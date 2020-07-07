@@ -32,7 +32,7 @@ fn main() {
     .username("joigikuna")
     .password("loypure618sae")
     .login()
-    .unwrap();
+    .unwrap(); // вынести в функцию
 
     //let me = client.unwrap();
     let subreddit = Subreddit::new("wow");
@@ -46,7 +46,8 @@ fn main() {
         count += 1;
         let author: String = child.data.author.clone();
         let title: String = child.data.title.clone();
-        println!("author = {}\n selftext = {}", author, title);
+        let ups: f64 = child.data.ups.clone();
+        println!("author = {}, selftext = {}, ups = {}", author, title, ups);
         authors.push(author);
     }
     println!("count = {}", count);
