@@ -1,5 +1,5 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Data {
+pub struct RedditPostData {
     pub subreddit: String,
     pub selftext: String,
     pub author_fullname: String,
