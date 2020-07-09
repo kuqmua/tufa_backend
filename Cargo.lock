@@ -1350,6 +1350,9 @@ name = "tufa_backend"
 version = "0.1.0"
 dependencies = [
  "roux",
+ "serde",
+ "serde_derive",
+ "serde_json",
 ]
 
 [[package]]
