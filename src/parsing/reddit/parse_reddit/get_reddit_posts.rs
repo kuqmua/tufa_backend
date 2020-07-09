@@ -5,25 +5,22 @@ use roux::Subreddit;
 #[path = "../subreddit_rust_structs/reddit_post_data_wrapper.rs"]
 mod reddit_post_data_wrapper;
 use reddit_post_data_wrapper::RedditPostDataWrapper;
-//use reddit_post_data_wrapper::SomeStruct;
-//include!("../subreddit_rust_structs/reddit_post_data_wrapper.rs");
-//-> reddit_post_data_wrapper::RedditPostDataWrapper
-pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper> {
-    let mut count_subreddits: u8 = 0;
-    let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> = Vec::new();
-    for subreddititer in subreddits_vec {
-        count_subreddits += 1;
-        let post = parse_reddit_post(subreddititer.to_string());
 
+pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper> {
+    if subreddits_vec.len() >= 4294967295 {
+        panic!("subreddits_vec.len() > 4294967295(u32::MAX)");
+    }
+    let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> =
+        Vec::with_capacity(subreddits_vec.len());
+    let subreddit_names_vec: Vec<Subreddit> = push_names_into_subreddit_names_vec(&subreddits_vec);
+    for subreddititer in subreddit_names_vec {
+        let post = parse_subreddit_post(subreddititer);
         vec_reddit_post_data.push(post);
     }
-    println!("countSubreddits = {}", count_subreddits);
     vec_reddit_post_data
 }
 
-pub fn parse_reddit_post(subreddit_name: String) -> RedditPostDataWrapper {
-    let subreddit = Subreddit::new(&subreddit_name);
-    println!("subreddit ------------------ {}", subreddit_name);
+pub fn parse_subreddit_post(subreddit: Subreddit) -> RedditPostDataWrapper {
     let latest = subreddit.latest(1, None);
     let unwrapped_latest = &latest.unwrap();
     let data = &unwrapped_latest.data;
@@ -43,9 +40,7 @@ pub fn parse_reddit_post(subreddit_name: String) -> RedditPostDataWrapper {
             redditwrapper.domain = first_child_data.domain.clone();
             redditwrapper.permalink = first_child_data.permalink.clone();
             match &first_child_data.url {
-                // The division was valid
                 Some(x) => redditwrapper.url = Some(x.clone()),
-                // The division was invalid
                 None => redditwrapper.url = Some("None".to_string()),
             }
             redditwrapper.thumbnail = first_child_data.thumbnail.clone();
@@ -64,49 +59,10 @@ pub fn parse_reddit_post(subreddit_name: String) -> RedditPostDataWrapper {
     redditwrapper
 }
 
-//let article_id = &hot.unwrap().data.children.first().unwrap().data.id.clone();
-/*
-let RedditRedditPostDataWrapperVar = reddit_post_data_wrapper::RedditPostDataWrapper(
-    subreddit: "oo",
-    selftext,
-    author_fullname,
-    id,
-    author,
-    title,
-    domain,
-    permalink,
-    url,
-    thumbnail,
-    thumbnail_width,
-    thumbnail_height,
-    selftext_html,
-    url_overridden_by_dest,
-    post_hint,
-    upvote_ratio,
-    ups,
-    score,
-    subreddit_subscribers,
-    created_utc,
-    num_crossposts,
-    num_comments,
-    over_18,
-    quarantine,
-    is_self,
-    saved,
-);
- */
-/*
-let mut count: u8 = 0;
-        let mut authors = Vec::new();
-
-        for child in data {
-            count += 1;
-            let author: String = child.data.author.clone();
-            let title: String = child.data.title.clone();
-            let ups: f64 = child.data.ups.clone();
-            let over_18: bool = child.data.over_18.clone();
-            println!("author = {}, selftext = {}, ups = {}", author, title, ups);
-            authors.push(author);
-        }
-        println!("count = {}", count);
-*/
+pub fn push_names_into_subreddit_names_vec(subreddits_vec: &Vec<&str>) -> Vec<Subreddit> {
+    let mut subreddit_names_vec: Vec<Subreddit> = Vec::with_capacity(subreddits_vec.len());
+    for subreddititer in subreddits_vec {
+        subreddit_names_vec.push(Subreddit::new(&subreddititer));
+    }
+    subreddit_names_vec
+}

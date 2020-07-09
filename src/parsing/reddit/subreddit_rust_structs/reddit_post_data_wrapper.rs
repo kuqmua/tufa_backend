@@ -25,7 +25,7 @@ impl Display for RedditPostDataWrapper {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
         write!(
             fmt,
-            "{:?} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} ",
+            "url = {:?}\nsubreddit = {}\nselftext ={}\nid = {}\nauthor = {}\ntitle = {}\ndomain = {}\npermalink = {}\nups = {}\nscore = {}\ncreated_utc = {}\nnum_comments = {}\nover_18 = {}\nquarantine = {}\nis_self = {}\nsaved = {}\n",
             self.url,
             self.subreddit,
             self.selftext,

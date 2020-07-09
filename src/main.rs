@@ -74,19 +74,6 @@ fn main() {
         "wildhearthstone",
         "wow",
     ];
-    let vecRedditPosts = get_reddit_posts::get_reddit_posts(user_subreddits);
-    println!("{}", vecRedditPosts[0])
+    let vec_reddit_posts = get_reddit_posts::get_reddit_posts(user_subreddits);
+    println!("{}", vec_reddit_posts[0])
 }
-
-/*
-#[derive(Debug, Deserialize, Serialize)]
-struct Origin {
-    origin: String,
-}
-
-impl fmt::Display for Origin {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.origin)
-    }
-}
-*/
