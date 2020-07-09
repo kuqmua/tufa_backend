@@ -74,7 +74,8 @@ fn main() {
         "wildhearthstone",
         "wow",
     ];
-    get_reddit_posts::get_reddit_posts(user_subreddits);
+    let vecRedditPosts = get_reddit_posts::get_reddit_posts(user_subreddits);
+    println!("{}", vecRedditPosts[0])
 }
 
 /*

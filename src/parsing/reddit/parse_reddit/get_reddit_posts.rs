@@ -4,41 +4,64 @@ use roux::Subreddit;
 
 #[path = "../subreddit_rust_structs/reddit_post_data_wrapper.rs"]
 mod reddit_post_data_wrapper;
+use reddit_post_data_wrapper::RedditPostDataWrapper;
+//use reddit_post_data_wrapper::SomeStruct;
+//include!("../subreddit_rust_structs/reddit_post_data_wrapper.rs");
 //-> reddit_post_data_wrapper::RedditPostDataWrapper
-pub fn get_reddit_posts(subreddits_vec: Vec<&str>) {
+pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper> {
     let mut count_subreddits: u8 = 0;
+    let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> = Vec::new();
     for subreddititer in subreddits_vec {
         count_subreddits += 1;
-        let subreddit = Subreddit::new(subreddititer);
-        println!("subreddit ------------------ {}", subreddititer);
-        //let hot = subreddit.hot(1, None);
-        let hot = subreddit.latest(1, None);
-        let unwrapped_hot = &hot.unwrap();
-        let data = &unwrapped_hot.data;
-        let children = &data.children;
-        let first_child = &children.first();
-        match first_child {
-            Some(_) => {
-                let unwrapped_first_child = first_child.unwrap();
-                let first_child_data = &unwrapped_first_child.data;
-                let title = &first_child_data.title.clone();
-                println!("{}", title);
-            }
-            None => println!("No first child"),
-        }
+        let post = parse_reddit_post(subreddititer.to_string());
+
+        vec_reddit_post_data.push(post);
     }
     println!("countSubreddits = {}", count_subreddits);
+    vec_reddit_post_data
 }
-pub fn parse_reddit_post(subreddit_name: &str) {
-    let subreddit = Subreddit::new(subreddit_name);
-    let hot = subreddit.top(1, None);
-    let unwrapped_hot = &hot.unwrap();
-    let data = &unwrapped_hot.data;
+
+pub fn parse_reddit_post(subreddit_name: String) -> RedditPostDataWrapper {
+    let subreddit = Subreddit::new(&subreddit_name);
+    println!("subreddit ------------------ {}", subreddit_name);
+    let latest = subreddit.latest(1, None);
+    let unwrapped_latest = &latest.unwrap();
+    let data = &unwrapped_latest.data;
     let children = &data.children;
-    let first_child = children.first().unwrap();
-    let first_child_data = &first_child.data;
-    let title = first_child_data.title.clone();
-    println!("{}", title);
+    let first_child = &children.first();
+
+    let mut redditwrapper = RedditPostDataWrapper::new();
+    match first_child {
+        Some(_) => {
+            let unwrapped_first_child = first_child.unwrap();
+            let first_child_data = &unwrapped_first_child.data;
+            redditwrapper.subreddit = first_child_data.subreddit.clone();
+            redditwrapper.selftext = first_child_data.selftext.clone();
+            redditwrapper.id = first_child_data.id.clone();
+            redditwrapper.author = first_child_data.author.clone();
+            redditwrapper.title = first_child_data.title.clone();
+            redditwrapper.domain = first_child_data.domain.clone();
+            redditwrapper.permalink = first_child_data.permalink.clone();
+            match &first_child_data.url {
+                // The division was valid
+                Some(x) => redditwrapper.url = Some(x.clone()),
+                // The division was invalid
+                None => redditwrapper.url = Some("None".to_string()),
+            }
+            redditwrapper.thumbnail = first_child_data.thumbnail.clone();
+            redditwrapper.created_utc = first_child_data.created_utc.clone();
+            redditwrapper.ups = first_child_data.ups.clone();
+            redditwrapper.num_comments = first_child_data.num_comments.clone();
+            redditwrapper.over_18 = first_child_data.over_18.clone();
+            redditwrapper.score = first_child_data.score.clone();
+            redditwrapper.quarantine = first_child_data.quarantine.clone();
+            redditwrapper.is_self = first_child_data.is_self.clone();
+            redditwrapper.saved = first_child_data.saved.clone();
+        }
+        None => println!("No first child"),
+    }
+    println!("redditwrapper ------------ {}", redditwrapper.subreddit);
+    redditwrapper
 }
 
 //let article_id = &hot.unwrap().data.children.first().unwrap().data.id.clone();
@@ -67,19 +90,9 @@ let RedditRedditPostDataWrapperVar = reddit_post_data_wrapper::RedditPostDataWra
     num_crossposts,
     num_comments,
     over_18,
-    media_only,
-    spoiler,
-    is_original_content,
     quarantine,
-    is_reddit_media_domain,
-    is_meta,
-    send_replies,
     is_self,
-    allow_live_comments,
     saved,
-    is_video,
-    no_follow,
-    contest_mode,
 );
  */
 /*
