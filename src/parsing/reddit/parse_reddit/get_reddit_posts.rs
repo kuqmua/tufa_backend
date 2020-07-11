@@ -1,3 +1,8 @@
+/*
+use futures::{stream, StreamExt}; // 0.3.1
+use reqwest::Client; // 0.10.0
+use tokio; // 0.2.4, features = ["macros"]
+*/
 extern crate roux;
 
 use roux::Subreddit;
@@ -19,8 +24,16 @@ pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper>
     }
     vec_reddit_post_data
 }
+/*
+pub fn fetch_subreddit_posts(subreddit: Subreddit) {
+    let latest = subreddit.latest(1, None);
+    let unwrapped_latest = &latest.unwrap();
+    &unwrapped_latest.data;
+}
+*/
 
 pub fn parse_subreddit_post(subreddit: Subreddit) -> RedditPostDataWrapper {
+    //let data = fetch_subreddit_posts(subreddit);
     let latest = subreddit.latest(1, None);
     let unwrapped_latest = &latest.unwrap();
     let data = &unwrapped_latest.data;
@@ -56,6 +69,7 @@ pub fn parse_subreddit_post(subreddit: Subreddit) -> RedditPostDataWrapper {
         None => println!("No first child"),
     }
     println!("redditwrapper ------------ {}", redditwrapper.subreddit);
+    //println!("redditwrapper ------------ {:#?}", redditwrapper);
     redditwrapper
 }
 

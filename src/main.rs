@@ -77,3 +77,36 @@ fn main() {
     let vec_reddit_posts = get_reddit_posts::get_reddit_posts(user_subreddits);
     println!("{}", vec_reddit_posts[0])
 }
+/*
+use futures::{stream, StreamExt}; // 0.3.1
+use reqwest::Client; // 0.10.0
+use tokio; // 0.2.4, features = ["macros"]
+
+const PARALLEL_REQUESTS: usize = 2;
+
+#[tokio::main]
+async fn main() {
+    let client = Client::new();
+
+    let urls = vec!["https://api.ipify.org", "https://api.ipify.org"];
+
+    let bodies = stream::iter(urls)
+        .map(|url| {
+            let client = &client;
+            async move {
+                let resp = client.get(url).send().await?;
+                resp.bytes().await
+            }
+        })
+        .buffer_unordered(PARALLEL_REQUESTS);
+
+    bodies
+        .for_each(|b| async {
+            match b {
+                Ok(b) => println!("Got {} bytes", b.len()),
+                Err(e) => eprintln!("Got an error: {}", e),
+            }
+        })
+        .await;
+}
+*/
