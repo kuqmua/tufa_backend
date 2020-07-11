@@ -1,10 +1,9 @@
-/*
 use futures::{stream, StreamExt}; // 0.3.1
 use reqwest::Client; // 0.10.0
+use std::time::Instant;
 use tokio; // 0.2.4, features = ["macros"]
-*/
-use std::thread;
-use std::time::Duration;
+           //use std::thread;
+           //use std::time::Duration;
 
 extern crate roux;
 
@@ -14,23 +13,13 @@ use roux::Subreddit;
 mod reddit_post_data_wrapper;
 use reddit_post_data_wrapper::RedditPostDataWrapper;
 
-pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper> {
+#[tokio::main]
+pub async fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper> {
     if subreddits_vec.len() >= 4294967295 {
         panic!("subreddits_vec.len() > 4294967295(u32::MAX)");
     }
-    let handle = thread::spawn(|| {
-        for i in 1..100 {
-            println!("hi number {} first thread!", i);
-            thread::sleep(Duration::from_millis(1));
-        }
-    });
-    let second_handle = thread::spawn(|| {
-        for i in 1..100 {
-            println!("hi number {} second thread!", i);
-            thread::sleep(Duration::from_millis(1));
-        }
-    });
-
+    //let client = Client::new();
+    let time = Instant::now();
     let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> =
         vec![RedditPostDataWrapper::new(); subreddits_vec.len()];
     let subreddit_names_vec: Vec<Subreddit> = push_names_into_subreddit_names_vec(&subreddits_vec);
@@ -45,20 +34,12 @@ pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper>
             break;
         }
     }
-    handle.join().unwrap();
-    second_handle.join().unwrap();
+
+    println!("{}", time.elapsed().as_secs());
     vec_reddit_post_data
 }
-/*
-pub fn fetch_subreddit_posts(subreddit: Subreddit) {
-    let latest = subreddit.latest(1, None);
-    let unwrapped_latest = &latest.unwrap();
-    &unwrapped_latest.data;
-}
-*/
 
 pub fn parse_subreddit_post(subreddit: &Subreddit) -> RedditPostDataWrapper {
-    //let data = fetch_subreddit_posts(subreddit);
     let latest = subreddit.latest(1, None);
     let unwrapped_latest = &latest.unwrap();
     let data = &unwrapped_latest.data;
@@ -105,3 +86,144 @@ pub fn push_names_into_subreddit_names_vec(subreddits_vec: &Vec<&str>) -> Vec<Su
     }
     subreddit_names_vec
 }
+
+/*
+    let handle = thread::spawn(|| {
+        for i in 1..100 {
+            println!("hi number {} first thread!", i);
+        }
+    });
+    let second_handle = thread::spawn(|| {
+        for i in 1..100 {
+            println!("hi number {} second thread!", i);
+        }
+    });
+*/
+/*
+use futures::{stream, StreamExt}; // 0.3.1
+use reqwest::Client; // 0.10.0
+use std::time::Instant;
+use tokio; // 0.2.4, features = ["macros"]
+
+const PARALLEL_REQUESTS: usize = 8;
+
+fn main() {
+    something();
+}
+#[tokio::main]
+async fn something() {
+    let client = Client::new();
+    let before = Instant::now();
+    let urls = vec![
+        "https://www.reddit.com/r/3Dprinting/new.json",
+        "https://www.reddit.com/r/3dsmax/new.json",
+        "https://www.reddit.com/r/AfterEffects/new.json",
+        "https://www.reddit.com/r/architecture/new.json",
+        "https://www.reddit.com/r/arduino/new.json",
+        "https://www.reddit.com/r/bigdata/new.json",
+        "https://www.reddit.com/r/bigquery/new.json",
+        "https://www.reddit.com/r/blender/new.json",
+        "https://www.reddit.com/r/BlenderGuru/new.json",
+        "https://www.reddit.com/r/blenderhelp/new.json",
+        "https://www.reddit.com/r/chemistry/new.json",
+        "https://www.reddit.com/r/Chromium/new.json",
+        "https://www.reddit.com/r/classicwow/new.json",
+        "https://www.reddit.com/r/ComputerEngineering/new.json",
+        "https://www.reddit.com/r/cpp/new.json",
+        "https://www.reddit.com/r/cpp_questions/new.json",
+        "https://www.reddit.com/r/css/new.json",
+        "https://www.reddit.com/r/datascience/new.json",
+        "https://www.reddit.com/r/elasticsearch/new.json",
+        "https://www.reddit.com/r/FlutterDev/new.json",
+        "https://www.reddit.com/r/gamedev/new.json",
+        "https://www.reddit.com/r/Games/new.json",
+        "https://www.reddit.com/r/git/new.json",
+        "https://www.reddit.com/r/github/new.json",
+        "https://www.reddit.com/r/gitlab/new.json",
+        "https://www.reddit.com/r/graphql/new.json",
+        "https://www.reddit.com/r/GreaseMonkey/new.json",
+        "https://www.reddit.com/r/grpc/new.json",
+        "https://www.reddit.com/r/hardware/new.json",
+        "https://www.reddit.com/r/hearthstone/new.json",
+        "https://www.reddit.com/r/Houdini/new.json",
+        "https://www.reddit.com/r/javascript/new.json",
+        "https://www.reddit.com/r/jenkinsci/new.json",
+        "https://www.reddit.com/r/kubernetes/new.json",
+        "https://www.reddit.com/r/learnmachinelearning/new.json",
+        "https://www.reddit.com/r/linux/new.json",
+        "https://www.reddit.com/r/low_poly/new.json",
+        "https://www.reddit.com/r/MachineLearning/new.json",
+        "https://www.reddit.com/r/Maya/new.json",
+        "https://www.reddit.com/r/MedicalGore/new.json",
+        "https://www.reddit.com/r/medizzy/new.json",
+        "https://www.reddit.com/r/nasa/new.json",
+        "https://www.reddit.com/r/node/new.json",
+        "https://www.reddit.com/r/Physics/new.json",
+        "https://www.reddit.com/r/PostgreSQL/new.json",
+        "https://www.reddit.com/r/proceduralgeneration/new.json",
+        "https://www.reddit.com/r/ProgrammerHumor/new.json",
+        "https://www.reddit.com/r/Python/new.json",
+        "https://www.reddit.com/r/pytorch/new.json",
+        "https://www.reddit.com/r/QuantumComputing/new.json",
+        "https://www.reddit.com/r/reactjs/new.json",
+        "https://www.reddit.com/r/reactnative/new.json",
+        "https://www.reddit.com/r/researchchemicals/new.json",
+        "https://www.reddit.com/r/rust/new.json",
+        "https://www.reddit.com/r/scientificresearch/new.json",
+        "https://www.reddit.com/r/space/new.json",
+        "https://www.reddit.com/r/spacex/new.json",
+        "https://www.reddit.com/r/stm32f4/new.json",
+        "https://www.reddit.com/r/sveltejs/new.json",
+        "https://www.reddit.com/r/tutorials/new.json",
+        "https://www.reddit.com/r/Unity3D/new.json",
+        "https://www.reddit.com/r/unity_tutorials/new.json",
+        "https://www.reddit.com/r/unrealengine/new.json",
+        "https://www.reddit.com/r/warcraft3/new.json",
+        "https://www.reddit.com/r/wildhearthstone/new.json",
+        "https://www.reddit.com/r/wow/new.json",
+    ];
+subreddits_vec
+    let bodies = stream::iter(subreddits_vec)
+        .map(|subreddits_vec_member| {
+            let client = &client;
+            async move {
+                let post = parse_subreddit_post(&subreddit_names_vec[count]);
+            vec_reddit_post_data[count] = post;
+                let resp = client.get(url).send().await?;
+                resp.bytes().await
+            }
+        })
+        .buffer_unordered(PARALLEL_REQUESTS);
+
+    bodies
+        .for_each(|b| async {
+            match b {
+                Ok(b) => println!("Got {:#?} ", b),
+                Err(e) => eprintln!("Got an error: {}", e),
+            }
+        })
+        .await;
+    println!("{}", before.elapsed().as_secs());
+}
+*/
+/*
+const PARALLEL_REQUESTS: usize = 8;
+let bodies = stream::iter(urls)
+        .map(|url| {
+            let client = &client;
+            async move {
+                let resp = client.get(url).send().await?;
+                resp.bytes().await
+            }
+        })
+        .buffer_unordered(PARALLEL_REQUESTS);
+
+    bodies
+        .for_each(|b| async {
+            match b {
+                Ok(b) => println!("Got {:#?} ", b),
+                Err(e) => eprintln!("Got an error: {}", e),
+            }
+        })
+        .await;
+*/

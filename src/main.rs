@@ -5,8 +5,7 @@ mod all_providers_authorization;
 mod get_reddit_posts;
 
 fn main() {
-    all_providers_authorization::all_providers_authorization();
-    let user_subreddits: Vec<&str> = vec![
+    let subreddits_names: Vec<&str> = vec![
         "3Dprinting",
         "3dsmax",
         "AfterEffects",
@@ -74,7 +73,8 @@ fn main() {
         "wildhearthstone",
         "wow",
     ];
-    let vec_reddit_posts = get_reddit_posts::get_reddit_posts(user_subreddits);
+    all_providers_authorization::all_providers_authorization();
+    let vec_reddit_posts = get_reddit_posts::get_reddit_posts(subreddits_names);
     println!("{}", vec_reddit_posts[0])
 }
 
@@ -96,38 +96,5 @@ fn main() {
         println!("hi number {} from the main thread!", i);
         thread::sleep(Duration::from_millis(1));
     }
-}
-*/
-/*
-use futures::{stream, StreamExt}; // 0.3.1
-use reqwest::Client; // 0.10.0
-use tokio; // 0.2.4, features = ["macros"]
-
-const PARALLEL_REQUESTS: usize = 2;
-
-#[tokio::main]
-async fn main() {
-    let client = Client::new();
-
-    let urls = vec!["https://api.ipify.org", "https://api.ipify.org"];
-
-    let bodies = stream::iter(urls)
-        .map(|url| {
-            let client = &client;
-            async move {
-                let resp = client.get(url).send().await?;
-                resp.bytes().await
-            }
-        })
-        .buffer_unordered(PARALLEL_REQUESTS);
-
-    bodies
-        .for_each(|b| async {
-            match b {
-                Ok(b) => println!("Got {} bytes", b.len()),
-                Err(e) => eprintln!("Got an error: {}", e),
-            }
-        })
-        .await;
 }
 */
