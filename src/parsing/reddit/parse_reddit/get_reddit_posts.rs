@@ -3,6 +3,9 @@ use futures::{stream, StreamExt}; // 0.3.1
 use reqwest::Client; // 0.10.0
 use tokio; // 0.2.4, features = ["macros"]
 */
+use std::thread;
+use std::time::Duration;
+
 extern crate roux;
 
 use roux::Subreddit;
@@ -15,13 +18,35 @@ pub fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWrapper>
     if subreddits_vec.len() >= 4294967295 {
         panic!("subreddits_vec.len() > 4294967295(u32::MAX)");
     }
+    let handle = thread::spawn(|| {
+        for i in 1..100 {
+            println!("hi number {} first thread!", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+    let second_handle = thread::spawn(|| {
+        for i in 1..100 {
+            println!("hi number {} second thread!", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
     let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> =
-        Vec::with_capacity(subreddits_vec.len());
+        vec![RedditPostDataWrapper::new(); subreddits_vec.len()];
     let subreddit_names_vec: Vec<Subreddit> = push_names_into_subreddit_names_vec(&subreddits_vec);
-    for subreddititer in subreddit_names_vec {
-        let post = parse_subreddit_post(subreddititer);
-        vec_reddit_post_data.push(post);
+
+    let mut count: usize = 0;
+    loop {
+        if count < subreddits_vec.len() {
+            let post = parse_subreddit_post(&subreddit_names_vec[count]);
+            vec_reddit_post_data[count] = post;
+            count += 1;
+        } else {
+            break;
+        }
     }
+    handle.join().unwrap();
+    second_handle.join().unwrap();
     vec_reddit_post_data
 }
 /*
@@ -32,7 +57,7 @@ pub fn fetch_subreddit_posts(subreddit: Subreddit) {
 }
 */
 
-pub fn parse_subreddit_post(subreddit: Subreddit) -> RedditPostDataWrapper {
+pub fn parse_subreddit_post(subreddit: &Subreddit) -> RedditPostDataWrapper {
     //let data = fetch_subreddit_posts(subreddit);
     let latest = subreddit.latest(1, None);
     let unwrapped_latest = &latest.unwrap();
