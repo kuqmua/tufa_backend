@@ -1,13 +1,27 @@
-#[path = "providers_authorization/all_providers_authorization.rs"]
-mod all_providers_authorization;
+extern crate reqwest;
+extern crate serde_json;
+use futures::{stream, StreamExt}; // 0.3.1
+use reqwest::Client; // 0.10.0
+use std::time::Instant;
+use tokio; // 0.2.4, features = ["macros"]
 
-#[path = "parsing/reddit/parse_reddit/get_reddit_posts.rs"]
-mod get_reddit_posts;
-/*
-#[path = "parsing/reddit/parse_reddit/reddit_api_from_scratch.rs"]
-mod reddit_api_from_scratch;
-*/
-fn main() {
+#[path = "../subreddit_rust_structs/reddit_post_data_wrapper.rs"]
+mod reddit_post_data_wrapper;
+use reddit_post_data_wrapper::RedditPostDataWrapper;
+
+//use crate::util::{FeedOption, RouxError};
+//mod responses;
+//use responses::{Comments, Moderators, Submissions};
+
+fn from_subreddit_name_to_url(subreddit_name: &str) -> String {
+    let subreddit_url = format!("https://www.reddit.com/r/{}", name, "new.json");
+}
+///////////
+
+const PARALLEL_REQUESTS: usize = 8;
+
+#[tokio::main]
+async fn something() {
     let subreddits_names: Vec<&str> = vec![
         "3Dprinting",
         "3dsmax",
@@ -76,32 +90,9 @@ fn main() {
         "wildhearthstone",
         "wow",
     ];
-    all_providers_authorization::all_providers_authorization();
-    let vec_reddit_posts = get_reddit_posts::get_reddit_posts(subreddits_names);
-    println!("{}", vec_reddit_posts[0])
-}
-
-/*
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-extern crate reqwest;
-extern crate serde_json;
-
-//use reqwest::
-use futures::future; // 0.3.4
-use reqwest::Client; // 0.10.1
-use tokio; // 0.2.11
-
-#[path = "parsing/reddit/subreddit_rust_structs/reddit_post_data_wrapper.rs"]
-mod reddit_post_data_wrapper;
-use reddit_post_data_wrapper::RedditPostDataWrapper;
-
-#[tokio::main]
-async fn main() {
     let client = Client::new();
-
-    let urls = vec![
+    let before = Instant::now();
+    let subreddit_urls = vec![
         "https://www.reddit.com/r/3Dprinting/new.json",
         "https://www.reddit.com/r/3dsmax/new.json",
         "https://www.reddit.com/r/AfterEffects/new.json",
@@ -170,32 +161,85 @@ async fn main() {
         "https://www.reddit.com/r/wow/new.json",
     ];
 
-    let bodies = future::join_all(urls.into_iter().map(|url| {
-        let client = &client;
-        async move {
-            let resp = client.get(url).send().await?;
-            resp.bytes().await
-        }
-    }))
-    .await;
-    println!("{}", bodies.len());
-    for b in bodies {
-        match b {
-            Ok(b) => {
-                println!("Got {} bytes", b.len());
-                let slice: &[u8] = &b;
-                let u: Option = serde_json::from_slice(slice).unwrap();
-                match u {
-                    Ok(b) => {
-                        println!("ok");
-                    }
-                    Err(e) => eprintln!("error:"),
-                }
-                println!("{:#?}", u);
-                //wtf = b.json::<RedditPostDataWrapper>();
+    let bodies = stream::iter(subreddit_urls)
+        .map(|subreddit_url| {
+            let client = &client;
+            async move {
+                let resp = client.get(subreddit_url).send().await?;
+                resp.bytes().await
             }
-            Err(e) => eprintln!("Got an error: {}", e),
+        })
+        .buffer_unordered(PARALLEL_REQUESTS);
+
+    bodies
+        .for_each(|b| async {
+            match b {
+                Ok(b) => println!("Got {:#?} ", b),
+                Err(e) => eprintln!("Got an error: {}", e),
+            }
+        })
+        .await;
+    println!("{}", before.elapsed().as_secs());
+}
+/////////////////////
+/// Subreddit.
+pub struct Subreddit {
+    /// Name of subreddit.
+    pub name: String,
+    url: String,
+    client: Client,
+}
+
+impl Subreddit {
+    /// Create a new `Subreddit` instance.
+    pub fn new(name: &str) -> Subreddit {
+        let subreddit_url = format!("https://www.reddit.com/r/{}", name);
+
+        Subreddit {
+            name: name.to_owned(),
+            url: subreddit_url,
+            client: Client::new(),
         }
     }
-}
-*/
+    fn get_feed(
+        &self,
+        ty: &str,
+        limit: u32,
+        options: Option<FeedOption>,
+    ) -> Result<Submissions, RouxError> {
+        let url = &mut format!("{}/{}.json?limit={}", self.url, ty, limit);
+
+        if !options.is_none() {
+            let option = options.unwrap();
+
+            if !option.after.is_none() {
+                url.push_str(&mut format!("&after={}", option.after.unwrap().to_owned()));
+            } else if !option.before.is_none() {
+                url.push_str(&mut format!(
+                    "&before={}",
+                    option.before.unwrap().to_owned()
+                ));
+            }
+
+            if !option.count.is_none() {
+                url.push_str(&mut format!("&count={}", option.count.unwrap()));
+            }
+        }
+
+        Ok(self
+            .client
+            .get(&url.to_owned())
+            .send()?
+            .json::<Submissions>()?)
+    }
+
+    /// Get latest posts.
+    pub fn latest(
+        &self,
+        limit: u32,
+        options: Option<FeedOption>,
+    ) -> Result<Submissions, RouxError> {
+        self.get_feed("new", limit, options)
+    }
+
+   

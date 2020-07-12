@@ -1,13 +1,17 @@
-use futures::{stream, StreamExt}; // 0.3.1
-use reqwest::Client; // 0.10.0
+//#![feature(proc_macro_hygiene, stmt_expr_attributes)]
+//use futures::{stream, StreamExt}; // 0.3.1
+//use reqwest::Client; // 0.10.0
 use std::time::Instant;
 use tokio; // 0.2.4, features = ["macros"]
            //use std::thread;
            //use std::time::Duration;
-
+//use futures::stream::Stream;
+//use futures_async_stream::for_await;
+use std::thread;
 extern crate roux;
 
 use roux::Subreddit;
+
 
 #[path = "../subreddit_rust_structs/reddit_post_data_wrapper.rs"]
 mod reddit_post_data_wrapper;
@@ -23,7 +27,8 @@ pub async fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWr
     let mut vec_reddit_post_data: Vec<RedditPostDataWrapper> =
         vec![RedditPostDataWrapper::new(); subreddits_vec.len()];
     let subreddit_names_vec: Vec<Subreddit> = push_names_into_subreddit_names_vec(&subreddits_vec);
-
+    //let mut vec = Vec::new();
+    /*
     let mut count: usize = 0;
     loop {
         if count < subreddits_vec.len() {
@@ -34,10 +39,38 @@ pub async fn get_reddit_posts(subreddits_vec: Vec<&str>) -> Vec<RedditPostDataWr
             break;
         }
     }
+    */
+    let mut children = vec![];
+    let number_of_threads: usize = 65;
+    for i in 0..number_of_threads {
+        // Spin up another thread
+        children.push(thread::spawn( move|| {
+            //println!("this is thread number {}", i);
+            let post = parse_subreddit_post(&subreddit_names_vec[&i.into()]);
+            vec_reddit_post_data[&i.into()] = post;
+
+        }));
+    }
+
+    for child in children {
+        // Wait for the thread to finish. Returns a result.
+        let _ = child.join();
+    }
+    
 
     println!("{}", time.elapsed().as_secs());
     vec_reddit_post_data
 }
+/*
+ fn stream_subreddit_post(stream: impl Stream<Item = i32>)-> Vec<RedditPostDataWrapper>{
+     let mut vec = Vec::new();
+    #[for_await]
+    for value in stream {
+        vec.push(value);
+    }
+    vec
+ }
+*/
 
 pub fn parse_subreddit_post(subreddit: &Subreddit) -> RedditPostDataWrapper {
     let latest = subreddit.latest(1, None);
