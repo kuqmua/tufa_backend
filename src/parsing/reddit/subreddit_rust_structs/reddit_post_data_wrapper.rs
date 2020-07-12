@@ -69,3 +69,36 @@ impl RedditPostDataWrapper {
         }
     }
 }
+
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct Root {
+    pub userId: i64,
+    pub id: i64,
+    pub title: String,
+    pub completed: bool,
+}
+
+impl Display for Root {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+        write!(
+            fmt,
+            "userId = {}\nid ={}\ntitle = {}\ncompleted = {}\n",
+            self.userId,
+            self.id,
+            self.title,
+            self.completed,
+        )
+    }
+}
+
+impl Root {
+    pub fn new() -> Self {
+        Root {
+            userId: 64,
+            id: 64,
+            title: "some".to_string(),
+    completed: false,
+        }
+    }
+}
