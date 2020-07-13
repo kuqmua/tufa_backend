@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RedditPostDataWrapper {
+pub struct UsedRedditJsonStruct {
     pub url: Option<String>,
     pub subreddit: String,
     pub selftext: String,
@@ -21,7 +21,7 @@ pub struct RedditPostDataWrapper {
     pub saved: bool,
 }
 
-impl Display for RedditPostDataWrapper {
+impl Display for UsedRedditJsonStruct {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
         write!(
             fmt,
@@ -46,9 +46,9 @@ impl Display for RedditPostDataWrapper {
     }
 }
 
-impl RedditPostDataWrapper {
+impl UsedRedditJsonStruct {
     pub fn new() -> Self {
-        RedditPostDataWrapper {
+        UsedRedditJsonStruct {
             url: Some("url".to_string()),
             subreddit: "subreddit".to_string(),
             selftext: "selftext".to_string(),
@@ -66,39 +66,6 @@ impl RedditPostDataWrapper {
             quarantine: false,
             is_self: false,
             saved: false,
-        }
-    }
-}
-
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Root {
-    pub userId: i64,
-    pub id: i64,
-    pub title: String,
-    pub completed: bool,
-}
-
-impl Display for Root {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(
-            fmt,
-            "userId = {}\nid ={}\ntitle = {}\ncompleted = {}\n",
-            self.userId,
-            self.id,
-            self.title,
-            self.completed,
-        )
-    }
-}
-
-impl Root {
-    pub fn new() -> Self {
-        Root {
-            userId: 64,
-            id: 64,
-            title: "some".to_string(),
-    completed: false,
         }
     }
 }

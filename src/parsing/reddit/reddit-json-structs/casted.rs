@@ -1,21 +1,15 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Root {
-    pub kind: String,
+pub struct CastedRedditJsonStruct {
     pub data: Data,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Data {
-    pub modhash: String,
-    pub dist: i64,
     pub children: Vec<Children>,
-    pub after: String,
-    pub before: ::serde_json::Value,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Children {
-    pub kind: String,
     pub data: Data2,
 }
 
