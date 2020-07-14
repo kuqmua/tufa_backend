@@ -1,6 +1,19 @@
 use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct VecOfUsedRedditJsonStruct {
+    pub posts: Vec<UsedRedditJsonStruct>,
+}
+
+impl VecOfUsedRedditJsonStruct {
+    pub fn new() -> Self {
+        VecOfUsedRedditJsonStruct {
+            posts: vec![UsedRedditJsonStruct::new(); 25], //default reddit api json children amount
+        }
+    }
+}
+//Vec::with_capacity(25)
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct UsedRedditJsonStruct {
     pub url: Option<String>,
     pub subreddit: String,
