@@ -62,19 +62,19 @@ impl Display for UsedRedditJsonStruct {
 impl UsedRedditJsonStruct {
     pub fn new() -> Self {
         UsedRedditJsonStruct {
-            url: Some("url".to_string()),
-            subreddit: "subreddit".to_string(),
-            selftext: "selftext".to_string(),
-            id: "id".to_string(), // может понадобиться
-            author: "id".to_string(),
-            title: "title".to_string(),
-            domain: "domain".to_string(), //сайт хоста
-            permalink: "permalink".to_string(),
-            thumbnail: "thumbnail".to_string(),
-            created_utc: 0.64, // время
+            url: Some("".to_string()),
+            subreddit: "".to_string(),
+            selftext: "".to_string(),
+            id: "".to_string(), // может понадобиться
+            author: "".to_string(),
+            title: "".to_string(),
+            domain: "".to_string(), //сайт хоста
+            permalink: "".to_string(),
+            thumbnail: "".to_string(),
+            created_utc: 0.0, // время
             ups: 0.0,
             score: 0.0, //чем отличается score от ups
-            num_comments: 64,
+            num_comments: 0,
             over_18: false,
             quarantine: false,
             is_self: false,

@@ -86,14 +86,14 @@ fn main() {
     ];
     all_providers_authorization::all_providers_authorization();
     let vec = get_posts(subreddits_names);
-    println!("{}", vec[1].posts[2].author,);
-}
-/*
-vec[0].posts[0].url,
+    println!(
+        "{:?}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
+        vec[0].posts[0].url,
         vec[0].posts[0].subreddit,
         vec[0].posts[0].selftext,
         vec[0].posts[0].id,
-vec[0].posts[0].title,
+        vec[0].posts[0].author,
+        vec[0].posts[0].title,
         vec[0].posts[0].domain,
         vec[0].posts[0].permalink,
         vec[0].posts[0].thumbnail,
@@ -105,4 +105,5 @@ vec[0].posts[0].title,
         vec[0].posts[0].quarantine,
         vec[0].posts[0].is_self,
         vec[0].posts[0].saved,
-*/
+    );
+}

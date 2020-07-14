@@ -27,6 +27,11 @@ pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> 
     let client = Client::new();
     let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
         push_names_into_two_layer_result_vec(&subreddits);
+    /*
+    let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
+        Vec::with_capacity(subreddits.len()); // не будет работать из за thread 'main' panicked at 'index out of bounds: the len is 0 but the index is 0'
+        а динамический push каждый раз это такое
+        */
     let subreddits_urls: Vec<String> = subreddits_into_urls(subreddits);
     let bodies = future::join_all(subreddits_urls.into_iter().map(|url| {
         let client = &client;
@@ -44,7 +49,6 @@ pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> 
                 let slice: &[u8] = &b;
                 let u: CastedRedditJsonStruct = serde_json::from_slice(slice).unwrap();
                 if u.data.children.len() > 0 {
-                    //let subreddit = u.data.children[0].data.subreddit; //неважно какой child тут, сабреддит одиаковый же
                     let children: &Vec<Children> = &u.data.children;
                     two_layer_result_vec[count] = parse_every_children(&u, &children);
                     println!("{}", two_layer_result_vec[count].posts[0].author);
@@ -59,7 +63,10 @@ pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> 
             }
         }
     }
-    println!("time.elapsed().as_secs() = {}", time.elapsed().as_secs());
+    println!(
+        "get_posts working(in seconds) = {} ",
+        time.elapsed().as_secs()
+    );
     return two_layer_result_vec;
 }
 
@@ -124,7 +131,7 @@ fn parse_every_children(
         child.quarantine = u.data.children[count].data.quarantine.clone();
         child.is_self = u.data.children[count].data.is_self.clone();
         child.saved = u.data.children[count].data.saved.clone();
-        vec_of_children.posts.push(child);
+        vec_of_children.posts[count] = child;
         count += 1;
     }
     vec_of_children
