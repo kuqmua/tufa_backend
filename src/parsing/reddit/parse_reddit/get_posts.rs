@@ -17,7 +17,7 @@ use casted::Children;
 mod used;
 use used::UsedRedditJsonStruct;
 use used::VecOfUsedRedditJsonStruct;
-//
+
 #[tokio::main]
 pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
     if subreddits.len() >= 4294967295 {
@@ -27,11 +27,6 @@ pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> 
     let client = Client::new();
     let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
         push_names_into_two_layer_result_vec(&subreddits);
-    /*
-    let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
-        Vec::with_capacity(subreddits.len()); // не будет работать из за thread 'main' panicked at 'index out of bounds: the len is 0 but the index is 0'
-        а динамический push каждый раз это такое
-        */
     let subreddits_urls: Vec<String> = subreddits_into_urls(subreddits);
     let bodies = future::join_all(subreddits_urls.into_iter().map(|url| {
         let client = &client;
@@ -80,18 +75,7 @@ fn subreddits_into_urls(subreddits: Vec<&str>) -> Vec<String> {
     }
     subreddits_urls
 }
-/*
-fn push_names_into_subreddit_names_vec(subreddits_vec: &Vec<&str>) -> Vec<UsedRedditJsonStruct> {
-    let mut subreddit_names_vec: Vec<UsedRedditJsonStruct> =
-        Vec::with_capacity(subreddits_vec.len());
-    let mut count = 0;
-    while count < subreddits_vec.len() {
-        subreddit_names_vec.push(UsedRedditJsonStruct::new());
-        count += 1;
-    }
-    subreddit_names_vec
-}
-*/
+
 fn push_names_into_two_layer_result_vec(
     subreddits_vec: &Vec<&str>,
 ) -> Vec<VecOfUsedRedditJsonStruct> {
@@ -105,8 +89,6 @@ fn push_names_into_two_layer_result_vec(
     subreddit_names_vec
 }
 
-// result_vec: Vec<VecOfUsedRedditJsonStruct>,
-//count: usize,
 fn parse_every_children(
     u: &CastedRedditJsonStruct,
     children: &Vec<Children>,
@@ -136,21 +118,3 @@ fn parse_every_children(
     }
     vec_of_children
 }
-/*
-result_vec[count].url = u.data.children[0].data.url.clone();
-                result_vec[count].subreddit = u.data.children[0].data.subreddit.clone();
-                result_vec[count].id = u.data.children[0].data.id.clone();
-                result_vec[count].author = u.data.children[0].data.author.clone();
-                result_vec[count].title = u.data.children[0].data.title.clone();
-                result_vec[count].domain = u.data.children[0].data.domain.clone();
-                result_vec[count].permalink = u.data.children[0].data.permalink.clone();
-                result_vec[count].thumbnail = u.data.children[0].data.thumbnail.clone();
-                result_vec[count].created_utc = u.data.children[0].data.created_utc.clone();
-                result_vec[count].ups = u.data.children[0].data.ups.clone();
-                result_vec[count].score = u.data.children[0].data.score.clone();
-                result_vec[count].num_comments = u.data.children[0].data.num_comments.clone();
-                result_vec[count].over_18 = u.data.children[0].data.over_18.clone();
-                result_vec[count].quarantine = u.data.children[0].data.quarantine.clone();
-                result_vec[count].is_self = u.data.children[0].data.is_self.clone();
-                result_vec[count].saved = u.data.children[0].data.saved.clone();
-*/

@@ -1,14 +1,3 @@
-/*
-
-#[path = "parsing/reddit/parse_reddit/get_reddit_posts.rs"]
-mod get_reddit_posts;
-
-fn main() {
-    let vec_reddit_posts = get_reddit_posts::get_reddit_posts(subreddits_names);
-    println!("{}", vec_reddit_posts[0])
-}
-*/
-
 #[path = "providers_authorization/all_providers_authorization.rs"]
 mod all_providers_authorization;
 
