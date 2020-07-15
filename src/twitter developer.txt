@@ -1,0 +1,20 @@
+Is everything correct?
+Primary use
+Exploring the API
+Account type
+Personal
+Twitter username
+@tyfaproj
+Email
+tyfaproject@gmail.com
+In your words
+I am going to use Twitter Developer account for learning natural language processing with libraries such as CoreNLP and Natural Language Toolkit. I would like to use them together in order to build my personal projects that i can showcase in my coding interview
+Analyze Twitter data
+No
+Tweet, Retweet or Like?
+Yes
+I would like to download 20 real-time tweets related to the keywords I selected. Using NLP libraries, I could understand that people have torwards that thing at the moment
+Show Tweets or Twitter information off Twitter
+No
+Providing Tweets or Twitter information to government entities
+No

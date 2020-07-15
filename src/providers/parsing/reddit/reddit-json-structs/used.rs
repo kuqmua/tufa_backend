@@ -17,6 +17,7 @@ impl VecOfUsedRedditJsonStruct {
 pub struct UsedRedditJsonStruct {
     pub url: Option<String>,
     pub subreddit: String,
+    //pub subreddit: &'static str,
     pub selftext: String,
     pub id: String, // может понадобиться
     pub author: String,
@@ -64,6 +65,7 @@ impl UsedRedditJsonStruct {
         UsedRedditJsonStruct {
             url: Some("".to_string()),
             subreddit: "".to_string(),
+            //subreddit: "",
             selftext: "".to_string(),
             id: "".to_string(), // может понадобиться
             author: "".to_string(),

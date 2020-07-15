@@ -19,7 +19,7 @@ use used::UsedRedditJsonStruct;
 use used::VecOfUsedRedditJsonStruct;
 
 #[tokio::main]
-pub async fn get_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
+pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
     if subreddits.len() >= 4294967295 {
         panic!("subreddits_vec.len() > 4294967295(u32::MAX)");
     }
@@ -99,6 +99,7 @@ fn parse_every_children(
         let mut child = UsedRedditJsonStruct::new();
         child.url = u.data.children[count].data.url.clone();
         child.subreddit = u.data.children[count].data.subreddit.clone();
+        //child.subreddit = &u.data.children[count].data.subreddit.clone();
         child.id = u.data.children[count].data.id.clone();
         child.author = u.data.children[count].data.author.clone();
         child.title = u.data.children[count].data.title.clone();
