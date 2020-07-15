@@ -69,7 +69,7 @@ fn indent(size: usize) -> String {
 }
 
 fn main() {
-    let file = BufReader::new(file);
+    let file = BufReader::new(file);/test
 
     let parser = EventReader::new(file);
     let mut depth = 0;
