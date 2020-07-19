@@ -1,5 +1,5 @@
 #[path = "../providers_authorization/all_providers_authorization.rs"]
-mod all_providers_authorization;
+mod all_providers_authorization; //НЕКОРРЕКТНО ПИХАТЬ ЭТО В РЕДДИТ ЧАСТЬ
 
 #[path = "../parsing/reddit/parse_reddit/get_reddit_posts.rs"]
 mod get_reddit_posts;
@@ -10,7 +10,7 @@ mod get_subreddits;
 use get_subreddits::get_subreddits;
 
 pub fn reddit_part() {
-    all_providers_authorization::all_providers_authorization();
+    all_providers_authorization::all_providers_authorization(); //некорректно это вызывать тут
     let subreddits_names = get_subreddits();
     let vec = get_reddit_posts(subreddits_names);
     println!(
