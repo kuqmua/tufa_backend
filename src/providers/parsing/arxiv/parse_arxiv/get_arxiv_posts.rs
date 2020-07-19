@@ -51,6 +51,7 @@ async fn get_arxiv_posts() -> Result<(), Box<dyn std::error::Error>> {
     let end_index_description_string = "\n</p>";
     let start_index_creator_link_string = "<a href=\"";
     let end_index_creator_link_string = "\">";//there is no start_index_creator_name_string because its end_index_creator_link_string + its len()
+    //add time from arxiv
     let end_index_creator_name_string = "</a>";
     while write_count < txt.len() {
         let mut arxiv_post: ArxivPost = ArxivPost::new();
