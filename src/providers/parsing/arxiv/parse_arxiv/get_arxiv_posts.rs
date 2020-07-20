@@ -4,14 +4,14 @@ extern crate xml;
 use quick_xml::events::Event;
 use quick_xml::Reader;
 
-#[path = "providers/parsing/arxiv/arxiv_xml_structs/arxiv_post.rs"]
+#[path = "../arxiv_xml_structs/arxiv_post.rs"]
 mod arxiv_post;
 use arxiv_post::ArxivPost;
 use arxiv_post::Creator;
 
 #[tokio::main]
-async fn get_arxiv_posts() -> Result<(), Box<dyn std::error::Error>> {
-    let resp = reqwest::get("http://arxiv.org/rss/math.QA")
+pub async fn get_arxiv_posts(link: &str) -> Result< Vec<ArxivPost>, Box<dyn std::error::Error>> {
+    let resp = reqwest::get(link)
         .await?
         .text()
         .await?;
@@ -130,5 +130,7 @@ async fn get_arxiv_posts() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("{}", write_count);
     println!("{:#?}", vec_of_arxiv_posts[0].creators[0].name);
-    Ok(())
+    
+    
+    Ok(vec_of_arxiv_posts)
 }
