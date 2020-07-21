@@ -20,64 +20,16 @@ use arxiv_post::ArxivPost;
 mod get_arxiv_links_in_hash_map;
 use get_arxiv_links_in_hash_map::get_arxiv_links_in_hash_map;
 
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct ArxivPost {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creators: Vec<Creator>,
-}
 
-impl Display for ArxivPost {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(
-            fmt,
-            "title = {}\nlink = {}\ndescription ={}\ncreators = {:#?}\n",
-            self.title, self.link, self.description, self.creators
-        )
-    }
-}
-
-impl ArxivPost {
-    pub fn new() -> Self {
-        ArxivPost {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            creators: Vec::<Creator>::new(),
-        }
-    }
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Creator {
-    pub name: String,
-    pub link: String,
-}
-
-impl Display for Creator {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(fmt, "name = {}\nlink = {}\n", self.name, self.link)
-    }
-}
-
-impl Creator {
-    pub fn new() -> Self {
-        Creator {
-            name: "".to_string(),
-            link: "".to_string(),
-        }
-    }
-}
-///////////
 pub fn arxiv_init() -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
 {
-    let arxiv_links_in_hash_map: HashMap<&str, String> = get_arxiv_links_in_hash_map();
+    let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
     let mut arxiv_pages_posts_hashmap = HashMap::new();
     println!("{:#?}", arxiv_links_in_hash_map.len());
     let mut increment_for_errors = 0;
     for (key, value) in arxiv_links_in_hash_map {
         println!("starting to fetch data with index {}", increment_for_errors);
+        println!("fetching url now ... {}", value);
         let time = Instant::now();
         let result_of_arxiv_posts = get_arxiv_posts(value); //
         match result_of_arxiv_posts {
@@ -111,8 +63,8 @@ pub fn arxiv_init() -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
 
 
 #[tokio::main]
-pub async fn get_arxiv_posts(link: String) -> Result<Vec<ArxivPost>, Box<dyn std::error::Error>> {
-    let resp = reqwest::get(&link)
+pub async fn get_arxiv_posts(link: &str) -> Result<Vec<ArxivPost>, Box<dyn std::error::Error>> {
+    let resp = reqwest::get(link)
         .await?
         .text()
         .await?;
@@ -139,7 +91,7 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<ArxivPost>, Box<dyn std
         }
         buf.clear();
     }
-    println!("{}", count);
+    println!("count on 143 ...{}", count);
     let mut remove_element = 0;
     while remove_element < 13 {
         txt.remove(0);
@@ -202,7 +154,7 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<ArxivPost>, Box<dyn std
                         creator.link = string_part_for_loop[link_index_from_start + start_index_creator_link_string.len()..link_index_from_end].to_string();
                         let name_index_from_start = link_index_from_end + end_index_creator_link_string.len();
                         creator.name = string_part_for_loop[name_index_from_start..name_index_from_end].to_string();
-                        println!("creator.name = {}", creator.name);
+                        //println!("creator.name = {}", creator.name);
                         arxiv_post.creators.push(creator);
                         string_part_for_loop = string_part_for_loop[name_index_from_end + end_index_creator_name_string.len()..].to_string();
                         creators_count += 1;
@@ -224,16 +176,74 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<ArxivPost>, Box<dyn std
                 break
                 }
             }
-            println!("end of iteration");
+            //println!("end of while iteration");
         }
         vec_of_arxiv_posts.push(arxiv_post);
         write_count += 4;
     }
-    println!("{}", write_count);
-    println!("{:#?}", vec_of_arxiv_posts[0].creators[0].name);
-    
-    
+    println!("write_count (posts count) {}", write_count);
+    if vec_of_arxiv_posts.len() == 0{
+        println!("vec_of_arxiv_posts.len() == 0");
+    }
+    else{
+        if vec_of_arxiv_posts[0].creators.len() == 0{
+            println!("vec_of_arxiv_posts[0].creators.len() == 0");
+        }
+        else{
+            println!("{:#?}", vec_of_arxiv_posts[0].creators[0].name);
+        }
+    }
     Ok(vec_of_arxiv_posts)
 }
 
 
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct ArxivPost {
+    pub title: String,
+    pub link: String,
+    pub description: String,
+    pub creators: Vec<Creator>,
+}
+
+impl Display for ArxivPost {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+        write!(
+            fmt,
+            "title = {}\nlink = {}\ndescription ={}\ncreators = {:#?}\n",
+            self.title, self.link, self.description, self.creators
+        )
+    }
+}
+
+impl ArxivPost {
+    pub fn new() -> Self {
+        ArxivPost {
+            title: "".to_string(),
+            link: "".to_string(),
+            description: "".to_string(),
+            creators: Vec::<Creator>::new(),
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct Creator {
+    pub name: String,
+    pub link: String,
+}
+
+impl Display for Creator {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+        write!(fmt, "name = {}\nlink = {}\n", self.name, self.link)
+    }
+}
+
+impl Creator {
+    pub fn new() -> Self {
+        Creator {
+            name: "".to_string(),
+            link: "".to_string(),
+        }
+    }
+}
+///////////
