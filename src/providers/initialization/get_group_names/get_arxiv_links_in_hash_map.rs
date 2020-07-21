@@ -1,154 +1,154 @@
 use std::collections::HashMap;
 
-pub fn get_arxiv_links_in_hash_map() -> HashMap<&'static str, &'static str> {
+pub fn get_arxiv_links_in_hash_map() -> HashMap<&'static str, String> {
     let arxiv_rss_link = "http://export.arxiv.org/rss/".to_string();
-    let arxiv_sections_links: HashMap<&str,&str> =
+    let arxiv_sections_links: HashMap<&str,String> =
     //Astrophysics
-    [("Cosmology and Nongalactic Astrophysics", arxiv_rss_link + &"astro-ph.CO".to_string()),
-     ("Earth and Planetary Astrophysics", arxiv_rss_link + &"astro-ph.EP".to_string()),
-     ("Astrophysics of Galaxies", arxiv_rss_link + &"astro-ph.GA".to_string())
-     ("High Energy Astrophysical Phenomena", arxiv_rss_link + &"astro-ph.HE".to_string())
-     ("Instrumentation and Methods for Astrophysics", arxiv_rss_link + &"astro-ph.IM".to_string())
-     ("Solar and Stellar Astrophysics", arxiv_rss_link + &"astro-ph.SR".to_string())
+    [("Cosmology and Nongalactic Astrophysics", "astro-ph.CO".to_string() +  &arxiv_rss_link),
+     ("Earth and Planetary Astrophysics", "astro-ph.EP".to_string() +  &arxiv_rss_link),
+     ("Astrophysics of Galaxies", "astro-ph.GA".to_string() + &arxiv_rss_link),
+     ("High Energy Astrophysical Phenomena", "astro-ph.HE".to_string() + &arxiv_rss_link),
+     ("Instrumentation and Methods for Astrophysics", "astro-ph.IM".to_string() + &arxiv_rss_link),
+     ("Solar and Stellar Astrophysics", "astro-ph.SR".to_string() + &arxiv_rss_link),
      //Condensed Matter
-     ("Disordered Systems and Neural Networks", arxiv_rss_link + &"cond-mat.dis-nn".to_string())
-     ("Mesoscale and Nanoscale Physics", arxiv_rss_link + &"cond-mat.mes-hall".to_string())
-     ("Materials Science", arxiv_rss_link + &"cond-mat.mtrl-sci".to_string())
-     ("Other Condensed Matter", arxiv_rss_link + &"cond-mat.other".to_string())//НАДО ЛИ - УПАДЕТ ЖЕ 
-     ("Quantum Gases", arxiv_rss_link + &"cond-mat.quant-gas".to_string())
-     ("Soft Condensed Matter", arxiv_rss_link + &"cond-mat.soft".to_string())
-     ("Statistical Mechanics", arxiv_rss_link + &"cond-mat.stat-mech".to_string())
-     ("Strongly Correlated Electrons", arxiv_rss_link + &"cond-mat.str-el".to_string())
-     ("Superconductivity", arxiv_rss_link + &"cond-mat.supr-con".to_string())
+     ("Disordered Systems and Neural Networks", "cond-mat.dis-nn".to_string() + &arxiv_rss_link),
+     ("Mesoscale and Nanoscale Physics", "cond-mat.mes-hall".to_string() + &arxiv_rss_link),
+     ("Materials Science", "cond-mat.mtrl-sci".to_string() + &arxiv_rss_link),
+     ("Other Condensed Matter", "cond-mat.other".to_string() + &arxiv_rss_link),//НАДО ЛИ - УПАДЕТ ЖЕ 
+     ("Quantum Gases", "cond-mat.quant-gas".to_string() + &arxiv_rss_link),
+     ("Soft Condensed Matter", "cond-mat.soft".to_string() + &arxiv_rss_link),
+     ("Statistical Mechanics", "cond-mat.stat-mech".to_string() + &arxiv_rss_link),
+     ("Strongly Correlated Electrons", "cond-mat.str-el".to_string() + &arxiv_rss_link),
+     ("Superconductivity", "cond-mat.supr-con".to_string() + &arxiv_rss_link),
      //Computer Science
-     ("Artificial Intelligence", arxiv_rss_link + &"cs.AI".to_string())
-     ("Hardware Architecture", arxiv_rss_link + &"cs.AR".to_string())
-     ("Computational Complexity", arxiv_rss_link + &"cs.CC".to_string())
-     ("Computational Engineering, Finance, and Science", arxiv_rss_link + &"cs.CE".to_string())
-     ("Computational Geometry", arxiv_rss_link + &"cs.CG".to_string())
-     ("Computation and Language", arxiv_rss_link + &"cs.CL".to_string())
-     ("Cryptography and Security", arxiv_rss_link + &"cs.CR".to_string())
-     ("Computer Vision and Pattern Recognition", arxiv_rss_link + &"cs.CV".to_string())
-     ("Computers and Society", arxiv_rss_link + &"cs.CY".to_string())
-     ("Databases", arxiv_rss_link + &"cs.DB".to_string())
-     ("Distributed, Parallel, and Cluster Computing", arxiv_rss_link + &"cs.DC".to_string())
-     ("Digital Libraries", arxiv_rss_link + &"cs.DL".to_string())
-     ("Discrete Mathematics", arxiv_rss_link + &"cs.DM".to_string())
-     ("Data Structures and Algorithms", arxiv_rss_link + &"cs.DS".to_string())
-     ("Emerging Technologies", arxiv_rss_link + &"cs.ET".to_string())
-     ("Formal Languages and Automata Theory", arxiv_rss_link + &"cs.FL".to_string())
-     ("General Literature", arxiv_rss_link + &"cs.GL".to_string())
-     ("Graphics", arxiv_rss_link + &"cs.GR".to_string())
-     ("Computer Science and Game Theory", arxiv_rss_link + &"cs.GT".to_string())
-     ("Human-Computer Interaction", arxiv_rss_link + &"cs.HC".to_string())
-     ("Information Retrieval", arxiv_rss_link + &"cs.IR".to_string())
-     ("Information Theory", arxiv_rss_link + &"cs.IT".to_string())
-     ("Machine Learning", arxiv_rss_link + &"cs.LG".to_string())
-     ("Logic in Computer Science", arxiv_rss_link + &"cs.LO".to_string())
-     ("Multiagent Systems", arxiv_rss_link + &"cs.MA".to_string())
-     ("Multimedia", arxiv_rss_link + &"cs.MM".to_string())
-     ("Mathematical Software", arxiv_rss_link + &"cs.MS".to_string())
-     ("Numerical Analysis", arxiv_rss_link + &"cs.NA".to_string())
-     ("Neural and Evolutionary Computing", arxiv_rss_link + &"cs.NE".to_string())
-     ("Networking and Internet Architecture", arxiv_rss_link + &"cs.NI".to_string())
-     ("Other Computer Science", arxiv_rss_link + &"cs.OH".to_string())
-     ("Operating Systems", arxiv_rss_link + &"cs.OS".to_string())
-     ("Performance", arxiv_rss_link + &"cs.PF".to_string())
-     ("Programming Languages", arxiv_rss_link + &"cs.PL".to_string())
-     ("Robotics", arxiv_rss_link + &"cs.RO".to_string())
-     ("Sound", arxiv_rss_link + &"cs.SC".to_string())
-     ("Sound", arxiv_rss_link + &"cs.SD".to_string())
-     ("Software Engineering", arxiv_rss_link + &"cs.SE".to_string())
-     ("Social and Information Networks", arxiv_rss_link + &"cs.SI".to_string())
-     ("Systems and Control", arxiv_rss_link + &"cs.SY".to_string())
+     ("Artificial Intelligence", "cs.AI".to_string() + &arxiv_rss_link),
+     ("Hardware Architecture", "cs.AR".to_string() + &arxiv_rss_link),
+     ("Computational Complexity", "cs.CC".to_string() + &arxiv_rss_link),
+     ("Computational Engineering, Finance, and Science", "cs.CE".to_string() + &arxiv_rss_link),
+     ("Computational Geometry", "cs.CG".to_string() + &arxiv_rss_link),
+     ("Computation and Language", "cs.CL".to_string() + &arxiv_rss_link),
+     ("Cryptography and Security", "cs.CR".to_string() + &arxiv_rss_link),
+     ("Computer Vision and Pattern Recognition", "cs.CV".to_string() + &arxiv_rss_link),
+     ("Computers and Society", "cs.CY".to_string() + &arxiv_rss_link),
+     ("Databases", "cs.DB".to_string() + &arxiv_rss_link),
+     ("Distributed, Parallel, and Cluster Computing", "cs.DC".to_string() + &arxiv_rss_link),
+     ("Digital Libraries", "cs.DL".to_string() + &arxiv_rss_link),
+     ("Discrete Mathematics", "cs.DM".to_string() + &arxiv_rss_link),
+     ("Data Structures and Algorithms", "cs.DS".to_string() + &arxiv_rss_link),
+     ("Emerging Technologies", "cs.ET".to_string() + &arxiv_rss_link),
+     ("Formal Languages and Automata Theory", "cs.FL".to_string() + &arxiv_rss_link),
+     ("General Literature", "cs.GL".to_string() + &arxiv_rss_link),
+     ("Graphics", "cs.GR".to_string() + &arxiv_rss_link),
+     ("Computer Science and Game Theory", "cs.GT".to_string() + &arxiv_rss_link),
+     ("Human-Computer Interaction", "cs.HC".to_string() + &arxiv_rss_link),
+     ("Information Retrieval", "cs.IR".to_string() + &arxiv_rss_link),
+     ("Information Theory", "cs.IT".to_string() + &arxiv_rss_link),
+     ("Machine Learning", "cs.LG".to_string() + &arxiv_rss_link),
+     ("Logic in Computer Science", "cs.LO".to_string() + &arxiv_rss_link),
+     ("Multiagent Systems", "cs.MA".to_string() + &arxiv_rss_link),
+     ("Multimedia", "cs.MM".to_string() + &arxiv_rss_link),
+     ("Mathematical Software", "cs.MS".to_string() + &arxiv_rss_link),
+     ("Numerical Analysis", "cs.NA".to_string() + &arxiv_rss_link),
+     ("Neural and Evolutionary Computing", "cs.NE".to_string() + &arxiv_rss_link),
+     ("Networking and Internet Architecture", "cs.NI".to_string() + &arxiv_rss_link),
+     ("Other Computer Science", "cs.OH".to_string() + &arxiv_rss_link),
+     ("Operating Systems", "cs.OS".to_string() + &arxiv_rss_link),
+     ("Performance", "cs.PF".to_string() + &arxiv_rss_link),
+     ("Programming Languages", "cs.PL".to_string() + &arxiv_rss_link),
+     ("Robotics", "cs.RO".to_string() + &arxiv_rss_link),
+     ("Sound", "cs.SC".to_string() + &arxiv_rss_link),
+     ("Sound", "cs.SD".to_string() + &arxiv_rss_link),
+     ("Software Engineering", "cs.SE".to_string() + &arxiv_rss_link),
+     ("Social and Information Networks", "cs.SI".to_string() + &arxiv_rss_link),
+     ("Systems and Control", "cs.SY".to_string() + &arxiv_rss_link),
      //Electrical Engineering and Systems Science
-     ("Audio and Speech Processing", arxiv_rss_link + &"eess.AS".to_string())
-     ("Image and Video Processing", arxiv_rss_link + &"eess.IV".to_string())
-     ("Signal Processing", arxiv_rss_link + &"eess.SP".to_string())
-     ("Systems and Control", arxiv_rss_link + &"eess.SY".to_string())
+     ("Audio and Speech Processing", "eess.AS".to_string() + &arxiv_rss_link),
+     ("Image and Video Processing", "eess.IV".to_string() + &arxiv_rss_link),
+     ("Signal Processing", "eess.SP".to_string() + &arxiv_rss_link),
+     ("Systems and Control", "eess.SY".to_string() + &arxiv_rss_link),
      //Mathematics
-     ("Commutative Algebra", arxiv_rss_link + &"math.AC".to_string())
-     ("Algebraic Geometry", arxiv_rss_link + &"math.AG".to_string())
-     ("Analysis of PDEs", arxiv_rss_link + &"math.AP".to_string())
-     ("Algebraic Topology", arxiv_rss_link + &"math.AT".to_string())
-     ("Classical Analysis and ODEs", arxiv_rss_link + &"math.CA".to_string())
-     ("Combinatorics", arxiv_rss_link + &"math.CO".to_string())
-     ("Category Theory", arxiv_rss_link + &"math.CT".to_string())
-     ("Complex Variables", arxiv_rss_link + &"math.CV".to_string())
-     ("Differential Geometry", arxiv_rss_link + &"math.DG".to_string())
-     ("Dynamical Systems", arxiv_rss_link + &"math.DS".to_string())
-     ("Functional Analysis", arxiv_rss_link + &"math.FA".to_string())
-     ("General Mathematics", arxiv_rss_link + &"math.GM".to_string())
-     ("General Topology", arxiv_rss_link + &"math.GN".to_string())
-     ("Group Theory", arxiv_rss_link + &"math.GR".to_string())
-     ("Geometric Topology", arxiv_rss_link + &"math.GT".to_string())
-     ("History and Overview", arxiv_rss_link + &"math.HO".to_string())
-     ("Information Theory", arxiv_rss_link + &"math.IT".to_string())
-     ("K-Theory and Homology", arxiv_rss_link + &"math.KT".to_string())
-     ("Logic", arxiv_rss_link + &"math.LO".to_string())
-     ("Metric Geometry", arxiv_rss_link + &"math.MG".to_string())
-     ("Mathematical Physics", arxiv_rss_link + &"math.MP".to_string())
-     ("Numerical Analysis", arxiv_rss_link + &"math.NA".to_string())
-     ("Number Theory", arxiv_rss_link + &"math.NT".to_string())
-     ("Operator Algebras", arxiv_rss_link + &"math.OA".to_string())
-     ("Optimization and Control", arxiv_rss_link + &"math.OC".to_string())
-     ("Probability", arxiv_rss_link + &"math.PR".to_string())
-     ("Quantum Algebra", arxiv_rss_link + &"math.QA".to_string())
-     ("Rings and Algebras", arxiv_rss_link + &"math.RA".to_string())
-     ("Representation Theory", arxiv_rss_link + &"math.RT".to_string())
-     ("Symplectic Geometry", arxiv_rss_link + &"math.SG".to_string())
-     ("Spectral Theory", arxiv_rss_link + &"math.SP".to_string())
-     ("Statistics Theory", arxiv_rss_link + &"math.ST".to_string())
+     ("Commutative Algebra", "math.AC".to_string() + &arxiv_rss_link),
+     ("Algebraic Geometry", "math.AG".to_string() + &arxiv_rss_link),
+     ("Analysis of PDEs", "math.AP".to_string() + &arxiv_rss_link),
+     ("Algebraic Topology", "math.AT".to_string() + &arxiv_rss_link),
+     ("Classical Analysis and ODEs", "math.CA".to_string() + &arxiv_rss_link),
+     ("Combinatorics", "math.CO".to_string() + &arxiv_rss_link),
+     ("Category Theory", "math.CT".to_string() + &arxiv_rss_link),
+     ("Complex Variables", "math.CV".to_string() + &arxiv_rss_link),
+     ("Differential Geometry", "math.DG".to_string() + &arxiv_rss_link),
+     ("Dynamical Systems", "math.DS".to_string() + &arxiv_rss_link),
+     ("Functional Analysis", "math.FA".to_string() + &arxiv_rss_link),
+     ("General Mathematics", "math.GM".to_string() + &arxiv_rss_link),
+     ("General Topology", "math.GN".to_string() + &arxiv_rss_link),
+     ("Group Theory", "math.GR".to_string() + &arxiv_rss_link),
+     ("Geometric Topology", "math.GT".to_string() + &arxiv_rss_link),
+     ("History and Overview", "math.HO".to_string() + &arxiv_rss_link),
+     ("Information Theory", "math.IT".to_string() + &arxiv_rss_link),
+     ("K-Theory and Homology", "math.KT".to_string() + &arxiv_rss_link),
+     ("Logic", "math.LO".to_string() + &arxiv_rss_link),
+     ("Metric Geometry", "math.MG".to_string() + &arxiv_rss_link),
+     ("Mathematical Physics", "math.MP".to_string() + &arxiv_rss_link),
+     ("Numerical Analysis", "math.NA".to_string() + &arxiv_rss_link),
+     ("Number Theory", "math.NT".to_string() + &arxiv_rss_link),
+     ("Operator Algebras", "math.OA".to_string() + &arxiv_rss_link),
+     ("Optimization and Control", "math.OC".to_string() + &arxiv_rss_link),
+     ("Probability", "math.PR".to_string() + &arxiv_rss_link),
+     ("Quantum Algebra", "math.QA".to_string() + &arxiv_rss_link),
+     ("Rings and Algebras", "math.RA".to_string() + &arxiv_rss_link),
+     ("Representation Theory", "math.RT".to_string() + &arxiv_rss_link),
+     ("Symplectic Geometry", "math.SG".to_string() + &arxiv_rss_link),
+     ("Spectral Theory", "math.SP".to_string() + &arxiv_rss_link),
+     ("Statistics Theory", "math.ST".to_string() + &arxiv_rss_link),
      //Nonlinear Sciences
-     ("Adaptation and Self-Organizing System", arxiv_rss_link + &"nlin.AO".to_string())
-     ("Chaotic Dynamics", arxiv_rss_link + &"nlin.CD".to_string())
-     ("Cellular Automata and Lattice Gases", arxiv_rss_link + &"nlin.CG".to_string())
-     ("Pattern Formation and Solitons", arxiv_rss_link + &"nlin.PS".to_string())
-     ("Exactly Solvable and Integrable Systems", arxiv_rss_link + &"nlin.SI".to_string())
+     ("Adaptation and Self-Organizing System", "nlin.AO".to_string() + &arxiv_rss_link),
+     ("Chaotic Dynamics", "nlin.CD".to_string() + &arxiv_rss_link),
+     ("Cellular Automata and Lattice Gases", "nlin.CG".to_string() + &arxiv_rss_link),
+     ("Pattern Formation and Solitons", "nlin.PS".to_string() + &arxiv_rss_link),
+     ("Exactly Solvable and Integrable Systems", "nlin.SI".to_string() + &arxiv_rss_link),
      //physics
-     ("Accelerator Physics", arxiv_rss_link + &"physics.acc-ph".to_string())
-     ("Atmospheric and Oceanic Physics", arxiv_rss_link + &"physics.ao-ph".to_string())
-     ("Applied Physics", arxiv_rss_link + &"physics.app-ph".to_string())
-     ("Atomic and Molecular Clusters", arxiv_rss_link + &"physics.atm-clus".to_string())
-     ("Atomic Physics", arxiv_rss_link + &"physics.atom-ph".to_string())
-     ("Biological Physics", arxiv_rss_link + &"physics.bio-ph".to_string())
-     ("Chemical Physics", arxiv_rss_link + &"physics.chem-ph".to_string())
-     ("Classical Physics", arxiv_rss_link + &"physics.class-ph".to_string())
-     ("Computational Physics", arxiv_rss_link + &"physics.comp-ph".to_string())
-     ("Data Analysis, Statistics and Probability", arxiv_rss_link + &"physics.data-an".to_string())
-     ("Physics Education", arxiv_rss_link + &"physics.ed-ph".to_string())
-     ("Fluid Dynamics", arxiv_rss_link + &"physics.flu-dyn".to_string())
-     ("General Physics", arxiv_rss_link + &"physics.gen-ph".to_string())
-     ("Geophysics", arxiv_rss_link + &"physics.geo-ph".to_string())
-     ("History and Philosophy of Physics", arxiv_rss_link + &"physics.hist-ph".to_string())
-     ("Instrumentation and Detectors", arxiv_rss_link + &"physics.ins-det".to_string())
-     ("Medical Physics", arxiv_rss_link + &"physics.med-ph".to_string())
-     ("Optics", arxiv_rss_link + &"physics.optics".to_string())
-     ("Plasma Physics", arxiv_rss_link + &"physics.plasm-ph".to_string())
-     ("Popular Physics", arxiv_rss_link + &"physics.pop-ph".to_string())
-     ("Physics and Society", arxiv_rss_link + &"physics.soc-ph".to_string())
-     ("Space Physics", arxiv_rss_link + &"physics.space-ph".to_string())
+     ("Accelerator Physics", "physics.acc-ph".to_string() + &arxiv_rss_link),
+     ("Atmospheric and Oceanic Physics", "physics.ao-ph".to_string() + &arxiv_rss_link),
+     ("Applied Physics", "physics.app-ph".to_string() + &arxiv_rss_link),
+     ("Atomic and Molecular Clusters", "physics.atm-clus".to_string() + &arxiv_rss_link),
+     ("Atomic Physics", "physics.atom-ph".to_string() + &arxiv_rss_link),
+     ("Biological Physics", "physics.bio-ph".to_string() + &arxiv_rss_link),
+     ("Chemical Physics", "physics.chem-ph".to_string() + &arxiv_rss_link),
+     ("Classical Physics", "physics.class-ph".to_string() + &arxiv_rss_link),
+     ("Computational Physics", "physics.comp-ph".to_string() + &arxiv_rss_link),
+     ("Data Analysis, Statistics and Probability", "physics.data-an".to_string() + &arxiv_rss_link),
+     ("Physics Education", "physics.ed-ph".to_string() + &arxiv_rss_link),
+     ("Fluid Dynamics", "physics.flu-dyn".to_string() + &arxiv_rss_link),
+     ("General Physics", "physics.gen-ph".to_string() + &arxiv_rss_link),
+     ("Geophysics", "physics.geo-ph".to_string() + &arxiv_rss_link),
+     ("History and Philosophy of Physics", "physics.hist-ph".to_string() + &arxiv_rss_link),
+     ("Instrumentation and Detectors", "physics.ins-det".to_string() + &arxiv_rss_link),
+     ("Medical Physics", "physics.med-ph".to_string() + &arxiv_rss_link),
+     ("Optics", "physics.optics".to_string() + &arxiv_rss_link),
+     ("Plasma Physics", "physics.plasm-ph".to_string() + &arxiv_rss_link),
+     ("Popular Physics", "physics.pop-ph".to_string() + &arxiv_rss_link),
+     ("Physics and Society", "physics.soc-ph".to_string() + &arxiv_rss_link),
+     ("Space Physics", "physics.space-ph".to_string() + &arxiv_rss_link),
      //Quantitative Biology
-     ("Biomolecules", arxiv_rss_link + &"q-bio.BM".to_string())
-     ("Cell Behavior", arxiv_rss_link + &"q-bio.CB".to_string())
-     ("Genomics", arxiv_rss_link + &"q-bio.GN".to_string())
-     ("Molecular Networks", arxiv_rss_link + &"q-bio.MN".to_string())
-     ("Neurons and Cognition", arxiv_rss_link + &"q-bio.NC".to_string())
-     ("Other Quantitative Biology", arxiv_rss_link + &"q-bio.OT".to_string())
-     ("Populations and Evolution", arxiv_rss_link + &"q-bio.PE".to_string())
-     ("Quantitative Methods", arxiv_rss_link + &"q-bio.QM".to_string())
-     ("Subcellular Processes", arxiv_rss_link + &"q-bio.SC".to_string())
-     ("Tissues and Organ", arxiv_rss_link + &"q-bio.TO".to_string())
+     ("Biomolecules", "q-bio.BM".to_string() + &arxiv_rss_link),
+     ("Cell Behavior", "q-bio.CB".to_string() + &arxiv_rss_link),
+     ("Genomics", "q-bio.GN".to_string() + &arxiv_rss_link),
+     ("Molecular Networks", "q-bio.MN".to_string() + &arxiv_rss_link),
+     ("Neurons and Cognition", "q-bio.NC".to_string() + &arxiv_rss_link),
+     ("Other Quantitative Biology", "q-bio.OT".to_string() + &arxiv_rss_link),
+     ("Populations and Evolution", "q-bio.PE".to_string() + &arxiv_rss_link),
+     ("Quantitative Methods", "q-bio.QM".to_string() + &arxiv_rss_link),
+     ("Subcellular Processes", "q-bio.SC".to_string() + &arxiv_rss_link),
+     ("Tissues and Organ", "q-bio.TO".to_string() + &arxiv_rss_link),
      //Statistics
-     ("General Relativity and Quantum Cosmology", arxiv_rss_link + &"gr-qc".to_string())
-     ("High Energy Physics - Experiment", arxiv_rss_link + &"hep-ex".to_string())
-     ("High Energy Physics - Lattice", arxiv_rss_link + &"hep-lat".to_string())
-     ("High Energy Physics - Phenomenolog", arxiv_rss_link + &"hep-ph".to_string())
-     ("High Energy Physics - Theory", arxiv_rss_link + &"hep-th".to_string())
-     ("Quantum Physics", arxiv_rss_link + &"quant-ph".to_string())
-     ("Nuclear Experiment", arxiv_rss_link + &"nucl-ex".to_string())
-     ("Nuclear Theory", arxiv_rss_link + &"nucl-th".to_string())
-     ("Mathematical Physic", arxiv_rss_link + &"math-ph".to_string())
+     ("General Relativity and Quantum Cosmology", "gr-qc".to_string() + &arxiv_rss_link),
+     ("High Energy Physics - Experiment", "hep-ex".to_string() + &arxiv_rss_link),
+     ("High Energy Physics - Lattice", "hep-lat".to_string() + &arxiv_rss_link),
+     ("High Energy Physics - Phenomenolog", "hep-ph".to_string() + &arxiv_rss_link),
+     ("High Energy Physics - Theory", "hep-th".to_string() + &arxiv_rss_link),
+     ("Quantum Physics", "quant-ph".to_string() + &arxiv_rss_link),
+     ("Nuclear Experiment", "nucl-ex".to_string() + &arxiv_rss_link),
+     ("Nuclear Theory", "nucl-th".to_string() + &arxiv_rss_link),
+     ("Mathematical Physic", "math-ph".to_string() + &arxiv_rss_link),
      ]
      .iter().cloned().collect();
     arxiv_sections_links

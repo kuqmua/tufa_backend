@@ -1,15 +1,117 @@
+use std::collections::HashMap;
 extern crate reqwest;
 extern crate xml;
-
+use std::time::Instant;
+use std::fmt::Display;
 use quick_xml::events::Event;
 use quick_xml::Reader;
+/*
+#[path = "../parsing/arxiv/parse_arxiv/get_arxiv_posts.rs"]
+mod get_arxiv_posts;
+use get_arxiv_posts::get_arxiv_posts;
 
-#[path = "../arxiv_xml_structs/arxiv_post.rs"]
+
+
+#[path = "../parsing/arxiv/arxiv_xml_structs/arxiv_post.rs"]
 mod arxiv_post;
-use arxiv_post::Creator;
+use arxiv_post::ArxivPost;
+*/
+#[path = "./get_group_names/get_arxiv_links_in_hash_map.rs"]
+mod get_arxiv_links_in_hash_map;
+use get_arxiv_links_in_hash_map::get_arxiv_links_in_hash_map;
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct ArxivPost {
+    pub title: String,
+    pub link: String,
+    pub description: String,
+    pub creators: Vec<Creator>,
+}
+
+impl Display for ArxivPost {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+        write!(
+            fmt,
+            "title = {}\nlink = {}\ndescription ={}\ncreators = {:#?}\n",
+            self.title, self.link, self.description, self.creators
+        )
+    }
+}
+
+impl ArxivPost {
+    pub fn new() -> Self {
+        ArxivPost {
+            title: "".to_string(),
+            link: "".to_string(),
+            description: "".to_string(),
+            creators: Vec::<Creator>::new(),
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct Creator {
+    pub name: String,
+    pub link: String,
+}
+
+impl Display for Creator {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+        write!(fmt, "name = {}\nlink = {}\n", self.name, self.link)
+    }
+}
+
+impl Creator {
+    pub fn new() -> Self {
+        Creator {
+            name: "".to_string(),
+            link: "".to_string(),
+        }
+    }
+}
+///////////
+pub fn arxiv_init() -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
+{
+    let arxiv_links_in_hash_map: HashMap<&str, String> = get_arxiv_links_in_hash_map();
+    let mut arxiv_pages_posts_hashmap = HashMap::new();
+    println!("{:#?}", arxiv_links_in_hash_map.len());
+    let mut increment_for_errors = 0;
+    for (key, value) in arxiv_links_in_hash_map {
+        println!("starting to fetch data with index {}", increment_for_errors);
+        let time = Instant::now();
+        let result_of_arxiv_posts = get_arxiv_posts(value); //
+        match result_of_arxiv_posts {
+            Ok(vec_of_arxiv_page_posts) => {
+                arxiv_pages_posts_hashmap.insert(key, vec_of_arxiv_page_posts);
+                println!(
+                    "iteration with index {} just fetched ok data",
+                    increment_for_errors
+                );
+                increment_for_errors += 1;
+            }
+            Err(e) => {
+                println!(
+                    "error = {}, iteration with index  = {}",
+                    e, increment_for_errors
+                );
+                increment_for_errors += 1;
+            }
+        }
+        println!(
+            "iteration working/fetching(in seconds) = {} ",
+            time.elapsed().as_secs()
+        );
+        //map.remove(key);
+    }
+    println!("{:#?}", arxiv_pages_posts_hashmap);
+    arxiv_pages_posts_hashmap
+}
+////////////////////////
+
+
 
 #[tokio::main]
-pub async fn get_arxiv_posts(link: String) -> Result<Vec<arxiv_post::ArxivPost>, Box<dyn std::error::Error>> {
+pub async fn get_arxiv_posts(link: String) -> Result<Vec<ArxivPost>, Box<dyn std::error::Error>> {
     let resp = reqwest::get(&link)
         .await?
         .text()
@@ -43,7 +145,7 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<arxiv_post::ArxivPost>,
         txt.remove(0);
         remove_element += 1;
     }
-    let mut vec_of_arxiv_posts: Vec<arxiv_post::ArxivPost> = Vec::new();
+    let mut vec_of_arxiv_posts: Vec<ArxivPost> = Vec::new();
     let mut write_count = 0;
     let end_index_title_string = ". (arXiv";
     let start_index_description_string = "<p>";
@@ -53,7 +155,7 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<arxiv_post::ArxivPost>,
     //add time from arxiv
     let end_index_creator_name_string = "</a>";
     while write_count < txt.len() {
-        let mut arxiv_post: arxiv_post::ArxivPost = arxiv_post::ArxivPost::new();
+        let mut arxiv_post: ArxivPost = ArxivPost::new();
         let start_title = txt[write_count].clone();
         if let Some(index) = start_title.find(end_index_title_string) {
             arxiv_post.title = start_title[..index].to_string();
@@ -133,3 +235,5 @@ pub async fn get_arxiv_posts(link: String) -> Result<Vec<arxiv_post::ArxivPost>,
     
     Ok(vec_of_arxiv_posts)
 }
+
+
