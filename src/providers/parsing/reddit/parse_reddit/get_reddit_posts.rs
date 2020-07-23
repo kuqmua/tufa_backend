@@ -58,10 +58,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
             }
         }
     }
-    println!(
-        "get_posts working(in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
+    5
     return two_layer_result_vec;
 }
 
