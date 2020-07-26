@@ -5,6 +5,11 @@ use std::time::Instant;
 use std::fmt::Display;
 use quick_xml::events::Event;
 use quick_xml::Reader;
+use reqwest::Client;
+use futures::future;
+use threadpool::ThreadPool;
+use std::sync::{Arc, Barrier, Mutex};
+use std::sync::atomic::{AtomicUsize, Ordering};
 /*
 #[path = "../parsing/arxiv/parse_arxiv/get_arxiv_posts.rs"]
 mod get_arxiv_posts;
@@ -20,13 +25,103 @@ use arxiv_post::ArxivPost;
 mod get_arxiv_links_in_hash_map;
 use get_arxiv_links_in_hash_map::get_arxiv_links_in_hash_map;
 
-pub fn arxiv_init() -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
+/*
+pub async fn arxiv_init() 
 {
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
-    let mut arxiv_pages_posts_hashmap = HashMap::new();
     println!("{:#?}", arxiv_links_in_hash_map.len());
+    let client = Client::new();
+    let bodies = future::join_all(arxiv_links_in_hash_map.into_iter().map(|(key, value)| {
+        let client = &client;
+        async move {
+            let resp = client.get(value).send().await?;
+            //resp.bytes().await
+            resp.text().await
+        }
+    }))
+    .await;
+    println!(" bodies.len() {}", bodies.len());
+    let mut something = Vec::new();
+    for b in bodies {
+        match b {
+            Ok(b) => {
+                let slice: &[u8] = &b;
+                let u: CastedRedditJsonStruct = serde_json::from_slice(slice).unwrap();
+                if u.data.children.len() > 0 {
+                    let children: &Vec<Children> = &u.data.children;
+                    two_layer_result_vec[count] = parse_every_children(&u, &children);
+                    println!("{}", two_layer_result_vec[count].posts[0].author);
+                } else {
+                    print!("u.data.children.len() > 0 NOPE");
+                }
+                count += 1;
+            }
+            Err(e) => {
+                count += 1;
+                eprintln!("Got an error: {}", e)
+            }
+        }
+    }
+    something
+}
+*/
+// -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
+pub async fn arxiv_init()
+{
+    let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
 
-    let mut increment_for_errors = 0;  
+    let mut arxiv_pages_posts_hashmap = Arc::new(Mutex::new(HashMap::new()));
+
+    println!("{:#?}", arxiv_links_in_hash_map.len());
+    let mut increment_for_errors: u32 = 0;
+    let n_workers = 42;
+    let n_jobs = 23;
+    let pool = ThreadPool::new(n_workers);
+let an_atomic = Arc::new(AtomicUsize::new(0));
+    let barrier = Arc::new(Barrier::new(n_jobs + 1));
+for _ in 0..n_jobs {
+    let barrier = barrier.clone();
+    let an_atomic = an_atomic.clone();
+    let arxiv_pages_posts_hashmap_in_loop = arxiv_pages_posts_hashmap.clone();
+
+    pool.execute(move|| {
+        println!("starting to fetch data with index {}", increment_for_errors);
+        let time = Instant::now();
+        let result_of_arxiv_posts = get_arxiv_link_posts("http://export.arxiv.org/rss/cs.OS"); //
+        match result_of_arxiv_posts {
+            Ok(vec_of_arxiv_page_posts) => {
+                
+                let mut shared = arxiv_pages_posts_hashmap_in_loop.lock().unwrap();
+                shared.insert("test", vec_of_arxiv_page_posts);
+                println!(
+                    "iteration with index {} just fetched ok data",
+                    increment_for_errors
+                );
+                increment_for_errors += 1;
+            }
+            Err(e) => {
+                println!(
+                    "error = {}, iteration with index  = {}",
+                    e, increment_for_errors
+                );
+                increment_for_errors += 1;
+            }
+        }
+        println!(
+            "iteration working/fetching(in seconds) = {} ",
+            time.elapsed().as_secs()
+        );
+        //map.remove(key);
+        an_atomic.fetch_add(1, Ordering::Relaxed);
+
+        // then wait for the other threads
+        barrier.wait();
+    });
+}
+
+// wait for the threads to finish the work
+barrier.wait();
+/*
     for (key, value) in arxiv_links_in_hash_map {
         println!("starting to fetch data with index {}", increment_for_errors);
         println!("fetching url now ... {}", value);
@@ -55,10 +150,23 @@ pub fn arxiv_init() -> std::collections::HashMap<&'static str, Vec<ArxivPost>>
         );
         //map.remove(key);
     }
+    */
     println!("{:#?}", arxiv_pages_posts_hashmap);
-    arxiv_pages_posts_hashmap
+    //let down = Arc::downgrade(&arxiv_pages_posts_hashmap);
+    match Arc::try_unwrap(arxiv_pages_posts_hashmap){
+        Ok(x) => {
+            match x.lock(){
+                Ok(y) => println!("{:#?}", y),
+                Err(e) => println!("{:#?}", e)
+            }}
+            
+        Err(e) => {println!("{:#?}", e)}
+    }
 }
+
 ////////////////////////
+
+
 
 
 pub fn get_arxiv_link_posts(link: &str) -> Result<Vec<ArxivPost>, Box<dyn std::error::Error>> {

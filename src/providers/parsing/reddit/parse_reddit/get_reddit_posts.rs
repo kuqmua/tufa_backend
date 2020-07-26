@@ -58,7 +58,6 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
             }
         }
     }
-    5
     return two_layer_result_vec;
 }
 
