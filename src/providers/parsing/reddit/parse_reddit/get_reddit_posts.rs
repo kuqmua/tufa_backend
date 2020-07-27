@@ -28,6 +28,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
     let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
         push_names_into_two_layer_result_vec(&subreddits);
     let subreddits_urls: Vec<String> = subreddits_into_urls(subreddits);
+    println!("starting fetching reddit...");
     let bodies = future::join_all(subreddits_urls.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -36,7 +37,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
-    println!(" bodies.len() {}", bodies.len());
+    println!("get_reddit_posts bodies.len() {}", bodies.len());
     let mut count = 0;
     for b in bodies {
         match b {
@@ -46,7 +47,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
                 if u.data.children.len() > 0 {
                     let children: &Vec<Children> = &u.data.children;
                     two_layer_result_vec[count] = parse_every_children(&u, &children);
-                    println!("{}", two_layer_result_vec[count].posts[0].author);
+                //println!("{}", two_layer_result_vec[count].posts[0].author);
                 } else {
                     print!("u.data.children.len() > 0 NOPE");
                 }
