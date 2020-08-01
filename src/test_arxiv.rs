@@ -73,7 +73,7 @@ pub async fn async_test_function(vec_of_links: Vec<&str>, vec_of_keys: Vec<&str>
         }
     }))
     .await;
-    println!("bodies.len() {}", bodies.len());
+    println!("arxiv bodies.len() {}", bodies.len());
     println!(
             "future::join_all (in seconds) = {} ",
             time.elapsed().as_secs()
