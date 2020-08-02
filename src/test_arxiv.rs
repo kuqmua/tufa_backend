@@ -1,14 +1,15 @@
-use std::collections::HashMap;
 extern crate reqwest;
 extern crate xml;
 use std::time::Instant;
 use std::fmt::Display;
+use std::collections::HashMap;
+use std::str;
 use quick_xml::events::Event;
 use quick_xml::Reader;
 use reqwest::Client;
 use futures::future;
 use tokio;
-use std::str;
+
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ArxivPost {
@@ -75,7 +76,7 @@ pub async fn async_test_function(vec_of_links: Vec<&str>, vec_of_keys: Vec<&str>
     .await;
     println!("arxiv bodies.len() {}", bodies.len());
     println!(
-            "future::join_all (in seconds) = {} ",
+            "arxiv future::join_all (in seconds) = {} ",
             time.elapsed().as_secs()
         );
     let mut count = 0;
@@ -119,7 +120,7 @@ pub async fn async_test_function(vec_of_links: Vec<&str>, vec_of_keys: Vec<&str>
     let mut arxiv_pages_posts_hashmap_second  = HashMap::new();
     let mut key_count = 0;
     for vec_member in vec_of_vec_of_strings {
-        let vec_of_arxiv_post_second: Vec<ArxivPost> = parse_arxiv_string_xml(vec_member, vec_of_keys[key_count].to_string());
+        let vec_of_arxiv_post_second: Vec<ArxivPost> = parse_arxiv_string_xml(vec_member);
         
         if vec_of_arxiv_post_second.len() != 0{
             if vec_of_arxiv_post_second[0].creators.len() != 0 {
@@ -131,8 +132,6 @@ pub async fn async_test_function(vec_of_links: Vec<&str>, vec_of_keys: Vec<&str>
             }
         key_count +=1;
     }
-    // println!("arxiv_pages_posts_hashmap_second done and contains {:#?} elements", arxiv_pages_posts_hashmap_second.len());
-    // println!("Artificial Intelligence contains {:#?} elements", arxiv_pages_posts_hashmap_second["Artificial Intelligence"].len());
     println!("arxiv fetching/parsing done in {} seconds",time.elapsed().as_secs());
     arxiv_pages_posts_hashmap_second
 }
@@ -156,7 +155,7 @@ fn remove_meta_elements_from_vec_of_arxiv_rss(mut vec_of_arxiv_rss: Vec<String>)
     vec_of_arxiv_rss
 }
 
-pub fn parse_arxiv_string_xml(vec_of_arxiv_xml_string: Vec<String>, key: String)->Vec<ArxivPost>{
+pub fn parse_arxiv_string_xml(vec_of_arxiv_xml_string: Vec<String>)->Vec<ArxivPost>{
     let mut vec_of_arxiv_posts: Vec<ArxivPost> = Vec::new();
     let mut posts_count = 0;
     let end_index_title_string = ". (arXiv";
@@ -238,16 +237,6 @@ pub fn parse_arxiv_string_xml(vec_of_arxiv_xml_string: Vec<String>, key: String)
         vec_of_arxiv_posts.push(arxiv_post);
         posts_count += 4;
     }
-    
-    // if vec_of_arxiv_posts.len() == 0{
-    //     println!("0 elements in {}",key); 
-    // }
-    // else if vec_of_arxiv_posts[0].creators.len() == 0{         
-    //         println!("0 creators in {}", key);
-    // }
-    // else {
-    //     println!("{} elements in key {}", posts_count,  key);
-    // }
     vec_of_arxiv_posts
 }
 

@@ -37,6 +37,10 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
+    println!(
+        "reddit future::join_all (in seconds) = {} ",
+        time.elapsed().as_secs()
+    );
     println!("get_reddit_posts bodies.len() {}", bodies.len());
     let mut count = 0;
     for b in bodies {

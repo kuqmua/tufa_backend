@@ -11,6 +11,7 @@ pub fn reddit_part() {
     let time = Instant::now();
     let subreddits_names = get_subreddits();
     let vec = get_reddit_posts(subreddits_names);
+    println!("{:#?}", vec[0].posts[0].subreddit);
     // println!(
     //     "{:?}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
     //     vec[0].posts[0].url,
