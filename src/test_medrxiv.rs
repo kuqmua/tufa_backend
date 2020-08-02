@@ -1,7 +1,7 @@
 extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
-extern crate xml;
+// extern crate xml;
 use futures::future;
 use reqwest::Client;
 use serde_xml_rs::from_str;
@@ -71,7 +71,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
     let mut biorxiv_structs_vec: HashMap<String, BiorxivPageStruct> =
         HashMap::with_capacity(vec_of_links.len());
     let client = Client::new();
-    println!("starting fetching biorxiv...");
+    println!("starting fetching medrxiv...");
     let bodies = future::join_all(vec_of_links.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -182,7 +182,10 @@ pub async fn fetch_and_parse_xml_biorxiv(
 
 pub fn medrxiv_part() -> HashMap<String, BiorxivPageStruct> {
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
-    println!("{:#?} elements in HashMap", arxiv_links_in_hash_map.len());
+    println!(
+        "{:#?} elements in Medrxiv HashMap",
+        arxiv_links_in_hash_map.len()
+    );
     let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
     let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
     let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);

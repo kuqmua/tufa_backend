@@ -1,7 +1,6 @@
 extern crate reqwest;
 extern crate xml;
 use std::time::Instant;
-use std::fmt::Display;
 use std::collections::HashMap;
 use std::str;
 use quick_xml::events::Event;
@@ -19,15 +18,6 @@ pub struct ArxivPost {
     pub creators: Vec<Creator>,
 }
 
-impl Display for ArxivPost {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(
-            fmt,
-            "title = {}\nlink = {}\ndescription ={}\ncreators = {:#?}\n",
-            self.title, self.link, self.description, self.creators
-        )
-    }
-}
 
 impl ArxivPost {
     pub fn new() -> Self {
@@ -44,12 +34,6 @@ impl ArxivPost {
 pub struct Creator {
     pub name: String,
     pub link: String,
-}
-
-impl Display for Creator {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(fmt, "name = {}\nlink = {}\n", self.name, self.link)
-    }
 }
 
 impl Creator {

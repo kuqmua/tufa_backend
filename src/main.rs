@@ -12,9 +12,12 @@ use std::time::Instant;
 #[path = "providers/providers_authorization/all_providers_authorization.rs"]
 mod all_providers_authorization; //пока только РЕДДИТ ЧАСТЬ
 
-#[path = "test_arxiv.rs"]
-mod test_arxiv;
-use test_arxiv::test_arxiv;
+// #[path = "test_arxiv.rs"]
+// mod test_arxiv;
+// use test_arxiv::test_arxiv;
+#[path = "arxiv_copy.rs"]
+mod arxiv_copy;
+use arxiv_copy::arxiv_part;
 
 // #[path = "biorxiv.rs"]
 // mod biorxiv;
@@ -36,7 +39,13 @@ fn main() {
         reddit_part();
     }));
     threads_vec.push(thread::spawn(move || {
-        test_arxiv();
+        arxiv_part();
+        // let biorxiv_vec = arxiv_part();
+        // for (key, value) in biorxiv_vec {
+        //     if value.items.len() < 0 {
+        //         print!("no value for key = {}\n", key,)
+        //     }
+        // }
     }));
     threads_vec.push(thread::spawn(move || {
         medrxiv_part();
