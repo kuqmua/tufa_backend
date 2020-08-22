@@ -20,9 +20,9 @@ pub struct XmlBiorxivParserStructItem {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creator: String,
+    // pub creator: String,
     pub date: String,
-    pub publisher: String,
+    // pub publisher: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
@@ -48,20 +48,20 @@ pub struct BiorxivPageStructItem {
     pub description: String,
     // pub creators: Vec<String>,
     pub date: String,
-    pub publisher: String,
+    // pub publisher: String,
 }
-impl BiorxivPageStructItem {
-    pub fn new() -> Self {
-        BiorxivPageStructItem {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            // creators: Vec::<String>::new(),
-            date: "".to_string(),
-            publisher: "".to_string(),
-        }
-    }
-}
+// impl BiorxivPageStructItem {
+//     pub fn new() -> Self {
+//         BiorxivPageStructItem {
+//             title: "".to_string(),
+//             link: "".to_string(),
+//             description: "".to_string(),
+//             // creators: Vec::<String>::new(),
+//             date: "".to_string(),
+//             // publisher: "".to_string(),
+//         }
+//     }
+// }
 
 #[tokio::main]
 pub async fn fetch_and_parse_xml_biorxiv(
@@ -128,42 +128,14 @@ pub async fn fetch_and_parse_xml_biorxiv(
                     //     xml_biorxiv_struct.items[count].creator.clone();
                     loop {
                         if count < xml_biorxiv_struct.items.len() {
-                            // let  biorxiv_page_struct_item: BiorxivPageStructItem =
-                            // biorxiv_page_struct.items[count].title =
-                            //     xml_biorxiv_struct.items[count].title.clone();
-                            // biorxiv_page_struct.items[count].link =
-                            //     xml_biorxiv_struct.items[count].link.clone();
-                            // biorxiv_page_struct.items[count].description =
-                            //     xml_biorxiv_struct.items[count].description.clone();
-                            // match xml_parser_one_string_creators.find("., ") {
-                            //     Some(end_of_creator) => {
-                            //         biorxiv_page_struct.items[count].creators.push(
-                            //             xml_parser_one_string_creators[..end_of_creator]
-                            //                 .to_string(),
-                            //         );
-                            //         xml_parser_one_string_creators = xml_parser_one_string_creators
-                            //             [end_of_creator + "., ".len()..]
-                            //             .to_string();
-                            //     }
-                            //     None => {
-                            //         biorxiv_page_struct.items[count]
-                            //             .creators
-                            //             .push(xml_parser_one_string_creators.clone());
-                            //         break;
-                            //     }
-                            // }
-                            // biorxiv_page_struct.items[count].date =
-                            //     xml_biorxiv_struct.items[count].date.clone();
-                            // biorxiv_page_struct.items[count].publisher =
-                            //     xml_biorxiv_struct.items[count].publisher.clone();
                             let temporary_title = xml_biorxiv_struct.items[count].title.clone();
                             let temporary_link = xml_biorxiv_struct.items[count].link.clone();
                             let temporary_description =
                                 xml_biorxiv_struct.items[count].description.clone();
                             // let mut temporary_creators = Vec::new();
                             let temporary_date = xml_biorxiv_struct.items[count].date.clone();
-                            let temporary_publisher =
-                                xml_biorxiv_struct.items[count].publisher.clone();
+                            // let temporary_publisher =
+                            //     xml_biorxiv_struct.items[count].publisher.clone();
                             // let mut creators_count = 0;
                             // while let Some(end_of_creator) =
                             //     xml_parser_one_string_creators.find("., ")
@@ -194,7 +166,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
                                     description: temporary_description,
                                     // creators: temporary_creators,
                                     date: temporary_date,
-                                    publisher: temporary_publisher,
+                                    // publisher: temporary_publisher,
                                 };
                             biorxiv_page_struct
                                 .items
@@ -238,10 +210,11 @@ pub fn medrxiv_part() -> HashMap<String, BiorxivPageStruct> {
     let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
     let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
     let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
-    println!(
-        "{:#?} vec",
-        vec_of_vec_of_strings["Addiction Medicine"].items.len()
-    );
+    // println!(
+    //     "{:#?} vec",
+    //     vec_of_vec_of_strings["Addiction Medicine"].items.len()
+    // );
+    // println!("{:#?} vec", vec_of_vec_of_strings.len());
     vec_of_vec_of_strings
 }
 
@@ -251,98 +224,98 @@ pub fn get_arxiv_links_in_hash_map() -> HashMap<&'static str, &'static str> {
             "Addiction Medicine",
             "http://connect.medrxiv.org/medrxiv_xml.php?subject=Addiction_Medicine",
         ),
-        // (
-        //     "Allergy and Immunology",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Allergy_and_Immunology",
-        // ),
-        // (
-        //     "Anesthesia",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Anesthesia",
-        // ),
-        // (
-        //     "Cardiovascular Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Cardiovascular_Medicine",
-        // ),
-        // (
-        //     "Dentistry and Oral Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Dentistry_and_Oral_Medicine",
-        // ),
-        // (
-        //     "Dermatology",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Dermatology",
-        // ),
-        // (
-        //     "Emergency Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Emergency_Medicine",
-        // ),
-        // (
-        //     "Endocrinology",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=endocrinology",
-        // ),
-        // (
-        //     "Epidemiology",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Epidemiology",
-        // ),
-        // (
-        //     "Forensic Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Forensic_Medicine",
-        // ),
-        // (
-        //     "Gastroenterology",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Gastroenterology",
-        // ),
-        // (
-        //     "Genetic and Genomic Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Genetic_and_Genomic_Medicine",
-        // ),
-        // (
-        //     "Geriatric Medicine",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Geriatric_Medicine",
-        // ),
-        // (
-        //     "Health Economics",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Economics",
-        // ),
-        //  ("Health Informatics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Informatics"),
-        //  ("Health Policy","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy"),
-        //  ("Health Systems and Quality Improvement","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Systems_and_Quality_Improvement"),
-        //  ("Hematology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Hematology"),
-        //  ("HIV/AIDS","http://connect.medrxiv.org/medrxiv_xml.php?subject=hivaids"),
-        //  ("Infectious Diseases","http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases"),
-        //  ("Intensive Care and Critical Care Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Intensive_Care_and_Critical_Care_Medicine"),
-        //  ("Medical Education","http://connect.medrxiv.org/medrxiv_xml.php?subject=Medical_Education"),
-        //  ("Medical Ethics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Medical_Ethics"),
-        //  ("Nephrology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nephrology"),
-        //  ("Neurology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Neurology"),
-        //  ("Nursing","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nursing"),
-        //  ("Nutrition","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nutrition"),
-        //  ("Obstetrics and Gynecology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Obstetrics_and_Gynecology"),
-        //  ("Occupational and Environmental Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Occupational_and_Environmental_Health"),
-        //  ("Oncology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Oncology"),
-        //  ("Ophthalmology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Ophthalmology"),
-        //  ("Orthopedics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Orthopedics"),
-        //  ("Otolaryngology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Otolaryngology"),
-        //  ("Pain Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pain_Medicine"),
-        //  ("Palliative Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Palliative_Medicine"),
-        //  ("Pathology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pathology"),
-        //  ("Pediatrics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pediatrics"),
-        //  ("Pharmacology and Therapeutics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pharmacology_and_Therapeutics"),
-        //  ("Primary Care Research","http://connect.medrxiv.org/medrxiv_xml.php?subject=Primary_Care_Research"),
-        //  ("Psychiatry and Clinical Psychology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Psychiatry_and_Clinical_Psychology"),
-        //  ("Public and Global Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Public_and_Global_Health"),
-        // (
-        //     "Radiology and Imaging",
-        //     "http://connect.medrxiv.org/medrxiv_xml.php?subject=Radiology_and_Imaging",
-        // ),
-        //  ("Rehabilitation Medicine and Physical Therapy","http://connect.medrxiv.org/medrxiv_xml.php?subject=Rehabilitation_Medicine_and_Physical_Therapy"),
-        //  ("Respiratory Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Respiratory_Medicine"),
-        //  ("Rheumatology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Rheumatology"),
-        //  ("Sexual and Reproductive Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Sexual_and_Reproductive_Health"),
-        //  ("Sports Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Sports_Medicine"),
-        //  ("Surgery","http://connect.medrxiv.org/medrxiv_xml.php?subject=Surgery"),
-        //  ("Toxicology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Toxicology"),
-        //  ("Transplantation","http://connect.medrxiv.org/medrxiv_xml.php?subject=Transplantation"),
-        //  ("Urology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Urology"),
+        (
+            "Allergy and Immunology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Allergy_and_Immunology",
+        ),
+        (
+            "Anesthesia",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Anesthesia",
+        ),
+        (
+            "Cardiovascular Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Cardiovascular_Medicine",
+        ),
+        (
+            "Dentistry and Oral Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Dentistry_and_Oral_Medicine",
+        ),
+        (
+            "Dermatology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Dermatology",
+        ),
+        (
+            "Emergency Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Emergency_Medicine",
+        ),
+        (
+            "Endocrinology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=endocrinology",
+        ),
+        (
+            "Epidemiology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Epidemiology",
+        ),
+        (
+            "Forensic Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Forensic_Medicine",
+        ),
+        (
+            "Gastroenterology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Gastroenterology",
+        ),
+        (
+            "Genetic and Genomic Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Genetic_and_Genomic_Medicine",
+        ),
+        (
+            "Geriatric Medicine",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Geriatric_Medicine",
+        ),
+        (
+            "Health Economics",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Economics",
+        ),
+         ("Health Informatics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Informatics"),
+         ("Health Policy","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy"),
+         ("Health Systems and Quality Improvement","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Systems_and_Quality_Improvement"),
+         ("Hematology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Hematology"),
+         ("HIV/AIDS","http://connect.medrxiv.org/medrxiv_xml.php?subject=hivaids"),
+         ("Infectious Diseases","http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases"),
+         ("Intensive Care and Critical Care Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Intensive_Care_and_Critical_Care_Medicine"),
+         ("Medical Education","http://connect.medrxiv.org/medrxiv_xml.php?subject=Medical_Education"),
+         ("Medical Ethics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Medical_Ethics"),
+         ("Nephrology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nephrology"),
+         ("Neurology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Neurology"),
+         ("Nursing","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nursing"),
+         ("Nutrition","http://connect.medrxiv.org/medrxiv_xml.php?subject=Nutrition"),
+         ("Obstetrics and Gynecology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Obstetrics_and_Gynecology"),
+         ("Occupational and Environmental Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Occupational_and_Environmental_Health"),
+         ("Oncology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Oncology"),
+         ("Ophthalmology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Ophthalmology"),
+         ("Orthopedics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Orthopedics"),
+         ("Otolaryngology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Otolaryngology"),
+         ("Pain Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pain_Medicine"),
+         ("Palliative Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Palliative_Medicine"),
+         ("Pathology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pathology"),
+         ("Pediatrics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pediatrics"),
+         ("Pharmacology and Therapeutics","http://connect.medrxiv.org/medrxiv_xml.php?subject=Pharmacology_and_Therapeutics"),
+         ("Primary Care Research","http://connect.medrxiv.org/medrxiv_xml.php?subject=Primary_Care_Research"),
+         ("Psychiatry and Clinical Psychology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Psychiatry_and_Clinical_Psychology"),
+         ("Public and Global Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Public_and_Global_Health"),
+        (
+            "Radiology and Imaging",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Radiology_and_Imaging",
+        ),
+         ("Rehabilitation Medicine and Physical Therapy","http://connect.medrxiv.org/medrxiv_xml.php?subject=Rehabilitation_Medicine_and_Physical_Therapy"),
+         ("Respiratory Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Respiratory_Medicine"),
+         ("Rheumatology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Rheumatology"),
+         ("Sexual and Reproductive Health","http://connect.medrxiv.org/medrxiv_xml.php?subject=Sexual_and_Reproductive_Health"),
+         ("Sports Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Sports_Medicine"),
+         ("Surgery","http://connect.medrxiv.org/medrxiv_xml.php?subject=Surgery"),
+         ("Toxicology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Toxicology"),
+         ("Transplantation","http://connect.medrxiv.org/medrxiv_xml.php?subject=Transplantation"),
+         ("Urology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Urology"),
     ]
     .iter()
     .cloned()

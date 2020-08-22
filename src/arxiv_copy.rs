@@ -98,6 +98,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
     println!("arxiv bodies.len() {}", bodies.len());
     let mut key_count = 0;
     for b in bodies {
+        //подсчитать на новом компе сколько эта операция будет занимать времени. если долго то распаралелить
         match b {
             Ok(b) => {
                 let slice: &[u8] = &b;
@@ -170,7 +171,6 @@ pub async fn fetch_and_parse_xml_biorxiv(
                 eprintln!("Got an error: {}", e);
             }
         }
-        // println!("key_count {}", key_count);
         key_count += 1;
     }
     println!(

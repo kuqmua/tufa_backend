@@ -20,9 +20,9 @@ pub struct XmlBiorxivParserStructItem {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creator: String,
+    // pub creator: String,
     pub date: String,
-    pub publisher: String,
+    // pub publisher: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
@@ -34,8 +34,8 @@ pub struct BiorxivPageStruct {
 impl BiorxivPageStruct {
     pub fn new() -> Self {
         BiorxivPageStruct {
-            // items: Vec::<BiorxivPageStructItem>::new(),
-            items: vec![BiorxivPageStructItem::new(); 30],
+            items: Vec::<BiorxivPageStructItem>::new(),
+            // items: vec![BiorxivPageStructItem::new(); 30],
             //vec![UsedRedditJsonStruct::new(); 25],
         }
     }
@@ -45,9 +45,9 @@ pub struct BiorxivPageStructItem {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creators: Vec<String>,
+    // pub creators: Vec<String>,
     pub date: String,
-    pub publisher: String,
+    // pub publisher: String,
 }
 impl BiorxivPageStructItem {
     pub fn new() -> Self {
@@ -55,9 +55,9 @@ impl BiorxivPageStructItem {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
-            creators: Vec::<String>::new(),
+            // creators: Vec::<String>::new(),
             date: "".to_string(),
-            publisher: "".to_string(),
+            // publisher: "".to_string(),
         }
     }
 }
@@ -114,41 +114,61 @@ pub async fn fetch_and_parse_xml_biorxiv(
                     }
                 }
                 if count_for_items > 0 {
-                    let biorvix_struct: XmlBiorxivParserStruct =
+                    let xml_biorxiv_struct: XmlBiorxivParserStruct =
                         from_str(&dots_unfiltered_str).unwrap();
                     let mut count = 0;
                     let mut biorxiv_page_struct: BiorxivPageStruct = BiorxivPageStruct::new();
-                    let mut xml_parser_one_string_creators =
-                        biorvix_struct.items[count].creator.clone();
+                    // let mut xml_parser_one_string_creators =
+                    //     xml_biorxiv_struct.items[count].creator.clone();
                     loop {
-                        if count < biorvix_struct.items.len() {
-                            biorxiv_page_struct.items[count].title =
-                                biorvix_struct.items[count].title.clone();
-                            biorxiv_page_struct.items[count].link =
-                                biorvix_struct.items[count].link.clone();
-                            biorxiv_page_struct.items[count].description =
-                                biorvix_struct.items[count].description.clone();
-                            match xml_parser_one_string_creators.find("., ") {
-                                Some(end_of_creator) => {
-                                    biorxiv_page_struct.items[count].creators.push(
-                                        xml_parser_one_string_creators[..end_of_creator]
-                                            .to_string(),
-                                    );
-                                    xml_parser_one_string_creators = xml_parser_one_string_creators
-                                        [end_of_creator + "., ".len()..]
-                                        .to_string();
-                                }
-                                None => {
-                                    biorxiv_page_struct.items[count]
-                                        .creators
-                                        .push(xml_parser_one_string_creators.clone());
-                                    break;
-                                }
-                            }
-                            biorxiv_page_struct.items[count].date =
-                                biorvix_struct.items[count].date.clone();
-                            biorxiv_page_struct.items[count].publisher =
-                                biorvix_struct.items[count].publisher.clone();
+                        if count < xml_biorxiv_struct.items.len() {
+                            let temporary_title = xml_biorxiv_struct.items[count].title.clone();
+                            let temporary_link = xml_biorxiv_struct.items[count].link.clone();
+                            let temporary_description =
+                                xml_biorxiv_struct.items[count].description.clone();
+                            // let mut temporary_creators = Vec::new();
+                            let temporary_date = xml_biorxiv_struct.items[count].date.clone();
+
+                            // biorxiv_page_struct.items[count].title =
+                            //     xml_biorxiv_struct.items[count].title.clone();
+                            // biorxiv_page_struct.items[count].link =
+                            //     xml_biorxiv_struct.items[count].link.clone();
+                            // biorxiv_page_struct.items[count].description =
+                            //     xml_biorxiv_struct.items[count].description.clone();
+                            // biorxiv_page_struct.items[count].date =
+                            //     xml_biorxiv_struct.items[count].date.clone();
+                            /////////////////////////////
+                            // match xml_parser_one_string_creators.find("., ") {
+                            //     Some(end_of_creator) => {
+                            //         biorxiv_page_struct.items[count].creators.push(
+                            //             xml_parser_one_string_creators[..end_of_creator]
+                            //                 .to_string(),
+                            //         );
+                            //         xml_parser_one_string_creators = xml_parser_one_string_creators
+                            //             [end_of_creator + "., ".len()..]
+                            //             .to_string();
+                            //     }
+                            //     None => {
+                            //         biorxiv_page_struct.items[count]
+                            //             .creators
+                            //             .push(xml_parser_one_string_creators.clone());
+                            //         break;
+                            //     }
+                            // }
+                            // biorxiv_page_struct.items[count].publisher =
+                            //     biorvix_struct.items[count].publisher.clone();
+                            let temporary_biorxiv_page_struct_item: BiorxivPageStructItem =
+                                BiorxivPageStructItem {
+                                    title: temporary_title,
+                                    link: temporary_link,
+                                    description: temporary_description,
+                                    // creators: temporary_creators,
+                                    date: temporary_date,
+                                    // publisher: temporary_publisher,
+                                };
+                            biorxiv_page_struct
+                                .items
+                                .push(temporary_biorxiv_page_struct_item);
                             count += 1;
                         } else {
                             break;
