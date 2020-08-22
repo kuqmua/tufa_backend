@@ -170,7 +170,6 @@ pub async fn fetch_and_parse_xml_biorxiv(
                 eprintln!("Got an error: {}", e);
             }
         }
-        // println!("key_count {}", key_count);
         key_count += 1;
     }
     println!(
