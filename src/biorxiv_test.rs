@@ -49,18 +49,18 @@ pub struct BiorxivPageStructItem {
     pub date: String,
     // pub publisher: String,
 }
-impl BiorxivPageStructItem {
-    pub fn new() -> Self {
-        BiorxivPageStructItem {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            // creators: Vec::<String>::new(),
-            date: "".to_string(),
-            // publisher: "".to_string(),
-        }
-    }
-}
+// impl BiorxivPageStructItem {
+//     pub fn new() -> Self {
+//         BiorxivPageStructItem {
+//             title: "".to_string(),
+//             link: "".to_string(),
+//             description: "".to_string(),
+//             // creators: Vec::<String>::new(),
+//             date: "".to_string(),
+//             // publisher: "".to_string(),
+//         }
+//     }
+// }
 
 #[tokio::main]
 pub async fn fetch_and_parse_xml_biorxiv(
