@@ -1,4 +1,7 @@
 use roux::Reddit;
+use roux::util::error::RouxError;
+#[path = "../../../override_prints.rs"]
+mod override_prints;
 
 pub fn reddit_authorization(
     user_agent: &str,
@@ -6,11 +9,33 @@ pub fn reddit_authorization(
     client_secret: &str,
     username: &str,
     password: &str,
-) {
-    Reddit::new(user_agent, client_id, client_secret)
+) -> bool
+{
+    let reddit_authorization_result = Reddit::new(user_agent, client_id, client_secret)
         .username(username)
         .password(password)
-        .login()
-        .unwrap(); // вынести в функцию
-    println!("success reddit authorization");
-}
+        .login();
+    match reddit_authorization_result {
+        Ok(_) => {
+            return true;
+        }
+        Err(roux_error_instans)=>{
+            match roux_error_instans {
+                RouxError::Network(error_instans)=> {
+                    match error_instans.get_ref() {
+                        Some(eshe_errorishe) => override_prints::print_error(
+                            file!().to_string(),
+                            line!().to_string(),
+                            eshe_errorishe.to_string()),
+                        None => {},
+                    }
+                },
+                _ => override_prints::print_error(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "todo RouxError enum error".to_string()),//TODO
+            }
+            return false;
+        }
+    }
+}  
