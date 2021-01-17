@@ -1,7 +1,6 @@
 extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
-// extern crate xml;
 use futures::future;
 use reqwest::Client;
 use serde_xml_rs::from_str;
