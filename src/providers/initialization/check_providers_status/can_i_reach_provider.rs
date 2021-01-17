@@ -2,6 +2,7 @@ use reqwest::Client;
 use tokio;
 #[path = "../../../override_prints.rs"]
 mod override_prints;
+
 #[tokio::main]
 pub async fn can_i_reach_provider(url: String) -> bool {
     let client = Client::new();

@@ -184,7 +184,8 @@ pub async fn fetch_and_parse_xml_biorxiv(
 
 pub fn arxiv_part() -> bool {
     //HashMap<String, ArxivPostStruct>
-    if can_i_reach_provider::can_i_reach_provider("https://arxiv.org/".to_string()) {
+
+    if can_i_reach_provider::can_i_reach_provider("http://export.arxiv.org/rss/".to_string()) {
         let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
         println!(
             "{:#?} elements in Arxiv HashMap",
