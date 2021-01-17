@@ -10,6 +10,8 @@ use std::time::Instant;
 use tokio;
 #[path = "../initialization/check_providers_status/can_i_reach_provider.rs"]
 mod can_i_reach_provider;
+#[path = "./../../site_links.rs"]
+mod site_links;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct XmlBiorxivParserStruct {
@@ -182,7 +184,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
 }
 
 pub fn medrxiv_part() -> bool {
-    if can_i_reach_provider::can_i_reach_provider("http://connect.medrxiv.org/".to_string()) {
+    if can_i_reach_provider::can_i_reach_provider(site_links::get_medrxiv_url()) {
         let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
         println!(
             "{:#?} elements in Medrxiv HashMap",

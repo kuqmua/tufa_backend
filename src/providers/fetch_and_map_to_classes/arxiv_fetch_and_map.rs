@@ -10,6 +10,8 @@ use std::time::Instant;
 use tokio;
 #[path = "../initialization/check_providers_status/can_i_reach_provider.rs"]
 mod can_i_reach_provider;
+#[path = "./../../site_links.rs"]
+mod site_links;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct XmlArxivParserStruct {
@@ -182,9 +184,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
 }
 
 pub fn arxiv_part() -> bool {
-    //HashMap<String, ArxivPostStruct>
-
-    if can_i_reach_provider::can_i_reach_provider("http://export.arxiv.org/rss/".to_string()) {
+    if can_i_reach_provider::can_i_reach_provider(site_links::get_arxiv_url()) {
         let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
         println!(
             "{:#?} elements in Arxiv HashMap",
@@ -194,8 +194,7 @@ pub fn arxiv_part() -> bool {
         let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
         let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
         return true; //чекнуть действительно ли в векторе есть хоть шот полезное
-
-    // vec_of_vec_of_strings //еще надо подумать куда это записывать
+                     // vec_of_vec_of_strings //еще надо подумать куда это записывать//HashMap<String, ArxivPostStruct>
     } else {
         return false;
     }

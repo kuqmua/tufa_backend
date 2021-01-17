@@ -13,9 +13,11 @@ mod authorization_info;
 mod can_i_reach_provider;
 #[path = "../authorization/reddit/reddit_authorization.rs"]
 mod reddit_authorization;
+#[path = "./../../site_links.rs"]
+mod site_links;
 
 pub fn reddit_part() {
-    let f = can_i_reach_provider::can_i_reach_provider("https://www.reddit.com/".to_string());
+    let f = can_i_reach_provider::can_i_reach_provider(site_links::get_reddit_url());
     if f == true {
         let is_reddit_authorized = reddit_authorization::reddit_authorization(
             authorization_info::REDDIT_USER_AGENT,
