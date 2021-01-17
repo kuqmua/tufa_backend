@@ -4,13 +4,13 @@ use std::time::Instant;
 #[path = "providers/initialization/reddit_part.rs"]
 mod reddit_part;
 use reddit_part::reddit_part;
-#[path = "arxiv_copy.rs"]
+#[path = "./providers/fetch_and_map_to_classes/arxiv_copy.rs"]
 mod arxiv_copy;
 use arxiv_copy::arxiv_part;
-#[path = "biorxiv_test.rs"]
+#[path = "./providers/fetch_and_map_to_classes/biorxiv_test.rs"]
 mod biorxiv_test;
 use biorxiv_test::biorxiv_part;
-#[path = "test_medrxiv.rs"]
+#[path = "./providers/fetch_and_map_to_classes/test_medrxiv.rs"]
 mod test_medrxiv;
 use test_medrxiv::medrxiv_part;
 

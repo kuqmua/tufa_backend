@@ -3,15 +3,15 @@ mod get_reddit_posts;
 use get_reddit_posts::get_reddit_posts;
 
 #[path = "./get_group_names/get_subreddits.rs"]
-mod get_subreddits;
-use get_subreddits::get_subreddits;
+mod get_subredditss;
+use get_subredditss::get_subreddits;
 use std::time::Instant;
 
-#[path = "../providers_authorization/reddit/authorization_info.rs"]
+#[path = "../authorization/reddit/authorization_info.rs"]
 mod authorization_info;
 #[path = "./check_providers_status/can_i_reach_provider.rs"]
 mod can_i_reach_provider;
-#[path = "../providers_authorization/reddit/reddit_authorization.rs"]
+#[path = "../authorization/reddit/reddit_authorization.rs"]
 mod reddit_authorization;
 
 pub fn reddit_part() {

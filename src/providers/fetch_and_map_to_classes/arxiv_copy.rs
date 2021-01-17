@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use std::str;
 use std::time::Instant;
 use tokio;
-#[path = "./providers/initialization/check_providers_status/can_i_reach_provider.rs"]
+#[path = "../initialization/check_providers_status/can_i_reach_provider.rs"]
 mod can_i_reach_provider;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
