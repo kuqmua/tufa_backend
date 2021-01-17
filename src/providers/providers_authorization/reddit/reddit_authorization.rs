@@ -1,5 +1,5 @@
-use roux::Reddit;
 use roux::util::error::RouxError;
+use roux::Reddit;
 #[path = "../../../override_prints.rs"]
 mod override_prints;
 
@@ -9,8 +9,7 @@ pub fn reddit_authorization(
     client_secret: &str,
     username: &str,
     password: &str,
-) -> bool
-{
+) -> bool {
     let reddit_authorization_result = Reddit::new(user_agent, client_id, client_secret)
         .username(username)
         .password(password)
@@ -19,23 +18,23 @@ pub fn reddit_authorization(
         Ok(_) => {
             return true;
         }
-        Err(roux_error_instans)=>{
+        Err(roux_error_instans) => {
             match roux_error_instans {
-                RouxError::Network(error_instans)=> {
-                    match error_instans.get_ref() {
-                        Some(eshe_errorishe) => override_prints::print_error(
-                            file!().to_string(),
-                            line!().to_string(),
-                            eshe_errorishe.to_string()),
-                        None => {},
-                    }
+                RouxError::Network(error_instans) => match error_instans.get_ref() {
+                    Some(eshe_errorishe) => override_prints::print_error_red(
+                        file!().to_string(),
+                        line!().to_string(),
+                        eshe_errorishe.to_string(),
+                    ),
+                    None => {}
                 },
-                _ => override_prints::print_error(
+                _ => override_prints::print_error_red(
                     file!().to_string(),
                     line!().to_string(),
-                    "todo RouxError enum error".to_string()),//TODO
+                    "todo RouxError enum error".to_string(),
+                ), //TODO
             }
             return false;
         }
     }
-}  
+}

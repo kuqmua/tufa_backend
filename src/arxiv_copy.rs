@@ -9,6 +9,8 @@ use std::collections::HashMap;
 use std::str;
 use std::time::Instant;
 use tokio;
+#[path = "./providers/initialization/check_providers_status/can_i_reach_provider.rs"]
+mod can_i_reach_provider;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct XmlArxivParserStruct {
@@ -180,16 +182,23 @@ pub async fn fetch_and_parse_xml_biorxiv(
     biorxiv_structs_vec.clone()
 }
 
-pub fn arxiv_part() -> HashMap<String, ArxivPostStruct> {
-    let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
-    println!(
-        "{:#?} elements in Arxiv HashMap",
-        arxiv_links_in_hash_map.len()
-    );
-    let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
-    let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
-    let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
-    vec_of_vec_of_strings
+pub fn arxiv_part() -> bool {
+    //HashMap<String, ArxivPostStruct>
+    if can_i_reach_provider::can_i_reach_provider("https://arxiv.org/".to_string()) {
+        let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links_in_hash_map();
+        println!(
+            "{:#?} elements in Arxiv HashMap",
+            arxiv_links_in_hash_map.len()
+        );
+        let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
+        let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
+        let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
+        return true; //чекнуть действительно ли в векторе есть хоть шот полезное
+
+    // vec_of_vec_of_strings //еще надо подумать куда это записывать
+    } else {
+        return false;
+    }
 }
 
 pub fn get_arxiv_links_in_hash_map() -> HashMap<&'static str, &'static str> {

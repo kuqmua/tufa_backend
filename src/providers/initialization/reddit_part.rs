@@ -7,11 +7,31 @@ mod get_subreddits;
 use get_subreddits::get_subreddits;
 use std::time::Instant;
 
+#[path = "../providers_authorization/reddit/authorization_info.rs"]
+mod authorization_info;
+#[path = "./check_providers_status/can_i_reach_provider.rs"]
+mod can_i_reach_provider;
+#[path = "../providers_authorization/reddit/reddit_authorization.rs"]
+mod reddit_authorization;
+
 pub fn reddit_part() {
-    let time = Instant::now();
-    let subreddits_names = get_subreddits();
-    get_reddit_posts(subreddits_names);
-    println!("reddit_part done in {} seconds", time.elapsed().as_secs());
+    let f = can_i_reach_provider::can_i_reach_provider("https://www.reddit.com/".to_string());
+    if f == true {
+        let is_reddit_authorized = reddit_authorization::reddit_authorization(
+            authorization_info::REDDIT_USER_AGENT,
+            authorization_info::REDDIT_CLIENT_ID,
+            authorization_info::REDDIT_CLIENT_SECRET,
+            authorization_info::REDDIT_USERNAME,
+            authorization_info::REDDIT_PASSWORD,
+        );
+        if is_reddit_authorized {
+            println!("success reddit authorization");
+            let time = Instant::now();
+            let subreddits_names = get_subreddits();
+            get_reddit_posts(subreddits_names);
+            println!("reddit_part done in {} seconds", time.elapsed().as_secs());
+        }
+    }
 }
 // println!(
 //     "{:?}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
