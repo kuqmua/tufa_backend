@@ -2,14 +2,14 @@
 mod get_reddit_posts;
 use get_reddit_posts::get_reddit_posts;
 
-#[path = "./get_group_names/get_subreddits.rs"]
+#[path = "../initialization/get_group_names/get_subreddits.rs"]
 mod get_subredditss;
 use get_subredditss::get_subreddits;
 use std::time::Instant;
 
 #[path = "../authorization/reddit/authorization_info.rs"]
 mod authorization_info;
-#[path = "./check_providers_status/can_i_reach_provider.rs"]
+#[path = "../initialization/check_providers_status/can_i_reach_provider.rs"]
 mod can_i_reach_provider;
 #[path = "../authorization/reddit/reddit_authorization.rs"]
 mod reddit_authorization;

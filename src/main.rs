@@ -1,18 +1,18 @@
 use std::thread;
 use std::time::Instant;
 
-#[path = "providers/initialization/reddit_part.rs"]
-mod reddit_part;
-use reddit_part::reddit_part;
-#[path = "./providers/fetch_and_map_to_classes/arxiv_copy.rs"]
-mod arxiv_copy;
-use arxiv_copy::arxiv_part;
-#[path = "./providers/fetch_and_map_to_classes/biorxiv_test.rs"]
-mod biorxiv_test;
-use biorxiv_test::biorxiv_part;
-#[path = "./providers/fetch_and_map_to_classes/test_medrxiv.rs"]
-mod test_medrxiv;
-use test_medrxiv::medrxiv_part;
+#[path = "./providers/fetch_and_map_to_classes/reddit_fetch_and_map.rs"]
+mod reddit_fetch_and_map;
+use reddit_fetch_and_map::reddit_part;
+#[path = "./providers/fetch_and_map_to_classes/arxiv_fetch_and_map.rs"]
+mod arxiv_fetch_and_map;
+use arxiv_fetch_and_map::arxiv_part;
+#[path = "./providers/fetch_and_map_to_classes/biorxiv_fetch_and_map.rs"]
+mod biorxiv_fetch_and_map;
+use biorxiv_fetch_and_map::biorxiv_part;
+#[path = "./providers/fetch_and_map_to_classes/medrxiv_fetch_and_map.rs"]
+mod medrxiv_fetch_and_map;
+use medrxiv_fetch_and_map::medrxiv_part;
 
 fn main() {
     let time = Instant::now();
