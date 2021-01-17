@@ -7,7 +7,7 @@ pub struct ArxivPagesLinksStruct {
     pub QuantitativeBiology: QuantitativeBiology,
     pub Mathematics: Mathematics,
     pub Statistics: Statistics,
-    pub ElectricalEngineeringAndSystemsScience:ElectricalEngineeringAndSystemsScience,
+    pub ElectricalEngineeringAndSystemsScience: ElectricalEngineeringAndSystemsScience,
     pub Physics: Physics,
     pub GeneralRelativityAndQuantumCosmology: String,
     pub HighEnergyPhysicsExperiment: String,
@@ -30,7 +30,7 @@ impl ArxivPagesStruct {
             QuantitativeBiology: QuantitativeBiology::new(),
             Mathematics: Mathematics::new(),
             Statistics: Statistics::new(),
-            ElectricalEngineeringAndSystemsScience:ElectricalEngineeringAndSystemsScience::new(),
+            ElectricalEngineeringAndSystemsScience: ElectricalEngineeringAndSystemsScience::new(),
             Physics: Physics::new(),
             GeneralRelativityAndQuantumCosmology: "gr-qc".to_string(),
             HighEnergyPhysicsExperiment: "hep-ex".to_string(),
@@ -57,39 +57,39 @@ pub struct Astrophysics {
 impl Astrophysics {
     pub fn new() -> Self {
         Astrophysics {
-            Astrophysics of Galaxies: "".to_string(),
-            Cosmology and Nongalactic Astrophysics: "".to_string(),
+            AstrophysicsOfGalaxies: "".to_string(),
+            CosmologyAndNongalacticAstrophysics: "".to_string(),
             EarthAndPlanetaryAstrophysics: "".to_string(),
             HighEnergyAstrophysicalPhenomena: "".to_string(),
             InstrumentationAndMethodsForAstrophysics: "".to_string(),
-            SolarAndStellarAstrophysics: "".to_string(), 
+            SolarAndStellarAstrophysics: "".to_string(),
         }
     }
 }
 pub struct CondensedMatter {
-    pub Disordered Systems and Neural Networks: String,
-    pub Materials Science: String,
-    pub Mesoscale and Nanoscale Physics: String,
-    pub Other Condensed Matte: String,
-    pub Quantum Gases: String,
-    pub Soft Condensed Matter: String,
-    pub Statistical Mechanics: String,
-    pub Strongly Correlated Electrons: String,
+    pub DisorderedSystemsAndNeuralNetworks: String,
+    pub MaterialsScience: String,
+    pub MesoscaleAndNanoscalePhysics: String,
+    pub OtherCondensedMatte: String,
+    pub QuantumGases: String,
+    pub SoftCondensedMatter: String,
+    pub StatisticalMechanics: String,
+    pub StronglyCorrelatedElectrons: String,
     pub Superconductivity: String,
 }
 
 impl CondensedMatter {
     pub fn new() -> Self {
         CondensedMatter {
-            Disordered Systems and Neural Networks: "".to_string(),
-            Disordered Systems and Neural Networks: "".to_string(),
-            Materials Science: "".to_string(),
-            Mesoscale and Nanoscale Physics: "".to_string(),
-            Other Condensed Matte: "".to_string(),
-            Quantum Gases: "".to_string(),
-            Soft Condensed Matter: "".to_string(),
-            Statistical Mechanics: "".to_string(),
-            Strongly Correlated Electrons: "".to_string(),
+            DisorderedSystemsAndNeuralNetworks: "".to_string(),
+            DisorderedSystemsAndNeuralNetworks: "".to_string(),
+            MaterialsScience: "".to_string(),
+            MesoscaleAndNanoscalePhysics: "".to_string(),
+            OtherCondensedMatte: "".to_string(),
+            QuantumGases: "".to_string(),
+            SoftCondensedMatter: "".to_string(),
+            StatisticalMechanics: "".to_string(),
+            StronglyCorrelatedElectrons: "".to_string(),
             Superconductivity: "".to_string(),
         }
     }
