@@ -8,15 +8,11 @@ use reqwest::Client;
 use std::time::Instant;
 use tokio;
 
-#[path = "../reddit-json-structs/casted.rs"]
-mod casted;
-use casted::CastedRedditJsonStruct;
-use casted::Children;
+use crate::parsing::reddit::reddit_json_structs::casted::CastedRedditJsonStruct;
+use crate::parsing::reddit::reddit_json_structs::casted::Children;
 
-#[path = "../reddit-json-structs/used.rs"]
-mod used;
-use used::UsedRedditJsonStruct;
-use used::VecOfUsedRedditJsonStruct;
+use crate::parsing::reddit::reddit_json_structs::used::UsedRedditJsonStruct;
+use crate::parsing::reddit::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 
 #[tokio::main]
 pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {

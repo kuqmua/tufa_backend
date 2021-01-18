@@ -1,7 +1,7 @@
 use roux::util::error::RouxError;
 use roux::Reddit;
-#[path = "../../../override_prints.rs"]
-mod override_prints;
+
+use crate::override_prints::override_prints::print_error_red;
 
 pub fn reddit_authorization(
     user_agent: &str,
@@ -21,14 +21,14 @@ pub fn reddit_authorization(
         Err(roux_error_instans) => {
             match roux_error_instans {
                 RouxError::Network(error_instans) => match error_instans.get_ref() {
-                    Some(eshe_errorishe) => override_prints::print_error_red(
+                    Some(eshe_errorishe) => print_error_red(
                         file!().to_string(),
                         line!().to_string(),
                         eshe_errorishe.to_string(),
                     ),
                     None => {}
                 },
-                _ => override_prints::print_error_red(
+                _ => print_error_red(
                     file!().to_string(),
                     line!().to_string(),
                     "todo RouxError enum error".to_string(),
