@@ -1,46 +1,71 @@
 use std::thread;
 use std::time::Instant;
 
-#[path = "./providers/fetch_and_map_to_classes/reddit_fetch_and_map.rs"]
-mod reddit_fetch_and_map;
-use reddit_fetch_and_map::reddit_part;
-#[path = "./providers/fetch_and_map_to_classes/arxiv_fetch_and_map.rs"]
-mod arxiv_fetch_and_map;
-use arxiv_fetch_and_map::arxiv_part;
-#[path = "./providers/fetch_and_map_to_classes/biorxiv_fetch_and_map.rs"]
-mod biorxiv_fetch_and_map;
-use biorxiv_fetch_and_map::biorxiv_part;
-#[path = "./providers/fetch_and_map_to_classes/medrxiv_fetch_and_map.rs"]
-mod medrxiv_fetch_and_map;
-use medrxiv_fetch_and_map::medrxiv_part;
+mod fetch {
+    pub mod arxiv_fetch;
+    pub mod biorxiv_fetch;
+    pub mod medrxiv_fetch;
+    pub mod reddit_fetch;
+}
+mod get_group_names {
+    pub mod get_arxiv_links;
+    pub mod get_biorxiv_links;
+    pub mod get_medrxiv_links;
+    pub mod get_subreddits;
+}
+mod check_provider {
+    pub mod can_i_reach_provider;
+}
+mod override_prints {
+    pub mod override_prints;
+}
+
+mod authorization {
+    pub mod reddit {
+        pub mod authorization_info;
+        pub mod reddit_authorization;
+    }
+}
+
+mod parsing {
+    pub mod reddit {
+        pub mod parse_reddit {
+            pub mod get_reddit_posts;
+        }
+        pub mod reddit_json_structs {
+            pub mod casted;
+            pub mod used;
+        }
+    }
+}
+
+mod config;
+use config::ARXIV_URL;
+use config::BIORXIV_URL;
+use config::MEDRXIV_URL;
+use config::REDDIT_URL;
 
 fn main() {
     let time = Instant::now();
     let mut threads_vec = vec![];
     threads_vec.push(thread::spawn(move || {
-        reddit_part();
+        fetch::reddit_fetch::reddit_part(REDDIT_URL);
     }));
     threads_vec.push(thread::spawn(move || {
-        arxiv_part();
-        // let biorxiv_vec = arxiv_part();
-        // for (key, value) in biorxiv_vec {
-        //     if value.items.len() < 0 {
-        //         print!("no value for key = {}\n", key,)
-        //     }
-        // }
+        fetch::arxiv_fetch::arxiv_part(ARXIV_URL);
     }));
     threads_vec.push(thread::spawn(move || {
-        medrxiv_part(); //TODO паника тут!!!
+        fetch::biorxiv_fetch::biorxiv_part(BIORXIV_URL);
     }));
     threads_vec.push(thread::spawn(move || {
-        biorxiv_part();
-        // let biorxiv_vec = biorxiv_part();
-        // for (key, value) in biorxiv_vec {
-        //     print!("{:#?}\n", key);
-        // }
+        fetch::medrxiv_fetch::medrxiv_part(MEDRXIV_URL); //TODO паника тут!!!
     }));
     for i in threads_vec {
         i.join().unwrap();
     }
     println!("main done in {} seconds", time.elapsed().as_secs());
 }
+// let biorxiv_vec = biorxiv_part();
+// for (key, value) in biorxiv_vec {
+//     print!("{:#?}\n", key);
+// }
