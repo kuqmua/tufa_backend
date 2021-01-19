@@ -1,8 +1,8 @@
-// const ENABLE_REDDIT: bool = true;
-// const ENABLE_ARXIV: bool = true;
-// const ENABLE_BIORXIV: bool = true;
-// const ENABLE_MEDRXIV: bool = true;
-// const ENABLE_TWITTER: &str = "";
+pub const ENABLE_REDDIT: bool = true;
+pub const ENABLE_ARXIV: bool = true;
+pub const ENABLE_BIORXIV: bool = true;
+pub const ENABLE_MEDRXIV: bool = true;
+//pub const ENABLE_TWITTER: bool = true;
 
 pub const REDDIT_URL: &str = "https://www.reddit.com/";
 pub const ARXIV_URL: &str = "http://export.arxiv.org/rss/";
