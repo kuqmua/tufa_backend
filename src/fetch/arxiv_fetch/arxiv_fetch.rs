@@ -9,73 +9,15 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
+use crate::fetch::arxiv_fetch::arxiv_structures::Creator;
+use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPost;
+use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPostStruct;
+use crate::fetch::arxiv_fetch::arxiv_structures::XmlArxivParserStruct;
+
 use crate::config::ARXIV_URL;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 
 use crate::check_provider::can_i_reach_provider::reach_provider;
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlArxivParserStruct {
-    #[serde(rename = "item", default)]
-    pub items: Vec<XmlArxivParserPost>,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlArxivParserPost {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creator: String,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct ArxivPostStruct {
-    pub items: Vec<ArxivPost>,
-}
-//count: usize
-impl ArxivPostStruct {
-    pub fn new() -> Self {
-        ArxivPostStruct {
-            items: Vec::<ArxivPost>::new(),
-            // items: vec![ArxivPost::new(); count],
-        }
-    }
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct ArxivPost {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creators: Vec<Creator>,
-}
-
-impl ArxivPost {
-    pub fn new() -> Self {
-        ArxivPost {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            creators: Vec::<Creator>::new(),
-            // creators: vec![Creator::new(); 70],
-        }
-    }
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Creator {
-    pub name: String,
-    pub link: String,
-}
-
-impl Creator {
-    pub fn new() -> Self {
-        Creator {
-            name: "".to_string(),
-            link: "".to_string(),
-        }
-    }
-}
 
 #[tokio::main]
 pub async fn fetch_and_parse_xml_biorxiv(

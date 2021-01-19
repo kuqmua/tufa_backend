@@ -9,63 +9,66 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
-use crate::config::MEDRXIV_URL;
+use crate::config::BIORXIV_URL;
 
-use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 
 use crate::check_provider::can_i_reach_provider::reach_provider;
 
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlBiorxivParserStruct {
-    #[serde(rename = "item", default)]
-    pub items: Vec<XmlBiorxivParserStructItem>,
-}
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlBiorxivParserStructItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creator: String,
-    pub date: String,
-    pub publisher: String,
-}
+use crate::fetch::biorxiv_fetch::biorxiv_structures::BiorxivPageStruct;
+use crate::fetch::biorxiv_fetch::biorxiv_structures::XmlBiorxivParserStruct;
 
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct BiorxivPageStruct {
-    #[serde(rename = "item", default)]
-    pub items: Vec<BiorxivPageStructItem>,
-}
+// #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+// pub struct XmlBiorxivParserStruct {
+//     #[serde(rename = "item", default)]
+//     pub items: Vec<XmlBiorxivParserStructItem>,
+// }
+// #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+// pub struct XmlBiorxivParserStructItem {
+//     pub title: String,
+//     pub link: String,
+//     pub description: String,
+//     pub creator: String,
+//     pub date: String,
+//     pub publisher: String,
+// }
 
-impl BiorxivPageStruct {
-    pub fn new() -> Self {
-        BiorxivPageStruct {
-            // items: Vec::<BiorxivPageStructItem>::new(),
-            items: vec![BiorxivPageStructItem::new(); 30],
-            //vec![UsedRedditJsonStruct::new(); 25],
-        }
-    }
-}
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct BiorxivPageStructItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creators: Vec<String>,
-    pub date: String,
-    pub publisher: String,
-}
-impl BiorxivPageStructItem {
-    pub fn new() -> Self {
-        BiorxivPageStructItem {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            creators: Vec::<String>::new(),
-            date: "".to_string(),
-            publisher: "".to_string(),
-        }
-    }
-}
+// #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+// pub struct BiorxivPageStruct {
+//     #[serde(rename = "item", default)]
+//     pub items: Vec<BiorxivPageStructItem>,
+// }
+
+// impl BiorxivPageStruct {
+//     pub fn new() -> Self {
+//         BiorxivPageStruct {
+//             // items: Vec::<BiorxivPageStructItem>::new(),
+//             items: vec![BiorxivPageStructItem::new(); 30],
+//             //vec![UsedRedditJsonStruct::new(); 25],
+//         }
+//     }
+// }
+// #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+// pub struct BiorxivPageStructItem {
+//     pub title: String,
+//     pub link: String,
+//     pub description: String,
+//     pub creators: Vec<String>,
+//     pub date: String,
+//     pub publisher: String,
+// }
+// impl BiorxivPageStructItem {
+//     pub fn new() -> Self {
+//         BiorxivPageStructItem {
+//             title: "".to_string(),
+//             link: "".to_string(),
+//             description: "".to_string(),
+//             creators: Vec::<String>::new(),
+//             date: "".to_string(),
+//             publisher: "".to_string(),
+//         }
+//     }
+// }
 
 #[tokio::main]
 pub async fn fetch_and_parse_xml_biorxiv(
@@ -76,7 +79,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
     let mut biorxiv_structs_vec: HashMap<String, BiorxivPageStruct> =
         HashMap::with_capacity(vec_of_links.len());
     let client = Client::new();
-    println!("starting fetching medrxiv...");
+    println!("starting fetching biorxiv...");
     let bodies = future::join_all(vec_of_links.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -86,10 +89,10 @@ pub async fn fetch_and_parse_xml_biorxiv(
     }))
     .await;
     println!(
-        "med future::join_all (in seconds) = {} ",
+        "biorxiv future::join_all (in seconds) = {} ",
         time.elapsed().as_secs()
     );
-    println!("medrxiv bodies.len() {}", bodies.len());
+    println!("biorxiv bodies.len() {}", bodies.len());
     let mut key_count = 0;
     for b in bodies {
         match b {
@@ -162,7 +165,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
                     biorxiv_structs_vec
                         .insert(vec_of_keys[key_count].to_string(), biorxiv_page_struct);
                 } else {
-                    println!("(medarxiv) no items for key {}", vec_of_keys[key_count]);
+                    println!("(biorxiv) no items for key {}", vec_of_keys[key_count]);
                     let useless_biorxiv_page_struct = BiorxivPageStruct::new();
                     biorxiv_structs_vec.insert(
                         vec_of_keys[key_count].to_string(),
@@ -185,19 +188,18 @@ pub async fn fetch_and_parse_xml_biorxiv(
     biorxiv_structs_vec.clone()
 }
 
-pub fn medrxiv_part() -> bool {
-    if reach_provider(MEDRXIV_URL.to_string()) {
-        let arxiv_links_in_hash_map: HashMap<&str, &str> = get_medrxiv_links();
+pub fn biorxiv_part() -> bool {
+    if reach_provider(BIORXIV_URL.to_string()) {
+        let arxiv_links_in_hash_map: HashMap<&str, &str> = get_biorxiv_links();
         println!(
-            "{:#?} elements in Medrxiv HashMap",
+            "{:#?} elements in Biorxiv HashMap",
             arxiv_links_in_hash_map.len()
         );
         let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
         let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
         let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
         // vec_of_vec_of_strings //HashMap<String, BiorxivPageStruct>
-        return true; //чекнуть действительно ли в векторе есть хоть шот полезное
-                     // vec_of_vec_of_strings //еще надо подумать куда это записывать
+        return true;
     } else {
         return false;
     }

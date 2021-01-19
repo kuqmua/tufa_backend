@@ -1,4 +1,4 @@
-use crate::parsing::reddit::parse_reddit::get_reddit_posts::get_reddit_posts;
+use crate::fetch::reddit_fetch::get_reddit_posts::get_reddit_posts;
 
 
 use crate::config::REDDIT_URL;

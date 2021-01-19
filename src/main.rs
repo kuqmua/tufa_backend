@@ -2,10 +2,26 @@ use std::thread;
 use std::time::Instant;
 
 mod fetch {
-    pub mod arxiv_fetch;
-    pub mod biorxiv_fetch;
-    pub mod medrxiv_fetch;
-    pub mod reddit_fetch;
+    pub mod arxiv_fetch{
+        pub mod arxiv_structures;
+        pub mod arxiv_fetch;
+    }
+    pub mod biorxiv_fetch{
+        pub mod biorxiv_structures;
+        pub mod biorxiv_fetch;
+    }
+    pub mod medrxiv_fetch{
+        pub mod medrxiv_structures;
+        pub mod medrxiv_fetch;
+    }
+    pub mod reddit_fetch{
+        pub mod reddit_fetch;
+        pub mod get_reddit_posts;
+        pub mod reddit_json_structs {
+            pub mod casted;
+            pub mod used;
+        }
+    }
 }
 mod get_group_names {
     pub mod get_arxiv_links;
@@ -27,18 +43,6 @@ mod authorization {
     }
 }
 
-mod parsing {
-    pub mod reddit {
-        pub mod parse_reddit {
-            pub mod get_reddit_posts;
-        }
-        pub mod reddit_json_structs {
-            pub mod casted;
-            pub mod used;
-        }
-    }
-}
-
 mod config;
 use config::ENABLE_REDDIT;
 use config::ENABLE_ARXIV;
@@ -51,22 +55,22 @@ fn main() {
     let mut threads_vec = vec![];
     if ENABLE_REDDIT {
     threads_vec.push(thread::spawn(move || {
-        fetch::reddit_fetch::reddit_part();
+        fetch::reddit_fetch::reddit_fetch::reddit_part();
     }));
     }
     if ENABLE_ARXIV {
     threads_vec.push(thread::spawn(move || {
-        fetch::arxiv_fetch::arxiv_part();
+        fetch::arxiv_fetch::arxiv_fetch::arxiv_part();
     }));
     }
     if ENABLE_BIORXIV {
     threads_vec.push(thread::spawn(move || {
-        fetch::biorxiv_fetch::biorxiv_part();
+        fetch::biorxiv_fetch::biorxiv_fetch::biorxiv_part();
     }));
 }
     if ENABLE_MEDRXIV {
     threads_vec.push(thread::spawn(move || {
-        fetch::medrxiv_fetch::medrxiv_part(); //TODO паника тут!!!
+        fetch::medrxiv_fetch::medrxiv_fetch::medrxiv_part(); //TODO паника тут!!!
     }));
 }
     for i in threads_vec {
