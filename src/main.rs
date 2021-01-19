@@ -49,16 +49,16 @@ fn main() {
     let time = Instant::now();
     let mut threads_vec = vec![];
     threads_vec.push(thread::spawn(move || {
-        fetch::reddit_fetch::reddit_part(REDDIT_URL);
+        fetch::reddit_fetch::reddit_part();
     }));
     threads_vec.push(thread::spawn(move || {
-        fetch::arxiv_fetch::arxiv_part(ARXIV_URL);
+        fetch::arxiv_fetch::arxiv_part();
     }));
     threads_vec.push(thread::spawn(move || {
-        fetch::biorxiv_fetch::biorxiv_part(BIORXIV_URL);
+        fetch::biorxiv_fetch::biorxiv_part();
     }));
     threads_vec.push(thread::spawn(move || {
-        fetch::medrxiv_fetch::medrxiv_part(MEDRXIV_URL); //TODO паника тут!!!
+        fetch::medrxiv_fetch::medrxiv_part(); //TODO паника тут!!!
     }));
     for i in threads_vec {
         i.join().unwrap();

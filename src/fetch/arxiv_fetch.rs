@@ -9,6 +9,7 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
+use crate::config::ARXIV_URL;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 
 use crate::check_provider::can_i_reach_provider::reach_provider;
@@ -182,9 +183,8 @@ pub async fn fetch_and_parse_xml_biorxiv(
     );
     biorxiv_structs_vec.clone()
 }
-
-pub fn arxiv_part(arxiv_url: &str) -> bool {
-    if reach_provider(arxiv_url.to_string()) {
+pub fn arxiv_part() -> bool {
+    if reach_provider(ARXIV_URL.to_string()) {
         let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
         println!(
             "{:#?} elements in Arxiv HashMap",
