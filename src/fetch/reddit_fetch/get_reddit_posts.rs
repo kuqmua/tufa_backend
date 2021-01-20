@@ -24,7 +24,6 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
     let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
         push_names_into_two_layer_result_vec(&subreddits);
     let subreddits_urls: Vec<String> = subreddits_into_urls(subreddits);
-    println!("starting fetching reddit...");
     let bodies = future::join_all(subreddits_urls.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -33,11 +32,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
-    println!(
-        "reddit future::join_all (in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
-    println!("get_reddit_posts bodies.len() {}", bodies.len());
+    println!("fetch in {} seconds, reddit bodies: {} ", time.elapsed().as_secs(), bodies.len());
     let mut count = 0;
     for b in bodies {
         match b {
@@ -59,6 +54,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
             }
         }
     }
+    println!("parsing in {} seconds, reddit bodies: {} ", time.elapsed().as_secs(), two_layer_result_vec.len());
     return two_layer_result_vec;
 }
 

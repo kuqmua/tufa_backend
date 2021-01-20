@@ -20,15 +20,14 @@ use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::check_provider::can_i_reach_provider::reach_provider;
 
 #[tokio::main]
-pub async fn fetch_and_parse_xml_biorxiv(
+pub async fn fetch_and_parse_xml_arxiv(
     vec_of_links: Vec<&str>,
     vec_of_keys: Vec<&str>,
 ) -> HashMap<String, ArxivPostStruct> {
     let time = Instant::now();
-    let mut biorxiv_structs_vec: HashMap<String, ArxivPostStruct> =
+    let mut arxiv_structs_vec: HashMap<String, ArxivPostStruct> =
         HashMap::with_capacity(vec_of_links.len());
     let client = Client::new();
-    println!("starting fetching arxiv...");
     let bodies = future::join_all(vec_of_links.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -37,11 +36,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
         }
     }))
     .await;
-    println!(
-        "arxiv future::join_all (in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
-    println!("arxiv bodies.len() {}", bodies.len());
+    println!("fetch in {} seconds, arxiv bodies: {} ", time.elapsed().as_secs(), bodies.len());
     let mut key_count = 0;
     for b in bodies {
         match b {
@@ -52,20 +47,20 @@ pub async fn fetch_and_parse_xml_biorxiv(
                 // расписать случай если не найдет посты
                 match dots_unfiltered_str.find("</item>") {
                     Some(_) => {
-                        let biorvix_struct: XmlArxivParserStruct =
+                        let arxiv_struct: XmlArxivParserStruct =
                             from_str(&dots_unfiltered_str).unwrap();
                         let mut count = 0;
-                        let mut biorxiv_page_struct: ArxivPostStruct = ArxivPostStruct::new();
-                        //biorvix_struct.items.len()
+                        let mut arxiv_page_struct: ArxivPostStruct = ArxivPostStruct::new();
+                        //arxiv_struct.items.len()
                         loop {
-                            if count < biorvix_struct.items.len() {
+                            if count < arxiv_struct.items.len() {
                                 let mut arxiv_post: ArxivPost = ArxivPost::new();
-                                arxiv_post.title = biorvix_struct.items[count].title.clone();
-                                arxiv_post.link = biorvix_struct.items[count].link.clone();
+                                arxiv_post.title = arxiv_struct.items[count].title.clone();
+                                arxiv_post.link = arxiv_struct.items[count].link.clone();
                                 arxiv_post.description =
-                                    biorvix_struct.items[count].description.clone();
+                                    arxiv_struct.items[count].description.clone();
                                 let mut string_part_for_loop =
-                                    biorvix_struct.items[count].creator.clone();
+                                    arxiv_struct.items[count].creator.clone();
                                 while let Some(link_index_from_start) =
                                     string_part_for_loop.find("<a href=\"")
                                 {
@@ -92,21 +87,21 @@ pub async fn fetch_and_parse_xml_biorxiv(
                                         }
                                     }
                                 }
-                                biorxiv_page_struct.items.push(arxiv_post);
+                                arxiv_page_struct.items.push(arxiv_post);
                                 count += 1;
                             } else {
                                 break;
                             }
                         }
-                        biorxiv_structs_vec
-                            .insert(vec_of_keys[key_count].to_string(), biorxiv_page_struct);
+                        arxiv_structs_vec
+                            .insert(vec_of_keys[key_count].to_string(), arxiv_page_struct);
                     }
                     _ => {
                         println!("(arxiv) no items for key {}", vec_of_keys[key_count]);
-                        let useless_biorxiv_page_struct = ArxivPostStruct::new();
-                        biorxiv_structs_vec.insert(
+                        let useless_arxiv_page_struct = ArxivPostStruct::new();
+                        arxiv_structs_vec.insert(
                             vec_of_keys[key_count].to_string(),
-                            useless_biorxiv_page_struct,
+                            useless_arxiv_page_struct,
                         );
                     }
                 }
@@ -119,11 +114,8 @@ pub async fn fetch_and_parse_xml_biorxiv(
         // println!("key_count {}", key_count);
         key_count += 1;
     }
-    println!(
-        "arxiv xml parsing (in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
-    biorxiv_structs_vec.clone()
+    println!("parsing in {} seconds, arxiv bodies: {} ", time.elapsed().as_secs(), arxiv_structs_vec.len());
+    arxiv_structs_vec.clone()
 }
 pub fn arxiv_part() -> bool {
     if reach_provider(ARXIV_URL.to_string()) {
@@ -134,9 +126,8 @@ pub fn arxiv_part() -> bool {
         );
         let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
         let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
-        let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
+        fetch_and_parse_xml_arxiv(vec_of_links, vec_of_keys);//тут есть возвращаемое значение let vec_of_vec_of_strings = 
         return true; //чекнуть действительно ли в векторе есть хоть шот полезное
-                     // vec_of_vec_of_strings //еще надо подумать куда это записывать//HashMap<String, ArxivPostStruct>
     } else {
         return false;
     }

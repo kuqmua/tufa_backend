@@ -23,10 +23,8 @@ pub fn reddit_part() {
         );
         if is_reddit_authorized {
             println!("success reddit authorization");
-            let time = Instant::now();
             let subreddits_names = get_subreddits();
-            get_reddit_posts(subreddits_names);
-            println!("reddit_part done in {} seconds", time.elapsed().as_secs());
+            get_reddit_posts(subreddits_names);//возможно неподходящее название////тут есть возвращаемое значение let vec_of_vec_of_strings = 
         }
     }
 }

@@ -28,7 +28,6 @@ pub async fn fetch_and_parse_xml_medrxiv(
     let mut medrxiv_structs_vec: HashMap<String, MedrxivPageStruct> =
         HashMap::with_capacity(vec_of_links.len());
     let client = Client::new();
-    println!("starting fetching medrxiv...");
     let bodies = future::join_all(vec_of_links.into_iter().map(|url| {
         let client = &client;
         async move {
@@ -37,11 +36,7 @@ pub async fn fetch_and_parse_xml_medrxiv(
         }
     }))
     .await;
-    println!(
-        "med future::join_all (in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
-    println!("medrxiv bodies.len() {}", bodies.len());
+    println!("fetch in {} seconds, medrxiv bodies: {} ", time.elapsed().as_secs(), bodies.len());
     let mut key_count = 0;
     for b in bodies {
         match b {
@@ -130,10 +125,7 @@ pub async fn fetch_and_parse_xml_medrxiv(
         // println!("key_count {}", key_count);
         key_count += 1;
     }
-    println!(
-        "medrxiv xml parsing (in seconds) = {} ",
-        time.elapsed().as_secs()
-    );
+    println!("parsing in {} seconds, medrxiv bodies: {} ", time.elapsed().as_secs(), medrxiv_structs_vec.len());
     medrxiv_structs_vec.clone()
 }
 
@@ -146,10 +138,8 @@ pub fn medrxiv_part() -> bool {
         );
         let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
         let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
-        let vec_of_vec_of_strings = fetch_and_parse_xml_medrxiv(vec_of_links, vec_of_keys);
-        // vec_of_vec_of_strings //HashMap<String, MedrxivPageStruct>
+        fetch_and_parse_xml_medrxiv(vec_of_links, vec_of_keys);//тут есть возвращаемое значение let vec_of_vec_of_strings = 
         return true; //чекнуть действительно ли в векторе есть хоть шот полезное
-                     // vec_of_vec_of_strings //еще надо подумать куда это записывать
     } else {
         return false;
     }

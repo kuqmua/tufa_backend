@@ -70,7 +70,7 @@ fn main() {
 }
     if ENABLE_MEDRXIV {
     threads_vec.push(thread::spawn(move || {
-        fetch::medrxiv_fetch::medrxiv_fetch::medrxiv_part(); //TODO паника тут!!!
+        fetch::medrxiv_fetch::medrxiv_fetch::medrxiv_part();
     }));
 }
     for i in threads_vec {
