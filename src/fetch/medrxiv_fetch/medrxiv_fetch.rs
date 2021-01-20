@@ -20,12 +20,12 @@ use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::check_provider::can_i_reach_provider::reach_provider;
 
 #[tokio::main]
-pub async fn fetch_and_parse_xml_biorxiv(
+pub async fn fetch_and_parse_xml_medrxiv(
     vec_of_links: Vec<&str>,
     vec_of_keys: Vec<&str>,
 ) -> HashMap<String, MedrxivPageStruct> {
     let time = Instant::now();
-    let mut biorxiv_structs_vec: HashMap<String, MedrxivPageStruct> =
+    let mut medrxiv_structs_vec: HashMap<String, MedrxivPageStruct> =
         HashMap::with_capacity(vec_of_links.len());
     let client = Client::new();
     println!("starting fetching medrxiv...");
@@ -49,7 +49,7 @@ pub async fn fetch_and_parse_xml_biorxiv(
                 let slice: &[u8] = &b;
                 let converted_str = str::from_utf8(&slice).unwrap();
                 let mut dots_unfiltered_str = converted_str.to_string();
-                // расписать случай если не найдет посты
+                dots_unfiltered_str.remove(0);//ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
                 let mut count_for_items = 0;
                 loop {
                     match dots_unfiltered_str.find("<dc:title>") {
@@ -71,23 +71,23 @@ pub async fn fetch_and_parse_xml_biorxiv(
                     }
                 }
                 if count_for_items > 0 {
-                    let biorvix_struct: XmlMedrxivParserStruct =
+                    let medrvix_struct: XmlMedrxivParserStruct =
                         from_str(&dots_unfiltered_str).unwrap();
                     let mut count = 0;
-                    let mut biorxiv_page_struct: MedrxivPageStruct = MedrxivPageStruct::new();
+                    let mut medrxiv_page_struct: MedrxivPageStruct = MedrxivPageStruct::new();
                     let mut xml_parser_one_string_creators =
-                        biorvix_struct.items[count].creator.clone();
+                        medrvix_struct.items[count].creator.clone();
                     loop {
-                        if count < biorvix_struct.items.len() {
-                            biorxiv_page_struct.items[count].title =
-                                biorvix_struct.items[count].title.clone();
-                            biorxiv_page_struct.items[count].link =
-                                biorvix_struct.items[count].link.clone();
-                            biorxiv_page_struct.items[count].description =
-                                biorvix_struct.items[count].description.clone();
+                        if count < medrvix_struct.items.len() {
+                            medrxiv_page_struct.items[count].title =
+                                medrvix_struct.items[count].title.clone();
+                            medrxiv_page_struct.items[count].link =
+                                medrvix_struct.items[count].link.clone();
+                            medrxiv_page_struct.items[count].description =
+                                medrvix_struct.items[count].description.clone();
                             match xml_parser_one_string_creators.find("., ") {
                                 Some(end_of_creator) => {
-                                    biorxiv_page_struct.items[count].creators.push(
+                                    medrxiv_page_struct.items[count].creators.push(
                                         xml_parser_one_string_creators[..end_of_creator]
                                             .to_string(),
                                     );
@@ -96,29 +96,29 @@ pub async fn fetch_and_parse_xml_biorxiv(
                                         .to_string();
                                 }
                                 None => {
-                                    biorxiv_page_struct.items[count]
+                                    medrxiv_page_struct.items[count]
                                         .creators
                                         .push(xml_parser_one_string_creators.clone());
                                     break;
                                 }
                             }
-                            biorxiv_page_struct.items[count].date =
-                                biorvix_struct.items[count].date.clone();
-                            biorxiv_page_struct.items[count].publisher =
-                                biorvix_struct.items[count].publisher.clone();
+                            medrxiv_page_struct.items[count].date =
+                                medrvix_struct.items[count].date.clone();
+                            medrxiv_page_struct.items[count].publisher =
+                                medrvix_struct.items[count].publisher.clone();
                             count += 1;
                         } else {
                             break;
                         }
                     }
-                    biorxiv_structs_vec
-                        .insert(vec_of_keys[key_count].to_string(), biorxiv_page_struct);
+                    medrxiv_structs_vec
+                        .insert(vec_of_keys[key_count].to_string(), medrxiv_page_struct);
                 } else {
                     println!("(medarxiv) no items for key {}", vec_of_keys[key_count]);
-                    let useless_biorxiv_page_struct = MedrxivPageStruct::new();
-                    biorxiv_structs_vec.insert(
+                    let useless_medrxiv_page_struct = MedrxivPageStruct::new();
+                    medrxiv_structs_vec.insert(
                         vec_of_keys[key_count].to_string(),
-                        useless_biorxiv_page_struct,
+                        useless_medrxiv_page_struct,
                     );
                 }
             }
@@ -131,10 +131,10 @@ pub async fn fetch_and_parse_xml_biorxiv(
         key_count += 1;
     }
     println!(
-        "biorxiv xml parsing (in seconds) = {} ",
+        "medrxiv xml parsing (in seconds) = {} ",
         time.elapsed().as_secs()
     );
-    biorxiv_structs_vec.clone()
+    medrxiv_structs_vec.clone()
 }
 
 pub fn medrxiv_part() -> bool {
@@ -146,7 +146,7 @@ pub fn medrxiv_part() -> bool {
         );
         let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
         let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
-        let vec_of_vec_of_strings = fetch_and_parse_xml_biorxiv(vec_of_links, vec_of_keys);
+        let vec_of_vec_of_strings = fetch_and_parse_xml_medrxiv(vec_of_links, vec_of_keys);
         // vec_of_vec_of_strings //HashMap<String, MedrxivPageStruct>
         return true; //чекнуть действительно ли в векторе есть хоть шот полезное
                      // vec_of_vec_of_strings //еще надо подумать куда это записывать
