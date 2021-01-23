@@ -13,3 +13,17 @@ remove eprints and put print_error_red instead
 // расписать случай если не найдет посты
                 match dots_unfiltered_str.find("</item>") {
 ---------
+rename arxiv fetch to arxiv part
+---
+items: vec![BiorxivPageStructItem::new(); 30],
+whats strange what only 30...weird
+-------
+arxiv_fetch_and_parse_xml and others cut to 2 different functions
+------
+rename some local variables in functions
+------
+add warnings prints
+------
+add green prints
+-----
+make parallel parsing
