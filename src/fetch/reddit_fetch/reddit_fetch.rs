@@ -1,15 +1,8 @@
 use crate::fetch::reddit_fetch::get_reddit_posts::get_reddit_posts;
-
-
 use crate::config::REDDIT_URL;
-
 use crate::get_group_names::get_subreddits::get_subreddits;
-
 use crate::check_provider::can_i_reach_provider::reach_provider;
-use std::time::Instant;
-
 use crate::authorization::reddit::authorization_info;
-
 use crate::authorization::reddit::reddit_authorization;
 
 pub fn reddit_part() {

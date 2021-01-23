@@ -5,6 +5,7 @@ mod fetch {
     pub mod arxiv_fetch{
         pub mod arxiv_structures;
         pub mod arxiv_fetch;
+        pub mod arxiv_fetch_and_parse_xml;
     }
     pub mod biorxiv_fetch{
         pub mod biorxiv_structures;
@@ -78,7 +79,3 @@ fn main() {
     }
     println!("main done in {} seconds", time.elapsed().as_secs());
 }
-// let biorxiv_vec = biorxiv_part();
-// for (key, value) in biorxiv_vec {
-//     print!("{:#?}\n", key);
-// }

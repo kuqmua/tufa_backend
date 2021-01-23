@@ -1,6 +1,7 @@
 extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
+
 use futures::future;
 use reqwest::Client;
 use serde_xml_rs::from_str;
@@ -10,13 +11,9 @@ use std::time::Instant;
 use tokio;
 
 use crate::config::MEDRXIV_URL;
-
-
 use crate::fetch::medrxiv_fetch::medrxiv_structures::MedrxivPageStruct;
 use crate::fetch::medrxiv_fetch::medrxiv_structures::XmlMedrxivParserStruct;
-
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
-
 use crate::check_provider::can_i_reach_provider::reach_provider;
 
 #[tokio::main]
