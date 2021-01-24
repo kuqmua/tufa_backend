@@ -1,17 +1,17 @@
 use futures::future;
 use reqwest::Client;
 use serde_xml_rs::from_str;
+use std::collections::HashMap;
+use std::str;
 use std::time::Instant;
 use tokio;
-use std::str;
-use std::collections::HashMap;
 
-use crate::fetch::arxiv_fetch::arxiv_structures::Creator;
+use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
+use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPost;
 use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPostStruct;
+use crate::fetch::arxiv_fetch::arxiv_structures::Creator;
 use crate::fetch::arxiv_fetch::arxiv_structures::XmlArxivParserStruct;
-use crate::config::ENABLE_PRINTS_ARXIV;
-use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]
@@ -32,7 +32,11 @@ pub async fn arxiv_fetch_and_parse_xml(
     }))
     .await;
     if ENABLE_PRINTS_ARXIV {
-        println!("fetch in {} seconds, arxiv bodies: {} ", time.elapsed().as_secs(), bodies.len());
+        println!(
+            "fetch in {} seconds, arxiv bodies: {} ",
+            time.elapsed().as_secs(),
+            bodies.len()
+        );
     }
     let mut key_count = 0;
     for b in bodies {
@@ -110,7 +114,7 @@ pub async fn arxiv_fetch_and_parse_xml(
                     print_error_red(
                         file!().to_string(),
                         line!().to_string(),
-                        e.to_string() + &"\nkey count: ".to_string() + &key_count.to_string()
+                        e.to_string() + &"\nkey count: ".to_string() + &key_count.to_string(),
                     )
                 }
             }
@@ -118,7 +122,11 @@ pub async fn arxiv_fetch_and_parse_xml(
         key_count += 1;
     }
     if ENABLE_PRINTS_ARXIV {
-        println!("parsing in {} seconds, arxiv bodies: {} ", time.elapsed().as_secs(), arxiv_structs_vec.len());
+        println!(
+            "parsing in {} seconds, arxiv bodies: {} ",
+            time.elapsed().as_secs(),
+            arxiv_structs_vec.len()
+        );
     }
     arxiv_structs_vec.clone()
 }

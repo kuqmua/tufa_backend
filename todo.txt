@@ -27,3 +27,7 @@ add warnings prints
 add green prints
 -----
 make parallel parsing
+-----
+"editor.formatOnSave": true, in settings.json :slight_smile: or per language: "[rust]": { "editor.formatOnSave": true, },
+-------
+делать хеш от поста и отправлять хеши постов с клиента на сервер чтобы сервер видел отправлял ли уже эти посты или нет
