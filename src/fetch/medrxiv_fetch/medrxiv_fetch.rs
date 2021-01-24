@@ -2,10 +2,10 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
+use super::medrxiv_fetch_and_parse_xml::medrxiv_fetch_and_parse_xml;
 use crate::check_provider::can_i_reach_provider::reach_provider;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
 use crate::config::MEDRXIV_URL;
-use crate::fetch::medrxiv_fetch::medrxiv_fetch_and_parse_xml::medrxiv_fetch_and_parse_xml;
 use std::collections::HashMap;
 use std::str;
 

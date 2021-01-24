@@ -6,10 +6,10 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
+use super::medrxiv_structures::MedrxivPageStruct;
+use super::medrxiv_structures::XmlMedrxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
-use crate::fetch::medrxiv_fetch::medrxiv_structures::MedrxivPageStruct;
-use crate::fetch::medrxiv_fetch::medrxiv_structures::XmlMedrxivParserStruct;
 use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]

@@ -6,12 +6,12 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
+use super::arxiv_structures::ArxivPost;
+use super::arxiv_structures::ArxivPostStruct;
+use super::arxiv_structures::Creator;
+use super::arxiv_structures::XmlArxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
-use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPost;
-use crate::fetch::arxiv_fetch::arxiv_structures::ArxivPostStruct;
-use crate::fetch::arxiv_fetch::arxiv_structures::Creator;
-use crate::fetch::arxiv_fetch::arxiv_structures::XmlArxivParserStruct;
 use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]

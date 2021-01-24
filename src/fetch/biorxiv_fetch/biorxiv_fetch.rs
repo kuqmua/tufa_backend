@@ -5,10 +5,10 @@ extern crate serde_xml_rs;
 use std::collections::HashMap;
 use std::str;
 
+use super::biorxiv_fetch_and_parse_xml::biorxiv_fetch_and_parse_xml;
 use crate::check_provider::can_i_reach_provider::reach_provider;
 use crate::config::BIORXIV_URL;
 use crate::config::ENABLE_PRINTS_BIORXIV;
-use crate::fetch::biorxiv_fetch::biorxiv_fetch_and_parse_xml::biorxiv_fetch_and_parse_xml;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 
 pub fn biorxiv_part() -> bool {

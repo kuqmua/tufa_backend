@@ -10,12 +10,12 @@ use tokio;
 
 use super::parse_every_children::parse_every_children;
 use super::push_names_into_two_layer_result_vec::push_names_into_two_layer_result_vec;
+use super::reddit_json_structs::casted::CastedRedditJsonStruct;
+use super::reddit_json_structs::casted::Children;
+use super::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 use super::subreddits_into_urls::subreddits_into_urls;
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_REDDIT;
-use crate::fetch::reddit_fetch::reddit_json_structs::casted::CastedRedditJsonStruct;
-use crate::fetch::reddit_fetch::reddit_json_structs::casted::Children;
-use crate::fetch::reddit_fetch::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]

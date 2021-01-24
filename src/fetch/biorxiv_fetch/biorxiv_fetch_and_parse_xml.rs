@@ -6,10 +6,10 @@ use std::str;
 use std::time::Instant;
 use tokio;
 
+use super::biorxiv_structures::BiorxivPageStruct;
+use super::biorxiv_structures::XmlBiorxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
-use crate::fetch::biorxiv_fetch::biorxiv_structures::BiorxivPageStruct;
-use crate::fetch::biorxiv_fetch::biorxiv_structures::XmlBiorxivParserStruct;
 use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]
