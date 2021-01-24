@@ -19,7 +19,10 @@ mod fetch {
     }
     pub mod reddit_fetch {
         pub mod get_reddit_posts;
+        pub mod parse_every_children;
+        pub mod push_names_into_two_layer_result_vec;
         pub mod reddit_fetch;
+        pub mod subreddits_into_urls;
         pub mod reddit_json_structs {
             pub mod casted;
             pub mod used;

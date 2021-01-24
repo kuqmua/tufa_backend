@@ -8,10 +8,15 @@ use reqwest::Client;
 use std::time::Instant;
 use tokio;
 
+use super::parse_every_children::parse_every_children;
+use super::push_names_into_two_layer_result_vec::push_names_into_two_layer_result_vec;
+use super::subreddits_into_urls::subreddits_into_urls;
+use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
+use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::fetch::reddit_fetch::reddit_json_structs::casted::CastedRedditJsonStruct;
 use crate::fetch::reddit_fetch::reddit_json_structs::casted::Children;
-use crate::fetch::reddit_fetch::reddit_json_structs::used::UsedRedditJsonStruct;
 use crate::fetch::reddit_fetch::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::override_prints::override_prints::print_error_red;
 
 #[tokio::main]
 pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
@@ -31,7 +36,13 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
-    println!("fetch in {} seconds, reddit bodies: {} ", time.elapsed().as_secs(), bodies.len());
+    if ENABLE_PRINTS_REDDIT {
+        println!(
+            "fetch in {} seconds, reddit bodies: {} ",
+            time.elapsed().as_secs(),
+            bodies.len()
+        );
+    };
     let mut count = 0;
     for b in bodies {
         match b {
@@ -43,71 +54,30 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
                     two_layer_result_vec[count] = parse_every_children(&u, &children);
                 //println!("{}", two_layer_result_vec[count].posts[0].author);
                 } else {
-                    print!("u.data.children.len() > 0 NOPE");
+                    if ENABLE_ERROR_PRINTS_REDDIT {
+                        print_error_red(
+                            file!().to_string(),
+                            line!().to_string(),
+                            "u.data.children.len() > 0 NOPE".to_string(),
+                        )
+                    }
                 }
                 count += 1;
             }
             Err(e) => {
                 count += 1;
-                eprintln!("Got an error: {}", e)
+                if ENABLE_ERROR_PRINTS_REDDIT {
+                    print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                }
             }
         }
     }
-    println!("parsing in {} seconds, reddit bodies: {} ", time.elapsed().as_secs(), two_layer_result_vec.len());
+    if ENABLE_PRINTS_REDDIT {
+        println!(
+            "parsing in {} seconds, reddit bodies: {} ",
+            time.elapsed().as_secs(),
+            two_layer_result_vec.len()
+        );
+    };
     return two_layer_result_vec;
-}
-
-fn subreddits_into_urls(subreddits: Vec<&str>) -> Vec<String> {
-    let start: &str = "https://www.reddit.com/r/";
-    let end: &str = "/new.json";
-    let mut subreddits_urls = Vec::with_capacity(subreddits.len());
-    for subreddit in subreddits {
-        let subreddit_url = format!("{}{}{}", start, subreddit, end);
-        subreddits_urls.push(subreddit_url)
-    }
-    subreddits_urls
-}
-
-fn push_names_into_two_layer_result_vec(
-    subreddits_vec: &Vec<&str>,
-) -> Vec<VecOfUsedRedditJsonStruct> {
-    let mut subreddit_names_vec: Vec<VecOfUsedRedditJsonStruct> =
-        Vec::with_capacity(subreddits_vec.len());
-    let mut count = 0;
-    while count < subreddits_vec.len() {
-        subreddit_names_vec.push(VecOfUsedRedditJsonStruct::new());
-        count += 1;
-    }
-    subreddit_names_vec
-}
-
-fn parse_every_children(
-    u: &CastedRedditJsonStruct,
-    children: &Vec<Children>,
-) -> VecOfUsedRedditJsonStruct {
-    let mut vec_of_children = VecOfUsedRedditJsonStruct::new();
-    let mut count = 0;
-    while count < children.len() {
-        let mut child = UsedRedditJsonStruct::new();
-        child.url = u.data.children[count].data.url.clone();
-        child.subreddit = u.data.children[count].data.subreddit.clone();
-        //child.subreddit = &u.data.children[count].data.subreddit.clone();
-        child.id = u.data.children[count].data.id.clone();
-        child.author = u.data.children[count].data.author.clone();
-        child.title = u.data.children[count].data.title.clone();
-        child.domain = u.data.children[count].data.domain.clone();
-        child.permalink = u.data.children[count].data.permalink.clone();
-        child.thumbnail = u.data.children[count].data.thumbnail.clone();
-        child.created_utc = u.data.children[count].data.created_utc.clone();
-        child.ups = u.data.children[count].data.ups.clone();
-        child.score = u.data.children[count].data.score.clone();
-        child.num_comments = u.data.children[count].data.num_comments.clone();
-        child.over_18 = u.data.children[count].data.over_18.clone();
-        child.quarantine = u.data.children[count].data.quarantine.clone();
-        child.is_self = u.data.children[count].data.is_self.clone();
-        child.saved = u.data.children[count].data.saved.clone();
-        vec_of_children.posts[count] = child;
-        count += 1;
-    }
-    vec_of_children
 }
