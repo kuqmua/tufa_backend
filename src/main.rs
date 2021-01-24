@@ -14,6 +14,7 @@ mod fetch {
     }
     pub mod medrxiv_fetch {
         pub mod medrxiv_fetch;
+        pub mod medrxiv_fetch_and_parse_xml;
         pub mod medrxiv_structures;
     }
     pub mod reddit_fetch {
