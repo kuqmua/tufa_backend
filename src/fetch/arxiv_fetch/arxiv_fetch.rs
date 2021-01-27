@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::str;
 
 use super::arxiv_fetch_and_parse_xml::do_something; //arxiv_fetch_and_parse_xml
-use crate::check_provider::can_i_reach_provider::reach_provider;
+                                                    // use crate::check_provider::can_i_reach_provider::reach_provider;
 use crate::config::ARXIV_URL;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;

@@ -1,4 +1,4 @@
-use crossbeam::scope;
+// use crossbeam::scope;
 
 // use futures::future;
 // use reqwest::{Client, Response};
@@ -34,8 +34,6 @@ use crossbeam::scope;
 //     let arcmap: HashMap<String, ArxivPostStruct> = HashMap::with_capacity(vec_links_len);
 //     println!("1");
 //     let arcmap = Arc::new(Mutex::new(arcmap));
-
-//     // let arcmapt = Arc::clone(&arcmap);
 //     tokio::spawn(async move {
 //         let arcmapt = arcmap.clone();
 //         let resp = client.get(vec_of_links[0]).send().await;
@@ -118,33 +116,6 @@ use crossbeam::scope;
 //             Err(e) => println!("{}", e),
 //         }
 //     });
-
-//     // handle.await.unwrap();
-//     println!("2");
-//     // let s = Arc::try_unwrap(arcmap);
-//     // let mut arcmapt: HashMap<String, ArxivPostStruct> = HashMap::new();
-//     // println!("3");
-//     // match s {
-//     //     Ok(oki) => {
-//     //         println!("yiiii");
-//     //         let f = oki.into_inner();
-//     //         match f {
-//     //             Ok(okidoki) => {
-//     //                 println!("yiiii2");
-//     //                 arcmapt = okidoki;
-//     //             }
-//     //             Err(e) => eprint!("ffff{:#?}", e),
-//     //         }
-//     //     }
-//     //     Err(e) => {
-//     //         s.f();
-//     //         eprint!("f2{:#?}", e)
-//     //     }
-//     // }
-//     println!("4");
-//     //Mutex<HashMap<std::string::String, ArxivPostStruct>>
-//     // let arcmapt: HashMap<String, ArxivPostStruct> =
-//     //     Arc::try_unwrap(arcmap).unwrap().into_inner().unwrap();
 //     arcmap
 // }
 // use std::collections::HashMap;
@@ -194,17 +165,175 @@ use crossbeam::scope;
 
 //     results
 // }
-pub fn do_something() -> Vec<i32> {
-    let mut results = vec![0, 0, 0, 0];
+// use super::arxiv_structures::ArxivPost;
+// use super::arxiv_structures::ArxivPostStruct;
+// // use super::arxiv_structures::Creator;
+// // use super::arxiv_structures::XmlArxivParserStruct;
+// use std::collections::HashMap;
+// pub fn do_something() -> Vec<ArxivPostStruct> {
+//     let vec_links_len = 32;
+//     // Vec::with_capacity(5);
+//     let useless_arxiv_page_struct_filler = ArxivPostStruct::new();
+//     // let mut arcmap: HashMap<String, ArxivPostStruct> = HashMap::with_capacity(vec_links_len);
+//     let mut results = vec![useless_arxiv_page_struct_filler; vec_links_len];
+//     let mut o = 0;
+//     let client = Client::new();
+//     // use std::sync::Arc;
+//     // use std::sync::Mutex;
 
+//     crossbeam::scope(|scope| {
+//         for i in &mut results {
+//             scope.spawn(move |_| {
+//                 // *i += 1;
+//                 let resp = client.get(vec_of_links[0]).send().await;
+//                 println!("ss");
+//                 let useless_arxiv_page_struct = ArxivPostStruct::new();
+//                 // arcmap
+//                 //     .lock()
+//                 //     .unwrap()
+//                 //     .insert(vec_of_keys[0].to_string(), useless_arxiv_page_struct);
+//                 *i = useless_arxiv_page_struct;
+//             });
+//             o += 1;
+//         }
+//     });
+
+//     results
+// }
+
+// use futures::future;
+
+// use serde_xml_rs::from_str;
+// use std::collections::hash_map::RandomState;
+use std::collections::HashMap;
+// use std::str;
+use std::sync::Arc;
+use std::sync::Mutex;
+// use std::thread;
+// use std::time::Instant;
+
+// use tokio::sync::mpsc::channel;
+
+// use tokio::sync::mpsc;
+use std::thread;
+// use tokio::runtime::Runtime;
+// use tokio::runtime::Runtime;
+// use tokio::sync::mpsc;
+// #[tokio::main]
+use futures::future::Future;
+
+// use crossbeam::scope;
+// use reqwest::blocking;
+use reqwest::{self, Response};
+use std::error::Error;
+use tokio;
+use tokio::task;
+pub fn do_something() -> Vec<i32> {
+    let mut results = vec![0, 0];
+    // let results = vec![
+    //     "http://export.arxiv.org/rss/astro-ph.CO",
+    //     "http://export.arxiv.org/rss/astro-ph.EP",
+    // ];
+    let mut h = 0;
     crossbeam::scope(|scope| {
         for i in &mut results {
             scope.spawn(move |_| {
-                *i += 1;
-                println!("ss")
+                // let (tx, mut rx) = tokio::sync::mpsc::channel(1);
+                // task::spawn(async move {
+                //     tx.send(getreesp().await);
+                // });
+                // let res = rx.blocking_recv();
+
+                // match resp {
+                //     Ok(file) => file,
+                //     Err(e) => return Err(e),
+                // };
+                // .json::<HashMap<String, String>>();
+                marr("http://export.arxiv.org/rss/astro-ph.CO");
+                // let f = getreesp();
+                // match f {
+                //     Some(s) => {
+                //         println!("1");
+                //         return true;
+                //     }
+                //     N => {
+                //         println!("2");
+                //         return false;
+                //     }
+                // }
+                // println!("{:#?}", f);
+                // *i += 1;
             });
+            h += 1;
         }
     });
-
     results
 }
+// fn block_on_nnaa<F: Future>(f: F) -> F::Output {
+//     let (tx, rx) = tokio::sync::mpsc::channel(1);
+//     tokio::task::spawn(async move {
+//         tx.send(f.await);
+//     });
+//     rx.blocking_recv().expect("future panicked")
+// }
+// async fn getreesp() -> bool {
+//     let body = reqwest::blocking::get(); //.text()?
+//     match body {
+//         Ok(s) => {
+//             println!("{:#?}", s.status() == reqwest::StatusCode::OK);
+//             return true;
+//         }
+//         Err(e) => {
+//             println!("{:#?}", e);
+//             return false;
+//         }
+//     }
+//     // Ok(())
+//     //.text()?
+//     // match resp {
+//     //     Some(suc) => println!("fi"),
+//     //     None => println!("f"),
+//     // }
+// }
+fn marr(link: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let mut res = reqwest::blocking::get(link)?;
+
+    println!("Status: {}", res.status());
+    println!("Headers:\n{:?}", res.headers());
+
+    // copy the response body directly to stdout
+    // res.copy_to(&mut std::io::stdout())?;
+
+    println!("\n\nDone.");
+    Ok(())
+}
+
+// pub async fn do_something(
+// ) -> Arc<std::sync::Mutex<HashMap<std::string::String, std::string::String>>> {
+//     // let mut results: Vec<i32> = vec![0, 0, 0, 0];
+//     let hsmap: HashMap<String, String> = HashMap::new();
+//     let arcmap = Arc::new(Mutex::new(hsmap));
+//     let mut threads_vec = vec![];
+//     // let arcmap = Arc::new(Mutex::new(results));
+//     threads_vec.push(thread::spawn(move || {
+//         let (tx, mut rx) = tokio::sync::mpsc::channel(1);
+//         println!("2");
+//         // *i += 1;
+//         // arcmap.lock().unwrap();
+
+//         // arcmap[0] += 1;
+//         //                                     .insert(vec_of_keys[0].to_string(), arxiv_page_struct);
+//         &arcmap
+//             .lock()
+//             .unwrap()
+//             .insert("something".to_string(), "something".to_string());
+//         println!("1");
+//         task::spawn(async move {
+//             tx.send(getreesp().await);
+//         });
+//         println!("3");
+//         let res = rx.blocking_recv();
+//     }));
+
+//     arcmap
+// }

@@ -12,13 +12,14 @@ futures = "0.3.5"
 futures-async-stream = "0.2.2"
 #google-youtube3 = "1.0.13+20200402" - не видит установленное openssl, под линуксом все норм
 # quick-xml = "0.18.1"
-reqwest = {version = "0.10.6", features = ["json"]}
+reqwest = {version = "0.11.0", features = ["json","blocking"]}
 roux = "0.4.0"
 serde = "1.0"
 serde-xml-rs = "0.4.0"
 serde_derive = "1.0"
 serde_json = "1.0"
-tokio = {version = "0.2.21", features = ["macros"]}
+tokio = "1.1.0"
+# tokio = {version = "0.2.21", features = ["macros"]}
 colored = "2"
 crossbeam = "0.8.0"
 # RustyXML = "0.3.0"
