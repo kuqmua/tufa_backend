@@ -1,3 +1,5 @@
+use crossbeam::scope;
+
 // use futures::future;
 // use reqwest::{Client, Response};
 // use serde_xml_rs::from_str;
@@ -165,28 +167,44 @@
 //     let arcmap: HashMap<String, String> = Arc::try_unwrap(arcmap).unwrap().into_inner().unwrap();
 //     arcmap
 // }
-use std::sync::{Arc, Mutex};
-use std::thread;
+// use std::sync::{Arc, Mutex};
+// use std::thread;
 
-async fn thread_func(results: Arc<Mutex<Vec<i32>>>, thread_id: i32) {
-    let mut results = results.lock().unwrap();
-    println!("dsgsdsd");
-    results[thread_id as usize] = 5;
-}
+// async fn thread_func(results: Arc<Mutex<Vec<i32>>>, thread_id: i32) {
+//     println!("dsg");
+//     let mut results = results.lock().unwrap();
 
-pub fn do_something() -> Arc<Mutex<Vec<i32>>> {
-    let results = Arc::new(Mutex::new(vec![0; 5]));
+//     results[thread_id as usize] = 5;
+//     println!("dsgsdsd {:#?}", results);
+// }
 
-    let guards: Vec<_> = (0..5)
-        .map(|i| {
-            let results = results.clone();
-            thread::spawn(move || thread_func(results, i))
-        })
-        .collect();
+// pub fn do_something() -> Arc<Mutex<Vec<i32>>> {
+//     let results = Arc::new(Mutex::new(vec![0; 5]));
 
-    for guard in guards {
-        guard.join();
-    }
+//     let guards: Vec<_> = (0..5)
+//         .map(|i| {
+//             let results = results.clone();
+//             thread::spawn(move || thread_func(results, i))
+//         })
+//         .collect();
+
+//     for guard in guards {
+//         guard.join();
+//     }
+
+//     results
+// }
+pub fn do_something() -> Vec<i32> {
+    let mut results = vec![0, 0, 0, 0];
+
+    crossbeam::scope(|scope| {
+        for i in &mut results {
+            scope.spawn(move |_| {
+                *i += 1;
+                println!("ss")
+            });
+        }
+    });
 
     results
 }

@@ -25,9 +25,9 @@ pub fn arxiv_part() -> bool {
     // let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
     // let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
     let fff = do_something(); //тут есть возвращаемое значение let vec_of_vec_of_strings =//&vec_of_links, &vec_of_keys
-    let jjj: Vec<i32> = Arc::try_unwrap(fff).unwrap().into_inner().unwrap();
-    //  HashMap<String, ArxivPostStruct>
-    println!("{:#?} elements in Arxiv HashMap", jjj);
+                              // let jjj: Vec<i32> = Arc::try_unwrap(fff).unwrap().into_inner().unwrap();
+                              //  HashMap<String, ArxivPostStruct>
+    println!("{:#?} elements in Arxiv HashMap", fff);
     return true; //чекнуть действительно ли в векторе есть хоть шот полезное
                  // } else {
                  // return false;

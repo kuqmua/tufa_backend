@@ -21,3 +21,17 @@ pub async fn do_something() -> HashMap<String, String> {
     let arcmap: HashMap<String, String> = Arc::try_unwrap(arcmap).unwrap().into_inner().unwrap();
     arcmap
 }
+
+
+
+-------
+fn parent() {
+    let mut vec = Vec::new();
+    // fill the vector
+    thread::spawn(|| {
+        print_vec(&vec)
+    })
+}
+
+
+let arcmapt = Arc::clone(&arcmap);

@@ -36,6 +36,8 @@ make parallel parsing
 ----------------------
 you need to ensure that the Arc has exactly one strong reference and the Mutex is not poisoned
 -------
+Rc<RefCell<Vec<T>>>
+-------
 Xml::CharacterNode(ref msg) => {}
                                             Xml::CDATANode(ref msg) => {
                                                 println!("3");
