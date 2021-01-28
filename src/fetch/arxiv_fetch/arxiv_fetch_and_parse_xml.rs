@@ -229,14 +229,23 @@ use std::error::Error;
 use tokio;
 use tokio::task;
 pub fn do_something() -> Vec<i32> {
-    let mut results = vec![0, 0];
+    //HashMap<& str, i32>
+    let mut arxiv_sections_links: HashMap<&str, i32> = [
+        ("http://export.arxiv.org/rss/astro-ph.CO", 0),
+        ("http://export.arxiv.org/rss/astro-ph.EP", 0),
+        ("http://export.arxiv.org/rss/astro-ph.GA", 0),
+    ]
+    .iter()
+    .cloned()
+    .collect();
+    let mut results = vec![0; 2];
     // let results = vec![
     //     "http://export.arxiv.org/rss/astro-ph.CO",
     //     "http://export.arxiv.org/rss/astro-ph.EP",
     // ];
     let mut h = 0;
-    crossbeam::scope(|scope| {
-        for i in &mut results {
+    let gg = crossbeam::scope(|scope| {
+        for (key, value) in &mut arxiv_sections_links {
             scope.spawn(move |_| {
                 // let (tx, mut rx) = tokio::sync::mpsc::channel(1);
                 // task::spawn(async move {
@@ -249,7 +258,8 @@ pub fn do_something() -> Vec<i32> {
                 //     Err(e) => return Err(e),
                 // };
                 // .json::<HashMap<String, String>>();
-                marr("http://export.arxiv.org/rss/astro-ph.CO");
+                let ggg = marr(key);
+                println!("ggg {:#?}", ggg);
                 // let f = getreesp();
                 // match f {
                 //     Some(s) => {
@@ -262,11 +272,12 @@ pub fn do_something() -> Vec<i32> {
                 //     }
                 // }
                 // println!("{:#?}", f);
-                // *i += 1;
+                *value += 1;
             });
             h += 1;
         }
     });
+    println!("arxiv_sections_links {:#?}", arxiv_sections_links);
     results
 }
 // fn block_on_nnaa<F: Future>(f: F) -> F::Output {
@@ -299,7 +310,7 @@ fn marr(link: &str) -> Result<(), Box<dyn std::error::Error>> {
     let mut res = reqwest::blocking::get(link)?;
 
     println!("Status: {}", res.status());
-    println!("Headers:\n{:?}", res.headers());
+    println!("Body:\n{:?}", res.text());
 
     // copy the response body directly to stdout
     // res.copy_to(&mut std::io::stdout())?;
