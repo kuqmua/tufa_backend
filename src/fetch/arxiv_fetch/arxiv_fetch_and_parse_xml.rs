@@ -100,7 +100,23 @@ pub async fn do_something() -> HashMap<String, ArxivPostStruct>{
     arcmap
 }
 
-
+// let mut arxiv_sections_links: HashMap<String, String> = [
+//         (
+//             "http://export.arxiv.org/rss/astro-ph.CO".to_string(),
+//             "1".to_string(),
+//         ),
+//         (
+//             "http://export.arxiv.org/rss/astro-ph.EP".to_string(),
+//             "2".to_string(),
+//         ),
+//         (
+//             "http://export.arxiv.org/rss/astro-ph.GA".to_string(),
+//             "3".to_string(),
+//         ),
+//     ]
+//     .iter()
+//     .cloned()
+//     .collect();
 pub fn do_something() -> HashMap<String, String> {
     let time = Instant::now();
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
@@ -116,29 +132,13 @@ pub fn do_something() -> HashMap<String, String> {
         hashmap_to_return.insert(vec_of_keys[q].to_string(), tuple);
         q +=1;
     }
-    let mut arxiv_sections_links: HashMap<String, String> = [
-        (
-            "http://export.arxiv.org/rss/astro-ph.CO".to_string(),
-            "1".to_string(),
-        ),
-        (
-            "http://export.arxiv.org/rss/astro-ph.EP".to_string(),
-            "2".to_string(),
-        ),
-        (
-            "http://export.arxiv.org/rss/astro-ph.GA".to_string(),
-            "3".to_string(),
-        ),
-    ]
-    .iter()
-    .cloned()
-    .collect();
+    
     // let mut h = 0;
-    let gg = crossbeam::scope(|scope| {
-        for (key, value) in &mut arxiv_sections_links {
+    let crossbeam_result = crossbeam::scope(|scope| {
+        for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let ggg = marr(key);
-                println!("ggg {:#?}", ggg);
+                let fetch_result = fetch_link(key);
+                println!("ggg {:#?}", fetch_result);
                 let b: String;
                 match ggg {
                     Ok(norm) => {
@@ -159,21 +159,24 @@ pub fn do_something() -> HashMap<String, String> {
     arxiv_sections_links
 }
 
-fn marr(link: &str) -> Result<String, Box<dyn std::error::Error>> {
+fn fetch_link(link: &str) -> Result<String, Box<dyn std::error::Error>> {
+    //add link identifire here for better user exp
     let res = reqwest::blocking::get(link)?;
-    println!("Status: {}", res.status());
+    println!("fetch_link status: {}", res.status());
     let b: String;
-    let s = res.text();
-    match s {
-        Ok(norm) => {
-            println!("{}", norm);
-            b = norm;
+    if res.status() == reqwest::StatusCode::OK {
+        let s = res.text();
+        match s {
+            Ok(norm) => {
+                b = norm;
+            }
+            Err(e) => {
+                println!("err{}", e);
+                b = "res.text error".to_string();
+            }
         }
-        Err(e) => {
-            println!("err{}", e);
-            b = "fetcherr".to_string();
-        }
+    }else{
+        b = "fetch_link status: NOT OK ".to_string();
     }
-    println!("\n\nDone.");
     Ok(b)
 }
