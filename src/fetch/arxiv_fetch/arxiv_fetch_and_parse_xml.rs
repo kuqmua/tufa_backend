@@ -228,12 +228,13 @@ use reqwest::{self, Response};
 use std::error::Error;
 use tokio;
 use tokio::task;
-pub fn do_something() -> Vec<i32> {
-    //HashMap<& str, i32>
-    let mut arxiv_sections_links: HashMap<&str, i32> = [
-        ("http://export.arxiv.org/rss/astro-ph.CO", 0),
-        ("http://export.arxiv.org/rss/astro-ph.EP", 0),
-        ("http://export.arxiv.org/rss/astro-ph.GA", 0),
+pub fn do_something() -> HashMap<String, i32> {
+    //
+    //Vec<i32>
+    let mut arxiv_sections_links: HashMap<String, i32> = [
+        ("http://export.arxiv.org/rss/astro-ph.CO".to_string(), 0),
+        ("http://export.arxiv.org/rss/astro-ph.EP".to_string(), 0),
+        ("http://export.arxiv.org/rss/astro-ph.GA".to_string(), 0),
     ]
     .iter()
     .cloned()
@@ -278,7 +279,8 @@ pub fn do_something() -> Vec<i32> {
         }
     });
     println!("arxiv_sections_links {:#?}", arxiv_sections_links);
-    results
+    arxiv_sections_links
+    // results
 }
 // fn block_on_nnaa<F: Future>(f: F) -> F::Output {
 //     let (tx, rx) = tokio::sync::mpsc::channel(1);
@@ -306,17 +308,29 @@ pub fn do_something() -> Vec<i32> {
 //     //     None => println!("f"),
 //     // }
 // }
-fn marr(link: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn marr(link: &str) -> Result<String, Box<dyn std::error::Error>> {
     let mut res = reqwest::blocking::get(link)?;
 
     println!("Status: {}", res.status());
-    println!("Body:\n{:?}", res.text());
+    // println!("Body:\n{:?}", );
+    let b: String;
+    let s = res.text();
+    match s {
+        Ok(norm) => {
+            println!("{}", norm);
+            b = norm;
+        }
+        Err(e) => {
+            println!("err{}", e);
+            b = "fetcherr".to_string();
+        }
+    }
 
     // copy the response body directly to stdout
     // res.copy_to(&mut std::io::stdout())?;
 
     println!("\n\nDone.");
-    Ok(())
+    Ok(b)
 }
 
 // pub async fn do_something(
