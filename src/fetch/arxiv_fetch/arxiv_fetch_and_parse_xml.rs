@@ -117,7 +117,7 @@ use crate::override_prints::override_prints::print_error_red;
 //     .cloned()
 //     .collect();
 pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
-    // let time = Instant::now();
+    let time = Instant::now();
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
     let mut hashmap_to_return: HashMap<String, (String, ArxivPostStruct)> = HashMap::new();
     for (key, value) in arxiv_links_in_hash_map {
@@ -130,7 +130,7 @@ pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result = fetch_link(&value.0);
+                let fetch_result = fetch_link(&value.0, key);
                 match fetch_result {
                     Ok(fetch_string_result) => {
                         //add better error handling
@@ -139,6 +139,11 @@ pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
                         } else if fetch_string_result == "fetch_link status: NOT OK " {
                             println!("F2 for"); //, value.0
                         } else {
+                            println!(
+                                "fetch for {} done in {} seconds. starting parsing...",
+                                key,
+                                time.elapsed().as_secs()
+                            );
                             match fetch_string_result.find("</item>") {
                                 Some(_) => {
                                     let arxiv_struct: XmlArxivParserStruct =
@@ -200,6 +205,11 @@ pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
                                     }
                                 }
                             }
+                            println!(
+                                "ended parsing {} in {} seconds",
+                                key,
+                                time.elapsed().as_secs()
+                            );
                         }
                     }
                     Err(e) => println!(" fetch_result error {}", e),
@@ -213,10 +223,11 @@ pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
     hashmap_to_return
 }
 
-fn fetch_link(link: &str) -> Result<String, Box<dyn std::error::Error>> {
+fn fetch_link(link: &str, key: &str) -> Result<String, Box<dyn std::error::Error>> {
     //add link identifire here for better user exp
+    println!("start fetching for key: {}", key);
     let res = reqwest::blocking::get(link)?;
-    println!("fetch_link status: {}", res.status());
+    println!("fetch_link status: {} for key: {}", res.status(), key);
     let b: String;
     if res.status() == reqwest::StatusCode::OK {
         let s = res.text();
