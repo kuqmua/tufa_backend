@@ -14,91 +14,90 @@ use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::override_prints::override_prints::print_error_red;
 
+// pub async fn do_somethingh() -> HashMap<String, ArxivPostStruct>{
+//     tokio::spawn(async move {
+//         resp
+//         match resp {
+//             Ok(respok) => {
+//                 println!("{:#?}", respok.status() == reqwest::StatusCode::OK);
+//                 println!("fetch in {} seconds", time.elapsed().as_secs());
+//                 let g = respok.text().await;
+//                 match g {
+//                     Ok(text) => {
+//                         println!("fetch in {} seconds", time.elapsed().as_secs());
+//                         match text.find("</item>") {
+//                             Some(_) => {
+//                                 let arxiv_struct: XmlArxivParserStruct = from_str(&text).unwrap();
+//                                 let mut count = 0;
+//                                 let mut arxiv_page_struct: ArxivPostStruct = ArxivPostStruct::new();
+//                                 loop {
+//                                     if count < arxiv_struct.items.len() {
+//                                         let mut arxiv_post: ArxivPost = ArxivPost::new();
+//                                         arxiv_post.title = arxiv_struct.items[count].title.clone();
+//                                         arxiv_post.link = arxiv_struct.items[count].link.clone();
+//                                         arxiv_post.description =
+//                                             arxiv_struct.items[count].description.clone();
+//                                         let mut string_part_for_loop =
+//                                             arxiv_struct.items[count].creator.clone();
+//                                         while let Some(link_index_from_start) =
+//                                             string_part_for_loop.find("<a href=\"")
+//                                         {
+//                                             if let Some(link_index_from_end) =
+//                                                 string_part_for_loop.find("\">")
+//                                             {
+//                                                 if let Some(name_index_from_end) =
+//                                                     string_part_for_loop.find("</a>")
+//                                                 {
+//                                                     let mut creator = Creator::new();
+//                                                     creator.link = string_part_for_loop
+//                                                         [link_index_from_start + "<a href=\"".len()
+//                                                             ..link_index_from_end]
+//                                                         .to_string();
+//                                                     let name_index_from_start =
+//                                                         link_index_from_end + "\">".len();
+//                                                     creator.name = string_part_for_loop
+//                                                         [name_index_from_start
+//                                                             ..name_index_from_end]
+//                                                         .to_string();
+//                                                     string_part_for_loop = string_part_for_loop
+//                                                         [name_index_from_end + "\">".len()..]
+//                                                         .to_string();
+//                                                     arxiv_post.creators.push(creator);
+//                                                 }
+//                                             }
+//                                         }
 
-pub async fn do_something() -> HashMap<String, ArxivPostStruct>{
-    tokio::spawn(async move {
-        resp
-        match resp {
-            Ok(respok) => {
-                println!("{:#?}", respok.status() == reqwest::StatusCode::OK);
-                println!("fetch in {} seconds", time.elapsed().as_secs());
-                let g = respok.text().await;
-                match g {
-                    Ok(text) => {
-                        println!("fetch in {} seconds", time.elapsed().as_secs());
-                        match text.find("</item>") {
-                            Some(_) => {
-                                let arxiv_struct: XmlArxivParserStruct = from_str(&text).unwrap();
-                                let mut count = 0;
-                                let mut arxiv_page_struct: ArxivPostStruct = ArxivPostStruct::new();
-                                loop {
-                                    if count < arxiv_struct.items.len() {
-                                        let mut arxiv_post: ArxivPost = ArxivPost::new();
-                                        arxiv_post.title = arxiv_struct.items[count].title.clone();
-                                        arxiv_post.link = arxiv_struct.items[count].link.clone();
-                                        arxiv_post.description =
-                                            arxiv_struct.items[count].description.clone();
-                                        let mut string_part_for_loop =
-                                            arxiv_struct.items[count].creator.clone();
-                                        while let Some(link_index_from_start) =
-                                            string_part_for_loop.find("<a href=\"")
-                                        {
-                                            if let Some(link_index_from_end) =
-                                                string_part_for_loop.find("\">")
-                                            {
-                                                if let Some(name_index_from_end) =
-                                                    string_part_for_loop.find("</a>")
-                                                {
-                                                    let mut creator = Creator::new();
-                                                    creator.link = string_part_for_loop
-                                                        [link_index_from_start + "<a href=\"".len()
-                                                            ..link_index_from_end]
-                                                        .to_string();
-                                                    let name_index_from_start =
-                                                        link_index_from_end + "\">".len();
-                                                    creator.name = string_part_for_loop
-                                                        [name_index_from_start
-                                                            ..name_index_from_end]
-                                                        .to_string();
-                                                    string_part_for_loop = string_part_for_loop
-                                                        [name_index_from_end + "\">".len()..]
-                                                        .to_string();
-                                                    arxiv_post.creators.push(creator);
-                                                }
-                                            }
-                                        }
-
-                                        arxiv_page_struct.items.push(arxiv_post);
-                                        count += 1;
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                arcmapt
-                                    .lock()
-                                    .unwrap()
-                                    .insert(vec_of_keys[0].to_string(), arxiv_page_struct);
-                            }
-                            _ => {
-                                if ENABLE_PRINTS_ARXIV {
-                                    println!("(arxiv) no items for key {}", vec_of_keys[0]);
-                                }
-                                let useless_arxiv_page_struct = ArxivPostStruct::new();
-                                arcmapt
-                                    .lock()
-                                    .unwrap()
-                                    .insert(vec_of_keys[0].to_string(), useless_arxiv_page_struct);
-                            }
-                        }
-                    }
-                    Err(e) => println!("{}", e),
-                }
-            }
-            Err(e) => println!("{}", e),
-        }
-    });
-    arcmap
-}
+//                                         arxiv_page_struct.items.push(arxiv_post);
+//                                         count += 1;
+//                                     } else {
+//                                         break;
+//                                     }
+//                                 }
+//                                 arcmapt
+//                                     .lock()
+//                                     .unwrap()
+//                                     .insert(vec_of_keys[0].to_string(), arxiv_page_struct);
+//                             }
+//                             _ => {
+//                                 if ENABLE_PRINTS_ARXIV {
+//                                     println!("(arxiv) no items for key {}", vec_of_keys[0]);
+//                                 }
+//                                 let useless_arxiv_page_struct = ArxivPostStruct::new();
+//                                 arcmapt
+//                                     .lock()
+//                                     .unwrap()
+//                                     .insert(vec_of_keys[0].to_string(), useless_arxiv_page_struct);
+//                             }
+//                         }
+//                     }
+//                     Err(e) => println!("{}", e),
+//                 }
+//             }
+//             Err(e) => println!("{}", e),
+//         }
+//     });
+//     arcmap
+// }
 
 // let mut arxiv_sections_links: HashMap<String, String> = [
 //         (
@@ -117,46 +116,101 @@ pub async fn do_something() -> HashMap<String, ArxivPostStruct>{
 //     .iter()
 //     .cloned()
 //     .collect();
-pub fn do_something() -> HashMap<String, String> {
-    let time = Instant::now();
+pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
+    // let time = Instant::now();
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
-    //есть ли тут гарантия того что ключи пара значение после этих операций будут соотвествовать друг другу?
-    let vec_of_keys: Vec<&str> = arxiv_links_in_hash_map.keys().cloned().collect();
-    let vec_of_links: Vec<&str> = arxiv_links_in_hash_map.values().cloned().collect();
-    
     let mut hashmap_to_return: HashMap<String, (String, ArxivPostStruct)> = HashMap::new();
-    let q =0;
     for (key, value) in arxiv_links_in_hash_map {
         let useless_arxiv_page_struct = ArxivPostStruct::new();
-        let tuple = (vec_of_links[q].to_string(), useless_arxiv_page_struct);
-        hashmap_to_return.insert(vec_of_keys[q].to_string(), tuple);
-        q +=1;
+        let tuple = (value.to_string(), useless_arxiv_page_struct);
+        hashmap_to_return.insert(key.to_string(), tuple);
     }
-    
+
     // let mut h = 0;
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result = fetch_link(key);
-                println!("ggg {:#?}", fetch_result);
-                let b: String;
-                match ggg {
-                    Ok(norm) => {
-                        println!("{}", norm);
-                        b = norm;
+                let fetch_result = fetch_link(&value.0);
+                match fetch_result {
+                    Ok(fetch_string_result) => {
+                        //add better error handling
+                        if fetch_string_result == "res.text error" {
+                            println!("F for"); //, value.0
+                        } else if fetch_string_result == "fetch_link status: NOT OK " {
+                            println!("F2 for"); //, value.0
+                        } else {
+                            match fetch_string_result.find("</item>") {
+                                Some(_) => {
+                                    let arxiv_struct: XmlArxivParserStruct =
+                                        from_str(&fetch_string_result).unwrap();
+                                    let mut count = 0;
+                                    let mut arxiv_page_struct: ArxivPostStruct =
+                                        ArxivPostStruct::new();
+                                    loop {
+                                        if count < arxiv_struct.items.len() {
+                                            let mut arxiv_post: ArxivPost = ArxivPost::new();
+                                            arxiv_post.title =
+                                                arxiv_struct.items[count].title.clone();
+                                            arxiv_post.link =
+                                                arxiv_struct.items[count].link.clone();
+                                            arxiv_post.description =
+                                                arxiv_struct.items[count].description.clone();
+                                            let mut string_part_for_loop =
+                                                arxiv_struct.items[count].creator.clone();
+                                            while let Some(link_index_from_start) =
+                                                string_part_for_loop.find("<a href=\"")
+                                            {
+                                                if let Some(link_index_from_end) =
+                                                    string_part_for_loop.find("\">")
+                                                {
+                                                    if let Some(name_index_from_end) =
+                                                        string_part_for_loop.find("</a>")
+                                                    {
+                                                        let mut creator = Creator::new();
+                                                        creator.link = string_part_for_loop
+                                                            [link_index_from_start
+                                                                + "<a href=\"".len()
+                                                                ..link_index_from_end]
+                                                            .to_string();
+                                                        let name_index_from_start =
+                                                            link_index_from_end + "\">".len();
+                                                        creator.name = string_part_for_loop
+                                                            [name_index_from_start
+                                                                ..name_index_from_end]
+                                                            .to_string();
+                                                        string_part_for_loop = string_part_for_loop
+                                                            [name_index_from_end + "\">".len()..]
+                                                            .to_string();
+                                                        arxiv_post.creators.push(creator);
+                                                    }
+                                                }
+                                            }
+
+                                            arxiv_page_struct.items.push(arxiv_post);
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    value.1 = arxiv_page_struct;
+                                }
+                                _ => {
+                                    if ENABLE_PRINTS_ARXIV {
+                                        println!("(arxiv) no items for key {}", key);
+                                    }
+                                }
+                            }
+                        }
                     }
-                    Err(e) => {
-                        println!("err{}", e);
-                        b = "fetcherr".to_string();
-                    }
+                    Err(e) => println!(" fetch_result error {}", e),
                 }
-                *value = b;
+                // *value = b;
             });
             // h += 1;
         }
     });
-    println!("arxiv_sections_links {:#?}", arxiv_sections_links);
-    arxiv_sections_links
+    // println!("arxiv_sections_links {:#?}", hashmap_to_return);
+    hashmap_to_return
 }
 
 fn fetch_link(link: &str) -> Result<String, Box<dyn std::error::Error>> {
@@ -175,7 +229,7 @@ fn fetch_link(link: &str) -> Result<String, Box<dyn std::error::Error>> {
                 b = "res.text error".to_string();
             }
         }
-    }else{
+    } else {
         b = "fetch_link status: NOT OK ".to_string();
     }
     Ok(b)
