@@ -6,7 +6,7 @@ use crate::override_prints::override_prints::print_error_red;
 #[tokio::main]
 pub async fn reach_provider(url: String) -> bool {
     let client = Client::new();
-    let response = client.get(&url).send().await;
+    let response = client.get(&url).send().await;//body не нужно ток статус
     match response {
         Ok(resp) => {
             let reddit_string_status = resp.status().to_string();

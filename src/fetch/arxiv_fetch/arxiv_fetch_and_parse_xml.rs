@@ -1,7 +1,6 @@
 use reqwest;
 use serde_xml_rs::from_str;
 use std::collections::HashMap;
-// use std::str;
 use std::time::Instant;
 
 use super::arxiv_structures::ArxivPost;
@@ -13,30 +12,52 @@ use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::override_prints::override_prints::print_error_red;
 
-pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
+pub enum StatusInfo {
+    Undefined,
+    ResTextError,   //запихнуть сюдат
+    ResStatusError, //запихнуть сюда статус
+    NoItemsForKey,
+    Success,
+}
+
+pub fn do_something() -> HashMap<String, (ArxivPostStruct, String, StatusInfo)> {
+    //вместо стринги enum
     let time = Instant::now();
     let res_text_error: &str = "res.text() error";
     let res_status_error: &str = "fetch_link status: NOT OK ";
     let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
-    let mut hashmap_to_return: HashMap<String, (String, ArxivPostStruct)> = HashMap::new();
+    let mut hashmap_to_return: HashMap<String, (ArxivPostStruct, String, StatusInfo)> =
+        HashMap::new();
     for (key, value) in arxiv_links_in_hash_map {
         let useless_arxiv_page_struct = ArxivPostStruct::new();
-        let tuple = (value.to_string(), useless_arxiv_page_struct);
+        let tuple = (
+            useless_arxiv_page_struct,
+            value.to_string(),
+            StatusInfo::Undefined,
+        );
         hashmap_to_return.insert(key.to_string(), tuple);
     }
+    if ENABLE_PRINTS_ARXIV {
+        println!(
+            "hashmap init in {}.{}ms",
+            time.elapsed().as_secs(),
+            time.elapsed().as_millis(),
+        );
+    };
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
                 let fetch_result =
-                    fetch_link(&value.0, key, time, res_text_error, res_status_error);
+                    fetch_link(&value.1, key, time, res_text_error, res_status_error);
                 match fetch_result {
                     Ok(fetch_string_result) => {
                         //add better error handling
                         if fetch_string_result == res_text_error {
-                            value.1.title = res_text_error.to_string(); //костыль, переделать позже структуру
+                            value.2 = StatusInfo::ResTextError; //костыль, переделать позже структуру
                         } else if fetch_string_result == res_status_error {
-                            value.1.title = res_text_error.to_string(); //костыль, переделать позже структуру
+                            value.2 = StatusInfo::ResStatusError; //костыль, переделать позже структуру
                         } else {
+                            let since_fetch = Instant::now();
                             match fetch_string_result.find("</item>") {
                                 Some(_) => {
                                     let arxiv_struct: XmlArxivParserStruct =
@@ -90,31 +111,54 @@ pub fn do_something() -> HashMap<String, (String, ArxivPostStruct)> {
                                             break;
                                         }
                                     }
-                                    value.1 = arxiv_page_struct;
+                                    value.0 = arxiv_page_struct;
+                                    value.2 = StatusInfo::Success;
                                 }
                                 _ => {
                                     if ENABLE_PRINTS_ARXIV {
-                                        println!("arxiv no items for key {} {}", key, value.0);
+                                        println!("arxiv no items for key {} {}", key, value.1);
                                     };
-                                    value.1.title = "no items for key".to_string();
-                                    //костыль, переделать позже структуру
+                                    value.2 = StatusInfo::NoItemsForKey;
                                 }
                             }
-                            println!(
-                                "parse in {}.{}ms _____________ for {}",
-                                time.elapsed().as_secs(),
-                                time.elapsed().as_millis(),
-                                key
-                            );
+                            if ENABLE_PRINTS_ARXIV {
+                                println!(
+                                    "parse in {}.{}ms abs, rel {}.{}ms for {}",
+                                    time.elapsed().as_secs(),
+                                    time.elapsed().as_millis() / 10,
+                                    since_fetch.elapsed().as_secs(),
+                                    since_fetch.elapsed().as_millis() / 10,
+                                    key
+                                );
+                            }
                         }
                     }
                     Err(e) => {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        if ENABLE_ERROR_PRINTS_ARXIV {
+                            print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        }
                     }
                 }
             });
         }
     });
+    match crossbeam_result {
+        Ok(_) => {
+            if ENABLE_PRINTS_ARXIV {
+                println!("crossbeam_result is ok",)
+            }
+        }
+        Err(e) => {
+            if ENABLE_ERROR_PRINTS_ARXIV {
+                eprintln!(
+                    "crossbeam_result is not ok, file: {}, line {}\n {:#?}",
+                    file!().to_string(),
+                    line!().to_string(),
+                    e
+                )
+            }
+        }
+    }
     // println!("arxiv_sections_links {:#?}", hashmap_to_return);
     hashmap_to_return
 }
@@ -127,13 +171,15 @@ fn fetch_link(
     res_status_error: &str,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
-    println!(
-        "fetch in {}.{}ms status {} for {}",
-        time.elapsed().as_secs(),
-        time.elapsed().as_millis(),
-        res.status(),
-        key
-    );
+    if ENABLE_PRINTS_ARXIV {
+        println!(
+            "fetch in {}.{}ms... status {} for {}",
+            time.elapsed().as_secs(),
+            time.elapsed().as_millis() / 10,
+            res.status(),
+            key
+        );
+    }
     let b: String;
     if res.status() == reqwest::StatusCode::OK {
         let s = res.text();
@@ -141,16 +187,20 @@ fn fetch_link(
             Ok(norm) => b = norm,
             Err(e) => {
                 b = res_text_error.to_string();
-                print_error_red(file!().to_string(), line!().to_string(), e.to_string());
+                if ENABLE_ERROR_PRINTS_ARXIV {
+                    print_error_red(file!().to_string(), line!().to_string(), e.to_string());
+                }
             }
         }
     } else {
         b = res_status_error.to_string();
-        print_error_red(
-            file!().to_string(),
-            line!().to_string(),
-            res.status().to_string(),
-        );
+        if ENABLE_ERROR_PRINTS_ARXIV {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                res.status().to_string(),
+            );
+        }
     }
     Ok(b)
 }
