@@ -22,6 +22,8 @@ rename some local variables in functions
 add warnings prints
 ------
 add green prints
+------
+service for date/time checking and executing arxiv for example one time per week and check of server restarted in this timestamp
 -----
 make parallel parsing
 -----
