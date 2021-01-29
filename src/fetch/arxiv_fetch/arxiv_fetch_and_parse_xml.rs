@@ -14,9 +14,9 @@ use crate::override_prints::override_prints::print_error_red;
 
 pub enum StatusInfo {
     Undefined,
-    ResTextError,   //запихнуть сюдат
+    ResTextError,   //запихнуть сюдатекст
     ResStatusError, //запихнуть сюда статус
-    NoItemsForKey,
+    NoItemsForKey,  //запихнуть сюдатекст
     Success,
 }
 
@@ -181,6 +181,7 @@ fn fetch_link(
     }
     let b: String;
     if res.status() == reqwest::StatusCode::OK {
+        //разделить на две функции статус год и текст()
         let s = res.text();
         match s {
             Ok(norm) => b = norm,
