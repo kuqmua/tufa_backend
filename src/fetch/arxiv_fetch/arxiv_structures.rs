@@ -46,7 +46,6 @@ impl ArxivPost {
             link: "".to_string(),
             description: "".to_string(),
             creators: Vec::<Creator>::new(),
-            // creators: vec![Creator::new(); 70],
         }
     }
 }
