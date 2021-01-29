@@ -21,7 +21,6 @@ pub enum StatusInfo {
 }
 
 pub fn do_something() -> HashMap<String, (ArxivPostStruct, String, StatusInfo)> {
-    //вместо стринги enum
     let time = Instant::now();
     let res_text_error: &str = "res.text() error";
     let res_status_error: &str = "fetch_link status: NOT OK ";
