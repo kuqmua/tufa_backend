@@ -1,7 +1,7 @@
 заоверрайдить принты под цвет
 тесты написать 
-в хешмап с линками стоит ли засовывать переменую линка сайта?
-чекать каждую ссылку на статус мало ли переименуют еще
+в хешмап с линками стоит ли засовывать переменую линка сайта?//пришлось из за мува обьекта в расте
+чекать каждую ссылку на статус мало ли переименуют еще//только на статус без тела
 подгружать инфу для авторизации из файла
 записывать результат фетчинга в файл и проверять нет ли там таких постов
 мапер который будет приравнивать все классы сайтов к одному формату
@@ -17,6 +17,8 @@ whats strange what only 30...weird
 -------
 arxiv_fetch_and_parse_xml and others cut to 2 different functions
 ------
+перед всеми действиями чекать доступен ли для меня инет типо ping 8.8.8.8
+-----
 rename some local variables in functions
 ------
 add warnings prints
@@ -48,13 +50,3 @@ you need to ensure that the Arc has exactly one strong reference and the Mutex i
 -------
 Rc<RefCell<Vec<T>>>
 -------
-Xml::CharacterNode(ref msg) => {}
-                                            Xml::CDATANode(ref msg) => {
-                                                println!("3");
-                                            }
-                                            Xml::CommentNode(ref msg) => {
-                                                println!("2");
-                                            }
-                                            Xml::PINode(ref msg) => {
-                                                println!("1");
-                                            }
