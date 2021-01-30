@@ -15,6 +15,8 @@ rename arxiv fetch to arxiv part
 items: vec![BiorxivPageStructItem::new(); 30],
 whats strange what only 30...weird
 -------
+по сути как можно избавиться от tokio
+------
 arxiv_fetch_and_parse_xml and others cut to 2 different functions
 ------
 перед всеми действиями чекать доступен ли для меня инет типо ping 8.8.8.8

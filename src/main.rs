@@ -35,9 +35,9 @@ mod get_group_names {
     pub mod get_medrxiv_links;
     pub mod get_subreddits;
 }
-// mod check_provider {
-//     pub mod can_i_reach_provider;
-// }
+mod check_provider {
+    pub mod can_i_reach_provider;
+}
 mod override_prints {
     pub mod override_prints;
 }
