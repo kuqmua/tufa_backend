@@ -31,9 +31,9 @@ mod fetch {
 }
 mod get_group_names {
     pub mod get_arxiv_links;
-    pub mod get_biorxiv_links;
-    pub mod get_medrxiv_links;
-    pub mod get_subreddits;
+    // pub mod get_biorxiv_links;
+    // pub mod get_medrxiv_links;
+    // pub mod get_subreddits;
 }
 mod check_provider {
     pub mod can_i_reach_provider;
@@ -42,18 +42,18 @@ mod override_prints {
     pub mod override_prints;
 }
 
-mod authorization {
-    pub mod reddit {
-        pub mod authorization_info;
-        pub mod reddit_authorization;
-    }
-}
+// mod authorization {
+//     pub mod reddit {
+//         pub mod authorization_info;
+//         pub mod reddit_authorization;
+//     }
+// }
 
 mod config;
 use config::ENABLE_ARXIV;
-use config::ENABLE_BIORXIV;
-use config::ENABLE_MEDRXIV;
-use config::ENABLE_REDDIT;
+// use config::ENABLE_BIORXIV;
+// use config::ENABLE_MEDRXIV;
+// use config::ENABLE_REDDIT;
 
 fn main() {
     let time = Instant::now();

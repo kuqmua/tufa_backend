@@ -27,7 +27,9 @@ pub enum AreThereItems {
     //модет быть parse error
     Yep,
     Initialized,
-    Nope(String),
+    NopeButThereIsTag(String),
+    ConversionFromStrError(String, String),
+    NopeNoTag(String),
 }
 
 pub fn do_something() -> HashMap<
@@ -77,7 +79,6 @@ pub fn do_something() -> HashMap<
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;
-                        //add better error handling
                         match fetch_tuple_result.1 {
                             HandledFetchStatusInfo::Initialized => {
                                 value.3 = HandledFetchStatusInfo::Initialized;
@@ -95,9 +96,11 @@ pub fn do_something() -> HashMap<
                                 value.3 = HandledFetchStatusInfo::Success;
                                 match fetch_tuple_result.0.find("</item>") {
                                     Some(_) => {
-                                        let arxiv_struct: XmlArxivParserStruct =
-                                            from_str(&fetch_tuple_result.0).unwrap(); //расписать
-                                        let mut count = 0;
+                                        let arxiv_struct_from_str_result: Result<XmlArxivParserStruct, serde_xml_rs::Error>  =
+                                            from_str(&fetch_tuple_result.0); //расписать//.unwrap()
+                                            match arxiv_struct_from_str_result{
+                                                Ok(arxiv_struct)=>{
+                                                    let mut count = 0;
                                         let mut arxiv_page_struct: ArxivPostStruct =
                                             ArxivPostStruct::new();
                                         loop {
@@ -153,15 +156,28 @@ pub fn do_something() -> HashMap<
                                         if arxiv_page_struct.items.len() > 0 {
                                             value.4 = AreThereItems::Yep;
                                         } else {
-                                            value.4 = AreThereItems::Nope(fetch_tuple_result.0);
+                                            value.4 = AreThereItems::NopeButThereIsTag(
+                                                fetch_tuple_result.0,
+                                            );
                                         }
                                         value.0 = arxiv_page_struct;
+                                                }
+                                                Err(e)=>{
+                                                    if ENABLE_ERROR_PRINTS_ARXIV {
+                                                        println!("arxiv conversion from str for {}, error {}",key, e.to_string());
+                                                    };
+                                                    value.4 = AreThereItems::ConversionFromStrError(
+                                                        fetch_tuple_result.0, e.to_string()
+                                                    );
+                                                }
+                                            }
+                                        
                                     }
                                     _ => {
                                         if ENABLE_PRINTS_ARXIV {
                                             println!("arxiv no items for key {} {}", key, value.1);
                                         };
-                                        value.4 = AreThereItems::Nope(fetch_tuple_result.0);
+                                        value.4 = AreThereItems::NopeNoTag(fetch_tuple_result.0);
                                     }
                                 }
                                 if ENABLE_PRINTS_ARXIV {
@@ -226,7 +242,6 @@ fn fetch_link(
     let mut result_tuple: (String, HandledFetchStatusInfo) =
         ("".to_string(), HandledFetchStatusInfo::Initialized);
     if res.status() == reqwest::StatusCode::OK {
-        //разделить на две функции статус год и текст()
         let res_to_text_result = res.text();
         match res_to_text_result {
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
