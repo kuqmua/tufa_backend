@@ -14,12 +14,12 @@ use crate::override_prints::override_prints::print_error_red;
 
 pub enum HandledFetchStatusInfo {
     Initialized,
-    ResToTextError, //запихнуть сюдатекст
-    ResStatusError, //запихнуть сюда статус
+    ResToTextError(String),
+    ResStatusError(reqwest::StatusCode),
     Success,
 }
 pub enum UnhandledFetchStatusInfo {
-    Failure, //box dyn error
+    Failure(String),
     Initialized,
     Success,
 }
@@ -27,7 +27,7 @@ pub enum AreThereItems {
     //модет быть parse error
     Yep,
     Initialized,
-    Nope, //запихнуть
+    Nope(String),
 }
 
 pub fn do_something() -> HashMap<
@@ -82,11 +82,13 @@ pub fn do_something() -> HashMap<
                             HandledFetchStatusInfo::Initialized => {
                                 value.3 = HandledFetchStatusInfo::Initialized;
                             }
-                            HandledFetchStatusInfo::ResToTextError => {
-                                value.3 = HandledFetchStatusInfo::ResToTextError;
+                            HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => {
+                                value.3 = HandledFetchStatusInfo::ResToTextError(
+                                    res_to_text_string_error,
+                                );
                             }
-                            HandledFetchStatusInfo::ResStatusError => {
-                                value.3 = HandledFetchStatusInfo::ResStatusError;
+                            HandledFetchStatusInfo::ResStatusError(res_error_code) => {
+                                value.3 = HandledFetchStatusInfo::ResStatusError(res_error_code);
                             }
                             HandledFetchStatusInfo::Success => {
                                 let since_fetch = Instant::now();
@@ -151,7 +153,7 @@ pub fn do_something() -> HashMap<
                                         if arxiv_page_struct.items.len() > 0 {
                                             value.4 = AreThereItems::Yep;
                                         } else {
-                                            value.4 = AreThereItems::Nope;
+                                            value.4 = AreThereItems::Nope(fetch_tuple_result.0);
                                         }
                                         value.0 = arxiv_page_struct;
                                     }
@@ -159,7 +161,7 @@ pub fn do_something() -> HashMap<
                                         if ENABLE_PRINTS_ARXIV {
                                             println!("arxiv no items for key {} {}", key, value.1);
                                         };
-                                        value.4 = AreThereItems::Nope;
+                                        value.4 = AreThereItems::Nope(fetch_tuple_result.0);
                                     }
                                 }
                                 if ENABLE_PRINTS_ARXIV {
@@ -176,7 +178,7 @@ pub fn do_something() -> HashMap<
                         }
                     }
                     Err(e) => {
-                        value.2 = UnhandledFetchStatusInfo::Failure; // add e
+                        value.2 = UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
                         if ENABLE_ERROR_PRINTS_ARXIV {
                             print_error_red(file!().to_string(), line!().to_string(), e.to_string())
                         }
@@ -229,14 +231,14 @@ fn fetch_link(
         match res_to_text_result {
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
             Err(e) => {
-                result_tuple.1 = HandledFetchStatusInfo::ResToTextError;
+                result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
                 if ENABLE_ERROR_PRINTS_ARXIV {
                     print_error_red(file!().to_string(), line!().to_string(), e.to_string());
                 }
             }
         }
     } else {
-        result_tuple.1 = HandledFetchStatusInfo::ResStatusError;
+        result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
         if ENABLE_ERROR_PRINTS_ARXIV {
             print_error_red(
                 file!().to_string(),

@@ -11,7 +11,7 @@ use crate::check_provider::can_i_reach_provider::reach_provider;
 use crate::config::ARXIV_URL;
 use crate::config::ENABLE_PRINTS_ARXIV;
 // use crate::get_group_names::get_arxiv_links::get_arxiv_links;
-use std::sync::Arc;
+// use std::sync::Arc;
 
 pub fn arxiv_part() -> bool {
     if reach_provider(ARXIV_URL.to_string()) {
@@ -27,7 +27,9 @@ pub fn arxiv_part() -> bool {
         let fff = do_something(); //тут есть возвращаемое значение let vec_of_vec_of_strings =//&vec_of_links, &vec_of_keys
                                   // let jjj: Vec<i32> = Arc::try_unwrap(fff).unwrap().into_inner().unwrap();
                                   //  HashMap<String, ArxivPostStruct>
-        println!("{:#?} elements in Arxiv HashMap", fff.len());
+        if ENABLE_PRINTS_ARXIV {
+            println!("{:#?} elements in Arxiv HashMap", fff.len());
+        };
         return true; //чекнуть действительно ли в векторе есть хоть шот полезное
     } else {
         return false;
