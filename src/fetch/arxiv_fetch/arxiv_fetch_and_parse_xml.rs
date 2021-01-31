@@ -97,7 +97,7 @@ pub fn do_something() -> HashMap<
                                 match fetch_tuple_result.0.find("</item>") {
                                     Some(_) => {
                                         let arxiv_struct_from_str_result: Result<XmlArxivParserStruct, serde_xml_rs::Error>  =
-                                            from_str(&fetch_tuple_result.0); //расписать//.unwrap()
+                                            from_str(&fetch_tuple_result.0);
                                             match arxiv_struct_from_str_result{
                                                 Ok(arxiv_struct)=>{
                                                     let mut count = 0;
@@ -115,8 +115,6 @@ pub fn do_something() -> HashMap<
                                                 let mut string_part_for_loop =
                                                     arxiv_struct.items[count].creator.clone();
                                                 while let Some(link_index_from_start) =
-                                                    //расписать по эррорам
-                                                // и выкинуть в функцию
                                                     string_part_for_loop.find("<a href=\"")
                                                 {
                                                     if let Some(link_index_from_end) =
