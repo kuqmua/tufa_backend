@@ -1,6 +1,6 @@
 use std::time::Instant;
 mod fetch {
-    pub mod arxiv_fetch {
+    pub mod arxiv_part {
         pub mod arxiv_fetch;
         pub mod arxiv_fetch_and_parse_xml;
         pub mod arxiv_structures;
@@ -36,8 +36,8 @@ mod get_group_names {
 mod check_provider {
     pub mod can_i_reach_provider;
 }
-mod override_prints {
-    pub mod override_prints;
+mod overriding {
+    pub mod prints;
 }
 
 // mod authorization {

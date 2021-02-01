@@ -14,7 +14,7 @@ pub async fn threads_parts() {
     // }
     if ENABLE_ARXIV {
         threads_vec.push(thread::spawn(move || {
-            fetch::arxiv_fetch::arxiv_fetch::arxiv_part();
+            fetch::arxiv_part::arxiv_fetch::arxiv_part();
         }));
     }
     // if ENABLE_BIORXIV {
