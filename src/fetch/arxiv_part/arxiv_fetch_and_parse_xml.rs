@@ -3,6 +3,9 @@ use serde_xml_rs::from_str;
 use std::collections::HashMap;
 use std::time::Instant;
 
+use super::arxiv_metainfo_structures::AreThereItems;
+use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
+use super::arxiv_metainfo_structures::UnhandledFetchStatusInfo;
 use super::arxiv_structures::ArxivPost;
 use super::arxiv_structures::ArxivPostStruct;
 use super::arxiv_structures::Creator;
@@ -11,26 +14,6 @@ use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::overriding::prints::print_error_red;
-
-pub enum HandledFetchStatusInfo {
-    Initialized,
-    ResToTextError(String),
-    ResStatusError(reqwest::StatusCode),
-    Success,
-}
-pub enum UnhandledFetchStatusInfo {
-    Failure(String),
-    Initialized,
-    Success,
-}
-pub enum AreThereItems {
-    //модет быть parse error
-    Yep,
-    Initialized,
-    NopeButThereIsTag(String),
-    ConversionFromStrError(String, String),
-    NopeNoTag(String),
-}
 
 pub fn do_something() -> HashMap<
     String,

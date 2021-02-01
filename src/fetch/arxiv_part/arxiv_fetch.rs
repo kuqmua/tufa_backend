@@ -13,8 +13,8 @@ pub fn arxiv_part() -> bool {
         if ENABLE_PRINTS_ARXIV {
             println!("{:#?} elements in Arxiv HashMap", fff.len());
         };
-        return true; //чекнуть действительно ли в векторе есть хоть шот полезное
+        true //чекнуть действительно ли в векторе есть хоть шот полезное
     } else {
-        return false;
+        false
     }
 }

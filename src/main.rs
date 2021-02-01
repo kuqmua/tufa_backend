@@ -3,6 +3,7 @@ mod fetch {
     pub mod arxiv_part {
         pub mod arxiv_fetch;
         pub mod arxiv_fetch_and_parse_xml;
+        pub mod arxiv_metainfo_structures;
         pub mod arxiv_structures;
     }
     // pub mod biorxiv_fetch {
