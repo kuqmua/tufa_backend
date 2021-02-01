@@ -1,5 +1,4 @@
 use std::time::Instant;
-
 mod fetch {
     pub mod arxiv_fetch {
         pub mod arxiv_fetch;
