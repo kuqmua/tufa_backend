@@ -1,25 +1,39 @@
-use crate::overriding::prints::print_error_red;
-use reqwest::Client;
+pub enum HandledReachProviderStatusInfo {
+    Initialized,
+    ResStatusError(reqwest::StatusCode),
+    Success,
+}
 
-#[tokio::main]
-pub async fn reach_provider(url: String) -> bool {
-    let client = Client::new();
-    let response = client.get(&url).send().await; //body не нужно ток статус
-    match response {
-        Ok(resp) => {
-            let reddit_string_status = resp.status().to_string();
-            if reddit_string_status == "200 OK" {
-                println!("{} status: 200 OK", url);
-                true
-            } else {
-                let error: String = url + " status: {}" + &reddit_string_status;
-                print_error_red(file!().to_string(), line!().to_string(), error);
-                false
-            }
+pub enum UnhandledReachProviderInfo {
+    Failure(String),
+    Success,
+}
+
+pub fn reach_provider(url: &str) -> (bool, UnhandledReachProviderInfo) {
+    let fetch_result = fetch_link(url);
+    let mut can_i: bool = false;
+    let unhandled_info: UnhandledReachProviderInfo;
+    match fetch_result {
+        Ok(fetch_tuple_result) => {
+            can_i = fetch_tuple_result.0;
+            unhandled_info = UnhandledReachProviderInfo::Success;
         }
-        Err(error) => {
-            print_error_red(file!().to_string(), line!().to_string(), error.to_string());
-            false
+        Err(e) => {
+            unhandled_info = UnhandledReachProviderInfo::Failure(e.to_string());
         }
     }
+    (can_i, unhandled_info)
+}
+fn fetch_link(
+    link: &str,
+) -> Result<(bool, HandledReachProviderStatusInfo), Box<dyn std::error::Error>> {
+    let res = reqwest::blocking::get(link)?;
+    let mut result_tuple: (bool, HandledReachProviderStatusInfo) =
+        (false, HandledReachProviderStatusInfo::Initialized);
+    if res.status() == reqwest::StatusCode::OK {
+        result_tuple = (true, HandledReachProviderStatusInfo::Success)
+    } else {
+        result_tuple.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
+    }
+    Ok(result_tuple)
 }
