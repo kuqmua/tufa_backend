@@ -1,4 +1,3 @@
-// use reqwest;
 use serde_xml_rs::from_str;
 use std::collections::HashMap;
 use std::time::Instant;
@@ -38,9 +37,8 @@ pub fn do_something() -> HashMap<
         ),
     > = HashMap::new();
     for (key, value) in arxiv_links_in_hash_map {
-        let useless_arxiv_page_struct = ArxivPostStruct::new();
         let tuple = (
-            useless_arxiv_page_struct,
+            ArxivPostStruct::new(),
             value.to_string(),
             UnhandledFetchStatusInfo::Initialized,
             HandledFetchStatusInfo::Initialized,
@@ -62,37 +60,20 @@ pub fn do_something() -> HashMap<
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;
-                        match fetch_tuple_result.1 {
-                            HandledFetchStatusInfo::Initialized => {
-                                value.3 = HandledFetchStatusInfo::Initialized;
-                            }
-                            HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => {
-                                value.3 = HandledFetchStatusInfo::ResToTextError(
-                                    res_to_text_string_error,
-                                );
-                            }
-                            HandledFetchStatusInfo::ResStatusError(res_error_code) => {
-                                value.3 = HandledFetchStatusInfo::ResStatusError(res_error_code);
-                            }
-                            HandledFetchStatusInfo::Success => {
-                                let since_fetch = Instant::now();
-                                value.3 = HandledFetchStatusInfo::Success;
-                                let (arxiv_post_struct_handle, are_there_items_handle) =
-                                    parse_string_into_struct(fetch_tuple_result.0, key, &value.1);
-                                value.0 = arxiv_post_struct_handle;
-                                value.4 = are_there_items_handle;
-                                if ENABLE_PRINTS_ARXIV {
-                                    println!(
-                                        "parse in {}.{}ms abs, rel {}.{}ms for {}",
-                                        time.elapsed().as_secs(),
-                                        time.elapsed().as_millis() / 10,
-                                        since_fetch.elapsed().as_secs(),
-                                        since_fetch.elapsed().as_millis() / 10,
-                                        key
-                                    );
-                                }
-                            }
-                        }
+                        let (
+                            value3,
+                            arxiv_post_struct_wrapper_handle,
+                            are_there_items_wrapper_handle,
+                        ) = check_handled_fetch_status_info(
+                            fetch_tuple_result.1,
+                            fetch_tuple_result.0,
+                            time,
+                            key,
+                            &value.1,
+                        );
+                        value.3 = value3;
+                        value.0 = arxiv_post_struct_wrapper_handle;
+                        value.4 = are_there_items_wrapper_handle;
                     }
                     Err(e) => {
                         value.2 = UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
@@ -250,4 +231,50 @@ fn parse_string_into_struct(
         }
     }
     (arxiv_post_struct_handle, are_there_items_handle)
+}
+
+fn check_handled_fetch_status_info(
+    handled_fetch_status_info: HandledFetchStatusInfo,
+    fetch_tuple_result_string: String,
+    time: Instant,
+    key: &str,
+    value: &str,
+) -> (HandledFetchStatusInfo, ArxivPostStruct, AreThereItems) {
+    let value3: HandledFetchStatusInfo;
+    let mut arxiv_post_struct_wrapper_handle: ArxivPostStruct = ArxivPostStruct::new();
+    let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
+    match handled_fetch_status_info {
+        HandledFetchStatusInfo::Initialized => {
+            value3 = HandledFetchStatusInfo::Initialized;
+        }
+        HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => {
+            value3 = HandledFetchStatusInfo::ResToTextError(res_to_text_string_error);
+        }
+        HandledFetchStatusInfo::ResStatusError(res_error_code) => {
+            value3 = HandledFetchStatusInfo::ResStatusError(res_error_code);
+        }
+        HandledFetchStatusInfo::Success => {
+            let since_fetch = Instant::now();
+            value3 = HandledFetchStatusInfo::Success;
+            let (arxiv_post_struct_handle, are_there_items_handle) =
+                parse_string_into_struct(fetch_tuple_result_string, key, &value);
+            arxiv_post_struct_wrapper_handle = arxiv_post_struct_handle;
+            are_there_items_wrapper_handle = are_there_items_handle;
+            if ENABLE_PRINTS_ARXIV {
+                println!(
+                    "parse in {}.{}ms abs, rel {}.{}ms for {}",
+                    time.elapsed().as_secs(),
+                    time.elapsed().as_millis() / 10,
+                    since_fetch.elapsed().as_secs(),
+                    since_fetch.elapsed().as_millis() / 10,
+                    key
+                );
+            }
+        }
+    }
+    (
+        value3,
+        arxiv_post_struct_wrapper_handle,
+        are_there_items_wrapper_handle,
+    )
 }
