@@ -36,6 +36,7 @@ mod get_group_names {
 }
 mod check_provider {
     pub mod can_i_reach_provider;
+    pub mod reach_link_meta_structures;
 }
 mod overriding {
     pub mod prints;

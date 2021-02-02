@@ -1,13 +1,5 @@
-pub enum HandledReachProviderStatusInfo {
-    Initialized,
-    ResStatusError(reqwest::StatusCode),
-    Success,
-}
-
-pub enum UnhandledReachProviderInfo {
-    Failure(String),
-    Success,
-}
+use super::reach_link_meta_structures::HandledReachProviderStatusInfo;
+use super::reach_link_meta_structures::UnhandledReachProviderInfo;
 
 pub fn reach_provider(url: &str) -> (bool, UnhandledReachProviderInfo) {
     let fetch_result = fetch_link(url);
