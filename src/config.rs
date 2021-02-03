@@ -21,3 +21,6 @@ pub const ENABLE_ERROR_PRINTS_ARXIV: bool = true;
 // pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = true;
 // pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = true;
 //pub const ENABLE_PRINTS_TWITTER: bool = true;
+
+pub const ENABLE_PRINTS_HANDLE: bool = true;
+pub const ENABLE_ERROR_PRINTS_HANDLE: bool = true;

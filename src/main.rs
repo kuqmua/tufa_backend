@@ -34,9 +34,10 @@ mod get_group_names {
     // pub mod get_medrxiv_links;
     // pub mod get_subreddits;
 }
-mod check_provider {
-    pub mod can_i_reach_provider;
-    pub mod reach_link_meta_structures;
+mod check_net {
+    pub mod check_link;
+    pub mod check_link_metainfo_structures;
+    pub mod fetch_link;
 }
 mod overriding {
     pub mod prints;
@@ -49,14 +50,12 @@ mod overriding {
 //     }
 // }
 
+mod async_tokio_wrapper;
 mod config;
 mod entry;
 mod threads_parts;
-// use config::ENABLE_ARXIV;
+
 use entry::entry;
-// use config::ENABLE_BIORXIV;
-// use config::ENABLE_MEDRXIV;
-// use config::ENABLE_REDDIT;
 
 fn main() {
     let time = Instant::now();
