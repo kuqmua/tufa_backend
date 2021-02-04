@@ -2,8 +2,8 @@ use std::time::Instant;
 
 use super::arxiv_metainfo_structures::AreThereItems;
 use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
+use super::arxiv_parse_string_into_struct::arxiv_parse_string_into_struct;
 use super::arxiv_structures::ArxivPostStruct;
-use super::parse_string_into_struct::parse_string_into_struct;
 use crate::config::ENABLE_PRINTS_ARXIV;
 
 pub fn check_handled_fetch_status_info(
@@ -30,7 +30,7 @@ pub fn check_handled_fetch_status_info(
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
             let (arxiv_post_struct_handle, are_there_items_handle) =
-                parse_string_into_struct(fetch_tuple_result_string, key, &value);
+                arxiv_parse_string_into_struct(fetch_tuple_result_string, key, &value);
             arxiv_post_struct_wrapper_handle = arxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             if ENABLE_PRINTS_ARXIV {

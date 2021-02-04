@@ -1,19 +1,19 @@
 use std::collections::HashMap;
 use std::time::Instant;
 
+use super::arxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
+use super::arxiv_fetch_link::arxiv_fetch_link;
 use super::arxiv_metainfo_structures::AreThereItems;
 use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
 use super::arxiv_metainfo_structures::UnhandledFetchStatusInfo;
 use super::arxiv_structures::ArxivPostStruct;
-use super::check_handled_fetch_status_info::check_handled_fetch_status_info;
-use super::fetch_arxiv_link::fetch_arxiv_link;
 
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::overriding::prints::print_error_red;
 
-pub fn do_something() -> HashMap<
+pub fn arxiv_fetch_and_parse_xml() -> HashMap<
     String,
     (
         ArxivPostStruct,
@@ -55,7 +55,7 @@ pub fn do_something() -> HashMap<
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result = fetch_arxiv_link(&value.1, key, time);
+                let fetch_result = arxiv_fetch_link(&value.1, key, time);
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;

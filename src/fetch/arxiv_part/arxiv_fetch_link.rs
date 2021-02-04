@@ -4,7 +4,7 @@ use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::overriding::prints::print_error_red;
 use std::time::Instant;
 
-pub fn fetch_arxiv_link(
+pub fn arxiv_fetch_link(
     link: &str,
     key: &str,
     time: Instant,

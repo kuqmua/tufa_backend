@@ -1,13 +1,13 @@
 use std::time::Instant;
 mod fetch {
     pub mod arxiv_part {
+        pub mod arxiv_check_handled_fetch_status_info;
         pub mod arxiv_fetch;
         pub mod arxiv_fetch_and_parse_xml;
+        pub mod arxiv_fetch_link;
         pub mod arxiv_metainfo_structures;
+        pub mod arxiv_parse_string_into_struct;
         pub mod arxiv_structures;
-        pub mod check_handled_fetch_status_info;
-        pub mod fetch_arxiv_link;
-        pub mod parse_string_into_struct;
     }
     // pub mod biorxiv_fetch {
     //     pub mod biorxiv_fetch;

@@ -7,7 +7,7 @@ use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use serde_xml_rs::from_str;
 
-pub fn parse_string_into_struct(
+pub fn arxiv_parse_string_into_struct(
     fetch_tuple_result: String,
     key: &str,
     value: &str,
