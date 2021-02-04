@@ -1,10 +1,10 @@
 use std::thread;
 
 use crate::config::ENABLE_ARXIV;
+use crate::config::ENABLE_BIORXIV;
 use crate::fetch;
-// use config::ENABLE_BIORXIV;
-// use config::ENABLE_MEDRXIV;
-// use config::ENABLE_REDDIT;
+// use crate::config::ENABLE_MEDRXIV;
+// use crate::config::ENABLE_REDDIT;
 
 pub async fn threads_parts() {
     let mut threads_vec = vec![];
@@ -18,11 +18,11 @@ pub async fn threads_parts() {
             fetch::arxiv_part::arxiv_fetch::arxiv_part();
         }));
     }
-    // if ENABLE_BIORXIV {
-    //     threads_vec.push(thread::spawn(move || {
-    //         fetch::biorxiv_fetch::biorxiv_fetch::biorxiv_part();
-    //     }));
-    // }
+    if ENABLE_BIORXIV {
+        threads_vec.push(thread::spawn(move || {
+            fetch::biorxiv_fetch::biorxiv_fetch::biorxiv_part();
+        }));
+    }
     // if ENABLE_MEDRXIV {
     //     threads_vec.push(thread::spawn(move || {
     //         fetch::medrxiv_fetch::medrxiv_fetch::medrxiv_part();
