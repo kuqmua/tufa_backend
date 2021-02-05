@@ -1,28 +1,20 @@
-// use crate::check_provider::can_i_reach_provider::wreach_provider;
-use crate::override_prints::override_prints::print_error_red;
-use crate::threads_parts::threads_parts;
-use reqwest::Client;
-use tokio;
-#[tokio::main]
-pub async fn entry() {
-    let client = Client::new();
-    let response = client.get("https://www.google.com/").send().await; //body не нужно ток статус
-    match response {
-        Ok(resp) => {
-            let reddit_string_status = resp.status().to_string();
-            if reddit_string_status == "200 OK" {
-                println!(" status: 200 OK");
-                threads_parts().await;
-                // return true;
-            } else {
-                let error: String = reddit_string_status;
-                print_error_red(file!().to_string(), line!().to_string(), error);
-                // return false;
-            }
+use crate::async_tokio_wrapper::tokio_wrapper;
+use crate::check_net::check_link::check_link;
+use crate::config::ENABLE_ERROR_PRINTS_HANDLE;
+use crate::config::ENABLE_PRINTS_HANDLE;
+use crate::overriding::prints::print_error_red;
+
+pub fn entry() {
+    if check_link("https://www.google.com/").0 {
+        if ENABLE_PRINTS_HANDLE {
+            println!("server can reach https://www.google.com/");
         }
-        Err(error) => {
-            print_error_red(file!().to_string(), line!().to_string(), error.to_string());
-            // return false;
-        }
+        tokio_wrapper();
+    } else if ENABLE_ERROR_PRINTS_HANDLE {
+        print_error_red(
+            file!().to_string(),
+            line!().to_string(),
+            "server cannot reach https://www.google.com/".to_string(),
+        )
     }
 }

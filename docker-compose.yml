@@ -1,0 +1,8 @@
+version: "3.8"
+services: 
+  rust-backend:
+    image: "rust:1.47"
+    volumes:
+      - ./tufa_backend:/tufa_backend
+    environment: 
+      - USER=sergey
