@@ -9,14 +9,18 @@ use crate::config::ENABLE_PRINTS_ARXIV;
 
 pub fn arxiv_part() -> bool {
     if check_link(ARXIV_URL).0 {
-        println!("i can reach {}", ARXIV_URL);
-        let fff = arxiv_fetch_and_parse_xml(); //тут есть возвращаемое значение let vec_of_vec_of_strings =//&vec_of_links, &vec_of_keys
+        if ENABLE_PRINTS_ARXIV {
+            println!("i can reach {}", ARXIV_URL);
+        };
+        let fff = arxiv_fetch_and_parse_xml();
         if ENABLE_PRINTS_ARXIV {
             println!("{:#?} elements in Arxiv HashMap", fff.len());
         };
         true //чекнуть действительно ли в векторе есть хоть шот полезное
     } else {
-        println!("i cannot reach {}", ARXIV_URL);
+        if ENABLE_PRINTS_ARXIV {
+            println!("i cannot reach {}", ARXIV_URL);
+        };
         false
     }
 }
