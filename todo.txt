@@ -52,3 +52,14 @@ you need to ensure that the Arc has exactly one strong reference and the Mutex i
 -------
 Rc<RefCell<Vec<T>>>
 -------
+ // `iter()` for vecs yields `&i32`.
+    let mut iter = vec1.iter();
+    // `into_iter()` for vecs yields `i32`.
+    let mut into_iter = vec2.into_iter();
+
+    // `iter()` for vecs yields `&i32`, and we want to reference one of its
+    // items, so we have to destructure `&&i32` to `i32`
+    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
+    // `into_iter()` for vecs yields `i32`, and we want to reference one of
+    // its items, so we have to destructure `&i32` to `i32`
+    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
