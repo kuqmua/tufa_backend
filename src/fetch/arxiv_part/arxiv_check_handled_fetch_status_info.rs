@@ -37,9 +37,9 @@ pub fn check_handled_fetch_status_info(
                 println!(
                     "parse in {}.{}ms abs, rel {}.{}ms for {}",
                     time.elapsed().as_secs(),
-                    time.elapsed().as_millis() / 10,
+                    time.elapsed().as_millis(),
                     since_fetch.elapsed().as_secs(),
-                    since_fetch.elapsed().as_millis() / 10,
+                    since_fetch.elapsed().as_millis(),
                     key
                 );
             }

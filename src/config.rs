@@ -5,7 +5,7 @@ pub const ENABLE_BIORXIV: bool = true;
 //pub const ENABLE_TWITTER: bool = true;
 
 // pub const REDDIT_URL: &str = "https://www.reddit.com/";
-pub const ARXIV_URL: &str = "http://export.arxiv.org/rss/";
+pub const ARXIV_URL: &str = "https://arxiv.org/"; //"http://export.arxiv.org/rss/"
 pub const BIORXIV_URL: &str = "http://connect.biorxiv.org/";
 // pub const MEDRXIV_URL: &str = "http://connect.medrxiv.org/";
 //enable prints for arxiv
