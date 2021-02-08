@@ -9,9 +9,13 @@ mod fetch {
         pub mod arxiv_parse_string_into_struct;
         pub mod arxiv_structures;
     }
-    pub mod biorxiv_fetch {
+    pub mod biorxiv_part {
+        pub mod biorxiv_check_handled_fetch_status_info;
         pub mod biorxiv_fetch;
         pub mod biorxiv_fetch_and_parse_xml;
+        pub mod biorxiv_fetch_link;
+        pub mod biorxiv_metainfo_structures;
+        pub mod biorxiv_parse_string_into_struct;
         pub mod biorxiv_structures;
     }
     // pub mod medrxiv_fetch {

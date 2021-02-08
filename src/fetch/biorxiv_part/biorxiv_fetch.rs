@@ -21,6 +21,6 @@ pub fn biorxiv_part() -> bool {
         if ENABLE_PRINTS_BIORXIV {
             println!("i cannot reach {}", BIORXIV_URL);
         };
-        return false;
+        false
     }
 }

@@ -1,31 +1,31 @@
-use super::arxiv_metainfo_structures::AreThereItems;
-use super::arxiv_structures::ArxivPost;
-use super::arxiv_structures::ArxivPostStruct;
-use super::arxiv_structures::Creator;
-use super::arxiv_structures::XmlArxivParserStruct;
-use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
-use crate::config::ENABLE_PRINTS_ARXIV;
-use crate::overriding::prints::print_error_red;
+use super::biorxiv_metainfo_structures::AreThereItems;
+use super::biorxiv_structures::BiorxivPageStruct;
+use super::biorxiv_structures::BiorxivPost;
+// use super::biorxiv_structures::BiorxivPageStructItem;
+use super::biorxiv_structures::Creator;
+use super::biorxiv_structures::XmlBiorxivParserStruct;
+use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
+use crate::config::ENABLE_PRINTS_BIORXIV;
 use serde_xml_rs::from_str;
 
-pub fn arxiv_parse_string_into_struct(
+pub fn biorxiv_parse_string_into_struct(
     fetch_tuple_result: String,
     key: &str,
     value: &str,
-) -> (ArxivPostStruct, AreThereItems) {
-    let mut arxiv_post_struct_handle: ArxivPostStruct = ArxivPostStruct::new();
+) -> (BiorxivPageStruct, AreThereItems) {
+    let mut arxiv_post_struct_handle: BiorxivPageStruct = BiorxivPageStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
-            let arxiv_struct_from_str_result: Result<XmlArxivParserStruct, serde_xml_rs::Error> =
+            let arxiv_struct_from_str_result: Result<XmlBiorxivParserStruct, serde_xml_rs::Error> =
                 from_str(&fetch_tuple_result);
             match arxiv_struct_from_str_result {
                 Ok(arxiv_struct) => {
                     let mut count = 0;
-                    let mut arxiv_page_struct: ArxivPostStruct = ArxivPostStruct::new();
+                    let mut arxiv_page_struct: BiorxivPageStruct = BiorxivPageStruct::new();
                     loop {
                         if count < arxiv_struct.items.len() {
-                            let mut arxiv_post: ArxivPost = ArxivPost::new();
+                            let mut arxiv_post: BiorxivPost = BiorxivPost::new();
                             arxiv_post.title = arxiv_struct.items[count].title.clone();
                             arxiv_post.link = arxiv_struct.items[count].link.clone();
                             arxiv_post.description = arxiv_struct.items[count].description.clone();
@@ -72,12 +72,12 @@ pub fn arxiv_parse_string_into_struct(
                     arxiv_post_struct_handle = arxiv_page_struct;
                 }
                 Err(e) => {
-                    if ENABLE_ERROR_PRINTS_ARXIV {
-                        let error_info: String = "arxiv conversion from str for".to_string()
-                            + key
-                            + ", error "
-                            + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), error_info);
+                    if ENABLE_ERROR_PRINTS_BIORXIV {
+                        println!(
+                            "arxiv conversion from str for {}, error {}",
+                            key,
+                            e.to_string()
+                        );
                     };
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_tuple_result, e.to_string());
@@ -85,7 +85,7 @@ pub fn arxiv_parse_string_into_struct(
             }
         }
         _ => {
-            if ENABLE_PRINTS_ARXIV {
+            if ENABLE_PRINTS_BIORXIV {
                 println!("arxiv no items for key {} {}", key, value);
             };
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_tuple_result);

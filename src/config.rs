@@ -1,6 +1,6 @@
 // pub const ENABLE_REDDIT: bool = false;
 pub const ENABLE_ARXIV: bool = true;
-pub const ENABLE_BIORXIV: bool = false;
+pub const ENABLE_BIORXIV: bool = true;
 // pub const ENABLE_MEDRXIV: bool = false;
 //pub const ENABLE_TWITTER: bool = true;
 
@@ -18,7 +18,7 @@ pub const ENABLE_PRINTS_BIORXIV: bool = true;
 
 // pub const ENABLE_ERROR_PRINTS_REDDIT: bool = true;
 pub const ENABLE_ERROR_PRINTS_ARXIV: bool = true;
-// pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = true;
+pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = true;
 // pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = true;
 //pub const ENABLE_PRINTS_TWITTER: bool = true;
 

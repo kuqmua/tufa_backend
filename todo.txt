@@ -51,6 +51,10 @@ make parallel parsing
 you need to ensure that the Arc has exactly one strong reference and the Mutex is not poisoned
 -------
 Rc<RefCell<Vec<T>>>
+---------
+приравнять структуры парсинга
+-------
+BiorxivPostStruct и page
 -------
  // `iter()` for vecs yields `&i32`.
     let mut iter = vec1.iter();

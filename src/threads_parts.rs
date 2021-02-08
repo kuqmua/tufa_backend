@@ -20,7 +20,7 @@ pub async fn threads_parts() {
     }
     if ENABLE_BIORXIV {
         threads_vec.push(thread::spawn(move || {
-            fetch::biorxiv_fetch::biorxiv_fetch::biorxiv_part();
+            fetch::biorxiv_part::biorxiv_fetch::biorxiv_part();
         }));
     }
     // if ENABLE_MEDRXIV {
