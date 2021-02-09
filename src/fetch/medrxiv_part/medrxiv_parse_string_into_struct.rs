@@ -15,27 +15,19 @@ pub fn medrxiv_parse_string_into_struct(
     let mut medrxiv_post_struct_handle: MedrxivPageStruct = MedrxivPageStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
     fetch_tuple_result.remove(0);
-    ////
-    loop {
-        match fetch_tuple_result.find("<dc:title>") {
-            Some(_) => match fetch_tuple_result.find("</dc:title>") {
-                Some(_) => {
-                    fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
-                    fetch_tuple_result = fetch_tuple_result.replace("</dc:title>", "</dcstitle>");
-                }
-                _ => {
-                    break;
-                }
-            },
-            _ => {
+    while fetch_tuple_result.find("<dc:title>").is_some() {
+        match fetch_tuple_result.find("</dc:title>") {
+            Some(_) => {
+                fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
+                fetch_tuple_result = fetch_tuple_result.replace("</dc:title>", "</dcstitle>");
+            }
+            None => {
                 break;
             }
         }
     }
-    ////
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
-            // println!("fetch_tuple_result {}", fetch_tuple_result);
             let medrxiv_struct_from_str_result: Result<
                 XmlMedrxivParserStruct,
                 serde_xml_rs::Error,
