@@ -1,10 +1,10 @@
-use super::arxiv_metainfo_structures::AreThereItems;
 use super::arxiv_structures::ArxivPost;
 use super::arxiv_structures::ArxivPostStruct;
 use super::arxiv_structures::Creator;
 use super::arxiv_structures::XmlArxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::overriding::prints::print_error_red;
 use serde_xml_rs::from_str;
 

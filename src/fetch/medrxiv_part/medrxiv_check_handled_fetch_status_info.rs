@@ -1,10 +1,10 @@
 use std::time::Instant;
 
-use super::medrxiv_metainfo_structures::AreThereItems;
-use super::medrxiv_metainfo_structures::HandledFetchStatusInfo;
 use super::medrxiv_parse_string_into_struct::medrxiv_parse_string_into_struct;
 use super::medrxiv_structures::MedrxivPageStruct;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 
 pub fn check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,

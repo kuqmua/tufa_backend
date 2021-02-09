@@ -3,10 +3,10 @@ use std::time::Instant;
 
 use super::arxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
 use super::arxiv_fetch_link::arxiv_fetch_link;
-use super::arxiv_metainfo_structures::AreThereItems;
-use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
-use super::arxiv_metainfo_structures::UnhandledFetchStatusInfo;
 use super::arxiv_structures::ArxivPostStruct;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;

@@ -1,10 +1,10 @@
 use std::time::Instant;
 
-use super::arxiv_metainfo_structures::AreThereItems;
-use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
 use super::arxiv_parse_string_into_struct::arxiv_parse_string_into_struct;
 use super::arxiv_structures::ArxivPostStruct;
 use crate::config::ENABLE_PRINTS_ARXIV;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 
 pub fn check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,

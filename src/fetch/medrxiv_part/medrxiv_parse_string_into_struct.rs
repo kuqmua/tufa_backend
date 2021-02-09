@@ -1,10 +1,10 @@
-use super::medrxiv_metainfo_structures::AreThereItems;
 use super::medrxiv_structures::Creator;
 use super::medrxiv_structures::MedrxivPageStruct;
 use super::medrxiv_structures::MedrxivPost;
 use super::medrxiv_structures::XmlMedrxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use serde_xml_rs::from_str;
 
 pub fn medrxiv_parse_string_into_struct(

@@ -3,10 +3,10 @@ use std::time::Instant;
 
 use super::medrxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
 use super::medrxiv_fetch_link::medrxiv_fetch_link;
-use super::medrxiv_metainfo_structures::AreThereItems;
-use super::medrxiv_metainfo_structures::HandledFetchStatusInfo;
-use super::medrxiv_metainfo_structures::UnhandledFetchStatusInfo;
-use super::medrxiv_structures::MedrxivPageStruct; //page instead of post wtf????
+use super::medrxiv_structures::MedrxivPageStruct;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo; //page instead of post wtf????
 
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;

@@ -145,10 +145,10 @@ use std::time::Instant;
 
 use super::biorxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
 use super::biorxiv_fetch_link::biorxiv_fetch_link;
-use super::biorxiv_metainfo_structures::AreThereItems;
-use super::biorxiv_metainfo_structures::HandledFetchStatusInfo;
-use super::biorxiv_metainfo_structures::UnhandledFetchStatusInfo;
-use super::biorxiv_structures::BiorxivPageStruct; //page instead of post wtf????
+use super::biorxiv_structures::BiorxivPageStruct;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo; //page instead of post wtf????
 
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;

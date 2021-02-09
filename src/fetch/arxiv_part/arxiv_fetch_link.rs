@@ -1,6 +1,6 @@
-use super::arxiv_metainfo_structures::HandledFetchStatusInfo;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
 use std::time::Instant;
 

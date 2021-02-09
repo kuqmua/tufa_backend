@@ -1,6 +1,6 @@
-use super::biorxiv_metainfo_structures::AreThereItems;
 use super::biorxiv_structures::BiorxivPageStruct;
 use super::biorxiv_structures::BiorxivPost;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
 // use super::biorxiv_structures::BiorxivPageStructItem;
 use super::biorxiv_structures::Creator;
 use super::biorxiv_structures::XmlBiorxivParserStruct;
