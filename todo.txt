@@ -53,8 +53,8 @@ you need to ensure that the Arc has exactly one strong reference and the Mutex i
 Rc<RefCell<Vec<T>>>
 ---------
 приравнять структуры парсинга
--------
- error custom: missing field `date`
+------
+убрать creators
 ------
 проблема с основной ссылкой архива
 ------

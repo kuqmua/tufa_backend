@@ -9,12 +9,30 @@ use crate::config::ENABLE_PRINTS_BIORXIV;
 use serde_xml_rs::from_str;
 
 pub fn biorxiv_parse_string_into_struct(
-    fetch_tuple_result: String,
+    mut fetch_tuple_result: String,
     key: &str,
     value: &str,
 ) -> (BiorxivPageStruct, AreThereItems) {
     let mut biorxiv_post_struct_handle: BiorxivPageStruct = BiorxivPageStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
+                                               //
+    loop {
+        match fetch_tuple_result.find("<dc:title>") {
+            Some(_) => match fetch_tuple_result.find("</dc:title>") {
+                Some(_) => {
+                    fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
+                    fetch_tuple_result = fetch_tuple_result.replace("</dc:title>", "</dcstitle>");
+                }
+                _ => {
+                    break;
+                }
+            },
+            _ => {
+                break;
+            }
+        }
+    }
+    //
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
             let biorxiv_struct_from_str_result: Result<
