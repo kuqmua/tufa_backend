@@ -1,3 +1,4 @@
+use colored::*;
 use std::collections::HashMap;
 use std::time::Instant;
 
@@ -94,8 +95,8 @@ pub fn medrxiv_fetch_and_parse_xml() -> HashMap<
             if ENABLE_ERROR_PRINTS_MEDRXIV {
                 eprintln!(
                     "crossbeam_result is not ok, file: {}, line {}\n {:#?}",
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!().to_string().red().bold(),
+                    line!().to_string().red().bold(),
                     e
                 )
             }
