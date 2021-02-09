@@ -150,9 +150,9 @@ use super::biorxiv_metainfo_structures::HandledFetchStatusInfo;
 use super::biorxiv_metainfo_structures::UnhandledFetchStatusInfo;
 use super::biorxiv_structures::BiorxivPageStruct; //page instead of post wtf????
 
-use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
-use crate::config::ENABLE_PRINTS_ARXIV;
-use crate::get_group_names::get_arxiv_links::get_arxiv_links;
+use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
+use crate::config::ENABLE_PRINTS_BIORXIV;
+use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::overriding::prints::print_error_red;
 
 pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
@@ -165,9 +165,8 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
         AreThereItems,
     ),
 > {
-    println!("ffffff");
     let time = Instant::now();
-    let arxiv_links_in_hash_map: HashMap<&str, &str> = get_arxiv_links();
+    let biorxiv_links_in_hash_map: HashMap<&str, &str> = get_biorxiv_links();
     let mut hashmap_to_return: HashMap<
         String,
         (
@@ -178,7 +177,7 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
             AreThereItems,
         ),
     > = HashMap::new();
-    for (key, value) in arxiv_links_in_hash_map {
+    for (key, value) in biorxiv_links_in_hash_map {
         let tuple = (
             BiorxivPageStruct::new(),
             value.to_string(),
@@ -188,7 +187,7 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
         );
         hashmap_to_return.insert(key.to_string(), tuple);
     }
-    if ENABLE_PRINTS_ARXIV {
+    if ENABLE_PRINTS_BIORXIV {
         println!(
             "hashmap init in {}.{}ms",
             time.elapsed().as_secs(),
@@ -204,7 +203,7 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
                         value.2 = UnhandledFetchStatusInfo::Success;
                         let (
                             value3,
-                            arxiv_post_struct_wrapper_handle,
+                            biorxiv_post_struct_wrapper_handle,
                             are_there_items_wrapper_handle,
                         ) = check_handled_fetch_status_info(
                             fetch_tuple_result.1,
@@ -214,12 +213,12 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
                             &value.1,
                         );
                         value.3 = value3;
-                        value.0 = arxiv_post_struct_wrapper_handle;
+                        value.0 = biorxiv_post_struct_wrapper_handle;
                         value.4 = are_there_items_wrapper_handle;
                     }
                     Err(e) => {
                         value.2 = UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
-                        if ENABLE_ERROR_PRINTS_ARXIV {
+                        if ENABLE_ERROR_PRINTS_BIORXIV {
                             print_error_red(file!().to_string(), line!().to_string(), e.to_string())
                         }
                     }
@@ -229,12 +228,12 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
     });
     match crossbeam_result {
         Ok(_) => {
-            if ENABLE_PRINTS_ARXIV {
+            if ENABLE_PRINTS_BIORXIV {
                 println!("crossbeam_result is ok",)
             }
         }
         Err(e) => {
-            if ENABLE_ERROR_PRINTS_ARXIV {
+            if ENABLE_ERROR_PRINTS_BIORXIV {
                 eprintln!(
                     "crossbeam_result is not ok, file: {}, line {}\n {:#?}",
                     file!().to_string(),
@@ -244,6 +243,6 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
             }
         }
     }
-    // println!("arxiv_sections_links {:#?}", hashmap_to_return);
+    // println!("biorxiv_sections_links {:#?}", hashmap_to_return);
     hashmap_to_return
 }

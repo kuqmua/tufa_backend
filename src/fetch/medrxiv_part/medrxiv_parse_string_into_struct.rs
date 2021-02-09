@@ -1,39 +1,58 @@
-use super::biorxiv_metainfo_structures::AreThereItems;
-use super::biorxiv_structures::BiorxivPageStruct;
-use super::biorxiv_structures::BiorxivPost;
-// use super::biorxiv_structures::BiorxivPageStructItem;
-use super::biorxiv_structures::Creator;
-use super::biorxiv_structures::XmlBiorxivParserStruct;
-use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
-use crate::config::ENABLE_PRINTS_BIORXIV;
+use super::medrxiv_metainfo_structures::AreThereItems;
+use super::medrxiv_structures::Creator;
+use super::medrxiv_structures::MedrxivPageStruct;
+use super::medrxiv_structures::MedrxivPost;
+use super::medrxiv_structures::XmlMedrxivParserStruct;
+use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
+use crate::config::ENABLE_PRINTS_MEDRXIV;
 use serde_xml_rs::from_str;
 
-pub fn biorxiv_parse_string_into_struct(
-    fetch_tuple_result: String,
+pub fn medrxiv_parse_string_into_struct(
+    mut fetch_tuple_result: String,
     key: &str,
     value: &str,
-) -> (BiorxivPageStruct, AreThereItems) {
-    let mut biorxiv_post_struct_handle: BiorxivPageStruct = BiorxivPageStruct::new();
+) -> (MedrxivPageStruct, AreThereItems) {
+    let mut medrxiv_post_struct_handle: MedrxivPageStruct = MedrxivPageStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
+    fetch_tuple_result.remove(0);
+    ////
+    loop {
+        match fetch_tuple_result.find("<dc:title>") {
+            Some(_) => match fetch_tuple_result.find("</dc:title>") {
+                Some(_) => {
+                    fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
+                    fetch_tuple_result = fetch_tuple_result.replace("</dc:title>", "</dcstitle>");
+                }
+                _ => {
+                    break;
+                }
+            },
+            _ => {
+                break;
+            }
+        }
+    }
+    ////
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
-            let biorxiv_struct_from_str_result: Result<
-                XmlBiorxivParserStruct,
+            // println!("fetch_tuple_result {}", fetch_tuple_result);
+            let medrxiv_struct_from_str_result: Result<
+                XmlMedrxivParserStruct,
                 serde_xml_rs::Error,
             > = from_str(&fetch_tuple_result);
-            match biorxiv_struct_from_str_result {
-                Ok(biorxiv_struct) => {
+            match medrxiv_struct_from_str_result {
+                Ok(medrxiv_struct) => {
                     let mut count = 0;
-                    let mut biorxiv_page_struct: BiorxivPageStruct = BiorxivPageStruct::new();
+                    let mut medrxiv_page_struct: MedrxivPageStruct = MedrxivPageStruct::new();
                     loop {
-                        if count < biorxiv_struct.items.len() {
-                            let mut biorxiv_post: BiorxivPost = BiorxivPost::new();
-                            biorxiv_post.title = biorxiv_struct.items[count].title.clone();
-                            biorxiv_post.link = biorxiv_struct.items[count].link.clone();
-                            biorxiv_post.description =
-                                biorxiv_struct.items[count].description.clone();
+                        if count < medrxiv_struct.items.len() {
+                            let mut medrxiv_post: MedrxivPost = MedrxivPost::new();
+                            medrxiv_post.title = medrxiv_struct.items[count].title.clone();
+                            medrxiv_post.link = medrxiv_struct.items[count].link.clone();
+                            medrxiv_post.description =
+                                medrxiv_struct.items[count].description.clone();
                             let mut string_part_for_loop =
-                                biorxiv_struct.items[count].creator.clone();
+                                medrxiv_struct.items[count].creator.clone();
                             while let Some(link_index_from_start) =
                                 string_part_for_loop.find("<a href=\"")
                             {
@@ -55,29 +74,28 @@ pub fn biorxiv_parse_string_into_struct(
                                         string_part_for_loop = string_part_for_loop
                                             [name_index_from_end + "\">".len()..]
                                             .to_string();
-                                        biorxiv_post.creators.push(creator);
+                                        medrxiv_post.creators.push(creator);
                                     }
                                 }
                             }
-
-                            biorxiv_page_struct.items.push(biorxiv_post);
+                            medrxiv_page_struct.items.push(medrxiv_post);
                             count += 1;
                         } else {
                             break;
                         }
                     }
-                    if !biorxiv_page_struct.items.is_empty() {
+                    if !medrxiv_page_struct.items.is_empty() {
                         are_there_items_handle = AreThereItems::Yep;
                     } else {
                         are_there_items_handle =
                             AreThereItems::NopeButThereIsTag(fetch_tuple_result);
                     }
-                    biorxiv_post_struct_handle = biorxiv_page_struct;
+                    medrxiv_post_struct_handle = medrxiv_page_struct;
                 }
                 Err(e) => {
-                    if ENABLE_ERROR_PRINTS_BIORXIV {
+                    if ENABLE_ERROR_PRINTS_MEDRXIV {
                         println!(
-                            "biorxiv conversion from str for {}, error {}",
+                            "medrxiv conversion from str for {}, error {}",
                             key,
                             e.to_string()
                         );
@@ -88,11 +106,11 @@ pub fn biorxiv_parse_string_into_struct(
             }
         }
         _ => {
-            if ENABLE_PRINTS_BIORXIV {
-                println!("biorxiv no items for key {} {}", key, value);
+            if ENABLE_PRINTS_MEDRXIV {
+                println!("medrxiv no items for key {} {}", key, value);
             };
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_tuple_result);
         }
     }
-    (biorxiv_post_struct_handle, are_there_items_handle)
+    (medrxiv_post_struct_handle, are_there_items_handle)
 }

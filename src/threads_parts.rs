@@ -2,8 +2,8 @@ use std::thread;
 
 use crate::config::ENABLE_ARXIV;
 use crate::config::ENABLE_BIORXIV;
+use crate::config::ENABLE_MEDRXIV;
 use crate::fetch;
-// use crate::config::ENABLE_MEDRXIV;
 // use crate::config::ENABLE_REDDIT;
 
 pub async fn threads_parts() {
@@ -23,11 +23,11 @@ pub async fn threads_parts() {
             fetch::biorxiv_part::biorxiv_fetch::biorxiv_part();
         }));
     }
-    // if ENABLE_MEDRXIV {
-    //     threads_vec.push(thread::spawn(move || {
-    //         fetch::medrxiv_fetch::medrxiv_fetch::medrxiv_part();
-    //     }));
-    // }
+    if ENABLE_MEDRXIV {
+        threads_vec.push(thread::spawn(move || {
+            fetch::medrxiv_part::medrxiv_fetch::medrxiv_part();
+        }));
+    }
     for i in threads_vec {
         i.join().unwrap();
     }

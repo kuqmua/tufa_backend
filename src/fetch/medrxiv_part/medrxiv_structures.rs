@@ -20,36 +20,52 @@ pub struct XmlMedrxivParserStructItem {
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MedrxivPageStruct {
     #[serde(rename = "item", default)]
-    pub items: Vec<MedrxivPageStructItem>,
+    pub items: Vec<MedrxivPost>,
 }
 
 impl MedrxivPageStruct {
     pub fn new() -> Self {
         MedrxivPageStruct {
             // items: Vec::<MedrxivPageStructItem>::new(),
-            items: vec![MedrxivPageStructItem::new(); 30],
+            items: vec![MedrxivPost::new(); 30],
             //vec![UsedRedditJsonStruct::new(); 25],
         }
     }
 }
+
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct MedrxivPageStructItem {
+pub struct MedrxivPost {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creators: Vec<String>,
+    pub creators: Vec<Creator>,
     pub date: String,
     pub publisher: String,
 }
-impl MedrxivPageStructItem {
+impl MedrxivPost {
     pub fn new() -> Self {
-        MedrxivPageStructItem {
+        MedrxivPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
-            creators: Vec::<String>::new(),
+            creators: Vec::<Creator>::new(),
             date: "".to_string(),
             publisher: "".to_string(),
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct Creator {
+    pub name: String,
+    pub link: String,
+}
+
+impl Creator {
+    pub fn new() -> Self {
+        Creator {
+            name: "".to_string(),
+            link: "".to_string(),
         }
     }
 }

@@ -18,11 +18,15 @@ mod fetch {
         pub mod biorxiv_parse_string_into_struct;
         pub mod biorxiv_structures;
     }
-    // pub mod medrxiv_fetch {
-    //     pub mod medrxiv_fetch;
-    //     pub mod medrxiv_fetch_and_parse_xml;
-    //     pub mod medrxiv_structures;
-    // }
+    pub mod medrxiv_part {
+        pub mod medrxiv_check_handled_fetch_status_info;
+        pub mod medrxiv_fetch;
+        pub mod medrxiv_fetch_and_parse_xml;
+        pub mod medrxiv_fetch_link;
+        pub mod medrxiv_metainfo_structures;
+        pub mod medrxiv_parse_string_into_struct;
+        pub mod medrxiv_structures;
+    }
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;
     //     pub mod parse_every_children;
@@ -37,8 +41,8 @@ mod fetch {
 }
 mod get_group_names {
     pub mod get_arxiv_links;
-    // pub mod get_biorxiv_links;
-    // pub mod get_medrxiv_links;
+    pub mod get_biorxiv_links;
+    pub mod get_medrxiv_links;
     // pub mod get_subreddits;
 }
 mod check_net {

@@ -71,3 +71,20 @@ BiorxivPostStruct и page
     // `into_iter()` for vecs yields `i32`, and we want to reference one of
     // its items, so we have to destructure `&i32` to `i32`
     println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
+---------
+impl MedrxivPageStruct {
+    pub fn new() -> Self {//входящим параметром добавить длину аллоцируемого вектора
+        MedrxivPageStruct {
+            // items: Vec::<MedrxivPageStructItem>::new(),
+            items: vec![MedrxivPageStructItem::new(); 30],
+            //vec![UsedRedditJsonStruct::new(); 25],
+        }
+    }
+}
+
+
+--------------
+let slice: &[u8] = &b;
+                let converted_str = str::from_utf8(&slice).unwrap();
+                let mut dots_unfiltered_str = converted_str.to_string();
+                dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ

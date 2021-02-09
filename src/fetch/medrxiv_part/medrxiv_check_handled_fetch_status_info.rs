@@ -1,10 +1,10 @@
 use std::time::Instant;
 
-use super::biorxiv_metainfo_structures::AreThereItems;
-use super::biorxiv_metainfo_structures::HandledFetchStatusInfo;
-use super::biorxiv_parse_string_into_struct::biorxiv_parse_string_into_struct;
-use super::biorxiv_structures::BiorxivPageStruct;
-use crate::config::ENABLE_PRINTS_BIORXIV;
+use super::medrxiv_metainfo_structures::AreThereItems;
+use super::medrxiv_metainfo_structures::HandledFetchStatusInfo;
+use super::medrxiv_parse_string_into_struct::medrxiv_parse_string_into_struct;
+use super::medrxiv_structures::MedrxivPageStruct;
+use crate::config::ENABLE_PRINTS_MEDRXIV;
 
 pub fn check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
@@ -12,9 +12,9 @@ pub fn check_handled_fetch_status_info(
     time: Instant,
     key: &str,
     value: &str,
-) -> (HandledFetchStatusInfo, BiorxivPageStruct, AreThereItems) {
+) -> (HandledFetchStatusInfo, MedrxivPageStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
-    let mut biorxiv_post_struct_wrapper_handle: BiorxivPageStruct = BiorxivPageStruct::new();
+    let mut medrxiv_post_struct_wrapper_handle: MedrxivPageStruct = MedrxivPageStruct::new();
     let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
         HandledFetchStatusInfo::Initialized => {
@@ -29,11 +29,11 @@ pub fn check_handled_fetch_status_info(
         HandledFetchStatusInfo::Success => {
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
-            let (biorxiv_post_struct_handle, are_there_items_handle) =
-                biorxiv_parse_string_into_struct(fetch_tuple_result_string, key, &value);
-            biorxiv_post_struct_wrapper_handle = biorxiv_post_struct_handle;
+            let (medrxiv_post_struct_handle, are_there_items_handle) =
+                medrxiv_parse_string_into_struct(fetch_tuple_result_string, key, &value);
+            medrxiv_post_struct_wrapper_handle = medrxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
-            if ENABLE_PRINTS_BIORXIV {
+            if ENABLE_PRINTS_MEDRXIV {
                 println!(
                     "parse in {}.{}ms abs, rel {}.{}ms for {}",
                     time.elapsed().as_secs(),
@@ -47,7 +47,7 @@ pub fn check_handled_fetch_status_info(
     }
     (
         value3,
-        biorxiv_post_struct_wrapper_handle,
+        medrxiv_post_struct_wrapper_handle,
         are_there_items_wrapper_handle,
     )
 }
