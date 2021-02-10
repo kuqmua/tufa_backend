@@ -1,9 +1,10 @@
 use std::time::Instant;
 
-use super::arxiv_parse_string_into_struct::arxiv_parse_string_into_struct;
-use crate::config::ENABLE_PRINTS_ARXIV;
+use crate::config::{ENABLE_ERROR_PRINTS_ARXIV, ENABLE_PRINTS_ARXIV};
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv_kind_enum::RxivKind;
+use crate::fetch::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
 use crate::fetch::rxiv_structures::RxivPostStruct;
 
 pub fn check_handled_fetch_status_info(
@@ -29,8 +30,14 @@ pub fn check_handled_fetch_status_info(
         HandledFetchStatusInfo::Success => {
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
-            let (arxiv_post_struct_handle, are_there_items_handle) =
-                arxiv_parse_string_into_struct(fetch_tuple_result_string, key, &value);
+            let (arxiv_post_struct_handle, are_there_items_handle) = rxiv_parse_string_into_struct(
+                fetch_tuple_result_string,
+                key,
+                &value,
+                ENABLE_PRINTS_ARXIV,
+                ENABLE_ERROR_PRINTS_ARXIV,
+                RxivKind::Arxiv,
+            );
             arxiv_post_struct_wrapper_handle = arxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             if ENABLE_PRINTS_ARXIV {

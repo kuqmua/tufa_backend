@@ -1,9 +1,10 @@
 use std::time::Instant;
 
-use super::biorxiv_parse_string_into_struct::biorxiv_parse_string_into_struct;
-use crate::config::ENABLE_PRINTS_BIORXIV;
+use crate::config::{ENABLE_ERROR_PRINTS_BIORXIV, ENABLE_PRINTS_BIORXIV};
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv_kind_enum::RxivKind;
+use crate::fetch::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
 use crate::fetch::rxiv_structures::RxivPostStruct;
 
 pub fn check_handled_fetch_status_info(
@@ -30,7 +31,14 @@ pub fn check_handled_fetch_status_info(
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
             let (biorxiv_post_struct_handle, are_there_items_handle) =
-                biorxiv_parse_string_into_struct(fetch_tuple_result_string, key, &value);
+                rxiv_parse_string_into_struct(
+                    fetch_tuple_result_string,
+                    key,
+                    &value,
+                    ENABLE_PRINTS_BIORXIV,
+                    ENABLE_ERROR_PRINTS_BIORXIV,
+                    RxivKind::Biorxiv,
+                );
             biorxiv_post_struct_wrapper_handle = biorxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             if ENABLE_PRINTS_BIORXIV {
