@@ -36,7 +36,6 @@ pub struct ArxivPost {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creators: Vec<Creator>,
 }
 
 impl ArxivPost {
@@ -45,22 +44,6 @@ impl ArxivPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
-            creators: Vec::<Creator>::new(),
-        }
-    }
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Creator {
-    pub name: String,
-    pub link: String,
-}
-
-impl Creator {
-    pub fn new() -> Self {
-        Creator {
-            name: "".to_string(),
-            link: "".to_string(),
         }
     }
 }

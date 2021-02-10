@@ -3,11 +3,11 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 use super::biorxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
-use super::biorxiv_fetch_link::biorxiv_fetch_link;
 use super::biorxiv_structures::BiorxivPageStruct;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo; //page instead of post wtf????
+use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv_fetch_link::rxiv_fetch_link; //page instead of post wtf????
 
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
@@ -56,7 +56,13 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result = biorxiv_fetch_link(&value.1, key, time);
+                let fetch_result = rxiv_fetch_link(
+                    &value.1,
+                    key,
+                    time,
+                    ENABLE_PRINTS_BIORXIV,
+                    ENABLE_ERROR_PRINTS_BIORXIV,
+                );
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;

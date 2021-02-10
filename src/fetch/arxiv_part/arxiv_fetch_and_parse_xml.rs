@@ -3,11 +3,11 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 use super::arxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
-use super::arxiv_fetch_link::arxiv_fetch_link;
 use super::arxiv_structures::ArxivPostStruct;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv_fetch_link::rxiv_fetch_link;
 
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
@@ -56,7 +56,13 @@ pub fn arxiv_fetch_and_parse_xml() -> HashMap<
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result = arxiv_fetch_link(&value.1, key, time);
+                let fetch_result = rxiv_fetch_link(
+                    &value.1,
+                    key,
+                    time,
+                    ENABLE_PRINTS_ARXIV,
+                    ENABLE_ERROR_PRINTS_ARXIV,
+                );
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;

@@ -1,16 +1,16 @@
-use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
-use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
 use std::time::Instant;
 
-pub fn arxiv_fetch_link(
+pub fn rxiv_fetch_link(
     link: &str,
     key: &str,
     time: Instant,
+    enable_prints: bool,
+    enable_error_prints: bool,
 ) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
-    if ENABLE_PRINTS_ARXIV {
+    if enable_prints {
         println!(
             "fetch in {}.{}ms... status {} for {}",
             time.elapsed().as_secs(),
@@ -27,14 +27,14 @@ pub fn arxiv_fetch_link(
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
             Err(e) => {
                 result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
-                if ENABLE_ERROR_PRINTS_ARXIV {
+                if enable_error_prints {
                     print_error_red(file!().to_string(), line!().to_string(), e.to_string());
                 }
             }
         }
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
-        if ENABLE_ERROR_PRINTS_ARXIV {
+        if enable_error_prints {
             print_error_red(
                 file!().to_string(),
                 line!().to_string(),

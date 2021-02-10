@@ -1,6 +1,5 @@
 use super::arxiv_structures::ArxivPost;
 use super::arxiv_structures::ArxivPostStruct;
-use super::arxiv_structures::Creator;
 use super::arxiv_structures::XmlArxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
@@ -29,34 +28,6 @@ pub fn arxiv_parse_string_into_struct(
                             arxiv_post.title = arxiv_struct.items[count].title.clone();
                             arxiv_post.link = arxiv_struct.items[count].link.clone();
                             arxiv_post.description = arxiv_struct.items[count].description.clone();
-                            let mut string_part_for_loop =
-                                arxiv_struct.items[count].creator.clone();
-                            while let Some(link_index_from_start) =
-                                string_part_for_loop.find("<a href=\"")
-                            {
-                                if let Some(link_index_from_end) = string_part_for_loop.find("\">")
-                                {
-                                    if let Some(name_index_from_end) =
-                                        string_part_for_loop.find("</a>")
-                                    {
-                                        let mut creator = Creator::new();
-                                        creator.link = string_part_for_loop[link_index_from_start
-                                            + "<a href=\"".len()
-                                            ..link_index_from_end]
-                                            .to_string();
-                                        let name_index_from_start =
-                                            link_index_from_end + "\">".len();
-                                        creator.name = string_part_for_loop
-                                            [name_index_from_start..name_index_from_end]
-                                            .to_string();
-                                        string_part_for_loop = string_part_for_loop
-                                            [name_index_from_end + "\">".len()..]
-                                            .to_string();
-                                        arxiv_post.creators.push(creator);
-                                    }
-                                }
-                            }
-
                             arxiv_page_struct.items.push(arxiv_post);
                             count += 1;
                         } else {

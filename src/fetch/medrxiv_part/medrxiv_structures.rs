@@ -38,7 +38,6 @@ pub struct MedrxivPost {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub creators: Vec<Creator>,
     pub date: String,
     pub publisher: String,
 }
@@ -48,24 +47,8 @@ impl MedrxivPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
-            creators: Vec::<Creator>::new(),
             date: "".to_string(),
             publisher: "".to_string(),
-        }
-    }
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Creator {
-    pub name: String,
-    pub link: String,
-}
-
-impl Creator {
-    pub fn new() -> Self {
-        Creator {
-            name: "".to_string(),
-            link: "".to_string(),
         }
     }
 }

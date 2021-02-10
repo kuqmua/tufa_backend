@@ -2,7 +2,6 @@ use super::biorxiv_structures::BiorxivPageStruct;
 use super::biorxiv_structures::BiorxivPost;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 // use super::biorxiv_structures::BiorxivPageStructItem;
-use super::biorxiv_structures::Creator;
 use super::biorxiv_structures::XmlBiorxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
@@ -43,34 +42,6 @@ pub fn biorxiv_parse_string_into_struct(
                             biorxiv_post.link = biorxiv_struct.items[count].link.clone();
                             biorxiv_post.description =
                                 biorxiv_struct.items[count].description.clone();
-                            let mut string_part_for_loop =
-                                biorxiv_struct.items[count].creator.clone();
-                            while let Some(link_index_from_start) =
-                                string_part_for_loop.find("<a href=\"")
-                            {
-                                if let Some(link_index_from_end) = string_part_for_loop.find("\">")
-                                {
-                                    if let Some(name_index_from_end) =
-                                        string_part_for_loop.find("</a>")
-                                    {
-                                        let mut creator = Creator::new();
-                                        creator.link = string_part_for_loop[link_index_from_start
-                                            + "<a href=\"".len()
-                                            ..link_index_from_end]
-                                            .to_string();
-                                        let name_index_from_start =
-                                            link_index_from_end + "\">".len();
-                                        creator.name = string_part_for_loop
-                                            [name_index_from_start..name_index_from_end]
-                                            .to_string();
-                                        string_part_for_loop = string_part_for_loop
-                                            [name_index_from_end + "\">".len()..]
-                                            .to_string();
-                                        biorxiv_post.creators.push(creator);
-                                    }
-                                }
-                            }
-
                             biorxiv_page_struct.items.push(biorxiv_post);
                             count += 1;
                         } else {
