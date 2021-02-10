@@ -1,10 +1,10 @@
 use std::time::Instant;
 
 use super::arxiv_parse_string_into_struct::arxiv_parse_string_into_struct;
-use super::arxiv_structures::ArxivPostStruct;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv_structures::RxivPostStruct;
 
 pub fn check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
@@ -12,9 +12,9 @@ pub fn check_handled_fetch_status_info(
     time: Instant,
     key: &str,
     value: &str,
-) -> (HandledFetchStatusInfo, ArxivPostStruct, AreThereItems) {
+) -> (HandledFetchStatusInfo, RxivPostStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
-    let mut arxiv_post_struct_wrapper_handle: ArxivPostStruct = ArxivPostStruct::new();
+    let mut arxiv_post_struct_wrapper_handle: RxivPostStruct = RxivPostStruct::new();
     let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
         HandledFetchStatusInfo::Initialized => {

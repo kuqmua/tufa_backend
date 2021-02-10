@@ -3,11 +3,11 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 use super::medrxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
-use super::medrxiv_structures::MedrxivPageStruct;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_fetch_link::rxiv_fetch_link; //page instead of post wtf????
+use crate::fetch::rxiv_fetch_link::rxiv_fetch_link;
+use crate::fetch::rxiv_structures::RxivPostStruct; //page instead of post wtf????
 
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
@@ -17,7 +17,7 @@ use crate::overriding::prints::print_error_red;
 pub fn medrxiv_fetch_and_parse_xml() -> HashMap<
     String,
     (
-        MedrxivPageStruct,
+        RxivPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -29,7 +29,7 @@ pub fn medrxiv_fetch_and_parse_xml() -> HashMap<
     let mut hashmap_to_return: HashMap<
         String,
         (
-            MedrxivPageStruct,
+            RxivPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -38,7 +38,7 @@ pub fn medrxiv_fetch_and_parse_xml() -> HashMap<
     > = HashMap::new();
     for (key, value) in medrxiv_links_in_hash_map {
         let tuple = (
-            MedrxivPageStruct::new(),
+            RxivPostStruct::new(),
             value.to_string(),
             UnhandledFetchStatusInfo::Initialized,
             HandledFetchStatusInfo::Initialized,

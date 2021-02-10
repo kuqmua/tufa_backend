@@ -1,18 +1,17 @@
-use super::biorxiv_structures::BiorxivPageStruct;
-use super::biorxiv_structures::BiorxivPost;
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-// use super::biorxiv_structures::BiorxivPageStructItem;
-use super::biorxiv_structures::XmlBiorxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv_structures::RxivPost;
+use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::rxiv_structures::XmlRxivParserStruct;
 use serde_xml_rs::from_str;
 
 pub fn biorxiv_parse_string_into_struct(
     mut fetch_tuple_result: String,
     key: &str,
     value: &str,
-) -> (BiorxivPageStruct, AreThereItems) {
-    let mut biorxiv_post_struct_handle: BiorxivPageStruct = BiorxivPageStruct::new();
+) -> (RxivPostStruct, AreThereItems) {
+    let mut biorxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
     while fetch_tuple_result.find("<dc:title>").is_some() {
         match fetch_tuple_result.find("</dc:title>") {
@@ -27,17 +26,15 @@ pub fn biorxiv_parse_string_into_struct(
     } //
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
-            let biorxiv_struct_from_str_result: Result<
-                XmlBiorxivParserStruct,
-                serde_xml_rs::Error,
-            > = from_str(&fetch_tuple_result);
+            let biorxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
+                from_str(&fetch_tuple_result);
             match biorxiv_struct_from_str_result {
                 Ok(biorxiv_struct) => {
                     let mut count = 0;
-                    let mut biorxiv_page_struct: BiorxivPageStruct = BiorxivPageStruct::new();
+                    let mut biorxiv_page_struct: RxivPostStruct = RxivPostStruct::new();
                     loop {
                         if count < biorxiv_struct.items.len() {
-                            let mut biorxiv_post: BiorxivPost = BiorxivPost::new();
+                            let mut biorxiv_post: RxivPost = RxivPost::new();
                             biorxiv_post.title = biorxiv_struct.items[count].title.clone();
                             biorxiv_post.link = biorxiv_struct.items[count].link.clone();
                             biorxiv_post.description =

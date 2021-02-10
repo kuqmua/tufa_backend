@@ -1,17 +1,17 @@
-use super::medrxiv_structures::MedrxivPageStruct;
-use super::medrxiv_structures::MedrxivPost;
-use super::medrxiv_structures::XmlMedrxivParserStruct;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv_structures::RxivPost;
+use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::rxiv_structures::XmlRxivParserStruct;
 use serde_xml_rs::from_str;
 
 pub fn medrxiv_parse_string_into_struct(
     mut fetch_tuple_result: String,
     key: &str,
     value: &str,
-) -> (MedrxivPageStruct, AreThereItems) {
-    let mut medrxiv_post_struct_handle: MedrxivPageStruct = MedrxivPageStruct::new();
+) -> (RxivPostStruct, AreThereItems) {
+    let mut medrxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
     fetch_tuple_result.remove(0);
     while fetch_tuple_result.find("<dc:title>").is_some() {
@@ -27,17 +27,15 @@ pub fn medrxiv_parse_string_into_struct(
     }
     match fetch_tuple_result.find("</item>") {
         Some(_) => {
-            let medrxiv_struct_from_str_result: Result<
-                XmlMedrxivParserStruct,
-                serde_xml_rs::Error,
-            > = from_str(&fetch_tuple_result);
+            let medrxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
+                from_str(&fetch_tuple_result);
             match medrxiv_struct_from_str_result {
                 Ok(medrxiv_struct) => {
                     let mut count = 0;
-                    let mut medrxiv_page_struct: MedrxivPageStruct = MedrxivPageStruct::new();
+                    let mut medrxiv_page_struct: RxivPostStruct = RxivPostStruct::new();
                     loop {
                         if count < medrxiv_struct.items.len() {
-                            let mut medrxiv_post: MedrxivPost = MedrxivPost::new();
+                            let mut medrxiv_post: RxivPost = RxivPost::new();
                             medrxiv_post.title = medrxiv_struct.items[count].title.clone();
                             medrxiv_post.link = medrxiv_struct.items[count].link.clone();
                             medrxiv_post.description =
