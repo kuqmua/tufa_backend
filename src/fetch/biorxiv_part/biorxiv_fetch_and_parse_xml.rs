@@ -2,11 +2,12 @@ use colored::*;
 use std::collections::HashMap;
 use std::time::Instant;
 
-use super::biorxiv_check_handled_fetch_status_info::check_handled_fetch_status_info;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv_check_handled_fetch_status_info::rxiv_check_handled_fetch_status_info;
 use crate::fetch::rxiv_fetch_link::rxiv_fetch_link;
+use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_structures::RxivPostStruct; //page instead of post wtf????
 
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
@@ -70,12 +71,15 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
                             value3,
                             biorxiv_post_struct_wrapper_handle,
                             are_there_items_wrapper_handle,
-                        ) = check_handled_fetch_status_info(
+                        ) = rxiv_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
                             time,
                             key,
                             &value.1,
+                            ENABLE_PRINTS_BIORXIV,
+                            ENABLE_ERROR_PRINTS_BIORXIV,
+                            RxivKind::Biorxiv,
                         );
                         value.3 = value3;
                         value.0 = biorxiv_post_struct_wrapper_handle;
@@ -108,6 +112,6 @@ pub fn biorxiv_fetch_and_parse_xml() -> HashMap<
             }
         }
     }
-    // println!("biorxiv_sections_links {:#?}", hashmap_to_return);
+    // println!("rxiv_sections_links {:#?}", hashmap_to_return);
     hashmap_to_return
 }

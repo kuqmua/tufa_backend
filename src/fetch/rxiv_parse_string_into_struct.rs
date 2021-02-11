@@ -3,6 +3,7 @@ use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_structures::RxivPost;
 use crate::fetch::rxiv_structures::RxivPostStruct;
 use crate::fetch::rxiv_structures::XmlRxivParserStruct;
+use crate::overriding::prints::print_error_red;
 use serde_xml_rs::from_str;
 
 pub fn rxiv_parse_string_into_struct(
@@ -15,6 +16,7 @@ pub fn rxiv_parse_string_into_struct(
 ) -> (RxivPostStruct, AreThereItems) {
     let mut rxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
+                                               // println!("{:#?}", rxiv_kind);
     if let RxivKind::Medrxiv = rxiv_kind {
         fetch_tuple_result.remove(0);
     }
@@ -63,11 +65,11 @@ pub fn rxiv_parse_string_into_struct(
                 }
                 Err(e) => {
                     if enable_error_prints {
-                        println!(
-                            "rxiv conversion from str for {}, error {}",
-                            key,
-                            e.to_string()
-                        );
+                        let error = "rxiv conversion from str for ".to_string()
+                            + key
+                            + "error: "
+                            + &e.to_string();
+                        print_error_red(file!().to_string(), line!().to_string(), error)
                     };
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_tuple_result, e.to_string());
