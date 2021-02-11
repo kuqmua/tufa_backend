@@ -1,5 +1,6 @@
+#[derive(Clone)]
 pub enum RxivKind {
-    Arxiv,
     Biorxiv,
+    Arxiv,
     Medrxiv,
 }

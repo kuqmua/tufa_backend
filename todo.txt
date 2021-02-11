@@ -52,6 +52,9 @@ make parallel parsing
 you need to ensure that the Arc has exactly one strong reference and the Mutex is not poisoned
 -------
 Rc<RefCell<Vec<T>>>
+----------
+rxiv no items for key Other Computer Science http://export.arxiv.org/rss/cs.OH
+make that orange or something color print
 ---------
 приравнять структуры парсинга
 ------
@@ -59,7 +62,7 @@ Rc<RefCell<Vec<T>>>
 ------
 проблема с основной ссылкой архива
 ------
-BiorxivPostStruct и page
+BiorxivPostStruct и page//DONE
 -------
  // `iter()` for vecs yields `&i32`.
     let mut iter = vec1.iter();
@@ -89,3 +92,15 @@ let slice: &[u8] = &b;
                 let converted_str = str::from_utf8(&slice).unwrap();
                 let mut dots_unfiltered_str = converted_str.to_string();
                 dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
+-----------------------------------------
+let mut hashmap_to_return: HashMap<
+        String,
+        (
+            RxivPostStruct,
+            String,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            RxivKind,
+        ),
+    > = HashMap::new();//для хеш мапы можно заранее алоцировать размер?
