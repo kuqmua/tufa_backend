@@ -11,6 +11,7 @@ use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 
 pub fn arxiv_part() -> bool {
+    //shame commit
     if check_link(ARXIV_URL).0 {
         if ENABLE_PRINTS_ARXIV {
             println!("i can reach {}", ARXIV_URL);
