@@ -22,7 +22,7 @@ pub fn rxiv_parse_string_into_struct(
     }
     if let RxivKind::Arxiv = rxiv_kind {
     } else {
-        while fetch_tuple_result.find("<dc:title>").is_some() {
+        while fetch_tuple_result.contains("<dc:title>") {
             match fetch_tuple_result.find("</dc:title>") {
                 Some(_) => {
                     fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
