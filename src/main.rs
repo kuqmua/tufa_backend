@@ -1,20 +1,12 @@
 use std::time::Instant;
 mod fetch {
-    pub mod arxiv_part {
-        pub mod arxiv_fetch;
-    }
-    pub mod biorxiv_part {
-        pub mod biorxiv_fetch;
-    }
-    pub mod medrxiv_part {
-        pub mod medrxiv_fetch;
-    }
     pub mod metainfo_fetch_structures;
     pub mod rxiv_check_handled_fetch_status_info;
     pub mod rxiv_fetch_and_parse_xml;
     pub mod rxiv_fetch_link;
     pub mod rxiv_kind_enum;
     pub mod rxiv_parse_string_into_struct;
+    pub mod rxiv_part;
     pub mod rxiv_structures;
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;
