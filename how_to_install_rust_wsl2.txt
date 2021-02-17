@@ -1,0 +1,8 @@
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+sudo apt install build-essential
+source $HOME/.cargo/env
+sudo apt install pkg-config //опционально
+sudo apt-get install pkg-config libssl-dev
+//переключение на nightly
+rustup default nightly
+rustup update //апдейтить каждую пару недель так как обновляется постоянно nightly
