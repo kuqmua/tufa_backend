@@ -38,7 +38,7 @@ pub fn rxiv_fetch_and_parse_xml(
             AreThereItems,
             RxivKind,
         ),
-    > = HashMap::new(); //для хеш мапы можно заранее алоцировать размер?
+    > = HashMap::with_capacity(rxiv_links.len());
 
     for (key, value) in rxiv_links {
         let tuple = (
