@@ -1,7 +1,7 @@
 pub const ENABLE_ALL_PROVIDERS: bool = true;
 // pub const ENABLE_REDDIT: bool = if ENABLE_ALL_PROVIDERS { false } else { false };
-pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & true | false; //ENABLE_ALL_PROVIDERS ? true :
-pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
+pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & false | false; //ENABLE_ALL_PROVIDERS ? true :
+pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
 pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
 //pub const ENABLE_TWITTER: bool = if ENABLE_ALL_PROVIDERS { false } else { false };
 //-------------------------------------------------------
@@ -10,7 +10,7 @@ pub const ARXIV_URL: &str = "https://www.google.com/"; //https://arxiv.org/ //"h
 pub const BIORXIV_URL: &str = "https://www.google.com/"; //http://connect.biorxiv.org/
 pub const MEDRXIV_URL: &str = "https://www.google.com/"; //http://connect.medrxiv.org/
                                                          //-------------------------------------------------------
-pub const ENABLE_ALL_PROVIDERS_PRINTS: bool = true;
+pub const ENABLE_ALL_PROVIDERS_PRINTS: bool = false;
 // pub const ENABLE_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false ;
 pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
 pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;

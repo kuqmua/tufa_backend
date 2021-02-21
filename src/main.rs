@@ -48,8 +48,11 @@ mod entry;
 mod threads_parts;
 
 use entry::entry;
-
+// use log::LevelFilter;
+// use simplelog::{Config, TermLogger, TerminalMode};
 fn main() {
+    //c логами реально дохерище спама
+    // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     let time = Instant::now();
     entry();
     println!("main done in {} seconds", time.elapsed().as_secs());

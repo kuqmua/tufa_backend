@@ -46,10 +46,6 @@ make parallel parsing
 добавить возможность писать принты\ошибки в файл
 ----------
 организация перезапуска фетча ссылок только для тех которые вернули эррор
-----------
-you need to ensure that the Arc has exactly one strong reference and the Mutex is not poisoned
--------
-Rc<RefCell<Vec<T>>>
 ------
 проблема с основной ссылкой архива
 -------
