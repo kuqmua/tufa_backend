@@ -17,6 +17,8 @@ use crate::fetch::rxiv_part::rxiv_part;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::overriding::prints::print_error_red;
+
 // use crate::config::ENABLE_REDDIT;
 
 pub async fn threads_parts() {
@@ -27,37 +29,64 @@ pub async fn threads_parts() {
     //     }));
     // }
     if ENABLE_ARXIV {
-        threads_vec.push(thread::spawn(move || {
-            rxiv_part(
-                get_arxiv_links(),
-                ENABLE_PRINTS_ARXIV,
-                ENABLE_ERROR_PRINTS_ARXIV,
-                ARXIV_URL,
-                RxivKind::Arxiv,
-            );
-        }));
+        let arxiv_links = get_arxiv_links();
+        if arxiv_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "arxiv_links.is_empty".to_string(),
+            )
+        } else {
+            threads_vec.push(thread::spawn(move || {
+                rxiv_part(
+                    get_arxiv_links(),
+                    ENABLE_PRINTS_ARXIV,
+                    ENABLE_ERROR_PRINTS_ARXIV,
+                    ARXIV_URL,
+                    RxivKind::Arxiv,
+                );
+            }));
+        }
     }
     if ENABLE_BIORXIV {
-        threads_vec.push(thread::spawn(move || {
-            rxiv_part(
-                get_biorxiv_links(),
-                ENABLE_PRINTS_BIORXIV,
-                ENABLE_ERROR_PRINTS_BIORXIV,
-                BIORXIV_URL,
-                RxivKind::Biorxiv,
-            );
-        }));
+        let biorxiv_links = get_biorxiv_links();
+        if biorxiv_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "biorxiv_links.is_empty".to_string(),
+            )
+        } else {
+            threads_vec.push(thread::spawn(move || {
+                rxiv_part(
+                    biorxiv_links,
+                    ENABLE_PRINTS_BIORXIV,
+                    ENABLE_ERROR_PRINTS_BIORXIV,
+                    BIORXIV_URL,
+                    RxivKind::Biorxiv,
+                );
+            }));
+        }
     }
     if ENABLE_MEDRXIV {
-        threads_vec.push(thread::spawn(move || {
-            rxiv_part(
-                get_medrxiv_links(),
-                ENABLE_PRINTS_MEDRXIV,
-                ENABLE_ERROR_PRINTS_MEDRXIV,
-                MEDRXIV_URL,
-                RxivKind::Medrxiv,
-            );
-        }));
+        let medrxiv_links = get_medrxiv_links();
+        if medrxiv_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "medrxiv_links.is_empty".to_string(),
+            )
+        } else {
+            threads_vec.push(thread::spawn(move || {
+                rxiv_part(
+                    get_medrxiv_links(),
+                    ENABLE_PRINTS_MEDRXIV,
+                    ENABLE_ERROR_PRINTS_MEDRXIV,
+                    MEDRXIV_URL,
+                    RxivKind::Medrxiv,
+                );
+            }));
+        }
     }
     for i in threads_vec {
         i.join().unwrap();
