@@ -4,6 +4,7 @@ use crate::fetch::rxiv_structures::RxivPost;
 use crate::fetch::rxiv_structures::RxivPostStruct;
 use crate::fetch::rxiv_structures::XmlRxivParserStruct;
 use crate::overriding::prints::print_error_red;
+use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
 pub fn rxiv_parse_string_into_struct(
@@ -78,7 +79,8 @@ pub fn rxiv_parse_string_into_struct(
         }
         _ => {
             if enable_prints {
-                println!("rxiv no items for key {} {}", key, value);
+                let warning: String = "rxiv no items for key:".to_string() + key + "link:" + value;
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning);
             };
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_tuple_result);
         }

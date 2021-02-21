@@ -50,17 +50,8 @@ make parallel parsing
 you need to ensure that the Arc has exactly one strong reference and the Mutex is not poisoned
 -------
 Rc<RefCell<Vec<T>>>
-----------
-rxiv no items for key Other Computer Science http://export.arxiv.org/rss/cs.OH
-make that orange or something color print
----------
-приравнять структуры парсинга
-------
-убрать creators
 ------
 проблема с основной ссылкой архива
-------
-BiorxivPostStruct и page//DONE
 -------
  // `iter()` for vecs yields `&i32`.
     let mut iter = vec1.iter();
