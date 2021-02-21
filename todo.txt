@@ -10,8 +10,6 @@ remove eprints and put print_error_red instead //проблема с Box<dyn err
 ---------
 // расписать случай если не найдет посты
                 match dots_unfiltered_str.find("</item>") {
----------
-rename arxiv fetch to arxiv part
 ---
 items: vec![BiorxivPageStructItem::new(); 30],
 whats strange what only 30...weird
@@ -93,14 +91,3 @@ let slice: &[u8] = &b;
                 let mut dots_unfiltered_str = converted_str.to_string();
                 dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
 -----------------------------------------
-let mut hashmap_to_return: HashMap<
-        String,
-        (
-            RxivPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            RxivKind,
-        ),
-    > = HashMap::new();//для хеш мапы можно заранее алоцировать размер?

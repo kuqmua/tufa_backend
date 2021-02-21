@@ -47,7 +47,7 @@ pub fn rxiv_fetch_and_parse_xml(
             UnhandledFetchStatusInfo::Initialized,
             HandledFetchStatusInfo::Initialized,
             AreThereItems::Initialized,
-            rxiv_kind.clone(), //что тут не так втф
+            rxiv_kind.clone(),
         );
 
         hashmap_to_return.insert(key.to_string(), tuple);
