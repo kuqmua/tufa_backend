@@ -22,8 +22,7 @@ pub struct RxivPostStruct {
 impl RxivPostStruct {
     pub fn new() -> Self {
         RxivPostStruct {
-            items: vec![RxivPost::new(); 30],
-            //vec![UsedRedditJsonStruct::new(); 25],
+            items: Vec::<RxivPost>::new(),
         }
     }
 }
