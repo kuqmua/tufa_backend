@@ -1,4 +1,5 @@
-use colored::*;
+use ansi_term::Colour::Red;
+use ansi_term::Colour::Yellow;
 // use log::{debug, error, info, warn};
 // use std::{fs::File, io::Write};
 //handle error
@@ -17,20 +18,20 @@ pub fn print_error_red(file: String, line: String, error: String) {
     // }
     eprintln!(
         "{}{}{}{}\n{}",
-        "file: ".red().bold(),
-        file.red().bold(),
-        ":".red().bold(),
-        line.red().bold(),
-        error.red().bold()
+        Red.bold().paint("file: "),
+        Red.bold().paint(file), //file.red().bold()
+        Red.bold().paint(":"),
+        Red.bold().paint(line),
+        Red.bold().paint(error)
     );
 }
 pub fn print_warning_yellow(file: String, line: String, error: String) {
     eprintln!(
         "{}{}{}{}\n{}",
-        "file: ".yellow().bold(),
-        file.yellow().bold(),
-        ":".yellow().bold(),
-        line.yellow().bold(),
-        error.yellow().bold()
+        Yellow.bold().paint("file: "),
+        Yellow.bold().paint(file),
+        Yellow.bold().paint(":"),
+        Yellow.bold().paint(line),
+        Yellow.bold().paint(error)
     );
 }

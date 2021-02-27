@@ -1,4 +1,4 @@
-use colored::*;
+use ansi_term::Colour::Red;
 use std::collections::HashMap;
 use std::time::Instant;
 
@@ -105,8 +105,8 @@ pub fn rxiv_fetch_and_parse_xml(
             if enable_prints {
                 eprintln!(
                     "crossbeam_result is not ok, file: {}, line {}\n {:#?}",
-                    file!().to_string().red().bold(),
-                    line!().to_string().red().bold(),
+                    Red.bold().paint(file!().to_string()),
+                    Red.bold().paint(line!().to_string()),
                     e
                 )
             }
