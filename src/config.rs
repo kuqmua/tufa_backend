@@ -5,6 +5,7 @@ pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
 pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
 //pub const ENABLE_TWITTER: bool = if ENABLE_ALL_PROVIDERS { false } else { false };
 //-------------------------------------------------------
+pub const STARTING_CHECK_URL: &str = "https://www.google.com/";
 // pub const REDDIT_URL: &str = "https://www.reddit.com/";
 pub const ARXIV_URL: &str = "https://www.google.com/"; //https://arxiv.org/ //"http://export.arxiv.org/rss/"
 pub const BIORXIV_URL: &str = "https://www.google.com/"; //http://connect.biorxiv.org/
