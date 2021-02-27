@@ -4,8 +4,16 @@ use crate::config::ENABLE_ERROR_PRINTS_HANDLE;
 use crate::config::ENABLE_PRINTS_HANDLE;
 use crate::config::STARTING_CHECK_URL;
 use crate::overriding::prints::print_error_red;
+extern crate num_cpus;
 
 pub fn entry() {
+    let cpus = num_cpus::get();
+    if cpus > 1 {
+        println!("We are on a multicore system with {} CPUs", cpus);
+    } else {
+        println!("We are on a single core system");
+    }
+
     if check_link(STARTING_CHECK_URL).0 {
         if ENABLE_PRINTS_HANDLE {
             let its_all_good_message = "server can reach ".to_string() + STARTING_CHECK_URL;
