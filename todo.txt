@@ -67,3 +67,15 @@ let slice: &[u8] = &b;
                 dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
 -----------------------------------------
  lazy_static! - глобальная переменная
+ ----------------
+ extern crate rayon;
+
+use rayon::prelude::*;
+
+fn main() {
+    let mut arr = [0, 7, 9, 11];
+    arr.par_iter_mut().for_each(|p| *p -= 1);
+    println!("{:?}", arr);
+}
+--------------------
+2 302 кода чего ????

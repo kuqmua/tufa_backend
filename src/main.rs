@@ -1,5 +1,6 @@
 use std::time::Instant;
 mod fetch {
+    pub mod handle_error_status_code;
     pub mod metainfo_fetch_structures;
     pub mod rxiv_check_handled_fetch_status_info;
     pub mod rxiv_fetch_and_parse_xml;

@@ -88,7 +88,13 @@ pub fn rxiv_fetch_and_parse_xml(
                     Err(e) => {
                         value.2 = UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
                         if enable_error_prints {
-                            print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                            let concated_error =
+                                "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
+                            print_error_red(
+                                file!().to_string(),
+                                line!().to_string(),
+                                concated_error,
+                            )
                         }
                     }
                 }

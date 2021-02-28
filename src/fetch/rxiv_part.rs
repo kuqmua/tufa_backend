@@ -3,6 +3,7 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 use crate::check_net::check_link::check_link;
+use crate::fetch::handle_error_status_code::handle_error_status_code;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -49,7 +50,9 @@ pub fn rxiv_part(
                     },
                     HandledFetchStatusInfo::Initialized => {}
                     HandledFetchStatusInfo::ResToTextError(String) => {}
-                    HandledFetchStatusInfo::ResStatusError(status_code) => {}
+                    HandledFetchStatusInfo::ResStatusError(status_code) => {
+                        let should_refetch_it = handle_error_status_code(status_code.as_u16());
+                    }
                 },
                 UnhandledFetchStatusInfo::Initialized => {}
                 UnhandledFetchStatusInfo::Failure(string_failure) => {}

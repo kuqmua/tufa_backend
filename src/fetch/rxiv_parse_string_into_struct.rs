@@ -79,7 +79,8 @@ pub fn rxiv_parse_string_into_struct(
         }
         _ => {
             if enable_prints {
-                let warning: String = "rxiv no items for key:".to_string() + key + "link:" + value;
+                let warning: String =
+                    "wrong url or there is no items for key:".to_string() + key + "link:" + value; //разделить логику при помощи нахождения паттерна архива урла
                 print_warning_yellow(file!().to_string(), line!().to_string(), warning);
             };
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_tuple_result);
