@@ -51,7 +51,8 @@ pub fn rxiv_part(
                     HandledFetchStatusInfo::Initialized => {}
                     HandledFetchStatusInfo::ResToTextError(String) => {}
                     HandledFetchStatusInfo::ResStatusError(status_code) => {
-                        let should_refetch_it = handle_error_status_code(status_code.as_u16());
+                        let should_refetch_it = handle_error_status_code(status_code);
+                        //.as_u16()
                     }
                 },
                 UnhandledFetchStatusInfo::Initialized => {}
