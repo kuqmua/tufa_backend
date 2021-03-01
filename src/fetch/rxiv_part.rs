@@ -23,8 +23,11 @@ pub fn rxiv_part(
         if enable_prints {
             println!("i can reach {}", rxiv_url);
         };
+        let zzz = rxiv_kind.clone(); //only for debug
         let rxiv_kind_clone = rxiv_kind.clone();
+
         let fff = rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind);
+        let fff_len_counter = fff.len();
         if enable_prints {
             println!(
                 "{:#?} elements in {:#?} HashMap",
@@ -32,19 +35,24 @@ pub fn rxiv_part(
                 rxiv_kind_clone
             );
         };
-        let succesfully_fetched_and_parsed_posts: HashMap<String, (RxivPostStruct, RxivKind)> =
+        let mut succesfully_fetched_and_parsed_posts: HashMap<String, (RxivPostStruct, RxivKind)> =
             HashMap::new();
-        for (_, value) in fff {
-            // println!(
-            //     "unhandled {:#?} - handled {:#?} - arethereitems {:#?}",
-            //     value.2, value.3, value.4
-            // );
+        let mut initialized_items_posts: HashMap<String, (String, RxivKind)> = HashMap::new();
+        let mut not_items_but_tag_posts: HashMap<String, (String, RxivKind)> = HashMap::new(); //"</item>" tag
+        for (key, value) in fff {
             match value.2 {
                 UnhandledFetchStatusInfo::Success => match value.3 {
                     HandledFetchStatusInfo::Success => match value.4 {
-                        AreThereItems::Yep => {}
-                        AreThereItems::Initialized => {}
-                        AreThereItems::NopeButThereIsTag(String) => {}
+                        AreThereItems::Yep => {
+                            succesfully_fetched_and_parsed_posts.insert(key, (value.0, value.5));
+                        }
+                        AreThereItems::Initialized => {
+                            initialized_items_posts.insert(key, (value.1, value.5));
+                        }
+                        AreThereItems::NopeButThereIsTag(String) => {
+                            //"</item>" tag
+                            not_items_but_tag_posts.insert(key, (value.1, value.5));
+                        }
                         AreThereItems::ConversionFromStrError(something1, something2) => {}
                         AreThereItems::NopeNoTag(String) => {}
                     },
@@ -59,6 +67,12 @@ pub fn rxiv_part(
                 UnhandledFetchStatusInfo::Failure(string_failure) => {}
             }
         }
+        println!(
+            "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+            succesfully_fetched_and_parsed_posts.len(),
+            fff_len_counter,
+            zzz
+        );
         true
     } else {
         if enable_prints {
