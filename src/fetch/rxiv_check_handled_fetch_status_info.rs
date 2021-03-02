@@ -8,7 +8,7 @@ use crate::fetch::rxiv_structures::RxivPostStruct;
 
 pub fn rxiv_check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
-    fetch_tuple_result_string: String,
+    fetch_result_string: String,
     time: Instant,
     key: &str,
     value: &str,
@@ -33,7 +33,7 @@ pub fn rxiv_check_handled_fetch_status_info(
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
             let (rxiv_post_struct_handle, are_there_items_handle) = rxiv_parse_string_into_struct(
-                fetch_tuple_result_string,
+                fetch_result_string,
                 key,
                 &value,
                 enable_prints,

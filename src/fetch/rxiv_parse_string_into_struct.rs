@@ -8,7 +8,7 @@ use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
 pub fn rxiv_parse_string_into_struct(
-    mut fetch_tuple_result: String,
+    mut fetch_result_string: String,
     key: &str,
     value: &str,
     enable_prints: bool,
@@ -19,15 +19,15 @@ pub fn rxiv_parse_string_into_struct(
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
                                                // println!("{:#?}", rxiv_kind);
     if let RxivKind::Medrxiv = rxiv_kind {
-        fetch_tuple_result.remove(0);
+        fetch_result_string.remove(0);
     }
     if let RxivKind::Arxiv = rxiv_kind {
     } else {
-        while fetch_tuple_result.contains("<dc:title>") {
-            match fetch_tuple_result.find("</dc:title>") {
+        while fetch_result_string.contains("<dc:title>") {
+            match fetch_result_string.find("</dc:title>") {
                 Some(_) => {
-                    fetch_tuple_result = fetch_tuple_result.replace("<dc:title>", "<dcstitle>");
-                    fetch_tuple_result = fetch_tuple_result.replace("</dc:title>", "</dcstitle>");
+                    fetch_result_string = fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                    fetch_result_string = fetch_result_string.replace("</dc:title>", "</dcstitle>");
                 }
                 None => {
                     break;
@@ -36,10 +36,10 @@ pub fn rxiv_parse_string_into_struct(
         }
     }
 
-    match fetch_tuple_result.find("</item>") {
+    match fetch_result_string.find("</item>") {
         Some(_) => {
             let rxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
-                from_str(&fetch_tuple_result);
+                from_str(&fetch_result_string);
             match rxiv_struct_from_str_result {
                 Ok(rxiv_struct) => {
                     let mut count = 0;
@@ -60,7 +60,7 @@ pub fn rxiv_parse_string_into_struct(
                         are_there_items_handle = AreThereItems::Yep;
                     } else {
                         are_there_items_handle =
-                            AreThereItems::NopeButThereIsTag(fetch_tuple_result);
+                            AreThereItems::NopeButThereIsTag(fetch_result_string);
                     }
                     rxiv_post_struct_handle = rxiv_page_struct;
                 }
@@ -73,7 +73,7 @@ pub fn rxiv_parse_string_into_struct(
                         print_error_red(file!().to_string(), line!().to_string(), error)
                     };
                     are_there_items_handle =
-                        AreThereItems::ConversionFromStrError(fetch_tuple_result, e.to_string());
+                        AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
                 }
             }
         }
@@ -83,7 +83,7 @@ pub fn rxiv_parse_string_into_struct(
                     "wrong url or there is no items for key:".to_string() + key + "link:" + value; //разделить логику при помощи нахождения паттерна архива урла
                 print_warning_yellow(file!().to_string(), line!().to_string(), warning);
             };
-            are_there_items_handle = AreThereItems::NopeNoTag(fetch_tuple_result);
+            are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
         }
     }
     (rxiv_post_struct_handle, are_there_items_handle)
