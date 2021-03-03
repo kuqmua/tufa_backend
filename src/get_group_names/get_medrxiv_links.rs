@@ -1,9 +1,19 @@
 use std::collections::HashMap;
 pub fn get_medrxiv_links() -> HashMap<&'static str, &'static str> {
     let arxiv_sections_links: HashMap<&str, &str> = [
-         ("Addiction Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Addiction_Medicine"),
-         ("Allergy and Immunology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Allergy_and_Immunology"),
-         ("Anesthesia","http://connect.medrxiv.org/medrxiv_xml.php?subject=Anesthesia"),
+        (
+            "Addiction Medicine",
+            // "https://github.com/ryeyeyhh/dfndfnhoj",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Addiction_Medicine",
+        ),
+        (
+            "Allergy and Immunology",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Allergy_and_Immunology",
+        ),
+        (
+            "Anesthesia",
+            "http://connect.medrxiv.org/medrxiv_xml.php?subject=Anesthesia",
+        ),
          ("Cardiovascular Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Cardiovascular_Medicine"),
          ("Dentistry and Oral Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Dentistry_and_Oral_Medicine"),
          ("Dermatology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Dermatology"),
@@ -19,7 +29,7 @@ pub fn get_medrxiv_links() -> HashMap<&'static str, &'static str> {
          ("Health Policy","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy"),
          ("Health Systems and Quality Improvement","http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Systems_and_Quality_Improvement"),
          ("Hematology","http://connect.medrxiv.org/medrxiv_xml.php?subject=Hematology"),
-         ("HIV/AIDS","http://connect.medrxiv.org/medrxiv_xml.php?subject=hivaids"),
+         ("HIV/AIDS","http://connect.medrxiv.org/medrxiv_xml.php?subject=hivaids"),//тут чет иногда ничего нет
          ("Infectious Diseases","http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases"),
          ("Intensive Care and Critical Care Medicine","http://connect.medrxiv.org/medrxiv_xml.php?subject=Intensive_Care_and_Critical_Care_Medicine"),
          ("Medical Education","http://connect.medrxiv.org/medrxiv_xml.php?subject=Medical_Education"),
