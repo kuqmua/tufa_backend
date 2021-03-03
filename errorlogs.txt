@@ -1,2 +1,0 @@
-server cannot reach https://www.google.com/
-server cannot reach https://www.google.com/
