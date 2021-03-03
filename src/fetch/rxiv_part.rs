@@ -5,13 +5,16 @@ extern crate serde_xml_rs;
 use reqwest::StatusCode;
 
 use crate::check_net::check_link::check_link;
-use crate::fetch::handle_error_status_code::handle_error_status_code;
+// use crate::fetch::handle_error_status_code::handle_error_status_code;
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_structures::RxivPostStruct;
+// use crate::overriding::prints::print_error_red;
+use crate::overriding::prints::print_warning_orange;
+use crate::overriding::prints::print_warning_yellow;
 use std::collections::HashMap;
 
 pub fn rxiv_part(
@@ -117,13 +120,98 @@ pub fn rxiv_part(
                 }
             }
         }
-        println!(
-            "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
-            unhandled_success_handled_success_are_there_items_yep_posts.len(),
-            fff_len_counter,
-            zzz
-        );
-        true
+        if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
+            //do something with it
+            print_warning_orange(
+                file!().to_string(),
+                line!().to_string(),
+                "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
+                    .to_string(),
+            );
+            false
+        } else {
+            if !unhandled_success_handled_success_are_there_items_initialized_posts.is_empty() {
+                let warning_message =
+                    "unhandled_success_handled_success_are_there_items_initialized_posts.len() "
+                        .to_string()
+                        + &unhandled_success_handled_success_are_there_items_initialized_posts
+                            .len()
+                            .to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts
+                .is_empty()
+            {
+                let warning_message = "unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts.len() ".to_string()
+                    + &unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts.len().to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts
+                .is_empty()
+            {
+                let warning_message = "unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts.len() ".to_string()
+                    + &unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts.len().to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_success_are_there_items_nope_no_tag_posts.is_empty() {
+                let warning_message =
+                    "unhandled_success_handled_success_are_there_items_nope_no_tag_posts.len() "
+                        .to_string()
+                        + &unhandled_success_handled_success_are_there_items_nope_no_tag_posts
+                            .len()
+                            .to_string();
+                for (key, value) in
+                    unhandled_success_handled_success_are_there_items_nope_no_tag_posts
+                {
+                    println!(
+                        " HERE key {} \n value 0 {} \n value 1 {}",
+                        key, value.0, value.1
+                    )
+                }
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_initialized_posts.is_empty() {
+                let warning_message = "unhandled_success_handled_initialized_posts.len() "
+                    .to_string()
+                    + &unhandled_success_handled_initialized_posts
+                        .len()
+                        .to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_res_to_text_error_posts.is_empty() {
+                let warning_message = "unhandled_success_handled_res_to_text_error_posts.len() "
+                    .to_string()
+                    + &unhandled_success_handled_res_to_text_error_posts
+                        .len()
+                        .to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_success_handled_res_status_error_posts.is_empty() {
+                let warning_message = "unhandled_success_handled_res_status_error_posts.len() "
+                    .to_string()
+                    + &unhandled_success_handled_res_status_error_posts
+                        .len()
+                        .to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_initialized_posts.is_empty() {
+                let warning_message = "unhandled_initialized_posts.len() ".to_string()
+                    + &unhandled_initialized_posts.len().to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            if !unhandled_failure_posts.is_empty() {
+                let warning_message = "unhandled_failure_posts.len() ".to_string()
+                    + &unhandled_failure_posts.len().to_string();
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+            }
+            println!(
+                "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                fff_len_counter,
+                zzz
+            );
+            true
+        }
     } else {
         if enable_prints {
             println!("i cannot reach {}", rxiv_url);
