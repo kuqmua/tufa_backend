@@ -169,8 +169,8 @@ pub fn rxiv_part(
                         " HERE key {} \n value 0 {} \n value 1 {}",
                         key, value.0, value.1
                     );
-                    let mut fileonos =
-                        File::create("errorlogs.txt").expect("could not create file");
+                    let mut fileonos = File::create("logs/warning_logs/errorlogs.txt")
+                        .expect("could not create file");
                     // writeln!(&mut fileonos, "{}", warning_message).unwrap();
                     let result_of_writing = fileonos.write(value.1.as_bytes()); //warning_message
                     match result_of_writing {
