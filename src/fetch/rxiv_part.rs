@@ -15,7 +15,9 @@ use crate::fetch::rxiv_structures::RxivPostStruct;
 // use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_orange;
 use crate::overriding::prints::print_warning_yellow;
+// use log::{debug, error, info, warn};
 use std::collections::HashMap;
+use std::{fs::File, io::Write};
 
 pub fn rxiv_part(
     links: HashMap<&'static str, &'static str>,
@@ -137,7 +139,7 @@ pub fn rxiv_part(
                         + &unhandled_success_handled_success_are_there_items_initialized_posts
                             .len()
                             .to_string();
-                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
             }
             if !unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts
                 .is_empty()
@@ -166,8 +168,17 @@ pub fn rxiv_part(
                     println!(
                         " HERE key {} \n value 0 {} \n value 1 {}",
                         key, value.0, value.1
-                    )
+                    );
+                    let mut fileonos =
+                        File::create("errorlogs.txt").expect("could not create file");
+                    // writeln!(&mut fileonos, "{}", warning_message).unwrap();
+                    let result_of_writing = fileonos.write(value.1.as_bytes()); //warning_message
+                    match result_of_writing {
+                        Ok(_) => println!("записано"),
+                        Err(e) => println!("error {}", e),
+                    }
                 }
+
                 print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
             }
             if !unhandled_success_handled_initialized_posts.is_empty() {
@@ -176,6 +187,7 @@ pub fn rxiv_part(
                     + &unhandled_success_handled_initialized_posts
                         .len()
                         .to_string();
+
                 print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
             }
             if !unhandled_success_handled_res_to_text_error_posts.is_empty() {
