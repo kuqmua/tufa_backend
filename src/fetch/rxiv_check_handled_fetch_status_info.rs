@@ -6,6 +6,7 @@ use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
 use crate::fetch::rxiv_structures::RxivPostStruct;
 
+#[allow(clippy::clippy::too_many_arguments)]
 pub fn rxiv_check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
     fetch_result_string: String,
