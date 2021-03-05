@@ -6,7 +6,7 @@ use crate::fetch::rxiv_structures::RxivPostStruct;
 use reqwest::StatusCode;
 use std::collections::HashMap;
 
-#[allow(clippy::clippy::too_many_arguments)]
+#[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
 pub fn rxiv_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: HashMap<
         String,

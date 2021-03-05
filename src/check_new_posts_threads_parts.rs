@@ -23,7 +23,7 @@ use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::overriding::prints::print_error_red;
 // use crate::config::ENABLE_REDDIT;
 
-pub async fn threads_parts() {
+pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = vec![];
     // if ENABLE_REDDIT {
     //     threads_vec.push(thread::spawn(move || {
