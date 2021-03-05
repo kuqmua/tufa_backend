@@ -5,6 +5,7 @@ mod fetch {
     pub mod rxiv_check_handled_fetch_status_info;
     pub mod rxiv_fetch_and_parse_xml;
     pub mod rxiv_fetch_link;
+    pub mod rxiv_filter_fetched_and_parsed_posts;
     pub mod rxiv_kind_enum;
     pub mod rxiv_parse_string_into_struct;
     pub mod rxiv_part;

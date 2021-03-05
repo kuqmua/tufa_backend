@@ -2,20 +2,21 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
-use reqwest::StatusCode;
+// use reqwest::StatusCode;
 
 use crate::check_net::check_link::check_link;
 // use crate::fetch::handle_error_status_code::handle_error_status_code;
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+// use crate::fetch::metainfo_fetch_structures::AreThereItems;
+// use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+// use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+// use crate::fetch::rxiv_structures::RxivPostStruct;
 // use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_orange;
 use crate::overriding::prints::print_warning_yellow;
 // use log::{debug, error, info, warn};
+use crate::fetch::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
 use std::collections::HashMap;
 use std::{fs::File, io::Write};
 
@@ -33,95 +34,30 @@ pub fn rxiv_part(
         let zzz = rxiv_kind.clone(); //only for debug
         let rxiv_kind_clone = rxiv_kind.clone();
 
-        let fff = rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind);
-        let fff_len_counter = fff.len();
+        let unfiltered_posts_hashmap_after_fetch_and_parse =
+            rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind);
+        let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
+            unfiltered_posts_hashmap_after_fetch_and_parse.len();
         if enable_prints {
             println!(
                 "{:#?} elements in {:#?} HashMap",
-                fff.len(),
+                unfiltered_posts_hashmap_after_fetch_and_parse.len(),
                 rxiv_kind_clone
             );
         };
-        let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
-            String,
-            (RxivPostStruct, RxivKind),
-        > = HashMap::new();
-        let mut unhandled_success_handled_success_are_there_items_initialized_posts: HashMap<
-            String,
-            (String, RxivKind),
-        > = HashMap::new();
-        let mut unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts: HashMap<String, (String, String, RxivKind)> =
-            HashMap::new(); //"</item>" tag
-        let mut unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts: HashMap<
-            String,
-            (String, String, String, RxivKind),
-        > = HashMap::new();
-        let mut unhandled_success_handled_success_are_there_items_nope_no_tag_posts: HashMap<
-            String,
-            (String, String, RxivKind),
-        > = HashMap::new();
-        /////
-        let mut unhandled_success_handled_initialized_posts: HashMap<String, (String, RxivKind)> =
-            HashMap::new();
-        let mut unhandled_success_handled_res_to_text_error_posts: HashMap<
-            String,
-            (String, String, RxivKind),
-        > = HashMap::new();
-        let mut unhandled_success_handled_res_status_error_posts: HashMap<
-            String,
-            (String, StatusCode, RxivKind),
-        > = HashMap::new();
-        //////
-        let mut unhandled_initialized_posts: HashMap<String, (String, RxivKind)> = HashMap::new();
-        let mut unhandled_failure_posts: HashMap<String, (String, String, RxivKind)> =
-            HashMap::new();
-        for (key, value) in fff {
-            match value.2 {
-                UnhandledFetchStatusInfo::Success => match value.3 {
-                    HandledFetchStatusInfo::Success => match value.4 {
-                        AreThereItems::Yep => {
-                            unhandled_success_handled_success_are_there_items_yep_posts
-                                .insert(key, (value.0, value.5));
-                        }
-                        AreThereItems::Initialized => {
-                            unhandled_success_handled_success_are_there_items_initialized_posts
-                                .insert(key, (value.1, value.5));
-                        }
-                        AreThereItems::NopeButThereIsTag(fetch_result_string) => {
-                            //"</item>" tag
-                            unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts
-                                .insert(key, (value.1, fetch_result_string, value.5));
-                        }
-                        AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
-                            unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts
-                                .insert(key, (value.1, fetch_result_string, error, value.5));
-                        }
-                        AreThereItems::NopeNoTag(fetch_result_string) => {
-                            unhandled_success_handled_success_are_there_items_nope_no_tag_posts
-                                .insert(key, (value.1, fetch_result_string, value.5));
-                        }
-                    },
-                    HandledFetchStatusInfo::Initialized => {
-                        unhandled_success_handled_initialized_posts.insert(key, (value.1, value.5));
-                    }
-                    HandledFetchStatusInfo::ResToTextError(error) => {
-                        unhandled_success_handled_res_to_text_error_posts
-                            .insert(key, (value.1, error, value.5));
-                    }
-                    HandledFetchStatusInfo::ResStatusError(status_code) => {
-                        // let should_refetch_it = handle_error_status_code(status_code);
-                        unhandled_success_handled_res_status_error_posts
-                            .insert(key, (value.1, status_code, value.5));
-                    }
-                },
-                UnhandledFetchStatusInfo::Initialized => {
-                    unhandled_initialized_posts.insert(key, (value.1, value.5));
-                }
-                UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
-                    unhandled_failure_posts.insert(key, (value.1, box_dyn_error, value.5));
-                }
-            }
-        }
+
+        let (
+            unhandled_success_handled_success_are_there_items_yep_posts,
+            unhandled_success_handled_success_are_there_items_initialized_posts,
+            unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
+            unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
+            unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
+            unhandled_success_handled_initialized_posts,
+            unhandled_success_handled_res_to_text_error_posts,
+            unhandled_success_handled_res_status_error_posts,
+            unhandled_initialized_posts,
+            unhandled_failure_posts,
+        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse);
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             //do something with it
             print_warning_orange(
@@ -165,10 +101,7 @@ pub fn rxiv_part(
                 for (key, value) in
                     unhandled_success_handled_success_are_there_items_nope_no_tag_posts
                 {
-                    println!(
-                        " HERE key {} \n value 0 {} \n value 1 {}",
-                        key, value.0, value.1
-                    );
+                    println!(" HERE key {} \n value 0 {}", key, value.0);
                     let mut fileonos = File::create("logs/warning_logs/errorlogs.txt")
                         .expect("could not create file");
                     // writeln!(&mut fileonos, "{}", warning_message).unwrap();
@@ -219,7 +152,7 @@ pub fn rxiv_part(
             println!(
                 "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
                 unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                fff_len_counter,
+                unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
                 zzz
             );
             true
