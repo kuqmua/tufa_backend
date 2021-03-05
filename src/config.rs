@@ -15,15 +15,22 @@ pub const ENABLE_ALL_PROVIDERS_PRINTS: bool = true;
 // pub const ENABLE_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false ;
 pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
 pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
-pub const ENABLE_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
+pub const ENABLE_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
 //pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
+//-------------------------------------------------------
+pub const ENABLE_ALL_PROVIDERS_WARNING_PRINTS: bool = true;
+// pub const ENABLE_WARNING_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
+pub const ENABLE_WARNING_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
+pub const ENABLE_WARNING_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
+pub const ENABLE_WARNING_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
+//pub const ENABLE_WARNING_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
 //-------------------------------------------------------
 pub const ENABLE_ALL_PROVIDERS_ERROR_PRINTS: bool = true;
 // pub const ENABLE_ERROR_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 pub const ENABLE_ERROR_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-//pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
+//pub const ENABLE_ERROR_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 //-------------------------------------------------------
 pub const ENABLE_PRINTS_HANDLE: bool = true;
 pub const ENABLE_ERROR_PRINTS_HANDLE: bool = true;
