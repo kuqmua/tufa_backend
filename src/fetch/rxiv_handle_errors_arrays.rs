@@ -1,6 +1,8 @@
 use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::overriding::prints::print_warning_yellow;
 use reqwest::StatusCode;
+use serde::{Deserialize, Serialize};
+use serde_json::json;
 use std::collections::HashMap;
 use std::{fs::File, io::Write};
 
@@ -70,19 +72,27 @@ pub fn rxiv_handle_errors_arrays(
                 + &unhandled_success_handled_success_are_there_items_nope_no_tag_posts
                     .len()
                     .to_string();
+        print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
+
         for (key, value) in unhandled_success_handled_success_are_there_items_nope_no_tag_posts {
-            println!("HERE key {} value 0 {}", key, value.0);
             let mut fileonos =
-                File::create("logs/warning_logs/errorlogs.txt").expect("could not create file");
+                File::create("logs/warning_logs/errorlogs.json").expect("could not create file");
+            let john = json!({
+                "name": value.1,
+                "age": 43,
+                // "phones": [
+                //     "+44 1234567",
+                //     "+44 2345678"
+                // ]
+            });
             // writeln!(&mut fileonos, "{}", warning_message).unwrap();
-            let result_of_writing = fileonos.write(value.1.as_bytes()); //warning_message
+            let j = serde_json::to_string_pretty(&john).unwrap();
+            let result_of_writing = fileonos.write(j.as_bytes()); //warning_message
             match result_of_writing {
                 Ok(_) => println!("записано"),
                 Err(e) => println!("error {}", e),
             }
         }
-
-        print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
     }
     if !unhandled_success_handled_initialized_posts.is_empty() && enable_warning_prints {
         let warning_message = "unhandled_success_handled_initialized_posts.len() ".to_string()
