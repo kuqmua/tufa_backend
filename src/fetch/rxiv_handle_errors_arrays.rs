@@ -73,14 +73,21 @@ pub fn rxiv_handle_errors_arrays(
                     .len()
                     .to_string();
         print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
-
+        let g = "logs/warning_logs/unhandled_success_handled_success_are_there_items_nope_no_tag_posts/".to_string();
+        println!("ffff {}", g);
+        if !Path::new(&g).exists() {
+            fs::create_dir(g).unwrap();
+        }
+        let f = format!("logs/warning_logs/unhandled_success_handled_success_are_there_items_nope_no_tag_posts/{:?}", rxiv_kind);
+        println!("ffff {}", f);
+        if !Path::new(&f).exists() {
+            fs::create_dir(f).unwrap();
+        }
+        println!("after create");
         for (key, value) in unhandled_success_handled_success_are_there_items_nope_no_tag_posts {
-            let f = format!("logs/warning_logs/{:?}", rxiv_kind); //нужно как то переделать чтоб каждый раз так не делать
-            if !Path::new(&f).exists() {
-                fs::create_dir(f).unwrap();
-            }
+            //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{:?}/{:?}_{}.json",
+                "logs/warning_logs/unhandled_success_handled_success_are_there_items_nope_no_tag_posts/{:?}/{:?}_{}.json",
                 rxiv_kind,
                 rxiv_kind,
                 key.replace("/", "_")
