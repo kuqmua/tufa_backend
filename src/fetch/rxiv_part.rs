@@ -28,6 +28,7 @@ pub fn rxiv_part(
         let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
             unfiltered_posts_hashmap_after_fetch_and_parse.len();
         let (
+            //все отсальное херачить в отдельный поток кроме первого массива
             unhandled_success_handled_success_are_there_items_yep_posts,
             unhandled_success_handled_success_are_there_items_initialized_posts,
             unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
