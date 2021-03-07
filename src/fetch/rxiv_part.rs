@@ -24,7 +24,7 @@ pub fn rxiv_part(
         };
         let rxiv_kind_clone_for_debug_purposes = rxiv_kind.clone(); //only for debug
         let unfiltered_posts_hashmap_after_fetch_and_parse =
-            rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind);
+            rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind.clone()); //rxiv_kind ниже еще используется
         let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
             unfiltered_posts_hashmap_after_fetch_and_parse.len();
         let (
@@ -51,7 +51,10 @@ pub fn rxiv_part(
             false
         } else {
             rxiv_handle_errors_arrays(
+                rxiv_kind,
+                enable_prints,
                 enable_warning_prints,
+                enable_error_prints,
                 unhandled_success_handled_success_are_there_items_initialized_posts,
                 unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
                 unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
