@@ -2,6 +2,8 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
+use std::thread;
+
 use crate::check_net::check_link::check_link;
 use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
@@ -39,7 +41,10 @@ pub fn rxiv_part(
             unhandled_success_handled_res_status_error_posts,
             unhandled_initialized_posts,
             unhandled_failure_posts,
-        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse);
+        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse); //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
+        let wrong_cases_thread = thread::spawn(move || println!("wrong_cases_thread"));
+        wrong_cases_thread.join().unwrap();
+
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             if enable_warning_prints {
                 print_warning_orange(
