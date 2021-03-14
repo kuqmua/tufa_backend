@@ -5,6 +5,7 @@ extern crate serde_xml_rs;
 use std::thread;
 
 use crate::check_net::check_link::check_link;
+use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
 use crate::fetch::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
@@ -14,9 +15,12 @@ use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use std::collections::HashMap;
+use std::fs;
+use std::path::Path;
 
 pub fn rxiv_part(
     links: HashMap<&'static str, &'static str>,
+    enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
     enable_error_prints: bool,
@@ -67,6 +71,34 @@ pub fn rxiv_part(
                         rxiv_kind_clone_for_debug_purposes
                     );
                     print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
+                }
+                if enable_cleaning_logs_directory {
+                    let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, rxiv_kind);
+                    if Path::new(&path).is_dir() {
+                        let result_of_recursively_removing_warning_logs_directory =
+                            fs::remove_dir_all(&path);
+                        match result_of_recursively_removing_warning_logs_directory {
+                            Ok(_) => {
+                                if enable_prints {
+                                    println!("папка {} удалена", &path);
+                                }
+                            }
+                            Err(e) => {
+                                if enable_error_prints {
+                                    let message = format!(
+                                        "проблема с удалением папки {} {}",
+                                        &path,
+                                        e.to_string()
+                                    );
+                                    print_error_red(
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        message,
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
                 rxiv_handle_errors_arrays(
                     rxiv_kind,

@@ -4,6 +4,7 @@ pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & false | false; //ENABLE_AL
 pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
 pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
 //-------------------------------------------------------
+
 pub const STARTING_CHECK_URL: &str = "https://www.google.com/";
 // pub const REDDIT_URL: &str = "https://www.reddit.com/";
 pub const ARXIV_URL: &str = "https://www.google.com/"; //https://arxiv.org/ //"http://export.arxiv.org/rss/"
@@ -29,8 +30,17 @@ pub const ENABLE_ERROR_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & 
 pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
 //-------------------------------------------------------
+pub const ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY: bool = true;
+// pub const ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT: bool = ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY & true | false;
+pub const ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV: bool =
+    ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY & true | false;
+pub const ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV: bool =
+    ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY & true | false;
+pub const ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV: bool =
+    ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY & true | false;
+//-------------------------------------------------------
 pub const ENABLE_PRINTS_HANDLE: bool = true;
 pub const ENABLE_ERROR_PRINTS_HANDLE: bool = true;
 //--------------------------------------------------------
 pub const WARNING_LOGS_DIRECTORY_NAME: &str = "warning_logs";
-pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
+// pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";

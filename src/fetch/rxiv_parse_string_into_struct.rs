@@ -11,7 +11,6 @@ pub fn rxiv_parse_string_into_struct(
     mut fetch_result_string: String,
     key: &str,
     value: &str,
-    enable_prints: bool,
     enable_error_prints: bool,
     rxiv_kind: RxivKind,
 ) -> (RxivPostStruct, AreThereItems) {

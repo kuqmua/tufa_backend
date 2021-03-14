@@ -1,4 +1,4 @@
-use crate::async_tokio_wrapper::tokio_wrapper;
+use crate::async_tokio_wrapper::async_tokio_wrapper;
 use crate::check_net::check_link::check_link;
 use crate::config::ENABLE_ERROR_PRINTS_HANDLE;
 use crate::config::ENABLE_PRINTS_HANDLE;
@@ -8,10 +8,12 @@ extern crate num_cpus;
 
 pub fn entry() {
     let cpus = num_cpus::get();
-    if cpus > 1 {
-        println!("We are on a multicore system with {} CPUs", cpus);
-    } else {
-        println!("We are on a single core system");
+    if ENABLE_PRINTS_HANDLE {
+        if cpus > 1 {
+            println!("We are on a multicore system with {} CPUs", cpus);
+        } else {
+            println!("We are on a single core system");
+        }
     }
 
     if check_link(STARTING_CHECK_URL).0 {
@@ -19,7 +21,7 @@ pub fn entry() {
             let its_all_good_message = "server can reach ".to_string() + STARTING_CHECK_URL;
             println!("{}", its_all_good_message);
         }
-        tokio_wrapper();
+        async_tokio_wrapper();
     } else if ENABLE_ERROR_PRINTS_HANDLE {
         let its_not_good_message = "server cannot reach ".to_string() + STARTING_CHECK_URL;
         print_error_red(

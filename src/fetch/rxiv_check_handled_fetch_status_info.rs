@@ -37,7 +37,7 @@ pub fn rxiv_check_handled_fetch_status_info(
                 fetch_result_string,
                 key,
                 &value,
-                enable_prints,
+                // enable_prints,
                 enable_error_prints,
                 rxiv_kind,
             );

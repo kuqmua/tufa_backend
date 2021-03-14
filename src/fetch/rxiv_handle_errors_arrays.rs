@@ -56,10 +56,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_success_are_there_items_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -107,6 +107,7 @@ pub fn rxiv_handle_errors_arrays(
                     }
                 }
                 Err(e) => {
+                    //file_name (path дописать)
                     if enable_error_prints {
                         print_error_red(file!().to_string(), line!().to_string(), e.to_string())
                     }
@@ -138,10 +139,10 @@ pub fn rxiv_handle_errors_arrays(
         {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -222,10 +223,10 @@ pub fn rxiv_handle_errors_arrays(
         {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -303,10 +304,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_success_are_there_items_nope_no_tag_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -382,10 +383,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -459,10 +460,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_res_to_text_error_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -537,10 +538,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_res_status_error_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -616,10 +617,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
@@ -690,10 +691,10 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_failure_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/{}/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{:?}/{}/{:?}_{}.json",
                 WARNING_LOGS_DIRECTORY_NAME,
-                underdirectory,
                 rxiv_kind,
+                underdirectory,
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
