@@ -63,7 +63,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -81,35 +81,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
-                    //file_name (path дописать)
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -146,7 +152,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -165,34 +171,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -230,7 +243,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -250,34 +263,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -311,7 +331,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -330,35 +350,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
-                                    println!("errr");
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -390,7 +416,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -408,34 +434,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -467,7 +500,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -486,34 +519,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -545,7 +585,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -565,34 +605,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -624,7 +671,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -642,34 +689,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
@@ -698,7 +752,7 @@ pub fn rxiv_handle_errors_arrays(
                 rxiv_kind,
                 key.replace("/", "_")
             ); //подобрать функцию которая из стринги делает сейвовый путь
-            let result_of_creating_file = File::create(file_name);
+            let result_of_creating_file = File::create(&file_name);
             match result_of_creating_file {
                 Ok(mut created_for_logs_file) => {
                     let json_object = json!({
@@ -717,34 +771,41 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл для ключа {}", key);
+                                        println!("логи записаны в файл {}", &file_name);
                                     }
                                 }
                                 Err(e) => {
+                                    let message = format!(
+                                        "ошибка записи в файл {} {}",
+                                        file_name,
+                                        e.to_string()
+                                    );
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
                                             line!().to_string(),
-                                            e.to_string(),
+                                            message,
                                         )
                                     }
                                 }
                             }
                         }
                         Err(e) => {
+                            let message = format!(
+                                "ошибка каста json в string {} {}",
+                                &json_object,
+                                e.to_string()
+                            );
                             if enable_error_prints {
-                                print_error_red(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    e.to_string(),
-                                )
+                                print_error_red(file!().to_string(), line!().to_string(), message)
                             }
                         }
                     }
                 }
                 Err(e) => {
+                    let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), e.to_string())
+                        print_error_red(file!().to_string(), line!().to_string(), message)
                     }
                 }
             }
