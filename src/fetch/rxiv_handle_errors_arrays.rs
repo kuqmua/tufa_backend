@@ -1,3 +1,4 @@
+use crate::fetch::handle_error_status_code::handle_error_status_code;
 use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
 use crate::overriding::prints::print_error_red;
@@ -78,7 +79,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -160,7 +161,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -244,7 +245,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -323,10 +324,11 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
+                                    println!("errr");
                                     if enable_error_prints {
                                         print_error_red(
                                             file!().to_string(),
@@ -399,7 +401,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -476,7 +478,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -544,6 +546,7 @@ pub fn rxiv_handle_errors_arrays(
                         "part_of": format!("{:?}", rxiv_kind),
                         "date": Local::now().to_string()
                     });
+                    handle_error_status_code(value.1);
                     let result_of_stringify_json_object_pretty =
                         serde_json::to_string_pretty(&json_object);
                     match result_of_stringify_json_object_pretty {
@@ -553,7 +556,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -629,7 +632,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {
@@ -703,7 +706,7 @@ pub fn rxiv_handle_errors_arrays(
                             match result_of_writing {
                                 Ok(_) => {
                                     if enable_prints {
-                                        println!("логи записаны в файл");
+                                        println!("логи записаны в файл для ключа {}", key);
                                     }
                                 }
                                 Err(e) => {

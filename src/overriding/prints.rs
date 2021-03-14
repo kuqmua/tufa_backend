@@ -48,3 +48,25 @@ pub fn print_warning_yellow(file: String, line: String, error: String) {
         Yellow.bold().paint(error)
     );
 }
+
+pub fn print_success_green(file: String, line: String, error: String) {
+    eprintln!(
+        "{}{}{}{}\n{}",
+        RGB(0, 255, 0).bold().paint("file: "),
+        RGB(0, 255, 0).bold().paint(file),
+        RGB(0, 255, 0).bold().paint(":"),
+        RGB(0, 255, 0).bold().paint(line),
+        RGB(0, 255, 0).bold().paint(error)
+    );
+}
+
+pub fn print_partial_success_cyan(file: String, line: String, error: String) {
+    eprintln!(
+        "{}{}{}{}\n{}",
+        RGB(0, 200, 155).bold().paint("file: "),
+        RGB(0, 200, 155).bold().paint(file),
+        RGB(0, 200, 155).bold().paint(":"),
+        RGB(0, 200, 155).bold().paint(line),
+        RGB(0, 200, 155).bold().paint(error)
+    );
+}

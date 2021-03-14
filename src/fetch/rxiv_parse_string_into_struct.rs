@@ -35,7 +35,6 @@ pub fn rxiv_parse_string_into_struct(
             }
         }
     }
-
     match fetch_result_string.find("</item>") {
         Some(_) => {
             let rxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
@@ -78,7 +77,7 @@ pub fn rxiv_parse_string_into_struct(
             }
         }
         _ => {
-            if enable_prints {
+            if enable_error_prints {
                 let warning: String = "wrong url or there is no items for key: ".to_string()
                     + key
                     + " link: "

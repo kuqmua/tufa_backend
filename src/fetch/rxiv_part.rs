@@ -9,6 +9,9 @@ use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
 use crate::fetch::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
 use crate::fetch::rxiv_kind_enum::RxivKind;
+use crate::overriding::prints::print_error_red;
+use crate::overriding::prints::print_partial_success_cyan;
+use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use std::collections::HashMap;
 
@@ -42,9 +45,6 @@ pub fn rxiv_part(
             unhandled_initialized_posts,
             unhandled_failure_posts,
         ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse); //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
-        let wrong_cases_thread = thread::spawn(move || println!("wrong_cases_thread"));
-        wrong_cases_thread.join().unwrap();
-
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             if enable_warning_prints {
                 print_warning_orange(
@@ -55,35 +55,52 @@ pub fn rxiv_part(
                 );
             }
             false
-        } else {
-            rxiv_handle_errors_arrays(
-                rxiv_kind,
-                enable_prints,
-                enable_warning_prints,
-                enable_error_prints,
-                unhandled_success_handled_success_are_there_items_initialized_posts,
-                unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
-                unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
-                unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
-                unhandled_success_handled_initialized_posts,
-                unhandled_success_handled_res_to_text_error_posts,
-                unhandled_success_handled_res_status_error_posts,
-                unhandled_initialized_posts,
-                unhandled_failure_posts,
-            );
-            if enable_prints {
-                println!(
-                    "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
-                    unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                    unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                    rxiv_kind_clone_for_debug_purposes
+        } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
+            != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
+        {
+            let wrong_cases_thread = thread::spawn(move || {
+                if enable_prints {
+                    let message = format!(
+                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                        unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                        unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                        rxiv_kind_clone_for_debug_purposes
+                    );
+                    print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
+                }
+                rxiv_handle_errors_arrays(
+                    rxiv_kind,
+                    enable_prints,
+                    enable_warning_prints,
+                    enable_error_prints,
+                    unhandled_success_handled_success_are_there_items_initialized_posts,
+                    unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
+                    unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
+                    unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
+                    unhandled_success_handled_initialized_posts,
+                    unhandled_success_handled_res_to_text_error_posts,
+                    unhandled_success_handled_res_status_error_posts,
+                    unhandled_initialized_posts,
+                    unhandled_failure_posts,
                 );
-            }
+            });
+            wrong_cases_thread.join().unwrap();
+            true
+        } else {
+            let message = format!(
+                "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                rxiv_kind_clone_for_debug_purposes
+            );
+            print_success_green(file!().to_string(), line!().to_string(), message);
             true
         }
     } else {
-        if enable_prints {
-            println!("i cannot reach {}", rxiv_url);
+        if enable_error_prints {
+            let error_message = format!("i cannot reach {}", rxiv_url);
+            print_error_red(file!().to_string(), line!().to_string(), error_message);
+            println!();
         };
         false
     }
