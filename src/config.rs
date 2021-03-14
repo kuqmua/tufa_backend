@@ -31,3 +31,6 @@ pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS 
 //-------------------------------------------------------
 pub const ENABLE_PRINTS_HANDLE: bool = true;
 pub const ENABLE_ERROR_PRINTS_HANDLE: bool = true;
+//--------------------------------------------------------
+pub const WARNING_LOGS_DIRECTORY_NAME: &str = "warning_logs";
+pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";

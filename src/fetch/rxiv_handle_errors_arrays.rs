@@ -1,3 +1,4 @@
+use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::handle_error_status_code::handle_error_status_code;
 use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
@@ -55,7 +56,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_success_are_there_items_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -136,7 +138,8 @@ pub fn rxiv_handle_errors_arrays(
         {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -219,7 +222,8 @@ pub fn rxiv_handle_errors_arrays(
         {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -299,7 +303,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_success_are_there_items_nope_no_tag_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -377,7 +382,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -453,7 +459,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_res_to_text_error_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -530,7 +537,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_success_handled_res_status_error_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -608,7 +616,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_initialized_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
@@ -681,7 +690,8 @@ pub fn rxiv_handle_errors_arrays(
         for (key, value) in unhandled_failure_posts {
             //цикл должен быть асинхронным\паралельным
             let file_name = format!(
-                "logs/warning_logs/{}/{:?}/{:?}_{}.json",
+                "logs/{}/{}/{:?}/{:?}_{}.json",
+                WARNING_LOGS_DIRECTORY_NAME,
                 underdirectory,
                 rxiv_kind,
                 rxiv_kind,
