@@ -3,7 +3,6 @@ use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rxiv_kind_enum::RxivKind;
 use crate::fetch::rxiv_structures::RxivPostStruct;
-use reqwest::StatusCode;
 use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
@@ -21,54 +20,34 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
     >,
 ) -> (
     HashMap<String, RxivPostStruct>,
-    std::collections::HashMap<std::string::String, std::string::String>,
-    std::collections::HashMap<std::string::String, (std::string::String, std::string::String)>,
-    std::collections::HashMap<
-        std::string::String,
+    HashMap<
+        String,
         (
-            std::string::String,
-            std::string::String,
-            std::string::String,
+            RxivPostStruct,
+            String,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            RxivKind,
         ),
     >,
-    std::collections::HashMap<std::string::String, (std::string::String, std::string::String)>,
-    std::collections::HashMap<std::string::String, std::string::String>,
-    std::collections::HashMap<std::string::String, (std::string::String, std::string::String)>,
-    std::collections::HashMap<std::string::String, (std::string::String, StatusCode)>,
-    std::collections::HashMap<std::string::String, std::string::String>,
-    std::collections::HashMap<std::string::String, (std::string::String, std::string::String)>,
 ) {
+    let hashmap_length = unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
         String,
         RxivPostStruct,
     > = HashMap::new();
-    let mut unhandled_success_handled_success_are_there_items_initialized_posts: HashMap<
+    let mut some_error_posts: HashMap<
         String,
-        String,
-    > = HashMap::new();
-    let mut unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts: HashMap<
-        String,
-        (String, String),
-    > = HashMap::new(); //"</item>" tag
-    let mut unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts: HashMap<
+        (
+            RxivPostStruct,
             String,
-            (String, String, String),
-        > = HashMap::new();
-    let mut unhandled_success_handled_success_are_there_items_nope_no_tag_posts: HashMap<
-        String,
-        (String, String),
-    > = HashMap::new();
-    /////
-    let mut unhandled_success_handled_initialized_posts: HashMap<String, String> = HashMap::new();
-    let mut unhandled_success_handled_res_to_text_error_posts: HashMap<String, (String, String)> =
-        HashMap::new();
-    let mut unhandled_success_handled_res_status_error_posts: HashMap<
-        String,
-        (String, StatusCode),
-    > = HashMap::new();
-    //////
-    let mut unhandled_initialized_posts: HashMap<String, String> = HashMap::new();
-    let mut unhandled_failure_posts: HashMap<String, (String, String)> = HashMap::new();
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            RxivKind,
+        ),
+    > = HashMap::with_capacity(hashmap_length);
     for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
         match value.2 {
             UnhandledFetchStatusInfo::Success => match value.3 {
@@ -78,53 +57,120 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                             .insert(key, value.0);
                     }
                     AreThereItems::Initialized => {
-                        unhandled_success_handled_success_are_there_items_initialized_posts
-                            .insert(key, value.1);
+                        some_error_posts.insert(key, value);
                     }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                         //"</item>" tag
-                        unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts
-                                .insert(key, (value.1, fetch_result_string));
+                        some_error_posts.insert(
+                            key,
+                            (
+                                value.0,
+                                value.1,
+                                value.2,
+                                value.3,
+                                AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                value.5,
+                            ),
+                        );
                     }
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
-                        unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts
-                                .insert(key, (value.1, fetch_result_string, error));
+                        some_error_posts.insert(
+                            key,
+                            (
+                                value.0,
+                                value.1,
+                                value.2,
+                                value.3,
+                                AreThereItems::ConversionFromStrError(fetch_result_string, error),
+                                value.5,
+                            ),
+                        );
                     }
                     AreThereItems::NopeNoTag(fetch_result_string) => {
-                        unhandled_success_handled_success_are_there_items_nope_no_tag_posts
-                            .insert(key, (value.1, fetch_result_string));
+                        some_error_posts.insert(
+                            key,
+                            (
+                                value.0,
+                                value.1,
+                                value.2,
+                                value.3,
+                                AreThereItems::NopeNoTag(fetch_result_string),
+                                value.5,
+                            ),
+                        );
                     }
                 },
                 HandledFetchStatusInfo::Initialized => {
-                    unhandled_success_handled_initialized_posts.insert(key, value.1);
+                    some_error_posts.insert(
+                        key,
+                        (
+                            value.0,
+                            value.1,
+                            value.2,
+                            HandledFetchStatusInfo::Initialized,
+                            value.4,
+                            value.5,
+                        ),
+                    );
                 }
                 HandledFetchStatusInfo::ResToTextError(error) => {
-                    unhandled_success_handled_res_to_text_error_posts.insert(key, (value.1, error));
+                    some_error_posts.insert(
+                        key,
+                        (
+                            value.0,
+                            value.1,
+                            value.2,
+                            HandledFetchStatusInfo::ResToTextError(error),
+                            value.4,
+                            value.5,
+                        ),
+                    );
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
                     // let should_refetch_it = handle_error_status_code(status_code);
-                    unhandled_success_handled_res_status_error_posts
-                        .insert(key, (value.1, status_code));
+                    some_error_posts.insert(
+                        key,
+                        (
+                            value.0,
+                            value.1,
+                            value.2,
+                            HandledFetchStatusInfo::ResStatusError(status_code),
+                            value.4,
+                            value.5,
+                        ),
+                    );
                 }
             },
             UnhandledFetchStatusInfo::Initialized => {
-                unhandled_initialized_posts.insert(key, value.1);
+                some_error_posts.insert(
+                    key,
+                    (
+                        value.0,
+                        value.1,
+                        UnhandledFetchStatusInfo::Initialized,
+                        value.3,
+                        value.4,
+                        value.5,
+                    ),
+                );
             }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
-                unhandled_failure_posts.insert(key, (value.1, box_dyn_error));
+                some_error_posts.insert(
+                    key,
+                    (
+                        value.0,
+                        value.1,
+                        UnhandledFetchStatusInfo::Failure(box_dyn_error),
+                        value.3,
+                        value.4,
+                        value.5,
+                    ),
+                );
             }
         }
     }
     (
         unhandled_success_handled_success_are_there_items_yep_posts,
-        unhandled_success_handled_success_are_there_items_initialized_posts,
-        unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
-        unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
-        unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
-        unhandled_success_handled_initialized_posts,
-        unhandled_success_handled_res_to_text_error_posts,
-        unhandled_success_handled_res_status_error_posts,
-        unhandled_initialized_posts,
-        unhandled_failure_posts,
+        some_error_posts,
     )
 }

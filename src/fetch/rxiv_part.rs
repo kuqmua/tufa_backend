@@ -39,16 +39,9 @@ pub fn rxiv_part(
         let (
             //все отсальное херачить в отдельный поток кроме первого массива
             unhandled_success_handled_success_are_there_items_yep_posts,
-            unhandled_success_handled_success_are_there_items_initialized_posts,
-            unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
-            unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
-            unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
-            unhandled_success_handled_initialized_posts,
-            unhandled_success_handled_res_to_text_error_posts,
-            unhandled_success_handled_res_status_error_posts,
-            unhandled_initialized_posts,
-            unhandled_failure_posts,
-        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse); //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
+            some_error_posts,
+        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse);
+        //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             if enable_warning_prints {
                 print_warning_orange(
@@ -58,7 +51,7 @@ pub fn rxiv_part(
                         .to_string(),
                 );
             }
-            false
+            // false
         } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
             != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
         {
@@ -100,24 +93,16 @@ pub fn rxiv_part(
                         }
                     }
                 }
-                rxiv_handle_errors_arrays(
-                    rxiv_kind,
-                    enable_prints,
-                    enable_warning_prints,
-                    enable_error_prints,
-                    unhandled_success_handled_success_are_there_items_initialized_posts,
-                    unhandled_success_handled_success_are_there_items_no_but_there_is_a_tag_posts,
-                    unhandled_success_handled_success_are_there_items_conversion_from_str_error_posts,
-                    unhandled_success_handled_success_are_there_items_nope_no_tag_posts,
-                    unhandled_success_handled_initialized_posts,
-                    unhandled_success_handled_res_to_text_error_posts,
-                    unhandled_success_handled_res_status_error_posts,
-                    unhandled_initialized_posts,
-                    unhandled_failure_posts,
-                );
+                // rxiv_handle_errors_arrays(
+                //     rxiv_kind,
+                //     enable_prints,
+                //     enable_warning_prints,
+                //     enable_error_prints,
+                //     some_error_posts,
+                // );
             });
             wrong_cases_thread.join().unwrap();
-            true
+            // true
         } else {
             let message = format!(
                 "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
@@ -126,7 +111,7 @@ pub fn rxiv_part(
                 rxiv_kind_clone_for_debug_purposes
             );
             print_success_green(file!().to_string(), line!().to_string(), message);
-            true
+            // true
         }
     } else {
         if enable_error_prints {
@@ -134,6 +119,7 @@ pub fn rxiv_part(
             print_error_red(file!().to_string(), line!().to_string(), error_message);
             println!();
         };
-        false
+        // false
     }
+    true
 }
