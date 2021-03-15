@@ -92,3 +92,5 @@ fn main() {
  -------------
  split().map()
  вместо find(<item></item>)
+ -------------
+ if size of working dir > 100mb then remove all containg
