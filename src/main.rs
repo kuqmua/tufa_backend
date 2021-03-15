@@ -12,6 +12,7 @@ mod fetch {
     pub mod rxiv_parse_string_into_struct;
     pub mod rxiv_part;
     pub mod rxiv_structures;
+    pub mod rxiv_write_error_logs_into_file;
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;
     //     pub mod parse_every_children;
