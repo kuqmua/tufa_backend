@@ -42,6 +42,7 @@ pub fn rxiv_part(
             some_error_posts,
         ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse);
         //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
+        let mut wrong_cases_thread = vec![];
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             if enable_warning_prints {
                 print_warning_orange(
@@ -55,7 +56,7 @@ pub fn rxiv_part(
         } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
             != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
         {
-            let wrong_cases_thread = thread::spawn(move || {
+            wrong_cases_thread.push(thread::spawn(move || {
                 if enable_prints {
                     let message = format!(
                         "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
@@ -93,15 +94,14 @@ pub fn rxiv_part(
                         }
                     }
                 }
-                // rxiv_handle_errors_arrays(
-                //     rxiv_kind,
-                //     enable_prints,
-                //     enable_warning_prints,
-                //     enable_error_prints,
-                //     some_error_posts,
-                // );
-            });
-            wrong_cases_thread.join().unwrap();
+                rxiv_handle_errors_arrays(
+                    rxiv_kind,
+                    enable_prints,
+                    enable_warning_prints,
+                    enable_error_prints,
+                    some_error_posts,
+                );
+            }));
             // true
         } else {
             let message = format!(
@@ -112,6 +112,9 @@ pub fn rxiv_part(
             );
             print_success_green(file!().to_string(), line!().to_string(), message);
             // true
+        }
+        for i in wrong_cases_thread {
+            i.join().unwrap();
         }
     } else {
         if enable_error_prints {
