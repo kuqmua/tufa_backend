@@ -97,7 +97,7 @@ pub fn rxiv_part(
                 rxiv_handle_errors_arrays(
                     rxiv_kind,
                     enable_prints,
-                    enable_warning_prints,
+                    // enable_warning_prints,
                     enable_error_prints,
                     some_error_posts,
                 );
@@ -116,13 +116,13 @@ pub fn rxiv_part(
         for i in wrong_cases_thread {
             i.join().unwrap();
         }
+        true
     } else {
         if enable_error_prints {
             let error_message = format!("i cannot reach {}", rxiv_url);
             print_error_red(file!().to_string(), line!().to_string(), error_message);
             println!();
         };
-        // false
+        false
     }
-    true
 }

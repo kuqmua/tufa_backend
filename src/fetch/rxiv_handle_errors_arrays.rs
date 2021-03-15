@@ -14,7 +14,7 @@ use std::collections::HashMap;
 pub fn rxiv_handle_errors_arrays(
     rxiv_kind: RxivKind,
     enable_prints: bool,
-    enable_warning_prints: bool,
+    // enable_warning_prints: bool,
     enable_error_prints: bool,
     some_error_posts: HashMap<
         String,
@@ -52,6 +52,7 @@ pub fn rxiv_handle_errors_arrays(
                         )
                     }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
+                        //"</item>" tag
                         let json_object = json!({
                             "topic": key,
                             "url": value.1,
@@ -59,7 +60,14 @@ pub fn rxiv_handle_errors_arrays(
                             "part_of": format!("{:?}", rxiv_kind),
                             "date": Local::now().to_string()
                         });
-                        //"</item>" tag
+                        rxiv_write_error_logs_into_file(
+                            json_object,
+                            &rxiv_kind,
+                            unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                            enable_prints,
+                            enable_error_prints,
+                            key,
+                        )
                     }
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
                         let json_object = json!({
@@ -70,6 +78,14 @@ pub fn rxiv_handle_errors_arrays(
                             "part_of": format!("{:?}", rxiv_kind),
                             "date": Local::now().to_string()
                         });
+                        rxiv_write_error_logs_into_file(
+                            json_object,
+                            &rxiv_kind,
+                            unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                            enable_prints,
+                            enable_error_prints,
+                            key,
+                        )
                     }
                     AreThereItems::NopeNoTag(fetch_result_string) => {
                         let json_object = json!({
@@ -79,6 +95,14 @@ pub fn rxiv_handle_errors_arrays(
                             "part_of": format!("{:?}", rxiv_kind),
                             "date": Local::now().to_string()
                         });
+                        rxiv_write_error_logs_into_file(
+                            json_object,
+                            &rxiv_kind,
+                            unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                            enable_prints,
+                            enable_error_prints,
+                            key,
+                        )
                     }
                 },
                 HandledFetchStatusInfo::Initialized => {
@@ -88,6 +112,14 @@ pub fn rxiv_handle_errors_arrays(
                         "part_of": format!("{:?}", rxiv_kind),
                         "date": Local::now().to_string()
                     });
+                    rxiv_write_error_logs_into_file(
+                        json_object,
+                        &rxiv_kind,
+                        unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                        enable_prints,
+                        enable_error_prints,
+                        key,
+                    )
                 }
                 HandledFetchStatusInfo::ResToTextError(error) => {
                     let json_object = json!({
@@ -97,6 +129,14 @@ pub fn rxiv_handle_errors_arrays(
                         "part_of": format!("{:?}", rxiv_kind),
                         "date": Local::now().to_string()
                     });
+                    rxiv_write_error_logs_into_file(
+                        json_object,
+                        &rxiv_kind,
+                        unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                        enable_prints,
+                        enable_error_prints,
+                        key,
+                    )
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
                     let json_object = json!({
@@ -106,6 +146,14 @@ pub fn rxiv_handle_errors_arrays(
                         "part_of": format!("{:?}", rxiv_kind),
                         "date": Local::now().to_string()
                     });
+                    rxiv_write_error_logs_into_file(
+                        json_object,
+                        &rxiv_kind,
+                        unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                        enable_prints,
+                        enable_error_prints,
+                        key,
+                    )
                 }
             },
             UnhandledFetchStatusInfo::Initialized => {
@@ -115,6 +163,14 @@ pub fn rxiv_handle_errors_arrays(
                     "part_of": format!("{:?}", rxiv_kind),
                     "date": Local::now().to_string()
                 });
+                rxiv_write_error_logs_into_file(
+                    json_object,
+                    &rxiv_kind,
+                    unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                    enable_prints,
+                    enable_error_prints,
+                    key,
+                )
             }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
                 let json_object = json!({
@@ -124,6 +180,14 @@ pub fn rxiv_handle_errors_arrays(
                     "part_of": format!("{:?}", rxiv_kind),
                     "date": Local::now().to_string()
                 });
+                rxiv_write_error_logs_into_file(
+                    json_object,
+                    &rxiv_kind,
+                    unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                    enable_prints,
+                    enable_error_prints,
+                    key,
+                )
             }
         }
     }
