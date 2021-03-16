@@ -129,7 +129,7 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_TWITTER {
-        let twitter_links = get_medrxiv_links();
+        let twitter_links = get_twitter_links();
         if twitter_links.is_empty() {
             print_error_red(
                 file!().to_string(),
