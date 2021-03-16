@@ -1,8 +1,8 @@
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_structures::RxivPost;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::rxiv_structures::XmlRxivParserStruct;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv::rxiv_structures::RxivPost;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
+use crate::fetch::rxiv::rxiv_structures::XmlRxivParserStruct;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
@@ -12,15 +12,15 @@ pub fn rxiv_parse_string_into_struct(
     key: &str,
     value: &str,
     enable_error_prints: bool,
-    rxiv_kind: RxivKind,
+    provider_kind: ProviderKind,
 ) -> (RxivPostStruct, AreThereItems) {
     let mut rxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
-                                               // println!("{:#?}", rxiv_kind);
-    if let RxivKind::Medrxiv = rxiv_kind {
+                                               // println!("{:#?}", provider_kind);
+    if let ProviderKind::Medrxiv = provider_kind {
         fetch_result_string.remove(0);
     }
-    if let RxivKind::Arxiv = rxiv_kind {
+    if let ProviderKind::Arxiv = provider_kind {
     } else {
         while fetch_result_string.contains("<dc:title>") {
             match fetch_result_string.find("</dc:title>") {

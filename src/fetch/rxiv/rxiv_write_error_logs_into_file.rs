@@ -1,26 +1,26 @@
 use serde_json::Value;
 
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
 use crate::overriding::prints::print_error_red;
 use std::{fs::File, io::Write};
 
 pub fn rxiv_write_error_logs_into_file(
     json_object: Value,
-    rxiv_kind: &RxivKind,
+    provider_kind: &ProviderKind,
     dir: &str,
     enable_prints: bool,
     enable_error_prints: bool,
     key: String,
 ) {
-    rxiv_logs_create_dir_if_dont_exists(dir, &rxiv_kind, enable_prints, enable_error_prints);
+    rxiv_logs_create_dir_if_dont_exists(dir, &provider_kind, enable_prints, enable_error_prints);
     let file_name = format!(
         "logs/{}/{:?}/{}/{:?}_{}.json",
         WARNING_LOGS_DIRECTORY_NAME,
-        rxiv_kind,
+        provider_kind,
         dir,
-        rxiv_kind,
+        provider_kind,
         key.replace("/", "_")
     ); //подобрать функцию которая из стринги делает сейвовый путь
 

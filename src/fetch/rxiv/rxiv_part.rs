@@ -6,10 +6,10 @@ use std::thread;
 
 use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
-use crate::fetch::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
-use crate::fetch::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
-use crate::fetch::rxiv_kind_enum::RxivKind;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
+use crate::fetch::rxiv::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
+use crate::fetch::rxiv::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
@@ -25,15 +25,19 @@ pub fn rxiv_part(
     enable_warning_prints: bool,
     enable_error_prints: bool,
     rxiv_url: &str,
-    rxiv_kind: RxivKind,
+    provider_kind: ProviderKind,
 ) -> bool {
     if check_link(rxiv_url).0 {
         if enable_prints {
             println!("i can reach {}", rxiv_url)
         };
-        let rxiv_kind_clone_for_debug_purposes = rxiv_kind.clone(); //only for debug
-        let unfiltered_posts_hashmap_after_fetch_and_parse =
-            rxiv_fetch_and_parse_xml(enable_prints, enable_error_prints, links, rxiv_kind.clone()); //rxiv_kind ниже еще используется
+        let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
+        let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
+            enable_prints,
+            enable_error_prints,
+            links,
+            provider_kind.clone(),
+        ); //provider_kind ниже еще используется
         let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
             unfiltered_posts_hashmap_after_fetch_and_parse.len();
         let (
@@ -62,12 +66,12 @@ pub fn rxiv_part(
                         "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
                         unhandled_success_handled_success_are_there_items_yep_posts.len(),
                         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                        rxiv_kind_clone_for_debug_purposes
+                        provider_kind_clone_for_debug_purposes
                     );
                     print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
                 }
                 if enable_cleaning_logs_directory {
-                    let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, rxiv_kind);
+                    let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
                     if Path::new(&path).is_dir() {
                         let result_of_recursively_removing_warning_logs_directory =
                             fs::remove_dir_all(&path);
@@ -95,7 +99,7 @@ pub fn rxiv_part(
                     }
                 }
                 rxiv_handle_errors_arrays(
-                    rxiv_kind,
+                    provider_kind,
                     enable_prints,
                     // enable_warning_prints,
                     enable_error_prints,
@@ -108,7 +112,7 @@ pub fn rxiv_part(
                 "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
                 unhandled_success_handled_success_are_there_items_yep_posts.len(),
                 unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                rxiv_kind_clone_for_debug_purposes
+                provider_kind_clone_for_debug_purposes
             );
             print_success_green(file!().to_string(), line!().to_string(), message);
             // true

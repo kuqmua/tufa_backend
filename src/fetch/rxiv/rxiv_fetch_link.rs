@@ -1,4 +1,4 @@
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
 use std::time::Instant;
 

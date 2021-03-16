@@ -7,22 +7,30 @@ use crate::config::ENABLE_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
+use crate::config::ENABLE_ERROR_PRINTS_TWITTER;
 use crate::config::ENABLE_MEDRXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
+use crate::config::ENABLE_PRINTS_TWITTER;
+use crate::config::ENABLE_TWITTER;
 use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
+use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
 use crate::config::MEDRXIV_URL;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_part::rxiv_part;
+use crate::config::TWITTER_URL; //must be not only 1 str but many - twitter and many nitters
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::rxiv_part::rxiv_part;
+use crate::fetch::twitter::twitter_part::twitter_part;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::overriding::prints::print_error_red;
 // use crate::config::ENABLE_REDDIT;
 
@@ -46,7 +54,7 @@ pub async fn check_new_posts_threads_parts() {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     arxiv_links.len(),
-                    RxivKind::Arxiv
+                    ProviderKind::Arxiv
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -57,7 +65,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_WARNING_PRINTS_ARXIV,
                     ENABLE_ERROR_PRINTS_ARXIV,
                     ARXIV_URL,
-                    RxivKind::Arxiv,
+                    ProviderKind::Arxiv,
                 );
             }));
         }
@@ -75,7 +83,7 @@ pub async fn check_new_posts_threads_parts() {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     biorxiv_links.len(),
-                    RxivKind::Biorxiv
+                    ProviderKind::Biorxiv
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -86,7 +94,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_WARNING_PRINTS_BIORXIV,
                     ENABLE_ERROR_PRINTS_BIORXIV,
                     BIORXIV_URL,
-                    RxivKind::Biorxiv,
+                    ProviderKind::Biorxiv,
                 );
             }));
         }
@@ -104,7 +112,7 @@ pub async fn check_new_posts_threads_parts() {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     medrxiv_links.len(),
-                    RxivKind::Medrxiv
+                    ProviderKind::Medrxiv
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -115,7 +123,36 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_WARNING_PRINTS_MEDRXIV,
                     ENABLE_ERROR_PRINTS_MEDRXIV,
                     MEDRXIV_URL,
-                    RxivKind::Medrxiv,
+                    ProviderKind::Medrxiv,
+                );
+            }));
+        }
+    }
+    if ENABLE_TWITTER {
+        let twitter_links = get_medrxiv_links();
+        if twitter_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "twitter_links.is_empty".to_string(),
+            )
+        } else {
+            if ENABLE_PRINTS_TWITTER {
+                println!(
+                    "{:#?} elements in {:#?} HashMap",
+                    twitter_links.len(),
+                    ProviderKind::Twitter
+                );
+            };
+            threads_vec.push(thread::spawn(move || {
+                twitter_part(
+                    get_twitter_links(),
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
+                    ENABLE_PRINTS_TWITTER,
+                    ENABLE_WARNING_PRINTS_TWITTER,
+                    ENABLE_ERROR_PRINTS_TWITTER,
+                    TWITTER_URL,
+                    ProviderKind::Twitter,
                 );
             }));
         }

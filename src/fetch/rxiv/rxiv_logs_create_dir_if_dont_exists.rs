@@ -1,19 +1,19 @@
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::rxiv_kind_enum::RxivKind;
+use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::fs;
 use std::path::Path;
 
 pub fn rxiv_logs_create_dir_if_dont_exists(
     underdirectory: &str,
-    rxiv_kind: &RxivKind,
+    provider_kind: &ProviderKind,
     enable_prints: bool,
     enable_error_prints: bool,
 ) {
     let path_to_log_file = format!(
         "logs/{}/{:?}/{}",
         WARNING_LOGS_DIRECTORY_NAME,
-        rxiv_kind,
+        provider_kind,
         underdirectory.to_string()
     );
     if !Path::new(&path_to_log_file).exists() {
@@ -23,7 +23,7 @@ pub fn rxiv_logs_create_dir_if_dont_exists(
                 if enable_prints {
                     println!(
                         "папка logs/{}/{:?}/{} создана!",
-                        WARNING_LOGS_DIRECTORY_NAME, rxiv_kind, underdirectory
+                        WARNING_LOGS_DIRECTORY_NAME, provider_kind, underdirectory
                     )
                 }
             }
@@ -31,7 +31,7 @@ pub fn rxiv_logs_create_dir_if_dont_exists(
                 let message = format!(
                     "ошибка при создании папки logs/{}/{:?}/{} {}",
                     WARNING_LOGS_DIRECTORY_NAME,
-                    rxiv_kind,
+                    provider_kind,
                     underdirectory,
                     e.to_string()
                 );

@@ -1,8 +1,8 @@
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
@@ -15,7 +15,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            RxivKind,
+            ProviderKind,
         ),
     >,
 ) -> (
@@ -28,7 +28,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            RxivKind,
+            ProviderKind,
         ),
     >,
 ) {
@@ -45,7 +45,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            RxivKind,
+            ProviderKind,
         ),
     > = HashMap::with_capacity(hashmap_length);
     for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {

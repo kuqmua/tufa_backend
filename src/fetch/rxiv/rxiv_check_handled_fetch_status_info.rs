@@ -1,10 +1,10 @@
 use std::time::Instant;
 
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rxiv_check_handled_fetch_status_info(
@@ -15,7 +15,7 @@ pub fn rxiv_check_handled_fetch_status_info(
     value: &str,
     enable_prints: bool,
     enable_error_prints: bool,
-    rxiv_kind: RxivKind,
+    provider_kind: ProviderKind,
 ) -> (HandledFetchStatusInfo, RxivPostStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
     let mut rxiv_post_struct_wrapper_handle: RxivPostStruct = RxivPostStruct::new();
@@ -39,7 +39,7 @@ pub fn rxiv_check_handled_fetch_status_info(
                 &value,
                 // enable_prints,
                 enable_error_prints,
-                rxiv_kind,
+                provider_kind,
             );
             rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;

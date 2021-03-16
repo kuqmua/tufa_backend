@@ -1,10 +1,10 @@
-use crate::fetch::handle_error_status_code::handle_error_status_code;
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::rxiv_write_error_logs_into_file::rxiv_write_error_logs_into_file;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::handle_error_status_code::handle_error_status_code;
+use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
+use crate::fetch::rxiv::rxiv_write_error_logs_into_file::rxiv_write_error_logs_into_file;
 // use crate::overriding::prints::print_warning_yellow;
 use chrono::Local;
 use serde_json::json;
@@ -12,7 +12,7 @@ use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rxiv_handle_errors_arrays(
-    rxiv_kind: RxivKind,
+    provider_kind: ProviderKind,
     enable_prints: bool,
     // enable_warning_prints: bool,
     enable_error_prints: bool,
@@ -24,7 +24,7 @@ pub fn rxiv_handle_errors_arrays(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            RxivKind,
+            ProviderKind,
         ),
     >,
 ) {
@@ -39,12 +39,12 @@ pub fn rxiv_handle_errors_arrays(
                         let json_object = json!({
                             "topic": key,
                             "url": value.1,
-                            "part_of": format!("{:?}", rxiv_kind),
+                            "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
                         });
                         rxiv_write_error_logs_into_file(
                             json_object,
-                            &rxiv_kind,
+                            &provider_kind,
                             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                             enable_prints,
                             enable_error_prints,
@@ -57,12 +57,12 @@ pub fn rxiv_handle_errors_arrays(
                             "topic": key,
                             "url": value.1,
                             "fetch_result_string": fetch_result_string,
-                            "part_of": format!("{:?}", rxiv_kind),
+                            "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
                         });
                         rxiv_write_error_logs_into_file(
                             json_object,
-                            &rxiv_kind,
+                            &provider_kind,
                             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                             enable_prints,
                             enable_error_prints,
@@ -75,12 +75,12 @@ pub fn rxiv_handle_errors_arrays(
                             "url": value.1,
                             "fetch_result_string": fetch_result_string,
                             "error": error,
-                            "part_of": format!("{:?}", rxiv_kind),
+                            "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
                         });
                         rxiv_write_error_logs_into_file(
                             json_object,
-                            &rxiv_kind,
+                            &provider_kind,
                             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                             enable_prints,
                             enable_error_prints,
@@ -92,12 +92,12 @@ pub fn rxiv_handle_errors_arrays(
                             "topic": key,
                             "url": value.1,
                             "page_content": fetch_result_string,
-                            "part_of": format!("{:?}", rxiv_kind),
+                            "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
                         });
                         rxiv_write_error_logs_into_file(
                             json_object,
-                            &rxiv_kind,
+                            &provider_kind,
                             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                             enable_prints,
                             enable_error_prints,
@@ -109,12 +109,12 @@ pub fn rxiv_handle_errors_arrays(
                     let json_object = json!({
                         "topic": key,
                         "url": value.1,
-                        "part_of": format!("{:?}", rxiv_kind),
+                        "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
                     rxiv_write_error_logs_into_file(
                         json_object,
-                        &rxiv_kind,
+                        &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
@@ -126,12 +126,12 @@ pub fn rxiv_handle_errors_arrays(
                         "topic": key,
                         "url": value.1,
                         "error": error,
-                        "part_of": format!("{:?}", rxiv_kind),
+                        "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
                     rxiv_write_error_logs_into_file(
                         json_object,
-                        &rxiv_kind,
+                        &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
@@ -143,13 +143,13 @@ pub fn rxiv_handle_errors_arrays(
                         "topic": key,
                         "url": value.1,
                         "status_code": status_code.to_string(),
-                        "part_of": format!("{:?}", rxiv_kind),
+                        "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
                     handle_error_status_code(status_code);
                     rxiv_write_error_logs_into_file(
                         json_object,
-                        &rxiv_kind,
+                        &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
@@ -161,12 +161,12 @@ pub fn rxiv_handle_errors_arrays(
                 let json_object = json!({
                     "topic": key,
                     "url": value.1,
-                    "part_of": format!("{:?}", rxiv_kind),
+                    "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
                 rxiv_write_error_logs_into_file(
                     json_object,
-                    &rxiv_kind,
+                    &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     enable_prints,
                     enable_error_prints,
@@ -178,12 +178,12 @@ pub fn rxiv_handle_errors_arrays(
                     "topic": key,
                     "url": value.1,
                     "error": box_dyn_error,
-                    "part_of": format!("{:?}", rxiv_kind),
+                    "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
                 rxiv_write_error_logs_into_file(
                     json_object,
-                    &rxiv_kind,
+                    &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     enable_prints,
                     enable_error_prints,

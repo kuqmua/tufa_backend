@@ -2,20 +2,20 @@ use ansi_term::Colour::Red;
 use std::collections::HashMap;
 use std::time::Instant;
 
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_check_handled_fetch_status_info::rxiv_check_handled_fetch_status_info;
-use crate::fetch::rxiv_fetch_link::rxiv_fetch_link;
-use crate::fetch::rxiv_kind_enum::RxivKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv::rxiv_check_handled_fetch_status_info::rxiv_check_handled_fetch_status_info;
+use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use crate::overriding::prints::print_error_red;
 
 pub fn rxiv_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     rxiv_links: HashMap<&str, &str>,
-    rxiv_kind: RxivKind,
+    provider_kind: ProviderKind,
 ) -> HashMap<
     String,
     (
@@ -24,7 +24,7 @@ pub fn rxiv_fetch_and_parse_xml(
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
         AreThereItems,
-        RxivKind,
+        ProviderKind,
     ),
 > {
     let time = Instant::now();
@@ -36,7 +36,7 @@ pub fn rxiv_fetch_and_parse_xml(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            RxivKind,
+            ProviderKind,
         ),
     > = HashMap::with_capacity(rxiv_links.len());
 
@@ -47,7 +47,7 @@ pub fn rxiv_fetch_and_parse_xml(
             UnhandledFetchStatusInfo::Initialized,
             HandledFetchStatusInfo::Initialized,
             AreThereItems::Initialized,
-            rxiv_kind.clone(),
+            provider_kind.clone(),
         );
 
         hashmap_to_return.insert(key.to_string(), tuple);

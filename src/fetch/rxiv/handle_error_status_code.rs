@@ -7,7 +7,7 @@
 // use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 // use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 // use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
-// use crate::fetch::rxiv_kind_enum::RxivKind;
+// use crate::fetch::provider_kind_enum::RxivKind;
 // use crate::fetch::rxiv_structures::RxivPostStruct;
 // use std::collections::HashMap;
 use reqwest::StatusCode;

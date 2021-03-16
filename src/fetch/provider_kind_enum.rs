@@ -1,6 +1,7 @@
 #[derive(Clone, Debug)]
-pub enum RxivKind {
+pub enum ProviderKind {
     Biorxiv,
     Arxiv,
     Medrxiv,
+    Twitter,
 }
