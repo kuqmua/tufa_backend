@@ -11,10 +11,10 @@ use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
 use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use crate::overriding::prints::print_error_red;
 
-pub fn rxiv_fetch_and_parse_xml(
+pub fn twitter_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
-    rxiv_links: HashMap<&str, &str>,
+    twitter_links: HashMap<&str, &str>,
     provider_kind: ProviderKind,
 ) -> HashMap<
     String,
@@ -38,8 +38,8 @@ pub fn rxiv_fetch_and_parse_xml(
             AreThereItems,
             ProviderKind,
         ),
-    > = HashMap::with_capacity(rxiv_links.len());
-    for (key, value) in rxiv_links {
+    > = HashMap::with_capacity(twitter_links.len());
+    for (key, value) in twitter_links {
         let tuple = (
             RxivPostStruct::new(),
             value.to_string(),

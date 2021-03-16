@@ -24,12 +24,12 @@ pub fn rxiv_part(
     enable_prints: bool,
     enable_warning_prints: bool,
     enable_error_prints: bool,
-    rxiv_url: &str,
+    provider_url: &str,
     provider_kind: ProviderKind,
 ) -> bool {
-    if check_link(rxiv_url).0 {
+    if check_link(provider_url).0 {
         if enable_prints {
-            println!("i can reach {}", rxiv_url)
+            println!("i can reach {}", provider_url)
         };
         let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
         let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
@@ -123,7 +123,7 @@ pub fn rxiv_part(
         true
     } else {
         if enable_error_prints {
-            let error_message = format!("i cannot reach {}", rxiv_url);
+            let error_message = format!("i cannot reach {}", provider_url);
             print_error_red(file!().to_string(), line!().to_string(), error_message);
             println!();
         };
