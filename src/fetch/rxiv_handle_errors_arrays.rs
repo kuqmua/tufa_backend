@@ -146,6 +146,7 @@ pub fn rxiv_handle_errors_arrays(
                         "part_of": format!("{:?}", rxiv_kind),
                         "date": Local::now().to_string()
                     });
+                    handle_error_status_code(status_code);
                     rxiv_write_error_logs_into_file(
                         json_object,
                         &rxiv_kind,

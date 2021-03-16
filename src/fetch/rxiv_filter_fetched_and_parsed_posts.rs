@@ -127,7 +127,6 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                     );
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
-                    // let should_refetch_it = handle_error_status_code(status_code);
                     some_error_posts.insert(
                         key,
                         (
