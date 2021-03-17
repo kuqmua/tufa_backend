@@ -751,7 +751,18 @@ pub fn get_twitter_links() -> HashMap<&'static str, &'static str> {
         NVIDIAHPCDev,
         NVIDIADC,
         NVIDIAGameDev,
-
+        david_obrien,
+        KKyrimis,
+        US_SpaceCom,
+        JimBridenstine,
+        keen_tools,
+        Aiims1742,
+        salkinstitute,
+        MrB_Jensen,
+        ProgrammerLin,
+        TheHackersNews,
+        zetuZT,
+        
 
 
     ]
