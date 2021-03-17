@@ -96,3 +96,5 @@ fn main() {
  if size of working dir > 100mb then remove all containg
  -----------------
  must be not only 1 str but many - twitter and many nitters
+ -----------------
+ let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
