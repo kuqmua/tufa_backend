@@ -19,7 +19,7 @@ use std::fs;
 use std::path::Path;
 
 pub fn twitter_part(
-    links: HashMap<&'static str, &'static str>,
+    links: HashMap<&'static str, String>,
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
