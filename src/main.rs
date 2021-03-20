@@ -17,8 +17,10 @@ mod fetch {
     }
     pub mod provider_kind_enum;
     pub mod twitter {
+        pub mod twitter_check_handled_fetch_status_info;
         pub mod twitter_fetch_and_parse_xml;
         pub mod twitter_part;
+        pub mod twitter_structures;
     }
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;

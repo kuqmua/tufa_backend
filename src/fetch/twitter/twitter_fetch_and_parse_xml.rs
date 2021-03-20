@@ -6,9 +6,9 @@ use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rxiv::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv::rxiv_check_handled_fetch_status_info::rxiv_check_handled_fetch_status_info;
 use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
-use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
+use crate::fetch::twitter::twitter_check_handled_fetch_status_info::twitter_check_handled_fetch_status_info;
+use crate::fetch::twitter::twitter_structures::TwitterPostStruct;
 use crate::overriding::prints::print_error_red;
 
 pub fn twitter_fetch_and_parse_xml(
@@ -19,7 +19,7 @@ pub fn twitter_fetch_and_parse_xml(
 ) -> HashMap<
     String,
     (
-        RxivPostStruct,
+        TwitterPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -31,7 +31,7 @@ pub fn twitter_fetch_and_parse_xml(
     let mut hashmap_to_return: HashMap<
         String,
         (
-            RxivPostStruct,
+            TwitterPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -41,7 +41,7 @@ pub fn twitter_fetch_and_parse_xml(
     > = HashMap::with_capacity(twitter_links.len());
     for (key, value) in twitter_links {
         let tuple = (
-            RxivPostStruct::new(),
+            TwitterPostStruct::new(),
             value.to_string(),
             UnhandledFetchStatusInfo::Initialized,
             HandledFetchStatusInfo::Initialized,
@@ -69,7 +69,7 @@ pub fn twitter_fetch_and_parse_xml(
                             value3,
                             rxiv_post_struct_wrapper_handle,
                             are_there_items_wrapper_handle,
-                        ) = rxiv_check_handled_fetch_status_info(
+                        ) = twitter_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
                             time,
