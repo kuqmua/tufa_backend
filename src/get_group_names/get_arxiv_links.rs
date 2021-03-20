@@ -157,11 +157,11 @@ pub fn get_arxiv_links() -> HashMap<&'static str, String> {
     .iter()
     .cloned()
     .collect();
-    // "http://export.arxiv.org/rss/astro-ph.CO
+    let first_part_of_link: &str = "http://export.arxiv.org/rss/";
     let mut arxiv_sections_links: HashMap<&str, String> =
         HashMap::with_capacity(arxiv_sections.len());
     for (key, value) in arxiv_sections {
-        arxiv_sections_links.insert(key, format!("http://export.arxiv.org/rss/{}", value));
+        arxiv_sections_links.insert(key, format!("{}{}", first_part_of_link, value));
     }
     arxiv_sections_links
 }

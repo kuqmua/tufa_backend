@@ -14,7 +14,7 @@ use crate::overriding::prints::print_error_red;
 pub fn rxiv_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
-    rxiv_links: HashMap<&str, &str>,
+    rxiv_links: HashMap<&str, String>,
     provider_kind: ProviderKind,
 ) -> HashMap<
     String,

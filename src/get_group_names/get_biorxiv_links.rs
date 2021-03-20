@@ -1,34 +1,48 @@
 use std::collections::HashMap;
-pub fn get_biorxiv_links() -> HashMap<&'static str, &'static str> {
-    let arxiv_sections_links: HashMap<&str,&str> =
-    [("Animal behavior and cognition","http://connect.biorxiv.org/biorxiv_xml.php?subject=animal_behavior_and_cognition"),
-     ("Biochemistry","http://connect.biorxiv.org/biorxiv_xml.php?subject=biochemistry"),
-     ("Bioengineering","http://connect.biorxiv.org/biorxiv_xml.php?subject=bioengineering"),
-     ("Bioinformatics","http://connect.biorxiv.org/biorxiv_xml.php?subject=bioinformatics"),
-     ("Biophysics","http://connect.biorxiv.org/biorxiv_xml.php?subject=biophysics"),
-     ("Cancer biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=cancer_biology"),
-     ("Cell biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology"),
-     ("Clinical trials","http://connect.biorxiv.org/biorxiv_xml.php?subject=clinical_trials"),
-     ("Developmental biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=developmental_biology"),
-     ("Ecology","http://connect.biorxiv.org/biorxiv_xml.php?subject=ecology"),
-     ("Epidemology","http://connect.biorxiv.org/biorxiv_xml.php?subject=epidemiology"),
-     ("Evolutionary biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=evolutionary_biology"),
-     ("Genetics","http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics"),
-     ("Genomics","http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics"),
-     ("Immunology","http://connect.biorxiv.org/biorxiv_xml.php?subject=immunology"),
-     ("Microbiology","http://connect.biorxiv.org/biorxiv_xml.php?subject=microbiology"),
-     ("Molecular biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=molecular_biology"),
-     ("Neuroscience","http://connect.biorxiv.org/biorxiv_xml.php?subject=neuroscience"),
-    ("Paleontology","http://connect.biorxiv.org/biorxiv_xml.php?subject=paleontology"),
-    ("Pathology","http://connect.biorxiv.org/biorxiv_xml.php?subject=pathology"),
-    ("Pharmacology and toxicology","http://connect.biorxiv.org/biorxiv_xml.php?subject=pharmacology_and_toxicology"),
-    ("Physiology","http://connect.biorxiv.org/biorxiv_xml.php?subject=physiology"),
-    ("Plant Biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=plant_biology"),
-    ("Scientific communication and education","http://connect.biorxiv.org/biorxiv_xml.php?subject=scientific_communication_and_education"),
-    ("Synthetic Biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology"),
-    ("Systems Biology","http://connect.biorxiv.org/biorxiv_xml.php?subject=systems_biology"),
-    ("Zoology","http://connect.biorxiv.org/biorxiv_xml.php?subject=zoology"),
-     ]
-     .iter().cloned().collect();
-    arxiv_sections_links
+pub fn get_biorxiv_links() -> HashMap<&'static str, String> {
+    let biorxiv_sections: HashMap<&str, &str> = [
+        (
+            "Animal behavior and cognition",
+            "animal_behavior_and_cognition",
+        ),
+        ("Biochemistry", "biochemistry"),
+        ("Bioengineering", "bioengineering"),
+        ("Bioinformatics", "bioinformatics"),
+        ("Biophysics", "biophysics"),
+        ("Cancer biology", "cancer_biology"),
+        ("Cell biology", "cell_biology"),
+        ("Clinical trials", "clinical_trials"),
+        ("Developmental biology", "developmental_biology"),
+        ("Ecology", "ecology"),
+        ("Epidemology", "epidemiology"),
+        ("Evolutionary biology", "evolutionary_biology"),
+        ("Genetics", "genetics"),
+        ("Genomics", "genomics"),
+        ("Immunology", "immunology"),
+        ("Microbiology", "microbiology"),
+        ("Molecular biology", "molecular_biology"),
+        ("Neuroscience", "neuroscience"),
+        ("Paleontology", "paleontology"),
+        ("Pathology", "pathology"),
+        ("Pharmacology and toxicology", "pharmacology_and_toxicology"),
+        ("Physiology", "physiology"),
+        ("Plant Biology", "plant_biology"),
+        (
+            "Scientific communication and education",
+            "scientific_communication_and_education",
+        ),
+        ("Synthetic Biology", "synthetic_biology"),
+        ("Systems Biology", "systems_biology"),
+        ("Zoology", "zoology"),
+    ]
+    .iter()
+    .cloned()
+    .collect();
+    let first_part_of_link: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";
+    let mut biorxiv_sections_links: HashMap<&str, String> =
+        HashMap::with_capacity(biorxiv_sections.len());
+    for (key, value) in biorxiv_sections {
+        biorxiv_sections_links.insert(key, format!("{}{}", first_part_of_link, value));
+    }
+    biorxiv_sections_links
 }
