@@ -80,7 +80,7 @@ pub fn get_medrxiv_links() -> HashMap<&'static str, String> {
     .iter()
     .cloned()
     .collect();
-    let first_part_of_link: &str = "http;://connect.medrxiv.org/medrxiv_xml.php?subject=";
+    let first_part_of_link: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";
     let mut medrxiv_sections_links: HashMap<&str, String> =
         HashMap::with_capacity(medrxiv_sections.len());
     for (key, value) in medrxiv_sections {

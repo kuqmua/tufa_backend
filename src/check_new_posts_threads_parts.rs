@@ -1,8 +1,7 @@
 use std::thread;
 
-use crate::config::Aprovider_url;
-use crate::config::BIOprovider_url;
-use crate::config::MEDprovider_url;
+use crate::config::ARXIV_URL;
+use crate::config::BIORXIV_URL;
 use crate::config::ENABLE_ARXIV;
 use crate::config::ENABLE_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
@@ -23,6 +22,7 @@ use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
 use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
+use crate::config::MEDRXIV_URL;
 use crate::config::TWITTER_URL; //must be not only 1 str but many - twitter and many nitters
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::rxiv_part::rxiv_part;
@@ -50,7 +50,7 @@ pub async fn check_new_posts_threads_parts() {
                 "arxiv_links.is_empty".to_string(),
             )
         } else {
-            if ENABLE_PRINTS_MEDRXIV {
+            if ENABLE_PRINTS_ARXIV {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     arxiv_links.len(),
@@ -64,7 +64,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
                     ENABLE_ERROR_PRINTS_ARXIV,
-                    Aprovider_url,
+                    ARXIV_URL,
                     ProviderKind::Arxiv,
                 );
             }));
@@ -79,7 +79,7 @@ pub async fn check_new_posts_threads_parts() {
                 "biorxiv_links.is_empty".to_string(),
             )
         } else {
-            if ENABLE_PRINTS_MEDRXIV {
+            if ENABLE_PRINTS_BIORXIV {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     biorxiv_links.len(),
@@ -93,7 +93,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
                     ENABLE_ERROR_PRINTS_BIORXIV,
-                    BIOprovider_url,
+                    BIORXIV_URL,
                     ProviderKind::Biorxiv,
                 );
             }));
@@ -122,7 +122,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,
                     ENABLE_ERROR_PRINTS_MEDRXIV,
-                    MEDprovider_url,
+                    MEDRXIV_URL,
                     ProviderKind::Medrxiv,
                 );
             }));

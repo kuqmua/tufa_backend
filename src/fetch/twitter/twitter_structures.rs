@@ -8,8 +8,9 @@ pub struct XmlTwitterParserStructItem {
     pub title: String,
     pub creator: String,
     pub description: String, //todo: parse inner links
-    pub pubDate: String,     //macros?
-    pub guid: String,        //maybe doesnt matter
+    #[serde(rename = "pubDate", default)]
+    pub publication_date: String,
+    pub guid: String, //maybe doesnt matter
     pub link: String,
 }
 
