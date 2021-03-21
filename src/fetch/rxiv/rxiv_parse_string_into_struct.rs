@@ -17,25 +17,27 @@ pub fn rxiv_parse_string_into_struct(
     let mut rxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
                                                // println!("{:#?}", provider_kind);
-    if let ProviderKind::Medrxiv = provider_kind {
-        fetch_result_string.remove(0);
-    }
-    if let ProviderKind::Arxiv = provider_kind {
-    } else {
-        while fetch_result_string.contains("<dc:title>") {
-            match fetch_result_string.find("</dc:title>") {
-                Some(_) => {
-                    fetch_result_string = fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                    fetch_result_string = fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                }
-                None => {
-                    break;
-                }
-            }
-        }
-    }
+
     match fetch_result_string.find("</item>") {
         Some(_) => {
+            if let ProviderKind::Medrxiv = provider_kind {
+                fetch_result_string.remove(0);
+            }
+            if let ProviderKind::Biorxiv = provider_kind {
+                while fetch_result_string.contains("<dc:title>") {
+                    match fetch_result_string.find("</dc:title>") {
+                        Some(_) => {
+                            fetch_result_string =
+                                fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                            fetch_result_string =
+                                fetch_result_string.replace("</dc:title>", "</dcstitle>");
+                        }
+                        None => {
+                            break;
+                        }
+                    }
+                }
+            }
             let rxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
                 from_str(&fetch_result_string);
             match rxiv_struct_from_str_result {

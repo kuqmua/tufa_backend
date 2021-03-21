@@ -98,3 +98,9 @@ fn main() {
  must be not only 1 str but many - twitter and many nitters
  -----------------
  let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
+ -----------------
+ instant::now() prints move into config variable
+ --------------------
+ if let ProviderKind::Twitter = provider_kind {
+        while fetch_result_string.contains("<dc:creator>") 
+        put something like that after this match fetch_result_string.find("</item>") {
