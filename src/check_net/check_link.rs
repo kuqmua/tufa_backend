@@ -1,6 +1,6 @@
-use super::check_link_metainfo_structures::HandledReachProviderStatusInfo;
-use super::check_link_metainfo_structures::UnhandledReachProviderInfo;
-use super::fetch_link::fetch_link;
+use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
+use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
+use crate::check_net::fetch_link::fetch_link;
 use crate::config::ENABLE_ERROR_PRINTS_HANDLE;
 use crate::overriding::prints::print_error_red;
 

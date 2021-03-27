@@ -1,4 +1,4 @@
-use super::check_link_metainfo_structures::HandledReachProviderStatusInfo;
+use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 
 pub fn fetch_link(
     link: &str,
