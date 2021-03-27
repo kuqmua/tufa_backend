@@ -25,24 +25,21 @@ pub fn check_link(
                 if ENABLE_ERROR_PRINTS_HANDLE {
                     match fetch_tuple_result.1 {
                         HandledReachProviderStatusInfo::ResStatusError(status_code) => {
-                            print_error_red(
-                                file!().to_string(),
-                                line!().to_string(),
-                                status_code.clone().to_string(),
-                            )
+                            let error_message = format!(
+                                "{} ResStatusError: {}",
+                                url,
+                                status_code.clone().to_string()
+                            );
+                            print_error_red(file!().to_string(), line!().to_string(), error_message)
                         }
-                        HandledReachProviderStatusInfo::Initialized => print_error_red(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "check_link false, and HandledReachProviderStatusInfo::Initialized??? wtf"
-                                .to_string(),
-                        ),
-                        HandledReachProviderStatusInfo::Success => print_error_red(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "check_link false, and HandledReachProviderStatusInfo::Success??? wtf"
-                                .to_string(),
-                        ),
+                        HandledReachProviderStatusInfo::Initialized => {
+                            let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Initialized??? wtf", url);
+                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                        }
+                        HandledReachProviderStatusInfo::Success => {
+                            let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Success??? wtf", url);
+                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                        }
                     }
                 }
                 can_i = false;
@@ -54,8 +51,8 @@ pub fn check_link(
             unhandled_info = UnhandledReachProviderInfo::Failure(e.to_string());
             handled_info = HandledReachProviderStatusInfo::Initialized;
             if ENABLE_ERROR_PRINTS_HANDLE {
-                let error = "check_link fetch_result Box<dyn Error>".to_string() + &e.to_string();
-                print_error_red(file!().to_string(), line!().to_string(), error)
+                let error_message = format!("{} check_link fetch_result Box<dyn Error> {}", url, e);
+                print_error_red(file!().to_string(), line!().to_string(), error_message)
             }
         }
     }

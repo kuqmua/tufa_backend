@@ -17,6 +17,7 @@ mod fetch {
     }
     pub mod provider_kind_enum;
     pub mod twitter {
+        pub mod twitter_check_available_providers;
         pub mod twitter_check_handled_fetch_status_info;
         pub mod twitter_fetch_and_parse_xml;
         pub mod twitter_parse_string_into_struct;
@@ -40,7 +41,7 @@ mod get_group_names {
     pub mod get_biorxiv_links;
     pub mod get_medrxiv_links;
     pub mod get_twitter_links;
-
+    pub mod get_twitter_providers;
     // pub mod get_subreddits;
 }
 mod check_net {

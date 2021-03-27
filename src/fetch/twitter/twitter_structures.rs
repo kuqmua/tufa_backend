@@ -6,7 +6,7 @@ pub struct XmlTwitterParserStruct {
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct XmlTwitterParserStructItem {
     pub title: String,
-    pub creator: String,
+    pub creator: String,     //maybe creator == publisher
     pub description: String, //todo: parse inner links
     #[serde(rename = "pubDate", default)]
     pub publication_date: String,
@@ -31,9 +31,9 @@ impl TwitterPostStruct {
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterPost {
     pub title: String,
-    pub creator: String,
+    pub creator: String, //maybe creator == publisher
     pub description: String,
-    pub publication_date: String, //macros?
+    pub publication_date: String,
     pub guid: String,
     pub link: String,
 }

@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 pub fn get_twitter_links() -> HashMap<&'static str, String> {
     let subs_nicknames: Vec<&str> = [
+        // Tom_McGurl
         // "OK9UWU",
         // "r2x0t",
         // "Katha16777",

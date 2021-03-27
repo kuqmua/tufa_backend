@@ -132,9 +132,5 @@ pub fn twitter_parse_string_into_struct(
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
         }
     }
-    println!(
-        "rxiv_post_struct_handle.len() {}",
-        rxiv_post_struct_handle.items.len()
-    );
     (rxiv_post_struct_handle, are_there_items_handle)
 }

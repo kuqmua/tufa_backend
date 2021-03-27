@@ -102,20 +102,18 @@ pub fn rxiv_fetch_and_parse_xml(
     match crossbeam_result {
         Ok(_) => {
             if enable_prints {
-                println!("crossbeam_result is ok",)
+                println!("rxiv_fetch_and_parse_xml crossbeam_result is ok")
             }
         }
         Err(e) => {
             if enable_prints {
-                eprintln!(
-                    "crossbeam_result is not ok, file: {}, line {}\n {:#?}",
-                    Red.bold().paint(file!().to_string()),
-                    Red.bold().paint(line!().to_string()),
+                let error_message = format!(
+                    "rxiv_fetch_and_parse_xml crossbeam_result is not ok: {:#?}",
                     e
-                )
+                );
+                print_error_red(file!().to_string(), line!().to_string(), error_message);
             }
         }
     }
-    // println!("rxiv_sections_links {:#?}", hashmap_to_return);
     hashmap_to_return
 }
