@@ -32,13 +32,15 @@ pub fn twitter_part(
 ) -> bool {
     let twitter_providers_names: Vec<&str> = get_twitter_providers();
     let twitter_providers_names_length_for_debug = twitter_providers_names.len();
-    let twitter_available_providers_links: Vec<String> = twitter_check_available_providers(
+    let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
+        //String
+        //отсюда идет с http b rss
         enable_prints,
         enable_error_prints,
         twitter_providers_names,
     );
     if !twitter_available_providers_links.is_empty() {
-        let links = get_twitter_links(&twitter_available_providers_links);
+        let links = get_twitter_links(twitter_available_providers_links.clone());
         if !links.is_empty() {
             // if enable_prints {
             //     println!(
