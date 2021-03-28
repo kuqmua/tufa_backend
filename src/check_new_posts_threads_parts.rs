@@ -30,7 +30,7 @@ use crate::fetch::twitter::twitter_part::twitter_part;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
-use crate::get_group_names::get_twitter_links::get_twitter_links;
+// use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::overriding::prints::print_error_red;
 // use crate::config::ENABLE_REDDIT;
 
@@ -129,33 +129,24 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_TWITTER {
-        let twitter_links = get_twitter_links();
-        if twitter_links.is_empty() {
-            print_error_red(
-                file!().to_string(),
-                line!().to_string(),
-                "twitter_links.is_empty".to_string(),
-            )
-        } else {
-            if ENABLE_PRINTS_TWITTER {
-                println!(
-                    "{:#?} elements in {:#?} HashMap",
-                    twitter_links.len(),
-                    ProviderKind::Twitter
-                );
-            };
-            threads_vec.push(thread::spawn(move || {
-                twitter_part(
-                    get_twitter_links(),
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
-                    ENABLE_PRINTS_TWITTER,
-                    ENABLE_WARNING_PRINTS_TWITTER,
-                    ENABLE_ERROR_PRINTS_TWITTER,
-                    TWITTER_URL,
-                    ProviderKind::Twitter,
-                );
-            }));
-        }
+        // if ENABLE_PRINTS_TWITTER {
+        //     println!(
+        //         "{:#?} elements in {:#?} HashMap",
+        //         twitter_links.len(),
+        //         ProviderKind::Twitter
+        //     );
+        // };
+        threads_vec.push(thread::spawn(move || {
+            twitter_part(
+                // get_twitter_links(),
+                ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
+                ENABLE_PRINTS_TWITTER,
+                ENABLE_WARNING_PRINTS_TWITTER,
+                ENABLE_ERROR_PRINTS_TWITTER,
+                TWITTER_URL,
+                ProviderKind::Twitter,
+            );
+        }));
     }
     for i in threads_vec {
         i.join().unwrap();

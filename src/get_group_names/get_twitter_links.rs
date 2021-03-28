@@ -1,18 +1,18 @@
 use std::collections::HashMap;
-pub fn get_twitter_links() -> HashMap<&'static str, String> {
+pub fn get_twitter_links(twitter_provider_names: &Vec<String>) -> HashMap<&'static str, String> {
     let subs_nicknames: Vec<&str> = [
-        // Tom_McGurl
-        // "OK9UWU",
-        // "r2x0t",
-        // "Katha16777",
-        // "PataniLab",
-        // "AlexSerbul",
+        "Tom_McGurl",
+        "OK9UWU",
+        "r2x0t",
+        "Katha16777",
+        "PataniLab",
+        "AlexSerbul",
         "TheCherno",
-        // "rustlinz",
-        // "HopeMarsMission",
-        // "dougbinks",
-        // "remodemo",
-        // "italiancpp",
+        "rustlinz",
+        "HopeMarsMission",
+        "dougbinks",
+        "remodemo",
+        "italiancpp",
         // "ilpropheta",
         // "alepezzato",
         // "rstropek",
@@ -2269,14 +2269,22 @@ pub fn get_twitter_links() -> HashMap<&'static str, String> {
     .iter()
     .cloned()
     .collect();
+    let how_many_links_on_diff_provider = subs_nicknames.len() / twitter_provider_names.len();
+    let subslen = subs_nicknames.len();
     let mut twitter_sections_links: HashMap<&str, String> =
         HashMap::with_capacity(subs_nicknames.len());
+    let mut i = 0;
     for sub_nickname in subs_nicknames {
         let sub_link: String = format!(
-            "https://nitter.pussthecat.org/{}/rss",
-            sub_nickname.to_string()
+            //nitter.pussthecat.org
+            "https://{}/{}/rss",
+            twitter_provider_names[i],
+            sub_nickname.to_string(),
         );
         twitter_sections_links.insert(sub_nickname, sub_link);
+        if subslen % how_many_links_on_diff_provider == 0 {
+            i += 1;
+        }
     }
     twitter_sections_links
 }
