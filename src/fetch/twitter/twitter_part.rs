@@ -70,10 +70,6 @@ pub fn twitter_part(
         for element in vec_of_links {
             if counter < even_links_length_size_for_remaind {
                 if i_to_each <= links_for_each_provider {
-                    println!(
-                        "i_to_each <, vec_of_hashmap_parts_position {}",
-                        vec_of_hashmap_parts_position
-                    );
                     vec_of_hashmap_parts[vec_of_hashmap_parts_position]
                         .insert(element.0, element.1);
                     i_to_each += 1;
@@ -87,38 +83,38 @@ pub fn twitter_part(
             }
             counter += 1;
         }
-        println!("vec_of_hashmap_parts {:#?}", vec_of_hashmap_parts);
         ///
-        // let crossbeam_result = crossbeam::scope(|scope| {
-
-        //     for (link, provider_link_checker_flag) in twitter_providers_links.iter_mut() {
-        //         scope.spawn(move |_| {
-        // let mut start_index: usize = 0;
-        // let mut end_index: usize = links_for_each_provider + links_to_remaind;
-        //             // let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
-        //             let unfiltered_posts_hashmap_after_fetch_and_parse =
-        //                 twitter_fetch_and_parse_xml(
-        //                     enable_prints,
-        //                     enable_error_prints,
-        //                     links[start_index..end_index],
-        //                     provider_kind.clone(),
-        //                 );
-        //         });
-        //     }
-        // });
-        // match crossbeam_result {
-        //     Ok(_) => {
-        //         if enable_prints {
-        //             println!("twitter_part is ok")
-        //         }
-        //     }
-        //     Err(error) => {
-        //         if enable_error_prints {
-        //             let error_message = format!("twitter_part is not ok: {:#?}", error);
-        //             print_error_red(file!().to_string(), line!().to_string(), error_message);
-        //         }
-        //     }
-        // }
+        let crossbeam_result = crossbeam::scope(|scope| {
+            for element in &mut vec_of_hashmap_parts {
+                scope.spawn(move |_| {
+                    // let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
+                    let unfiltered_posts_hashmap_after_fetch_and_parse =
+                        twitter_fetch_and_parse_xml(
+                            enable_prints,
+                            enable_error_prints,
+                            element.clone(),
+                            ProviderKind::Twitter,
+                        );
+                    println!(
+                        "unfiltered_posts_hashmap_after_fetch_and_parse.len() {:#?}",
+                        unfiltered_posts_hashmap_after_fetch_and_parse.len()
+                    )
+                });
+            }
+        });
+        match crossbeam_result {
+            Ok(_) => {
+                if enable_prints {
+                    println!("twitter_part is ok")
+                }
+            }
+            Err(error) => {
+                if enable_error_prints {
+                    let error_message = format!("twitter_part is not ok: {:#?}", error);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+            }
+        }
         ///
         // // provider_kind ниже еще используется
         //             let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
