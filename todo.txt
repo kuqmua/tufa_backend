@@ -107,3 +107,5 @@ fn main() {
 ---------------------
 https://doc.rust-lang.org/std/primitive.i32.html#method.checked_add
 переписать места в которых мб есть переполнение буфера
+---------------------
+add everywhere explicit types
