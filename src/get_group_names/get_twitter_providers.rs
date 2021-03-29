@@ -7,18 +7,18 @@ pub fn get_twitter_providers() -> Vec<&'static str> {
         "nitter.tedomum.net",
         "nitter.fdn.fr",
         "nitter.1d4.us",
-        "nitter.kavin.rocks",
+        "nitter.kavin.rocks", //not working i think
         "tweet.lambda.dance",
         "nitter.cc",
         "nitter.vxempire.xyz",
-        "nitter.unixfox.eu",
+        "nitter.unixfox.eu", //not working i think
         "nitter.domain.glass",
         "nitter.himiko.cloud",
         "nitter.eu",
         "nitter.ethibox.fr",
         "nitter.namazso.eu",
         "nitter.mailstation.de",
-        "nitter.actionsack.com",
+        "nitter.actionsack.com", //not working i think
         "nitter.cattube.org",
         "nitter.dark.fail",
         "birdsite.xanny.family",
