@@ -111,5 +111,7 @@ https://doc.rust-lang.org/std/primitive.i32.html#method.checked_add
 add everywhere explicit types
 --------------------
 error had .description method 0_o
-
+-----------------
 std::stringify
+-----------------
+std::str::SplitN
