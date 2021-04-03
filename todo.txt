@@ -115,3 +115,5 @@ error had .description method 0_o
 std::stringify
 -----------------
 std::str::SplitN
+--------------
+add to config time elapsed prints handle
