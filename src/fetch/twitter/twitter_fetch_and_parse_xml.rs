@@ -50,13 +50,13 @@ pub fn twitter_fetch_and_parse_xml(
         );
         hashmap_to_return.insert(key.to_string(), tuple);
     }
-    if enable_prints {
-        println!(
-            "hashmap init in {}.{}ms",
-            time.elapsed().as_secs(),
-            time.elapsed().as_millis(),
-        );
-    };
+    // if enable_prints {
+    //     println!(
+    //         "hashmap init in {}.{}ms",
+    //         time.elapsed().as_secs(),
+    //         time.elapsed().as_millis(),
+    //     );
+    // };
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
