@@ -57,43 +57,66 @@ pub fn twitter_part(
                     links.len() % twitter_available_providers_links.len(),
                 );
             }
-
-            let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links.len());
-            let links_for_each_provider: usize =
-                links.len() / twitter_available_providers_links.len();
-            let even_links_length_size_for_remaind: usize =
-                links_for_each_provider * twitter_available_providers_links.len();
+            let links_for_each_provider: usize;
+            let even_links_length_size_for_remaind: usize;
+            if links.len() > twitter_available_providers_links.len() {
+                links_for_each_provider = links.len() / twitter_available_providers_links.len();
+                even_links_length_size_for_remaind =
+                    links.len() % twitter_available_providers_links.len();
+            } else {
+                links_for_each_provider = links.len();
+                even_links_length_size_for_remaind = 0;
+            }
             let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> = vec![
                 HashMap::with_capacity(links_for_each_provider);
                 twitter_available_providers_links.len()
             ];
-
-            let mut vec_of_hashmap_parts_position: usize = 0;
+            //HashMap into Vector transformation
+            let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links.len());
             for (key, value) in links {
                 vec_of_links.push((key, value));
             }
-            let mut i_to_each: usize = 1;
-            let mut counter: usize = 1;
+            let mut vec_of_hashmap_parts_element_index_counter = 0;
+            let mut even_vec_of_hashmap_parts_element_index_counter = 0;
+            let mut even_flag = false;
             for element in vec_of_links {
-                if counter < even_links_length_size_for_remaind {
-                    if i_to_each <= links_for_each_provider {
-                        vec_of_hashmap_parts[vec_of_hashmap_parts_position]
+                if !even_flag {
+                    if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
+                        == links_for_each_provider
+                    {
+                        if (vec_of_hashmap_parts.len() - 1)
+                            != vec_of_hashmap_parts_element_index_counter
+                        {
+                            vec_of_hashmap_parts_element_index_counter += 1;
+                            vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
+                                .insert(element.0, element.1);
+                        } else {
+                            even_flag = true;
+                            vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
+                                .insert(element.0, element.1);
+                            even_vec_of_hashmap_parts_element_index_counter += 1;
+                        }
+                    } else {
+                        vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
                             .insert(element.0, element.1);
-                        i_to_each += 1;
                     }
-                    if counter != 0 && counter % links_for_each_provider == 0 {
-                        vec_of_hashmap_parts_position += 1;
-                        i_to_each = 1;
-                    }
-                } else {
-                    vec_of_hashmap_parts[vec_of_hashmap_parts_position]
+                } else if (vec_of_hashmap_parts.len() - 1)
+                    != even_vec_of_hashmap_parts_element_index_counter
+                {
+                    even_vec_of_hashmap_parts_element_index_counter += 1;
+                    vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
                         .insert(element.0, element.1);
+                } else {
+                    vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
+                        .insert(element.0, element.1);
+                    even_vec_of_hashmap_parts_element_index_counter = 0;
                 }
-                counter += 1;
             }
+            println!("vec_of_hashmap_parts {:#?}", vec_of_hashmap_parts);
             let crossbeam_result = crossbeam::scope(|scope| {
                 for element in &mut vec_of_hashmap_parts {
                     scope.spawn(move |_| {
+                        println!("spawn, element {:#?}", element);
                         let unfiltered_posts_hashmap_after_fetch_and_parse =
                             twitter_fetch_and_parse_xml(
                                 enable_prints,
@@ -106,92 +129,92 @@ pub fn twitter_part(
                             "unfiltered_posts_hashmap_after_fetch_and_parse.len() {:#?}",
                             unfiltered_posts_hashmap_after_fetch_and_parse.len()
                         );
-                        // // provider_kind ниже еще используется
-                        // let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
-                        //     unfiltered_posts_hashmap_after_fetch_and_parse.len();
-                        // let (
-                        //     //все отсальное херачить в отдельный поток кроме первого массива
-                        //     unhandled_success_handled_success_are_there_items_yep_posts,
-                        //     some_error_posts,
-                        // ) = twitter_filter_fetched_and_parsed_posts(
-                        //     unfiltered_posts_hashmap_after_fetch_and_parse,
-                        // );
-                        // println!("unhandled_success_handled_success_are_there_items_yep_posts.len {}, some_error_posts.len {}", unhandled_success_handled_success_are_there_items_yep_posts.len(), some_error_posts.len());
-                        // // //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
-                        // let mut wrong_cases_thread_vec = vec![];
-                        // if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
-                        //     if enable_warning_prints {
-                        //         print_warning_orange(
-                        //             file!().to_string(),
-                        //             line!().to_string(),
-                        //             "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
-                        //                 .to_string(),
-                        //         );
-                        //     }
-                        //     // false
-                        // } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
-                        //     != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
-                        // {
-                        //     wrong_cases_thread_vec.push(thread::spawn(move || {
-                        //         if enable_prints {
-                        //             let message = format!(
-                        //                 "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
-                        //                 unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                        //                 unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                        //                 provider_kind
-                        //             );
-                        //             print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
-                        //         }
-                        //         if enable_cleaning_logs_directory {
-                        //             let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
-                        //             if Path::new(&path).is_dir() {
-                        //                 let result_of_recursively_removing_warning_logs_directory =
-                        //                     fs::remove_dir_all(&path);
-                        //                 match result_of_recursively_removing_warning_logs_directory {
-                        //                     Ok(_) => {
-                        //                         if enable_prints {
-                        //                             println!("папка {} удалена", &path);
-                        //                         }
-                        //                     }
-                        //                     Err(e) => {
-                        //                         if enable_error_prints {
-                        //                             let message = format!(
-                        //                                 "проблема с удалением папки {} {}",
-                        //                                 &path,
-                        //                                 e.to_string()
-                        //                             );
-                        //                             print_error_red(
-                        //                                 file!().to_string(),
-                        //                                 line!().to_string(),
-                        //                                 message,
-                        //                             )
-                        //                         }
-                        //                     }
-                        //                 }
-                        //             }
-                        //         }
-                        //         twitter_handle_errors_arrays(
-                        //             provider_kind,
-                        //             enable_prints,
-                        //             // enable_warning_prints,
-                        //             enable_error_prints,
-                        //             some_error_posts,
-                        //         );
-                        //     }));
-                        //     // true
-                        // } else {
-                        //     let message = format!(
-                        //         "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
-                        //         unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                        //         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                        //         provider_kind
-                        //     );
-                        //     print_success_green(file!().to_string(), line!().to_string(), message);
-                        //     // true
-                        // }
-                        // for i in wrong_cases_thread_vec {
-                        //     i.join().unwrap();
-                        // }
+                        // provider_kind ниже еще используется
+                        let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
+                            unfiltered_posts_hashmap_after_fetch_and_parse.len();
+                        let (
+                            //все отсальное херачить в отдельный поток кроме первого массива
+                            unhandled_success_handled_success_are_there_items_yep_posts,
+                            some_error_posts,
+                        ) = twitter_filter_fetched_and_parsed_posts(
+                            unfiltered_posts_hashmap_after_fetch_and_parse,
+                        );
+                        println!("unhandled_success_handled_success_are_there_items_yep_posts.len {}, some_error_posts.len {}", unhandled_success_handled_success_are_there_items_yep_posts.len(), some_error_posts.len());
+                        // //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
+                        let mut wrong_cases_thread_vec = vec![];
+                        if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
+                            if enable_warning_prints {
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
+                                        .to_string(),
+                                );
+                            }
+                            // false
+                        } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
+                            != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
+                        {
+                            wrong_cases_thread_vec.push(thread::spawn(move || {
+                                if enable_prints {
+                                    let message = format!(
+                                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                                        unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                                        unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                                        provider_kind
+                                    );
+                                    print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
+                                }
+                                if enable_cleaning_logs_directory {
+                                    let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
+                                    if Path::new(&path).is_dir() {
+                                        let result_of_recursively_removing_warning_logs_directory =
+                                            fs::remove_dir_all(&path);
+                                        match result_of_recursively_removing_warning_logs_directory {
+                                            Ok(_) => {
+                                                if enable_prints {
+                                                    println!("папка {} удалена", &path);
+                                                }
+                                            }
+                                            Err(e) => {
+                                                if enable_error_prints {
+                                                    let message = format!(
+                                                        "проблема с удалением папки {} {}",
+                                                        &path,
+                                                        e.to_string()
+                                                    );
+                                                    print_error_red(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        message,
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                twitter_handle_errors_arrays(
+                                    provider_kind,
+                                    enable_prints,
+                                    // enable_warning_prints,
+                                    enable_error_prints,
+                                    some_error_posts,
+                                );
+                            }));
+                            // true
+                        } else {
+                            let message = format!(
+                                "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                                unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                                unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                                provider_kind
+                            );
+                            print_success_green(file!().to_string(), line!().to_string(), message);
+                            // true
+                        }
+                        for i in wrong_cases_thread_vec {
+                            i.join().unwrap();
+                        }
                     });
                 }
             });
