@@ -119,3 +119,5 @@ std::str::SplitN
 add to config time elapsed prints handle
 --------------
 println!("массив занимает {} байт", mem::size_of_val(&xs));
+-------------
+remove vec into hashmap in twitter_part cause it can be reorganized into better structure
