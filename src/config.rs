@@ -1,9 +1,9 @@
 pub const ENABLE_ALL_PROVIDERS: bool = true;
 // pub const ENABLE_REDDIT: bool = if ENABLE_ALL_PROVIDERS { false } else { false };
-pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & true | false; //ENABLE_ALL_PROVIDERS ? true :
+pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & false | false; //ENABLE_ALL_PROVIDERS ? true :
 pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
 pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
-pub const ENABLE_TWITTER: bool = ENABLE_ALL_PROVIDERS & false | false;
+pub const ENABLE_TWITTER: bool = ENABLE_ALL_PROVIDERS & true | false;
 
 pub const STARTING_CHECK_URL: &str = "https://www.google.com/";
 // pub const REDDIT_URL: &str = "https://www.reddit.com/";
@@ -14,10 +14,10 @@ pub const TWITTER_URL: &str = "https://www.google.com/"; ////must be not only 1 
 
 pub const ENABLE_ALL_PROVIDERS_PRINTS: bool = true;
 // pub const ENABLE_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false ;
-pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
+pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
+pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
 pub const ENABLE_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
-pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_PRINTS & false | false;
+pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
 
 pub const ENABLE_ALL_PROVIDERS_WARNING_PRINTS: bool = true;
 // pub const ENABLE_WARNING_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
@@ -49,3 +49,10 @@ pub const ENABLE_ERROR_PRINTS_HANDLE: bool = true;
 
 pub const WARNING_LOGS_DIRECTORY_NAME: &str = "warning_logs";
 // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
+
+pub const ENABLE_COMMON_TIME_MEASUREMENT: bool = true;
+pub const ENABLE_REDDIT_TIME_MEASUREMENT: bool = true;
+pub const ENABLE_ARXIV_TIME_MEASUREMENT: bool = true;
+pub const ENABLE_BIORXIV_TIME_MEASUREMENT: bool = true;
+pub const ENABLE_MEDRXIV_TIME_MEASUREMENT: bool = true;
+pub const ENABLE_TWITTER_TIME_MEASUREMENT: bool = true;

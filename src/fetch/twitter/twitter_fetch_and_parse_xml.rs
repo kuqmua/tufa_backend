@@ -1,4 +1,3 @@
-use ansi_term::Colour::Red;
 use std::collections::HashMap;
 use std::time::Instant;
 
@@ -14,6 +13,7 @@ use crate::overriding::prints::print_error_red;
 pub fn twitter_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
     twitter_links: HashMap<&str, String>,
     provider_kind: ProviderKind,
 ) -> HashMap<
@@ -50,18 +50,24 @@ pub fn twitter_fetch_and_parse_xml(
         );
         hashmap_to_return.insert(key.to_string(), tuple);
     }
-    // if enable_prints {
-    //     println!(
-    //         "hashmap init in {}.{}ms",
-    //         time.elapsed().as_secs(),
-    //         time.elapsed().as_millis(),
-    //     );
-    // };
+    if enable_time_measurement {
+        println!(
+            "hashmap init in {}.{}ms",
+            time.elapsed().as_secs(),
+            time.elapsed().as_millis(),
+        );
+    };
     let crossbeam_result = crossbeam::scope(|scope| {
         for (key, value) in &mut hashmap_to_return {
             scope.spawn(move |_| {
-                let fetch_result =
-                    rxiv_fetch_link(&value.1, key, time, enable_prints, enable_error_prints);
+                let fetch_result = rxiv_fetch_link(
+                    &value.1,
+                    key,
+                    time,
+                    enable_prints,
+                    enable_error_prints,
+                    enable_time_measurement,
+                );
                 match fetch_result {
                     Ok(fetch_tuple_result) => {
                         value.2 = UnhandledFetchStatusInfo::Success;
@@ -77,6 +83,7 @@ pub fn twitter_fetch_and_parse_xml(
                             &value.1,
                             enable_prints,
                             enable_error_prints,
+                            enable_time_measurement,
                             value.5.clone(),
                         );
                         value.3 = value3;

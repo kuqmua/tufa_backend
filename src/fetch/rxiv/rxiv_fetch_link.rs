@@ -8,9 +8,10 @@ pub fn rxiv_fetch_link(
     time: Instant,
     enable_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
 ) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
-    if enable_prints {
+    if enable_time_measurement {
         println!(
             "fetch in {}.{}ms... status {} for {}",
             time.elapsed().as_secs(),

@@ -1,4 +1,3 @@
-use std::time::Instant;
 mod fetch {
     pub mod rxiv {
         pub mod handle_error_status_code;
@@ -21,6 +20,7 @@ mod fetch {
         pub mod twitter_check_handled_fetch_status_info;
         pub mod twitter_check_provider_status_aka_rxiv_fetch_link;
         pub mod twitter_fetch_and_parse_xml;
+        pub mod twitter_filter_fetched_and_parsed_posts;
         pub mod twitter_parse_string_into_struct;
         pub mod twitter_part;
         pub mod twitter_structures;
@@ -53,26 +53,23 @@ mod check_net {
 mod overriding {
     pub mod prints;
 }
-
 // mod authorization {
 //     pub mod reddit {
 //         pub mod authorization_info;
 //         pub mod reddit_authorization;
 //     }
 // }
-
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod config;
 mod entry;
 
 use entry::entry;
+
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
 fn main() {
     //c логами реально дохерище спама
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
-    let time = Instant::now();
     entry();
-    println!("main done in {} seconds", time.elapsed().as_secs());
 }

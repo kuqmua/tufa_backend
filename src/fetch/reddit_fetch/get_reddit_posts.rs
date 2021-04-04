@@ -36,7 +36,7 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
-    if ENABLE_PRINTS_REDDIT {
+    if ENABLE_PRINTS_REDDIT {//enable_time_measurement
         println!(
             "fetch in {} seconds, reddit bodies: {} ",
             time.elapsed().as_secs(),

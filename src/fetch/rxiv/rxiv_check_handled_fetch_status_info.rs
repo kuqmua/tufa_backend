@@ -15,6 +15,7 @@ pub fn rxiv_check_handled_fetch_status_info(
     value: &str,
     enable_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
     provider_kind: ProviderKind,
 ) -> (HandledFetchStatusInfo, RxivPostStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
@@ -43,7 +44,7 @@ pub fn rxiv_check_handled_fetch_status_info(
             );
             rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
-            if enable_prints {
+            if enable_time_measurement {
                 println!(
                     "parse in {}.{}ms abs, rel {}.{}ms for {}",
                     time.elapsed().as_secs(),

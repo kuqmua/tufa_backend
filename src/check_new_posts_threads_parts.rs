@@ -22,6 +22,13 @@ use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
 use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
+
+use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
+use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
+use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
+// use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
+use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
+
 use crate::config::MEDRXIV_URL;
 use crate::config::TWITTER_URL; //must be not only 1 str but many - twitter and many nitters
 use crate::fetch::provider_kind_enum::ProviderKind;
@@ -64,6 +71,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
                     ENABLE_ERROR_PRINTS_ARXIV,
+                    ENABLE_ARXIV_TIME_MEASUREMENT,
                     ARXIV_URL,
                     ProviderKind::Arxiv,
                 );
@@ -93,6 +101,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
                     ENABLE_ERROR_PRINTS_BIORXIV,
+                    ENABLE_BIORXIV_TIME_MEASUREMENT,
                     BIORXIV_URL,
                     ProviderKind::Biorxiv,
                 );
@@ -122,6 +131,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,
                     ENABLE_ERROR_PRINTS_MEDRXIV,
+                    ENABLE_MEDRXIV_TIME_MEASUREMENT,
                     MEDRXIV_URL,
                     ProviderKind::Medrxiv,
                 );
@@ -129,20 +139,13 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_TWITTER {
-        // if ENABLE_PRINTS_TWITTER {
-        //     println!(
-        //         "{:#?} elements in {:#?} HashMap",
-        //         twitter_links.len(),
-        //         ProviderKind::Twitter
-        //     );
-        // };
         threads_vec.push(thread::spawn(move || {
             twitter_part(
-                // get_twitter_links(),
                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
                 ENABLE_PRINTS_TWITTER,
                 ENABLE_WARNING_PRINTS_TWITTER,
                 ENABLE_ERROR_PRINTS_TWITTER,
+                ENABLE_TWITTER_TIME_MEASUREMENT,
                 TWITTER_URL,
                 ProviderKind::Twitter,
             );

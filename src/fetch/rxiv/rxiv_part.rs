@@ -24,6 +24,7 @@ pub fn rxiv_part(
     enable_prints: bool,
     enable_warning_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
     provider_url: &str,
     provider_kind: ProviderKind,
 ) -> bool {
@@ -35,6 +36,7 @@ pub fn rxiv_part(
         let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
             enable_prints,
             enable_error_prints,
+            enable_time_measurement,
             links,
             provider_kind.clone(),
         ); //provider_kind ниже еще используется
