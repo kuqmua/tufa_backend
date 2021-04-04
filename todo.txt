@@ -117,3 +117,5 @@ std::stringify
 std::str::SplitN
 --------------
 add to config time elapsed prints handle
+--------------
+println!("массив занимает {} байт", mem::size_of_val(&xs));
