@@ -1,5 +1,5 @@
-pub fn get_twitter_providers() -> Vec<&'static str> {
-    let twitter_providers_domains: Vec<&str> = vec![
+pub fn get_twitter_providers_names() -> Vec<&'static str> {
+    let twitter_providers_names: Vec<&str> = vec![
         "nitter.42l.fr",
         "nitter.pussthecat.org",
         "nitter.nixnet.services",
@@ -24,5 +24,5 @@ pub fn get_twitter_providers() -> Vec<&'static str> {
         "birdsite.xanny.family",
         "nitter.40two.app",
     ];
-    twitter_providers_domains
+    twitter_providers_names
 }
