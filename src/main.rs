@@ -21,6 +21,7 @@ mod fetch {
         pub mod twitter_check_provider_status_aka_rxiv_fetch_link;
         pub mod twitter_fetch_and_parse_xml;
         pub mod twitter_filter_fetched_and_parsed_posts;
+        pub mod twitter_handle_errors_arrays;
         pub mod twitter_parse_string_into_struct;
         pub mod twitter_part;
         pub mod twitter_structures;

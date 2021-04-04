@@ -147,7 +147,7 @@ pub async fn check_new_posts_threads_parts() {
                 ENABLE_ERROR_PRINTS_TWITTER,
                 ENABLE_TWITTER_TIME_MEASUREMENT,
                 TWITTER_URL,
-                ProviderKind::Twitter,
+                &ProviderKind::Twitter,
             );
         }));
     }

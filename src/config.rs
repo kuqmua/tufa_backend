@@ -51,7 +51,7 @@ pub const WARNING_LOGS_DIRECTORY_NAME: &str = "warning_logs";
 // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
 
 pub const ENABLE_COMMON_TIME_MEASUREMENT: bool = true;
-pub const ENABLE_REDDIT_TIME_MEASUREMENT: bool = true;
+// pub const ENABLE_REDDIT_TIME_MEASUREMENT: bool = true;
 pub const ENABLE_ARXIV_TIME_MEASUREMENT: bool = true;
 pub const ENABLE_BIORXIV_TIME_MEASUREMENT: bool = true;
 pub const ENABLE_MEDRXIV_TIME_MEASUREMENT: bool = true;
