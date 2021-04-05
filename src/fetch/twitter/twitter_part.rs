@@ -59,17 +59,22 @@ pub fn twitter_part(
             }
             let links_for_each_provider: usize;
             let even_links_length_size_for_remaind: usize;
-            if links.len() > twitter_available_providers_links.len() {
+            let is_links_len_more_than_twitter_available_providers_links_len = links.len() > twitter_available_providers_links.len();
+            let vec_of_hashmap_parts_len: usize;
+            if is_links_len_more_than_twitter_available_providers_links_len {
                 links_for_each_provider = links.len() / twitter_available_providers_links.len();
                 even_links_length_size_for_remaind =
                     links.len() % twitter_available_providers_links.len();
+                    vec_of_hashmap_parts_len = twitter_available_providers_links.len();
             } else {
                 links_for_each_provider = links.len();
                 even_links_length_size_for_remaind = 0;
+                vec_of_hashmap_parts_len = links.len();
             }
+            
             let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> = vec![
                 HashMap::with_capacity(links_for_each_provider);
-                twitter_available_providers_links.len()
+                vec_of_hashmap_parts_len
             ];
             //HashMap into Vector transformation
             let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links.len());
@@ -79,7 +84,8 @@ pub fn twitter_part(
             let mut vec_of_hashmap_parts_element_index_counter = 0;
             let mut even_vec_of_hashmap_parts_element_index_counter = 0;
             let mut even_flag = false;
-            for element in vec_of_links {
+            if is_links_len_more_than_twitter_available_providers_links_len {
+                for element in vec_of_links {
                 if !even_flag {
                     if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
                         == links_for_each_provider
@@ -112,11 +118,19 @@ pub fn twitter_part(
                     even_vec_of_hashmap_parts_element_index_counter = 0;
                 }
             }
+            }
+            else{
+                println!("vec_of_links.len() {}", vec_of_links.len());
+                println!("vec_of_hashmap_parts.len() {}", vec_of_hashmap_parts.len());
+                for (element_index, element) in vec_of_links.into_iter().enumerate() {
+                    vec_of_hashmap_parts[element_index].insert(element.0, element.1);
+                }
+            }
+            
             println!("vec_of_hashmap_parts {:#?}", vec_of_hashmap_parts);
             let crossbeam_result = crossbeam::scope(|scope| {
                 for element in &mut vec_of_hashmap_parts {
                     scope.spawn(move |_| {
-                        println!("spawn, element {:#?}", element);
                         let unfiltered_posts_hashmap_after_fetch_and_parse =
                             twitter_fetch_and_parse_xml(
                                 enable_prints,
@@ -142,6 +156,7 @@ pub fn twitter_part(
                         println!("unhandled_success_handled_success_are_there_items_yep_posts.len {}, some_error_posts.len {}", unhandled_success_handled_success_are_there_items_yep_posts.len(), some_error_posts.len());
                         // //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
                         let mut wrong_cases_thread_vec = vec![];
+                        
                         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
                             if enable_warning_prints {
                                 print_warning_orange(
@@ -166,6 +181,7 @@ pub fn twitter_part(
                                     print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
                                 }
                                 if enable_cleaning_logs_directory {
+                                    
                                     let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
                                     if Path::new(&path).is_dir() {
                                         let result_of_recursively_removing_warning_logs_directory =
@@ -210,7 +226,6 @@ pub fn twitter_part(
                                 provider_kind
                             );
                             print_success_green(file!().to_string(), line!().to_string(), message);
-                            // true
                         }
                         for i in wrong_cases_thread_vec {
                             i.join().unwrap();
