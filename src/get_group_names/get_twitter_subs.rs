@@ -1,21 +1,23 @@
 use std::collections::HashMap;
 
-pub fn get_twitter_links(twitter_provider_names: Vec<&str>) -> HashMap<&'static str, String> {
-    //twitter_provider_names.len() хотяб 1 должен быть
-    let subs_nicknames: Vec<&str> = [
+pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> HashMap<&'static str, String> {
+    if twitter_provider_names.is_empty() {
+        panic!("twitter_provider_names is empty!!!");
+    }
+    let twitter_subs_nicknames: Vec<&str> = [
         "Tom_McGurl",
         "OK9UWU",
         "r2x0t",
         "Katha16777",
         "PataniLab",
         "AlexSerbul",
-        // "TheCherno",
-        // "rustlinz",
-        // "HopeMarsMission",
-        // "dougbinks",
-        // "remodemo",
-        // "italiancpp",
-        // "ilpropheta",
+        "TheCherno",
+        "rustlinz",
+        "HopeMarsMission",
+        "dougbinks",
+        "remodemo",
+        "italiancpp",
+        "ilpropheta",
         // "alepezzato",
         // "rstropek",
         // "agrimgupta92",
@@ -2269,38 +2271,42 @@ pub fn get_twitter_links(twitter_provider_names: Vec<&str>) -> HashMap<&'static 
         // "pabbeel",
     ]
     .to_vec();
-    if subs_nicknames.is_empty() {
+    if twitter_subs_nicknames.is_empty() {
         panic!("twitter_subs_nicknames is empty!");
     }
     if twitter_provider_names.is_empty() {
         panic!("twitter_provider_names is empty!");
     }
-    let subs_nicknames_length = subs_nicknames.len();
+    let twitter_subs_nicknames_length = twitter_subs_nicknames.len();
     let mut twitter_sections_links: HashMap<&str, String> =
-        HashMap::with_capacity(subs_nicknames_length);
-    if subs_nicknames_length > twitter_provider_names.len() {
-        let how_many_links_on_diff_provider = subs_nicknames_length / twitter_provider_names.len();
+        HashMap::with_capacity(twitter_subs_nicknames_length);
+    if twitter_subs_nicknames_length > twitter_provider_names.len() {
+        let how_many_twitter_links_on_diff_provider =
+            twitter_subs_nicknames_length / twitter_provider_names.len();
         let twitter_provider_names_length = twitter_provider_names.len();
 
         let mut twitter_provider_name_index = 0;
 
-        for (sub_nickname_index, sub_nickname) in subs_nicknames.into_iter().enumerate() {
+        for (twitter_sub_nickname_index, sub_nickname) in
+            twitter_subs_nicknames.into_iter().enumerate()
+        {
             let sub_link: String = format!(
                 "https://{}/{}/rss",
                 twitter_provider_names[twitter_provider_name_index],
                 sub_nickname.to_string(),
             );
             twitter_sections_links.insert(sub_nickname, sub_link);
-            if sub_nickname_index != 0
-                && sub_nickname_index % how_many_links_on_diff_provider == 0
+            if twitter_sub_nickname_index != 0
+                && twitter_sub_nickname_index % how_many_twitter_links_on_diff_provider == 0
                 && (twitter_provider_names_length - 1) > twitter_provider_name_index
             {
                 twitter_provider_name_index += 1;
             }
         }
     } else {
-        let twitter_provider_names_splited = &twitter_provider_names[0..subs_nicknames_length];
-        for (index, sub_nickname) in subs_nicknames.into_iter().enumerate() {
+        let twitter_provider_names_splited =
+            &twitter_provider_names[0..twitter_subs_nicknames_length];
+        for (index, sub_nickname) in twitter_subs_nicknames.into_iter().enumerate() {
             let sub_link: String = format!(
                 "https://{}/{}/rss",
                 twitter_provider_names_splited[index],

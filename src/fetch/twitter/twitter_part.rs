@@ -11,7 +11,7 @@ use crate::fetch::twitter::twitter_check_available_providers::twitter_check_avai
 use crate::fetch::twitter::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
 use crate::fetch::twitter::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
 use crate::fetch::twitter::twitter_handle_errors_arrays::twitter_handle_errors_arrays;
-use crate::get_group_names::get_twitter_links::get_twitter_links;
+use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
@@ -41,7 +41,7 @@ pub fn twitter_part(
         twitter_providers_names,
     );
     if !twitter_available_providers_links.is_empty() {
-        let links = get_twitter_links(twitter_available_providers_links.clone());
+        let links = get_twitter_subs(twitter_available_providers_links.clone());
         if !links.is_empty() {
             if enable_prints {
                 println!(
