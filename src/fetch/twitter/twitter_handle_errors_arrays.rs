@@ -146,7 +146,7 @@ pub fn twitter_handle_errors_arrays(
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
-                    handle_error_status_code(status_code);
+                    handle_error_status_code(status_code, &key, value.1);
                     rxiv_write_error_logs_into_file(
                         json_object,
                         &provider_kind,
