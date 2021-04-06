@@ -121,3 +121,5 @@ add to config time elapsed prints handle
 println!("массив занимает {} байт", mem::size_of_val(&xs));
 -------------
 remove vec into hashmap in twitter_part cause it can be reorganized into better structure
+-------------
+providers statistics in files. if 3 time provider is inactive then do not fetch him next time then next two times...
