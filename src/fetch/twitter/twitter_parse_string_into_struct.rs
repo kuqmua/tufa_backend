@@ -20,33 +20,6 @@ pub fn twitter_parse_string_into_struct(
                                                // if let ProviderKind::Medrxiv = provider_kind {
                                                //     fetch_result_string.remove(0);
                                                // }
-
-    match fetch_result_string.find("<channel>") {
-        Some(find_item_position_start) => match fetch_result_string.find("</channel>") {
-            Some(find_item_position_end) => {
-                let cutted_string: String = fetch_result_string
-                    [find_item_position_start..find_item_position_end + "</channel>".len()]
-                    .to_string();
-                // println!(" cutted_string ***{}***", cutted_string);
-                // let cutted_string_result: Result<XmlTwitterParserStruct, serde_xml_rs::Error> =
-                //     from_str(&cutted_string);
-                // match cutted_string_result {
-                //     Ok(twitter_post) => {
-                //         println!("twitter_post {:#?}", twitter_post)
-                //     }
-                //     Err(e) => {
-                //         println!("error3, {}", e)
-                //     }
-                // }
-            }
-            _ => {
-                println!("error1")
-            }
-        },
-        _ => {
-            println!("error2")
-        }
-    }
     match fetch_result_string.find("<channel>") {
         Some(find_item_position_start) => match fetch_result_string.find("</channel>") {
             Some(find_item_position_end) => {
