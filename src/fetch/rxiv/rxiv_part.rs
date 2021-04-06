@@ -50,13 +50,12 @@ pub fn rxiv_part(
         //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
         let mut wrong_cases_thread = vec![];
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
+            let error_message = format!(
+                "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!! {}",
+                provider_url
+            );
             if enable_warning_prints {
-                print_warning_orange(
-                    file!().to_string(),
-                    line!().to_string(),
-                    "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
-                        .to_string(),
-                );
+                print_warning_orange(file!().to_string(), line!().to_string(), error_message);
             }
             // false
         } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
