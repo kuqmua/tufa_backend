@@ -57,19 +57,16 @@ pub fn twitter_part(
                     links.len() % twitter_available_providers_links.len(),
                 );
             }
+            let links_len = links.len();
             let links_for_each_provider: usize;
-            let even_links_length_size_for_remaind: usize;
-            let is_links_len_more_than_twitter_available_providers_links_len = links.len() > twitter_available_providers_links.len();
+            let is_links_len_more_than_twitter_available_providers_links_len = links_len > twitter_available_providers_links.len();
             let vec_of_hashmap_parts_len: usize;
             if is_links_len_more_than_twitter_available_providers_links_len {
-                links_for_each_provider = links.len() / twitter_available_providers_links.len();
-                even_links_length_size_for_remaind =
-                    links.len() % twitter_available_providers_links.len();
-                    vec_of_hashmap_parts_len = twitter_available_providers_links.len();
+                links_for_each_provider = links_len / twitter_available_providers_links.len();
+                vec_of_hashmap_parts_len = twitter_available_providers_links.len();
             } else {
-                links_for_each_provider = links.len();
-                even_links_length_size_for_remaind = 0;
-                vec_of_hashmap_parts_len = links.len();
+                links_for_each_provider = links_len;
+                vec_of_hashmap_parts_len = links_len;
             }
             
             let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> = vec![
@@ -77,7 +74,7 @@ pub fn twitter_part(
                 vec_of_hashmap_parts_len
             ];
             //HashMap into Vector transformation
-            let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links.len());
+            let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links_len);
             for (key, value) in links {
                 vec_of_links.push((key, value));
             }
@@ -120,14 +117,12 @@ pub fn twitter_part(
             }
             }
             else{
-                println!("vec_of_links.len() {}", vec_of_links.len());
-                println!("vec_of_hashmap_parts.len() {}", vec_of_hashmap_parts.len());
                 for (element_index, element) in vec_of_links.into_iter().enumerate() {
                     vec_of_hashmap_parts[element_index].insert(element.0, element.1);
                 }
             }
             
-            println!("vec_of_hashmap_parts {:#?}", vec_of_hashmap_parts);
+            // println!("vec_of_hashmap_parts {:#?}", vec_of_hashmap_parts);
             let crossbeam_result = crossbeam::scope(|scope| {
                 for element in &mut vec_of_hashmap_parts {
                     scope.spawn(move |_| {
