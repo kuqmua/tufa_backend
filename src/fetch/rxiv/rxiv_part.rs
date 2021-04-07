@@ -25,12 +25,12 @@ pub fn rxiv_part(
     enable_warning_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    provider_url: &str,
+    provider_link: &str,
     provider_kind: ProviderKind,
 ) -> bool {
-    if check_link(provider_url).0 {
+    if check_link(provider_link).0 {
         if enable_prints {
-            println!("i can reach {}", provider_url)
+            println!("i can reach {}", provider_link)
         };
         let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
         let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
@@ -52,7 +52,7 @@ pub fn rxiv_part(
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             let error_message = format!(
                 "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!! {}",
-                provider_url
+                provider_link
             );
             if enable_warning_prints {
                 print_warning_orange(file!().to_string(), line!().to_string(), error_message);
@@ -124,7 +124,7 @@ pub fn rxiv_part(
         true
     } else {
         if enable_error_prints {
-            let error_message = format!("i cannot reach {}", provider_url);
+            let error_message = format!("i cannot reach {}", provider_link);
             print_error_red(file!().to_string(), line!().to_string(), error_message);
             println!();
         };

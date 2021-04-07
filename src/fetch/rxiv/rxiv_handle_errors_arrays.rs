@@ -38,7 +38,7 @@ pub fn rxiv_handle_errors_arrays(
                     AreThereItems::Initialized => {
                         let json_object = json!({
                             "topic": key,
-                            "url": value.1,
+                            "link": value.1,
                             "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
                         });
@@ -55,7 +55,7 @@ pub fn rxiv_handle_errors_arrays(
                         //"</item>" tag
                         let json_object = json!({
                             "topic": key,
-                            "url": value.1,
+                            "link": value.1,
                             "fetch_result_string": fetch_result_string,
                             "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
@@ -72,7 +72,7 @@ pub fn rxiv_handle_errors_arrays(
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
                         let json_object = json!({
                             "topic": key,
-                            "url": value.1,
+                            "link": value.1,
                             "fetch_result_string": fetch_result_string,
                             "error": error,
                             "part_of": format!("{:?}", provider_kind),
@@ -90,7 +90,7 @@ pub fn rxiv_handle_errors_arrays(
                     AreThereItems::NopeNoTag(fetch_result_string) => {
                         let json_object = json!({
                             "topic": key,
-                            "url": value.1,
+                            "link": value.1,
                             "page_content": fetch_result_string,
                             "part_of": format!("{:?}", provider_kind),
                             "date": Local::now().to_string()
@@ -108,7 +108,7 @@ pub fn rxiv_handle_errors_arrays(
                 HandledFetchStatusInfo::Initialized => {
                     let json_object = json!({
                         "topic": key,
-                        "url": value.1,
+                        "link": value.1,
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
@@ -124,7 +124,7 @@ pub fn rxiv_handle_errors_arrays(
                 HandledFetchStatusInfo::ResToTextError(error) => {
                     let json_object = json!({
                         "topic": key,
-                        "url": value.1,
+                        "link": value.1,
                         "error": error,
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
@@ -141,7 +141,7 @@ pub fn rxiv_handle_errors_arrays(
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
                     let json_object = json!({
                         "topic": key,
-                        "url": value.1,
+                        "link": value.1,
                         "status_code": status_code.to_string(),
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
@@ -160,7 +160,7 @@ pub fn rxiv_handle_errors_arrays(
             UnhandledFetchStatusInfo::Initialized => {
                 let json_object = json!({
                     "topic": key,
-                    "url": value.1,
+                    "link": value.1,
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
@@ -176,7 +176,7 @@ pub fn rxiv_handle_errors_arrays(
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
                 let json_object = json!({
                     "topic": key,
-                    "url": value.1,
+                    "link": value.1,
                     "error": box_dyn_error,
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()

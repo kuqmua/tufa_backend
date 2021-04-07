@@ -28,7 +28,7 @@ pub fn twitter_part(
     enable_warning_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    provider_url: &str,
+    provider_link: &str,
     provider_kind: &'static ProviderKind,
 ) -> bool {
     let twitter_providers_names: Vec<&str> = get_twitter_providers_names();

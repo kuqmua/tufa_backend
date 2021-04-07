@@ -31,7 +31,7 @@ mod fetch {
     //     pub mod parse_every_children;
     //     pub mod push_names_into_two_layer_result_vec;
     //     pub mod reddit_fetch;
-    //     pub mod subreddits_into_urls;
+    //     pub mod subreddits_into_links;
     //     pub mod reddit_json_structs {
     //         pub mod casted;
     //         pub mod used;

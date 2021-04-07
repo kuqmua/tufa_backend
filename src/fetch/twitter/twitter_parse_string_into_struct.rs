@@ -96,7 +96,7 @@ pub fn twitter_parse_string_into_struct(
         }
         _ => {
             if enable_error_prints {
-                let warning: String = "wrong url or there is no items for key: ".to_string()
+                let warning: String = "wrong link or there is no items for key: ".to_string()
                     + key
                     + " link: "
                     + value; //разделить логику при помощи нахождения паттерна архива урла

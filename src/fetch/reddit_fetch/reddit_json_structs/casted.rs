@@ -15,7 +15,7 @@ pub struct Children {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Data2 {
-    pub url: Option<String>,
+    pub link: Option<String>,
     pub subreddit: String,
     pub selftext: String,
     pub id: String, // может понадобиться

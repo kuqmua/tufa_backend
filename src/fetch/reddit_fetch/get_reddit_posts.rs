@@ -13,7 +13,7 @@ use crate::fetch::reddit_fetch::push_names_into_two_layer_result_vec::push_names
 use crate::fetch::reddit_fetch::reddit_json_structs::casted::CastedRedditJsonStruct;
 use crate::fetch::reddit_fetch::reddit_json_structs::casted::Children;
 use crate::fetch::reddit_fetch::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
-use crate::fetch::reddit_fetch::subreddits_into_urls::subreddits_into_urls;
+use crate::fetch::reddit_fetch::subreddits_into_links::subreddits_into_links;
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::override_prints::override_prints::print_error_red;
@@ -27,11 +27,11 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
     let client = Client::new();
     let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
         push_names_into_two_layer_result_vec(&subreddits);
-    let subreddits_urls: Vec<String> = subreddits_into_urls(subreddits);
-    let bodies = future::join_all(subreddits_urls.into_iter().map(|url| {
+    let subreddits_links: Vec<String> = subreddits_into_links(subreddits);
+    let bodies = future::join_all(subreddits_links.into_iter().map(|link| {
         let client = &client;
         async move {
-            let resp = client.get(&url).send().await?;
+            let resp = client.get(&link).send().await?;
             resp.bytes().await
         }
     }))

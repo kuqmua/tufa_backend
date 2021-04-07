@@ -11,7 +11,7 @@ pub fn parse_every_children(
     let mut count = 0;
     while count < children.len() {
         let mut child = UsedRedditJsonStruct::new();
-        child.url = u.data.children[count].data.url.clone();
+        child.link = u.data.children[count].data.link.clone();
         child.subreddit = u.data.children[count].data.subreddit.clone();
         //child.subreddit = &u.data.children[count].data.subreddit.clone();
         child.id = u.data.children[count].data.id.clone();

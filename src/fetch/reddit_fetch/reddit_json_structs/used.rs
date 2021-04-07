@@ -15,7 +15,7 @@ impl VecOfUsedRedditJsonStruct {
 //Vec::with_capacity(25)
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct UsedRedditJsonStruct {
-    pub url: Option<String>,
+    pub link: Option<String>,
     pub subreddit: String,
     //pub subreddit: &'static str,
     pub selftext: String,
@@ -39,8 +39,8 @@ impl Display for UsedRedditJsonStruct {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
         write!(
             fmt,
-            "url = {:?}\nsubreddit = {}\nselftext ={}\nid = {}\nauthor = {}\ntitle = {}\ndomain = {}\npermalink = {}\nups = {}\nscore = {}\ncreated_utc = {}\nnum_comments = {}\nover_18 = {}\nquarantine = {}\nis_self = {}\nsaved = {}\n",
-            self.url,
+            "link = {:?}\nsubreddit = {}\nselftext ={}\nid = {}\nauthor = {}\ntitle = {}\ndomain = {}\npermalink = {}\nups = {}\nscore = {}\ncreated_utc = {}\nnum_comments = {}\nover_18 = {}\nquarantine = {}\nis_self = {}\nsaved = {}\n",
+            self.link,
             self.subreddit,
             self.selftext,
             self.id,
@@ -63,7 +63,7 @@ impl Display for UsedRedditJsonStruct {
 impl UsedRedditJsonStruct {
     pub fn new() -> Self {
         UsedRedditJsonStruct {
-            url: Some("".to_string()),
+            link: Some("".to_string()),
             subreddit: "".to_string(),
             //subreddit: "",
             selftext: "".to_string(),
