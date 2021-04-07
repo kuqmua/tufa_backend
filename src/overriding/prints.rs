@@ -19,10 +19,10 @@ pub fn print_error_red(file: String, line: String, error: String) {
     // }
     eprintln!(
         "{}{}{}{}\n{}",
-        Red.bold().paint("file: "),
-        Red.bold().paint(file), //file.red().bold()
-        Red.bold().paint(":"),
-        Red.bold().paint(line),
+        Red.paint("file: "),
+        Red.paint(file),
+        Red.paint(":"),
+        Red.paint(line),
         Red.bold().paint(error)
     );
 }
@@ -30,10 +30,10 @@ pub fn print_error_red(file: String, line: String, error: String) {
 pub fn print_warning_orange(file: String, line: String, error: String) {
     eprintln!(
         "{}{}{}{}\n{}",
-        RGB(255, 165, 0).bold().paint("file: "),
-        RGB(255, 165, 0).bold().paint(file),
-        RGB(255, 165, 0).bold().paint(":"),
-        RGB(255, 165, 0).bold().paint(line),
+        RGB(255, 165, 0).paint("file: "),
+        RGB(255, 165, 0).paint(file),
+        RGB(255, 165, 0).paint(":"),
+        RGB(255, 165, 0).paint(line),
         RGB(255, 165, 0).bold().paint(error)
     );
 }
@@ -41,10 +41,10 @@ pub fn print_warning_orange(file: String, line: String, error: String) {
 pub fn print_warning_yellow(file: String, line: String, error: String) {
     eprintln!(
         "{}{}{}{}\n{}",
-        Yellow.bold().paint("file: "),
-        Yellow.bold().paint(file),
-        Yellow.bold().paint(":"),
-        Yellow.bold().paint(line),
+        Yellow.paint("file: "),
+        Yellow.paint(file),
+        Yellow.paint(":"),
+        Yellow.paint(line),
         Yellow.bold().paint(error)
     );
 }
@@ -52,10 +52,10 @@ pub fn print_warning_yellow(file: String, line: String, error: String) {
 pub fn print_success_green(file: String, line: String, error: String) {
     eprintln!(
         "{}{}{}{}\n{}",
-        RGB(0, 255, 0).bold().paint("file: "),
-        RGB(0, 255, 0).bold().paint(file),
-        RGB(0, 255, 0).bold().paint(":"),
-        RGB(0, 255, 0).bold().paint(line),
+        RGB(0, 255, 0).paint("file: "),
+        RGB(0, 255, 0).paint(file),
+        RGB(0, 255, 0).paint(":"),
+        RGB(0, 255, 0).paint(line),
         RGB(0, 255, 0).bold().paint(error)
     );
 }
@@ -63,10 +63,10 @@ pub fn print_success_green(file: String, line: String, error: String) {
 pub fn print_partial_success_cyan(file: String, line: String, error: String) {
     eprintln!(
         "{}{}{}{}\n{}",
-        RGB(0, 200, 155).bold().paint("file: "),
-        RGB(0, 200, 155).bold().paint(file),
-        RGB(0, 200, 155).bold().paint(":"),
-        RGB(0, 200, 155).bold().paint(line),
+        RGB(0, 200, 155).paint("file: "),
+        RGB(0, 200, 155).paint(file),
+        RGB(0, 200, 155).paint(":"),
+        RGB(0, 200, 155).paint(line),
         RGB(0, 200, 155).bold().paint(error)
     );
 }
