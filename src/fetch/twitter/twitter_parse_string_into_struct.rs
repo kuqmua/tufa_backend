@@ -28,11 +28,15 @@ pub fn twitter_parse_string_into_struct(
                     .to_string();
             }
             _ => {
-                println!("error1")
+                let warning_message: String =
+                    format!("no </channel> in response for key: {} link: {}", key, value);
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
             }
         },
         _ => {
-            println!("error2")
+            let warning_message: String =
+                format!("no <channel> in response for key: {} link: {}", key, value);
+            print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
         }
     }
     match fetch_result_string.find("</item>") {
@@ -83,11 +87,11 @@ pub fn twitter_parse_string_into_struct(
                 }
                 Err(e) => {
                     if enable_error_prints {
-                        let error = "rxiv conversion from str for ".to_string()
+                        let error_message = "rxiv conversion from str for ".to_string()
                             + key
                             + "error: "
                             + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), error)
+                        print_error_red(file!().to_string(), line!().to_string(), error_message)
                     };
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
@@ -96,11 +100,12 @@ pub fn twitter_parse_string_into_struct(
         }
         _ => {
             if enable_error_prints {
-                let warning: String = "wrong link or there is no items for key: ".to_string()
+                let warning_message: String = "wrong link or there is no items for key: "
+                    .to_string()
                     + key
                     + " link: "
                     + value; //разделить логику при помощи нахождения паттерна архива урла
-                print_warning_yellow(file!().to_string(), line!().to_string(), warning);
+                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
             };
             are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
         }
