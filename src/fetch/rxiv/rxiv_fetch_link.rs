@@ -28,19 +28,20 @@ pub fn rxiv_fetch_link(
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
             Err(e) => {
                 result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
+                let error_message = format!(
+                    "KEY: {} LINK: {} ResToTextError...(decided to not show)",
+                    key, link
+                );
                 if enable_error_prints {
-                    print_error_red(file!().to_string(), line!().to_string(), e.to_string());
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
             }
         }
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
+        let error_message = format!("KEY: {} LINK: {} RES.STATUS: {}", key, link, res.status());
         if enable_error_prints {
-            print_error_red(
-                file!().to_string(),
-                line!().to_string(),
-                res.status().to_string(),
-            );
+            print_error_red(file!().to_string(), line!().to_string(), error_message);
         }
     }
     Ok(result_tuple)
