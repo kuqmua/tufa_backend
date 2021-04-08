@@ -1,13 +1,12 @@
 mod fetch {
+    pub mod handle_error_status_code;
     pub mod rxiv {
-        pub mod handle_error_status_code;
         pub mod metainfo_fetch_structures;
         pub mod rxiv_check_handled_fetch_status_info;
         pub mod rxiv_fetch_and_parse_xml;
         pub mod rxiv_fetch_link;
         pub mod rxiv_filter_fetched_and_parsed_posts;
         pub mod rxiv_handle_errors_arrays;
-
         pub mod rxiv_logs_create_dir_if_dont_exists;
         pub mod rxiv_parse_string_into_struct;
         pub mod rxiv_part;
@@ -74,3 +73,28 @@ fn main() {
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
 }
+
+// use std::sync::{Arc, Mutex};
+// use std::thread;
+// fn main() {
+//     let vec_two = vec![1, 2, 3];
+//     // let vec_of_mutex
+//     let counter = Arc::new(Mutex::new(vec![0, 0, 0]));
+//     let mut handles = vec![];
+
+//     for (element_index, element) in &mut vec_two.into_iter().enumerate() {
+//         let counter = Arc::clone(&counter);
+
+//         let handle = thread::spawn(move || {
+//             let mut num = counter.lock().unwrap();
+//             let mut f = element;
+//             f += 1;
+//             num[element_index] += f;
+//         });
+//         handles.push(handle);
+//     }
+//     for handle in handles {
+//         handle.join().unwrap();
+//     }
+//     println!("Result: {:#?}", counter.lock().unwrap());
+// }
