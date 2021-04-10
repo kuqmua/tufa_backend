@@ -134,7 +134,7 @@ pub fn twitter_part(
             #[warn(clippy::type_complexity)]
             let not_ready_processed_posts: Arc<
                 Mutex<
-                    HashMap<
+                    Vec<(
                         String,
                         (
                             TwitterPostStruct,
@@ -144,13 +144,13 @@ pub fn twitter_part(
                             AreThereItems,
                             ProviderKind,
                         ),
-                    >,
+                    )>,
                 >,
-            > = Arc::new(Mutex::new(HashMap::with_capacity(links_for_each_provider)));
+            > = Arc::new(Mutex::new(Vec::with_capacity(links_for_each_provider)));
 
             let mut threads_vector = vec![];
 
-            for element in &mut vec_of_hashmap_parts.into_iter() {
+            for (element_index, element) in &mut vec_of_hashmap_parts.into_iter().enumerate() {
                 let not_ready_processed_posts_handle = Arc::clone(&not_ready_processed_posts);
                 let thread = thread::spawn(move || {
                     let unfiltered_posts_hashmap_after_fetch_and_parse =
@@ -165,7 +165,8 @@ pub fn twitter_part(
                     let mut locked_not_ready_processed_posts =
                         not_ready_processed_posts_handle.lock().unwrap();
                     for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
-                        locked_not_ready_processed_posts.insert(key, value);
+                        //[element_index]
+                        locked_not_ready_processed_posts.push((key, value));
                     }
                 });
                 threads_vector.push(thread);
@@ -174,13 +175,12 @@ pub fn twitter_part(
                 thread.join().unwrap();
             }
             let processed_posts = &*not_ready_processed_posts.lock().unwrap();
-
             let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter = processed_posts.len();
             let (
                 //все отсальное херачить в отдельный поток кроме первого массива
                 unhandled_success_handled_success_are_there_items_yep_posts,
                 some_error_posts,
-            ) = twitter_filter_fetched_and_parsed_posts(processed_posts.clone()); //how to remove clone here? TODO
+            ) = twitter_filter_fetched_and_parsed_posts(processed_posts.to_vec());
 
             let warning_message = format!(
                 "some_error_posts.len {} of {}",
@@ -190,7 +190,6 @@ pub fn twitter_part(
             print_warning_orange(file!().to_string(), line!().to_string(), warning_message);
             ////////
             let mut wrong_cases_thread_vec = vec![];
-
             if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
                 if enable_warning_prints {
                     print_warning_orange(
@@ -200,7 +199,6 @@ pub fn twitter_part(
                             .to_string(),
                     );
                 }
-                // false
             } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
                 != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
             {
@@ -215,7 +213,6 @@ pub fn twitter_part(
                                     print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
                                 }
                                 if enable_cleaning_logs_directory {
-
                                     let path = format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
                                     if Path::new(&path).is_dir() {
                                         let result_of_recursively_removing_warning_logs_directory =
@@ -251,7 +248,6 @@ pub fn twitter_part(
                                     some_error_posts,
                                 );
                             }));
-                // true
             } else {
                 let message = format!(
                     "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",

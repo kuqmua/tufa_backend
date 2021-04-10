@@ -7,7 +7,7 @@ use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
 pub fn twitter_filter_fetched_and_parsed_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: HashMap<
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (
             TwitterPostStruct,
@@ -17,7 +17,7 @@ pub fn twitter_filter_fetched_and_parsed_posts(
             AreThereItems,
             ProviderKind,
         ),
-    >,
+    )>,
 ) -> (
     HashMap<String, TwitterPostStruct>,
     HashMap<
