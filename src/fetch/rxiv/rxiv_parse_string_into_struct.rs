@@ -66,11 +66,9 @@ pub fn rxiv_parse_string_into_struct(
                 }
                 Err(e) => {
                     if enable_error_prints {
-                        let error = "rxiv conversion from str for ".to_string()
-                            + key
-                            + "error: "
-                            + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), error)
+                        let error_message =
+                            format!("rxiv conversion from str for {} error: {}", key, e);
+                        print_error_red(file!().to_string(), line!().to_string(), error_message)
                     };
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
