@@ -77,9 +77,11 @@ pub fn rxiv_fetch_and_parse_xml(
                             provider_kind_clone.clone(),
                         );
                     let mut hashmap_handle_locked = hashmap_handle.lock().unwrap();
+                    hashmap_handle_locked[element_index].0 = key.to_string();
+                    hashmap_handle_locked[element_index].1 .0 = rxiv_post_struct_wrapper_handle;
+                    hashmap_handle_locked[element_index].1 .1 = value;
                     hashmap_handle_locked[element_index].1 .2 = UnhandledFetchStatusInfo::Success;
                     hashmap_handle_locked[element_index].1 .3 = value3;
-                    hashmap_handle_locked[element_index].1 .0 = rxiv_post_struct_wrapper_handle;
                     hashmap_handle_locked[element_index].1 .4 = are_there_items_wrapper_handle;
                 }
                 Err(e) => {
