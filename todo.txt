@@ -131,3 +131,5 @@ rewrite all crossbeam into threads
 rewrite all huge hashmaps into 2 before some crossbeams
 ------------
 hashmaps into vecs
+------------
+config into json file
