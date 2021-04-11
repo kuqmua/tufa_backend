@@ -30,7 +30,7 @@ pub fn rxiv_fetch_and_parse_xml(
     ),
 )> {
     let time = Instant::now();
-    let mut hashmap_to_return = Arc::new(Mutex::new(vec![
+    let hashmap_to_return = Arc::new(Mutex::new(vec![
         (
             "".to_string(),
             (
@@ -56,7 +56,6 @@ pub fn rxiv_fetch_and_parse_xml(
         let hashmap_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
-            let mut hashmap_handle_locked = hashmap_handle.lock().unwrap();
             let fetch_result = rxiv_fetch_link(
                 &value,
                 key,
@@ -67,7 +66,6 @@ pub fn rxiv_fetch_and_parse_xml(
             );
             match fetch_result {
                 Ok(fetch_tuple_result) => {
-                    hashmap_handle_locked[element_index].1 .2 = UnhandledFetchStatusInfo::Success;
                     let (value3, rxiv_post_struct_wrapper_handle, are_there_items_wrapper_handle) =
                         rxiv_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
@@ -80,11 +78,14 @@ pub fn rxiv_fetch_and_parse_xml(
                             enable_time_measurement,
                             provider_kind_clone.clone(),
                         );
+                    let mut hashmap_handle_locked = hashmap_handle.lock().unwrap();
+                    hashmap_handle_locked[element_index].1 .2 = UnhandledFetchStatusInfo::Success;
                     hashmap_handle_locked[element_index].1 .3 = value3;
                     hashmap_handle_locked[element_index].1 .0 = rxiv_post_struct_wrapper_handle;
                     hashmap_handle_locked[element_index].1 .4 = are_there_items_wrapper_handle;
                 }
                 Err(e) => {
+                    let mut hashmap_handle_locked = hashmap_handle.lock().unwrap();
                     hashmap_handle_locked[element_index].1 .2 =
                         UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
                     if enable_error_prints {
