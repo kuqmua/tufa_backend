@@ -74,7 +74,7 @@ pub fn rxiv_fetch_and_parse_xml(
                             enable_prints,
                             enable_error_prints,
                             enable_time_measurement,
-                            provider_kind_clone.clone(),
+                            provider_kind_clone,
                         );
                     let mut hashmap_handle_locked = hashmap_handle.lock().unwrap();
                     hashmap_handle_locked[element_index].0 = key.to_string();

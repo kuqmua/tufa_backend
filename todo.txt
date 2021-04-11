@@ -123,13 +123,23 @@ println!("массив занимает {} байт", mem::size_of_val(&xs));
 remove vec into hashmap in twitter_part cause it can be reorganized into better structure
 -------------
 providers statistics in files. if 3 time provider is inactive then do not fetch him next time then next two times...
--------------
-rename urls into links or links into urls...
-------------
-rewrite all crossbeam into threads
-------------
-rewrite all huge hashmaps into 2 before some crossbeams
 ------------
 hashmaps into vecs
 ------------
 config into json file
+------------
+twitter errors:
+builder error: Too many open files (os error 24)
+
+error sending request for url (https://nitter.cattube.org/_baku89/rss): error trying to connect: dns error: Too many open files (os error 24)
+
+error sending request for url (https://tweet.lambda.dance/_CPResearch_/rss): error trying to connect: tcp open error: Too many open files (os error 24)
+
+error sending request for url (https://nitter.40two.app/_davideast/rss): operation timed out
+
+404 Not Found - CAUSE
+This account's tweets are protected.
+Only confirmed followers have access to @_KudoHiroyuki's tweets.
+
+429 Too Many Requests
+-----------

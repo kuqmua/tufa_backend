@@ -10,13 +10,16 @@ use crate::fetch::twitter::twitter_check_handled_fetch_status_info::twitter_chec
 use crate::fetch::twitter::twitter_structures::TwitterPostStruct;
 use crate::overriding::prints::print_error_red;
 
+use std::sync::{Arc, Mutex};
+use std::thread;
+
 pub fn twitter_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    twitter_links: HashMap<&str, String>,
+    twitter_links: std::collections::HashMap<&'static str, std::string::String>,
     provider_kind: ProviderKind,
-) -> HashMap<
+) -> Vec<(
     String,
     (
         TwitterPostStruct,
@@ -26,30 +29,22 @@ pub fn twitter_fetch_and_parse_xml(
         AreThereItems,
         ProviderKind,
     ),
-> {
+)> {
     let time = Instant::now();
-    let mut hashmap_to_return: HashMap<
-        String,
+    let hashmap_to_return = Arc::new(Mutex::new(vec![
         (
-            TwitterPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
-    > = HashMap::with_capacity(twitter_links.len());
-    for (key, value) in twitter_links {
-        let tuple = (
-            TwitterPostStruct::new(),
-            value.to_string(),
-            UnhandledFetchStatusInfo::Initialized,
-            HandledFetchStatusInfo::Initialized,
-            AreThereItems::Initialized,
-            provider_kind.clone(),
+            "".to_string(),
+            (
+                TwitterPostStruct::new(),
+                "".to_string(),
+                UnhandledFetchStatusInfo::Initialized,
+                HandledFetchStatusInfo::Initialized,
+                AreThereItems::Initialized,
+                provider_kind.clone()
+            )
         );
-        hashmap_to_return.insert(key.to_string(), tuple);
-    }
+        twitter_links.len()
+    ]));
     if enable_time_measurement {
         println!(
             "hashmap init in {}.{}ms",
@@ -57,70 +52,63 @@ pub fn twitter_fetch_and_parse_xml(
             time.elapsed().as_millis(),
         );
     };
-    let crossbeam_result = crossbeam::scope(|scope| {
-        for (key, value) in &mut hashmap_to_return {
-            scope.spawn(move |_| {
-                let fetch_result = rxiv_fetch_link(
-                    &value.1,
-                    key,
-                    time,
-                    enable_prints,
-                    enable_error_prints,
-                    enable_time_measurement,
-                );
-                match fetch_result {
-                    Ok(fetch_tuple_result) => {
-                        value.2 = UnhandledFetchStatusInfo::Success;
-                        let (
-                            value3,
-                            rxiv_post_struct_wrapper_handle,
-                            are_there_items_wrapper_handle,
-                        ) = twitter_check_handled_fetch_status_info(
+    let mut thread_vector = vec![];
+    for (element_index, (key, value)) in &mut twitter_links.into_iter().enumerate() {
+        let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
+        let provider_kind_clone = provider_kind.clone();
+        let handle = thread::spawn(move || {
+            let fetch_result = rxiv_fetch_link(
+                &value,
+                key,
+                time,
+                enable_prints,
+                enable_error_prints,
+                enable_time_measurement,
+            );
+            match fetch_result {
+                Ok(fetch_tuple_result) => {
+                    let (value3, rxiv_post_struct_wrapper_handle, are_there_items_wrapper_handle) =
+                        twitter_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
                             time,
                             key,
-                            &value.1,
+                            &value,
                             enable_prints,
                             enable_error_prints,
                             enable_time_measurement,
-                            value.5.clone(),
+                            provider_kind_clone,
                         );
-                        value.3 = value3;
-                        value.0 = rxiv_post_struct_wrapper_handle;
-                        value.4 = are_there_items_wrapper_handle;
-                    }
-                    Err(e) => {
-                        value.2 = UnhandledFetchStatusInfo::Failure(e.to_string()); // add e
-                        if enable_error_prints {
-                            let concated_error =
-                                "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
-                            print_error_red(
-                                file!().to_string(),
-                                line!().to_string(),
-                                concated_error,
-                            )
-                        }
-                    }
+                    let mut hashmap_to_return_handle_locked =
+                        hashmap_to_return_handle.lock().unwrap();
+                    hashmap_to_return_handle_locked[element_index].0 = key.to_string();
+                    hashmap_to_return_handle_locked[element_index].1 .0 =
+                        rxiv_post_struct_wrapper_handle;
+                    hashmap_to_return_handle_locked[element_index].1 .1 = value;
+                    hashmap_to_return_handle_locked[element_index].1 .2 =
+                        UnhandledFetchStatusInfo::Success;
+                    hashmap_to_return_handle_locked[element_index].1 .3 = value3;
+                    hashmap_to_return_handle_locked[element_index].1 .4 =
+                        are_there_items_wrapper_handle;
                 }
-            });
-        }
-    });
-    match crossbeam_result {
-        Ok(_) => {
-            if enable_prints {
-                println!("twitter_fetch_and_parse_xml crossbeam_result is ok")
+                Err(e) => {
+                    if enable_error_prints {
+                        let concated_error =
+                            "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
+                        print_error_red(file!().to_string(), line!().to_string(), concated_error)
+                    }
+                    let mut hashmap_to_return_handle_locked =
+                        hashmap_to_return_handle.lock().unwrap();
+                    hashmap_to_return_handle_locked[element_index].1 .2 =
+                        UnhandledFetchStatusInfo::Failure(e.to_string());
+                }
             }
-        }
-        Err(e) => {
-            if enable_prints {
-                let error_message = format!(
-                    "twitter_fetch_and_parse_xml crossbeam_result is not ok: {:#?}",
-                    e
-                );
-                print_error_red(file!().to_string(), line!().to_string(), error_message);
-            }
-        }
+        });
+        thread_vector.push(handle);
     }
-    hashmap_to_return
+    for thread in thread_vector {
+        thread.join().unwrap();
+    }
+    let hashmap_to_return_done = hashmap_to_return.lock().unwrap().to_vec();
+    hashmap_to_return_done
 }
