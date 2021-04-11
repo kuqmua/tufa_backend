@@ -16,12 +16,23 @@ pub fn rxiv_parse_string_into_struct(
 ) -> (RxivPostStruct, AreThereItems) {
     let mut rxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
-                                               // println!("{:#?}", provider_kind);
-
     match fetch_result_string.find("</item>") {
         Some(_) => {
             if let ProviderKind::Medrxiv = provider_kind {
                 fetch_result_string.remove(0);
+                while fetch_result_string.contains("<dc:title>") {
+                    match fetch_result_string.find("</dc:title>") {
+                        Some(_) => {
+                            fetch_result_string =
+                                fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                            fetch_result_string =
+                                fetch_result_string.replace("</dc:title>", "</dcstitle>");
+                        }
+                        None => {
+                            break;
+                        }
+                    }
+                }
             }
             if let ProviderKind::Biorxiv = provider_kind {
                 while fetch_result_string.contains("<dc:title>") {
