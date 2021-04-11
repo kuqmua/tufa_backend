@@ -16,6 +16,7 @@ use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use std::collections::HashMap;
 use std::fs;
+use std::mem;
 use std::path::Path;
 
 pub fn rxiv_part(
@@ -67,10 +68,11 @@ pub fn rxiv_part(
             wrong_cases_thread.push(thread::spawn(move || {
                 if enable_prints {
                     let message = format!(
-                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
                         unhandled_success_handled_success_are_there_items_yep_posts.len(),
                         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                        provider_kind_clone_for_debug_purposes
+                        provider_kind_clone_for_debug_purposes,
+                        mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
                     );
                     print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
                 }
@@ -112,13 +114,16 @@ pub fn rxiv_part(
             }));
             // true
         } else {
-            let message = format!(
-                "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
-                unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                provider_kind_clone_for_debug_purposes
-            );
-            print_success_green(file!().to_string(), line!().to_string(), message);
+            if enable_prints {
+                let message = format!(
+                    "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
+                    unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                    unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                    provider_kind_clone_for_debug_purposes,
+                    mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
+                );
+                print_success_green(file!().to_string(), line!().to_string(), message);
+            }
             // true
         }
         for i in wrong_cases_thread {

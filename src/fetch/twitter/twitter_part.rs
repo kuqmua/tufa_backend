@@ -16,6 +16,7 @@ use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use std::collections::HashMap;
 use std::fs;
+use std::mem;
 use std::path::Path;
 
 use std::sync::{Arc, Mutex};
@@ -178,10 +179,11 @@ pub fn twitter_part(
                 let wrong_cases_thread = thread::spawn(move || {
                     if enable_prints {
                         let message = format!(
-                                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
                                         unhandled_success_handled_success_are_there_items_yep_posts.len(),
                                         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                                        provider_kind
+                                        provider_kind,
+                                        mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
                                     );
                         print_partial_success_cyan(
                             file!().to_string(),
@@ -232,10 +234,11 @@ pub fn twitter_part(
                 true
             } else {
                 let message = format!(
-                    "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}",
+                    "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
                     unhandled_success_handled_success_are_there_items_yep_posts.len(),
                     unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                    provider_kind
+                    provider_kind,
+                    mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
                 );
                 if enable_prints {
                     print_success_green(file!().to_string(), line!().to_string(), message);
