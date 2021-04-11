@@ -1,6 +1,3 @@
-use std::collections::HashMap;
-use std::time::Instant;
-
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -12,6 +9,7 @@ use crate::overriding::prints::print_error_red;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
+use std::time::Instant;
 
 pub fn rxiv_fetch_and_parse_xml(
     enable_prints: bool,
