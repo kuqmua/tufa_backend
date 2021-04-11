@@ -7,7 +7,7 @@ use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
 pub fn rxiv_filter_fetched_and_parsed_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: HashMap<
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (
             RxivPostStruct,
@@ -15,9 +15,9 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
             AreThereItems,
-            ProviderKind,
         ),
-    >,
+    )>,
+    provider_kind: ProviderKind,
 ) -> (
     HashMap<String, RxivPostStruct>,
     HashMap<
@@ -57,7 +57,17 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                             .insert(key, value.0);
                     }
                     AreThereItems::Initialized => {
-                        some_error_posts.insert(key, value);
+                        some_error_posts.insert(
+                            key,
+                            (
+                                value.0,
+                                value.1,
+                                value.2,
+                                value.3,
+                                AreThereItems::Initialized,
+                                provider_kind.clone(),
+                            ),
+                        );
                     }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                         //"</item>" tag
@@ -69,7 +79,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                                 value.2,
                                 value.3,
                                 AreThereItems::NopeButThereIsTag(fetch_result_string),
-                                value.5,
+                                provider_kind.clone(),
                             ),
                         );
                     }
@@ -82,7 +92,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                                 value.2,
                                 value.3,
                                 AreThereItems::ConversionFromStrError(fetch_result_string, error),
-                                value.5,
+                                provider_kind.clone(),
                             ),
                         );
                     }
@@ -95,7 +105,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                                 value.2,
                                 value.3,
                                 AreThereItems::NopeNoTag(fetch_result_string),
-                                value.5,
+                                provider_kind.clone().clone(),
                             ),
                         );
                     }
@@ -109,7 +119,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                             value.2,
                             HandledFetchStatusInfo::Initialized,
                             value.4,
-                            value.5,
+                            provider_kind.clone(),
                         ),
                     );
                 }
@@ -122,7 +132,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                             value.2,
                             HandledFetchStatusInfo::ResToTextError(error),
                             value.4,
-                            value.5,
+                            provider_kind.clone(),
                         ),
                     );
                 }
@@ -135,7 +145,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                             value.2,
                             HandledFetchStatusInfo::ResStatusError(status_code),
                             value.4,
-                            value.5,
+                            provider_kind.clone(),
                         ),
                     );
                 }
@@ -149,7 +159,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                         UnhandledFetchStatusInfo::Initialized,
                         value.3,
                         value.4,
-                        value.5,
+                        provider_kind.clone(),
                     ),
                 );
             }
@@ -162,7 +172,7 @@ pub fn rxiv_filter_fetched_and_parsed_posts(
                         UnhandledFetchStatusInfo::Failure(box_dyn_error),
                         value.3,
                         value.4,
-                        value.5,
+                        provider_kind.clone(),
                     ),
                 );
             }

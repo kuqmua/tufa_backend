@@ -46,7 +46,10 @@ pub fn rxiv_part(
             //все отсальное херачить в отдельный поток кроме первого массива
             unhandled_success_handled_success_are_there_items_yep_posts,
             some_error_posts,
-        ) = rxiv_filter_fetched_and_parsed_posts(unfiltered_posts_hashmap_after_fetch_and_parse);
+        ) = rxiv_filter_fetched_and_parsed_posts(
+            unfiltered_posts_hashmap_after_fetch_and_parse,
+            provider_kind.clone(),
+        );
         //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
         let mut wrong_cases_thread = vec![];
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
