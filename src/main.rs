@@ -73,28 +73,3 @@ fn main() {
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
 }
-
-// use std::sync::{Arc, Mutex};
-// use std::thread;
-// fn main() {
-//     let vec_two = vec![1, 2, 3];
-//     // let vec_of_mutex
-//     let counter = Arc::new(Mutex::new(vec![0, 0, 0]));
-//     let mut handles = vec![];
-
-//     for (element_index, element) in &mut vec_two.into_iter().enumerate() {
-//         let counter = Arc::clone(&counter);
-
-//         let handle = thread::spawn(move || {
-//             let mut num = counter.lock().unwrap();
-//             let mut f = element;
-//             f += 1;
-//             num[element_index] += f;
-//         });
-//         handles.push(handle);
-//     }
-//     for handle in handles {
-//         handle.join().unwrap();
-//     }
-//     println!("Result: {:#?}", counter.lock().unwrap());
-// }
