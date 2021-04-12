@@ -73,7 +73,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_ERROR_PRINTS_ARXIV,
                     ENABLE_ARXIV_TIME_MEASUREMENT,
                     ARXIV_LINK,
-                    ProviderKind::Arxiv,
+                    &ProviderKind::Arxiv,
                 );
             }));
         }
@@ -103,7 +103,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_ERROR_PRINTS_BIORXIV,
                     ENABLE_BIORXIV_TIME_MEASUREMENT,
                     BIORXIV_LINK,
-                    ProviderKind::Biorxiv,
+                    &ProviderKind::Biorxiv,
                 );
             }));
         }
@@ -133,7 +133,7 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_ERROR_PRINTS_MEDRXIV,
                     ENABLE_MEDRXIV_TIME_MEASUREMENT,
                     MEDRXIV_LINK,
-                    ProviderKind::Medrxiv,
+                    &ProviderKind::Medrxiv,
                 );
             }));
         }

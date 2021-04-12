@@ -6,6 +6,7 @@ use std::thread;
 
 use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
+use crate::fetch;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
@@ -27,7 +28,7 @@ pub fn rxiv_part(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_link: &str,
-    provider_kind: ProviderKind,
+    provider_kind: &'static fetch::provider_kind_enum::ProviderKind,
 ) -> bool {
     if check_link(provider_link).0 {
         if enable_prints {
