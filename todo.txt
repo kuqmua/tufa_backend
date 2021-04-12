@@ -142,3 +142,5 @@ Only confirmed followers have access to @_KudoHiroyuki's tweets.
 429 Too Many Requests
 -----------
 futures in some cases instead of threads
+-----------
+threads batch
