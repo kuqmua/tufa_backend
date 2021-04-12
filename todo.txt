@@ -144,3 +144,5 @@ Only confirmed followers have access to @_KudoHiroyuki's tweets.
 futures in some cases instead of threads
 -----------
 threads batch
+-----------
+Vec::with_capacity everywhere if possible insteadf\ of vec![] or Vec::new()
