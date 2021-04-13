@@ -130,7 +130,7 @@ pub fn twitter_part(
             }
             //links_for_each_provider maybe 8 / 3 = 2,66666. do something with 6666666 (will be reallocation )
             let not_ready_processed_posts = Arc::new(Mutex::new(Vec::with_capacity(links_len)));
-            let mut threads_vector = vec![];
+            let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
             for element in &mut vec_of_hashmap_parts.into_iter() {
                 let not_ready_processed_posts_handle = Arc::clone(&not_ready_processed_posts);
                 let thread = thread::spawn(move || {

@@ -53,7 +53,7 @@ pub fn rxiv_part(
             provider_kind.clone(),
         );
         //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
-        let mut wrong_cases_thread = vec![];
+
         if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
             let error_message = format!(
                 "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!! {}",
@@ -66,7 +66,7 @@ pub fn rxiv_part(
         } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
             != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
         {
-            wrong_cases_thread.push(thread::spawn(move || {
+            let wrong_cases_thread = thread::spawn(move || {
                 if enable_prints {
                     let message = format!(
                         "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
@@ -112,7 +112,8 @@ pub fn rxiv_part(
                     enable_error_prints,
                     some_error_posts,
                 );
-            }));
+            });
+            wrong_cases_thread.join().unwrap();
             // true
         } else {
             if enable_prints {
@@ -127,9 +128,7 @@ pub fn rxiv_part(
             }
             // true
         }
-        for i in wrong_cases_thread {
-            i.join().unwrap();
-        }
+
         true
     } else {
         if enable_error_prints {

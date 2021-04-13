@@ -42,7 +42,7 @@ use crate::overriding::prints::print_error_red;
 // use crate::config::ENABLE_REDDIT;
 
 pub async fn check_new_posts_threads_parts() {
-    let mut threads_vec = vec![];
+    let mut threads_vec = Vec::with_capacity(4);
     // if ENABLE_REDDIT {
     //     threads_vec.push(thread::spawn(move || {
     //         fetch::reddit_fetch::reddit_fetch::reddit_part();

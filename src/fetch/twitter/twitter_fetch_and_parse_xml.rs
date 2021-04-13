@@ -52,7 +52,7 @@ pub fn twitter_fetch_and_parse_xml(
             time.elapsed().as_millis(),
         );
     };
-    let mut thread_vector = vec![];
+    let mut thread_vector = Vec::with_capacity(twitter_links.len());
     for (element_index, (key, value)) in &mut twitter_links.into_iter().enumerate() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();

@@ -9,7 +9,7 @@ pub fn twitter_check_available_providers(
     enable_error_prints: bool,
     twitter_providers_names: std::vec::Vec<&'static str>,
 ) -> Vec<&str> {
-    let mut threads_vector = vec![];
+    let mut threads_vector = Vec::with_capacity(twitter_providers_names.len());
     let twitter_providers_links_available = Arc::new(Mutex::new(Vec::new()));
     for provider_name in &mut twitter_providers_names.into_iter() {
         let twitter_providers_links_available_handle =

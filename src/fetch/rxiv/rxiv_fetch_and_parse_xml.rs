@@ -48,7 +48,7 @@ pub fn rxiv_fetch_and_parse_xml(
             time.elapsed().as_millis(),
         );
     };
-    let mut handles = vec![];
+    let mut handles = Vec::with_capacity(rxiv_links.len());
 
     for (element_index, (key, value)) in &mut rxiv_links.into_iter().enumerate() {
         let hashmap_handle = Arc::clone(&hashmap_to_return);

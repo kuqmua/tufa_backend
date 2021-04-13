@@ -145,4 +145,6 @@ futures in some cases instead of threads
 -----------
 threads batch
 -----------
-Vec::with_capacity everywhere if possible insteadf\ of vec![] or Vec::new()
+do something with that 
+pub async fn check_new_posts_threads_parts() {
+    let mut threads_vec = Vec::with_capacity(4); arxiv biorxiv medrxiv twitter reddit ...
