@@ -146,5 +146,3 @@ futures in some cases instead of threads
 threads batch
 -----------
 Vec::with_capacity everywhere if possible insteadf\ of vec![] or Vec::new()
------------
-move to github??????
