@@ -15,7 +15,7 @@ pub fn rxiv_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    rxiv_links: std::collections::HashMap<&'static str, std::string::String>,
+    rxiv_links: Vec<(&'static str, std::string::String)>,
     provider_kind: ProviderKind,
 ) -> Vec<(
     String,

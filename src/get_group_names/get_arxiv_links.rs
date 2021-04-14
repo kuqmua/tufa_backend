@@ -1,7 +1,5 @@
-use std::collections::HashMap;
-
-pub fn get_arxiv_links() -> HashMap<&'static str, String> {
-    let arxiv_sections: HashMap<&str, &str> = [
+pub fn get_arxiv_links() -> Vec<(&'static str, String)> {
+    let arxiv_sections: Vec<(&str, &str)> = [
         ("Cosmology and Nongalactic Astrophysics", "astro-ph.CO"),
         ("Earth and Planetary Astrophysics", "astro-ph.EP"),
         ("Astrophysics of Galaxies", "astro-ph.GA"),
@@ -158,10 +156,9 @@ pub fn get_arxiv_links() -> HashMap<&'static str, String> {
     .cloned()
     .collect();
     let first_part_of_link: &str = "http://export.arxiv.org/rss/";
-    let mut arxiv_sections_links: HashMap<&str, String> =
-        HashMap::with_capacity(arxiv_sections.len());
+    let mut arxiv_sections_links: Vec<(&str, String)> = Vec::with_capacity(arxiv_sections.len());
     for (key, value) in arxiv_sections {
-        arxiv_sections_links.insert(key, format!("{}{}", first_part_of_link, value));
+        arxiv_sections_links.push((key, format!("{}{}", first_part_of_link, value)));
     }
     arxiv_sections_links
 }

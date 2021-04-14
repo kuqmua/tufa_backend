@@ -1,6 +1,5 @@
-use std::collections::HashMap;
-pub fn get_medrxiv_links() -> HashMap<&'static str, String> {
-    let medrxiv_sections: HashMap<&str, &str> = [
+pub fn get_medrxiv_links() -> Vec<(&'static str, String)> {
+    let medrxiv_sections: Vec<(&str, &str)> = vec![
         ("Addiction Medicine", "Addiction_Medicine"),
         ("Allergy and Immunology", "Allergy_and_Immunology"),
         ("Anesthesia", "Anesthesia"),
@@ -81,10 +80,10 @@ pub fn get_medrxiv_links() -> HashMap<&'static str, String> {
     .cloned()
     .collect();
     let first_part_of_link: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";
-    let mut medrxiv_sections_links: HashMap<&str, String> =
-        HashMap::with_capacity(medrxiv_sections.len());
+    let mut medrxiv_sections_links: Vec<(&str, String)> =
+        Vec::with_capacity(medrxiv_sections.len());
     for (key, value) in medrxiv_sections {
-        medrxiv_sections_links.insert(key, format!("{}{}", first_part_of_link, value));
+        medrxiv_sections_links.push((key, format!("{}{}", first_part_of_link, value)));
     }
     medrxiv_sections_links
 }

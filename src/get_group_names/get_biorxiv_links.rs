@@ -1,6 +1,5 @@
-use std::collections::HashMap;
-pub fn get_biorxiv_links() -> HashMap<&'static str, String> {
-    let biorxiv_sections: HashMap<&str, &str> = [
+pub fn get_biorxiv_links() -> Vec<(&'static str, String)> {
+    let biorxiv_sections: Vec<(&str, &str)> = [
         (
             "Animal behavior and cognition",
             "animal_behavior_and_cognition",
@@ -39,10 +38,10 @@ pub fn get_biorxiv_links() -> HashMap<&'static str, String> {
     .cloned()
     .collect();
     let first_part_of_link: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";
-    let mut biorxiv_sections_links: HashMap<&str, String> =
-        HashMap::with_capacity(biorxiv_sections.len());
+    let mut biorxiv_sections_links: Vec<(&str, String)> =
+        Vec::with_capacity(biorxiv_sections.len());
     for (key, value) in biorxiv_sections {
-        biorxiv_sections_links.insert(key, format!("{}{}", first_part_of_link, value));
+        biorxiv_sections_links.push((key, format!("{}{}", first_part_of_link, value)));
     }
     biorxiv_sections_links
 }
