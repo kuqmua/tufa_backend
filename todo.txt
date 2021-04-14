@@ -148,3 +148,5 @@ threads batch
 do something with that 
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(4); arxiv biorxiv medrxiv twitter reddit ...
+-----------
+&str instead of String everywhere if possible
