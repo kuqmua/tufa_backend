@@ -1,6 +1,4 @@
-use std::collections::HashMap;
-
-pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> HashMap<&'static str, String> {
+pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> Vec<(&str, String)> {
     if twitter_provider_names.is_empty() {
         panic!("twitter_provider_names is empty!!!");
     }
@@ -2275,8 +2273,8 @@ pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> HashMap<&'static s
         panic!("twitter_subs_nicknames is empty!");
     }
     let twitter_subs_nicknames_length = twitter_subs_nicknames.len();
-    let mut twitter_sections_links: HashMap<&str, String> =
-        HashMap::with_capacity(twitter_subs_nicknames_length);
+    let mut twitter_sections_links: Vec<(&str, String)> =
+        Vec::with_capacity(twitter_subs_nicknames_length);
     if twitter_subs_nicknames_length > twitter_provider_names.len() {
         let how_many_twitter_links_on_diff_provider =
             twitter_subs_nicknames_length / twitter_provider_names.len();
@@ -2292,7 +2290,7 @@ pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> HashMap<&'static s
                 twitter_provider_names[twitter_provider_name_index],
                 sub_nickname.to_string(),
             );
-            twitter_sections_links.insert(sub_nickname, sub_link);
+            twitter_sections_links.push((sub_nickname, sub_link));
             if twitter_sub_nickname_index != 0
                 && twitter_sub_nickname_index % how_many_twitter_links_on_diff_provider == 0
                 && (twitter_provider_names_length - 1) > twitter_provider_name_index
@@ -2309,7 +2307,7 @@ pub fn get_twitter_subs(twitter_provider_names: Vec<&str>) -> HashMap<&'static s
                 twitter_provider_names_splited[index],
                 sub_nickname.to_string(),
             );
-            twitter_sections_links.insert(sub_nickname, sub_link);
+            twitter_sections_links.push((sub_nickname, sub_link));
         }
     }
     twitter_sections_links //maybe change structure for memory effective reasons
