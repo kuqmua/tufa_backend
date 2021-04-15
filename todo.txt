@@ -152,3 +152,5 @@ pub async fn check_new_posts_threads_parts() {
 &str instead of String everywhere if possible
 -----------
 'static remove if possible or maybe add if its better 
+-----------
+check github user
