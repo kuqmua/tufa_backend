@@ -73,3 +73,31 @@ fn main() {
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
 }
+
+// use std::sync::mpsc::channel;
+// use std::time::Instant;
+// use threadpool::ThreadPool;
+
+// fn main() {
+//     let since_fetch = Instant::now();
+//     let n_workers = 4;
+//     let n_jobs = 8000;
+//     let pool = ThreadPool::new(n_workers);
+
+//     let (tx, rx) = channel();
+//     for _ in 0..n_jobs {
+//         let tx = tx.clone();
+//         pool.execute(move || {
+//             println!("aaa");
+//             tx.send(1)
+//                 .expect("channel will be there waiting for the pool");
+//         });
+//     }
+
+//     assert_eq!(rx.iter().take(n_jobs).fold(0, |a, b| a + b), 8000);
+//     println!(
+//         "in {} sec {} mill",
+//         since_fetch.elapsed().as_secs(),
+//         since_fetch.elapsed().as_millis()
+//     );
+// }
