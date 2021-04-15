@@ -153,4 +153,4 @@ pub async fn check_new_posts_threads_parts() {
 -----------
 'static remove if possible or maybe add if its better 
 -----------
-check github user1
+ensure! macros
