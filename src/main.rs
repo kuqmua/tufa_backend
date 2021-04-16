@@ -101,3 +101,18 @@ fn main() {
 //         since_fetch.elapsed().as_millis()
 //     );
 // }
+
+// use futures::executor::block_on;
+
+// async fn greeter() {
+//     println!("sss");
+//     second_greeter().await;
+// }
+
+// async fn second_greeter() {
+//     println!("ffff");
+// }
+
+// fn main() {
+//     block_on(greeter());
+// }
