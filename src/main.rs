@@ -103,16 +103,38 @@ fn main() {
 // }
 
 // use futures::executor::block_on;
+// use std::sync::{Arc, Mutex};
 
-// async fn greeter() {
-//     println!("sss");
-//     second_greeter().await;
+// struct State {
+//     count: u64,
 // }
 
-// async fn second_greeter() {
-//     println!("ffff");
+// async fn task1(state: &Arc<Mutex<State>>) -> u64 {
+//     if let Ok(mut state) = state.lock() {
+//         state.count += 1;
+//     }
+//     println!("task1");
+//     1
+// }
+
+// async fn task2(state: &Arc<Mutex<State>>) -> u64 {
+//     if let Ok(mut state) = state.lock() {
+//         state.count += 2;
+//     }
+//     println!("task2");
+//     2
+// }
+
+// async fn async_main() {
+//     let state = State { count: 0 };
+//     let data = Arc::new(Mutex::new(state));
+//     let (result1, result2) = futures::join!(task1(&data), task2(&data));
+//     println!("result1 {} result2 {}", result1, result2);
+//     if let Ok(s) = data.lock() {
+//         println!("state {}", s.count);
+//     };
 // }
 
 // fn main() {
-//     block_on(greeter());
+//     block_on(async_main());
 // }
