@@ -34,6 +34,7 @@ pub fn twitter_part(
 ) -> bool {
     let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
     let twitter_providers_names_length_for_debug = twitter_providers_names.len();
+    // let twitter_available_providers_links: Vec<String> =
     let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
         enable_prints,
         enable_error_prints,

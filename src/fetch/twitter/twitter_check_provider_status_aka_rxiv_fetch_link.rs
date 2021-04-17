@@ -1,12 +1,13 @@
-// use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
-
+//async
 pub fn twitter_check_provider_status_aka_rxiv_fetch_link(
     link: &str,
     enable_error_prints: bool,
 ) -> Result<(bool, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
+    // let res = reqwest::get(link).await?;
+
     let mut result_tuple: (bool, HandledFetchStatusInfo) =
         (false, HandledFetchStatusInfo::Initialized);
     if res.status() == reqwest::StatusCode::OK {
