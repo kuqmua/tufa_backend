@@ -4,16 +4,17 @@ extern crate serde_xml_rs;
 
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::twitter::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
 use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
 use crate::fetch::twitter::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
 use crate::fetch::twitter::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
-use crate::fetch::twitter::twitter_handle_errors_arrays::twitter_handle_errors_arrays;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
+use futures::executor::block_on;
 use std::collections::HashMap;
 use std::fs;
 use std::mem;
@@ -220,14 +221,13 @@ pub fn twitter_part(
                             }
                         }
                     }
-                    //todo for each file thread
-                    twitter_handle_errors_arrays(
+                    block_on(twitter_async_write_fetch_error_logs_into_files_wrapper(
                         provider_kind,
                         enable_prints,
-                        // enable_warning_prints,
+                        // enable_warning_prints: bool,
                         enable_error_prints,
                         some_error_posts,
-                    );
+                    ));
                 });
                 wrong_cases_thread.join().unwrap();
                 //todo: cast to common post type
