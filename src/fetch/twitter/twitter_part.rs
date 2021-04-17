@@ -2,6 +2,7 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
+use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::twitter::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
@@ -32,6 +33,35 @@ pub fn twitter_part(
     provider_link: &str,
     provider_kind: &'static ProviderKind,
 ) -> bool {
+    let mut availability_checker_flag: bool = false;
+    match provider_kind {
+        ProviderKind::Arxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Biorxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Medrxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Twitter => {
+            let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
+            let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
+                enable_prints,
+                enable_error_prints,
+                twitter_providers_names,
+            );
+            if !twitter_available_providers_links.is_empty() {
+                availability_checker_flag = true;
+            }
+        }
+    }
     let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
     let twitter_providers_names_length_for_debug = twitter_providers_names.len();
     // let twitter_available_providers_links: Vec<String> =
@@ -40,7 +70,7 @@ pub fn twitter_part(
         enable_error_prints,
         twitter_providers_names,
     );
-    if !twitter_available_providers_links.is_empty() {
+    if availability_checker_flag {
         let links = get_twitter_subs(twitter_available_providers_links.clone());
         if !links.is_empty() {
             let twitter_available_providers_links_len = twitter_available_providers_links.len();
