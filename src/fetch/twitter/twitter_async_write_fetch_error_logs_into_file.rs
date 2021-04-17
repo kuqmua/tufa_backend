@@ -9,6 +9,7 @@ use chrono::Local;
 use serde_json::json;
 use std::time::Instant;
 
+#[allow(clippy::clippy::too_many_arguments)]
 pub async fn twitter_async_write_fetch_error_logs_into_file(
     key: String,
     value: (
@@ -23,6 +24,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
     provider_kind: &ProviderKind,
     enable_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
     time: Instant,
 ) {
     match value.2 {
@@ -185,7 +187,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
             )
         }
     }
-    if enable_prints {
+    if enable_time_measurement {
         println!(
             "write fetch error logs into file done in {} seconds {} miliseconds for {:#?}",
             time.elapsed().as_secs(),

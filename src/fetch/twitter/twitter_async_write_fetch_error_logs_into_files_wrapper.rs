@@ -14,6 +14,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_files_wrapper(
     enable_prints: bool,
     // enable_warning_prints: bool,
     enable_error_prints: bool,
+    enable_time_measurement: bool,
     some_error_posts: HashMap<
         String,
         (
@@ -38,11 +39,12 @@ pub async fn twitter_async_write_fetch_error_logs_into_files_wrapper(
             provider_kind,
             enable_prints,
             enable_error_prints,
+            enable_time_measurement,
             time,
         ));
     }
     let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
-    if enable_prints {
+    if enable_time_measurement {
         println!(
             "write fetch error logs into files done in {} seconds {} miliseconds for {:#?}",
             time.elapsed().as_secs(),

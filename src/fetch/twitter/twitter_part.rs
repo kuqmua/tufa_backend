@@ -226,6 +226,7 @@ pub fn twitter_part(
                         enable_prints,
                         // enable_warning_prints: bool,
                         enable_error_prints,
+                        enable_time_measurement,
                         some_error_posts,
                     ));
                 });
