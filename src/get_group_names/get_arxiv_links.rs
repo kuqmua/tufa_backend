@@ -152,9 +152,7 @@ pub fn get_arxiv_links() -> Vec<(&'static str, String)> {
         ("Nuclear Theory", "nucl-th"),
         ("Mathematical Physic", "math-ph"),
     ]
-    .iter()
-    .cloned()
-    .collect();
+    .to_vec();
     let first_part_of_link: &str = "http://export.arxiv.org/rss/";
     let mut arxiv_sections_links: Vec<(&str, String)> = Vec::with_capacity(arxiv_sections.len());
     for (key, value) in arxiv_sections {

@@ -76,9 +76,7 @@ pub fn get_medrxiv_links() -> Vec<(&'static str, String)> {
         ("Transplantation", "Transplantation"),
         ("Urology", "Urology"),
     ]
-    .iter()
-    .cloned()
-    .collect();
+    .to_vec();
     let first_part_of_link: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";
     let mut medrxiv_sections_links: Vec<(&str, String)> =
         Vec::with_capacity(medrxiv_sections.len());

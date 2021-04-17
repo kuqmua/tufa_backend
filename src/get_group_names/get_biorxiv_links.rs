@@ -34,9 +34,7 @@ pub fn get_biorxiv_links() -> Vec<(&'static str, String)> {
         ("Systems Biology", "systems_biology"),
         ("Zoology", "zoology"),
     ]
-    .iter()
-    .cloned()
-    .collect();
+    .to_vec();
     let first_part_of_link: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";
     let mut biorxiv_sections_links: Vec<(&str, String)> =
         Vec::with_capacity(biorxiv_sections.len());
