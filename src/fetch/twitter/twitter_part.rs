@@ -65,6 +65,7 @@ pub fn twitter_part(
                 if links_len % twitter_available_providers_links_len == 0 {
                     links_for_each_provider = links_len / twitter_available_providers_links_len;
                 } else {
+                    //little bit more memory usage than needed but no second allocation!
                     links_for_each_provider =
                         (links_len / twitter_available_providers_links_len) + 1;
                 }
@@ -129,7 +130,6 @@ pub fn twitter_part(
                     vec_of_hashmap_parts.len()
                 );
             }
-            //links_for_each_provider maybe 8 / 3 = 2,66666. do something with 6666666 (will be reallocation )
             let not_ready_processed_posts = Arc::new(Mutex::new(Vec::with_capacity(links_len)));
             let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
             for element in &mut vec_of_hashmap_parts.into_iter() {
