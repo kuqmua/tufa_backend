@@ -160,3 +160,7 @@ let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of su
 if let Ok(something) = something.lock() {}
 instead of 
 something.lock().unwrap();
+----------
+RES.STATUS: 521 <unknown status code>
+----------
+operation timed out print time elapsed
