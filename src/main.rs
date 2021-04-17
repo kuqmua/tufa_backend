@@ -140,10 +140,13 @@ fn main() {
 //     block_on(async_main());
 // }
 
+// use async_std::task;
 // use futures::executor::block_on;
 // use futures::future::join_all;
+// use std::time::Duration;
 
 // async fn foo(i: u32) -> u32 {
+//     task::sleep(Duration::from_secs(5)).await;
 //     println!("foo");
 //     i
 // }
