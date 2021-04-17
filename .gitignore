@@ -2,3 +2,4 @@
 #ignore cargo.lock
 Cargo.lock
 /logs
+/.vscode
