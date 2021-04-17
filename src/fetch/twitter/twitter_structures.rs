@@ -10,7 +10,6 @@ pub struct XmlTwitterParserStructItem {
     pub description: String, //todo: parse inner links
     #[serde(rename = "pubDate", default)]
     pub publication_date: String,
-    pub guid: String, //maybe doesnt matter
     pub link: String,
 }
 
@@ -31,20 +30,20 @@ impl TwitterPostStruct {
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterPost {
     pub title: String,
-    pub creator: String, //maybe creator == publisher
+    pub creator: String,
     pub description: String,
     pub publication_date: String,
-    pub guid: String,
+    // pub guid: String,
     pub link: String,
 }
 impl TwitterPost {
     pub fn new() -> Self {
         TwitterPost {
             title: "".to_string(),
-            creator: "".to_string(), //maybe creator == publisher
+            creator: "".to_string(),
             description: "".to_string(),
             publication_date: "".to_string(),
-            guid: "".to_string(),
+            // guid: "".to_string(),
             link: "".to_string(),
         }
     }

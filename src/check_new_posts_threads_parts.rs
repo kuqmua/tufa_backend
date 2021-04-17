@@ -66,7 +66,6 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rxiv_part(
-                    get_arxiv_links(),
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV,
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
@@ -96,7 +95,6 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rxiv_part(
-                    biorxiv_links,
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV,
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
@@ -126,7 +124,6 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rxiv_part(
-                    get_medrxiv_links(),
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV,
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,

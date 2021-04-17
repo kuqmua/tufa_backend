@@ -11,17 +11,20 @@ use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
 use crate::fetch::rxiv::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
+use crate::get_group_names::get_arxiv_links::get_arxiv_links;
+use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
+use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
-use std::collections::HashMap;
+use futures::executor::block_on;
 use std::fs;
 use std::mem;
 use std::path::Path;
 
 pub fn rxiv_part(
-    links: Vec<(&'static str, String)>,
+    // links: Vec<(&'static str, String)>,
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
@@ -34,6 +37,22 @@ pub fn rxiv_part(
         if enable_prints {
             println!("i can reach {}", provider_link)
         };
+        let links: Vec<(&str, String)>;
+        match provider_kind {
+            ProviderKind::Arxiv => {
+                links = get_arxiv_links();
+            }
+            ProviderKind::Biorxiv => {
+                links = get_biorxiv_links();
+            }
+            ProviderKind::Medrxiv => {
+                links = get_medrxiv_links();
+            }
+            ProviderKind::Twitter => {
+                //todo
+                panic!("twitter not handled yet!")
+            }
+        }
         let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
         let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
             enable_prints,
