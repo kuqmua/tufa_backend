@@ -181,6 +181,7 @@ pub fn rxiv_part(
         }
         true
     } else {
+        //todo twitter and rxiv common
         if enable_error_prints {
             let error_message = format!("i cannot reach {}", provider_link);
             print_error_red(file!().to_string(), line!().to_string(), error_message);
