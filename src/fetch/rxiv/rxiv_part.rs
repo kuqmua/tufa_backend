@@ -23,6 +23,9 @@ use std::fs;
 use std::mem;
 use std::path::Path;
 
+use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
+use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+
 pub fn rxiv_part(
     // links: Vec<(&'static str, String)>,
     enable_cleaning_logs_directory: bool,
@@ -33,7 +36,36 @@ pub fn rxiv_part(
     provider_link: &str,
     provider_kind: &'static fetch::provider_kind_enum::ProviderKind,
 ) -> bool {
-    if check_link(provider_link).0 {
+    let mut availability_checker_flag: bool = false;
+    match provider_kind {
+        ProviderKind::Arxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Biorxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Medrxiv => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
+            }
+        }
+        ProviderKind::Twitter => {
+            let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
+            let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
+                enable_prints,
+                enable_error_prints,
+                twitter_providers_names,
+            );
+            if !twitter_available_providers_links.is_empty() {
+                availability_checker_flag = true;
+            }
+        }
+    }
+    if availability_checker_flag {
         if enable_prints {
             println!("i can reach {}", provider_link)
         };
@@ -147,7 +179,6 @@ pub fn rxiv_part(
             }
             // true
         }
-
         true
     } else {
         if enable_error_prints {
