@@ -62,15 +62,16 @@ pub fn twitter_part(
             }
         }
     }
-    let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
-    let twitter_providers_names_length_for_debug = twitter_providers_names.len();
-    // let twitter_available_providers_links: Vec<String> =
-    let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
-        enable_prints,
-        enable_error_prints,
-        twitter_providers_names,
-    );
+
     if availability_checker_flag {
+        let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
+        let twitter_providers_names_length_for_debug = twitter_providers_names.len();
+        // let twitter_available_providers_links: Vec<String> =
+        let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
+            enable_prints,
+            enable_error_prints,
+            twitter_providers_names,
+        );
         let links = get_twitter_subs(twitter_available_providers_links.clone());
         if !links.is_empty() {
             let twitter_available_providers_links_len = twitter_available_providers_links.len();
@@ -284,6 +285,32 @@ pub fn twitter_part(
             false
         }
     } else {
+        if enable_error_prints {
+            match provider_kind {
+                ProviderKind::Arxiv => {
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Biorxiv => {
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Medrxiv => {
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Twitter => {
+                    let error_message = format!(
+                        "i cannot reach any of provider links for {:#?}",
+                        provider_kind
+                    );
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+            }
+        };
         false
     }
 }

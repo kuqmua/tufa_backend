@@ -27,7 +27,6 @@ use crate::fetch::twitter::twitter_check_available_providers::twitter_check_avai
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 
 pub fn rxiv_part(
-    // links: Vec<(&'static str, String)>,
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
@@ -183,9 +182,9 @@ pub fn rxiv_part(
     } else {
         //todo twitter and rxiv common
         if enable_error_prints {
-            let error_message = format!("i cannot reach {}", provider_link);
+            let error_message =
+                format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
             print_error_red(file!().to_string(), line!().to_string(), error_message);
-            println!();
         };
         false
     }
