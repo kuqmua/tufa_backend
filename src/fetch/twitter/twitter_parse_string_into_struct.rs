@@ -1,8 +1,8 @@
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::twitter::twitter_structures::TwitterPost;
-use crate::fetch::twitter::twitter_structures::TwitterPostStruct;
-use crate::fetch::twitter::twitter_structures::XmlTwitterParserStruct;
+use crate::fetch::rxiv::rxiv_structures::RxivPost;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
+use crate::fetch::rxiv::rxiv_structures::XmlRxivParserStruct;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
@@ -13,8 +13,8 @@ pub fn twitter_parse_string_into_struct(
     value: &str,
     enable_error_prints: bool,
     provider_kind: ProviderKind,
-) -> (TwitterPostStruct, AreThereItems) {
-    let mut rxiv_post_struct_handle: TwitterPostStruct = TwitterPostStruct::new();
+) -> (RxivPostStruct, AreThereItems) {
+    let mut rxiv_post_struct_handle: RxivPostStruct = RxivPostStruct::new();
     let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
                                                // println!("{:#?}", provider_kind);
                                                // if let ProviderKind::Medrxiv = provider_kind {
@@ -59,15 +59,15 @@ pub fn twitter_parse_string_into_struct(
                     fetch_result_string = fetch_result_string.replace("<atom:link", "<atom_link");
                 }
             }
-            let rxiv_struct_from_str_result: Result<XmlTwitterParserStruct, serde_xml_rs::Error> =
+            let rxiv_struct_from_str_result: Result<XmlRxivParserStruct, serde_xml_rs::Error> =
                 from_str(&fetch_result_string);
             match rxiv_struct_from_str_result {
                 Ok(rxiv_struct) => {
                     let mut count = 0;
-                    let mut rxiv_page_struct: TwitterPostStruct = TwitterPostStruct::new();
+                    let mut rxiv_page_struct: RxivPostStruct = RxivPostStruct::new();
                     loop {
                         if count < rxiv_struct.items.len() {
-                            let mut rxiv_post: TwitterPost = TwitterPost::new();
+                            let mut rxiv_post: RxivPost = RxivPost::new();
                             rxiv_post.title = rxiv_struct.items[count].title.clone();
                             rxiv_post.link = rxiv_struct.items[count].link.clone();
                             rxiv_post.description = rxiv_struct.items[count].description.clone();

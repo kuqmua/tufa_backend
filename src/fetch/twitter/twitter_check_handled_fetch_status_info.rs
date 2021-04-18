@@ -3,8 +3,8 @@ use std::time::Instant;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use crate::fetch::twitter::twitter_parse_string_into_struct::twitter_parse_string_into_struct;
-use crate::fetch::twitter::twitter_structures::TwitterPostStruct;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn twitter_check_handled_fetch_status_info(
@@ -17,9 +17,9 @@ pub fn twitter_check_handled_fetch_status_info(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_kind: ProviderKind,
-) -> (HandledFetchStatusInfo, TwitterPostStruct, AreThereItems) {
+) -> (HandledFetchStatusInfo, RxivPostStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
-    let mut rxiv_post_struct_wrapper_handle: TwitterPostStruct = TwitterPostStruct::new();
+    let mut rxiv_post_struct_wrapper_handle: RxivPostStruct = RxivPostStruct::new();
     let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
         HandledFetchStatusInfo::Initialized => {

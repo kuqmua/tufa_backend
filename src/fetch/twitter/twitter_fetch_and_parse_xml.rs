@@ -6,8 +6,8 @@ use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rxiv::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
+use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use crate::fetch::twitter::twitter_check_handled_fetch_status_info::twitter_check_handled_fetch_status_info;
-use crate::fetch::twitter::twitter_structures::TwitterPostStruct;
 use crate::overriding::prints::print_error_red;
 
 use std::sync::{Arc, Mutex};
@@ -22,7 +22,7 @@ pub fn twitter_fetch_and_parse_xml(
 ) -> Vec<(
     String,
     (
-        TwitterPostStruct,
+        RxivPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -35,7 +35,7 @@ pub fn twitter_fetch_and_parse_xml(
         (
             "".to_string(),
             (
-                TwitterPostStruct::new(),
+                RxivPostStruct::new(),
                 "".to_string(),
                 UnhandledFetchStatusInfo::Initialized,
                 HandledFetchStatusInfo::Initialized,
