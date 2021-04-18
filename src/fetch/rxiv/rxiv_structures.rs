@@ -38,7 +38,6 @@ impl RxivPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
-            // date: "".to_string(),
             creator: "".to_string(),
         }
     }
