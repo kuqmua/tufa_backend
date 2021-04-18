@@ -107,16 +107,11 @@ pub fn twitter_part(
             }
             let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> =
                 vec![HashMap::with_capacity(links_for_each_provider); vec_of_hashmap_parts_len];
-            //HashMap into Vector transformation
-            let mut vec_of_links: Vec<(&str, String)> = Vec::with_capacity(links_len);
-            for (key, value) in links {
-                vec_of_links.push((key, value));
-            }
             let mut vec_of_hashmap_parts_element_index_counter = 0;
             let mut even_vec_of_hashmap_parts_element_index_counter = 0;
             let mut even_flag = false;
             if is_links_len_more_than_twitter_available_providers_links_len {
-                for element in vec_of_links {
+                for element in links {
                     if !even_flag {
                         if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
                             == links_for_each_provider
@@ -151,7 +146,7 @@ pub fn twitter_part(
                     }
                 }
             } else {
-                for (element_index, element) in vec_of_links.into_iter().enumerate() {
+                for (element_index, element) in links.into_iter().enumerate() {
                     vec_of_hashmap_parts[element_index].insert(element.0, element.1);
                 }
             }
