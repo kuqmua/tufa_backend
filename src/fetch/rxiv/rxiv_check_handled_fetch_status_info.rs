@@ -3,8 +3,8 @@ use std::time::Instant;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rxiv::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rxiv::rxiv_parse_string_into_struct::rxiv_parse_string_into_struct;
 use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
+use crate::fetch::twitter::twitter_parse_string_into_struct::twitter_parse_string_into_struct;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rxiv_check_handled_fetch_status_info(
@@ -34,14 +34,15 @@ pub fn rxiv_check_handled_fetch_status_info(
         HandledFetchStatusInfo::Success => {
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
-            let (rxiv_post_struct_handle, are_there_items_handle) = rxiv_parse_string_into_struct(
-                fetch_result_string,
-                key,
-                &value,
-                // enable_prints,
-                enable_error_prints,
-                provider_kind,
-            );
+            let (rxiv_post_struct_handle, are_there_items_handle) =
+                twitter_parse_string_into_struct(
+                    fetch_result_string,
+                    key,
+                    &value,
+                    // enable_prints,
+                    enable_error_prints,
+                    provider_kind,
+                );
             rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             if enable_time_measurement {

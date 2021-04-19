@@ -7,7 +7,6 @@ mod fetch {
         pub mod rxiv_fetch_link;
         pub mod rxiv_filter_fetched_and_parsed_posts;
         pub mod rxiv_logs_create_dir_if_dont_exists;
-        pub mod rxiv_parse_string_into_struct;
         pub mod rxiv_part;
         pub mod rxiv_structures;
         pub mod rxiv_write_error_logs_into_file;
