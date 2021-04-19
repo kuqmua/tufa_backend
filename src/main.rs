@@ -24,7 +24,6 @@ mod fetch {
         pub mod twitter_filter_fetched_and_parsed_posts;
         pub mod twitter_parse_string_into_struct;
         pub mod twitter_part;
-        pub mod twitter_structures;
     }
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;
