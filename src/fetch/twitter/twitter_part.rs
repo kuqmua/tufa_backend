@@ -184,7 +184,7 @@ pub fn twitter_part(
             let processed_posts = &*not_ready_processed_posts.lock().unwrap();
             let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter = processed_posts.len();
             let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
-                twitter_filter_fetched_and_parsed_posts(processed_posts.to_vec());
+                twitter_filter_fetched_and_parsed_posts(processed_posts.to_vec(), provider_kind);
             if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
                 if enable_warning_prints {
                     print_warning_orange(

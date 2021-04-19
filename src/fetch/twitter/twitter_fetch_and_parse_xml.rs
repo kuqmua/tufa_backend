@@ -17,7 +17,7 @@ pub fn twitter_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    twitter_links: std::collections::HashMap<&'static str, std::string::String>,
+    twitter_links: HashMap<&'static str, String>,
     provider_kind: ProviderKind,
 ) -> Vec<(
     String,
@@ -27,7 +27,7 @@ pub fn twitter_fetch_and_parse_xml(
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
         AreThereItems,
-        ProviderKind,
+        // ProviderKind,
     ),
 )> {
     let time = Instant::now();
@@ -40,7 +40,7 @@ pub fn twitter_fetch_and_parse_xml(
                 UnhandledFetchStatusInfo::Initialized,
                 HandledFetchStatusInfo::Initialized,
                 AreThereItems::Initialized,
-                provider_kind.clone()
+                // provider_kind.clone()
             )
         );
         twitter_links.len()

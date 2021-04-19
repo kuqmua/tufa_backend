@@ -6,6 +6,7 @@ use crate::fetch::rxiv::rxiv_check_handled_fetch_status_info::rxiv_check_handled
 use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
 use crate::fetch::rxiv::rxiv_structures::RxivPostStruct;
 use crate::overriding::prints::print_error_red;
+use std::collections::HashMap;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -15,7 +16,7 @@ pub fn rxiv_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    rxiv_links: Vec<(&'static str, std::string::String)>,
+    rxiv_links: HashMap<&'static str, std::string::String>,
     provider_kind: ProviderKind,
 ) -> Vec<(
     String,

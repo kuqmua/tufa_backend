@@ -2,15 +2,13 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
-use std::thread;
-
 use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
-use crate::fetch::rxiv::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
 use crate::fetch::twitter::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
+use crate::fetch::twitter::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
@@ -19,9 +17,11 @@ use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use futures::executor::block_on;
+use std::collections::HashMap;
 use std::fs;
 use std::mem;
 use std::path::Path;
+use std::thread;
 
 use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
@@ -68,7 +68,7 @@ pub fn rxiv_part(
         if enable_prints {
             println!("i can reach {}", provider_link)
         };
-        let links: Vec<(&str, String)>;
+        let links: HashMap<&str, String>;
         match provider_kind {
             ProviderKind::Arxiv => {
                 links = get_arxiv_links();
@@ -98,9 +98,9 @@ pub fn rxiv_part(
             //все отсальное херачить в отдельный поток кроме первого массива
             unhandled_success_handled_success_are_there_items_yep_posts,
             some_error_posts,
-        ) = rxiv_filter_fetched_and_parsed_posts(
+        ) = twitter_filter_fetched_and_parsed_posts(
             unfiltered_posts_hashmap_after_fetch_and_parse,
-            provider_kind.clone(),
+            &provider_kind,
         );
         //переписать логику фильтрации выделяя тут только нужную часть//перенести в отдельный поток остальное
 
