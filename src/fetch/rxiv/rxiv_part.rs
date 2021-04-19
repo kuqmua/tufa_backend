@@ -10,7 +10,7 @@ use crate::fetch;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
 use crate::fetch::rxiv::rxiv_filter_fetched_and_parsed_posts::rxiv_filter_fetched_and_parsed_posts;
-use crate::fetch::rxiv::rxiv_handle_errors_arrays::rxiv_handle_errors_arrays;
+use crate::fetch::twitter::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
@@ -155,11 +155,12 @@ pub fn rxiv_part(
                         }
                     }
                 }
-                rxiv_handle_errors_arrays(
+                twitter_async_write_fetch_error_logs_into_files_wrapper(
                     provider_kind,
                     enable_prints,
                     // enable_warning_prints,
                     enable_error_prints,
+                    enable_time_measurement,
                     some_error_posts,
                 );
             });
