@@ -2,7 +2,7 @@ use serde_json::Value;
 
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
+use crate::fetch::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
 use crate::overriding::prints::print_error_red;
 use std::{fs::File, io::Write};
 

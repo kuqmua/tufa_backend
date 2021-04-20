@@ -4,7 +4,7 @@ use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::provider_kind_enum::ProviderKind;
 use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::twitter::twitter_async_write_fetch_error_logs_into_file::twitter_async_write_fetch_error_logs_into_file;
+use crate::fetch::twitter_async_write_fetch_error_logs_into_file::twitter_async_write_fetch_error_logs_into_file;
 use futures::future::join_all;
 use std::collections::HashMap;
 use std::time::Instant;
