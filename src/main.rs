@@ -12,12 +12,13 @@ mod fetch {
     pub mod twitter_async_write_fetch_error_logs_into_file;
     pub mod twitter_async_write_fetch_error_logs_into_files_wrapper;
     pub mod twitter_check_handled_fetch_status_info;
+    pub mod twitter_fetch_and_parse_xml;
     pub mod twitter_filter_fetched_and_parsed_posts;
     pub mod twitter_parse_string_into_struct;
     pub mod twitter {
         pub mod twitter_check_available_providers;
         pub mod twitter_check_provider_status_aka_rxiv_fetch_link;
-        pub mod twitter_fetch_and_parse_xml;
+
         pub mod twitter_part;
     }
     // pub mod reddit_fetch {
