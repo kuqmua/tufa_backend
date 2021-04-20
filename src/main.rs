@@ -1,15 +1,16 @@
 mod fetch {
     pub mod handle_error_status_code;
     pub mod rxiv {
-        pub mod metainfo_fetch_structures;
+
         pub mod rxiv_fetch_and_parse_xml;
         pub mod rxiv_fetch_link;
         pub mod rxiv_logs_create_dir_if_dont_exists;
         pub mod rxiv_part;
-        pub mod rxiv_structures;
-        pub mod rxiv_write_error_logs_into_file;
     }
+    pub mod metainfo_fetch_structures;
     pub mod provider_kind_enum;
+    pub mod rxiv_structures;
+    pub mod rxiv_write_error_logs_into_file;
     pub mod twitter {
         pub mod twitter_async_write_fetch_error_logs_into_file;
         pub mod twitter_async_write_fetch_error_logs_into_files_wrapper;

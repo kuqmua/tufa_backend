@@ -55,6 +55,7 @@ pub fn twitter_part(
             let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
                 enable_prints,
                 enable_error_prints,
+                enable_time_measurement,
                 twitter_providers_names,
             );
             if !twitter_available_providers_links.is_empty() {
@@ -70,6 +71,7 @@ pub fn twitter_part(
         let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
             enable_prints,
             enable_error_prints,
+            enable_time_measurement,
             twitter_providers_names,
         );
         let links = get_twitter_subs(twitter_available_providers_links.clone());
