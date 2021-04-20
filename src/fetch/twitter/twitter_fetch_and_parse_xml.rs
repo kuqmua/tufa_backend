@@ -1,6 +1,3 @@
-use std::collections::HashMap;
-use std::time::Instant;
-
 use crate::fetch::metainfo_fetch_structures::AreThereItems;
 use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -10,14 +7,16 @@ use crate::fetch::rxiv_structures::RxivPostStruct;
 use crate::fetch::twitter_check_handled_fetch_status_info::twitter_check_handled_fetch_status_info;
 use crate::overriding::prints::print_error_red;
 
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
+use std::time::Instant;
 
 pub fn twitter_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    twitter_links: HashMap<&'static str, String>,
+    links: HashMap<&'static str, String>,
     provider_kind: ProviderKind,
 ) -> Vec<(
     String,
@@ -27,7 +26,6 @@ pub fn twitter_fetch_and_parse_xml(
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
         AreThereItems,
-        // ProviderKind,
     ),
 )> {
     let time = Instant::now();
@@ -40,10 +38,9 @@ pub fn twitter_fetch_and_parse_xml(
                 UnhandledFetchStatusInfo::Initialized,
                 HandledFetchStatusInfo::Initialized,
                 AreThereItems::Initialized,
-                // provider_kind.clone()
             )
         );
-        twitter_links.len()
+        links.len()
     ]));
     if enable_time_measurement {
         println!(
@@ -52,8 +49,8 @@ pub fn twitter_fetch_and_parse_xml(
             time.elapsed().as_millis(),
         );
     };
-    let mut thread_vector = Vec::with_capacity(twitter_links.len());
-    for (element_index, (key, value)) in &mut twitter_links.into_iter().enumerate() {
+    let mut thread_vector = Vec::with_capacity(links.len());
+    for (element_index, (key, value)) in &mut links.into_iter().enumerate() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
@@ -92,15 +89,15 @@ pub fn twitter_fetch_and_parse_xml(
                         are_there_items_wrapper_handle;
                 }
                 Err(e) => {
+                    let mut hashmap_to_return_handle_locked =
+                        hashmap_to_return_handle.lock().unwrap();
+                    hashmap_to_return_handle_locked[element_index].1 .2 =
+                        UnhandledFetchStatusInfo::Failure(e.to_string());
                     if enable_error_prints {
                         let concated_error =
                             "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
                         print_error_red(file!().to_string(), line!().to_string(), concated_error)
                     }
-                    let mut hashmap_to_return_handle_locked =
-                        hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked[element_index].1 .2 =
-                        UnhandledFetchStatusInfo::Failure(e.to_string());
                 }
             }
         });

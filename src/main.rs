@@ -1,10 +1,7 @@
 mod fetch {
     pub mod handle_error_status_code;
     pub mod rxiv {
-
-        pub mod rxiv_fetch_and_parse_xml;
         pub mod rxiv_fetch_link;
-
         pub mod rxiv_part;
     }
     pub mod metainfo_fetch_structures;
@@ -18,7 +15,6 @@ mod fetch {
     pub mod twitter_filter_fetched_and_parsed_posts;
     pub mod twitter_parse_string_into_struct;
     pub mod twitter {
-
         pub mod twitter_check_available_providers;
         pub mod twitter_check_provider_status_aka_rxiv_fetch_link;
         pub mod twitter_fetch_and_parse_xml;

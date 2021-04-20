@@ -6,7 +6,7 @@ use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch;
 use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
+use crate::fetch::twitter::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
 use crate::fetch::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
 use crate::fetch::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
@@ -86,7 +86,7 @@ pub fn rxiv_part(
             }
         }
         let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
-        let unfiltered_posts_hashmap_after_fetch_and_parse = rxiv_fetch_and_parse_xml(
+        let unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
             enable_prints,
             enable_error_prints,
             enable_time_measurement,

@@ -1,15 +1,3 @@
-// extern crate reqwest;
-// extern crate serde;
-// extern crate serde_xml_rs;
-
-// use crate::check_net::check_link::check_link;
-// use crate::fetch::metainfo_fetch_structures::AreThereItems;
-// use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-// use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-// use crate::fetch::rxiv_fetch_and_parse_xml::rxiv_fetch_and_parse_xml;
-// use crate::fetch::provider_kind_enum::RxivKind;
-// use crate::fetch::rxiv_structures::RxivPostStruct;
-// use std::collections::HashMap;
 use reqwest::StatusCode;
 
 pub fn handle_error_status_code(error_status_code: StatusCode, key: &str, link: String) -> bool {
