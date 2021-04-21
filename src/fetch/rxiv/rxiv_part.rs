@@ -69,19 +69,31 @@ pub fn rxiv_part(
             println!("i can reach {}", provider_link)
         };
         let links_temp_naming: HashMap<&str, String>;
+        let twitter_available_providers_links: Vec<&str>;
         match provider_kind {
             ProviderKind::Arxiv => {
                 links_temp_naming = get_arxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Biorxiv => {
                 links_temp_naming = get_biorxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Medrxiv => {
                 links_temp_naming = get_medrxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Twitter => {
                 links_temp_naming = HashMap::new();
                 // panic!("twitter not handled yet!")
+                let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
+                // let twitter_available_providers_links: Vec<String> =
+                twitter_available_providers_links = twitter_check_available_providers(
+                    enable_prints,
+                    enable_error_prints,
+                    enable_time_measurement,
+                    twitter_providers_names,
+                );
             }
         }
         if !links_temp_naming.is_empty() {

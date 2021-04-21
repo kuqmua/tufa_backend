@@ -73,33 +73,39 @@ pub fn twitter_part(
             println!("i can reach {}", provider_link)
         };
         let links_temp_naming: HashMap<&str, String>;
+        let twitter_available_providers_links: Vec<&str>;
         match provider_kind {
             ProviderKind::Arxiv => {
                 links_temp_naming = get_arxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Biorxiv => {
                 links_temp_naming = get_biorxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Medrxiv => {
                 links_temp_naming = get_medrxiv_links();
+                twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Twitter => {
+                links_temp_naming = HashMap::new();
                 // panic!("twitter not handled yet!")
+                let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
+                // let twitter_available_providers_links: Vec<String> =
+                twitter_available_providers_links = twitter_check_available_providers(
+                    enable_prints,
+                    enable_error_prints,
+                    enable_time_measurement,
+                    twitter_providers_names,
+                );
             }
         }
-        let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
-        let twitter_providers_names_length_for_debug = twitter_providers_names.len();
-        // let twitter_available_providers_links: Vec<String> =
-        let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
-            enable_prints,
-            enable_error_prints,
-            enable_time_measurement,
-            twitter_providers_names,
-        );
-        let links = get_twitter_subs(twitter_available_providers_links.clone());
-        if !links.is_empty() {
+        //todo: 2 different match for links_temp_naming and twitter_providers_names
+
+        let links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
+        if !links_temp_naming.is_empty() {
             let twitter_available_providers_links_len = twitter_available_providers_links.len();
-            let links_len = links.len();
+            let links_len = links_temp_naming.len();
             let links_for_each_provider: usize;
             let is_links_len_more_than_twitter_available_providers_links_len =
                 links_len > twitter_available_providers_links_len;
@@ -123,7 +129,7 @@ pub fn twitter_part(
             let mut even_vec_of_hashmap_parts_element_index_counter = 0;
             let mut even_flag = false;
             if is_links_len_more_than_twitter_available_providers_links_len {
-                for element in links {
+                for element in links_temp_naming {
                     if !even_flag {
                         if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
                             == links_for_each_provider
@@ -158,7 +164,7 @@ pub fn twitter_part(
                     }
                 }
             } else {
-                for (element_index, element) in links.into_iter().enumerate() {
+                for (element_index, element) in links_temp_naming.into_iter().enumerate() {
                     vec_of_hashmap_parts[element_index].insert(element.0, element.1);
                 }
             }
