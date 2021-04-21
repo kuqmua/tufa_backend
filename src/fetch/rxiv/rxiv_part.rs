@@ -84,7 +84,8 @@ pub fn rxiv_part(
                 // panic!("twitter not handled yet!")
             }
         }
-        let unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+        if !links_temp_naming.is_empty() {
+            let unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
             enable_prints,
             enable_error_prints,
             enable_time_measurement,
@@ -177,6 +178,18 @@ pub fn rxiv_part(
             // true
         }
         true
+        }
+        else{
+            if enable_error_prints {
+                print_error_red(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "twitter_links.is_empty".to_string(),
+                );
+            }
+            false
+        }
+        
     } else {
         if enable_error_prints {
             match provider_kind {
