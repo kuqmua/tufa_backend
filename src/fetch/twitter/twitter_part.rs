@@ -20,13 +20,13 @@ use std::mem;
 use std::path::Path;
 use std::thread;
 
-use std::sync::{Arc, Mutex};
 use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
-use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
-use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+use crate::get_group_names::get_twitter_subs::get_twitter_subs;
+use std::sync::{Arc, Mutex};
 
 pub fn twitter_part(
     enable_cleaning_logs_directory: bool,
@@ -294,17 +294,6 @@ pub fn twitter_part(
                 );
             }
             false
-            // if enable_prints {
-            //     let message = format!(
-            //         "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
-            //         unhandled_success_handled_success_are_there_items_yep_posts.len(),
-            //         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-            //         provider_kind,
-            //         mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
-            //     );
-            //     print_success_green(file!().to_string(), line!().to_string(), message);
-            // }
-            // false
         }
     } else {
         if enable_error_prints {
