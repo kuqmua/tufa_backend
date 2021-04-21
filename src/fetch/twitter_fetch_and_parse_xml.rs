@@ -17,7 +17,7 @@ pub fn twitter_fetch_and_parse_xml(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     links: HashMap<&'static str, String>,
-    provider_kind: ProviderKind,
+    provider_kind: &ProviderKind,
 ) -> Vec<(
     String,
     (

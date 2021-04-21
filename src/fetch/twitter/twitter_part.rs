@@ -5,12 +5,10 @@ extern crate serde_xml_rs;
 use crate::check_net::check_link::check_link;
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
+
 use crate::fetch::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
 use crate::fetch::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
 use crate::fetch::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
-use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
-use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
@@ -20,9 +18,15 @@ use std::collections::HashMap;
 use std::fs;
 use std::mem;
 use std::path::Path;
+use std::thread;
 
 use std::sync::{Arc, Mutex};
-use std::thread;
+use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
+use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+use crate::get_group_names::get_twitter_subs::get_twitter_subs;
+use crate::get_group_names::get_arxiv_links::get_arxiv_links;
+use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
+use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 
 pub fn twitter_part(
     enable_cleaning_logs_directory: bool,
@@ -65,6 +69,24 @@ pub fn twitter_part(
     }
 
     if availability_checker_flag {
+        if enable_prints {
+            println!("i can reach {}", provider_link)
+        };
+        let links_temp_naming: HashMap<&str, String>;
+        match provider_kind {
+            ProviderKind::Arxiv => {
+                links_temp_naming = get_arxiv_links();
+            }
+            ProviderKind::Biorxiv => {
+                links_temp_naming = get_biorxiv_links();
+            }
+            ProviderKind::Medrxiv => {
+                links_temp_naming = get_medrxiv_links();
+            }
+            ProviderKind::Twitter => {
+                // panic!("twitter not handled yet!")
+            }
+        }
         let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
         let twitter_providers_names_length_for_debug = twitter_providers_names.len();
         // let twitter_available_providers_links: Vec<String> =
@@ -77,19 +99,6 @@ pub fn twitter_part(
         let links = get_twitter_subs(twitter_available_providers_links.clone());
         if !links.is_empty() {
             let twitter_available_providers_links_len = twitter_available_providers_links.len();
-            if enable_prints {
-                println!(
-                    "twitter providers available {:#?} of {:#?}",
-                    twitter_available_providers_links_len, twitter_providers_names_length_for_debug
-                );
-                println!(
-                    "links({}) for each provider ({}) links_for_each_provider {} links_to_remaind {}",
-                    links.len(),
-                    twitter_available_providers_links_len,
-                    links.len() / twitter_available_providers_links_len,
-                    links.len() % twitter_available_providers_links_len,
-                );
-            }
             let links_len = links.len();
             let links_for_each_provider: usize;
             let is_links_len_more_than_twitter_available_providers_links_len =
@@ -170,7 +179,7 @@ pub fn twitter_part(
                             enable_error_prints,
                             enable_time_measurement,
                             element.clone(),
-                            ProviderKind::Twitter,
+                            &ProviderKind::Twitter,
                         );
                     let mut locked_not_ready_processed_posts =
                         not_ready_processed_posts_handle.lock().unwrap();
@@ -285,6 +294,17 @@ pub fn twitter_part(
                 );
             }
             false
+            // if enable_prints {
+            //     let message = format!(
+            //         "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
+            //         unhandled_success_handled_success_are_there_items_yep_posts.len(),
+            //         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+            //         provider_kind,
+            //         mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
+            //     );
+            //     print_success_green(file!().to_string(), line!().to_string(), message);
+            // }
+            // false
         }
     } else {
         if enable_error_prints {
@@ -316,3 +336,17 @@ pub fn twitter_part(
         false
     }
 }
+
+// if enable_prints {
+//                 println!(
+//                     "twitter providers available {:#?} of {:#?}",
+//                     twitter_available_providers_links_len, twitter_providers_names_length_for_debug
+//                 );
+//                 println!(
+//                     "links({}) for each provider ({}) links_for_each_provider {} links_to_remaind {}",
+//                     links.len(),
+//                     twitter_available_providers_links_len,
+//                     links.len() / twitter_available_providers_links_len,
+//                     links.len() % twitter_available_providers_links_len,
+//                 );
+//             }
