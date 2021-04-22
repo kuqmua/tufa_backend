@@ -72,19 +72,15 @@ pub fn rxiv_part(
         let twitter_available_providers_links: Vec<&str>;
         match provider_kind {
             ProviderKind::Arxiv => {
-                links_temp_naming = get_arxiv_links();
                 twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Biorxiv => {
-                links_temp_naming = get_biorxiv_links();
                 twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Medrxiv => {
-                links_temp_naming = get_medrxiv_links();
                 twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Twitter => {
-                links_temp_naming = HashMap::new();
                 // panic!("twitter not handled yet!")
                 let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
                 // let twitter_available_providers_links: Vec<String> =
@@ -94,6 +90,22 @@ pub fn rxiv_part(
                     enable_time_measurement,
                     twitter_providers_names,
                 );
+            }
+        }
+        //todo: 2 different match for links_temp_naming and twitter_providers_names
+        match provider_kind {
+            ProviderKind::Arxiv => {
+                links_temp_naming = get_arxiv_links();
+            }
+            ProviderKind::Biorxiv => {
+                links_temp_naming = get_biorxiv_links();
+            }
+            ProviderKind::Medrxiv => {
+                links_temp_naming = get_medrxiv_links();
+            }
+            ProviderKind::Twitter => {
+                links_temp_naming = HashMap::new();
+                // panic!("twitter not handled yet!")
             }
         }
         if !links_temp_naming.is_empty() {
