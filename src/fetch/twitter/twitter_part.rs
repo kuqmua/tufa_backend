@@ -19,6 +19,11 @@ use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 
+use crate::fetch::metainfo_fetch_structures::AreThereItems;
+use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rxiv_structures::RxivPostStruct;
+
 pub fn twitter_part(
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,
@@ -101,37 +106,81 @@ pub fn twitter_part(
         }
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
-            let vec_of_hashmap_parts = divide_to_equal_for_each_provider(
-                twitter_available_providers_links,
-                links_temp_naming,
-                links_len,
-            );
-            let not_ready_processed_posts = Arc::new(Mutex::new(Vec::with_capacity(links_len)));
-            let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
-            for element in &mut vec_of_hashmap_parts.into_iter() {
-                let not_ready_processed_posts_handle = Arc::clone(&not_ready_processed_posts);
-                let thread = thread::spawn(move || {
-                    let unfiltered_posts_hashmap_after_fetch_and_parse =
-                        twitter_fetch_and_parse_xml(
-                            enable_prints,
-                            enable_error_prints,
-                            enable_time_measurement,
-                            element.clone(),
-                            &provider_kind,
-                        );
-                    let mut locked_not_ready_processed_posts =
-                        not_ready_processed_posts_handle.lock().unwrap();
-                    for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
-                        locked_not_ready_processed_posts.push((key, value));
+            let unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+                String,
+                (
+                    RxivPostStruct,
+                    String,
+                    UnhandledFetchStatusInfo,
+                    HandledFetchStatusInfo,
+                    AreThereItems,
+                ),
+            )>;
+            match provider_kind {
+                ProviderKind::Arxiv => {
+                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                        enable_prints,
+                        enable_error_prints,
+                        enable_time_measurement,
+                        links_temp_naming,
+                        provider_kind,
+                    );
+                }
+                ProviderKind::Biorxiv => {
+                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                        enable_prints,
+                        enable_error_prints,
+                        enable_time_measurement,
+                        links_temp_naming,
+                        provider_kind,
+                    );
+                }
+                ProviderKind::Medrxiv => {
+                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                        enable_prints,
+                        enable_error_prints,
+                        enable_time_measurement,
+                        links_temp_naming,
+                        provider_kind,
+                    );
+                }
+                ProviderKind::Twitter => {
+                    let vec_of_hashmap_parts = divide_to_equal_for_each_provider(
+                        twitter_available_providers_links,
+                        links_temp_naming,
+                        links_len,
+                    );
+                    let not_ready_processed_posts =
+                        Arc::new(Mutex::new(Vec::with_capacity(links_len)));
+                    let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
+                    for element in &mut vec_of_hashmap_parts.into_iter() {
+                        let not_ready_processed_posts_handle =
+                            Arc::clone(&not_ready_processed_posts);
+                        let thread = thread::spawn(move || {
+                            let unfiltered_posts_hashmap_after_fetch_and_parse =
+                                twitter_fetch_and_parse_xml(
+                                    enable_prints,
+                                    enable_error_prints,
+                                    enable_time_measurement,
+                                    element.clone(),
+                                    &provider_kind,
+                                );
+                            let mut locked_not_ready_processed_posts =
+                                not_ready_processed_posts_handle.lock().unwrap();
+                            for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
+                                locked_not_ready_processed_posts.push((key, value));
+                            }
+                        });
+                        threads_vector.push(thread);
                     }
-                });
-                threads_vector.push(thread);
+                    for thread in threads_vector {
+                        thread.join().unwrap();
+                    }
+                    let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
+                    unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
+                }
             }
-            for thread in threads_vector {
-                thread.join().unwrap();
-            }
-            let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
-            let unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
+
             handle_unfiltered_posts(
                 unfiltered_posts_hashmap_after_fetch_and_parse,
                 provider_kind,

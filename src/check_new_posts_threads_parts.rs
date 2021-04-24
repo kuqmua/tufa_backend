@@ -32,7 +32,7 @@ use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
 use crate::config::MEDRXIV_LINK;
 use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
 use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv::rxiv_part::rxiv_part;
+// use crate::fetch::rxiv::twitter_part::twitter_part;
 use crate::fetch::twitter::twitter_part::twitter_part;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
@@ -65,7 +65,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             threads_vec.push(thread::spawn(move || {
-                rxiv_part(
+                twitter_part(
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV,
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
@@ -94,7 +94,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             threads_vec.push(thread::spawn(move || {
-                rxiv_part(
+                twitter_part(
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV,
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
@@ -123,7 +123,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             threads_vec.push(thread::spawn(move || {
-                rxiv_part(
+                twitter_part(
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV,
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,
