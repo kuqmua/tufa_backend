@@ -3,21 +3,12 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 use crate::check_net::check_link::check_link;
-use crate::config::WARNING_LOGS_DIRECTORY_NAME;
+use crate::fetch::handle_unfiltered_posts::handle_unfiltered_posts;
 use crate::fetch::provider_kind_enum::ProviderKind;
-
-use crate::fetch::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
 use crate::fetch::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
-use crate::fetch::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
 use crate::overriding::prints::print_error_red;
-use crate::overriding::prints::print_partial_success_cyan;
-use crate::overriding::prints::print_success_green;
-use crate::overriding::prints::print_warning_orange;
-use futures::executor::block_on;
 use std::collections::HashMap;
-use std::fs;
-use std::mem;
-use std::path::Path;
+use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::fetch::twitter::divide_to_equal_for_each_provider::divide_to_equal_for_each_provider;
@@ -27,7 +18,6 @@ use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use crate::get_group_names::get_twitter_subs::get_twitter_subs;
-use std::sync::{Arc, Mutex};
 
 pub fn twitter_part(
     enable_cleaning_logs_directory: bool,
@@ -116,12 +106,6 @@ pub fn twitter_part(
                 links_temp_naming,
                 links_len,
             );
-            if enable_prints {
-                println!(
-                    "thread::spawn for each provider must be done {:#?} times...",
-                    vec_of_hashmap_parts.len()
-                );
-            }
             let not_ready_processed_posts = Arc::new(Mutex::new(Vec::with_capacity(links_len)));
             let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
             for element in &mut vec_of_hashmap_parts.into_iter() {
@@ -146,100 +130,17 @@ pub fn twitter_part(
             for thread in threads_vector {
                 thread.join().unwrap();
             }
-            let processed_posts = &*not_ready_processed_posts.lock().unwrap();
-            let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter = processed_posts.len();
-            let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
-                twitter_filter_fetched_and_parsed_posts(processed_posts.to_vec(), provider_kind);
-            if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
-                if enable_warning_prints {
-                    print_warning_orange(
-                        file!().to_string(),
-                        line!().to_string(),
-                        "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
-                            .to_string(),
-                    );
-                }
-                false
-            } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
-                != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
-            {
-                let warning_message = format!(
-                    "some_error_posts.len {} of {}",
-                    some_error_posts.len(),
-                    unhandled_success_handled_success_are_there_items_yep_posts.len()
-                );
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message);
-                let wrong_cases_thread = thread::spawn(move || {
-                    if enable_prints {
-                        let message = format!(
-                                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
-                                        unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                                        unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                                        provider_kind,
-                                        mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
-                                    );
-                        print_partial_success_cyan(
-                            file!().to_string(),
-                            line!().to_string(),
-                            message,
-                        );
-                    }
-                    if enable_cleaning_logs_directory {
-                        let path =
-                            format!("logs/{}/{:?}", WARNING_LOGS_DIRECTORY_NAME, provider_kind);
-                        if Path::new(&path).is_dir() {
-                            let result_of_recursively_removing_warning_logs_directory =
-                                fs::remove_dir_all(&path);
-                            match result_of_recursively_removing_warning_logs_directory {
-                                Ok(_) => {
-                                    if enable_prints {
-                                        println!("folder {} has been deleted", &path);
-                                    }
-                                }
-                                Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message = format!(
-                                            "delete folder problem{} {}",
-                                            &path,
-                                            e.to_string()
-                                        );
-                                        print_error_red(
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    block_on(twitter_async_write_fetch_error_logs_into_files_wrapper(
-                        provider_kind,
-                        enable_prints,
-                        // enable_warning_prints: bool,
-                        enable_error_prints,
-                        enable_time_measurement,
-                        some_error_posts,
-                    ));
-                });
-                wrong_cases_thread.join().unwrap();
-                //todo: cast to common post type
-                true
-            } else {
-                let message = format!(
-                    "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
-                    unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                    unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                    provider_kind,
-                    mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
-                );
-                if enable_prints {
-                    print_success_green(file!().to_string(), line!().to_string(), message);
-                }
-                //todo: cast to common post type
-                true
-            }
-            // true
+            let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
+            let unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
+            handle_unfiltered_posts(
+                unfiltered_posts_hashmap_after_fetch_and_parse,
+                provider_kind,
+                enable_prints,
+                enable_warning_prints,
+                enable_error_prints,
+                enable_cleaning_logs_directory,
+                enable_time_measurement,
+            )
         } else {
             if enable_error_prints {
                 print_error_red(
@@ -280,6 +181,13 @@ pub fn twitter_part(
         false
     }
 }
+
+// if enable_prints {
+//                 println!(
+//                     "thread::spawn for each provider must be done {:#?} times...",
+//                     vec_of_hashmap_parts.len()
+//                 );
+//             }
 
 // if enable_prints {
 //                 println!(

@@ -4,6 +4,7 @@ mod fetch {
         pub mod rxiv_fetch_link;
         pub mod rxiv_part;
     }
+    pub mod handle_unfiltered_posts;
     pub mod metainfo_fetch_structures;
     pub mod provider_kind_enum;
     pub mod rxiv_logs_create_dir_if_dont_exists;
