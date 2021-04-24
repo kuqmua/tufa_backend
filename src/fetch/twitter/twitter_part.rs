@@ -67,7 +67,6 @@ pub fn twitter_part(
             }
         }
     }
-
     if availability_checker_flag {
         if enable_prints {
             println!("i can reach {}", provider_link)
@@ -85,7 +84,6 @@ pub fn twitter_part(
                 twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Twitter => {
-                // panic!("twitter not handled yet!")
                 let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
                 // let twitter_available_providers_links: Vec<String> =
                 twitter_available_providers_links = twitter_check_available_providers(
@@ -107,11 +105,9 @@ pub fn twitter_part(
                 links_temp_naming = get_medrxiv_links();
             }
             ProviderKind::Twitter => {
-                links_temp_naming = HashMap::new();
-                // panic!("twitter not handled yet!")
+                links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
             }
         }
-        let links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
         if !links_temp_naming.is_empty() {
             let twitter_available_providers_links_len = twitter_available_providers_links.len();
             let links_len = links_temp_naming.len();
@@ -194,7 +190,7 @@ pub fn twitter_part(
                             enable_error_prints,
                             enable_time_measurement,
                             element.clone(),
-                            &ProviderKind::Twitter,
+                            &provider_kind,
                         );
                     let mut locked_not_ready_processed_posts =
                         not_ready_processed_posts_handle.lock().unwrap();

@@ -24,6 +24,7 @@ use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 
 pub fn rxiv_part(
     enable_cleaning_logs_directory: bool,
@@ -81,7 +82,6 @@ pub fn rxiv_part(
                 twitter_available_providers_links = Vec::new();
             }
             ProviderKind::Twitter => {
-                // panic!("twitter not handled yet!")
                 let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
                 // let twitter_available_providers_links: Vec<String> =
                 twitter_available_providers_links = twitter_check_available_providers(
@@ -92,7 +92,6 @@ pub fn rxiv_part(
                 );
             }
         }
-        //todo: 2 different match for links_temp_naming and twitter_providers_names
         match provider_kind {
             ProviderKind::Arxiv => {
                 links_temp_naming = get_arxiv_links();
@@ -104,8 +103,7 @@ pub fn rxiv_part(
                 links_temp_naming = get_medrxiv_links();
             }
             ProviderKind::Twitter => {
-                links_temp_naming = HashMap::new();
-                // panic!("twitter not handled yet!")
+                links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
             }
         }
         if !links_temp_naming.is_empty() {
