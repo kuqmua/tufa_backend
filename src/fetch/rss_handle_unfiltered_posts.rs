@@ -3,9 +3,9 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::twitter_async_write_fetch_error_logs_into_files_wrapper::twitter_async_write_fetch_error_logs_into_files_wrapper;
-use crate::fetch::twitter_filter_fetched_and_parsed_posts::twitter_filter_fetched_and_parsed_posts;
+use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_parsed_posts;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
@@ -16,10 +16,10 @@ use std::mem;
 use std::path::Path;
 use std::thread;
 
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_structures::RxivPostStruct;
 
 pub fn handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
@@ -42,7 +42,7 @@ pub fn handle_unfiltered_posts(
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
         unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
-        twitter_filter_fetched_and_parsed_posts(
+        rss_filter_fetched_and_parsed_posts(
             unfiltered_posts_hashmap_after_fetch_and_parse.to_vec(),
             provider_kind,
         );
@@ -101,7 +101,7 @@ pub fn handle_unfiltered_posts(
                     }
                 }
             }
-            block_on(twitter_async_write_fetch_error_logs_into_files_wrapper(
+            block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
                 provider_kind,
                 enable_prints,
                 // enable_warning_prints: bool,

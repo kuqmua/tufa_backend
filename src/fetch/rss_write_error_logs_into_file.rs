@@ -1,12 +1,12 @@
 use serde_json::Value;
 
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_logs_create_dir_if_dont_exists::rxiv_logs_create_dir_if_dont_exists;
+use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_dont_exists;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::{fs::File, io::Write};
 
-pub fn rxiv_write_error_logs_into_file(
+pub fn rss_write_error_logs_into_file(
     json_object: Value,
     provider_kind: &ProviderKind,
     dir: &str,
@@ -14,7 +14,7 @@ pub fn rxiv_write_error_logs_into_file(
     enable_error_prints: bool,
     key: String,
 ) {
-    rxiv_logs_create_dir_if_dont_exists(dir, &provider_kind, enable_prints, enable_error_prints);
+    rss_logs_create_dir_if_dont_exists(dir, &provider_kind, enable_prints, enable_error_prints);
     let file_name = format!(
         "logs/{}/{:?}/{}/{:?}_{}.json",
         WARNING_LOGS_DIRECTORY_NAME,

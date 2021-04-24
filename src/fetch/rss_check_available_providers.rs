@@ -1,11 +1,11 @@
-use crate::fetch::twitter::twitter_check_provider_status_aka_rxiv_fetch_link::twitter_check_provider_status_aka_rxiv_fetch_link;
+use crate::fetch::rss_check_provider_status_aka_rxiv_fetch_link::rss_check_provider_status_aka_rxiv_fetch_link;
 use crate::overriding::prints::print_error_red;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-pub fn twitter_check_available_providers(
+pub fn rss_check_available_providers(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
@@ -19,7 +19,7 @@ pub fn twitter_check_available_providers(
             Arc::clone(&twitter_providers_links_available);
         let handle = thread::spawn(move || {
             let provider_link: String = format!("https://{}/TheCherno/rss", provider_name); //choose random account from following
-            let check_status_result = twitter_check_provider_status_aka_rxiv_fetch_link(
+            let check_status_result = rss_check_provider_status_aka_rxiv_fetch_link(
                 &provider_link,
                 "TODO",
                 time,

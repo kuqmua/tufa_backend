@@ -1,4 +1,4 @@
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
 use std::time::Instant;
 //async
@@ -15,7 +15,7 @@ use std::time::Instant;
 //     println!("fetch_link res.status() not ok");
 //     result_tuplefff.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
 // }
-pub fn twitter_check_provider_status_aka_rxiv_fetch_link(
+pub fn rss_check_provider_status_aka_rxiv_fetch_link(
     link: &str,
     key: &str,
     time: Instant,

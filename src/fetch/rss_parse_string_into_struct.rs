@@ -1,13 +1,13 @@
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_structures::RxivPost;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::rxiv_structures::XmlRxivParserStruct;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPost;
+use crate::fetch::rss_structures::RxivPostStruct;
+use crate::fetch::rss_structures::XmlRxivParserStruct;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
-pub fn twitter_parse_string_into_struct(
+pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     key: &str,
     value: &str,

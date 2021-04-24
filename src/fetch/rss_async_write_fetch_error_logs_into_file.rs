@@ -1,16 +1,16 @@
-use crate::fetch::handle_error_status_code::handle_error_status_code;
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::rxiv_write_error_logs_into_file::rxiv_write_error_logs_into_file;
+use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPostStruct;
+use crate::fetch::rss_write_error_logs_into_file::rss_write_error_logs_into_file;
 use chrono::Local;
 use serde_json::json;
 use std::time::Instant;
 
 #[allow(clippy::clippy::too_many_arguments)]
-pub async fn twitter_async_write_fetch_error_logs_into_file(
+pub async fn rss_async_write_fetch_error_logs_into_file(
     key: String,
     value: (
         RxivPostStruct,
@@ -38,7 +38,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
-                    rxiv_write_error_logs_into_file(
+                    rss_write_error_logs_into_file(
                         json_object,
                         &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -56,7 +56,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
-                    rxiv_write_error_logs_into_file(
+                    rss_write_error_logs_into_file(
                         json_object,
                         &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -74,7 +74,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
-                    rxiv_write_error_logs_into_file(
+                    rss_write_error_logs_into_file(
                         json_object,
                         &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -91,7 +91,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
                     });
-                    rxiv_write_error_logs_into_file(
+                    rss_write_error_logs_into_file(
                         json_object,
                         &provider_kind,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -108,7 +108,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
-                rxiv_write_error_logs_into_file(
+                rss_write_error_logs_into_file(
                     json_object,
                     &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -125,7 +125,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
-                rxiv_write_error_logs_into_file(
+                rss_write_error_logs_into_file(
                     json_object,
                     &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -143,7 +143,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                     "date": Local::now().to_string()
                 });
                 handle_error_status_code(status_code, &key, value.1);
-                rxiv_write_error_logs_into_file(
+                rss_write_error_logs_into_file(
                     json_object,
                     &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -160,7 +160,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                 "part_of": format!("{:?}", provider_kind),
                 "date": Local::now().to_string()
             });
-            rxiv_write_error_logs_into_file(
+            rss_write_error_logs_into_file(
                 json_object,
                 &provider_kind,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -177,7 +177,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_file(
                 "part_of": format!("{:?}", provider_kind),
                 "date": Local::now().to_string()
             });
-            rxiv_write_error_logs_into_file(
+            rss_write_error_logs_into_file(
                 json_object,
                 &provider_kind,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,

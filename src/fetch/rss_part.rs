@@ -3,28 +3,28 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 use crate::check_net::check_link::check_link;
-use crate::fetch::handle_unfiltered_posts::handle_unfiltered_posts;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::twitter_fetch_and_parse_xml::twitter_fetch_and_parse_xml;
+use crate::fetch::rss_fetch_and_parse_xml::rss_fetch_and_parse_xml;
+use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::fetch::twitter::divide_to_equal_for_each_provider::divide_to_equal_for_each_provider;
-use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
+use crate::fetch::rss_check_available_providers::rss_check_available_providers;
+use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_structures::RxivPostStruct;
 
-pub fn twitter_part(
+pub fn rss_part(
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
@@ -52,7 +52,7 @@ pub fn twitter_part(
         }
         ProviderKind::Twitter => {
             let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
-            let twitter_available_providers_links: Vec<&str> = twitter_check_available_providers(
+            let twitter_available_providers_links: Vec<&str> = rss_check_available_providers(
                 enable_prints,
                 enable_error_prints,
                 enable_time_measurement,
@@ -82,7 +82,7 @@ pub fn twitter_part(
             ProviderKind::Twitter => {
                 let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
                 // let twitter_available_providers_links: Vec<String> =
-                twitter_available_providers_links = twitter_check_available_providers(
+                twitter_available_providers_links = rss_check_available_providers(
                     enable_prints,
                     enable_error_prints,
                     enable_time_measurement,
@@ -118,7 +118,7 @@ pub fn twitter_part(
             )>;
             match provider_kind {
                 ProviderKind::Arxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
                         enable_prints,
                         enable_error_prints,
                         enable_time_measurement,
@@ -127,7 +127,7 @@ pub fn twitter_part(
                     );
                 }
                 ProviderKind::Biorxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
                         enable_prints,
                         enable_error_prints,
                         enable_time_measurement,
@@ -136,7 +136,7 @@ pub fn twitter_part(
                     );
                 }
                 ProviderKind::Medrxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = twitter_fetch_and_parse_xml(
+                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
                         enable_prints,
                         enable_error_prints,
                         enable_time_measurement,
@@ -145,7 +145,7 @@ pub fn twitter_part(
                     );
                 }
                 ProviderKind::Twitter => {
-                    let vec_of_hashmap_parts = divide_to_equal_for_each_provider(
+                    let vec_of_hashmap_parts = rss_divide_to_equal_for_each_provider(
                         twitter_available_providers_links,
                         links_temp_naming,
                         links_len,
@@ -158,7 +158,7 @@ pub fn twitter_part(
                             Arc::clone(&not_ready_processed_posts);
                         let thread = thread::spawn(move || {
                             let unfiltered_posts_hashmap_after_fetch_and_parse =
-                                twitter_fetch_and_parse_xml(
+                                rss_fetch_and_parse_xml(
                                     enable_prints,
                                     enable_error_prints,
                                     enable_time_measurement,

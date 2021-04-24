@@ -1,10 +1,10 @@
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv::rxiv_fetch_link::rxiv_fetch_link;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::twitter_check_handled_fetch_status_info::twitter_check_handled_fetch_status_info;
+use crate::fetch::rss_check_handled_fetch_status_info::rss_check_handled_fetch_status_info;
+use crate::fetch::rss_fetch_link::rss_fetch_link;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPostStruct;
 use crate::overriding::prints::print_error_red;
 
 use std::collections::HashMap;
@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-pub fn twitter_fetch_and_parse_xml(
+pub fn rss_fetch_and_parse_xml(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
@@ -54,7 +54,7 @@ pub fn twitter_fetch_and_parse_xml(
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
-            let fetch_result = rxiv_fetch_link(
+            let fetch_result = rss_fetch_link(
                 &value,
                 key,
                 time,
@@ -65,7 +65,7 @@ pub fn twitter_fetch_and_parse_xml(
             match fetch_result {
                 Ok(fetch_tuple_result) => {
                     let (value3, rxiv_post_struct_wrapper_handle, are_there_items_wrapper_handle) =
-                        twitter_check_handled_fetch_status_info(
+                        rss_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
                             time,

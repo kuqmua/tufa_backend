@@ -1,13 +1,13 @@
 use std::time::Instant;
 
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::twitter_parse_string_into_struct::twitter_parse_string_into_struct;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPostStruct;
 
 #[allow(clippy::clippy::too_many_arguments)]
-pub fn twitter_check_handled_fetch_status_info(
+pub fn rss_check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
     fetch_result_string: String,
     time: Instant,
@@ -34,15 +34,14 @@ pub fn twitter_check_handled_fetch_status_info(
         HandledFetchStatusInfo::Success => {
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
-            let (rxiv_post_struct_handle, are_there_items_handle) =
-                twitter_parse_string_into_struct(
-                    fetch_result_string,
-                    key,
-                    &value,
-                    // enable_prints,
-                    enable_error_prints,
-                    provider_kind,
-                );
+            let (rxiv_post_struct_handle, are_there_items_handle) = rss_parse_string_into_struct(
+                fetch_result_string,
+                key,
+                &value,
+                // enable_prints,
+                enable_error_prints,
+                provider_kind,
+            );
             rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             if enable_time_measurement {

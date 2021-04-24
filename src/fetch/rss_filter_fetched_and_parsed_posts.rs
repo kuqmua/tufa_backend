@@ -1,12 +1,12 @@
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPostStruct;
 use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
-pub fn twitter_filter_fetched_and_parsed_posts(
+pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (

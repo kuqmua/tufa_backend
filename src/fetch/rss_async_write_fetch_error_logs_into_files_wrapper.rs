@@ -1,16 +1,16 @@
 use crate::fetch;
-use crate::fetch::metainfo_fetch_structures::AreThereItems;
-use crate::fetch::metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::provider_kind_enum::ProviderKind;
-use crate::fetch::rxiv_structures::RxivPostStruct;
-use crate::fetch::twitter_async_write_fetch_error_logs_into_file::twitter_async_write_fetch_error_logs_into_file;
+use crate::fetch::rss_async_write_fetch_error_logs_into_file::rss_async_write_fetch_error_logs_into_file;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use crate::fetch::rss_structures::RxivPostStruct;
 use futures::future::join_all;
 use std::collections::HashMap;
 use std::time::Instant;
 
-pub async fn twitter_async_write_fetch_error_logs_into_files_wrapper(
-    provider_kind: &'static fetch::provider_kind_enum::ProviderKind,
+pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
+    provider_kind: &'static fetch::rss_provider_kind_enum::ProviderKind,
     enable_prints: bool,
     // enable_warning_prints: bool,
     enable_error_prints: bool,
@@ -32,7 +32,7 @@ pub async fn twitter_async_write_fetch_error_logs_into_files_wrapper(
         "unhandled_success_handled_success_are_there_items_initialized_posts";
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
     for (key, value) in some_error_posts {
-        vec_of_write_into_files_futures.push(twitter_async_write_fetch_error_logs_into_file(
+        vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
             key,
             value,
             unhandled_success_handled_success_are_there_items_initialized_posts_dir,

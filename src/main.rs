@@ -1,27 +1,22 @@
 mod fetch {
-    pub mod handle_error_status_code;
-    pub mod rxiv {
-        pub mod rxiv_fetch_link;
-        pub mod rxiv_part;
-    }
-    pub mod handle_unfiltered_posts;
-    pub mod metainfo_fetch_structures;
-    pub mod provider_kind_enum;
-    pub mod rxiv_logs_create_dir_if_dont_exists;
-    pub mod rxiv_structures;
-    pub mod rxiv_write_error_logs_into_file;
-    pub mod twitter_async_write_fetch_error_logs_into_file;
-    pub mod twitter_async_write_fetch_error_logs_into_files_wrapper;
-    pub mod twitter_check_handled_fetch_status_info;
-    pub mod twitter_fetch_and_parse_xml;
-    pub mod twitter_filter_fetched_and_parsed_posts;
-    pub mod twitter_parse_string_into_struct;
-    pub mod twitter {
-        pub mod divide_to_equal_for_each_provider;
-        pub mod twitter_check_available_providers;
-        pub mod twitter_check_provider_status_aka_rxiv_fetch_link;
-        pub mod twitter_part;
-    }
+    pub mod rss_async_write_fetch_error_logs_into_file;
+    pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
+    pub mod rss_check_available_providers;
+    pub mod rss_check_handled_fetch_status_info;
+    pub mod rss_check_provider_status_aka_rxiv_fetch_link;
+    pub mod rss_divide_to_equal_for_each_provider;
+    pub mod rss_fetch_and_parse_xml;
+    pub mod rss_fetch_link;
+    pub mod rss_filter_fetched_and_parsed_posts;
+    pub mod rss_handle_error_status_code;
+    pub mod rss_handle_unfiltered_posts;
+    pub mod rss_logs_create_dir_if_dont_exists;
+    pub mod rss_metainfo_fetch_structures;
+    pub mod rss_parse_string_into_struct;
+    pub mod rss_part;
+    pub mod rss_provider_kind_enum;
+    pub mod rss_structures;
+    pub mod rss_write_error_logs_into_file;
     // pub mod reddit_fetch {
     //     pub mod get_reddit_posts;
     //     pub mod parse_every_children;

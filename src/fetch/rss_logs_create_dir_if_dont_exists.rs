@@ -1,10 +1,10 @@
 use crate::config::WARNING_LOGS_DIRECTORY_NAME;
-use crate::fetch::provider_kind_enum::ProviderKind;
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::fs;
 use std::path::Path;
 
-pub fn rxiv_logs_create_dir_if_dont_exists(
+pub fn rss_logs_create_dir_if_dont_exists(
     underdirectory: &str,
     provider_kind: &ProviderKind,
     enable_prints: bool,
