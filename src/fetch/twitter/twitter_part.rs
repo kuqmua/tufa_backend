@@ -20,6 +20,7 @@ use std::mem;
 use std::path::Path;
 use std::thread;
 
+use crate::fetch::twitter::divide_to_equal_for_each_provider::divide_to_equal_for_each_provider;
 use crate::fetch::twitter::twitter_check_available_providers::twitter_check_available_providers;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
@@ -109,70 +110,77 @@ pub fn twitter_part(
             }
         }
         if !links_temp_naming.is_empty() {
-            let twitter_available_providers_links_len = twitter_available_providers_links.len();
             let links_len = links_temp_naming.len();
-            let links_for_each_provider: usize;
-            let is_links_len_more_than_twitter_available_providers_links_len =
-                links_len > twitter_available_providers_links_len;
-            let vec_of_hashmap_parts_len: usize;
-            if is_links_len_more_than_twitter_available_providers_links_len {
-                if links_len % twitter_available_providers_links_len == 0 {
-                    links_for_each_provider = links_len / twitter_available_providers_links_len;
-                } else {
-                    //little bit more memory usage than needed but no second allocation!
-                    links_for_each_provider =
-                        (links_len / twitter_available_providers_links_len) + 1;
-                }
-                vec_of_hashmap_parts_len = twitter_available_providers_links_len;
-            } else {
-                links_for_each_provider = links_len;
-                vec_of_hashmap_parts_len = links_len;
-            }
-            let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> =
-                vec![HashMap::with_capacity(links_for_each_provider); vec_of_hashmap_parts_len];
-            let mut vec_of_hashmap_parts_element_index_counter = 0;
-            let mut even_vec_of_hashmap_parts_element_index_counter = 0;
-            let mut even_flag = false;
-            if is_links_len_more_than_twitter_available_providers_links_len {
-                for element in links_temp_naming {
-                    if !even_flag {
-                        if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
-                            == links_for_each_provider
-                        {
-                            if (vec_of_hashmap_parts.len() - 1)
-                                != vec_of_hashmap_parts_element_index_counter
-                            {
-                                vec_of_hashmap_parts_element_index_counter += 1;
-                                vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
-                                    .insert(element.0, element.1);
-                            } else {
-                                even_flag = true;
-                                vec_of_hashmap_parts
-                                    [even_vec_of_hashmap_parts_element_index_counter]
-                                    .insert(element.0, element.1);
-                                even_vec_of_hashmap_parts_element_index_counter += 1;
-                            }
-                        } else {
-                            vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
-                                .insert(element.0, element.1);
-                        }
-                    } else if (vec_of_hashmap_parts.len() - 1)
-                        != even_vec_of_hashmap_parts_element_index_counter
-                    {
-                        even_vec_of_hashmap_parts_element_index_counter += 1;
-                        vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
-                            .insert(element.0, element.1);
-                    } else {
-                        vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
-                            .insert(element.0, element.1);
-                        even_vec_of_hashmap_parts_element_index_counter = 0;
-                    }
-                }
-            } else {
-                for (element_index, element) in links_temp_naming.into_iter().enumerate() {
-                    vec_of_hashmap_parts[element_index].insert(element.0, element.1);
-                }
-            }
+            let vec_of_hashmap_parts = divide_to_equal_for_each_provider(
+                twitter_available_providers_links,
+                links_temp_naming,
+                links_len,
+            );
+            //
+            // let twitter_available_providers_links_len = twitter_available_providers_links.len();
+            // let links_len = links_temp_naming.len();
+            // let links_for_each_provider: usize;
+            // let is_links_len_more_than_twitter_available_providers_links_len =
+            //     links_len > twitter_available_providers_links_len;
+            // let vec_of_hashmap_parts_len: usize;
+            // if is_links_len_more_than_twitter_available_providers_links_len {
+            //     if links_len % twitter_available_providers_links_len == 0 {
+            //         links_for_each_provider = links_len / twitter_available_providers_links_len;
+            //     } else {
+            //         //little bit more memory usage than needed but no second allocation!
+            //         links_for_each_provider =
+            //             (links_len / twitter_available_providers_links_len) + 1;
+            //     }
+            //     vec_of_hashmap_parts_len = twitter_available_providers_links_len;
+            // } else {
+            //     links_for_each_provider = links_len;
+            //     vec_of_hashmap_parts_len = links_len;
+            // }
+            // let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> =
+            //     vec![HashMap::with_capacity(links_for_each_provider); vec_of_hashmap_parts_len];
+            // let mut vec_of_hashmap_parts_element_index_counter = 0;
+            // let mut even_vec_of_hashmap_parts_element_index_counter = 0;
+            // let mut even_flag = false;
+            // if is_links_len_more_than_twitter_available_providers_links_len {
+            //     for element in links_temp_naming {
+            //         if !even_flag {
+            //             if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
+            //                 == links_for_each_provider
+            //             {
+            //                 if (vec_of_hashmap_parts.len() - 1)
+            //                     != vec_of_hashmap_parts_element_index_counter
+            //                 {
+            //                     vec_of_hashmap_parts_element_index_counter += 1;
+            //                     vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
+            //                         .insert(element.0, element.1);
+            //                 } else {
+            //                     even_flag = true;
+            //                     vec_of_hashmap_parts
+            //                         [even_vec_of_hashmap_parts_element_index_counter]
+            //                         .insert(element.0, element.1);
+            //                     even_vec_of_hashmap_parts_element_index_counter += 1;
+            //                 }
+            //             } else {
+            //                 vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
+            //                     .insert(element.0, element.1);
+            //             }
+            //         } else if (vec_of_hashmap_parts.len() - 1)
+            //             != even_vec_of_hashmap_parts_element_index_counter
+            //         {
+            //             even_vec_of_hashmap_parts_element_index_counter += 1;
+            //             vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
+            //                 .insert(element.0, element.1);
+            //         } else {
+            //             vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
+            //                 .insert(element.0, element.1);
+            //             even_vec_of_hashmap_parts_element_index_counter = 0;
+            //         }
+            //     }
+            // } else {
+            //     for (element_index, element) in links_temp_naming.into_iter().enumerate() {
+            //         vec_of_hashmap_parts[element_index].insert(element.0, element.1);
+            //     }
+            // }
             if enable_prints {
                 println!(
                     "thread::spawn for each provider must be done {:#?} times...",
@@ -296,6 +304,7 @@ pub fn twitter_part(
                 //todo: cast to common post type
                 true
             }
+            // true
         } else {
             if enable_error_prints {
                 print_error_red(
