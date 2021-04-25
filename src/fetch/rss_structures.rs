@@ -1,10 +1,10 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlRxivParserStruct {
+pub struct XmlRssParserStruct {
     #[serde(rename = "item", default)]
-    pub items: Vec<XmlRxivParserStructItem>,
+    pub items: Vec<XmlRssParserStructItem>,
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlRxivParserStructItem {
+pub struct XmlRssParserStructItem {
     pub title: String,
     pub link: String,
     pub description: String,
@@ -12,29 +12,29 @@ pub struct XmlRxivParserStructItem {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RxivPostStruct {
+pub struct RssPostStruct {
     #[serde(rename = "item", default)]
-    pub items: Vec<RxivPost>,
+    pub items: Vec<RssPost>,
 }
 
-impl RxivPostStruct {
+impl RssPostStruct {
     pub fn new() -> Self {
-        RxivPostStruct {
-            items: Vec::<RxivPost>::new(),
+        RssPostStruct {
+            items: Vec::<RssPost>::new(),
         }
     }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RxivPost {
+pub struct RssPost {
     pub title: String,
     pub link: String,
     pub description: String,
     pub creator: String,
 }
-impl RxivPost {
+impl RssPost {
     pub fn new() -> Self {
-        RxivPost {
+        RssPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),

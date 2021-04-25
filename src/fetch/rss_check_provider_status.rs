@@ -15,7 +15,7 @@ use std::time::Instant;
 //     println!("fetch_link res.status() not ok");
 //     result_tuplefff.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
 // }
-pub fn rss_check_provider_status_aka_rxiv_fetch_link(
+pub fn rss_check_provider_status(
     link: &str,
     key: &str,
     time: Instant,

@@ -2,7 +2,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RxivPostStruct;
+use crate::fetch::rss_structures::RssPostStruct;
 use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
@@ -10,7 +10,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (
-            RxivPostStruct,
+            RssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -19,11 +19,11 @@ pub fn rss_filter_fetched_and_parsed_posts(
     )>,
     provider_kind: &ProviderKind,
 ) -> (
-    HashMap<String, RxivPostStruct>,
+    HashMap<String, RssPostStruct>,
     HashMap<
         String,
         (
-            RxivPostStruct,
+            RssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -35,12 +35,12 @@ pub fn rss_filter_fetched_and_parsed_posts(
     let hashmap_length = unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
         String,
-        RxivPostStruct,
+        RssPostStruct,
     > = HashMap::new();
     let mut some_error_posts: HashMap<
         String,
         (
-            RxivPostStruct,
+            RssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,

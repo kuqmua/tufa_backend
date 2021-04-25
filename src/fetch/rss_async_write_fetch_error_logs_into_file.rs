@@ -3,7 +3,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RxivPostStruct;
+use crate::fetch::rss_structures::RssPostStruct;
 use crate::fetch::rss_write_error_logs_into_file::rss_write_error_logs_into_file;
 use chrono::Local;
 use serde_json::json;
@@ -13,7 +13,7 @@ use std::time::Instant;
 pub async fn rss_async_write_fetch_error_logs_into_file(
     key: String,
     value: (
-        RxivPostStruct,
+        RssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,

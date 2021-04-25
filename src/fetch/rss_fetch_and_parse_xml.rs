@@ -4,7 +4,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RxivPostStruct;
+use crate::fetch::rss_structures::RssPostStruct;
 use crate::overriding::prints::print_error_red;
 
 use std::collections::HashMap;
@@ -21,7 +21,7 @@ pub fn rss_fetch_and_parse_xml(
 ) -> Vec<(
     String,
     (
-        RxivPostStruct,
+        RssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -33,7 +33,7 @@ pub fn rss_fetch_and_parse_xml(
         (
             "".to_string(),
             (
-                RxivPostStruct::new(),
+                RssPostStruct::new(),
                 "".to_string(),
                 UnhandledFetchStatusInfo::Initialized,
                 HandledFetchStatusInfo::Initialized,
@@ -64,7 +64,7 @@ pub fn rss_fetch_and_parse_xml(
             );
             match fetch_result {
                 Ok(fetch_tuple_result) => {
-                    let (value3, rxiv_post_struct_wrapper_handle, are_there_items_wrapper_handle) =
+                    let (value3, post_struct_wrapper_handle, are_there_items_wrapper_handle) =
                         rss_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
@@ -80,7 +80,7 @@ pub fn rss_fetch_and_parse_xml(
                         hashmap_to_return_handle.lock().unwrap();
                     hashmap_to_return_handle_locked[element_index].0 = key.to_string();
                     hashmap_to_return_handle_locked[element_index].1 .0 =
-                        rxiv_post_struct_wrapper_handle;
+                        post_struct_wrapper_handle;
                     hashmap_to_return_handle_locked[element_index].1 .1 = value;
                     hashmap_to_return_handle_locked[element_index].1 .2 =
                         UnhandledFetchStatusInfo::Success;

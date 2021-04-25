@@ -3,7 +3,7 @@ mod fetch {
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_check_available_providers;
     pub mod rss_check_handled_fetch_status_info;
-    pub mod rss_check_provider_status_aka_rxiv_fetch_link;
+    pub mod rss_check_provider_status;
     pub mod rss_divide_to_equal_for_each_provider;
     pub mod rss_fetch_and_parse_xml;
     pub mod rss_fetch_link;

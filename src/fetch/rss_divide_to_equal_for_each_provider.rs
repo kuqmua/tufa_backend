@@ -4,23 +4,23 @@ extern crate serde_xml_rs;
 use std::collections::HashMap;
 
 pub fn rss_divide_to_equal_for_each_provider<'a>(
-    twitter_available_providers_links: Vec<&str>,
+    rss_available_providers_links: Vec<&str>,
     links_temp_naming: HashMap<&'static str, String>,
     links_len: usize,
 ) -> Vec<HashMap<&'a str, String>> {
-    let twitter_available_providers_links_len = twitter_available_providers_links.len();
+    let rss_available_providers_links_len = rss_available_providers_links.len();
     let links_for_each_provider: usize;
-    let is_links_len_more_than_twitter_available_providers_links_len =
-        links_len > twitter_available_providers_links_len;
+    let is_links_len_more_than_rss_available_providers_links_len =
+        links_len > rss_available_providers_links_len;
     let vec_of_hashmap_parts_len: usize;
-    if is_links_len_more_than_twitter_available_providers_links_len {
-        if links_len % twitter_available_providers_links_len == 0 {
-            links_for_each_provider = links_len / twitter_available_providers_links_len;
+    if is_links_len_more_than_rss_available_providers_links_len {
+        if links_len % rss_available_providers_links_len == 0 {
+            links_for_each_provider = links_len / rss_available_providers_links_len;
         } else {
             //little bit more memory usage than needed but no second allocation!
-            links_for_each_provider = (links_len / twitter_available_providers_links_len) + 1;
+            links_for_each_provider = (links_len / rss_available_providers_links_len) + 1;
         }
-        vec_of_hashmap_parts_len = twitter_available_providers_links_len;
+        vec_of_hashmap_parts_len = rss_available_providers_links_len;
     } else {
         links_for_each_provider = links_len;
         vec_of_hashmap_parts_len = links_len;
@@ -30,7 +30,7 @@ pub fn rss_divide_to_equal_for_each_provider<'a>(
     let mut vec_of_hashmap_parts_element_index_counter = 0;
     let mut even_vec_of_hashmap_parts_element_index_counter = 0;
     let mut even_flag = false;
-    if is_links_len_more_than_twitter_available_providers_links_len {
+    if is_links_len_more_than_rss_available_providers_links_len {
         for element in links_temp_naming {
             if !even_flag {
                 if vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].len()
