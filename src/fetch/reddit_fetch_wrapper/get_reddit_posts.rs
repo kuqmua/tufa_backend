@@ -8,15 +8,15 @@ use reqwest::Client;
 use std::time::Instant;
 use tokio;
 
-use crate::fetch::reddit_fetch::parse_every_children::parse_every_children;
-use crate::fetch::reddit_fetch::push_names_into_two_layer_result_vec::push_names_into_two_layer_result_vec;
-use crate::fetch::reddit_fetch::reddit_json_structs::casted::CastedRedditJsonStruct;
-use crate::fetch::reddit_fetch::reddit_json_structs::casted::Children;
-use crate::fetch::reddit_fetch::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
-use crate::fetch::reddit_fetch::subreddits_into_links::subreddits_into_links;
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_REDDIT;
-use crate::override_prints::override_prints::print_error_red;
+use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
+use crate::fetch::reddit_fetch_wrapper::push_names_into_two_layer_result_vec::push_names_into_two_layer_result_vec;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::CastedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::Children;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::subreddits_into_links::subreddits_into_links;
+use crate::overriding::prints::print_error_red;
 
 #[tokio::main]
 pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
@@ -36,7 +36,8 @@ pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonS
         }
     }))
     .await;
-    if ENABLE_PRINTS_REDDIT {//enable_time_measurement
+    if ENABLE_PRINTS_REDDIT {
+        //enable_time_measurement
         println!(
             "fetch in {} seconds, reddit bodies: {} ",
             time.elapsed().as_secs(),

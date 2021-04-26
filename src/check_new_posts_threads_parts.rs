@@ -37,16 +37,17 @@ use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 // use crate::get_group_names::get_twitter_links::get_twitter_links;
+use crate::config::ENABLE_REDDIT;
+use crate::fetch::reddit_fetch_wrapper::reddit_fetch::reddit_part;
 use crate::overriding::prints::print_error_red;
-// use crate::config::ENABLE_REDDIT;
 
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(4);
-    // if ENABLE_REDDIT {
-    //     threads_vec.push(thread::spawn(move || {
-    //         fetch::reddit_fetch::reddit_fetch::reddit_part();
-    //     }));
-    // }
+    if ENABLE_REDDIT {
+        threads_vec.push(thread::spawn(move || {
+            reddit_part();
+        }));
+    }
     if ENABLE_ARXIV {
         let arxiv_links = get_arxiv_links();
         if arxiv_links.is_empty() {

@@ -1,7 +1,7 @@
 use roux::util::error::RouxError;
 use roux::Reddit;
 
-use crate::override_prints::override_prints::print_error_red;
+use crate::overriding::prints::print_error_red;
 
 pub fn reddit_authorization(
     user_agent: &str,

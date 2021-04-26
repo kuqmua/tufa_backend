@@ -1,4 +1,4 @@
-use crate::fetch::reddit_fetch::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 
 pub fn push_names_into_two_layer_result_vec(
     subreddits_vec: &Vec<&str>,

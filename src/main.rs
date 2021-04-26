@@ -17,25 +17,25 @@ mod fetch {
     pub mod rss_provider_kind_enum;
     pub mod rss_structures;
     pub mod rss_write_error_logs_into_file;
-    // pub mod reddit_fetch {
-    //     pub mod get_reddit_posts;
-    //     pub mod parse_every_children;
-    //     pub mod push_names_into_two_layer_result_vec;
-    //     pub mod reddit_fetch;
-    //     pub mod subreddits_into_links;
-    //     pub mod reddit_json_structs {
-    //         pub mod casted;
-    //         pub mod used;
-    //     }
-    // }
+    pub mod reddit_fetch_wrapper {
+        pub mod get_reddit_posts;
+        pub mod parse_every_children;
+        pub mod push_names_into_two_layer_result_vec;
+        pub mod reddit_fetch;
+        pub mod subreddits_into_links;
+        pub mod reddit_json_structs {
+            pub mod casted;
+            pub mod used;
+        }
+    }
 }
 mod get_group_names {
     pub mod get_arxiv_links;
     pub mod get_biorxiv_links;
     pub mod get_medrxiv_links;
+    pub mod get_subreddits;
     pub mod get_twitter_providers_names;
     pub mod get_twitter_subs;
-    // pub mod get_subreddits;
 }
 mod check_net {
     pub mod check_link;
@@ -45,12 +45,12 @@ mod check_net {
 mod overriding {
     pub mod prints;
 }
-// mod authorization {
-//     pub mod reddit {
-//         pub mod authorization_info;
-//         pub mod reddit_authorization;
-//     }
-// }
+mod authorization {
+    pub mod reddit {
+        pub mod authorization_info;
+        pub mod reddit_authorization;
+    }
+}
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod config;

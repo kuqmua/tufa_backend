@@ -1,12 +1,14 @@
 use crate::authorization::reddit::authorization_info;
 use crate::authorization::reddit::reddit_authorization;
-use crate::check_provider::can_i_reach_provider::reach_provider;
+use crate::check_net::check_link::check_link;
+// use crate::check_provider::can_i_reach_provider::reach_provider;
 use crate::config::REDDIT_LINK;
-use crate::fetch::reddit_fetch::get_reddit_posts::get_reddit_posts;
+use crate::fetch::reddit_fetch_wrapper::get_reddit_posts::get_reddit_posts;
 use crate::get_group_names::get_subreddits::get_subreddits;
 
 pub fn reddit_part() {
-    if reach_provider(REDDIT_LINK.to_string()) {
+    if check_link(REDDIT_LINK).0 {
+        println!("sss");
         let is_reddit_authorized = reddit_authorization::reddit_authorization(
             authorization_info::REDDIT_USER_AGENT,
             authorization_info::REDDIT_CLIENT_ID,
