@@ -7,10 +7,12 @@ use crate::config::ENABLE_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER;
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
+use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_ERROR_PRINTS_TWITTER;
 use crate::config::ENABLE_MEDRXIV;
 use crate::config::ENABLE_PRINTS_ARXIV;
@@ -21,12 +23,13 @@ use crate::config::ENABLE_TWITTER;
 use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
+use crate::config::ENABLE_WARNING_PRINTS_REDDIT;
 use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
 
 use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
-// use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
+use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
 use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
 
 use crate::config::MEDRXIV_LINK;
@@ -40,6 +43,7 @@ use crate::get_group_names::get_subreddits::get_subreddits;
 // use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_REDDIT;
+use crate::config::REDDIT_LINK;
 use crate::fetch::reddit_fetch_wrapper::reddit_fetch::reddit_part;
 use crate::overriding::prints::print_error_red;
 
@@ -58,11 +62,19 @@ pub async fn check_new_posts_threads_parts() {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     reddit_links.len(),
-                    ProviderKind::Arxiv
+                    ProviderKind::Reddit
                 );
             };
             threads_vec.push(thread::spawn(move || {
-                reddit_part();
+                reddit_part(
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT,
+                    ENABLE_PRINTS_REDDIT,
+                    ENABLE_WARNING_PRINTS_REDDIT,
+                    ENABLE_ERROR_PRINTS_REDDIT,
+                    ENABLE_REDDIT_TIME_MEASUREMENT,
+                    REDDIT_LINK,
+                    &ProviderKind::Reddit,
+                );
             }))
         };
     }
