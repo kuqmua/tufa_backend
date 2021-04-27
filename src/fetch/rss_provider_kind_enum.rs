@@ -4,4 +4,5 @@ pub enum ProviderKind {
     Arxiv,
     Medrxiv,
     Twitter,
+    Reddit,
 }

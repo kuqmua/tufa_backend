@@ -62,6 +62,11 @@ pub fn rss_part(
                 availability_checker_flag = true;
             }
         }
+        ProviderKind::Reddit => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = false; //todo
+            }
+        }
     }
     if availability_checker_flag {
         if enable_prints {
@@ -89,6 +94,9 @@ pub fn rss_part(
                     twitter_providers_names,
                 );
             }
+            ProviderKind::Reddit => {
+                twitter_available_providers_links = Vec::new(); //todo
+            }
         }
         match provider_kind {
             ProviderKind::Arxiv => {
@@ -102,6 +110,9 @@ pub fn rss_part(
             }
             ProviderKind::Twitter => {
                 links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
+            }
+            ProviderKind::Reddit => {
+                links_temp_naming = HashMap::new();
             }
         }
         if !links_temp_naming.is_empty() {
@@ -179,6 +190,10 @@ pub fn rss_part(
                     let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
                     unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
                 }
+                ProviderKind::Reddit => {
+                    //todo
+                    unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                }
             }
 
             handle_unfiltered_posts(
@@ -223,6 +238,12 @@ pub fn rss_part(
                         "i cannot reach any of provider links for {:#?}",
                         provider_kind
                     );
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Reddit => {
+                    //todo
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
             }

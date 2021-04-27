@@ -6,7 +6,6 @@ extern crate serde_json;
 use futures::future;
 use reqwest::Client;
 use std::time::Instant;
-use tokio;
 
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_REDDIT;
