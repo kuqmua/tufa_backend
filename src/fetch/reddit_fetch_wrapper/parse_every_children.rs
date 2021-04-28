@@ -9,6 +9,7 @@ pub fn parse_every_children(
 ) -> RedditJsonStructVector {
     let mut vec_of_children = RedditJsonStructVector::new();
     let mut count = 0;
+    println!("children.len() {}", children.len());
     while count < children.len() {
         let mut child = RedditJsonStruct::new();
         child.link = u.data.children[count].data.link.clone();
@@ -28,7 +29,8 @@ pub fn parse_every_children(
         child.quarantine = u.data.children[count].data.quarantine.clone();
         child.is_self = u.data.children[count].data.is_self.clone();
         child.saved = u.data.children[count].data.saved.clone();
-        vec_of_children.posts[count] = child;
+        // vec_of_children.posts[count] = child;
+        vec_of_children.posts.push(child);
         count += 1;
     }
     vec_of_children

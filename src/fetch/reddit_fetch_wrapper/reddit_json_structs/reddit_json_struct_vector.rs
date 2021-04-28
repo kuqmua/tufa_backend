@@ -8,7 +8,8 @@ pub struct RedditJsonStructVector {
 impl RedditJsonStructVector {
     pub fn new() -> Self {
         RedditJsonStructVector {
-            posts: vec![RedditJsonStruct::new(); 25], //default reddit api json children amount
+            // posts: vec![RedditJsonStruct::new(); 25], //default reddit api json children amount
+            posts: Vec::<RedditJsonStruct>::new(),
         }
     }
 }
