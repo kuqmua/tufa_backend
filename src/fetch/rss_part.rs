@@ -16,8 +16,9 @@ use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::get_group_names::get_reddit_links::get_reddit_links;
+use crate::get_group_names::get_twitter_links::get_twitter_subs;
 use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
-use crate::get_group_names::get_twitter_subs::get_twitter_subs;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -112,7 +113,7 @@ pub fn rss_part(
                 links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
             }
             ProviderKind::Reddit => {
-                links_temp_naming = HashMap::new();
+                links_temp_naming = get_reddit_links();
             }
         }
         if !links_temp_naming.is_empty() {
