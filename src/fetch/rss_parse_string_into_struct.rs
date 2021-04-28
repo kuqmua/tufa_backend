@@ -7,6 +7,11 @@ use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
+use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::CastedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::Children;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     key: &str,
@@ -15,130 +20,175 @@ pub fn rss_parse_string_into_struct(
     provider_kind: ProviderKind,
 ) -> (RssPostStruct, AreThereItems) {
     let mut rss_post_struct_handle: RssPostStruct = RssPostStruct::new();
-    let are_there_items_handle: AreThereItems; // = AreThereItems::Initialized
-    if let ProviderKind::Twitter = provider_kind {
-        match fetch_result_string.find("<channel>") {
-            Some(find_item_position_start) => match fetch_result_string.find("</channel>") {
-                Some(find_item_position_end) => {
-                    fetch_result_string = fetch_result_string
-                        [find_item_position_start..find_item_position_end + "</channel>".len()]
-                        .to_string();
+    let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
+    match provider_kind {
+        ProviderKind::Reddit => {
+            let u: CastedRedditJsonStruct = serde_json::from_str(&fetch_result_string).unwrap();
+            if !u.data.children.is_empty() {
+                let children: &Vec<Children> = &u.data.children;
+                let f: VecOfUsedRedditJsonStruct = parse_every_children(&u, &children);
+                println!("{}", f.posts[0].author);
+            } else if enable_error_prints {
+                print_error_red(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "u.data.children.len() > 0 NOPE".to_string(),
+                )
+            }
+        }
+        _ => {
+            if let ProviderKind::Twitter = provider_kind {
+                match fetch_result_string.find("<channel>") {
+                    Some(find_item_position_start) => {
+                        match fetch_result_string.find("</channel>") {
+                            Some(find_item_position_end) => {
+                                fetch_result_string = fetch_result_string[find_item_position_start
+                                    ..find_item_position_end + "</channel>".len()]
+                                    .to_string();
+                            }
+                            _ => {
+                                let warning_message: String = format!(
+                                    "no </channel> in response for key: {} link: {}",
+                                    key, value
+                                );
+                                print_warning_yellow(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                );
+                            }
+                        }
+                    }
+                    _ => {
+                        let warning_message: String =
+                            format!("no <channel> in response for key: {} link: {}", key, value);
+                        print_warning_yellow(
+                            file!().to_string(),
+                            line!().to_string(),
+                            warning_message,
+                        );
+                    }
+                }
+            }
+
+            match fetch_result_string.find("</item>") {
+                Some(_) => {
+                    if let ProviderKind::Twitter = provider_kind {
+                        while fetch_result_string.contains("<dc:creator>") {
+                            match fetch_result_string.find("</dc:creator>") {
+                                Some(_) => {
+                                    fetch_result_string =
+                                        fetch_result_string.replace("<dc:creator>", "<creator>");
+                                    fetch_result_string =
+                                        fetch_result_string.replace("</dc:creator>", "</creator>");
+                                }
+                                None => {
+                                    break;
+                                }
+                            }
+                        }
+                        while fetch_result_string.contains("<atom:link") {
+                            fetch_result_string =
+                                fetch_result_string.replace("<atom:link", "<atom_link");
+                        }
+                    }
+                    if let ProviderKind::Medrxiv = provider_kind {
+                        fetch_result_string.remove(0);
+                        while fetch_result_string.contains("<dc:title>") {
+                            match fetch_result_string.find("</dc:title>") {
+                                Some(_) => {
+                                    fetch_result_string =
+                                        fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                                    fetch_result_string =
+                                        fetch_result_string.replace("</dc:title>", "</dcstitle>");
+                                }
+                                None => {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if let ProviderKind::Biorxiv = provider_kind {
+                        while fetch_result_string.contains("<dc:title>") {
+                            match fetch_result_string.find("</dc:title>") {
+                                Some(_) => {
+                                    fetch_result_string =
+                                        fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                                    fetch_result_string =
+                                        fetch_result_string.replace("</dc:title>", "</dcstitle>");
+                                }
+                                None => {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    let Rss_struct_from_str_result: Result<
+                        XmlRssParserStruct,
+                        serde_xml_rs::Error,
+                    > = from_str(&fetch_result_string);
+                    match Rss_struct_from_str_result {
+                        Ok(Rss_struct) => {
+                            let mut count = 0;
+                            let mut Rss_page_struct: RssPostStruct = RssPostStruct::new();
+                            loop {
+                                if count < Rss_struct.items.len() {
+                                    let mut Rss_post: RssPost = RssPost::new();
+                                    Rss_post.title = Rss_struct.items[count].title.clone();
+                                    Rss_post.link = Rss_struct.items[count].link.clone();
+                                    Rss_post.description =
+                                        Rss_struct.items[count].description.clone();
+                                    Rss_page_struct.items.push(Rss_post);
+                                    count += 1;
+                                } else {
+                                    break;
+                                }
+                            }
+                            if !Rss_page_struct.items.is_empty() {
+                                are_there_items_handle = AreThereItems::Yep;
+                            } else {
+                                are_there_items_handle =
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                            }
+                            rss_post_struct_handle = Rss_page_struct;
+                        }
+                        Err(e) => {
+                            if enable_error_prints {
+                                let error_message = "Rss conversion from str for ".to_string()
+                                    + key
+                                    + "error: "
+                                    + &e.to_string();
+                                print_error_red(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    error_message,
+                                )
+                            };
+                            are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                fetch_result_string,
+                                e.to_string(),
+                            );
+                        }
+                    }
                 }
                 _ => {
-                    let warning_message: String =
-                        format!("no </channel> in response for key: {} link: {}", key, value);
-                    print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
+                    if enable_error_prints {
+                        let warning_message: String = "wrong link or there is no items for key: "
+                            .to_string()
+                            + key
+                            + " link: "
+                            + value; //разделить логику при помощи нахождения паттерна архива урла
+                        print_warning_yellow(
+                            file!().to_string(),
+                            line!().to_string(),
+                            warning_message,
+                        );
+                    };
+                    are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
                 }
-            },
-            _ => {
-                let warning_message: String =
-                    format!("no <channel> in response for key: {} link: {}", key, value);
-                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
             }
         }
     }
 
-    match fetch_result_string.find("</item>") {
-        Some(_) => {
-            if let ProviderKind::Twitter = provider_kind {
-                while fetch_result_string.contains("<dc:creator>") {
-                    match fetch_result_string.find("</dc:creator>") {
-                        Some(_) => {
-                            fetch_result_string =
-                                fetch_result_string.replace("<dc:creator>", "<creator>");
-                            fetch_result_string =
-                                fetch_result_string.replace("</dc:creator>", "</creator>");
-                        }
-                        None => {
-                            break;
-                        }
-                    }
-                }
-                while fetch_result_string.contains("<atom:link") {
-                    fetch_result_string = fetch_result_string.replace("<atom:link", "<atom_link");
-                }
-            }
-            if let ProviderKind::Medrxiv = provider_kind {
-                fetch_result_string.remove(0);
-                while fetch_result_string.contains("<dc:title>") {
-                    match fetch_result_string.find("</dc:title>") {
-                        Some(_) => {
-                            fetch_result_string =
-                                fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                            fetch_result_string =
-                                fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                        }
-                        None => {
-                            break;
-                        }
-                    }
-                }
-            }
-            if let ProviderKind::Biorxiv = provider_kind {
-                while fetch_result_string.contains("<dc:title>") {
-                    match fetch_result_string.find("</dc:title>") {
-                        Some(_) => {
-                            fetch_result_string =
-                                fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                            fetch_result_string =
-                                fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                        }
-                        None => {
-                            break;
-                        }
-                    }
-                }
-            }
-            let Rss_struct_from_str_result: Result<XmlRssParserStruct, serde_xml_rs::Error> =
-                from_str(&fetch_result_string);
-            match Rss_struct_from_str_result {
-                Ok(Rss_struct) => {
-                    let mut count = 0;
-                    let mut Rss_page_struct: RssPostStruct = RssPostStruct::new();
-                    loop {
-                        if count < Rss_struct.items.len() {
-                            let mut Rss_post: RssPost = RssPost::new();
-                            Rss_post.title = Rss_struct.items[count].title.clone();
-                            Rss_post.link = Rss_struct.items[count].link.clone();
-                            Rss_post.description = Rss_struct.items[count].description.clone();
-                            Rss_page_struct.items.push(Rss_post);
-                            count += 1;
-                        } else {
-                            break;
-                        }
-                    }
-                    if !Rss_page_struct.items.is_empty() {
-                        are_there_items_handle = AreThereItems::Yep;
-                    } else {
-                        are_there_items_handle =
-                            AreThereItems::NopeButThereIsTag(fetch_result_string);
-                    }
-                    rss_post_struct_handle = Rss_page_struct;
-                }
-                Err(e) => {
-                    if enable_error_prints {
-                        let error_message = "Rss conversion from str for ".to_string()
-                            + key
-                            + "error: "
-                            + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), error_message)
-                    };
-                    are_there_items_handle =
-                        AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
-                }
-            }
-        }
-        _ => {
-            if enable_error_prints {
-                let warning_message: String = "wrong link or there is no items for key: "
-                    .to_string()
-                    + key
-                    + " link: "
-                    + value; //разделить логику при помощи нахождения паттерна архива урла
-                print_warning_yellow(file!().to_string(), line!().to_string(), warning_message);
-            };
-            are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
-        }
-    }
     (rss_post_struct_handle, are_there_items_handle)
 }

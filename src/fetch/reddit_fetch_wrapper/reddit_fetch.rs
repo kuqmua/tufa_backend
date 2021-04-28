@@ -65,10 +65,8 @@ pub fn reddit_part(
         }
         ProviderKind::Reddit => {
             if check_link(provider_link).0 {
-                println!("f1");
                 availability_checker_flag = true; //todo
             } else {
-                println!("f2");
             }
         }
     }
