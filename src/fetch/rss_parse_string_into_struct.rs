@@ -27,7 +27,7 @@ pub fn rss_parse_string_into_struct(
             if !u.data.children.is_empty() {
                 let children: &Vec<JsonRedditParserStructVectorChild> = &u.data.children;
                 let f: VecOfUsedRedditJsonStruct = parse_every_children(&u, &children);
-                println!("{:#?}", f); //.posts[0].author
+                println!("{:#?}", f.posts[0].author);
             } else if enable_error_prints {
                 print_error_red(
                     file!().to_string(),
@@ -123,34 +123,34 @@ pub fn rss_parse_string_into_struct(
                             }
                         }
                     }
-                    let Rss_struct_from_str_result: Result<
+                    let rss_struct_from_str_result: Result<
                         XmlRssParserStruct,
                         serde_xml_rs::Error,
                     > = from_str(&fetch_result_string);
-                    match Rss_struct_from_str_result {
-                        Ok(Rss_struct) => {
+                    match rss_struct_from_str_result {
+                        Ok(rss_struct) => {
                             let mut count = 0;
-                            let mut Rss_page_struct: RssPostStruct = RssPostStruct::new();
+                            let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                             loop {
-                                if count < Rss_struct.items.len() {
-                                    let mut Rss_post: RssPost = RssPost::new();
-                                    Rss_post.title = Rss_struct.items[count].title.clone();
-                                    Rss_post.link = Rss_struct.items[count].link.clone();
-                                    Rss_post.description =
-                                        Rss_struct.items[count].description.clone();
-                                    Rss_page_struct.items.push(Rss_post);
+                                if count < rss_struct.items.len() {
+                                    let mut rss_post: RssPost = RssPost::new();
+                                    rss_post.title = rss_struct.items[count].title.clone();
+                                    rss_post.link = rss_struct.items[count].link.clone();
+                                    rss_post.description =
+                                        rss_struct.items[count].description.clone();
+                                    rss_page_struct.items.push(rss_post);
                                     count += 1;
                                 } else {
                                     break;
                                 }
                             }
-                            if !Rss_page_struct.items.is_empty() {
+                            if !rss_page_struct.items.is_empty() {
                                 are_there_items_handle = AreThereItems::Yep;
                             } else {
                                 are_there_items_handle =
                                     AreThereItems::NopeButThereIsTag(fetch_result_string);
                             }
-                            rss_post_struct_handle = Rss_page_struct;
+                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             if enable_error_prints {
