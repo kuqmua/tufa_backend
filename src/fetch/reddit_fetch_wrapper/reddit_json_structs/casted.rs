@@ -10,11 +10,11 @@ pub struct JsonRedditParserStructVector {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct JsonRedditParserStructVectorChild {
-    pub data: Data2,
+    pub data: JsonRedditParserStructVectorChildData,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Data2 {
+pub struct JsonRedditParserStructVectorChildData {
     pub link: Option<String>,
     pub subreddit: String,
     pub selftext: String,
