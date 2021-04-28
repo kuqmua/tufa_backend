@@ -8,8 +8,8 @@ use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
 use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::Children;
 use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStructVectorChild;
 use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 
 pub fn rss_parse_string_into_struct(
@@ -25,7 +25,7 @@ pub fn rss_parse_string_into_struct(
         ProviderKind::Reddit => {
             let u: JsonRedditParserStruct = serde_json::from_str(&fetch_result_string).unwrap();
             if !u.data.children.is_empty() {
-                let children: &Vec<Children> = &u.data.children;
+                let children: &Vec<JsonRedditParserStructVectorChild> = &u.data.children;
                 let f: VecOfUsedRedditJsonStruct = parse_every_children(&u, &children);
                 println!("{:#?}", f); //.posts[0].author
             } else if enable_error_prints {

@@ -1,15 +1,15 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct JsonRedditParserStruct {
-    pub data: Data,
+    pub data: JsonRedditParserStructVector,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Data {
-    pub children: Vec<Children>,
+pub struct JsonRedditParserStructVector {
+    pub children: Vec<JsonRedditParserStructVectorChild>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct Children {
+pub struct JsonRedditParserStructVectorChild {
     pub data: Data2,
 }
 
