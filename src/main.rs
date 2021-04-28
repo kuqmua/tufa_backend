@@ -24,8 +24,8 @@ mod fetch {
         pub mod reddit_fetch;
         pub mod subreddits_into_links;
         pub mod reddit_json_structs {
-            pub mod casted;
-            pub mod used;
+            pub mod json_reddit_parser_struct;
+            pub mod reddit_json_struct_vector;
         }
     }
 }

@@ -1,16 +1,16 @@
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStruct;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStructVectorChild;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::UsedRedditJsonStruct;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStructVectorChild;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_vector::RedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
 
 pub fn parse_every_children(
     u: &JsonRedditParserStruct,
     children: &Vec<JsonRedditParserStructVectorChild>,
-) -> VecOfUsedRedditJsonStruct {
-    let mut vec_of_children = VecOfUsedRedditJsonStruct::new();
+) -> RedditJsonStructVector {
+    let mut vec_of_children = RedditJsonStructVector::new();
     let mut count = 0;
     while count < children.len() {
-        let mut child = UsedRedditJsonStruct::new();
+        let mut child = RedditJsonStruct::new();
         child.link = u.data.children[count].data.link.clone();
         child.subreddit = u.data.children[count].data.subreddit.clone();
         //child.subreddit = &u.data.children[count].data.subreddit.clone();

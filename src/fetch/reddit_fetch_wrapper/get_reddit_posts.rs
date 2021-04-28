@@ -11,20 +11,20 @@ use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
 use crate::fetch::reddit_fetch_wrapper::push_names_into_two_layer_result_vec::push_names_into_two_layer_result_vec;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStruct;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStructVectorChild;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStructVectorChild;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
 use crate::fetch::reddit_fetch_wrapper::subreddits_into_links::subreddits_into_links;
 use crate::overriding::prints::print_error_red;
 
 #[tokio::main]
-pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<VecOfUsedRedditJsonStruct> {
+pub async fn get_reddit_posts(subreddits: Vec<&str>) -> Vec<RedditJsonStructVector> {
     if subreddits.len() >= 4294967295 {
         panic!("subreddits_vec.len() > 4294967295(u32::MAX)");
     }
     let time = Instant::now();
     let client = Client::new();
-    let mut two_layer_result_vec: Vec<VecOfUsedRedditJsonStruct> =
+    let mut two_layer_result_vec: Vec<RedditJsonStructVector> =
         push_names_into_two_layer_result_vec(&subreddits);
     let subreddits_links: Vec<String> = subreddits_into_links(subreddits);
     let bodies = future::join_all(subreddits_links.into_iter().map(|link| {

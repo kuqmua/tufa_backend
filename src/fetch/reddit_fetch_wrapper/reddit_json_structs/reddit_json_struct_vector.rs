@@ -1,20 +1,20 @@
 use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct VecOfUsedRedditJsonStruct {
-    pub posts: Vec<UsedRedditJsonStruct>,
+pub struct RedditJsonStructVector {
+    pub posts: Vec<RedditJsonStruct>,
 }
 
-impl VecOfUsedRedditJsonStruct {
+impl RedditJsonStructVector {
     pub fn new() -> Self {
-        VecOfUsedRedditJsonStruct {
-            posts: vec![UsedRedditJsonStruct::new(); 25], //default reddit api json children amount
+        RedditJsonStructVector {
+            posts: vec![RedditJsonStruct::new(); 25], //default reddit api json children amount
         }
     }
 }
 //Vec::with_capacity(25)
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct UsedRedditJsonStruct {
+pub struct RedditJsonStruct {
     pub link: Option<String>,
     pub subreddit: String,
     //pub subreddit: &'static str,
@@ -35,7 +35,7 @@ pub struct UsedRedditJsonStruct {
     pub saved: bool,
 }
 
-impl Display for UsedRedditJsonStruct {
+impl Display for RedditJsonStruct {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
         write!(
             fmt,
@@ -60,9 +60,9 @@ impl Display for UsedRedditJsonStruct {
     }
 }
 
-impl UsedRedditJsonStruct {
+impl RedditJsonStruct {
     pub fn new() -> Self {
-        UsedRedditJsonStruct {
+        RedditJsonStruct {
             link: Some("".to_string()),
             subreddit: "".to_string(),
             //subreddit: "",

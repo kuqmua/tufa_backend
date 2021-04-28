@@ -8,9 +8,8 @@ use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
 use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStruct;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStructVectorChild;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
@@ -26,7 +25,7 @@ pub fn rss_parse_string_into_struct(
             let possible_reddit_posts_structure: JsonRedditParserStruct =
                 serde_json::from_str(&fetch_result_string).unwrap();
             if !possible_reddit_posts_structure.data.children.is_empty() {
-                let reddit_posts_struct: VecOfUsedRedditJsonStruct = parse_every_children(
+                let reddit_posts_struct: RedditJsonStructVector = parse_every_children(
                     &possible_reddit_posts_structure,
                     &possible_reddit_posts_structure.data.children,
                 );
