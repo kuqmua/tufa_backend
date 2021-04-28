@@ -23,16 +23,19 @@ pub fn rss_parse_string_into_struct(
     let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
     match provider_kind {
         ProviderKind::Reddit => {
-            let u: JsonRedditParserStruct = serde_json::from_str(&fetch_result_string).unwrap();
-            if !u.data.children.is_empty() {
-                let children: &Vec<JsonRedditParserStructVectorChild> = &u.data.children;
-                let f: VecOfUsedRedditJsonStruct = parse_every_children(&u, &children);
-                println!("{:#?}", f.posts[0].author);
+            let possible_reddit_posts_structure: JsonRedditParserStruct =
+                serde_json::from_str(&fetch_result_string).unwrap();
+            if !possible_reddit_posts_structure.data.children.is_empty() {
+                let reddit_posts_struct: VecOfUsedRedditJsonStruct = parse_every_children(
+                    &possible_reddit_posts_structure,
+                    &possible_reddit_posts_structure.data.children,
+                );
+                println!("{:#?}", reddit_posts_struct.posts[0].author);
             } else if enable_error_prints {
                 print_error_red(
                     file!().to_string(),
                     line!().to_string(),
-                    "u.data.children.len() > 0 NOPE".to_string(),
+                    "reddit_posts_structure.data.children is empty".to_string(),
                 )
             }
         }
