@@ -1,10 +1,10 @@
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::CastedRedditJsonStruct;
 use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::Children;
+use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::casted::JsonRedditParserStruct;
 use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::UsedRedditJsonStruct;
 use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::used::VecOfUsedRedditJsonStruct;
 
 pub fn parse_every_children(
-    u: &CastedRedditJsonStruct,
+    u: &JsonRedditParserStruct,
     children: &Vec<Children>,
 ) -> VecOfUsedRedditJsonStruct {
     let mut vec_of_children = VecOfUsedRedditJsonStruct::new();

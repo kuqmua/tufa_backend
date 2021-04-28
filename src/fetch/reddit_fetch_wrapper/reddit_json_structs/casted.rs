@@ -1,5 +1,5 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct CastedRedditJsonStruct {
+pub struct JsonRedditParserStruct {
     pub data: Data,
 }
 
