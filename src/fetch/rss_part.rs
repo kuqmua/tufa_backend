@@ -15,7 +15,7 @@ use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_reddit_links::get_reddit_links;
-use crate::get_group_names::get_twitter_links::get_twitter_subs;
+use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::overriding::prints::print_error_red;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -109,7 +109,7 @@ pub fn rss_part(
                 links_temp_naming = get_medrxiv_links();
             }
             ProviderKind::Twitter => {
-                links_temp_naming = get_twitter_subs(twitter_available_providers_links.clone());
+                links_temp_naming = get_twitter_links(twitter_available_providers_links.clone());
             }
             ProviderKind::Reddit => {
                 links_temp_naming = get_reddit_links();

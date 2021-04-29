@@ -1,11 +1,8 @@
 use std::collections::HashMap;
-pub fn get_twitter_subs(
+pub fn get_twitter_links(
     // twitter_provider_names: Vec<String>
     twitter_provider_names: Vec<&str>,
-) 
-// -> Vec<(&str, String)>
--> HashMap<&'static str, String>
- {
+) -> HashMap<&'static str, String> {
     // Vec<(&'static str, String)>
     if twitter_provider_names.is_empty() {
         panic!("twitter_provider_names is empty!!!");
@@ -2318,5 +2315,6 @@ pub fn get_twitter_subs(
             twitter_sections_links.insert(sub_nickname, sub_link);
         }
     }
+    println!("{:#?}", twitter_sections_links);
     twitter_sections_links //maybe change structure for memory effective reasons
 }

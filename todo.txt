@@ -167,3 +167,6 @@ habr rss
 https://habr.com/ru/rss/post/553356/?with_hubs=true:?with_tags=true:?limit=100
 ----------
 github newsfeed
+---------
+get names and links in different functions and let twitter_links = get_medrxiv_links(); //change to get_twitter_links()
+something wrong with get_twitter_links()... maybe need to implement 2 different functions

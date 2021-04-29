@@ -37,12 +37,14 @@ use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_reddit_links::get_reddit_links;
+use crate::get_group_names::get_twitter_links::get_twitter_links;
+
 // use crate::get_group_names::get_subreddits::get_subreddits;
-// use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_REDDIT;
 use crate::config::REDDIT_LINK;
 use crate::fetch::rss_part::rss_part;
+
 use crate::overriding::prints::print_error_red;
 
 pub async fn check_new_posts_threads_parts() {
@@ -164,17 +166,33 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_TWITTER {
-        threads_vec.push(thread::spawn(move || {
-            rss_part(
-                ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
-                ENABLE_PRINTS_TWITTER,
-                ENABLE_WARNING_PRINTS_TWITTER,
-                ENABLE_ERROR_PRINTS_TWITTER,
-                ENABLE_TWITTER_TIME_MEASUREMENT,
-                TWITTER_LINK,
-                &ProviderKind::Twitter,
-            );
-        }));
+        let twitter_links = get_medrxiv_links(); //change to get_twitter_links()
+        if twitter_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "twitter_links.is_empty".to_string(),
+            )
+        } else {
+            if ENABLE_PRINTS_TWITTER {
+                println!(
+                    "{:#?} elements in {:#?} HashMap",
+                    twitter_links.len(),
+                    ProviderKind::Twitter
+                );
+            };
+            threads_vec.push(thread::spawn(move || {
+                rss_part(
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
+                    ENABLE_PRINTS_TWITTER,
+                    ENABLE_WARNING_PRINTS_TWITTER,
+                    ENABLE_ERROR_PRINTS_TWITTER,
+                    ENABLE_TWITTER_TIME_MEASUREMENT,
+                    TWITTER_LINK,
+                    &ProviderKind::Twitter,
+                );
+            }));
+        }
     }
     for i in threads_vec {
         i.join().unwrap();
