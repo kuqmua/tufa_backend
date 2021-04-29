@@ -41,4 +41,17 @@ impl RssPost {
             creator: "".to_string(),
         }
     }
+    pub fn initialize_new(
+        title: String,
+        link: String,
+        description: String,
+        creator: String,
+    ) -> Self {
+        RssPost {
+            title,
+            link,
+            description,
+            creator,
+        }
+    }
 }
