@@ -17,12 +17,9 @@ mod fetch {
     pub mod rss_provider_kind_enum;
     pub mod rss_structures;
     pub mod rss_write_error_logs_into_file;
+
     pub mod reddit_fetch_wrapper {
-        pub mod get_reddit_posts;
         pub mod parse_every_children;
-        pub mod push_names_into_two_layer_result_vec;
-        pub mod reddit_fetch;
-        pub mod subreddits_into_links;
         pub mod reddit_json_structs {
             pub mod json_reddit_parser_struct;
             pub mod reddit_json_struct_vector;

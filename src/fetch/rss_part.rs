@@ -1,24 +1,22 @@
-extern crate reqwest;
-extern crate serde;
-extern crate serde_xml_rs;
-
+use crate::authorization::reddit::authorization_info;
+use crate::authorization::reddit::reddit_authorization;
 use crate::check_net::check_link::check_link;
+use crate::fetch::rss_check_available_providers::rss_check_available_providers;
+use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::fetch::rss_fetch_and_parse_xml::rss_fetch_and_parse_xml;
 use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
+use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::fetch::rss_check_available_providers::rss_check_available_providers;
-use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
 use crate::get_group_names::get_reddit_links::get_reddit_links;
 use crate::get_group_names::get_twitter_links::get_twitter_subs;
-use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+use crate::overriding::prints::print_error_red;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -65,7 +63,8 @@ pub fn rss_part(
         }
         ProviderKind::Reddit => {
             if check_link(provider_link).0 {
-                availability_checker_flag = false; //todo
+                availability_checker_flag = true; //todo
+            } else {
             }
         }
     }
@@ -192,27 +191,60 @@ pub fn rss_part(
                     unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
                 }
                 ProviderKind::Reddit => {
-                    //todo
-                    unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                    //what should i do with authorization?
+                    let is_reddit_authorized = reddit_authorization::reddit_authorization(
+                        authorization_info::REDDIT_USER_AGENT,
+                        authorization_info::REDDIT_CLIENT_ID,
+                        authorization_info::REDDIT_CLIENT_SECRET,
+                        authorization_info::REDDIT_USERNAME,
+                        authorization_info::REDDIT_PASSWORD,
+                    );
+                    if is_reddit_authorized {
+                        println!("success reddit authorization");
+                        unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
+                            enable_prints,
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
+                    } else {
+                        unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                        if enable_error_prints {
+                            print_error_red(
+                                file!().to_string(),
+                                line!().to_string(),
+                                "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
+                            )
+                        }
+                    }
                 }
             }
-
-            handle_unfiltered_posts(
-                unfiltered_posts_hashmap_after_fetch_and_parse,
-                provider_kind,
-                enable_prints,
-                enable_warning_prints,
-                enable_error_prints,
-                enable_cleaning_logs_directory,
-                enable_time_measurement,
-            )
+            if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
+                handle_unfiltered_posts(
+                    unfiltered_posts_hashmap_after_fetch_and_parse,
+                    provider_kind,
+                    enable_prints,
+                    enable_warning_prints,
+                    enable_error_prints,
+                    enable_cleaning_logs_directory,
+                    enable_time_measurement,
+                );
+                true
+            } else {
+                if enable_error_prints {
+                    let error_message = format!(
+                        "unfiltered_posts_hashmap_after_fetch_and_parse is empty for{:#?}",
+                        provider_kind
+                    );
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                false
+            }
         } else {
             if enable_error_prints {
-                print_error_red(
-                    file!().to_string(),
-                    line!().to_string(),
-                    "twitter_links.is_empty".to_string(),
-                );
+                let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
+                print_error_red(file!().to_string(), line!().to_string(), error_message)
             }
             false
         }
@@ -252,24 +284,3 @@ pub fn rss_part(
         false
     }
 }
-
-// if enable_prints {
-//                 println!(
-//                     "thread::spawn for each provider must be done {:#?} times...",
-//                     vec_of_hashmap_parts.len()
-//                 );
-//             }
-
-// if enable_prints {
-//                 println!(
-//                     "twitter providers available {:#?} of {:#?}",
-//                     twitter_available_providers_links_len, twitter_providers_names_length_for_debug
-//                 );
-//                 println!(
-//                     "links({}) for each provider ({}) links_for_each_provider {} links_to_remaind {}",
-//                     links.len(),
-//                     twitter_available_providers_links_len,
-//                     links.len() / twitter_available_providers_links_len,
-//                     links.len() % twitter_available_providers_links_len,
-//                 );
-//             }

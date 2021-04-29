@@ -5,11 +5,11 @@ use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_
 
 pub fn parse_every_children(
     u: &JsonRedditParserStruct,
-    children: &Vec<JsonRedditParserStructVectorChild>,
+    children: &[JsonRedditParserStructVectorChild],
 ) -> RedditJsonStructVector {
     let mut vec_of_children = RedditJsonStructVector::new();
     let mut count = 0;
-    println!("children.len() {}", children.len());
+    // println!("children.len() {}", children.len());
     while count < children.len() {
         let mut child = RedditJsonStruct::new();
         // child.link = u.data.children[count].data.link.clone();

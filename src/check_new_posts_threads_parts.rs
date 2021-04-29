@@ -34,7 +34,7 @@ use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
 
 use crate::config::MEDRXIV_LINK;
 use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
-use crate::fetch::rss_part::rss_part;
+                                 // use crate::fetch::rss_part::rss_part;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
@@ -44,7 +44,7 @@ use crate::get_group_names::get_subreddits::get_subreddits;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_REDDIT;
 use crate::config::REDDIT_LINK;
-use crate::fetch::reddit_fetch_wrapper::reddit_fetch::reddit_part;
+use crate::fetch::rss_part::rss_part;
 use crate::overriding::prints::print_error_red;
 
 pub async fn check_new_posts_threads_parts() {
@@ -66,7 +66,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             threads_vec.push(thread::spawn(move || {
-                reddit_part(
+                rss_part(
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT,
                     ENABLE_PRINTS_REDDIT,
                     ENABLE_WARNING_PRINTS_REDDIT,
