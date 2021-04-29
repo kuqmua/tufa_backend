@@ -7,9 +7,9 @@ use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
-use crate::fetch::reddit_fetch_wrapper::parse_every_children::parse_every_children;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
-use crate::fetch::reddit_fetch_wrapper::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
+use crate::fetch::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
+use crate::fetch::rss_reddit_parse_every_children::rss_reddit_parse_every_children;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
@@ -25,11 +25,11 @@ pub fn rss_parse_string_into_struct(
             let possible_reddit_posts_structure: JsonRedditParserStruct =
                 serde_json::from_str(&fetch_result_string).unwrap();
             if !possible_reddit_posts_structure.data.children.is_empty() {
-                let reddit_posts_struct: RedditJsonStructVector = parse_every_children(
+                let reddit_posts_struct: RedditJsonStructVector = rss_reddit_parse_every_children(
                     &possible_reddit_posts_structure,
                     &possible_reddit_posts_structure.data.children,
                 );
-                println!("{:#?}", reddit_posts_struct.posts[0].author); //[0].author//.posts.len()
+                // println!("{:#?}", reddit_posts_struct.posts); //[0].author//.posts.len()
                 for reddit_post in reddit_posts_struct.posts {
                     let rss_post: RssPost = RssPost::initialize_new(
                         reddit_post.title,
