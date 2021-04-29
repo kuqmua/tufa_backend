@@ -3,7 +3,9 @@ use std::thread;
 use crate::config::ARXIV_LINK;
 use crate::config::BIORXIV_LINK;
 use crate::config::ENABLE_ARXIV;
+use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_BIORXIV;
+use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
@@ -15,31 +17,27 @@ use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_ERROR_PRINTS_TWITTER;
 use crate::config::ENABLE_MEDRXIV;
+use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
 use crate::config::ENABLE_PRINTS_TWITTER;
+use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
 use crate::config::ENABLE_TWITTER;
+use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
 use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
 use crate::config::ENABLE_WARNING_PRINTS_REDDIT;
 use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
-
-use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
-use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
-
 use crate::config::MEDRXIV_LINK;
 use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
-                                 // use crate::fetch::rss_part::rss_part;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
-use crate::get_group_names::get_subreddits::get_subreddits;
+use crate::get_group_names::get_reddit_links::get_reddit_links;
+// use crate::get_group_names::get_subreddits::get_subreddits;
 // use crate::get_group_names::get_twitter_links::get_twitter_links;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_REDDIT;
@@ -50,7 +48,7 @@ use crate::overriding::prints::print_error_red;
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(4);
     if ENABLE_REDDIT {
-        let reddit_links = get_subreddits();
+        let reddit_links = get_reddit_links();
         if reddit_links.is_empty() {
             print_error_red(
                 file!().to_string(),

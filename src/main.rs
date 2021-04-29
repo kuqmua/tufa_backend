@@ -28,7 +28,6 @@ mod get_group_names {
     pub mod get_biorxiv_links;
     pub mod get_medrxiv_links;
     pub mod get_reddit_links;
-    pub mod get_subreddits;
     pub mod get_twitter_links;
     pub mod get_twitter_providers_names;
 }
