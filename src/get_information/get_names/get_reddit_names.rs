@@ -67,8 +67,6 @@ pub fn get_reddit_names() -> Vec<&'static str> {
         // "wildhearthstone",
         // "wow",
     ]
-    .iter()
-    .cloned()
-    .collect();
+    .to_vec();
     reddit_names
 }

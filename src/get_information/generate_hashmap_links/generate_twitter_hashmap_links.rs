@@ -45,6 +45,5 @@ pub fn get_twitter_links(
             twitter_sections_links.insert(sub_name, sub_link);
         }
     }
-    println!("{:#?}", twitter_sections_links);
     twitter_sections_links //maybe change structure for memory effective reasons
 }

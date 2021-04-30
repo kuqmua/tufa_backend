@@ -23,17 +23,21 @@ mod fetch {
         pub mod reddit_json_struct_vector;
     }
 }
-mod get_group_names {
-    pub mod get_arxiv_links;
-    pub mod get_arxiv_names;
-    pub mod get_biorxiv_links;
-    pub mod get_biorxiv_names;
-    pub mod get_medrxiv_links;
-    pub mod get_medrxiv_names;
-    pub mod get_reddit_links;
-    pub mod get_reddit_names;
-    pub mod get_twitter_links;
-    pub mod get_twitter_names;
+mod get_information {
+    pub mod get_names {
+        pub mod get_arxiv_names;
+        pub mod get_biorxiv_names;
+        pub mod get_medrxiv_names;
+        pub mod get_reddit_names;
+        pub mod get_twitter_names;
+    }
+    pub mod generate_hashmap_links {
+        pub mod generate_arxiv_hashmap_links;
+        pub mod generate_biorxiv_hashmap_links;
+        pub mod generate_medrxiv_hashmap_links;
+        pub mod generate_reddit_hashmap_links;
+        pub mod generate_twitter_hashmap_links;
+    }
     pub mod get_twitter_providers_names;
 }
 mod check_net {

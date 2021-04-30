@@ -6,21 +6,21 @@ use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for
 use crate::fetch::rss_fetch_and_parse_xml::rss_fetch_and_parse_xml;
 use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::get_group_names::get_twitter_providers_names::get_twitter_providers_names;
+use crate::get_information::get_twitter_providers_names::get_twitter_providers_names;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::get_group_names::get_arxiv_links::get_arxiv_links;
-use crate::get_group_names::get_arxiv_names::get_arxiv_names;
-use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
-use crate::get_group_names::get_biorxiv_names::get_biorxiv_names;
-use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
-use crate::get_group_names::get_medrxiv_names::get_medrxiv_names;
-use crate::get_group_names::get_reddit_links::get_reddit_links;
-use crate::get_group_names::get_reddit_names::get_reddit_names;
-use crate::get_group_names::get_twitter_links::get_twitter_links;
-use crate::get_group_names::get_twitter_names::get_twitter_names;
+use crate::get_information::generate_hashmap_links::generate_arxiv_hashmap_links::get_arxiv_links;
+use crate::get_information::generate_hashmap_links::generate_biorxiv_hashmap_links::get_biorxiv_links;
+use crate::get_information::generate_hashmap_links::generate_medrxiv_hashmap_links::get_medrxiv_links;
+use crate::get_information::generate_hashmap_links::generate_reddit_hashmap_links::get_reddit_links;
+use crate::get_information::generate_hashmap_links::generate_twitter_hashmap_links::get_twitter_links;
+use crate::get_information::get_names::get_arxiv_names::get_arxiv_names;
+use crate::get_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_information::get_names::get_medrxiv_names::get_medrxiv_names;
+use crate::get_information::get_names::get_reddit_names::get_reddit_names;
+use crate::get_information::get_names::get_twitter_names::get_twitter_names;
 use crate::overriding::prints::print_error_red;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -208,7 +208,9 @@ pub fn rss_part(
                         authorization_info::REDDIT_PASSWORD,
                     );
                     if is_reddit_authorized {
-                        println!("success reddit authorization");
+                        if enable_prints {
+                            println!("success reddit authorization");
+                        }
                         unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
                             enable_prints,
                             enable_error_prints,

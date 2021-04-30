@@ -33,13 +33,12 @@ use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
 use crate::config::MEDRXIV_LINK;
 use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::get_group_names::get_arxiv_names::get_arxiv_names;
-use crate::get_group_names::get_biorxiv_names::get_biorxiv_names;
-use crate::get_group_names::get_medrxiv_names::get_medrxiv_names;
-use crate::get_group_names::get_reddit_names::get_reddit_names;
-use crate::get_group_names::get_twitter_names::get_twitter_names;
+use crate::get_information::get_names::get_arxiv_names::get_arxiv_names;
+use crate::get_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_information::get_names::get_medrxiv_names::get_medrxiv_names;
+use crate::get_information::get_names::get_reddit_names::get_reddit_names;
+use crate::get_information::get_names::get_twitter_names::get_twitter_names;
 
-// use crate::get_group_names::get_subreddits::get_subreddits;
 use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_REDDIT;
 use crate::config::REDDIT_LINK;

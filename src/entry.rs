@@ -12,7 +12,6 @@ extern crate num_cpus;
 
 pub fn entry() {
     let time = Instant::now();
-
     let cpus = num_cpus::get();
     if ENABLE_PRINTS_HANDLE {
         if cpus > 1 {
@@ -21,7 +20,6 @@ pub fn entry() {
             println!("We are on a single core system");
         }
     }
-
     if check_link(STARTING_CHECK_LINK).0 {
         if ENABLE_PRINTS_HANDLE {
             let its_all_good_message = "server can reach ".to_string() + STARTING_CHECK_LINK;
@@ -36,7 +34,6 @@ pub fn entry() {
             its_not_good_message,
         )
     }
-
     if ENABLE_COMMON_TIME_MEASUREMENT {
         println!("main done in {} seconds", time.elapsed().as_secs());
     }
