@@ -12,10 +12,15 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::get_group_names::get_arxiv_links::get_arxiv_links;
+use crate::get_group_names::get_arxiv_names::get_arxiv_names;
 use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
+use crate::get_group_names::get_biorxiv_names::get_biorxiv_names;
 use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
+use crate::get_group_names::get_medrxiv_names::get_medrxiv_names;
 use crate::get_group_names::get_reddit_links::get_reddit_links;
+use crate::get_group_names::get_reddit_names::get_reddit_names;
 use crate::get_group_names::get_twitter_links::get_twitter_links;
+use crate::get_group_names::get_twitter_names::get_twitter_names;
 use crate::overriding::prints::print_error_red;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -100,19 +105,22 @@ pub fn rss_part(
         }
         match provider_kind {
             ProviderKind::Arxiv => {
-                links_temp_naming = get_arxiv_links();
+                links_temp_naming = get_arxiv_links(get_arxiv_names());
             }
             ProviderKind::Biorxiv => {
-                links_temp_naming = get_biorxiv_links();
+                links_temp_naming = get_biorxiv_links(get_biorxiv_names());
             }
             ProviderKind::Medrxiv => {
-                links_temp_naming = get_medrxiv_links();
+                links_temp_naming = get_medrxiv_links(get_medrxiv_names());
             }
             ProviderKind::Twitter => {
-                links_temp_naming = get_twitter_links(twitter_available_providers_links.clone());
+                links_temp_naming = get_twitter_links(
+                    twitter_available_providers_links.clone(),
+                    get_twitter_names(),
+                );
             }
             ProviderKind::Reddit => {
-                links_temp_naming = get_reddit_links();
+                links_temp_naming = get_reddit_links(get_reddit_names());
             }
         }
         if !links_temp_naming.is_empty() {

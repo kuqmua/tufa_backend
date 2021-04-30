@@ -33,11 +33,11 @@ use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
 use crate::config::MEDRXIV_LINK;
 use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::get_group_names::get_arxiv_links::get_arxiv_links;
-use crate::get_group_names::get_biorxiv_links::get_biorxiv_links;
-use crate::get_group_names::get_medrxiv_links::get_medrxiv_links;
-use crate::get_group_names::get_reddit_links::get_reddit_links;
-use crate::get_group_names::get_twitter_links::get_twitter_links;
+use crate::get_group_names::get_arxiv_names::get_arxiv_names;
+use crate::get_group_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_group_names::get_medrxiv_names::get_medrxiv_names;
+use crate::get_group_names::get_reddit_names::get_reddit_names;
+use crate::get_group_names::get_twitter_names::get_twitter_names;
 
 // use crate::get_group_names::get_subreddits::get_subreddits;
 use crate::config::ENABLE_PRINTS_REDDIT;
@@ -50,7 +50,7 @@ use crate::overriding::prints::print_error_red;
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(4);
     if ENABLE_REDDIT {
-        let reddit_links = get_reddit_links();
+        let reddit_links = get_reddit_names();
         if reddit_links.is_empty() {
             print_error_red(
                 file!().to_string(),
@@ -79,7 +79,7 @@ pub async fn check_new_posts_threads_parts() {
         };
     }
     if ENABLE_ARXIV {
-        let arxiv_links = get_arxiv_links();
+        let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
             print_error_red(
                 file!().to_string(),
@@ -108,7 +108,7 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_BIORXIV {
-        let biorxiv_links = get_biorxiv_links();
+        let biorxiv_links = get_biorxiv_names();
         if biorxiv_links.is_empty() {
             print_error_red(
                 file!().to_string(),
@@ -137,7 +137,7 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_MEDRXIV {
-        let medrxiv_links = get_medrxiv_links();
+        let medrxiv_links = get_medrxiv_names();
         if medrxiv_links.is_empty() {
             print_error_red(
                 file!().to_string(),
@@ -166,7 +166,7 @@ pub async fn check_new_posts_threads_parts() {
         }
     }
     if ENABLE_TWITTER {
-        let twitter_links = get_medrxiv_links(); //change to get_twitter_links()
+        let twitter_links = get_twitter_names();
         if twitter_links.is_empty() {
             print_error_red(
                 file!().to_string(),
