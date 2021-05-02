@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-pub fn get_biorxiv_links(
+pub fn generate_biorxiv_hashmap_links(
     biorxiv_names: HashMap<&'static str, &str>,
 ) -> HashMap<&'static str, String> {
     let first_part_of_link: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";

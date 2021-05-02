@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-pub fn get_medrxiv_links(
+pub fn generate_medrxiv_hashmap_links(
     medrxiv_names: HashMap<&'static str, &str>,
 ) -> HashMap<&'static str, String> {
     let first_part_of_link: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";

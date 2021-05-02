@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-pub fn get_twitter_links(
+pub fn generate_twitter_hashmap_links(
     // twitter_provider_names: Vec<String>
     twitter_provider_names: Vec<&str>,
     twitter_subs_names: Vec<&'static str>,
