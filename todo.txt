@@ -170,3 +170,17 @@ https://habr.com/ru/rss/all/all/?fl=ru?with_hubs=true:?with_tags=true:
 github newsfeed
 ---------
 impl for structure new - implement with arguments in ()
+let mut rss_page_struct: HabrPostStruct = HabrPostStruct::new();
+                                loop {
+                                    if count < rss_struct.items.len() {
+                                        let mut rss_post: HabrPost = HabrPost::new();
+                                        rss_post.title = rss_struct.items[count].title.clone();
+                                        rss_post.link = rss_struct.items[count].link.clone();
+                                        rss_post.description =
+                                            rss_struct.items[count].description.clone();
+                                        rss_page_struct.items.push(rss_post);
+                                        count += 1;
+                                    } else {
+                                        break;
+                                    }
+                                }
