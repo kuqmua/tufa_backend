@@ -1,10 +1,10 @@
 use std::time::Instant;
 
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RssPostStruct;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_check_handled_fetch_status_info(

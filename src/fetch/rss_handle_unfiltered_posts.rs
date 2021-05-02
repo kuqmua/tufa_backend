@@ -16,10 +16,10 @@ use std::mem;
 use std::path::Path;
 use std::thread;
 
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rss_structures::RssPostStruct;
 
 pub fn handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(

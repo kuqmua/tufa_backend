@@ -1,7 +1,7 @@
-use crate::fetch::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
-use crate::fetch::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStructVectorChild;
-use crate::fetch::reddit_json_structs::reddit_json_struct_vector::RedditJsonStruct;
-use crate::fetch::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
+use crate::fetch::info_structures::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::info_structures::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStructVectorChild;
+use crate::fetch::info_structures::reddit_json_structs::reddit_json_struct_vector::RedditJsonStruct;
+use crate::fetch::info_structures::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
 
 pub fn rss_reddit_parse_every_children(
     json_reddit_parser_struct: &JsonRedditParserStruct,

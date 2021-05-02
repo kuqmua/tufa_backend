@@ -1,10 +1,10 @@
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
 use crate::fetch::rss_check_handled_fetch_status_info::rss_check_handled_fetch_status_info;
 use crate::fetch::rss_fetch_link::rss_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RssPostStruct;
 use crate::overriding::prints::print_error_red;
 
 use std::collections::HashMap;

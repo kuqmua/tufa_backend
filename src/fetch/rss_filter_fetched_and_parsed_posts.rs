@@ -1,8 +1,8 @@
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RssPostStruct;
 use std::collections::HashMap;
 
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]

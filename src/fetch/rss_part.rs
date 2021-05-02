@@ -31,10 +31,10 @@ use crate::get_information::get_twitter_providers_names::get_twitter_providers_n
 
 use crate::overriding::prints::print_error_red;
 
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rss_structures::RssPostStruct;
 
 pub fn rss_part(
     enable_cleaning_logs_directory: bool,

@@ -1,14 +1,14 @@
+use crate::fetch::info_structures::rss_structures::RssPost;
+use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::rss_structures::XmlRssParserStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_structures::RssPost;
-use crate::fetch::rss_structures::RssPostStruct;
-use crate::fetch::rss_structures::XmlRssParserStruct;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_yellow;
 use serde_xml_rs::from_str;
 
-use crate::fetch::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
-use crate::fetch::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
+use crate::fetch::info_structures::reddit_json_structs::json_reddit_parser_struct::JsonRedditParserStruct;
+use crate::fetch::info_structures::reddit_json_structs::reddit_json_struct_vector::RedditJsonStructVector;
 use crate::fetch::rss_reddit_parse_every_children::rss_reddit_parse_every_children;
 
 pub fn rss_parse_string_into_struct(
