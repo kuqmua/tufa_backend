@@ -169,3 +169,4 @@ https://habr.com/ru/rss/all/all/?fl=ru?with_hubs=true:?with_tags=true:
 ----------
 github newsfeed
 ---------
+impl for structure new - implement with arguments in ()
