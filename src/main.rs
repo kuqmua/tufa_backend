@@ -23,6 +23,7 @@ mod fetch {
             pub mod json_reddit_parser_struct;
             pub mod reddit_json_struct_vector;
         }
+        pub mod habr_structures;
         pub mod rss_structures;
     }
 }
