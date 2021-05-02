@@ -2,47 +2,63 @@ use std::thread;
 
 use crate::config::ARXIV_LINK;
 use crate::config::BIORXIV_LINK;
+use crate::config::HABR_LINK;
+use crate::config::MEDRXIV_LINK;
+use crate::config::REDDIT_LINK;
+use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
+
 use crate::config::ENABLE_ARXIV;
-use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_BIORXIV;
+use crate::config::ENABLE_HABR;
+use crate::config::ENABLE_MEDRXIV;
+use crate::config::ENABLE_REDDIT;
+use crate::config::ENABLE_TWITTER;
+
+use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
+use crate::config::ENABLE_HABR_TIME_MEASUREMENT;
+use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
+use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
+use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
+
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_HABR;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER;
+
 use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
 use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
+use crate::config::ENABLE_ERROR_PRINTS_HABR;
 use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
 use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
 use crate::config::ENABLE_ERROR_PRINTS_TWITTER;
-use crate::config::ENABLE_MEDRXIV;
-use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
+
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
+use crate::config::ENABLE_PRINTS_HABR;
 use crate::config::ENABLE_PRINTS_MEDRXIV;
+use crate::config::ENABLE_PRINTS_REDDIT;
 use crate::config::ENABLE_PRINTS_TWITTER;
-use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
-use crate::config::ENABLE_TWITTER;
-use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
+
 use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
 use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
+use crate::config::ENABLE_WARNING_PRINTS_HABR;
 use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
 use crate::config::ENABLE_WARNING_PRINTS_REDDIT;
 use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
-use crate::config::MEDRXIV_LINK;
-use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+
 use crate::get_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_information::get_names::get_habr_names::get_habr_names;
 use crate::get_information::get_names::get_medrxiv_names::get_medrxiv_names;
 use crate::get_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_information::get_names::get_twitter_names::get_twitter_names;
 
-use crate::config::ENABLE_PRINTS_REDDIT;
-use crate::config::ENABLE_REDDIT;
-use crate::config::REDDIT_LINK;
 use crate::fetch::rss_part::rss_part;
+
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::overriding::prints::print_error_red;
 
@@ -189,6 +205,35 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_TWITTER_TIME_MEASUREMENT,
                     TWITTER_LINK,
                     &ProviderKind::Twitter,
+                );
+            }));
+        }
+    }
+    if ENABLE_HABR {
+        let habr_links = get_habr_names();
+        if habr_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "habr_links.is_empty".to_string(),
+            )
+        } else {
+            if ENABLE_PRINTS_HABR {
+                println!(
+                    "{:#?} elements in {:#?} HashMap",
+                    habr_links.len(),
+                    ProviderKind::Habr
+                );
+            };
+            threads_vec.push(thread::spawn(move || {
+                rss_part(
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_HABR,
+                    ENABLE_PRINTS_HABR,
+                    ENABLE_WARNING_PRINTS_HABR,
+                    ENABLE_ERROR_PRINTS_HABR,
+                    ENABLE_HABR_TIME_MEASUREMENT,
+                    HABR_LINK,
+                    &ProviderKind::Habr,
                 );
             }));
         }

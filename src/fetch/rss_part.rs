@@ -1,26 +1,34 @@
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex};
+use std::thread;
+
 use crate::authorization::reddit::authorization_info;
 use crate::authorization::reddit::reddit_authorization;
+
 use crate::check_net::check_link::check_link;
+
 use crate::fetch::rss_check_available_providers::rss_check_available_providers;
 use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::fetch::rss_fetch_and_parse_xml::rss_fetch_and_parse_xml;
 use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::get_information::get_twitter_providers_names::get_twitter_providers_names;
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
-use std::thread;
 
 use crate::get_information::generate_hashmap_links::generate_arxiv_hashmap_links::get_arxiv_links;
 use crate::get_information::generate_hashmap_links::generate_biorxiv_hashmap_links::get_biorxiv_links;
+use crate::get_information::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
 use crate::get_information::generate_hashmap_links::generate_medrxiv_hashmap_links::get_medrxiv_links;
 use crate::get_information::generate_hashmap_links::generate_reddit_hashmap_links::get_reddit_links;
 use crate::get_information::generate_hashmap_links::generate_twitter_hashmap_links::get_twitter_links;
+
 use crate::get_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_information::get_names::get_habr_names::get_habr_names;
 use crate::get_information::get_names::get_medrxiv_names::get_medrxiv_names;
 use crate::get_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_information::get_names::get_twitter_names::get_twitter_names;
+
+use crate::get_information::get_twitter_providers_names::get_twitter_providers_names;
+
 use crate::overriding::prints::print_error_red;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -69,7 +77,11 @@ pub fn rss_part(
         ProviderKind::Reddit => {
             if check_link(provider_link).0 {
                 availability_checker_flag = true; //todo
-            } else {
+            }
+        }
+        ProviderKind::Habr => {
+            if check_link(provider_link).0 {
+                availability_checker_flag = true;
             }
         }
     }
@@ -102,6 +114,9 @@ pub fn rss_part(
             ProviderKind::Reddit => {
                 twitter_available_providers_links = Vec::new(); //todo
             }
+            ProviderKind::Habr => {
+                twitter_available_providers_links = Vec::new();
+            }
         }
         match provider_kind {
             ProviderKind::Arxiv => {
@@ -121,6 +136,9 @@ pub fn rss_part(
             }
             ProviderKind::Reddit => {
                 links_temp_naming = get_reddit_links(get_reddit_names());
+            }
+            ProviderKind::Habr => {
+                links_temp_naming = generate_habr_hashmap_links(get_habr_names());
             }
         }
         if !links_temp_naming.is_empty() {
@@ -229,6 +247,15 @@ pub fn rss_part(
                         }
                     }
                 }
+                ProviderKind::Habr => {
+                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
+                        enable_prints,
+                        enable_error_prints,
+                        enable_time_measurement,
+                        links_temp_naming,
+                        provider_kind,
+                    );
+                }
             }
             if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
                 handle_unfiltered_posts(
@@ -284,6 +311,12 @@ pub fn rss_part(
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
                 ProviderKind::Reddit => {
+                    //todo
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Habr => {
                     //todo
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
