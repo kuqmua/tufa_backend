@@ -186,3 +186,5 @@ let mut rss_page_struct: HabrPostStruct = HabrPostStruct::new();
                                 }
 -----------------------------------
 conversion function for each type twitter arxiv bio reddit and others into common structure with option params i think 
+-----------------------------------
+// #[serde(rename = "item", default)] remove useless
