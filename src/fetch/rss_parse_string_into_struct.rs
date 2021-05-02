@@ -52,6 +52,38 @@ pub fn rss_parse_string_into_struct(
                 )
             }
         }
+        ProviderKind::Habr => {
+            println!("4");
+            // let possible_reddit_posts_structure: JsonRedditParserStruct =
+            //     serde_json::from_str(&fetch_result_string).unwrap();
+            // if !possible_reddit_posts_structure.data.children.is_empty() {
+            //     let reddit_posts_struct: RedditJsonStructVector = rss_reddit_parse_every_children(
+            //         &possible_reddit_posts_structure,
+            //         &possible_reddit_posts_structure.data.children,
+            //     );
+            //     // println!("{:#?}", reddit_posts_struct.posts); //[0].author//.posts.len()
+            //     for reddit_post in reddit_posts_struct.posts {
+            //         let rss_post: RssPost = RssPost::initialize_new(
+            //             reddit_post.title,
+            //             reddit_post.url,
+            //             reddit_post.selftext,
+            //             reddit_post.author,
+            //         );
+            //         rss_post_struct_handle.items.push(rss_post);
+            //     }
+            //     if !rss_post_struct_handle.items.is_empty() {
+            //         are_there_items_handle = AreThereItems::Yep;
+            //     } else {
+            //         are_there_items_handle = AreThereItems::NopeButThereIsTag(fetch_result_string);
+            //     }
+            // } else if enable_error_prints {
+            //     print_error_red(
+            //         file!().to_string(),
+            //         line!().to_string(),
+            //         "reddit_posts_structure.data.children is empty".to_string(),
+            //     )
+            // }
+        }
         _ => {
             if let ProviderKind::Twitter = provider_kind {
                 match fetch_result_string.find("<channel>") {
