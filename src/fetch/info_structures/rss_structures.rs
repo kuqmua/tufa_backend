@@ -41,7 +41,7 @@ impl RssPost {
             creator: "".to_string(),
         }
     }
-    pub fn initialize_new(
+    pub fn initialize_with_params(
         title: String,
         link: String,
         description: String,
