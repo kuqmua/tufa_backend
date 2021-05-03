@@ -2,8 +2,8 @@ use std::collections::HashMap;
 pub fn get_medrxiv_names() -> HashMap<&'static str, &'static str> {
     let medrxiv_names: HashMap<&str, &str> = [
         ("Addiction Medicine", "Addiction_Medicine"),
-        ("Allergy and Immunology", "Allergy_and_Immunology"),
-        ("Anesthesia", "Anesthesia"),
+        // ("Allergy and Immunology", "Allergy_and_Immunology"),
+        // ("Anesthesia", "Anesthesia"),
         // ("Cardiovascular Medicine", "Cardiovascular_Medicine"),
         // ("Dentistry and Oral Medicine", "Dentistry_and_Oral_Medicine"),
         // ("Dermatology", "Dermatology"),

@@ -1,6 +1,6 @@
 pub fn get_reddit_names() -> Vec<&'static str> {
     let reddit_names: Vec<&str> = [
-        // "3Dprinting",
+        "3Dprinting",
         // "3dsmax",
         // "AfterEffects",
         // "architecture",
@@ -53,7 +53,7 @@ pub fn get_reddit_names() -> Vec<&'static str> {
         // "reactjs",
         // "reactnative",
         // "researchchemicals",
-        "rust",
+        // "rust",
         // "scientificresearch",
         // "space",
         // "spacex",

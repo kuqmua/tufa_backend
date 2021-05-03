@@ -2,8 +2,8 @@ use std::collections::HashMap;
 pub fn get_arxiv_names() -> HashMap<&'static str, &'static str> {
     let arxiv_names: HashMap<&str, &str> = [
         ("Cosmology and Nongalactic Astrophysics", "astro-ph.CO"),
-        ("Earth and Planetary Astrophysics", "astro-ph.EP"),
-        ("Astrophysics of Galaxies", "astro-ph.GA"),
+        // ("Earth and Planetary Astrophysics", "astro-ph.EP"),
+        // ("Astrophysics of Galaxies", "astro-ph.GA"),
         // ("High Energy Astrophysical Phenomena", "astro-ph.HE"),
         // (
         //     "Instrumentation and Methods for Astrophysics",

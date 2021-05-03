@@ -19,6 +19,14 @@ mod fetch {
 
     pub mod rss_write_error_logs_into_file;
     pub mod info_structures {
+        pub mod structs_for_parsing {
+            pub mod arxiv_struct_for_parsing;
+            pub mod biorxiv_struct_for_parsing;
+            pub mod habr_struct_for_parsing;
+            pub mod medrxiv_struct_for_parsing;
+            pub mod reddit_struct_for_parsing;
+            pub mod twitter_struct_for_parsing;
+        }
         pub mod reddit_json_structs {
             pub mod json_reddit_parser_struct;
             pub mod reddit_json_struct_vector;

@@ -1,8 +1,8 @@
 pub fn get_twitter_names() -> Vec<&'static str> {
     let twitter_subs_names: Vec<&str> = [
         "Tom_McGurl",
-        "OK9UWU",
-        "r2x0t",
+        // "OK9UWU",
+        // "r2x0t",
         // "Katha16777",
         // "PataniLab",
         // "AlexSerbul",

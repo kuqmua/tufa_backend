@@ -1,9 +1,9 @@
 pub const ENABLE_ALL_PROVIDERS: bool = true;
-pub const ENABLE_REDDIT: bool = ENABLE_ALL_PROVIDERS & false | false;
-pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
-pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
-pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & false | false;
-pub const ENABLE_TWITTER: bool = ENABLE_ALL_PROVIDERS & false | false;
+pub const ENABLE_REDDIT: bool = ENABLE_ALL_PROVIDERS & true | false;
+pub const ENABLE_ARXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
+pub const ENABLE_BIORXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
+pub const ENABLE_MEDRXIV: bool = ENABLE_ALL_PROVIDERS & true | false;
+pub const ENABLE_TWITTER: bool = ENABLE_ALL_PROVIDERS & true | false;
 pub const ENABLE_HABR: bool = ENABLE_ALL_PROVIDERS & true | false;
 
 pub const STARTING_CHECK_LINK: &str = "https://www.google.com/";

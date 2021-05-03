@@ -145,9 +145,10 @@ pub fn rss_parse_string_into_struct(
                             match fetch_result_string.find("</channel>") {
                                 Some(_) => {
                                     fetch_result_string =
-                                        fetch_result_string.replace("<channel>", "         ");
+                                        fetch_result_string.replace("<channel>", "         "); //replace wuth same string len -> no second allocation then?
                                     fetch_result_string =
                                         fetch_result_string.replace("</channel>", "          ");
+                                    //replace wuth same string len -> no second allocation then?
                                 }
                                 None => {
                                     break;
