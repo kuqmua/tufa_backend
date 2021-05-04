@@ -36,13 +36,13 @@ pub fn rss_parse_string_into_struct(
                     let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                     loop {
                         if count < rss_struct.data.children.len() {
-                            let mut rss_post: RssPost = RssPost::new();
-                            rss_post.title = rss_struct.data.children[count].data.title.clone();
-                            rss_post.link = rss_struct.data.children[count].data.url.clone(); //there is a link and url
-                            rss_post.description =
-                                rss_struct.data.children[count].data.selftext.clone(); //no description
-                            rss_post.creator = rss_struct.data.children[count].data.author.clone();
-                            rss_page_struct.items.push(rss_post);
+                            rss_page_struct.items.push(RssPost::initialize_with_params(
+                                //todo option fields
+                                rss_struct.data.children[count].data.title.clone(),
+                                rss_struct.data.children[count].data.url.clone(),
+                                rss_struct.data.children[count].data.selftext.clone(),
+                                rss_struct.data.children[count].data.author.clone(),
+                            ));
                             count += 1;
                         } else {
                             break;
@@ -70,18 +70,35 @@ pub fn rss_parse_string_into_struct(
             }
         }
         _ => {
-            if let ProviderKind::Twitter = provider_kind {
-                match fetch_result_string.find("<channel>") {
-                    Some(find_item_position_start) => {
-                        match fetch_result_string.find("</channel>") {
-                            Some(find_item_position_end) => {
-                                fetch_result_string = fetch_result_string[find_item_position_start
-                                    ..find_item_position_end + "</channel>".len()]
-                                    .to_string();
+            match fetch_result_string.find("</item>") {
+                Some(_) => {
+                    //preparation
+                    if let ProviderKind::Twitter = provider_kind {
+                        match fetch_result_string.find("<channel>") {
+                            Some(find_item_position_start) => {
+                                match fetch_result_string.find("</channel>") {
+                                    Some(find_item_position_end) => {
+                                        fetch_result_string = fetch_result_string
+                                            [find_item_position_start
+                                                ..find_item_position_end + "</channel>".len()]
+                                            .to_string();
+                                    }
+                                    _ => {
+                                        let warning_message: String = format!(
+                                            "no </channel> in response for key: {} link: {}",
+                                            key, value
+                                        );
+                                        print_warning_yellow(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            warning_message,
+                                        );
+                                    }
+                                }
                             }
                             _ => {
                                 let warning_message: String = format!(
-                                    "no </channel> in response for key: {} link: {}",
+                                    "no <channel> in response for key: {} link: {}",
                                     key, value
                                 );
                                 print_warning_yellow(
@@ -91,22 +108,6 @@ pub fn rss_parse_string_into_struct(
                                 );
                             }
                         }
-                    }
-                    _ => {
-                        let warning_message: String =
-                            format!("no <channel> in response for key: {} link: {}", key, value);
-                        print_warning_yellow(
-                            file!().to_string(),
-                            line!().to_string(),
-                            warning_message,
-                        );
-                    }
-                }
-            }
-            match fetch_result_string.find("</item>") {
-                Some(_) => {
-                    //preparation
-                    if let ProviderKind::Twitter = provider_kind {
                         while fetch_result_string.contains("<dc:creator>") {
                             match fetch_result_string.find("</dc:creator>") {
                                 Some(_) => {
@@ -184,12 +185,14 @@ pub fn rss_parse_string_into_struct(
                                 let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
-                                        let mut rss_post: RssPost = RssPost::new();
-                                        rss_post.title = rss_struct.items[count].title.clone();
-                                        rss_post.link = rss_struct.items[count].link.clone();
-                                        rss_post.description =
-                                            rss_struct.items[count].description.clone();
-                                        rss_page_struct.items.push(rss_post);
+                                        rss_page_struct.items.push(
+                                            RssPost::initialize_with_params(
+                                                rss_struct.items[count].title.clone(),
+                                                rss_struct.items[count].link.clone(),
+                                                rss_struct.items[count].description.clone(),
+                                                rss_struct.items[count].creator.clone(),
+                                            ),
+                                        );
                                         count += 1;
                                     } else {
                                         break;
@@ -232,12 +235,15 @@ pub fn rss_parse_string_into_struct(
                                 let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
-                                        let mut rss_post: RssPost = RssPost::new();
-                                        rss_post.title = rss_struct.items[count].title.clone();
-                                        rss_post.link = rss_struct.items[count].link.clone();
-                                        rss_post.description =
-                                            rss_struct.items[count].description.clone();
-                                        rss_page_struct.items.push(rss_post);
+                                        rss_page_struct.items.push(
+                                            RssPost::initialize_with_params(
+                                                //todo option fields
+                                                rss_struct.items[count].title.clone(),
+                                                rss_struct.items[count].link.clone(),
+                                                rss_struct.items[count].description.clone(),
+                                                rss_struct.items[count].creator.clone(),
+                                            ),
+                                        );
                                         count += 1;
                                     } else {
                                         break;
@@ -280,12 +286,15 @@ pub fn rss_parse_string_into_struct(
                                 let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
-                                        let mut rss_post: RssPost = RssPost::new();
-                                        rss_post.title = rss_struct.items[count].title.clone();
-                                        rss_post.link = rss_struct.items[count].link.clone();
-                                        rss_post.description =
-                                            rss_struct.items[count].description.clone();
-                                        rss_page_struct.items.push(rss_post);
+                                        rss_page_struct.items.push(
+                                            RssPost::initialize_with_params(
+                                                //todo option fields
+                                                rss_struct.items[count].title.clone(),
+                                                rss_struct.items[count].link.clone(),
+                                                rss_struct.items[count].description.clone(),
+                                                rss_struct.items[count].creator.clone(),
+                                            ),
+                                        );
                                         count += 1;
                                     } else {
                                         break;
@@ -318,7 +327,6 @@ pub fn rss_parse_string_into_struct(
                             }
                         }
                     } else if let ProviderKind::Habr = provider_kind {
-                        //todo option fields
                         let rss_struct_from_str_result: Result<
                             HabrStructForParsing,
                             serde_xml_rs::Error,
@@ -331,13 +339,11 @@ pub fn rss_parse_string_into_struct(
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
                                             RssPost::initialize_with_params(
+                                                //todo option fields
                                                 rss_struct.items[count].title.clone(),
-                                                // rss_struct.items[count].guid.clone(),
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
-                                                // rss_struct.items[count].pubdate.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                // rss_struct.items[count].category.clone(),//Vec<String>
                                             ),
                                         );
                                         count += 1;
@@ -372,7 +378,6 @@ pub fn rss_parse_string_into_struct(
                             }
                         }
                     } else if let ProviderKind::Twitter = provider_kind {
-                        //todo option fields
                         let rss_struct_from_str_result: Result<
                             TwitterStructForParsing,
                             serde_xml_rs::Error,
@@ -383,12 +388,15 @@ pub fn rss_parse_string_into_struct(
                                 let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
-                                        let mut rss_post: RssPost = RssPost::new();
-                                        rss_post.title = rss_struct.items[count].title.clone();
-                                        rss_post.link = rss_struct.items[count].link.clone();
-                                        rss_post.description =
-                                            rss_struct.items[count].description.clone();
-                                        rss_page_struct.items.push(rss_post);
+                                        rss_page_struct.items.push(
+                                            RssPost::initialize_with_params(
+                                                //todo option fields
+                                                rss_struct.items[count].title.clone(),
+                                                rss_struct.items[count].link.clone(),
+                                                rss_struct.items[count].description.clone(),
+                                                rss_struct.items[count].creator.clone(),
+                                            ),
+                                        );
                                         count += 1;
                                     } else {
                                         break;
