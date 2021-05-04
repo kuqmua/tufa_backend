@@ -1,4 +1,4 @@
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -13,7 +13,7 @@ use std::time::Instant;
 pub async fn rss_async_write_fetch_error_logs_into_file(
     key: String,
     value: (
-        RssPostStruct,
+        CommonRssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,

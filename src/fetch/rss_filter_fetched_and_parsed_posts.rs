@@ -1,4 +1,4 @@
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -10,7 +10,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (
-            RssPostStruct,
+            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -19,11 +19,11 @@ pub fn rss_filter_fetched_and_parsed_posts(
     )>,
     provider_kind: &ProviderKind,
 ) -> (
-    HashMap<String, RssPostStruct>,
+    HashMap<String, CommonRssPostStruct>,
     HashMap<
         String,
         (
-            RssPostStruct,
+            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -35,12 +35,12 @@ pub fn rss_filter_fetched_and_parsed_posts(
     let hashmap_length = unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
         String,
-        RssPostStruct,
+        CommonRssPostStruct,
     > = HashMap::new();
     let mut some_error_posts: HashMap<
         String,
         (
-            RssPostStruct,
+            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,

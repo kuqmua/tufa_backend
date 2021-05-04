@@ -1,27 +1,27 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RssPostStruct {
+pub struct CommonRssPostStruct {
     #[serde(rename = "item", default)]
-    pub items: Vec<RssPost>,
+    pub items: Vec<CommonRssPost>,
 }
 
-impl RssPostStruct {
+impl CommonRssPostStruct {
     pub fn new() -> Self {
-        RssPostStruct {
-            items: Vec::<RssPost>::new(),
+        CommonRssPostStruct {
+            items: Vec::<CommonRssPost>::new(),
         }
     }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RssPost {
+pub struct CommonRssPost {
     pub title: String,
     pub link: String,
     pub description: String,
     pub creator: String,
 }
-impl RssPost {
+impl CommonRssPost {
     pub fn new() -> Self {
-        RssPost {
+        CommonRssPost {
             title: "".to_string(),
             link: "".to_string(),
             description: "".to_string(),
@@ -34,7 +34,7 @@ impl RssPost {
         description: String,
         creator: String,
     ) -> Self {
-        RssPost {
+        CommonRssPost {
             title,
             link,
             description,

@@ -1,5 +1,5 @@
-use crate::fetch::info_structures::rss_structures::RssPost;
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
@@ -21,8 +21,8 @@ pub fn rss_parse_string_into_struct(
     value: &str,
     enable_error_prints: bool,
     provider_kind: ProviderKind,
-) -> (RssPostStruct, AreThereItems) {
-    let mut rss_post_struct_handle: RssPostStruct = RssPostStruct::new();
+) -> (CommonRssPostStruct, AreThereItems) {
+    let mut rss_post_struct_handle: CommonRssPostStruct = CommonRssPostStruct::new();
     let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
     match provider_kind {
         ProviderKind::Reddit => {
@@ -33,16 +33,18 @@ pub fn rss_parse_string_into_struct(
             match rss_struct_from_str_result {
                 Ok(rss_struct) => {
                     let mut count = 0;
-                    let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                    let mut rss_page_struct: CommonRssPostStruct = CommonRssPostStruct::new();
                     loop {
                         if count < rss_struct.data.children.len() {
-                            rss_page_struct.items.push(RssPost::initialize_with_params(
-                                //todo option fields
-                                rss_struct.data.children[count].data.title.clone(),
-                                rss_struct.data.children[count].data.url.clone(),
-                                rss_struct.data.children[count].data.selftext.clone(),
-                                rss_struct.data.children[count].data.author.clone(),
-                            ));
+                            rss_page_struct
+                                .items
+                                .push(CommonRssPost::initialize_with_params(
+                                    //todo option fields
+                                    rss_struct.data.children[count].data.title.clone(),
+                                    rss_struct.data.children[count].data.url.clone(),
+                                    rss_struct.data.children[count].data.selftext.clone(),
+                                    rss_struct.data.children[count].data.author.clone(),
+                                ));
                             count += 1;
                         } else {
                             break;
@@ -182,11 +184,12 @@ pub fn rss_parse_string_into_struct(
                         match rss_struct_from_str_result {
                             Ok(rss_struct) => {
                                 let mut count = 0;
-                                let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                                let mut rss_page_struct: CommonRssPostStruct =
+                                    CommonRssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
-                                            RssPost::initialize_with_params(
+                                            CommonRssPost::initialize_with_params(
                                                 rss_struct.items[count].title.clone(),
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
@@ -232,11 +235,12 @@ pub fn rss_parse_string_into_struct(
                         match rss_struct_from_str_result {
                             Ok(rss_struct) => {
                                 let mut count = 0;
-                                let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                                let mut rss_page_struct: CommonRssPostStruct =
+                                    CommonRssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
-                                            RssPost::initialize_with_params(
+                                            CommonRssPost::initialize_with_params(
                                                 //todo option fields
                                                 rss_struct.items[count].title.clone(),
                                                 rss_struct.items[count].link.clone(),
@@ -283,11 +287,12 @@ pub fn rss_parse_string_into_struct(
                         match rss_struct_from_str_result {
                             Ok(rss_struct) => {
                                 let mut count = 0;
-                                let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                                let mut rss_page_struct: CommonRssPostStruct =
+                                    CommonRssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
-                                            RssPost::initialize_with_params(
+                                            CommonRssPost::initialize_with_params(
                                                 //todo option fields
                                                 rss_struct.items[count].title.clone(),
                                                 rss_struct.items[count].link.clone(),
@@ -334,11 +339,12 @@ pub fn rss_parse_string_into_struct(
                         match rss_struct_from_str_result {
                             Ok(rss_struct) => {
                                 let mut count = 0;
-                                let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                                let mut rss_page_struct: CommonRssPostStruct =
+                                    CommonRssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
-                                            RssPost::initialize_with_params(
+                                            CommonRssPost::initialize_with_params(
                                                 //todo option fields
                                                 rss_struct.items[count].title.clone(),
                                                 rss_struct.items[count].link.clone(),
@@ -385,11 +391,12 @@ pub fn rss_parse_string_into_struct(
                         match rss_struct_from_str_result {
                             Ok(rss_struct) => {
                                 let mut count = 0;
-                                let mut rss_page_struct: RssPostStruct = RssPostStruct::new();
+                                let mut rss_page_struct: CommonRssPostStruct =
+                                    CommonRssPostStruct::new();
                                 loop {
                                     if count < rss_struct.items.len() {
                                         rss_page_struct.items.push(
-                                            RssPost::initialize_with_params(
+                                            CommonRssPost::initialize_with_params(
                                                 //todo option fields
                                                 rss_struct.items[count].title.clone(),
                                                 rss_struct.items[count].link.clone(),

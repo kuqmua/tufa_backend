@@ -31,7 +31,7 @@ use crate::get_information::get_twitter_providers_names::get_twitter_providers_n
 
 use crate::overriding::prints::print_error_red;
 
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -146,7 +146,7 @@ pub fn rss_part(
             let unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
                 String,
                 (
-                    RssPostStruct,
+                    CommonRssPostStruct,
                     String,
                     UnhandledFetchStatusInfo,
                     HandledFetchStatusInfo,

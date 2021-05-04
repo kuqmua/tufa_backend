@@ -1,5 +1,5 @@
 use crate::fetch;
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_async_write_fetch_error_logs_into_file::rss_async_write_fetch_error_logs_into_file;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -18,7 +18,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     some_error_posts: HashMap<
         String,
         (
-            RssPostStruct,
+            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,

@@ -1,4 +1,4 @@
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_check_handled_fetch_status_info::rss_check_handled_fetch_status_info;
 use crate::fetch::rss_fetch_link::rss_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -21,7 +21,7 @@ pub fn rss_fetch_and_parse_xml(
 ) -> Vec<(
     String,
     (
-        RssPostStruct,
+        CommonRssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -33,7 +33,7 @@ pub fn rss_fetch_and_parse_xml(
         (
             "".to_string(),
             (
-                RssPostStruct::new(),
+                CommonRssPostStruct::new(),
                 "".to_string(),
                 UnhandledFetchStatusInfo::Initialized,
                 HandledFetchStatusInfo::Initialized,

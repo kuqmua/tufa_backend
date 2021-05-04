@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-use crate::fetch::info_structures::rss_structures::RssPostStruct;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
@@ -17,9 +17,9 @@ pub fn rss_check_handled_fetch_status_info(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_kind: ProviderKind,
-) -> (HandledFetchStatusInfo, RssPostStruct, AreThereItems) {
+) -> (HandledFetchStatusInfo, CommonRssPostStruct, AreThereItems) {
     let value3: HandledFetchStatusInfo;
-    let mut rxiv_post_struct_wrapper_handle: RssPostStruct = RssPostStruct::new();
+    let mut rxiv_post_struct_wrapper_handle: CommonRssPostStruct = CommonRssPostStruct::new();
     let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
         HandledFetchStatusInfo::Initialized => {

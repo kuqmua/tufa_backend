@@ -25,7 +25,7 @@ mod fetch {
             pub mod reddit_struct_for_parsing;
             pub mod twitter_struct_for_parsing;
         }
-        pub mod rss_structures;
+        pub mod common_rss_structures;
     }
 }
 mod get_information {
