@@ -15,8 +15,6 @@ mod fetch {
     pub mod rss_parse_string_into_struct;
     pub mod rss_part;
     pub mod rss_provider_kind_enum;
-    pub mod rss_reddit_parse_every_children;
-
     pub mod rss_write_error_logs_into_file;
     pub mod info_structures {
         pub mod structs_for_parsing {
@@ -27,11 +25,6 @@ mod fetch {
             pub mod reddit_struct_for_parsing;
             pub mod twitter_struct_for_parsing;
         }
-        pub mod reddit_json_structs {
-            pub mod json_reddit_parser_struct;
-            pub mod reddit_json_struct_vector;
-        }
-        pub mod habr_structures;
         pub mod rss_structures;
     }
 }

@@ -1,17 +1,4 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlRssParserStruct {
-    #[serde(rename = "item", default)]
-    pub items: Vec<XmlRssParserStructItem>,
-}
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct XmlRssParserStructItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creator: String,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct RssPostStruct {
     #[serde(rename = "item", default)]
     pub items: Vec<RssPost>,

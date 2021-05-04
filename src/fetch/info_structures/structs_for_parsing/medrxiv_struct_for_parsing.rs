@@ -9,7 +9,6 @@ pub struct MedrxivStructForParsingItem {
     pub link: String,
     pub description: String,
     pub date: String,
-    pub guid: String,
     pub creator: String,
     pub identifier: String,
     pub publisher: String,
