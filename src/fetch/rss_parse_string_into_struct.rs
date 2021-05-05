@@ -44,6 +44,8 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.url.clone(),
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
+                                    // provider_kind,
+                                    "reddit".to_string(),
                                 ));
                             count += 1;
                         } else {
@@ -194,6 +196,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
+                                                "arxiv".to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -246,6 +249,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
+                                                "biorxiv".to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -298,6 +302,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
+                                                "medrxiv".to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -350,6 +355,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
+                                                "habr".to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -402,6 +408,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
+                                                "twitter".to_string(),
                                             ),
                                         );
                                         count += 1;

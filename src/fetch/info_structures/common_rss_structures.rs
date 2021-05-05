@@ -18,27 +18,37 @@ pub struct CommonRssPost {
     pub link: String,
     pub description: String,
     pub creator: String,
+    //meta
+    pub provider_name: String,
+    //meta
+    //reddit specific
+
+    //reddit specific
 }
 impl CommonRssPost {
-    pub fn new() -> Self {
-        CommonRssPost {
-            title: "".to_string(),
-            link: "".to_string(),
-            description: "".to_string(),
-            creator: "".to_string(),
-        }
-    }
     pub fn initialize_with_params(
         title: String,
         link: String,
         description: String,
         creator: String,
+        //meta
+        provider_name: String,
+        //meta
+        //reddit specific
+
+        //reddit specific
     ) -> Self {
         CommonRssPost {
             title,
             link,
             description,
             creator,
+            //meta
+            provider_name,
+            //meta
+            //reddit specific
+
+            //reddit specific
         }
     }
 }
