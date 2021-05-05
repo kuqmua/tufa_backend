@@ -56,10 +56,10 @@ pub fn rss_check_handled_fetch_status_info(
             }
         }
     }
-    println!(
-        "rxiv_post_struct_wrapper_handleffff{:#?}",
-        rxiv_post_struct_wrapper_handle
-    );
+    // println!(
+    //     "rxiv_post_struct_wrapper_handleffff{:#?}",
+    //     rxiv_post_struct_wrapper_handle
+    // );
     (
         value3,
         rxiv_post_struct_wrapper_handle,

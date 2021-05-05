@@ -1,11 +1,18 @@
-#[derive(Clone, Debug)]
+use strum::EnumMessage;
+#[derive(Clone, Debug, EnumMessage)]
 pub enum ProviderKind {
-    Biorxiv,
+    #[strum(message = "arxiv")]
     Arxiv,
-    Medrxiv,
-    Twitter,
-    Reddit,
+    #[strum(message = "biorxiv")]
+    Biorxiv,
+    #[strum(message = "habr")]
     Habr,
+    #[strum(message = "medrxiv")]
+    Medrxiv,
+    #[strum(message = "reddit")]
+    Reddit,
+    #[strum(message = "twitter")]
+    Twitter,
 }
 // impl fmt::Display for Foo {
 //     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

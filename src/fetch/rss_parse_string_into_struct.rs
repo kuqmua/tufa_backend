@@ -14,6 +14,7 @@ use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsin
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 
 use serde_xml_rs::from_str;
+use strum::EnumMessage;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
@@ -44,8 +45,7 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.url.clone(),
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
-                                    // provider_kind,
-                                    "reddit".to_string(),
+                                    provider_kind.get_message().unwrap().to_string(),
                                 ));
                             count += 1;
                         } else {
@@ -196,7 +196,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                "arxiv".to_string(),
+                                                provider_kind.get_message().unwrap().to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -249,7 +249,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                "biorxiv".to_string(),
+                                                provider_kind.get_message().unwrap().to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -302,7 +302,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                "medrxiv".to_string(),
+                                                provider_kind.get_message().unwrap().to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -355,7 +355,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                "habr".to_string(),
+                                                provider_kind.get_message().unwrap().to_string(),
                                             ),
                                         );
                                         count += 1;
@@ -408,7 +408,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                "twitter".to_string(),
+                                                provider_kind.get_message().unwrap().to_string(),
                                             ),
                                         );
                                         count += 1;
