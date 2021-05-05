@@ -9,7 +9,7 @@ use crate::check_net::check_link::check_link;
 
 use crate::fetch::rss_check_available_providers::rss_check_available_providers;
 use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
-use crate::fetch::rss_fetch_and_parse_xml::rss_fetch_and_parse_xml;
+use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
 use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
@@ -155,31 +155,34 @@ pub fn rss_part(
             )>;
             match provider_kind {
                 ProviderKind::Arxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
-                        enable_prints,
-                        enable_error_prints,
-                        enable_time_measurement,
-                        links_temp_naming,
-                        provider_kind,
-                    );
+                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                        rss_fetch_and_parse_provider_data(
+                            enable_prints,
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
                 }
                 ProviderKind::Biorxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
-                        enable_prints,
-                        enable_error_prints,
-                        enable_time_measurement,
-                        links_temp_naming,
-                        provider_kind,
-                    );
+                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                        rss_fetch_and_parse_provider_data(
+                            enable_prints,
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
                 }
                 ProviderKind::Medrxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
-                        enable_prints,
-                        enable_error_prints,
-                        enable_time_measurement,
-                        links_temp_naming,
-                        provider_kind,
-                    );
+                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                        rss_fetch_and_parse_provider_data(
+                            enable_prints,
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
                 }
                 ProviderKind::Twitter => {
                     let vec_of_hashmap_parts = rss_divide_to_equal_for_each_provider(
@@ -195,7 +198,7 @@ pub fn rss_part(
                             Arc::clone(&not_ready_processed_posts);
                         let thread = thread::spawn(move || {
                             let unfiltered_posts_hashmap_after_fetch_and_parse =
-                                rss_fetch_and_parse_xml(
+                                rss_fetch_and_parse_provider_data(
                                     enable_prints,
                                     enable_error_prints,
                                     enable_time_measurement,
@@ -229,13 +232,14 @@ pub fn rss_part(
                         if enable_prints {
                             println!("success reddit authorization");
                         }
-                        unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
-                            enable_prints,
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        unfiltered_posts_hashmap_after_fetch_and_parse =
+                            rss_fetch_and_parse_provider_data(
+                                enable_prints,
+                                enable_error_prints,
+                                enable_time_measurement,
+                                links_temp_naming,
+                                provider_kind,
+                            );
                     } else {
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
                         if enable_error_prints {
@@ -248,13 +252,14 @@ pub fn rss_part(
                     }
                 }
                 ProviderKind::Habr => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse = rss_fetch_and_parse_xml(
-                        enable_prints,
-                        enable_error_prints,
-                        enable_time_measurement,
-                        links_temp_naming,
-                        provider_kind,
-                    );
+                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                        rss_fetch_and_parse_provider_data(
+                            enable_prints,
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
                 }
             }
             if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {

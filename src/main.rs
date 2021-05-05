@@ -5,7 +5,7 @@ mod fetch {
     pub mod rss_check_handled_fetch_status_info;
     pub mod rss_check_provider_status;
     pub mod rss_divide_to_equal_for_each_provider;
-    pub mod rss_fetch_and_parse_xml;
+    pub mod rss_fetch_and_parse_provider_data;
     pub mod rss_fetch_link;
     pub mod rss_filter_fetched_and_parsed_posts;
     pub mod rss_handle_error_status_code;

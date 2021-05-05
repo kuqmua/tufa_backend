@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-pub fn rss_fetch_and_parse_xml(
+pub fn rss_fetch_and_parse_provider_data(
     enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
