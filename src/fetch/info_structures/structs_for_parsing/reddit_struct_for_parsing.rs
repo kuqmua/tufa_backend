@@ -15,100 +15,138 @@ pub struct RedditStructForParsingVectorChild {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct RedditStructForParsingVectorChildData {
+    // media_embed ???
+    // user_reports ???
+    // category ???
+    // selftext_html ???
+    // likes ??? null into what ???
+    // banned_at_utc null into what ???
+    // view_count ???
+    // preview ?? //maybe but without auth or something i cannot reach image links
+    // mod_reason_by ???
+    // removal_reason ???
+    // report_reasons ???
+    // contest_mode ???
+    // mod_reports ???
+    // media ???
     pub link: Option<String>,
     pub subreddit: String,
     pub selftext: String,
-    pub id: String, // может понадобиться
+    pub id: String,
     pub author: String,
+    pub author_fullname: String,
     pub title: String,
-    pub domain: String, //сайт хоста
+    pub domain: String, //host site
     pub permalink: String,
-    pub thumbnail: String, //todo
-    pub created_utc: f64,  // время
+    pub thumbnail: String, //image link todo
+    pub created_utc: f64,
     pub ups: f64,
-    pub score: f64, //чем отличается score от ups
+    pub score: f64, //difference between score от ups?
     pub num_comments: u64,
     pub over_18: bool,
     pub quarantine: bool,
-    pub is_self: bool, //может понадобиться мб
+    pub is_self: bool, //can be usefull in client app
     pub saved: bool,
     pub url: String,
+    pub hidden: bool,
+    pub downs: f64,
+    pub name: String,
+    pub upvote_ratio: f64,
+    pub total_awards_received: f64,
+    pub is_original_content: bool,
+    pub is_reddit_media_domain: bool,
+    pub is_meta: bool,
+    pub created: f64, //time
+    pub allow_live_comments: bool,
+    // pub url_overridden_by_dest: String,//Optional
+    pub archived: bool,
+    pub is_crosspostable: bool,
+    pub pinned: bool,
+    pub media_only: bool,
+    pub spoiler: bool,
+    pub locked: bool,
+    pub visited: bool,
+    pub subreddit_id: String,
+    pub send_replies: bool,
+    pub stickied: bool,
+    pub subreddit_subscribers: f64,
+    pub is_video: bool,
 }
-// "approved_at_utc": null,
-// "subreddit": "3Dprinting",
-// "selftext": "",
-// "author_fullname": "t2_n6r6oak",
-// "saved": false,
-// "mod_reason_title": null,
-// "gilded": 0,
-// "clicked": false,
-// "title": "Experiment - load coordinates from *.stl (binary) to excel, it's crazy.",
-// "link_flair_richtext": [
+// "approved_at_utc": null,//dont think so
+// "subreddit": "3Dprinting",//already
+// "selftext": "",//already
+// "author_fullname": "t2_n6r6oak",//already
+// "saved": false,//already
+// "mod_reason_title": null,//dont know that it is
+// "gilded": 0,//dont know that it is
+// "clicked": false,//dont think so
+// "title": "Experiment - load coordinates from *.stl (binary) to excel, it's crazy.",//already
+// "link_flair_richtext": [//dont think so
 // {
 // "e": "text",
 // "t": "Image"
 // }
 // ],
-// "subreddit_name_prefixed": "r/3Dprinting",
-// "hidden": false,
-// "pwls": 6,
-// "link_flair_css_class": "g",
-// "downs": 0,
-// "thumbnail_height": 102,
-// "top_awarded_type": null,
-// "hide_score": true,
-// "name": "t3_n5anff",
-// "quarantine": false,
-// "link_flair_text_color": "dark",
-// "upvote_ratio": 1,
-// "author_flair_background_color": null,
-// "subreddit_type": "public",
-// "ups": 1,
-// "total_awards_received": 0,
-// "media_embed": {},
-// "thumbnail_width": 140,
-// "author_flair_template_id": null,
-// "is_original_content": false,
-// "user_reports": [],
-// "secure_media": null,
-// "is_reddit_media_domain": true,
-// "is_meta": false,
-// "category": null,
-// "secure_media_embed": {},
-// "link_flair_text": "Image",
-// "can_mod_post": false,
-// "score": 1,
-// "approved_by": null,
-// "author_premium": false,
-// "thumbnail": "https://b.thumbs.redditmedia.com/KSOgyDVFIwdwOoRjTBuiNBCO6No23i09Yc5NXLJehVk.jpg",
-// "edited": false,
-// "author_flair_css_class": null,
-// "author_flair_richtext": [],
-// "gildings": {},
-// "post_hint": "image",
-// "content_categories": null,
-// "is_self": false,
-// "mod_note": null,
-// "created": 1620230469,
-// "link_flair_type": "richtext",
-// "wls": 6,
-// "removed_by_category": null,
-// "banned_by": null,
-// "author_flair_type": "text",
-// "domain": "i.redd.it",
-// "allow_live_comments": false,
-// "selftext_html": null,
-// "likes": null,
-// "suggested_sort": null,
-// "banned_at_utc": null,
-// "url_overridden_by_dest": "https://i.redd.it/so1xw3dpd9x61.png",
-// "view_count": null,
-// "archived": false,
-// "no_follow": true,
-// "is_crosspostable": true,
-// "pinned": false,
-// "over_18": false,
-// "preview": {
+// "subreddit_name_prefixed": "r/3Dprinting",//dont think so
+// "hidden": false,//already
+// "pwls": 6,//dont know that it is
+// "link_flair_css_class": "g",//dont think so
+// "downs": 0,//already
+// "thumbnail_height": 102,//dont think so
+// "top_awarded_type": null,//dont know that it is
+// "hide_score": true,//dont think so
+// "name": "t3_n5anff",//already
+// "quarantine": false,//already
+// "link_flair_text_color": "dark",//dont think so
+// "upvote_ratio": 1,//already
+// "author_flair_background_color": null,//dont think so
+// "subreddit_type": "public",//dont think so
+// "ups": 1,//already
+// "total_awards_received": 0,//already
+// "media_embed": {},//maybe...
+// "thumbnail_width": 140,//dont think so
+// "author_flair_template_id": null,//dont think so
+// "is_original_content": false,//already
+// "user_reports": [],//maybe...
+// "secure_media": null,//dont think so
+// "is_reddit_media_domain": true,//already
+// "is_meta": false,//already
+// "category": null,//maybe...
+// "secure_media_embed": {},//dont think so
+// "link_flair_text": "Image",//dont think so
+// "can_mod_post": false,//dont think so
+// "score": 1,//already
+// "approved_by": null,//dont think so
+// "author_premium": false,//dont think so
+// "thumbnail": "https://b.thumbs.redditmedia.com/KSOgyDVFIwdwOoRjTBuiNBCO6No23i09Yc5NXLJehVk.jpg",//already
+// "edited": false,//dont think so
+// "author_flair_css_class": null,//dont think so
+// "author_flair_richtext": [],//dont think so
+// "gildings": {},//dont think so
+// "post_hint": "image",//dont think so
+// "content_categories": null,//dont think so
+// "is_self": false,//already
+// "mod_note": null,//dont know that it is
+// "created": 1620230469,//already
+// "link_flair_type": "richtext",//dont think so
+// "wls": 6,//dont know that it is
+// "removed_by_category": null,//dont think so
+// "banned_by": null,//dont think so
+// "author_flair_type": "text",//dont think so
+// "domain": "i.redd.it",//already
+// "allow_live_comments": false,//already
+// "selftext_html": null,//maybe
+// "likes": null,//maybe
+// "suggested_sort": null,//dont think so
+// "banned_at_utc": null,//maybe
+// "url_overridden_by_dest": "https://i.redd.it/so1xw3dpd9x61.png",//already
+// "view_count": null,//maybe
+// "archived": false,//already
+// "no_follow": true,//dont think so
+// "is_crosspostable": true,//already
+// "pinned": false,//already
+// "over_18": false,//already
+// "preview": {//maybe but without auth or something i cannot reach image links
 // "images": [
 // {
 // "source": {
@@ -149,40 +187,40 @@ pub struct RedditStructForParsingVectorChildData {
 // ],
 // "enabled": true
 // },
-// "all_awardings": [],
-// "awarders": [],
-// "media_only": false,
-// "can_gild": true,
-// "spoiler": false,
-// "locked": false,
-// "author_flair_text": null,
-// "treatment_tags": [],
-// "visited": false,
-// "removed_by": null,
-// "num_reports": null,
-// "distinguished": null,
-// "subreddit_id": "t5_2rk5q",
-// "mod_reason_by": null,
-// "removal_reason": null,
-// "link_flair_background_color": "",
-// "id": "n5anff",
-// "is_robot_indexable": true,
-// "report_reasons": null,
-// "author": "mochr91",
-// "discussion_type": null,
-// "num_comments": 0,
-// "send_replies": true,
-// "whitelist_status": "all_ads",
-// "contest_mode": false,
-// "mod_reports": [],
-// "author_patreon_flair": false,
-// "author_flair_text_color": null,
-// "permalink": "/r/3Dprinting/comments/n5anff/experiment_load_coordinates_from_stl_binary_to/",
-// "parent_whitelist_status": "all_ads",
-// "stickied": false,
-// "url": "https://i.redd.it/so1xw3dpd9x61.png",
-// "subreddit_subscribers": 700555,
-// "created_utc": 1620201669,
-// "num_crossposts": 0,
-// "media": null,
-// "is_video": false
+// "all_awardings": [],//dont think so
+// "awarders": [],//dont think so
+// "media_only": false,//already
+// "can_gild": true,//dont think so
+// "spoiler": false,//already
+// "locked": false,//already
+// "author_flair_text": null,//dont think so
+// "treatment_tags": [],//dont think so
+// "visited": false,//already
+// "removed_by": null,//dont think so
+// "num_reports": null,//dont think so
+// "distinguished": null,//dont think so
+// "subreddit_id": "t5_2rk5q",//already
+// "mod_reason_by": null,//maybe
+// "removal_reason": null,//maybe
+// "link_flair_background_color": "",//dont think so
+// "id": "n5anff",//already
+// "is_robot_indexable": true,//dont think so
+// "report_reasons": null,//maybe
+// "author": "mochr91",//already
+// "discussion_type": null,//dont think so
+// "num_comments": 0,//already
+// "send_replies": true,//already
+// "whitelist_status": "all_ads",//dont think so
+// "contest_mode": false,//maybe
+// "mod_reports": [],//maybe
+// "author_patreon_flair": false,//dont think so
+// "author_flair_text_color": null,//dont think so
+// "permalink": "/r/3Dprinting/comments/n5anff/experiment_load_coordinates_from_stl_binary_to/",//already
+// "parent_whitelist_status": "all_ads",//dont think so
+// "stickied": false,//already
+// "url": "https://i.redd.it/so1xw3dpd9x61.png",//already
+// "subreddit_subscribers": 700555,//already
+// "created_utc": 1620201669,//already
+// "num_crossposts": 0,//dont think so
+// "media": null,//maybe
+// "is_video": false//already
