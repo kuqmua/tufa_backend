@@ -29,6 +29,8 @@ pub struct RedditStructForParsingVectorChildData {
     // contest_mode ???
     // mod_reports ???
     // media ???
+    //////////
+    pub url_overridden_by_dest: Option<String>,
     pub link: Option<String>,
     pub subreddit: String,
     pub selftext: String,
@@ -58,7 +60,6 @@ pub struct RedditStructForParsingVectorChildData {
     pub is_meta: bool,
     pub created: f64, //time
     pub allow_live_comments: bool,
-    // pub url_overridden_by_dest: String,//Optional
     pub archived: bool,
     pub is_crosspostable: bool,
     pub pinned: bool,
