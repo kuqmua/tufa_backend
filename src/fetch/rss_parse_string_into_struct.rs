@@ -46,12 +46,81 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
                                     provider_kind.get_message().unwrap().to_string(),
+                                    //biorxiv specific
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    //biorxiv specific
+
+                                    //habr specific
+                                    None,
+                                    None,
+                                    None,
+                                    //habr specific
+
+                                    //medrxiv specific
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    //medrxiv specific
+
+                                    //reddit specific
+                                    rss_struct.data.children[count]
+                                        .data
+                                        .url_overridden_by_dest
+                                        .clone(),
+                                    rss_struct.data.children[count].data.subreddit.clone(),
+                                    rss_struct.data.children[count].data.id.clone(),
+                                    rss_struct.data.children[count].data.author_fullname.clone(),
+                                    rss_struct.data.children[count].data.domain.clone(),
+                                    rss_struct.data.children[count].data.permalink.clone(),
+                                    rss_struct.data.children[count].data.thumbnail.clone(),
+                                    rss_struct.data.children[count].data.url.clone(),
+                                    rss_struct.data.children[count].data.name.clone(),
+                                    rss_struct.data.children[count].data.subreddit_id.clone(),
+                                    rss_struct.data.children[count].data.subreddit_subscribers,
+                                    rss_struct.data.children[count].data.created,
+                                    rss_struct.data.children[count].data.upvote_ratio,
+                                    rss_struct.data.children[count].data.total_awards_received,
+                                    rss_struct.data.children[count].data.downs,
+                                    rss_struct.data.children[count].data.created_utc,
+                                    rss_struct.data.children[count].data.ups,
+                                    rss_struct.data.children[count].data.score,
+                                    rss_struct.data.children[count].data.num_comments,
+                                    rss_struct.data.children[count].data.is_video,
+                                    rss_struct.data.children[count].data.hidden,
+                                    rss_struct.data.children[count].data.send_replies,
+                                    rss_struct.data.children[count].data.stickied,
+                                    rss_struct.data.children[count].data.is_original_content,
+                                    rss_struct.data.children[count].data.is_reddit_media_domain,
+                                    rss_struct.data.children[count].data.is_meta,
+                                    rss_struct.data.children[count].data.allow_live_comments,
+                                    rss_struct.data.children[count].data.archived,
+                                    rss_struct.data.children[count].data.over_18,
+                                    rss_struct.data.children[count].data.quarantine,
+                                    rss_struct.data.children[count].data.is_self,
+                                    rss_struct.data.children[count].data.saved,
+                                    rss_struct.data.children[count].data.is_crosspostable,
+                                    rss_struct.data.children[count].data.pinned,
+                                    rss_struct.data.children[count].data.media_only,
+                                    rss_struct.data.children[count].data.spoiler,
+                                    rss_struct.data.children[count].data.locked,
+                                    rss_struct.data.children[count].data.visited,
+                                    //reddit specific
+
+                                    //twitter specific
+                                    None,
+                                    None,
+                                    //twitter specific
                                 ));
                             count += 1;
                         } else {
                             break;
                         }
                     }
+
                     if !rss_page_struct.items.is_empty() {
                         are_there_items_handle = AreThereItems::Yep;
                     } else {
@@ -197,6 +266,71 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
                                                 provider_kind.get_message().unwrap().to_string(),
+                                                //biorxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //biorxiv specific
+
+                                                //habr specific
+                                                None,
+                                                None,
+                                                None,
+                                                //habr specific
+
+                                                //medrxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //medrxiv specific
+
+                                                //reddit specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //reddit specific
+
+                                                //twitter specific
+                                                None,
+                                                None,
+                                                //twitter specific
                                             ),
                                         );
                                         count += 1;
@@ -250,6 +384,71 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
                                                 provider_kind.get_message().unwrap().to_string(),
+                                                //biorxiv specific
+                                                rss_struct.items[count].date.clone(),
+                                                rss_struct.items[count].identifier.clone(),
+                                                rss_struct.items[count].publisher.clone(),
+                                                rss_struct.items[count].publication_date.clone(),
+                                                //biorxiv specific
+
+                                                //habr specific
+                                                None,
+                                                None,
+                                                None,
+                                                //habr specific
+
+                                                //medrxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //medrxiv specific
+
+                                                //reddit specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //reddit specific
+
+                                                //twitter specific
+                                                None,
+                                                None,
+                                                //twitter specific
                                             ),
                                         );
                                         count += 1;
@@ -303,6 +502,71 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
                                                 provider_kind.get_message().unwrap().to_string(),
+                                                //biorxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //biorxiv specific
+
+                                                //habr specific
+                                                None,
+                                                None,
+                                                None,
+                                                //habr specific
+
+                                                //medrxiv specific
+                                                rss_struct.items[count].date.clone(),
+                                                rss_struct.items[count].identifier.clone(),
+                                                rss_struct.items[count].publisher.clone(),
+                                                rss_struct.items[count].publication_date.clone(),
+                                                //medrxiv specific
+
+                                                //reddit specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //reddit specific
+
+                                                //twitter specific
+                                                None,
+                                                None,
+                                                //twitter specific
                                             ),
                                         );
                                         count += 1;
@@ -356,6 +620,71 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
                                                 provider_kind.get_message().unwrap().to_string(),
+                                                //biorxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //biorxiv specific
+
+                                                //habr specific
+                                                rss_struct.items[count].guid.clone(),
+                                                rss_struct.items[count].pub_date.clone(),
+                                                rss_struct.items[count].category.clone(),
+                                                //habr specific
+
+                                                //medrxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //medrxiv specific
+
+                                                //reddit specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //reddit specific
+
+                                                //twitter specific
+                                                None,
+                                                None,
+                                                //twitter specific
                                             ),
                                         );
                                         count += 1;
@@ -409,6 +738,71 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
                                                 provider_kind.get_message().unwrap().to_string(),
+                                                //biorxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //biorxiv specific
+
+                                                //habr specific
+                                                None,
+                                                None,
+                                                None,
+                                                //habr specific
+
+                                                //medrxiv specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //medrxiv specific
+
+                                                //reddit specific
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                None,
+                                                //reddit specific
+
+                                                //twitter specific
+                                                rss_struct.items[count].pub_date.clone(),
+                                                rss_struct.items[count].guid.clone(),
+                                                //twitter specific
                                             ),
                                         );
                                         count += 1;
@@ -468,5 +862,6 @@ pub fn rss_parse_string_into_struct(
             }
         }
     }
+
     (rss_post_struct_handle, are_there_items_handle)
 }
