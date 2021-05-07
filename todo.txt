@@ -190,5 +190,3 @@ conversion function for each type twitter arxiv bio reddit and others into commo
 // #[serde(rename = "item", default)] remove useless
 -----------------------------------
 add in parser structs avatar creator link and etc
------------------------------------
-make all parser structs fields optional
