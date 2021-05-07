@@ -5,11 +5,11 @@ pub struct TwitterStructForParsing {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterStructForParsingItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
+    pub title: Option<String>,
+    pub link: Option<String>,
+    pub description: Option<String>,
     #[serde(rename = "pubDate", default)]
-    pub pub_date: String,
-    pub guid: String,
-    pub creator: String,
+    pub pub_date: Option<String>,
+    pub guid: Option<String>,
+    pub creator: Option<String>,
 }

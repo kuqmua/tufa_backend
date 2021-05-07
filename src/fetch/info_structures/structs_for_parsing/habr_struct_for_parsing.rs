@@ -5,12 +5,12 @@ pub struct HabrStructForParsing {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct HabrStructForParsingItem {
-    pub title: String,
-    pub guid: String,
-    pub link: String,
-    pub description: String,
+    pub title: Option<String>,
+    pub guid: Option<String>,
+    pub link: Option<String>,
+    pub description: Option<String>,
     #[serde(rename = "pubDate", default)]
-    pub pub_date: String,
-    pub creator: String,
-    pub category: Vec<String>,
+    pub pub_date: Option<String>,
+    pub creator: Option<String>,
+    pub category: Option<Vec<String>>, //Option<Vec<Option<String>>>???????
 }

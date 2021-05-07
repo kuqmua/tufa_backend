@@ -14,10 +14,10 @@ impl CommonRssPostStruct {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct CommonRssPost {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creator: String,
+    pub title: Option<String>,
+    pub link: Option<String>,
+    pub description: Option<String>,
+    pub creator: Option<String>,
     //meta
     pub provider_name: String,
     //meta
@@ -95,10 +95,10 @@ pub struct CommonRssPost {
 }
 impl CommonRssPost {
     pub fn initialize_with_params(
-        title: String,
-        link: String,
-        description: String,
-        creator: String,
+        title: Option<String>,
+        link: Option<String>,
+        description: Option<String>,
+        creator: Option<String>,
         //meta
         provider_name: String,
         //meta

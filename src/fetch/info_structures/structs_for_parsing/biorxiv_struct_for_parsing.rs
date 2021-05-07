@@ -5,13 +5,13 @@ pub struct BiorxivStructForParsing {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct BiorxivStructForParsingItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub date: String,
-    pub creator: String,
-    pub identifier: String,
-    pub publisher: String,
+    pub title: Option<String>,
+    pub link: Option<String>,
+    pub description: Option<String>,
+    pub date: Option<String>,
+    pub creator: Option<String>,
+    pub identifier: Option<String>,
+    pub publisher: Option<String>,
     #[serde(rename = "publicationDate", default)]
-    pub publication_date: String,
+    pub publication_date: Option<String>,
 }

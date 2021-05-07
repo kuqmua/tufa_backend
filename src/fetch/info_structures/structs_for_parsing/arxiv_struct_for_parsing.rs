@@ -5,8 +5,8 @@ pub struct ArxivStructForParsing {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ArxivStructForParsingItem {
-    pub title: String,
-    pub link: String,
-    pub description: String,
-    pub creator: String,
+    pub title: Option<String>,
+    pub link: Option<String>,
+    pub description: Option<String>,
+    pub creator: Option<String>,
 }
