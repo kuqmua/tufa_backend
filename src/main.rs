@@ -15,6 +15,7 @@ mod fetch {
     pub mod rss_parse_string_into_struct;
     pub mod rss_part;
     pub mod rss_provider_kind_enum;
+    pub mod rss_provider_structure_into_common_rss_structure;
     pub mod rss_write_error_logs_into_file;
     pub mod info_structures {
         pub mod structs_for_parsing {
