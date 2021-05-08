@@ -9,35 +9,40 @@ pub const ENABLE_TWITTER: bool = ENABLE_ALL_PROVIDERS & true | false;
 
 pub const STARTING_CHECK_LINK: &str = "https://www.google.com/";
 pub const REDDIT_LINK: &str = "https://www.reddit.com/";
-pub const ARXIV_LINK: &str = "https://www.google.com/"; //https://arxiv.org/ //"http://export.arxiv.org/rss/"
+pub const ARXIV_LINK: &str = "http://export.arxiv.org/rss/astro-ph.CO"; //https://arxiv.org/ //"http://export.arxiv.org/rss/"
 pub const BIORXIV_LINK: &str = "https://www.google.com/"; //http://connect.biorxiv.org/
 pub const MEDRXIV_LINK: &str = "https://www.google.com/"; //http://connect.medrxiv.org/
 pub const TWITTER_LINK: &str = "https://www.google.com/"; ////must be not only 1 str but many - twitter and many nitters
 pub const HABR_LINK: &str = "https://www.google.com/"; ////must be not only 1 str but many - twitter and many nitters
 
-pub const ENABLE_ALL_PROVIDERS_PRINTS: bool = true;
-pub const ENABLE_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
-pub const ENABLE_PRINTS_HABR: bool = ENABLE_ALL_PROVIDERS_PRINTS & true | false;
+pub const ENABLE_PRINTS_FOR_ALL_PROVIDERS: bool = true;
+pub const ENABLE_PRINTS_REDDIT: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_PRINTS_ARXIV: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_PRINTS_BIORXIV: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_PRINTS_MEDRXIV: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_PRINTS_TWITTER: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_PRINTS_HABR: bool = ENABLE_PRINTS_FOR_ALL_PROVIDERS & true | false;
 
-pub const ENABLE_ALL_PROVIDERS_WARNING_PRINTS: bool = true;
-pub const ENABLE_WARNING_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
-pub const ENABLE_WARNING_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
-pub const ENABLE_WARNING_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
-pub const ENABLE_WARNING_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
-pub const ENABLE_WARNING_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
-pub const ENABLE_WARNING_PRINTS_HABR: bool = ENABLE_ALL_PROVIDERS_WARNING_PRINTS & true | false;
+pub const ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS: bool = true;
+pub const ENABLE_WARNING_PRINTS_REDDIT: bool =
+    ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_WARNING_PRINTS_ARXIV: bool =
+    ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_WARNING_PRINTS_BIORXIV: bool =
+    ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_WARNING_PRINTS_MEDRXIV: bool =
+    ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_WARNING_PRINTS_TWITTER: bool =
+    ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_WARNING_PRINTS_HABR: bool = ENABLE_WARNING_PRINTS_FOR_ALL_PROVIDERS & true | false;
 
-pub const ENABLE_ALL_PROVIDERS_ERROR_PRINTS: bool = true;
-pub const ENABLE_ERROR_PRINTS_REDDIT: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-pub const ENABLE_ERROR_PRINTS_ARXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-pub const ENABLE_ERROR_PRINTS_TWITTER: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
-pub const ENABLE_ERROR_PRINTS_HABR: bool = ENABLE_ALL_PROVIDERS_ERROR_PRINTS & true | false;
+pub const ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS: bool = true;
+pub const ENABLE_ERROR_PRINTS_REDDIT: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_ERROR_PRINTS_ARXIV: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_ERROR_PRINTS_BIORXIV: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_ERROR_PRINTS_MEDRXIV: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_ERROR_PRINTS_TWITTER: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
+pub const ENABLE_ERROR_PRINTS_HABR: bool = ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS & true | false;
 
 pub const ENABLE_ALL_CLEANING_WARNING_LOGS_DIRECTORY: bool = true;
 pub const ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT: bool =
