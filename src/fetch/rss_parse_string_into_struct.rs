@@ -113,6 +113,7 @@ pub fn rss_parse_string_into_struct(
                                     //twitter specific
                                     None,
                                     None,
+                                    None,
                                     //twitter specific
                                 ));
                             count += 1;
@@ -330,6 +331,7 @@ pub fn rss_parse_string_into_struct(
                                                 //twitter specific
                                                 None,
                                                 None,
+                                                None,
                                                 //twitter specific
                                             ),
                                         );
@@ -446,6 +448,7 @@ pub fn rss_parse_string_into_struct(
                                                 //reddit specific
 
                                                 //twitter specific
+                                                None,
                                                 None,
                                                 None,
                                                 //twitter specific
@@ -566,6 +569,7 @@ pub fn rss_parse_string_into_struct(
                                                 //twitter specific
                                                 None,
                                                 None,
+                                                None,
                                                 //twitter specific
                                             ),
                                         );
@@ -682,6 +686,7 @@ pub fn rss_parse_string_into_struct(
                                                 //reddit specific
 
                                                 //twitter specific
+                                                None,
                                                 None,
                                                 None,
                                                 //twitter specific
@@ -802,6 +807,7 @@ pub fn rss_parse_string_into_struct(
                                                 //twitter specific
                                                 rss_struct.items[count].pub_date.clone(),
                                                 rss_struct.items[count].guid.clone(),
+                                                rss_struct.image.url.clone(),
                                                 //twitter specific
                                             ),
                                         );

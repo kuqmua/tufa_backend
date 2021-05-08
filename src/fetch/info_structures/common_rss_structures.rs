@@ -91,6 +91,9 @@ pub struct CommonRssPost {
     //twitter specific
     pub twitter_pub_date: Option<String>,
     pub twitter_guid: Option<String>,
+    //from TwitterStructForParsingImage
+    pub twitter_author_link: Option<String>,
+    //from TwitterStructForParsingImage
     //twitter specific
 }
 impl CommonRssPost {
@@ -172,6 +175,9 @@ impl CommonRssPost {
         //twitter specific
         twitter_pub_date: Option<String>,
         twitter_guid: Option<String>,
+        //from TwitterStructForParsingImage
+        twitter_author_link: Option<String>,
+        //from TwitterStructForParsingImage
         //twitter specific
     ) -> Self {
         CommonRssPost {
@@ -252,6 +258,9 @@ impl CommonRssPost {
             //twitter specific
             twitter_pub_date,
             twitter_guid,
+            //from TwitterStructForParsingImage
+            twitter_author_link,
+            //from TwitterStructForParsingImage
             //twitter specific
         }
     }
