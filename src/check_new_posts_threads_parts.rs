@@ -21,12 +21,12 @@ use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
 use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
 use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
 
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_HABR;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT;
+use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER;
 
 use crate::config::ENABLE_ERROR_PRINTS_FOR_ARXIV;
 use crate::config::ENABLE_ERROR_PRINTS_FOR_BIORXIV;
@@ -83,7 +83,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT,
                     ENABLE_PRINTS_REDDIT,
                     ENABLE_WARNING_PRINTS_REDDIT,
                     ENABLE_ERROR_PRINTS_FOR_REDDIT,
@@ -113,7 +113,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV,
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
                     ENABLE_ERROR_PRINTS_FOR_ARXIV,
@@ -143,7 +143,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV,
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
                     ENABLE_ERROR_PRINTS_FOR_BIORXIV,
@@ -173,7 +173,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV,
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,
                     ENABLE_ERROR_PRINTS_FOR_MEDRXIV,
@@ -203,7 +203,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER,
                     ENABLE_PRINTS_TWITTER,
                     ENABLE_WARNING_PRINTS_TWITTER,
                     ENABLE_ERROR_PRINTS_FOR_TWITTER,
@@ -233,7 +233,7 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_HABR,
+                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR,
                     ENABLE_PRINTS_HABR,
                     ENABLE_WARNING_PRINTS_HABR,
                     ENABLE_ERROR_PRINTS_FOR_HABR,
