@@ -1,54 +1,5 @@
 use std::thread;
 
-use crate::config::ARXIV_LINK;
-use crate::config::BIORXIV_LINK;
-use crate::config::HABR_LINK;
-use crate::config::MEDRXIV_LINK;
-use crate::config::REDDIT_LINK;
-use crate::config::TWITTER_LINK; //must be not only 1 str but many - twitter and many nitters
-
-use crate::config::ENABLE_ARXIV;
-use crate::config::ENABLE_BIORXIV;
-use crate::config::ENABLE_HABR;
-use crate::config::ENABLE_MEDRXIV;
-use crate::config::ENABLE_REDDIT;
-use crate::config::ENABLE_TWITTER;
-
-use crate::config::ENABLE_ARXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_BIORXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_HABR_TIME_MEASUREMENT;
-use crate::config::ENABLE_MEDRXIV_TIME_MEASUREMENT;
-use crate::config::ENABLE_REDDIT_TIME_MEASUREMENT;
-use crate::config::ENABLE_TWITTER_TIME_MEASUREMENT;
-
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT;
-use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER;
-
-use crate::config::ENABLE_ERROR_PRINTS_FOR_ARXIV;
-use crate::config::ENABLE_ERROR_PRINTS_FOR_BIORXIV;
-use crate::config::ENABLE_ERROR_PRINTS_FOR_HABR;
-use crate::config::ENABLE_ERROR_PRINTS_FOR_MEDRXIV;
-use crate::config::ENABLE_ERROR_PRINTS_FOR_REDDIT;
-use crate::config::ENABLE_ERROR_PRINTS_FOR_TWITTER;
-
-use crate::config::ENABLE_PRINTS_ARXIV;
-use crate::config::ENABLE_PRINTS_BIORXIV;
-use crate::config::ENABLE_PRINTS_HABR;
-use crate::config::ENABLE_PRINTS_MEDRXIV;
-use crate::config::ENABLE_PRINTS_REDDIT;
-use crate::config::ENABLE_PRINTS_TWITTER;
-
-use crate::config::ENABLE_WARNING_PRINTS_ARXIV;
-use crate::config::ENABLE_WARNING_PRINTS_BIORXIV;
-use crate::config::ENABLE_WARNING_PRINTS_HABR;
-use crate::config::ENABLE_WARNING_PRINTS_MEDRXIV;
-use crate::config::ENABLE_WARNING_PRINTS_REDDIT;
-use crate::config::ENABLE_WARNING_PRINTS_TWITTER;
-
 use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
 use crate::get_project_information::get_names::get_habr_names::get_habr_names;
@@ -56,15 +7,18 @@ use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_na
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
+use crate::get_project_information::get_config_information::Config;
+
 use crate::fetch::rss_part::rss_part;
 
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::overriding::prints::print_error_red;
 
-pub async fn check_new_posts_threads_parts() {
-    let mut threads_vec = Vec::with_capacity(4);
-    if ENABLE_REDDIT {
+pub async fn check_new_posts_threads_parts(config: Config) {
+    let mut threads_vec = Vec::with_capacity(6);
+    let warning_logs_directory_name = config.params.warning_logs_directory_name.clone();
+    if config.params.enable_reddit {
         let reddit_links = get_reddit_names();
         if reddit_links.is_empty() {
             print_error_red(
@@ -74,7 +28,18 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
-            if ENABLE_PRINTS_REDDIT {
+            let enable_cleaning_warning_logs_directory_for_reddit = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_reddit;
+            let enable_prints_reddit = config.params.enable_prints_reddit;
+            let enable_warning_prints_for_reddit = config.params.enable_warning_prints_for_reddit;
+            let enable_error_prints_for_reddit = config.params.enable_error_prints_for_reddit;
+            let enable_reddit_time_measurement = config.params.enable_reddit_time_measurement;
+            let reddit_link = config.params.reddit_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_reddit {
+                // ENABLE_PRINTS_REDDIT
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     reddit_links.len(),
@@ -83,18 +48,20 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT,
-                    ENABLE_PRINTS_REDDIT,
-                    ENABLE_WARNING_PRINTS_REDDIT,
-                    ENABLE_ERROR_PRINTS_FOR_REDDIT,
-                    ENABLE_REDDIT_TIME_MEASUREMENT,
-                    REDDIT_LINK,
+                    enable_cleaning_warning_logs_directory_for_reddit,
+                    enable_prints_reddit,
+                    enable_warning_prints_for_reddit,
+                    enable_error_prints_for_reddit,
+                    enable_reddit_time_measurement,
+                    &reddit_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }))
         };
     }
-    if ENABLE_ARXIV {
+    if config.params.enable_arxiv {
         let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
             print_error_red(
@@ -104,7 +71,17 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
-            if ENABLE_PRINTS_ARXIV {
+            let enable_cleaning_warning_logs_directory_for_arxiv = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_arxiv;
+            let enable_prints_arxiv = config.params.enable_prints_arxiv;
+            let enable_warning_prints_for_arxiv = config.params.enable_warning_prints_for_arxiv;
+            let enable_error_prints_for_arxiv = config.params.enable_error_prints_for_arxiv;
+            let enable_arxiv_time_measurement = config.params.enable_arxiv_time_measurement;
+            let arxiv_link = config.params.arxiv_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_arxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     arxiv_links.len(),
@@ -113,18 +90,20 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV,
-                    ENABLE_PRINTS_ARXIV,
-                    ENABLE_WARNING_PRINTS_ARXIV,
-                    ENABLE_ERROR_PRINTS_FOR_ARXIV,
-                    ENABLE_ARXIV_TIME_MEASUREMENT,
-                    ARXIV_LINK,
+                    enable_cleaning_warning_logs_directory_for_arxiv,
+                    enable_prints_arxiv,
+                    enable_warning_prints_for_arxiv,
+                    enable_error_prints_for_arxiv,
+                    enable_arxiv_time_measurement,
+                    &arxiv_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }));
         }
     }
-    if ENABLE_BIORXIV {
+    if config.params.enable_biorxiv {
         let biorxiv_links = get_biorxiv_names();
         if biorxiv_links.is_empty() {
             print_error_red(
@@ -134,7 +113,17 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Biorxiv;
-            if ENABLE_PRINTS_BIORXIV {
+            let enable_cleaning_warning_logs_directory_for_biorxiv = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_biorxiv;
+            let enable_prints_biorxiv = config.params.enable_prints_biorxiv;
+            let enable_warning_prints_for_biorxiv = config.params.enable_warning_prints_for_biorxiv;
+            let enable_error_prints_for_biorxiv = config.params.enable_error_prints_for_biorxiv;
+            let enable_biorxiv_time_measurement = config.params.enable_biorxiv_time_measurement;
+            let biorxiv_link = config.params.biorxiv_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_biorxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     biorxiv_links.len(),
@@ -143,18 +132,20 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV,
-                    ENABLE_PRINTS_BIORXIV,
-                    ENABLE_WARNING_PRINTS_BIORXIV,
-                    ENABLE_ERROR_PRINTS_FOR_BIORXIV,
-                    ENABLE_BIORXIV_TIME_MEASUREMENT,
-                    BIORXIV_LINK,
+                    enable_cleaning_warning_logs_directory_for_biorxiv,
+                    enable_prints_biorxiv,
+                    enable_warning_prints_for_biorxiv,
+                    enable_error_prints_for_biorxiv,
+                    enable_biorxiv_time_measurement,
+                    &biorxiv_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }));
         }
     }
-    if ENABLE_MEDRXIV {
+    if config.params.enable_medrxiv {
         let medrxiv_links = get_medrxiv_names();
         if medrxiv_links.is_empty() {
             print_error_red(
@@ -164,7 +155,17 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Medrxiv;
-            if ENABLE_PRINTS_MEDRXIV {
+            let enable_cleaning_warning_logs_directory_for_medrxiv = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_medrxiv;
+            let enable_prints_medrxiv = config.params.enable_prints_medrxiv;
+            let enable_warning_prints_for_medrxiv = config.params.enable_warning_prints_for_medrxiv;
+            let enable_error_prints_for_medrxiv = config.params.enable_error_prints_for_medrxiv;
+            let enable_medrxiv_time_measurement = config.params.enable_medrxiv_time_measurement;
+            let medrxiv_link = config.params.medrxiv_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_medrxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     medrxiv_links.len(),
@@ -173,18 +174,20 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV,
-                    ENABLE_PRINTS_MEDRXIV,
-                    ENABLE_WARNING_PRINTS_MEDRXIV,
-                    ENABLE_ERROR_PRINTS_FOR_MEDRXIV,
-                    ENABLE_MEDRXIV_TIME_MEASUREMENT,
-                    MEDRXIV_LINK,
+                    enable_cleaning_warning_logs_directory_for_medrxiv,
+                    enable_prints_medrxiv,
+                    enable_warning_prints_for_medrxiv,
+                    enable_error_prints_for_medrxiv,
+                    enable_medrxiv_time_measurement,
+                    &medrxiv_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }));
         }
     }
-    if ENABLE_TWITTER {
+    if config.params.enable_twitter {
         let twitter_links = get_twitter_names();
         if twitter_links.is_empty() {
             print_error_red(
@@ -194,7 +197,17 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
-            if ENABLE_PRINTS_TWITTER {
+            let enable_cleaning_warning_logs_directory_for_twitter = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_twitter;
+            let enable_prints_twitter = config.params.enable_prints_twitter;
+            let enable_warning_prints_for_twitter = config.params.enable_warning_prints_for_twitter;
+            let enable_error_prints_for_twitter = config.params.enable_error_prints_for_twitter;
+            let enable_twitter_time_measurement = config.params.enable_twitter_time_measurement;
+            let twitter_link = config.params.twitter_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_twitter {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     twitter_links.len(),
@@ -203,18 +216,20 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER,
-                    ENABLE_PRINTS_TWITTER,
-                    ENABLE_WARNING_PRINTS_TWITTER,
-                    ENABLE_ERROR_PRINTS_FOR_TWITTER,
-                    ENABLE_TWITTER_TIME_MEASUREMENT,
-                    TWITTER_LINK,
+                    enable_cleaning_warning_logs_directory_for_twitter,
+                    enable_prints_twitter,
+                    enable_warning_prints_for_twitter,
+                    enable_error_prints_for_twitter,
+                    enable_twitter_time_measurement,
+                    &twitter_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }));
         }
     }
-    if ENABLE_HABR {
+    if config.params.enable_habr {
         let habr_links = get_habr_names();
         if habr_links.is_empty() {
             print_error_red(
@@ -224,7 +239,17 @@ pub async fn check_new_posts_threads_parts() {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Habr;
-            if ENABLE_PRINTS_HABR {
+            let enable_cleaning_warning_logs_directory_for_habr = config
+                .params
+                .enable_cleaning_warning_logs_directory_for_habr;
+            let enable_prints_habr = config.params.enable_prints_habr;
+            let enable_warning_prints_for_habr = config.params.enable_warning_prints_for_habr;
+            let enable_error_prints_for_habr = config.params.enable_error_prints_for_habr;
+            let enable_habr_time_measurement = config.params.enable_habr_time_measurement;
+            let habr_link = config.params.habr_link;
+            let enable_error_prints_handle = config.params.enable_error_prints_handle;
+            let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            if enable_prints_habr {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     habr_links.len(),
@@ -233,13 +258,15 @@ pub async fn check_new_posts_threads_parts() {
             };
             threads_vec.push(thread::spawn(move || {
                 rss_part(
-                    ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR,
-                    ENABLE_PRINTS_HABR,
-                    ENABLE_WARNING_PRINTS_HABR,
-                    ENABLE_ERROR_PRINTS_FOR_HABR,
-                    ENABLE_HABR_TIME_MEASUREMENT,
-                    HABR_LINK,
+                    enable_cleaning_warning_logs_directory_for_habr,
+                    enable_prints_habr,
+                    enable_warning_prints_for_habr,
+                    enable_error_prints_for_habr,
+                    enable_habr_time_measurement,
+                    &habr_link,
                     &PROVIDER_KIND,
+                    enable_error_prints_handle,
+                    warning_logs_directory_name_clone,
                 );
             }));
         }

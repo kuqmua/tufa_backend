@@ -1,11 +1,11 @@
 use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
 use crate::check_net::fetch_link::fetch_link;
-use crate::config::ENABLE_ERROR_PRINTS_HANDLE;
 use crate::overriding::prints::print_error_red;
 
 pub fn check_link(
     link: &str,
+    enable_error_prints_handle: bool,
 ) -> (
     bool,
     UnhandledReachProviderInfo,
@@ -22,7 +22,7 @@ pub fn check_link(
                 unhandled_info = UnhandledReachProviderInfo::Success;
                 handled_info = fetch_tuple_result.1;
             } else {
-                if ENABLE_ERROR_PRINTS_HANDLE {
+                if enable_error_prints_handle {
                     match fetch_tuple_result.1 {
                         HandledReachProviderStatusInfo::ResStatusError(status_code) => {
                             let error_message = format!(
@@ -50,7 +50,7 @@ pub fn check_link(
         Err(e) => {
             unhandled_info = UnhandledReachProviderInfo::Failure(e.to_string());
             handled_info = HandledReachProviderStatusInfo::Initialized;
-            if ENABLE_ERROR_PRINTS_HANDLE {
+            if enable_error_prints_handle {
                 let error_message =
                     format!("{} check_link fetch_result Box<dyn Error> {}", link, e);
                 print_error_red(file!().to_string(), line!().to_string(), error_message)

@@ -44,21 +44,23 @@ pub fn rss_part(
     enable_time_measurement: bool,
     provider_link: &str,
     provider_kind: &'static ProviderKind,
+    enable_error_prints_handle: bool,
+    warning_logs_directory_name: String,
 ) -> bool {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {
-            if check_link(provider_link).0 {
+            if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true;
             }
         }
         ProviderKind::Biorxiv => {
-            if check_link(provider_link).0 {
+            if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true;
             }
         }
         ProviderKind::Medrxiv => {
-            if check_link(provider_link).0 {
+            if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true;
             }
         }
@@ -75,12 +77,12 @@ pub fn rss_part(
             }
         }
         ProviderKind::Reddit => {
-            if check_link(provider_link).0 {
+            if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true; //todo
             }
         }
         ProviderKind::Habr => {
-            if check_link(provider_link).0 {
+            if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true;
             }
         }
@@ -271,6 +273,7 @@ pub fn rss_part(
                     enable_error_prints,
                     enable_cleaning_logs_directory,
                     enable_time_measurement,
+                    warning_logs_directory_name,
                 );
                 true
             } else {
