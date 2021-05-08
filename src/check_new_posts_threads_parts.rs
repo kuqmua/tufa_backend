@@ -28,12 +28,12 @@ use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT;
 use crate::config::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER;
 
-use crate::config::ENABLE_ERROR_PRINTS_ARXIV;
-use crate::config::ENABLE_ERROR_PRINTS_BIORXIV;
-use crate::config::ENABLE_ERROR_PRINTS_HABR;
-use crate::config::ENABLE_ERROR_PRINTS_MEDRXIV;
-use crate::config::ENABLE_ERROR_PRINTS_REDDIT;
-use crate::config::ENABLE_ERROR_PRINTS_TWITTER;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_ARXIV;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_BIORXIV;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_HABR;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_MEDRXIV;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_REDDIT;
+use crate::config::ENABLE_ERROR_PRINTS_FOR_TWITTER;
 
 use crate::config::ENABLE_PRINTS_ARXIV;
 use crate::config::ENABLE_PRINTS_BIORXIV;
@@ -73,11 +73,12 @@ pub async fn check_new_posts_threads_parts() {
                 "arxiv_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
             if ENABLE_PRINTS_REDDIT {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     reddit_links.len(),
-                    ProviderKind::Reddit
+                    PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -85,10 +86,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_REDDIT,
                     ENABLE_PRINTS_REDDIT,
                     ENABLE_WARNING_PRINTS_REDDIT,
-                    ENABLE_ERROR_PRINTS_REDDIT,
+                    ENABLE_ERROR_PRINTS_FOR_REDDIT,
                     ENABLE_REDDIT_TIME_MEASUREMENT,
                     REDDIT_LINK,
-                    &ProviderKind::Reddit,
+                    &PROVIDER_KIND,
                 );
             }))
         };
@@ -102,11 +103,12 @@ pub async fn check_new_posts_threads_parts() {
                 "arxiv_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
             if ENABLE_PRINTS_ARXIV {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     arxiv_links.len(),
-                    ProviderKind::Arxiv
+                    PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -114,10 +116,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ARXIV,
                     ENABLE_PRINTS_ARXIV,
                     ENABLE_WARNING_PRINTS_ARXIV,
-                    ENABLE_ERROR_PRINTS_ARXIV,
+                    ENABLE_ERROR_PRINTS_FOR_ARXIV,
                     ENABLE_ARXIV_TIME_MEASUREMENT,
                     ARXIV_LINK,
-                    &ProviderKind::Arxiv,
+                    &PROVIDER_KIND,
                 );
             }));
         }
@@ -131,11 +133,12 @@ pub async fn check_new_posts_threads_parts() {
                 "biorxiv_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Biorxiv;
             if ENABLE_PRINTS_BIORXIV {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     biorxiv_links.len(),
-                    ProviderKind::Biorxiv
+                    PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -143,10 +146,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_BIORXIV,
                     ENABLE_PRINTS_BIORXIV,
                     ENABLE_WARNING_PRINTS_BIORXIV,
-                    ENABLE_ERROR_PRINTS_BIORXIV,
+                    ENABLE_ERROR_PRINTS_FOR_BIORXIV,
                     ENABLE_BIORXIV_TIME_MEASUREMENT,
                     BIORXIV_LINK,
-                    &ProviderKind::Biorxiv,
+                    &PROVIDER_KIND,
                 );
             }));
         }
@@ -160,11 +163,12 @@ pub async fn check_new_posts_threads_parts() {
                 "medrxiv_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Medrxiv;
             if ENABLE_PRINTS_MEDRXIV {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     medrxiv_links.len(),
-                    ProviderKind::Medrxiv
+                    PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -172,10 +176,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_MEDRXIV,
                     ENABLE_PRINTS_MEDRXIV,
                     ENABLE_WARNING_PRINTS_MEDRXIV,
-                    ENABLE_ERROR_PRINTS_MEDRXIV,
+                    ENABLE_ERROR_PRINTS_FOR_MEDRXIV,
                     ENABLE_MEDRXIV_TIME_MEASUREMENT,
                     MEDRXIV_LINK,
-                    &ProviderKind::Medrxiv,
+                    &PROVIDER_KIND,
                 );
             }));
         }
@@ -189,11 +193,12 @@ pub async fn check_new_posts_threads_parts() {
                 "twitter_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
             if ENABLE_PRINTS_TWITTER {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     twitter_links.len(),
-                    ProviderKind::Twitter
+                    PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -201,10 +206,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_TWITTER,
                     ENABLE_PRINTS_TWITTER,
                     ENABLE_WARNING_PRINTS_TWITTER,
-                    ENABLE_ERROR_PRINTS_TWITTER,
+                    ENABLE_ERROR_PRINTS_FOR_TWITTER,
                     ENABLE_TWITTER_TIME_MEASUREMENT,
                     TWITTER_LINK,
-                    &ProviderKind::Twitter,
+                    &PROVIDER_KIND,
                 );
             }));
         }
@@ -218,11 +223,12 @@ pub async fn check_new_posts_threads_parts() {
                 "habr_links.is_empty".to_string(),
             )
         } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Habr;
             if ENABLE_PRINTS_HABR {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
                     habr_links.len(),
-                    ProviderKind::Habr
+                    &PROVIDER_KIND
                 );
             };
             threads_vec.push(thread::spawn(move || {
@@ -230,10 +236,10 @@ pub async fn check_new_posts_threads_parts() {
                     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_HABR,
                     ENABLE_PRINTS_HABR,
                     ENABLE_WARNING_PRINTS_HABR,
-                    ENABLE_ERROR_PRINTS_HABR,
+                    ENABLE_ERROR_PRINTS_FOR_HABR,
                     ENABLE_HABR_TIME_MEASUREMENT,
                     HABR_LINK,
-                    &ProviderKind::Habr,
+                    &PROVIDER_KIND,
                 );
             }));
         }
