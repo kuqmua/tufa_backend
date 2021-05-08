@@ -46,6 +46,7 @@ mod get_project_information {
         pub mod generate_reddit_hashmap_links;
         pub mod generate_twitter_hashmap_links;
     }
+    pub mod get_config_information;
     pub mod get_twitter_providers_names;
 }
 mod check_net {
@@ -71,8 +72,9 @@ use entry::entry;
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
+
 fn main() {
-    //c логами реально дохерище спама
+    //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
 }
