@@ -4,6 +4,7 @@ pub fn generate_twitter_hashmap_links(
     twitter_provider_names: Vec<&str>,
     twitter_subs_names: Vec<&'static str>,
 ) -> HashMap<&'static str, String> {
+    //example https://nitter.42l.fr/Tom_McGurl/rss
     if twitter_provider_names.is_empty() {
         panic!("twitter_provider_names is empty!!!");
     }

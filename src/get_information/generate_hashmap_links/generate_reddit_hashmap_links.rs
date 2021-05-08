@@ -3,6 +3,7 @@ use std::collections::HashMap;
 pub fn generate_reddit_hashmap_links(
     subreddits_names: Vec<&'static str>,
 ) -> HashMap<&'static str, String> {
+    //example https://www.reddit.com/r/3Dprinting/new.json
     let start: &str = "https://www.reddit.com/r/";
     let end: &str = "/new.json";
     let mut reddit_links: HashMap<&str, String> = HashMap::with_capacity(subreddits_names.len());
