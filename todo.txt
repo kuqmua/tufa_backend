@@ -184,5 +184,4 @@ let mut rss_page_struct: HabrPostStruct = HabrPostStruct::new();
                                         break;
                                     }
                                 }
------------------------------------
-conversion function for each type twitter arxiv bio reddit and others into common structure with option params i think 
+ 
