@@ -1,0 +1,63 @@
+[project_parameters]
+starting_check_link = "https://www.google.com/"
+arxiv_link = "https://www.google.com/" # https://arxiv.org/   http://export.arxiv.org/rss/   http://export.arxiv.org/rss/astro-ph.CO
+biorxiv_link = "https://www.google.com/" # http://connect.biorxiv.org/
+habr_link = "https://www.google.com/" # https://habr.com/ru/
+medrxiv_link = "https://www.google.com/" # http://connect.medrxiv.org/
+reddit_link = "https://www.reddit.com/"
+twitter_link = "https://www.google.com/" # must be not only 1 str but many - twitter and many nitters
+
+enable_all_providers = true
+enable_arxiv = true
+enable_biorxiv = true
+enable_habr = true
+enable_medrxiv = true
+enable_reddit = true
+enable_twitter = true
+
+enable_all_providers_prints = true
+enable_prints_arxiv = true
+enable_prints_biorxiv = true
+enable_prints_habr = true
+enable_prints_medrxiv = true
+enable_prints_reddit = true
+enable_prints_twitter = true
+
+enable_warning_prints_for_all_providers = true
+enable_warning_prints_for_arxiv = true
+enable_warning_prints_for_biorxiv = true
+enable_warning_prints_for_habr = true
+enable_warning_prints_for_medrxiv = true
+enable_warning_prints_for_reddit = true
+enable_warning_prints_for_twitter = true
+
+enable_error_prints_for_all_providers = true
+enable_error_prints_for_arxiv = true
+enable_error_prints_for_biorxiv = true
+enable_error_prints_for_habr = true
+enable_error_prints_for_medrxiv = true
+enable_error_prints_for_reddit = true
+enable_error_prints_for_twitter = true
+
+enable_all_cleaning_warning_logs_directory = true
+enable_cleaning_warning_logs_directory_for_arxiv = true
+enable_cleaning_warning_logs_directory_for_biorxiv = true
+enable_cleaning_warning_logs_directory_for_habr = true
+enable_cleaning_warning_logs_directory_for_medrxiv = true
+enable_cleaning_warning_logs_directory_for_reddit = true
+enable_cleaning_warning_logs_directory_for_twitter = true
+
+enable_prints_handle = true
+enable_error_prints_handle = true
+
+warning_logs_directory_name = "warning_logs"
+# // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
+
+enable_all_time_measurement = true
+enable_common_time_measurement = true
+enable_arxiv_time_measurement = true
+enable_biorxiv_time_measurement = true
+enable_habr_time_measurement = true
+enable_medrxiv_time_measurement = true
+enable_reddit_time_measurement = true
+enable_twitter_time_measurement = true
