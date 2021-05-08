@@ -29,7 +29,7 @@ mod fetch {
         pub mod common_rss_structures;
     }
 }
-mod get_information {
+mod get_project_information {
     pub mod get_names {
         pub mod get_arxiv_names;
         pub mod get_biorxiv_names;
