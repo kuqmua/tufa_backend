@@ -1,6 +1,5 @@
 use serde_json::Value;
 
-use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_dont_exists;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
@@ -13,11 +12,18 @@ pub fn rss_write_error_logs_into_file(
     enable_prints: bool,
     enable_error_prints: bool,
     key: String,
+    warning_logs_directory_name: String,
 ) {
-    rss_logs_create_dir_if_dont_exists(dir, &provider_kind, enable_prints, enable_error_prints);
+    rss_logs_create_dir_if_dont_exists(
+        dir,
+        &provider_kind,
+        enable_prints,
+        enable_error_prints,
+        &warning_logs_directory_name,
+    );
     let file_name = format!(
         "logs/{}/{:?}/{}/{:?}_{}.json",
-        WARNING_LOGS_DIRECTORY_NAME,
+        &warning_logs_directory_name,
         provider_kind,
         dir,
         provider_kind,

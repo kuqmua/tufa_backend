@@ -26,6 +26,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     time: Instant,
+    warning_logs_directory_name: String,
 ) {
     match value.2 {
         UnhandledFetchStatusInfo::Success => match value.3 {
@@ -45,6 +46,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         enable_prints,
                         enable_error_prints,
                         key,
+                        warning_logs_directory_name,
                     )
                 }
                 AreThereItems::NopeButThereIsTag(fetch_result_string) => {
@@ -63,6 +65,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         enable_prints,
                         enable_error_prints,
                         key,
+                        warning_logs_directory_name,
                     )
                 }
                 AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
@@ -81,6 +84,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         enable_prints,
                         enable_error_prints,
                         key,
+                        warning_logs_directory_name,
                     )
                 }
                 AreThereItems::NopeNoTag(fetch_result_string) => {
@@ -98,6 +102,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         enable_prints,
                         enable_error_prints,
                         key,
+                        warning_logs_directory_name,
                     )
                 }
             },
@@ -115,6 +120,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     enable_prints,
                     enable_error_prints,
                     key,
+                    warning_logs_directory_name,
                 )
             }
             HandledFetchStatusInfo::ResToTextError(error) => {
@@ -132,6 +138,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     enable_prints,
                     enable_error_prints,
                     key,
+                    warning_logs_directory_name,
                 )
             }
             HandledFetchStatusInfo::ResStatusError(status_code) => {
@@ -150,6 +157,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     enable_prints,
                     enable_error_prints,
                     key,
+                    warning_logs_directory_name,
                 )
             }
         },
@@ -167,6 +175,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 enable_prints,
                 enable_error_prints,
                 key,
+                warning_logs_directory_name,
             )
         }
         UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
@@ -184,6 +193,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 enable_prints,
                 enable_error_prints,
                 key,
+                warning_logs_directory_name,
             )
         }
     }

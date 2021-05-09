@@ -1,4 +1,3 @@
-use crate::config::WARNING_LOGS_DIRECTORY_NAME;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::fs;
@@ -9,10 +8,11 @@ pub fn rss_logs_create_dir_if_dont_exists(
     provider_kind: &ProviderKind,
     enable_prints: bool,
     enable_error_prints: bool,
+    warning_logs_directory_name: &str,
 ) {
     let path_to_log_file = format!(
         "logs/{}/{:?}/{}",
-        WARNING_LOGS_DIRECTORY_NAME,
+        warning_logs_directory_name,
         provider_kind,
         underdirectory.to_string()
     );
@@ -23,14 +23,14 @@ pub fn rss_logs_create_dir_if_dont_exists(
                 if enable_prints {
                     println!(
                         "папка logs/{}/{:?}/{} создана!",
-                        WARNING_LOGS_DIRECTORY_NAME, provider_kind, underdirectory
+                        warning_logs_directory_name, provider_kind, underdirectory
                     )
                 }
             }
             Err(e) => {
                 let message = format!(
                     "ошибка при создании папки logs/{}/{:?}/{} {}",
-                    WARNING_LOGS_DIRECTORY_NAME,
+                    warning_logs_directory_name,
                     provider_kind,
                     underdirectory,
                     e.to_string()

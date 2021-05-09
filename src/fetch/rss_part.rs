@@ -36,6 +36,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
+#[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
     enable_cleaning_logs_directory: bool,
     enable_prints: bool,

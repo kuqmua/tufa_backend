@@ -113,6 +113,7 @@ pub fn handle_unfiltered_posts(
                 enable_error_prints,
                 enable_time_measurement,
                 some_error_posts,
+                warning_logs_directory_name,
             ));
         });
         wrong_cases_thread.join().unwrap();
