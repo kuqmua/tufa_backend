@@ -23,7 +23,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
     let reddit_client_secret = config.params.reddit_client_secret.clone();
     let reddit_username = config.params.reddit_username.clone();
     let reddit_password = config.params.reddit_password.clone();
-    if config.params.enable_reddit {
+    if config.params.enable_all_providers && config.params.enable_reddit {
         let reddit_links = get_reddit_names();
         if reddit_links.is_empty() {
             print_error_red(
@@ -33,13 +33,21 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
-            let enable_cleaning_warning_logs_directory_for_reddit = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_reddit;
-            let enable_prints_reddit = config.params.enable_prints_reddit;
-            let enable_warning_prints_for_reddit = config.params.enable_warning_prints_for_reddit;
-            let enable_error_prints_for_reddit = config.params.enable_error_prints_for_reddit;
-            let enable_reddit_time_measurement = config.params.enable_reddit_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_reddit =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_reddit;
+            let enable_prints_reddit =
+                config.params.enable_all_providers_prints && config.params.enable_prints_reddit;
+            let enable_warning_prints_for_reddit =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_reddit;
+            let enable_error_prints_for_reddit =
+                config.params.enable_error_prints_for_all_providers
+                    && config.params.enable_error_prints_for_reddit;
+            let enable_reddit_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_reddit_time_measurement;
             let reddit_link = config.params.reddit_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
@@ -76,7 +84,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             }))
         };
     }
-    if config.params.enable_arxiv {
+    if config.params.enable_all_providers && config.params.enable_arxiv {
         let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
             print_error_red(
@@ -86,13 +94,20 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
-            let enable_cleaning_warning_logs_directory_for_arxiv = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_arxiv;
-            let enable_prints_arxiv = config.params.enable_prints_arxiv;
-            let enable_warning_prints_for_arxiv = config.params.enable_warning_prints_for_arxiv;
-            let enable_error_prints_for_arxiv = config.params.enable_error_prints_for_arxiv;
-            let enable_arxiv_time_measurement = config.params.enable_arxiv_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_arxiv =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_arxiv;
+            let enable_prints_arxiv =
+                config.params.enable_all_providers_prints && config.params.enable_prints_arxiv;
+            let enable_warning_prints_for_arxiv =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_arxiv;
+            let enable_error_prints_for_arxiv = config.params.enable_error_prints_for_all_providers
+                && config.params.enable_error_prints_for_arxiv;
+            let enable_arxiv_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_arxiv_time_measurement;
             let arxiv_link = config.params.arxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
@@ -128,7 +143,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             }));
         }
     }
-    if config.params.enable_biorxiv {
+    if config.params.enable_all_providers && config.params.enable_biorxiv {
         let biorxiv_links = get_biorxiv_names();
         if biorxiv_links.is_empty() {
             print_error_red(
@@ -138,13 +153,21 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Biorxiv;
-            let enable_cleaning_warning_logs_directory_for_biorxiv = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_biorxiv;
-            let enable_prints_biorxiv = config.params.enable_prints_biorxiv;
-            let enable_warning_prints_for_biorxiv = config.params.enable_warning_prints_for_biorxiv;
-            let enable_error_prints_for_biorxiv = config.params.enable_error_prints_for_biorxiv;
-            let enable_biorxiv_time_measurement = config.params.enable_biorxiv_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_biorxiv =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_biorxiv;
+            let enable_prints_biorxiv =
+                config.params.enable_all_providers_prints && config.params.enable_prints_biorxiv;
+            let enable_warning_prints_for_biorxiv =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_biorxiv;
+            let enable_error_prints_for_biorxiv =
+                config.params.enable_error_prints_for_all_providers
+                    && config.params.enable_error_prints_for_biorxiv;
+            let enable_biorxiv_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_biorxiv_time_measurement;
             let biorxiv_link = config.params.biorxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
@@ -180,7 +203,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             }));
         }
     }
-    if config.params.enable_medrxiv {
+    if config.params.enable_all_providers && config.params.enable_medrxiv {
         let medrxiv_links = get_medrxiv_names();
         if medrxiv_links.is_empty() {
             print_error_red(
@@ -190,13 +213,21 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Medrxiv;
-            let enable_cleaning_warning_logs_directory_for_medrxiv = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_medrxiv;
-            let enable_prints_medrxiv = config.params.enable_prints_medrxiv;
-            let enable_warning_prints_for_medrxiv = config.params.enable_warning_prints_for_medrxiv;
-            let enable_error_prints_for_medrxiv = config.params.enable_error_prints_for_medrxiv;
-            let enable_medrxiv_time_measurement = config.params.enable_medrxiv_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_medrxiv =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_medrxiv;
+            let enable_prints_medrxiv =
+                config.params.enable_all_providers_prints && config.params.enable_prints_medrxiv;
+            let enable_warning_prints_for_medrxiv =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_medrxiv;
+            let enable_error_prints_for_medrxiv =
+                config.params.enable_error_prints_for_all_providers
+                    && config.params.enable_error_prints_for_medrxiv;
+            let enable_medrxiv_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_medrxiv_time_measurement;
             let medrxiv_link = config.params.medrxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
@@ -232,7 +263,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             }));
         }
     }
-    if config.params.enable_twitter {
+    if config.params.enable_all_providers && config.params.enable_twitter {
         let twitter_links = get_twitter_names();
         if twitter_links.is_empty() {
             print_error_red(
@@ -242,13 +273,21 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
-            let enable_cleaning_warning_logs_directory_for_twitter = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_twitter;
-            let enable_prints_twitter = config.params.enable_prints_twitter;
-            let enable_warning_prints_for_twitter = config.params.enable_warning_prints_for_twitter;
-            let enable_error_prints_for_twitter = config.params.enable_error_prints_for_twitter;
-            let enable_twitter_time_measurement = config.params.enable_twitter_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_twitter =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_twitter;
+            let enable_prints_twitter =
+                config.params.enable_all_providers_prints && config.params.enable_prints_twitter;
+            let enable_warning_prints_for_twitter =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_twitter;
+            let enable_error_prints_for_twitter =
+                config.params.enable_error_prints_for_all_providers
+                    && config.params.enable_error_prints_for_twitter;
+            let enable_twitter_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_twitter_time_measurement;
             let twitter_link = config.params.twitter_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
@@ -284,7 +323,7 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             }));
         }
     }
-    if config.params.enable_habr {
+    if config.params.enable_all_providers && config.params.enable_habr {
         let habr_links = get_habr_names();
         if habr_links.is_empty() {
             print_error_red(
@@ -294,13 +333,20 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Habr;
-            let enable_cleaning_warning_logs_directory_for_habr = config
-                .params
-                .enable_cleaning_warning_logs_directory_for_habr;
-            let enable_prints_habr = config.params.enable_prints_habr;
-            let enable_warning_prints_for_habr = config.params.enable_warning_prints_for_habr;
-            let enable_error_prints_for_habr = config.params.enable_error_prints_for_habr;
-            let enable_habr_time_measurement = config.params.enable_habr_time_measurement;
+            let enable_cleaning_warning_logs_directory_for_habr =
+                config.params.enable_all_time_measurement
+                    && config
+                        .params
+                        .enable_cleaning_warning_logs_directory_for_habr;
+            let enable_prints_habr =
+                config.params.enable_all_providers_prints && config.params.enable_prints_habr;
+            let enable_warning_prints_for_habr =
+                config.params.enable_warning_prints_for_all_providers
+                    && config.params.enable_warning_prints_for_habr;
+            let enable_error_prints_for_habr = config.params.enable_error_prints_for_all_providers
+                && config.params.enable_error_prints_for_habr;
+            let enable_habr_time_measurement = config.params.enable_all_time_measurement
+                && config.params.enable_habr_time_measurement;
             let habr_link = config.params.habr_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
