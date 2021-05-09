@@ -179,3 +179,6 @@ make some structs private
 ------------------
 let mut threads_vec = Vec::with_capacity(6  thisssss);
 implement that with config params 
+------------------
+Rc<RefCell<Data>>
+Rc::new(<RefCell::new(Data { value: 42}))
