@@ -24,20 +24,20 @@ pub fn entry() {
             }
             let enable_common_time_measurement = config.params.enable_common_time_measurement; //need to be different variable cuz move happpens
             if check_link(
-                &config.params.starting_check_link,
+                &config.links.starting_check_link,
                 config.params.enable_error_prints_handle,
             )
             .0
             {
                 if config.params.enable_prints_handle {
                     let its_all_good_message =
-                        "server can reach ".to_string() + &config.params.starting_check_link;
+                        "server can reach ".to_string() + &config.links.starting_check_link;
                     println!("{}", its_all_good_message);
                 }
                 async_tokio_wrapper(config);
             } else if config.params.enable_error_prints_handle {
                 let its_not_good_message =
-                    "server cannot reach ".to_string() + &config.params.starting_check_link;
+                    "server cannot reach ".to_string() + &config.links.starting_check_link;
                 print_error_red(
                     file!().to_string(),
                     line!().to_string(),
