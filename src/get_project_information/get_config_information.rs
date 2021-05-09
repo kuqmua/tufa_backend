@@ -77,7 +77,7 @@ pub struct Params {
 }
 
 pub fn get_config_information() -> Option<Config> {
-    let result_of_file_opening = File::open("././Config.toml");
+    let result_of_file_opening = File::open("././Cargo.toml");
     match result_of_file_opening {
         Ok(mut file) => {
             let mut string_file_content = String::new();
@@ -118,12 +118,3 @@ pub fn get_config_information() -> Option<Config> {
         }
     }
 }
-// let option_of_config = get_config_information();
-//     match option_of_config {
-//         Some(config) => {
-//             println!("{:#?}config", config);
-//         }
-//         None => {
-//             todo!()
-//         }
-//     }
