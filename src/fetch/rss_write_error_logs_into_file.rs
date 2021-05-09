@@ -28,7 +28,7 @@ pub fn rss_write_error_logs_into_file(
         dir,
         provider_kind,
         key.replace("/", "_")
-    ); //подобрать функцию которая из стринги делает сейвовый путь
+    ); //add save function what convert string into save path
 
     let result_of_creating_file = File::create(&file_name);
     match result_of_creating_file {
