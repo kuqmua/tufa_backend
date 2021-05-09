@@ -59,7 +59,6 @@ mod overriding {
 }
 mod authorization {
     pub mod reddit {
-        pub mod authorization_info;
         pub mod reddit_authorization;
     }
 }

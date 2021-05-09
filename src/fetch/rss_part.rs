@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::authorization::reddit::authorization_info;
 use crate::authorization::reddit::reddit_authorization;
 
 use crate::check_net::check_link::check_link;
@@ -47,6 +46,11 @@ pub fn rss_part(
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
     warning_logs_directory_name: String,
+    reddit_user_agent: &str,
+    reddit_client_id: &str,
+    reddit_client_secret: &str,
+    reddit_username: &str,
+    reddit_password: &str,
 ) -> bool {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
@@ -225,11 +229,11 @@ pub fn rss_part(
                 ProviderKind::Reddit => {
                     //what should i do with authorization?
                     let is_reddit_authorized = reddit_authorization::reddit_authorization(
-                        authorization_info::REDDIT_USER_AGENT,
-                        authorization_info::REDDIT_CLIENT_ID,
-                        authorization_info::REDDIT_CLIENT_SECRET,
-                        authorization_info::REDDIT_USERNAME,
-                        authorization_info::REDDIT_PASSWORD,
+                        reddit_user_agent,
+                        reddit_client_id,
+                        reddit_client_secret,
+                        reddit_username,
+                        reddit_password,
                     );
                     if is_reddit_authorized {
                         if enable_prints {

@@ -18,6 +18,11 @@ use crate::overriding::prints::print_error_red;
 pub async fn check_new_posts_threads_parts(config: Config) {
     let mut threads_vec = Vec::with_capacity(6);
     let warning_logs_directory_name = config.params.warning_logs_directory_name.clone();
+    let reddit_user_agent = config.params.reddit_user_agent.clone();
+    let reddit_client_id = config.params.reddit_client_id.clone();
+    let reddit_client_secret = config.params.reddit_client_secret.clone();
+    let reddit_username = config.params.reddit_username.clone();
+    let reddit_password = config.params.reddit_password.clone();
     if config.params.enable_reddit {
         let reddit_links = get_reddit_names();
         if reddit_links.is_empty() {
@@ -38,6 +43,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let reddit_link = config.params.reddit_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_reddit {
                 // ENABLE_PRINTS_REDDIT
                 println!(
@@ -57,6 +67,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }))
         };
@@ -81,6 +96,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let arxiv_link = config.params.arxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_arxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
@@ -99,6 +119,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }));
         }
@@ -123,6 +148,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let biorxiv_link = config.params.biorxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_biorxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
@@ -141,6 +171,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }));
         }
@@ -165,6 +200,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let medrxiv_link = config.params.medrxiv_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_medrxiv {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
@@ -183,6 +223,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }));
         }
@@ -207,6 +252,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let twitter_link = config.params.twitter_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_twitter {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
@@ -225,6 +275,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }));
         }
@@ -249,6 +304,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
             let habr_link = config.params.habr_link;
             let enable_error_prints_handle = config.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
+            let reddit_user_agent_clone = reddit_user_agent.clone();
+            let reddit_client_id_clone = reddit_client_id.clone();
+            let reddit_client_secret_clone = reddit_client_secret.clone();
+            let reddit_username_clone = reddit_username.clone();
+            let reddit_password_clone = reddit_password.clone();
             if enable_prints_habr {
                 println!(
                     "{:#?} elements in {:#?} HashMap",
@@ -267,6 +327,11 @@ pub async fn check_new_posts_threads_parts(config: Config) {
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
+                    &reddit_user_agent_clone,
+                    &reddit_client_id_clone,
+                    &reddit_client_secret_clone,
+                    &reddit_username_clone,
+                    &reddit_password_clone,
                 );
             }));
         }
