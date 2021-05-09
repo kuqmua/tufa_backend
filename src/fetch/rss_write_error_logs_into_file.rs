@@ -41,12 +41,12 @@ pub fn rss_write_error_logs_into_file(
                     match result_of_writing {
                         Ok(_) => {
                             if enable_prints {
-                                println!("логи записаны в файл {}", &file_name);
+                                println!("logs were written in file {}", &file_name);
                             }
                         }
                         Err(e) => {
                             let message =
-                                format!("ошибка записи в файл {} {}", file_name, e.to_string());
+                                format!("error writing in file {} {}", file_name, e.to_string());
                             if enable_error_prints {
                                 print_error_red(file!().to_string(), line!().to_string(), message)
                             }
@@ -55,7 +55,7 @@ pub fn rss_write_error_logs_into_file(
                 }
                 Err(e) => {
                     let message = format!(
-                        "ошибка каста json в string {} {}",
+                        "error cast json into string {} {}",
                         &json_object,
                         e.to_string()
                     );
@@ -66,7 +66,7 @@ pub fn rss_write_error_logs_into_file(
             }
         }
         Err(e) => {
-            let message = format!("ошибка создания файла {} {}", &file_name, e.to_string());
+            let message = format!("error creating file {} {}", &file_name, e.to_string());
             if enable_error_prints {
                 print_error_red(file!().to_string(), line!().to_string(), message)
             }
