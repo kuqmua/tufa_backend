@@ -6,7 +6,7 @@ use crate::overriding::prints::print_error_red;
 
 extern crate num_cpus;
 
-use crate::get_project_information::get_config_information::get_config_information;
+use crate::get_project_information::get_config::get_config_information::get_config_information;
 
 pub fn entry() {
     let option_of_config = get_config_information();
