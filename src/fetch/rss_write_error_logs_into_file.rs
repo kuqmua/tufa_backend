@@ -12,7 +12,7 @@ pub fn rss_write_error_logs_into_file(
     enable_prints: bool,
     enable_error_prints: bool,
     key: String,
-    warning_logs_directory_name: String,
+    warning_logs_directory_name: &str,
 ) {
     rss_logs_create_dir_if_dont_exists(
         dir,

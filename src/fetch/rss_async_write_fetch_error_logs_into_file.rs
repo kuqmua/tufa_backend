@@ -26,7 +26,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     time: Instant,
-    warning_logs_directory_name: String,
+    warning_logs_directory_name: &str,
 ) {
     match value.2 {
         UnhandledFetchStatusInfo::Success => match value.3 {

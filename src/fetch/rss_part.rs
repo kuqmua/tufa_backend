@@ -47,7 +47,7 @@ pub fn rss_part(
     provider_link: &str,
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
-    warning_logs_directory_name: String,
+    warning_logs_directory_name: &'static str,
 ) -> bool {
     let mut availability_checker_flag: bool = false;
     match provider_kind {

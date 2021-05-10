@@ -52,7 +52,7 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.arxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }));
         }
@@ -97,7 +97,7 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.biorxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }));
         }
@@ -137,7 +137,7 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.habr_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }));
         }
@@ -182,7 +182,7 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.medrxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }));
         }
@@ -228,7 +228,7 @@ pub async fn check_new_posts_threads_parts() {
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_for_all_providers
                         && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }))
         };
@@ -273,7 +273,7 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.twitter_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    CONFIG.params.warning_logs_directory_name.clone(),
+                    &CONFIG.params.warning_logs_directory_name,
                 );
             }));
         }

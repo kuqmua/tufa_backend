@@ -26,7 +26,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             ProviderKind,
         ),
     >,
-    warning_logs_directory_name: String,
+    warning_logs_directory_name: &str,
 ) {
     let time = Instant::now();
     let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
@@ -42,7 +42,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             enable_error_prints,
             enable_time_measurement,
             time,
-            warning_logs_directory_name.clone(),
+            warning_logs_directory_name,
         ));
     }
     let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
