@@ -1,3 +1,5 @@
+use config::{Config, ConfigError, File};
+const CONFIG_FILE_PATH: &str = "./config/Development.toml";
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ConfigStruct {
     pub params: Params,
@@ -9,6 +11,14 @@ pub struct ConfigStruct {
     pub enable_error_prints: EnableErrorPrints,
     pub enable_cleaning_warning_logs_directory: EnableCleaningWarningLogsDirectory,
     pub enable_time_measurement: EnableTimeMeasurement,
+}
+
+impl ConfigStruct {
+    pub fn new() -> Result<Self, ConfigError> {
+        let mut s = Config::new();
+        s.merge(File::with_name(CONFIG_FILE_PATH))?;
+        s.try_into()
+    }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]

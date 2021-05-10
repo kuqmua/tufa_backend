@@ -7,7 +7,7 @@ use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_na
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
-use crate::settings::CONFIG;
+use crate::get_project_information::get_config::get_config_information::CONFIG;
 
 use crate::fetch::rss_part::rss_part;
 

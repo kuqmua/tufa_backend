@@ -68,7 +68,6 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
-mod settings;
 
 use entry::entry;
 
