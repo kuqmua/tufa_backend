@@ -13,7 +13,6 @@ use std::thread;
 use std::time::Instant;
 
 pub fn rss_fetch_and_parse_provider_data(
-    enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
     links: HashMap<&'static str, String>,
@@ -58,7 +57,6 @@ pub fn rss_fetch_and_parse_provider_data(
                 &value,
                 key,
                 time,
-                enable_prints,
                 enable_error_prints,
                 enable_time_measurement,
             );
@@ -71,7 +69,6 @@ pub fn rss_fetch_and_parse_provider_data(
                             time,
                             key,
                             &value,
-                            enable_prints,
                             enable_error_prints,
                             enable_time_measurement,
                             provider_kind_clone,

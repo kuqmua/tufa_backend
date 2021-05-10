@@ -1,6 +1,6 @@
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::overriding::prints::print_error_red;
-use std::time::Instant;
+// use std::time::Instant;
 //async
 // let res = reqwest::get(link).await?;
 //NOT WORKING FOR SOME REASON (returning 404)
@@ -17,11 +17,7 @@ use std::time::Instant;
 // }
 pub fn rss_check_provider_status(
     link: &str,
-    key: &str,
-    time: Instant,
-    enable_prints: bool,
     enable_error_prints: bool,
-    enable_time_measurement: bool,
 ) -> Result<(bool, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
     let mut result_tuple: (bool, HandledFetchStatusInfo) =

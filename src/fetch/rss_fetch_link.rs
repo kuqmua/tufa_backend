@@ -19,7 +19,6 @@ pub fn rss_fetch_link(
     link: &str,
     key: &str,
     time: Instant,
-    enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
 ) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {

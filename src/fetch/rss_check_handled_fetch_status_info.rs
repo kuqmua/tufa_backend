@@ -13,7 +13,6 @@ pub fn rss_check_handled_fetch_status_info(
     time: Instant,
     key: &str,
     value: &str,
-    enable_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_kind: ProviderKind,

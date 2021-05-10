@@ -3,15 +3,11 @@ use crate::overriding::prints::print_error_red;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::time::Instant;
 
 pub fn rss_check_available_providers(
-    enable_prints: bool,
     enable_error_prints: bool,
-    enable_time_measurement: bool,
     twitter_providers_names: std::vec::Vec<&'static str>,
 ) -> Vec<&str> {
-    let time = Instant::now();
     let mut threads_vector = Vec::with_capacity(twitter_providers_names.len());
     let twitter_providers_links_available = Arc::new(Mutex::new(Vec::new()));
     for provider_name in &mut twitter_providers_names.into_iter() {
@@ -19,14 +15,8 @@ pub fn rss_check_available_providers(
             Arc::clone(&twitter_providers_links_available);
         let handle = thread::spawn(move || {
             let provider_link: String = format!("https://{}/TheCherno/rss", provider_name); //choose random account from following
-            let check_status_result = rss_check_provider_status(
-                &provider_link,
-                "TODO",
-                time,
-                enable_prints,
-                enable_error_prints,
-                enable_time_measurement,
-            );
+            let check_status_result =
+                rss_check_provider_status(&provider_link, enable_error_prints);
             match check_status_result {
                 Ok(fetch_tuple_result) => {
                     if fetch_tuple_result.0 {
