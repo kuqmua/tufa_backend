@@ -169,13 +169,9 @@ https://habr.com/ru/rss/all/all/?fl=ru?with_hubs=true:?with_tags=true:
 ----------
 github newsfeed
 ----------
-config as toml file
-----------
 redo fetch link cuz method not allowed error error
 ------------------
 write a test and run before commit to check if i for some reason have user data in config
-------------------
-make some structs private
 ------------------
 let mut threads_vec = Vec::with_capacity(6  thisssss);
 implement that with config params 
