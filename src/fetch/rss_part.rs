@@ -35,6 +35,8 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
+use crate::get_project_information::get_config::get_config_information::CONFIG;
+
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
     enable_cleaning_logs_directory: bool,
@@ -46,11 +48,6 @@ pub fn rss_part(
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
     warning_logs_directory_name: String,
-    reddit_user_agent: &str,
-    reddit_client_id: &str,
-    reddit_client_secret: &str,
-    reddit_username: &str,
-    reddit_password: &str,
 ) -> bool {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
@@ -229,11 +226,11 @@ pub fn rss_part(
                 ProviderKind::Reddit => {
                     //what should i do with authorization?
                     let is_reddit_authorized = reddit_authorization::reddit_authorization(
-                        reddit_user_agent,
-                        reddit_client_id,
-                        reddit_client_secret,
-                        reddit_username,
-                        reddit_password,
+                        &CONFIG.reddit_authorization.reddit_user_agent,
+                        &CONFIG.reddit_authorization.reddit_client_id,
+                        &CONFIG.reddit_authorization.reddit_client_secret,
+                        &CONFIG.reddit_authorization.reddit_username,
+                        &CONFIG.reddit_authorization.reddit_password,
                     );
                     if is_reddit_authorized {
                         if enable_prints {
