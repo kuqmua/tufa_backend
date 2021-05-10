@@ -72,22 +72,13 @@ mod settings;
 
 use entry::entry;
 
-// use log::LevelFilter;
-// use simplelog::{Config, TermLogger, TerminalMode};
-
 #[macro_use]
 extern crate lazy_static;
 
-lazy_static! {
-    static ref CONFIG: settings::Settings =
-        settings::Settings::new().expect("config can be loaded");
-}
+// use log::LevelFilter;
+// use simplelog::{Config, TermLogger, TerminalMode};
 
 fn main() {
-    println!(
-        "Server started at localhost:{}",
-        CONFIG.enable_providers.enable_arxiv
-    );
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();

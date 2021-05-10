@@ -113,3 +113,7 @@ impl Settings {
         s.try_into()
     }
 }
+
+lazy_static! {
+    pub static ref CONFIG: Settings = Settings::new().expect("config can be loaded");
+}
