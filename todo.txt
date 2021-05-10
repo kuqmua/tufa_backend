@@ -1,47 +1,26 @@
-заоверрайдить принты под цвет
 тесты написать 
-в хешмап с линками стоит ли засовывать переменую линка сайта?//пришлось из за мува обьекта в расте
+----------
 чекать каждую ссылку на статус мало ли переименуют еще
-только на статус без тела//DONE
-подгружать инфу для авторизации из файла
+только на статус без тела
+----------
 записывать результат фетчинга в файл и проверять нет ли там таких постов
-мапер который будет приравнивать все классы сайтов к одному формату
-remove eprints and put print_error_red instead //проблема с Box<dyn errorr any send ></dyn>
----------
-// расписать случай если не найдет посты
-                match dots_unfiltered_str.find("</item>") {
 ---
 items: vec![BiorxivPageStructItem::new(); 30],
 whats strange what only 30...weird
 -------
 по сути как можно избавиться от tokio
-------
-перед всеми действиями чекать доступен ли для меня инет типо ping 8.8.8.8
 -----
 rename some local variables in functions
 ------
-add warnings prints
-------
-add green prints
-------
 service for date/time checking and executing arxiv for example one time per week and check of server restarted in this timestamp
------
-make parallel parsing
------
-"editor.formatOnSave": true, in settings.json :slight_smile: or per language: "[rust]": { "editor.formatOnSave": true, },
 -------
 делать хеш от поста и отправлять хеши постов с клиента на сервер чтобы сервер видел отправлял ли уже эти посты или нет
---------------
-если спарсилось неудочно и возникла ошибка вместо того чтобы убивать тред просто выкинуть эррор(записать его куда нидь) и 
-перейти на следующую итерацию
 ----------------------
 в reach_provider вместо полного запроса на тело изменить ток на запрос статуса типо пинга
 ---------
 запихнуть в enum тест\статус код
 -----------
 проблема еще в том что он дожидается фетча ввсех ссылок. не над так
-----------------------
-добавить возможность писать принты\ошибки в файл
 ----------
 организация перезапуска фетча ссылок только для тех которые вернули эррор
 ------
@@ -63,8 +42,6 @@ let slice: &[u8] = &b;
                 let converted_str = str::from_utf8(&slice).unwrap();
                 let mut dots_unfiltered_str = converted_str.to_string();
                 dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
------------------------------------------
- lazy_static! - глобальная переменная
  ----------------
  extern crate rayon;
 
@@ -94,14 +71,6 @@ fn main() {
  if size of working dir > 100mb then remove all containg
  -----------------
  must be not only 1 str but many - twitter and many nitters
- -----------------
- let provider_kind_clone_for_debug_purposes = provider_kind.clone(); //only for debug
- -----------------
- instant::now() prints move into config variable
- --------------------
- if let ProviderKind::Twitter = provider_kind {
-        while fetch_result_string.contains("<dc:creator>") 
-        put something like that after this match fetch_result_string.find("</item>") {
 ---------------------
 https://doc.rust-lang.org/std/primitive.i32.html#method.checked_add
 переписать места в которых мб есть переполнение буфера
@@ -113,16 +82,10 @@ error had .description method 0_o
 std::stringify
 -----------------
 std::str::SplitN
---------------
-add to config time elapsed prints handle
--------------
-remove vec into hashmap in twitter_part cause it can be reorganized into better structure
 -------------
 providers statistics in files. if 3 time provider is inactive then do not fetch him next time then next two times...
 ------------
 hashmaps into vecs
-------------
-config into json file
 ------------
 twitter errors:
 builder error: Too many open files (os error 24)
@@ -162,10 +125,6 @@ something.lock().unwrap();
 RES.STATUS: 521 <unknown status code>
 ----------
 operation timed out print time elapsed
-----------
-habr rss 
-https://habr.com/ru/rss/post/553356/?with_hubs=true:?with_tags=true:?limit=100
-https://habr.com/ru/rss/all/all/?fl=ru?with_hubs=true:?with_tags=true:
 ----------
 github newsfeed
 ----------
