@@ -47,7 +47,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG.enable_error_prints.enable_error_prints_for_arxiv;
             let enable_arxiv_time_measurement = CONFIG.params.enable_all_time_measurement
                 && CONFIG.enable_time_measurement.enable_arxiv_time_measurement;
-            let arxiv_link = &CONFIG.links.arxiv_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -69,7 +68,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_arxiv,
                     enable_error_prints_for_arxiv,
                     enable_arxiv_time_measurement,
-                    &arxiv_link,
+                    &CONFIG.links.arxiv_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
@@ -111,7 +110,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG
                     .enable_time_measurement
                     .enable_biorxiv_time_measurement;
-            let biorxiv_link = &CONFIG.links.biorxiv_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -133,7 +131,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_biorxiv,
                     enable_error_prints_for_biorxiv,
                     enable_biorxiv_time_measurement,
-                    &biorxiv_link,
+                    &CONFIG.links.biorxiv_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
@@ -170,7 +168,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG.enable_error_prints.enable_error_prints_for_habr;
             let enable_habr_time_measurement = CONFIG.params.enable_all_time_measurement
                 && CONFIG.enable_time_measurement.enable_habr_time_measurement;
-            let habr_link = &CONFIG.links.habr_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -192,7 +189,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_habr,
                     enable_error_prints_for_habr,
                     enable_habr_time_measurement,
-                    &habr_link,
+                    &CONFIG.links.habr_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
@@ -234,7 +231,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG
                     .enable_time_measurement
                     .enable_medrxiv_time_measurement;
-            let medrxiv_link = &CONFIG.links.medrxiv_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -256,7 +252,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_medrxiv,
                     enable_error_prints_for_medrxiv,
                     enable_medrxiv_time_measurement,
-                    &medrxiv_link,
+                    &CONFIG.links.medrxiv_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
@@ -298,7 +294,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG
                     .enable_time_measurement
                     .enable_reddit_time_measurement;
-            let reddit_link = &CONFIG.links.reddit_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -321,7 +316,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_reddit,
                     enable_error_prints_for_reddit,
                     enable_reddit_time_measurement,
-                    &reddit_link,
+                    &CONFIG.links.reddit_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
@@ -363,7 +358,6 @@ pub async fn check_new_posts_threads_parts() {
                 && CONFIG
                     .enable_time_measurement
                     .enable_twitter_time_measurement;
-            let twitter_link = &CONFIG.links.twitter_link;
             let enable_error_prints_handle = CONFIG.params.enable_error_prints_handle;
             let warning_logs_directory_name_clone = warning_logs_directory_name.clone();
             let reddit_user_agent_clone = reddit_user_agent.clone();
@@ -385,7 +379,7 @@ pub async fn check_new_posts_threads_parts() {
                     enable_warning_prints_for_twitter,
                     enable_error_prints_for_twitter,
                     enable_twitter_time_measurement,
-                    &twitter_link,
+                    &CONFIG.links.twitter_link,
                     &PROVIDER_KIND,
                     enable_error_prints_handle,
                     warning_logs_directory_name_clone,
