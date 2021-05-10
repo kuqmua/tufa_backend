@@ -1,5 +1,4 @@
 use config::{Config, ConfigError, File};
-const CONFIG_FILE_PATH: &str = "./config/Development.toml";
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ConfigStruct {
     pub params: Params,
@@ -16,7 +15,7 @@ pub struct ConfigStruct {
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
         let mut s = Config::new();
-        s.merge(File::with_name(CONFIG_FILE_PATH))?;
+        s.merge(File::with_name("./config/Development.toml"))?;
         s.try_into()
     }
 }
