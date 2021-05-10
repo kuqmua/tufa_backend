@@ -1,3 +1,4 @@
+use config::{Config, ConfigError, File};
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Settings {
     pub params: Params,
@@ -103,51 +104,12 @@ pub struct Params {
     pub enable_common_time_measurement: bool,
 }
 
-const CONFIG_FILE_PATH: &str = "./config/Default.toml";
-const CONFIG_FILE_PREFIX: &str = "./config/";
-
-use std::fmt;
-
-use config::{Config, ConfigError, Environment, File};
-#[derive(Clone, Debug, serde_derive::Deserialize)]
-pub enum ENV {
-    Development,
-    Testing,
-    Production,
-}
-
-impl fmt::Display for ENV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            ENV::Development => write!(f, "Development"),
-            ENV::Testing => write!(f, "Testing"),
-            ENV::Production => write!(f, "Production"),
-        }
-    }
-}
-
-impl From<&str> for ENV {
-    fn from(env: &str) -> Self {
-        match env {
-            "Testing" => ENV::Testing,
-            "Production" => ENV::Production,
-            _ => ENV::Development,
-        }
-    }
-}
+const CONFIG_FILE_PATH: &str = "./config/Development.toml";
 
 impl Settings {
     pub fn new() -> Result<Self, ConfigError> {
-        let env = std::env::var("RUN_ENV").unwrap_or_else(|_| "Development".into());
         let mut s = Config::new();
-        s.set("env", env.clone())?;
-
         s.merge(File::with_name(CONFIG_FILE_PATH))?;
-        s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
-
-        // This makes it so "EA_SERVER__PORT overrides server.port
-        s.merge(Environment::with_prefix("ea").separator("__"))?;
-
         s.try_into()
     }
 }

@@ -68,6 +68,7 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
+mod settings;
 
 use entry::entry;
 
@@ -76,8 +77,6 @@ use entry::entry;
 
 #[macro_use]
 extern crate lazy_static;
-use std::convert::Infallible;
-mod settings;
 
 lazy_static! {
     static ref CONFIG: settings::Settings =
@@ -85,6 +84,10 @@ lazy_static! {
 }
 
 fn main() {
+    println!(
+        "Server started at localhost:{}",
+        CONFIG.enable_providers.enable_arxiv
+    );
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
