@@ -7,7 +7,7 @@ use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_na
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
-use crate::get_project_information::get_config::config_structures::Config;
+use crate::get_project_information::get_config::config_structures::ConfigStruct;
 
 use crate::fetch::rss_part::rss_part;
 
@@ -15,7 +15,7 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::overriding::prints::print_error_red;
 
-pub async fn check_new_posts_threads_parts(config: Config) {
+pub async fn check_new_posts_threads_parts(config: ConfigStruct) {
     let mut threads_vec = Vec::with_capacity(6);
     let warning_logs_directory_name = config.params.warning_logs_directory_name.clone();
     let reddit_user_agent = config.reddit_authorization.reddit_user_agent.clone();

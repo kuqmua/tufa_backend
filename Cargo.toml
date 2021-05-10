@@ -10,12 +10,12 @@ version = "0.1.0"
 #egg-mode = "0.15.0"//twitter
 futures = "0.3.5"
 futures-async-stream = "0.2.2"
-#google-youtube3 = "1.0.13+20200402" - не видит установленное openssl, под линуксом все норм
+#google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
 reqwest = {version = "0.11.0", features = ["json","blocking"]}
 roux = "0.4.0"
-log = "0.4"
-simplelog = "0.9"
+# log = "0.4"
+# simplelog = "0.9"
 serde = "1.0"
 serde-xml-rs = "0.4.0"
 serde_derive = "1.0"
@@ -35,80 +35,8 @@ num_cpus = "1.0"
 #google-youtube3-cli = "1.0.13+20200402" коммандная строка - не то но как вариант можно стырить кое че
 strum = { version = "0.20", features = ["derive"] }#for enum into string
 toml = "0.5"
-
-[params]
-enable_all_providers = true
-enable_all_providers_prints = true
-enable_warning_prints_for_all_providers = true
-enable_error_prints_for_all_providers = true
-enable_all_cleaning_warning_logs_directory = true
-enable_prints_handle = true
-enable_error_prints_handle = true
-warning_logs_directory_name = "warning_logs"
-# // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
-enable_all_time_measurement = true
-enable_common_time_measurement = true
-
-[enable_providers]
-enable_arxiv = true
-enable_biorxiv = true
-enable_habr = true
-enable_medrxiv = true
-enable_reddit = true
-enable_twitter = true
-
-[reddit_authorization]
-reddit_user_agent = "example"
-reddit_client_id = "example"
-reddit_client_secret = "example"
-reddit_username = "example"
-reddit_password = "example"
-
-[links]
-starting_check_link = "https://www.google.com/"
-arxiv_link = "https://www.google.com/" # https://arxiv.org/   http://export.arxiv.org/rss/   http://export.arxiv.org/rss/astro-ph.CO
-biorxiv_link = "https://www.google.com/" # http://connect.biorxiv.org/
-habr_link = "https://www.google.com/" # https://habr.com/ru/
-medrxiv_link = "https://www.google.com/" # http://connect.medrxiv.org/
-reddit_link = "https://www.reddit.com/"
-twitter_link = "https://www.google.com/" # must be not only 1 str but many - twitter and many nitters
-
-[enable_prints]
-enable_prints_arxiv = true
-enable_prints_biorxiv = true
-enable_prints_habr = true
-enable_prints_medrxiv = true
-enable_prints_reddit = true
-enable_prints_twitter = true
-
-[enable_warning_prints]
-enable_warning_prints_for_arxiv = true
-enable_warning_prints_for_biorxiv = true
-enable_warning_prints_for_habr = true
-enable_warning_prints_for_medrxiv = true
-enable_warning_prints_for_reddit = true
-enable_warning_prints_for_twitter = true
-
-[enable_error_prints]
-enable_error_prints_for_arxiv = true
-enable_error_prints_for_biorxiv = true
-enable_error_prints_for_habr = true
-enable_error_prints_for_medrxiv = true
-enable_error_prints_for_reddit = true
-enable_error_prints_for_twitter = true
-
-[enable_cleaning_warning_logs_directory]
-enable_cleaning_warning_logs_directory_for_arxiv = true
-enable_cleaning_warning_logs_directory_for_biorxiv = true
-enable_cleaning_warning_logs_directory_for_habr = true
-enable_cleaning_warning_logs_directory_for_medrxiv = true
-enable_cleaning_warning_logs_directory_for_reddit = true
-enable_cleaning_warning_logs_directory_for_twitter = true
-
-[enable_time_measurement]
-enable_arxiv_time_measurement = true
-enable_biorxiv_time_measurement = true
-enable_habr_time_measurement = true
-enable_medrxiv_time_measurement = true
-enable_reddit_time_measurement = true
-enable_twitter_time_measurement = true
+#tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
+# warp = "0.2"
+config = "0.10"
+lazy_static = "1.4"
+#tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/

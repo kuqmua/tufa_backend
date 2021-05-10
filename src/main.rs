@@ -74,6 +74,16 @@ use entry::entry;
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
 
+#[macro_use]
+extern crate lazy_static;
+use std::convert::Infallible;
+mod settings;
+
+lazy_static! {
+    static ref CONFIG: settings::Settings =
+        settings::Settings::new().expect("config can be loaded");
+}
+
 fn main() {
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
