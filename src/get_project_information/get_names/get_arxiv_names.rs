@@ -14,7 +14,7 @@ pub fn get_arxiv_names() -> HashMap<&'static str, &'static str> {
         // ("Disordered Systems and Neural Networks", "cond-mat.dis-nn"),
         // ("Mesoscale and Nanoscale Physics", "cond-mat.mes-hall"),
         // ("Materials Science", "cond-mat.mtrl-sci"),
-        // ("Other Condensed Matter", "cond-mat.other"), //НАДО ЛИ - УПАДЕТ ЖЕ
+        // ("Other Condensed Matter", "cond-mat.other"), //typicly empty
         // ("Quantum Gases", "cond-mat.quant-gas"),
         // ("Soft Condensed Matter", "cond-mat.soft"),
         // ("Statistical Mechanics", "cond-mat.stat-mech"),
