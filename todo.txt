@@ -139,3 +139,17 @@ Rc<RefCell<Data>>
 Rc::new(<RefCell::new(Data { value: 42}))
 ------------------
 db for provider links
+------------------
+let wrong_cases_thread = thread::spawn(move || {
+refetch logic
+-------------------
+block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
+                provider_kind,
+                enable_prints,
+                // enable_warning_prints: bool,
+                enable_error_prints,
+                enable_time_measurement,
+                some_error_posts,
+                warning_logs_directory_name,
+            ));
+move this code into upper tree positions - no need no waiting for writing files
