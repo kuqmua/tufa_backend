@@ -10,6 +10,7 @@ use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
 use futures::executor::block_on;
+use std::collections::HashMap;
 use std::fs;
 use std::mem;
 use std::path::Path;
@@ -39,7 +40,7 @@ pub fn handle_unfiltered_posts(
     enable_cleaning_logs_directory: bool,
     enable_time_measurement: bool,
     warning_logs_directory_name: &'static str,
-) -> bool {
+) -> Option<HashMap<String, CommonRssPostStruct>> {
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
         unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
@@ -56,27 +57,21 @@ pub fn handle_unfiltered_posts(
                     .to_string(),
             );
         }
-        false
+        None
     } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
         != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
     {
-        let warning_message = format!(
-            "some_error_posts.len {} of {}",
-            some_error_posts.len(),
-            unhandled_success_handled_success_are_there_items_yep_posts.len()
-        );
-        print_warning_orange(file!().to_string(), line!().to_string(), warning_message);
-        let wrong_cases_thread = thread::spawn(move || {
-            if enable_prints {
-                let message = format!(
+        if enable_prints {
+            let message = format!(
                                         "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
                                         unhandled_success_handled_success_are_there_items_yep_posts.len(),
                                         unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
                                         provider_kind,
                                         mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
                                     );
-                print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
-            }
+            print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
+        }
+        let wrong_cases_thread = thread::spawn(move || {
             if enable_cleaning_logs_directory {
                 let path = format!("logs/{}/{:?}", warning_logs_directory_name, provider_kind);
                 if Path::new(&path).is_dir() {
@@ -105,7 +100,6 @@ pub fn handle_unfiltered_posts(
             block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
                 provider_kind,
                 enable_prints,
-                // enable_warning_prints: bool,
                 enable_error_prints,
                 enable_time_measurement,
                 some_error_posts,
@@ -113,8 +107,7 @@ pub fn handle_unfiltered_posts(
             ));
         });
         wrong_cases_thread.join().unwrap();
-        //todo: cast to common post type
-        true
+        Some(unhandled_success_handled_success_are_there_items_yep_posts)
     } else {
         let message = format!(
             "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
@@ -126,7 +119,6 @@ pub fn handle_unfiltered_posts(
         if enable_prints {
             print_success_green(file!().to_string(), line!().to_string(), message);
         }
-        //todo: cast to common post type
-        true
+        Some(unhandled_success_handled_success_are_there_items_yep_posts)
     }
 }
