@@ -1,5 +1,6 @@
 use config::{Config, ConfigError, File};
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+use std::fmt;
+#[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
 pub struct ConfigStruct {
     pub params: Params,
     pub enable_providers: EnableProvidersStruct,
@@ -10,13 +11,20 @@ pub struct ConfigStruct {
     pub enable_error_prints: EnableErrorPrints,
     pub enable_cleaning_warning_logs_directory: EnableCleaningWarningLogsDirectory,
     pub enable_time_measurement: EnableTimeMeasurement,
+    pub env: Env,
 }
+const CONFIG_FILE_PATH: &str = "./config/Default.toml";
+const CONFIG_FILE_PREFIX: &str = "./config/";
 
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        let mut s = Config::new();
-        s.merge(File::with_name("./config/Development.toml"))?;
-        s.try_into()
+        // RUN_ENV=Testing cargo run
+        let env = std::env::var("RUN_ENV").unwrap_or_else(|_| "Development".into());
+        let mut config = Config::new();
+        config.set("env", env.clone())?;
+        config.merge(File::with_name(CONFIG_FILE_PATH))?;
+        config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
+        config.try_into()
     }
 }
 
@@ -110,4 +118,31 @@ pub struct Params {
     pub warning_logs_directory_name: String,
     pub enable_all_time_measurement: bool,
     pub enable_common_time_measurement: bool,
+}
+
+#[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
+pub enum Env {
+    Development,
+    Testing,
+    Production,
+}
+
+impl fmt::Display for Env {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Env::Development => write!(f, "Development"),
+            Env::Testing => write!(f, "Testing"),
+            Env::Production => write!(f, "Production"),
+        }
+    }
+}
+
+impl From<&str> for Env {
+    fn from(env: &str) -> Self {
+        match env {
+            "Testing" => Env::Testing,
+            "Production" => Env::Production,
+            _ => Env::Development,
+        }
+    }
 }

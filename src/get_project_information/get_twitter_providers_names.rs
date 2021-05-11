@@ -1,10 +1,10 @@
 pub fn get_twitter_providers_names() -> Vec<&'static str> {
     let twitter_providers_names: Vec<&str> = vec![
-        "nitter.42l.fr",
-        // "nitter.pussthecat.org",
+        // "nitter.42l.fr",
+        // "nitter.pussthecsat.org",
         // "nitter.nixnet.services",
         // "nitter.mastodont.cat",
-        // "nitter.tedomum.net",
+        "nitter.tedomum.net",
         // "nitter.fdn.fr",
         // "nitter.1d4.us",
         // "nitter.kavin.rocks", //not working i think
