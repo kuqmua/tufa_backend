@@ -153,3 +153,5 @@ block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
                 warning_logs_directory_name,
             ));
 move this code into upper tree positions - no need no waiting for writing files
+--------------------
+write logs into file in different service
