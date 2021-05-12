@@ -48,7 +48,7 @@ pub fn rss_part(
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
     warning_logs_directory_name: &'static str,
-) -> bool {
+) -> Option<HashMap<String, CommonRssPostStruct>> {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {
@@ -262,8 +262,7 @@ pub fn rss_part(
                     enable_cleaning_logs_directory,
                     enable_time_measurement,
                     warning_logs_directory_name,
-                );
-                true
+                )
             } else {
                 if enable_error_prints {
                     let error_message = format!(
@@ -272,14 +271,14 @@ pub fn rss_part(
                     );
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
-                false
+                None
             }
         } else {
             if enable_error_prints {
                 let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
                 print_error_red(file!().to_string(), line!().to_string(), error_message)
             }
-            false
+            None
         }
     } else {
         if enable_error_prints {
@@ -320,6 +319,6 @@ pub fn rss_part(
                 }
             }
         };
-        false
+        None
     }
 }

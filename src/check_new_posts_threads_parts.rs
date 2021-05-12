@@ -15,8 +15,15 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::overriding::prints::print_error_red;
 
+use std::collections::HashMap;
+
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+use std::sync::{Arc, Mutex};
+
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(6);
+    //: HashMap<String, CommonRssPostStruct>
+    let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_arxiv {
         let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
@@ -35,8 +42,9 @@ pub async fn check_new_posts_threads_parts() {
                     PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -54,6 +62,17 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }));
         }
     }
@@ -76,8 +95,9 @@ pub async fn check_new_posts_threads_parts() {
                     PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -99,6 +119,17 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }));
         }
     }
@@ -120,8 +151,9 @@ pub async fn check_new_posts_threads_parts() {
                     &PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -139,6 +171,17 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }));
         }
     }
@@ -161,8 +204,9 @@ pub async fn check_new_posts_threads_parts() {
                     PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -184,6 +228,17 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }));
         }
     }
@@ -206,8 +261,9 @@ pub async fn check_new_posts_threads_parts() {
                     PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -230,6 +286,17 @@ pub async fn check_new_posts_threads_parts() {
                         && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }))
         };
     }
@@ -252,8 +319,9 @@ pub async fn check_new_posts_threads_parts() {
                     PROVIDER_KIND
                 );
             };
+            let posts_handle = Arc::clone(&posts);
             threads_vec.push(thread::spawn(move || {
-                rss_part(
+                let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -275,10 +343,23 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
+                match option_posts {
+                    Some(posts) => {
+                        let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        for (key, value) in posts {
+                            posts_handle_locked.push(value);
+                        }
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
             }));
         }
     }
     for i in threads_vec {
         i.join().unwrap();
     }
+    let posts_done = posts.lock().unwrap().to_vec();
+    println!("posts_done_len{}", posts_done.len())
 }
