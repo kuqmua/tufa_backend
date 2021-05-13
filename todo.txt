@@ -155,3 +155,5 @@ block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
 move this code into upper tree positions - no need no waiting for writing files
 --------------------
 write logs into file in different service
+--------------------
+maybe cast struct into common rss with option type with fields for all providers
