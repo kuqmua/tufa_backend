@@ -85,42 +85,7 @@ pub fn handle_unfiltered_posts(
                                     );
             print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
         }
-        // let wrong_cases_thread = thread::spawn(move || {
-        //     if enable_cleaning_logs_directory {
-        //         let path = format!("logs/{}/{:?}", warning_logs_directory_name, provider_kind);
-        //         if Path::new(&path).is_dir() {
-        //             let result_of_recursively_removing_warning_logs_directory =
-        //                 fs::remove_dir_all(&path);
-        //             match result_of_recursively_removing_warning_logs_directory {
-        //                 Ok(_) => {
-        //                     if enable_prints {
-        //                         println!("folder {} has been deleted", &path);
-        //                     }
-        //                 }
-        //                 Err(e) => {
-        //                     if enable_error_prints {
-        //                         let error_message =
-        //                             format!("delete folder problem{} {}", &path, e.to_string());
-        //                         print_error_red(
-        //                             file!().to_string(),
-        //                             line!().to_string(),
-        //                             error_message,
-        //                         )
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
-        //         provider_kind,
-        //         enable_prints,
-        //         enable_error_prints,
-        //         enable_time_measurement,
-        //         some_error_posts,
-        //         warning_logs_directory_name,
-        //     ));
-        // });
-        // wrong_cases_thread.join().unwrap();
+
         Some((
             unhandled_success_handled_success_are_there_items_yep_posts,
             some_error_posts,

@@ -1,5 +1,7 @@
 use std::thread;
 
+use futures::executor::block_on;
+
 use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
 use crate::get_project_information::get_names::get_habr_names::get_habr_names;
@@ -20,10 +22,30 @@ use std::collections::HashMap;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use std::sync::{Arc, Mutex};
 
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+
+use std::fs;
+use std::path::Path;
+
+use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
+
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(6);
     //: HashMap<String, CommonRssPostStruct>
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
+    let error_posts = Arc::new(Mutex::new(Vec::<(
+        String,
+        (
+            CommonRssPostStruct,
+            String,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            ProviderKind,
+        ),
+    )>::new()));
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_arxiv {
         let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
@@ -43,6 +65,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -65,8 +88,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -96,6 +123,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -122,8 +150,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -152,6 +184,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -174,8 +207,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -205,6 +242,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -231,8 +269,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -262,6 +304,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -289,8 +332,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -320,6 +367,7 @@ pub async fn check_new_posts_threads_parts() {
                 );
             };
             let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
@@ -346,8 +394,12 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
                         for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
+                        }
+                        for (key, value) in posts.1 {
+                            error_posts_handle_locked.push((key, value));
                         }
                     }
                     None => {
@@ -361,5 +413,46 @@ pub async fn check_new_posts_threads_parts() {
         i.join().unwrap();
     }
     let posts_done = posts.lock().unwrap().to_vec();
-    println!("posts_done_len{}", posts_done.len())
+    let error_posts_done = error_posts.lock().unwrap().to_vec();
+
+    let wrong_cases_thread = thread::spawn(move || {
+        if true {
+            //enable_cleaning_logs_directory
+            let path = format!(
+                "logs/{}/{:?}",
+                &CONFIG.params.warning_logs_directory_name,
+                ProviderKind::Arxiv //todo
+            );
+            if Path::new(&path).is_dir() {
+                let result_of_recursively_removing_warning_logs_directory =
+                    fs::remove_dir_all(&path);
+                match result_of_recursively_removing_warning_logs_directory {
+                    Ok(_) => {
+                        if CONFIG.enable_prints.enable_prints_arxiv {
+                            //todo
+                            println!("folder {} has been deleted", &path);
+                        }
+                    }
+                    Err(e) => {
+                        if CONFIG.enable_error_prints.enable_error_prints_for_arxiv {
+                            let error_message =
+                                format!("delete folder problem{} {}", &path, e.to_string());
+                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                        }
+                    }
+                }
+            }
+        }
+        block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
+            &ProviderKind::Arxiv,                                     //todo
+            CONFIG.enable_prints.enable_prints_arxiv,                 //todo
+            CONFIG.enable_error_prints.enable_error_prints_for_arxiv, //todo
+            CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
+            error_posts_done,
+            &CONFIG.params.warning_logs_directory_name,
+        ));
+    });
+    wrong_cases_thread.join().unwrap();
+    println!("posts_done_len{}", posts_done.len());
+    // println!("error_posts_done_len{}", error_posts_done.len());
 }

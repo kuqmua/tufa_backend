@@ -15,7 +15,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     // enable_warning_prints: bool,
     enable_error_prints: bool,
     enable_time_measurement: bool,
-    some_error_posts: HashMap<
+    some_error_posts: Vec<(
         String,
         (
             CommonRssPostStruct,
@@ -25,7 +25,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             AreThereItems,
             ProviderKind,
         ),
-    >,
+    )>,
     warning_logs_directory_name: &str,
 ) {
     let time = Instant::now();
