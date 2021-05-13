@@ -48,7 +48,20 @@ pub fn rss_part(
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
     warning_logs_directory_name: &'static str,
-) -> Option<HashMap<String, CommonRssPostStruct>> {
+) -> Option<(
+    HashMap<String, CommonRssPostStruct>,
+    HashMap<
+        String,
+        (
+            CommonRssPostStruct,
+            String,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            ProviderKind,
+        ),
+    >,
+)> {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {

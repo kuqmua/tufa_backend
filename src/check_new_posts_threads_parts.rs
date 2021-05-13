@@ -65,7 +65,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -122,7 +122,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -174,7 +174,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -231,7 +231,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -289,7 +289,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -346,7 +346,7 @@ pub async fn check_new_posts_threads_parts() {
                 match option_posts {
                     Some(posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in posts {
+                        for (key, value) in posts.0 {
                             posts_handle_locked.push(value);
                         }
                     }
