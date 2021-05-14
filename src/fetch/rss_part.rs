@@ -48,20 +48,22 @@ pub fn rss_part(
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
     warning_logs_directory_name: &'static str,
-) -> Option<(
-    HashMap<String, CommonRssPostStruct>,
-    HashMap<
-        String,
-        (
-            CommonRssPostStruct,
+) -> (
+    Option<HashMap<String, CommonRssPostStruct>>,
+    Option<
+        HashMap<
             String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
+            (
+                CommonRssPostStruct,
+                String,
+                UnhandledFetchStatusInfo,
+                HandledFetchStatusInfo,
+                AreThereItems,
+                ProviderKind,
+            ),
+        >,
     >,
-)> {
+) {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {
@@ -280,14 +282,14 @@ pub fn rss_part(
                     );
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
-                None
+                (None, None)
             }
         } else {
             if enable_error_prints {
                 let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
                 print_error_red(file!().to_string(), line!().to_string(), error_message)
             }
-            None
+            (None, None)
         }
     } else {
         if enable_error_prints {
@@ -328,6 +330,6 @@ pub fn rss_part(
                 }
             }
         };
-        None
+        (None, None)
     }
 }

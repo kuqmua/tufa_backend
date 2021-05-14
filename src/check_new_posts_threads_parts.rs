@@ -67,7 +67,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -85,14 +85,21 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }
@@ -125,7 +132,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -147,14 +154,21 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }
@@ -186,7 +200,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -204,14 +218,21 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }
@@ -244,7 +265,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -266,14 +287,21 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }
@@ -306,7 +334,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -329,14 +357,21 @@ pub async fn check_new_posts_threads_parts() {
                         && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }
@@ -369,7 +404,7 @@ pub async fn check_new_posts_threads_parts() {
             let posts_handle = Arc::clone(&posts);
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
-                let option_posts = rss_part(
+                let enum_success_unsuccess_option_posts = rss_part(
                     CONFIG.params.enable_all_time_measurement
                         && CONFIG
                             .enable_cleaning_warning_logs_directory
@@ -391,14 +426,21 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match option_posts {
-                    Some(posts) => {
+                match enum_success_unsuccess_option_posts.0 {
+                    Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in posts.0 {
+                        for (key, value) in success_posts {
                             posts_handle_locked.push(value);
                         }
-                        for (key, value) in posts.1 {
+                    }
+                    None => {
+                        println!("None");
+                    }
+                }
+                match enum_success_unsuccess_option_posts.1 {
+                    Some(unsuccess_posts) => {
+                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                        for (key, value) in unsuccess_posts {
                             error_posts_handle_locked.push((key, value));
                         }
                     }

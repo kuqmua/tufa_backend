@@ -30,20 +30,22 @@ pub fn rss_handle_unfiltered_posts(
     provider_kind: &'static ProviderKind,
     enable_prints: bool,
     enable_warning_prints: bool,
-) -> Option<(
-    HashMap<String, CommonRssPostStruct>,
-    HashMap<
-        String,
-        (
-            CommonRssPostStruct,
+) -> (
+    Option<HashMap<String, CommonRssPostStruct>>,
+    Option<
+        HashMap<
             String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
+            (
+                CommonRssPostStruct,
+                String,
+                UnhandledFetchStatusInfo,
+                HandledFetchStatusInfo,
+                AreThereItems,
+                ProviderKind,
+            ),
+        >,
     >,
-)> {
+) {
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
         unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
@@ -60,8 +62,7 @@ pub fn rss_handle_unfiltered_posts(
                     .to_string(),
             );
         }
-        let empty_hashmap = HashMap::<String, CommonRssPostStruct>::new();
-        None
+        (None, Some(some_error_posts))
     } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
         != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
     {
@@ -75,11 +76,10 @@ pub fn rss_handle_unfiltered_posts(
                                     );
             print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
         }
-
-        Some((
-            unhandled_success_handled_success_are_there_items_yep_posts,
-            some_error_posts,
-        ))
+        (
+            Some(unhandled_success_handled_success_are_there_items_yep_posts),
+            Some(some_error_posts),
+        )
     } else {
         let message = format!(
             "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
@@ -91,9 +91,9 @@ pub fn rss_handle_unfiltered_posts(
         if enable_prints {
             print_success_green(file!().to_string(), line!().to_string(), message);
         }
-        Some((
-            unhandled_success_handled_success_are_there_items_yep_posts,
-            some_error_posts,
-        ))
+        (
+            Some(unhandled_success_handled_success_are_there_items_yep_posts),
+            None,
+        )
     }
 }
