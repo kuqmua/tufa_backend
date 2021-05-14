@@ -9,7 +9,7 @@ use crate::check_net::check_link::check_link;
 use crate::fetch::rss_check_available_providers::rss_check_available_providers;
 use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
-use crate::fetch::rss_handle_unfiltered_posts::handle_unfiltered_posts;
+use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
@@ -266,15 +266,11 @@ pub fn rss_part(
                 }
             }
             if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
-                handle_unfiltered_posts(
+                rss_handle_unfiltered_posts(
                     unfiltered_posts_hashmap_after_fetch_and_parse,
                     provider_kind,
                     enable_prints,
                     enable_warning_prints,
-                    enable_error_prints,
-                    enable_cleaning_logs_directory,
-                    enable_time_measurement,
-                    warning_logs_directory_name,
                 )
             } else {
                 if enable_error_prints {

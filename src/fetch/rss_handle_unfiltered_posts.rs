@@ -2,19 +2,13 @@ extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
 
-use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_parsed_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
-use futures::executor::block_on;
-use std::fs;
+use std::collections::HashMap;
 use std::mem;
-use std::path::Path;
-use std::thread;
-use std::{collections::HashMap, hash::Hash};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -22,7 +16,7 @@ use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 #[allow(clippy::clippy::too_many_arguments)]
-pub fn handle_unfiltered_posts(
+pub fn rss_handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
         String,
         (
@@ -36,10 +30,6 @@ pub fn handle_unfiltered_posts(
     provider_kind: &'static ProviderKind,
     enable_prints: bool,
     enable_warning_prints: bool,
-    enable_error_prints: bool,
-    enable_cleaning_logs_directory: bool,
-    enable_time_measurement: bool,
-    warning_logs_directory_name: &'static str,
 ) -> Option<(
     HashMap<String, CommonRssPostStruct>,
     HashMap<
