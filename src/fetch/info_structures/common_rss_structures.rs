@@ -19,7 +19,6 @@ pub struct CommonRssPost {
     pub description: Option<String>,
     pub creator: Option<String>,
     //meta
-    // pub key: String,
     pub provider_name: String,
     //meta
 
@@ -104,7 +103,6 @@ impl CommonRssPost {
         description: Option<String>,
         creator: Option<String>,
         //meta
-        // key: String,
         provider_name: String,
         //meta
 
@@ -188,7 +186,6 @@ impl CommonRssPost {
             description,
             creator,
             //meta
-            // key,
             provider_name,
             //meta
 

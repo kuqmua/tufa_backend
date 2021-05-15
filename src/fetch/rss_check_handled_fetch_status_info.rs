@@ -34,9 +34,7 @@ pub fn rss_check_handled_fetch_status_info(
             value3 = HandledFetchStatusInfo::Success;
             let (rxiv_post_struct_handle, are_there_items_handle) = rss_parse_string_into_struct(
                 fetch_result_string,
-                // key,
                 &value,
-                // enable_prints,
                 enable_error_prints,
                 provider_kind,
             );

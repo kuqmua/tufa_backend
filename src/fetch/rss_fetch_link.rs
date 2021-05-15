@@ -17,7 +17,6 @@ use std::time::Instant;
 // }
 pub fn rss_fetch_link(
     link: &str,
-    // key: &str,
     time: Instant,
     enable_error_prints: bool,
     enable_time_measurement: bool,
@@ -29,7 +28,6 @@ pub fn rss_fetch_link(
             time.elapsed().as_secs(),
             time.elapsed().as_millis() / 10,
             res.status(),
-            // key
         );
     }
     let mut result_tuple: (String, HandledFetchStatusInfo) =
@@ -40,11 +38,8 @@ pub fn rss_fetch_link(
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
             Err(e) => {
                 result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
-                let error_message = format!(
-                    "LINK: {} ResToTextError...(decided to not show)", //KEY: {}
-                    // key,
-                    link
-                );
+                let error_message =
+                    format!("LINK: {} ResToTextError...(decided to not show)", link);
                 if enable_error_prints {
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
@@ -52,7 +47,7 @@ pub fn rss_fetch_link(
         }
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
-        let error_message = format!("LINK: {} RES.STATUS: {}", link, res.status()); //KEY: {} //key,
+        let error_message = format!("LINK: {} RES.STATUS: {}", link, res.status());
         if enable_error_prints {
             print_error_red(file!().to_string(), line!().to_string(), error_message);
         }

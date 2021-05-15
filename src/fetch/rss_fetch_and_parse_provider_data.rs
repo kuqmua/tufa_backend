@@ -46,13 +46,8 @@ pub fn rss_fetch_and_parse_provider_data(
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
-            let fetch_result = rss_fetch_link(
-                &link,
-                // key,
-                time,
-                enable_error_prints,
-                enable_time_measurement,
-            );
+            let fetch_result =
+                rss_fetch_link(&link, time, enable_error_prints, enable_time_measurement);
             match fetch_result {
                 Ok(fetch_tuple_result) => {
                     let (value3, post_struct_wrapper_handle, are_there_items_wrapper_handle) =

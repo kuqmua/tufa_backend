@@ -7,7 +7,6 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_partial_success_cyan;
 use crate::overriding::prints::print_success_green;
 use crate::overriding::prints::print_warning_orange;
-use std::collections::HashMap;
 use std::mem;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;

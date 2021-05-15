@@ -1,9 +1,8 @@
 extern crate reqwest;
 extern crate serde;
 extern crate serde_xml_rs;
-use std::collections::HashMap;
 
-pub fn rss_divide_to_equal_for_each_provider<'a>(
+pub fn rss_divide_to_equal_for_each_provider(
     rss_available_providers_links: Vec<&str>,
     links_temp_naming: Vec<String>,
     links_len: usize,

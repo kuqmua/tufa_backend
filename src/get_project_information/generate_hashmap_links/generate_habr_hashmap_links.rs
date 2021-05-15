@@ -1,6 +1,5 @@
 pub fn generate_habr_hashmap_links(habr_names: Vec<&'static str>) -> Vec<String> {
     //example https://habr.com/ru/rss/all/all/?fl=ru?with_hubs=true:?with_tags=true:
-    let habr_key = "Habr";
     let habr_link = "https://habr.com/ru/rss/";
     let mut habr_links: Vec<String> = Vec::with_capacity(habr_names.len());
     for habr_name in habr_names {

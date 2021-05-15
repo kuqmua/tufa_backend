@@ -31,7 +31,6 @@ use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async
 
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(6);
-    //: HashMap<String, CommonRssPostStruct>
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     let error_posts = Arc::new(Mutex::new(Vec::<(
         CommonRssPostStruct,
