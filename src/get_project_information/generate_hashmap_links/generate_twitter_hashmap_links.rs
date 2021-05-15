@@ -43,5 +43,8 @@ pub fn generate_twitter_hashmap_links(
             twitter_sections_links.push(sub_link);
         }
     }
+    if twitter_sections_links.is_empty() {
+        panic!("twitter_sections_links is empty in generate_twitter_hashmap_links()!!!");
+    }
     twitter_sections_links //maybe change structure for memory effective reasons
 }

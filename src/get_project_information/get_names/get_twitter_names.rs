@@ -2266,5 +2266,9 @@ pub fn get_twitter_names() -> Vec<&'static str> {
         // "pabbeel",
     ]
     .to_vec();
+    println!("twitter_subs_names {:#?}", twitter_subs_names);
+    if twitter_subs_names.is_empty() {
+        panic!("twitter_subs_names is empty in get_twitter_names()!!!");
+    }
     twitter_subs_names
 }
