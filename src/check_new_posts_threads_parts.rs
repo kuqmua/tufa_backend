@@ -62,10 +62,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_arxiv,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_arxiv,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -77,7 +73,6 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.arxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -117,10 +112,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_biorxiv,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_biorxiv,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -136,7 +127,6 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.biorxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -175,10 +165,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_habr,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_habr,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -190,7 +176,6 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.habr_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -230,10 +215,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_medrxiv,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_medrxiv,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -249,7 +230,6 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.medrxiv_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -289,10 +269,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_reddit,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_reddit,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -309,7 +285,6 @@ pub async fn check_new_posts_threads_parts() {
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_for_all_providers
                         && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -349,10 +324,6 @@ pub async fn check_new_posts_threads_parts() {
             let error_posts_handle = Arc::clone(&error_posts);
             threads_vec.push(thread::spawn(move || {
                 let enum_success_unsuccess_option_posts = rss_part(
-                    CONFIG.params.enable_all_time_measurement
-                        && CONFIG
-                            .enable_cleaning_warning_logs_directory
-                            .enable_cleaning_warning_logs_directory_for_twitter,
                     CONFIG.params.enable_all_providers_prints
                         && CONFIG.enable_prints.enable_prints_twitter,
                     CONFIG.params.enable_warning_prints_for_all_providers
@@ -368,7 +339,6 @@ pub async fn check_new_posts_threads_parts() {
                     &CONFIG.links.twitter_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
-                    &CONFIG.params.warning_logs_directory_name,
                 );
                 if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
                     let mut posts_handle_locked = posts_handle.lock().unwrap();
@@ -392,12 +362,12 @@ pub async fn check_new_posts_threads_parts() {
     let error_posts_done = error_posts.lock().unwrap().to_vec();
 
     let wrong_cases_thread = thread::spawn(move || {
-        if true {
-            //enable_cleaning_logs_directory
+        //todo: async future writing in file (as paralell)
+        if CONFIG.params.enable_all_cleaning_warning_logs_directory {
             let path = format!(
                 "logs/{}/{:?}",
                 &CONFIG.params.warning_logs_directory_name,
-                ProviderKind::Arxiv //todo
+                ProviderKind::Arxiv, //todo
             );
             if Path::new(&path).is_dir() {
                 let result_of_recursively_removing_warning_logs_directory =

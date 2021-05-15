@@ -38,7 +38,7 @@ use crate::get_project_information::get_config::get_config_information::CONFIG;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
-    enable_cleaning_logs_directory: bool,
+    // enable_cleaning_logs_directory: bool,
     enable_prints: bool,
     enable_warning_prints: bool,
     enable_error_prints: bool,
@@ -46,7 +46,7 @@ pub fn rss_part(
     provider_link: &str,
     provider_kind: &'static ProviderKind,
     enable_error_prints_handle: bool,
-    warning_logs_directory_name: &'static str,
+    // warning_logs_directory_name: &'static str,
 ) -> (
     Option<Vec<CommonRssPostStruct>>,
     Option<
