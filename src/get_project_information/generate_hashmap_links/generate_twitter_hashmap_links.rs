@@ -5,12 +5,12 @@ pub fn generate_twitter_hashmap_links(
     twitter_subs_names: Vec<&'static str>,
 ) -> HashMap<&'static str, String> {
     //example https://nitter.pussthecat.org/Tom_McGurl/rss
-    if twitter_provider_names.is_empty() {
-        panic!("twitter_provider_names is empty!!!");
-    }
-    if twitter_subs_names.is_empty() {
-        panic!("twitter_subs_names is empty!");
-    }
+    // if twitter_provider_names.is_empty() {
+    //     panic!("twitter_provider_names is empty!!!");
+    // }
+    // if twitter_subs_names.is_empty() {
+    //     panic!("twitter_subs_names is empty!");
+    // }
     let twitter_subs_names_length = twitter_subs_names.len();
     let mut twitter_sections_links: HashMap<&str, String> =
         HashMap::with_capacity(twitter_subs_names_length);

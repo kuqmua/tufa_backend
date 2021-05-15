@@ -31,7 +31,7 @@ pub fn rss_handle_unfiltered_posts(
     enable_prints: bool,
     enable_warning_prints: bool,
 ) -> (
-    Option<HashMap<String, CommonRssPostStruct>>,
+    Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
             CommonRssPostStruct,

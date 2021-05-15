@@ -19,7 +19,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
     )>,
     provider_kind: &ProviderKind,
 ) -> (
-    HashMap<String, CommonRssPostStruct>,
+    Vec<CommonRssPostStruct>,
     Vec<(
         CommonRssPostStruct,
         String,
@@ -30,10 +30,8 @@ pub fn rss_filter_fetched_and_parsed_posts(
     )>,
 ) {
     let hashmap_length = unfiltered_posts_hashmap_after_fetch_and_parse.len();
-    let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
-        String,
-        CommonRssPostStruct,
-    > = HashMap::new();
+    let mut unhandled_success_handled_success_are_there_items_yep_posts: Vec<CommonRssPostStruct> =
+        Vec::new();
     let mut some_error_posts: Vec<(
         CommonRssPostStruct,
         String,
@@ -47,8 +45,8 @@ pub fn rss_filter_fetched_and_parsed_posts(
             UnhandledFetchStatusInfo::Success => match value.3 {
                 HandledFetchStatusInfo::Success => match value.4 {
                     AreThereItems::Yep => {
-                        unhandled_success_handled_success_are_there_items_yep_posts
-                            .insert(key, value.0);
+                        println!("key{}", key);
+                        unhandled_success_handled_success_are_there_items_yep_posts.push(value.0);
                     }
                     AreThereItems::Initialized => {
                         some_error_posts.push((

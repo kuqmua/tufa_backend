@@ -49,7 +49,7 @@ pub fn rss_part(
     enable_error_prints_handle: bool,
     warning_logs_directory_name: &'static str,
 ) -> (
-    Option<HashMap<String, CommonRssPostStruct>>,
+    Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
             CommonRssPostStruct,

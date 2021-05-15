@@ -85,7 +85,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -154,7 +154,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -218,7 +218,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -287,7 +287,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -357,7 +357,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
@@ -426,7 +426,7 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.0 {
                     Some(success_posts) => {
                         let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for (key, value) in success_posts {
+                        for value in success_posts {
                             posts_handle_locked.push(value);
                         }
                     }
