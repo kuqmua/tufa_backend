@@ -17,8 +17,6 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::overriding::prints::print_error_red;
 
-use std::collections::HashMap;
-
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use std::sync::{Arc, Mutex};
 
@@ -82,26 +80,16 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }));
@@ -151,26 +139,16 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }));
@@ -215,26 +193,16 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }));
@@ -284,26 +252,16 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }));
@@ -354,26 +312,16 @@ pub async fn check_new_posts_threads_parts() {
                         && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }))
@@ -423,26 +371,16 @@ pub async fn check_new_posts_threads_parts() {
                     CONFIG.params.enable_error_prints_handle,
                     &CONFIG.params.warning_logs_directory_name,
                 );
-                match enum_success_unsuccess_option_posts.0 {
-                    Some(success_posts) => {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
                     }
                 }
-                match enum_success_unsuccess_option_posts.1 {
-                    Some(unsuccess_posts) => {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                    None => {
-                        println!("None");
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
                     }
                 }
             }));
