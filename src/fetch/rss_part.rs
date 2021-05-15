@@ -51,17 +51,14 @@ pub fn rss_part(
 ) -> (
     Option<HashMap<String, CommonRssPostStruct>>,
     Option<
-        HashMap<
+        Vec<(
+            CommonRssPostStruct,
             String,
-            (
-                CommonRssPostStruct,
-                String,
-                UnhandledFetchStatusInfo,
-                HandledFetchStatusInfo,
-                AreThereItems,
-                ProviderKind,
-            ),
-        >,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            ProviderKind,
+        )>,
     >,
 ) {
     let mut availability_checker_flag: bool = false;

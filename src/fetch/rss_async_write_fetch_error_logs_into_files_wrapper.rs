@@ -6,7 +6,6 @@ use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use futures::future::join_all;
-use std::collections::HashMap;
 use std::time::Instant;
 
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
@@ -16,15 +15,12 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     some_error_posts: Vec<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+        ProviderKind,
     )>,
     warning_logs_directory_name: &str,
 ) {
@@ -32,10 +28,9 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
         "unhandled_success_handled_success_are_there_items_initialized_posts";
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
-    for (key, value) in some_error_posts {
+    for some_error_post in some_error_posts {
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
-            key,
-            value,
+            some_error_post,
             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
             provider_kind,
             enable_prints,

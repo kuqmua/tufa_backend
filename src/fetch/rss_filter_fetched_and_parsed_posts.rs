@@ -20,34 +20,28 @@ pub fn rss_filter_fetched_and_parsed_posts(
     provider_kind: &ProviderKind,
 ) -> (
     HashMap<String, CommonRssPostStruct>,
-    HashMap<
+    Vec<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
-    >,
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+        ProviderKind,
+    )>,
 ) {
     let hashmap_length = unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let mut unhandled_success_handled_success_are_there_items_yep_posts: HashMap<
         String,
         CommonRssPostStruct,
     > = HashMap::new();
-    let mut some_error_posts: HashMap<
+    let mut some_error_posts: Vec<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
-    > = HashMap::with_capacity(hashmap_length);
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+        ProviderKind,
+    )> = Vec::with_capacity(hashmap_length);
     for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
         match value.2 {
             UnhandledFetchStatusInfo::Success => match value.3 {
@@ -57,124 +51,97 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             .insert(key, value.0);
                     }
                     AreThereItems::Initialized => {
-                        some_error_posts.insert(
-                            key,
-                            (
-                                value.0,
-                                value.1,
-                                value.2,
-                                value.3,
-                                AreThereItems::Initialized,
-                                provider_kind.clone(),
-                            ),
-                        );
+                        some_error_posts.push((
+                            value.0,
+                            value.1,
+                            value.2,
+                            value.3,
+                            AreThereItems::Initialized,
+                            provider_kind.clone(),
+                        ));
                     }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                         //"</item>" tag
-                        some_error_posts.insert(
-                            key,
-                            (
-                                value.0,
-                                value.1,
-                                value.2,
-                                value.3,
-                                AreThereItems::NopeButThereIsTag(fetch_result_string),
-                                provider_kind.clone(),
-                            ),
-                        );
+                        some_error_posts.push((
+                            value.0,
+                            value.1,
+                            value.2,
+                            value.3,
+                            AreThereItems::NopeButThereIsTag(fetch_result_string),
+                            provider_kind.clone(),
+                        ));
                     }
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
-                        some_error_posts.insert(
-                            key,
-                            (
-                                value.0,
-                                value.1,
-                                value.2,
-                                value.3,
-                                AreThereItems::ConversionFromStrError(fetch_result_string, error),
-                                provider_kind.clone(),
-                            ),
-                        );
+                        some_error_posts.push((
+                            value.0,
+                            value.1,
+                            value.2,
+                            value.3,
+                            AreThereItems::ConversionFromStrError(fetch_result_string, error),
+                            provider_kind.clone(),
+                        ));
                     }
                     AreThereItems::NopeNoTag(fetch_result_string) => {
-                        some_error_posts.insert(
-                            key,
-                            (
-                                value.0,
-                                value.1,
-                                value.2,
-                                value.3,
-                                AreThereItems::NopeNoTag(fetch_result_string),
-                                provider_kind.clone(),
-                            ),
-                        );
+                        some_error_posts.push((
+                            value.0,
+                            value.1,
+                            value.2,
+                            value.3,
+                            AreThereItems::NopeNoTag(fetch_result_string),
+                            provider_kind.clone(),
+                        ));
                     }
                 },
                 HandledFetchStatusInfo::Initialized => {
-                    some_error_posts.insert(
-                        key,
-                        (
-                            value.0,
-                            value.1,
-                            value.2,
-                            HandledFetchStatusInfo::Initialized,
-                            value.4,
-                            provider_kind.clone(),
-                        ),
-                    );
+                    some_error_posts.push((
+                        value.0,
+                        value.1,
+                        value.2,
+                        HandledFetchStatusInfo::Initialized,
+                        value.4,
+                        provider_kind.clone(),
+                    ));
                 }
                 HandledFetchStatusInfo::ResToTextError(error) => {
-                    some_error_posts.insert(
-                        key,
-                        (
-                            value.0,
-                            value.1,
-                            value.2,
-                            HandledFetchStatusInfo::ResToTextError(error),
-                            value.4,
-                            provider_kind.clone(),
-                        ),
-                    );
+                    some_error_posts.push((
+                        value.0,
+                        value.1,
+                        value.2,
+                        HandledFetchStatusInfo::ResToTextError(error),
+                        value.4,
+                        provider_kind.clone(),
+                    ));
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
-                    some_error_posts.insert(
-                        key,
-                        (
-                            value.0,
-                            value.1,
-                            value.2,
-                            HandledFetchStatusInfo::ResStatusError(status_code),
-                            value.4,
-                            provider_kind.clone(),
-                        ),
-                    );
+                    some_error_posts.push((
+                        value.0,
+                        value.1,
+                        value.2,
+                        HandledFetchStatusInfo::ResStatusError(status_code),
+                        value.4,
+                        provider_kind.clone(),
+                    ));
                 }
             },
             UnhandledFetchStatusInfo::Initialized => {
-                some_error_posts.insert(
-                    key,
-                    (
-                        value.0,
-                        value.1,
-                        UnhandledFetchStatusInfo::Initialized,
-                        value.3,
-                        value.4,
-                        provider_kind.clone(),
-                    ),
-                );
+                some_error_posts.push((
+                    value.0,
+                    value.1,
+                    UnhandledFetchStatusInfo::Initialized,
+                    value.3,
+                    value.4,
+                    provider_kind.clone(),
+                ));
             }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
-                some_error_posts.insert(
-                    key,
-                    (
-                        value.0,
-                        value.1,
-                        UnhandledFetchStatusInfo::Failure(box_dyn_error),
-                        value.3,
-                        value.4,
-                        provider_kind.clone(),
-                    ),
-                );
+                some_error_posts.push((
+                    value.0,
+                    value.1,
+                    UnhandledFetchStatusInfo::Failure(box_dyn_error),
+                    value.3,
+                    value.4,
+                    provider_kind.clone(),
+                ));
             }
         }
     }

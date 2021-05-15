@@ -11,7 +11,6 @@ use std::time::Instant;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub async fn rss_async_write_fetch_error_logs_into_file(
-    key: String,
     value: (
         CommonRssPostStruct,
         String,
@@ -34,7 +33,6 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 AreThereItems::Yep => (),
                 AreThereItems::Initialized => {
                     let json_object = json!({
-                        "topic": key,
                         "link": value.1,
                         "part_of": format!("{:?}", provider_kind),
                         "date": Local::now().to_string()
@@ -45,14 +43,12 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
-                        key,
                         warning_logs_directory_name,
                     )
                 }
                 AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                     //"</item>" tag
                     let json_object = json!({
-                        "topic": key,
                         "link": value.1,
                         "fetch_result_string": fetch_result_string,
                         "part_of": format!("{:?}", provider_kind),
@@ -64,13 +60,11 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
-                        key,
                         warning_logs_directory_name,
                     )
                 }
                 AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
                     let json_object = json!({
-                        "topic": key,
                         "link": value.1,
                         "fetch_result_string": fetch_result_string,
                         "error": error,
@@ -83,13 +77,11 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
-                        key,
                         warning_logs_directory_name,
                     )
                 }
                 AreThereItems::NopeNoTag(fetch_result_string) => {
                     let json_object = json!({
-                        "topic": key,
                         "link": value.1,
                         "page_content": fetch_result_string,
                         "part_of": format!("{:?}", provider_kind),
@@ -101,14 +93,12 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         enable_prints,
                         enable_error_prints,
-                        key,
                         warning_logs_directory_name,
                     )
                 }
             },
             HandledFetchStatusInfo::Initialized => {
                 let json_object = json!({
-                    "topic": key,
                     "link": value.1,
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
@@ -119,13 +109,11 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     enable_prints,
                     enable_error_prints,
-                    key,
                     warning_logs_directory_name,
                 )
             }
             HandledFetchStatusInfo::ResToTextError(error) => {
                 let json_object = json!({
-                    "topic": key,
                     "link": value.1,
                     "error": error,
                     "part_of": format!("{:?}", provider_kind),
@@ -137,33 +125,29 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     enable_prints,
                     enable_error_prints,
-                    key,
                     warning_logs_directory_name,
                 )
             }
             HandledFetchStatusInfo::ResStatusError(status_code) => {
                 let json_object = json!({
-                    "topic": key,
                     "link": value.1,
                     "status_code": status_code.to_string(),
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 });
-                handle_error_status_code(status_code, &key, value.1);
+                handle_error_status_code(status_code, value.1);
                 rss_write_error_logs_into_file(
                     json_object,
                     &provider_kind,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     enable_prints,
                     enable_error_prints,
-                    key,
                     warning_logs_directory_name,
                 )
             }
         },
         UnhandledFetchStatusInfo::Initialized => {
             let json_object = json!({
-                "topic": key,
                 "link": value.1,
                 "part_of": format!("{:?}", provider_kind),
                 "date": Local::now().to_string()
@@ -174,13 +158,11 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                 enable_prints,
                 enable_error_prints,
-                key,
                 warning_logs_directory_name,
             )
         }
         UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
             let json_object = json!({
-                "topic": key,
                 "link": value.1,
                 "error": box_dyn_error,
                 "part_of": format!("{:?}", provider_kind),
@@ -192,7 +174,6 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                 enable_prints,
                 enable_error_prints,
-                key,
                 warning_logs_directory_name,
             )
         }

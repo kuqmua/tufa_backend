@@ -33,17 +33,14 @@ pub fn rss_handle_unfiltered_posts(
 ) -> (
     Option<HashMap<String, CommonRssPostStruct>>,
     Option<
-        HashMap<
+        Vec<(
+            CommonRssPostStruct,
             String,
-            (
-                CommonRssPostStruct,
-                String,
-                UnhandledFetchStatusInfo,
-                HandledFetchStatusInfo,
-                AreThereItems,
-                ProviderKind,
-            ),
-        >,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            ProviderKind,
+        )>,
     >,
 ) {
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =

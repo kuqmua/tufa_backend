@@ -36,15 +36,12 @@ pub async fn check_new_posts_threads_parts() {
     //: HashMap<String, CommonRssPostStruct>
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     let error_posts = Arc::new(Mutex::new(Vec::<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        ),
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+        ProviderKind,
     )>::new()));
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_arxiv {
         let arxiv_links = get_arxiv_names();
@@ -99,8 +96,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -168,8 +165,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -232,8 +229,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -301,8 +298,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -371,8 +368,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -440,8 +437,8 @@ pub async fn check_new_posts_threads_parts() {
                 match enum_success_unsuccess_option_posts.1 {
                     Some(unsuccess_posts) => {
                         let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for (key, value) in unsuccess_posts {
-                            error_posts_handle_locked.push((key, value));
+                        for unsuccess_post in unsuccess_posts {
+                            error_posts_handle_locked.push(unsuccess_post);
                         }
                     }
                     None => {
@@ -495,6 +492,6 @@ pub async fn check_new_posts_threads_parts() {
         ));
     });
     wrong_cases_thread.join().unwrap();
-    println!("posts_done_len{}", posts_done.len());
+    // println!("posts_done_len{:#?}", posts_done[0]);
     // println!("error_posts_done_len{}", error_posts_done.len());
 }

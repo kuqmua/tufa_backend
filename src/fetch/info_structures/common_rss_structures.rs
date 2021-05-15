@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,
 pub struct CommonRssPostStruct {
     #[serde(rename = "item", default)]
     pub items: Vec<CommonRssPost>,
@@ -12,13 +12,14 @@ impl CommonRssPostStruct {
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] //PartialEq,
 pub struct CommonRssPost {
     pub title: Option<String>,
     pub link: Option<String>,
     pub description: Option<String>,
     pub creator: Option<String>,
     //meta
+    pub key: String,
     pub provider_name: String,
     //meta
 
@@ -103,6 +104,7 @@ impl CommonRssPost {
         description: Option<String>,
         creator: Option<String>,
         //meta
+        key: String,
         provider_name: String,
         //meta
 
@@ -186,6 +188,7 @@ impl CommonRssPost {
             description,
             creator,
             //meta
+            key,
             provider_name,
             //meta
 
