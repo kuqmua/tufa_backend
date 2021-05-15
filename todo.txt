@@ -157,3 +157,10 @@ move this code into upper tree positions - no need no waiting for writing files
 write logs into file in different service
 --------------------
 maybe cast struct into common rss with option type with fields for all providers
+--------------------
+) -> (HandledFetchStatusInfo, CommonRssPostStruct, AreThereItems) {
+    change order
+--------------------
+twitter bug
+--------------------
+writing to file
