@@ -11,7 +11,6 @@ pub fn rss_check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,
     fetch_result_string: String,
     time: Instant,
-    key: &str,
     value: &str,
     enable_error_prints: bool,
     enable_time_measurement: bool,
@@ -35,7 +34,7 @@ pub fn rss_check_handled_fetch_status_info(
             value3 = HandledFetchStatusInfo::Success;
             let (rxiv_post_struct_handle, are_there_items_handle) = rss_parse_string_into_struct(
                 fetch_result_string,
-                key,
+                // key,
                 &value,
                 // enable_prints,
                 enable_error_prints,
@@ -45,12 +44,11 @@ pub fn rss_check_handled_fetch_status_info(
             are_there_items_wrapper_handle = are_there_items_handle;
             if enable_time_measurement {
                 println!(
-                    "parse in {}.{}ms abs, rel {}.{}ms for {}",
+                    "parse in {}.{}ms abs, rel {}.{}ms",
                     time.elapsed().as_secs(),
                     time.elapsed().as_millis(),
                     since_fetch.elapsed().as_secs(),
                     since_fetch.elapsed().as_millis(),
-                    key
                 );
             }
         }

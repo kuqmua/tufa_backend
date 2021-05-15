@@ -101,7 +101,7 @@ pub fn rss_part(
         if enable_prints {
             println!("i can reach {}", provider_link)
         };
-        let links_temp_naming: HashMap<&str, String>;
+        let links_temp_naming: Vec<String>;
         let twitter_available_providers_links: Vec<&str>;
         match provider_kind {
             ProviderKind::Arxiv => {
@@ -152,14 +152,11 @@ pub fn rss_part(
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
             let unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+                CommonRssPostStruct,
                 String,
-                (
-                    CommonRssPostStruct,
-                    String,
-                    UnhandledFetchStatusInfo,
-                    HandledFetchStatusInfo,
-                    AreThereItems,
-                ),
+                UnhandledFetchStatusInfo,
+                HandledFetchStatusInfo,
+                AreThereItems,
             )>;
             match provider_kind {
                 ProviderKind::Arxiv => {
@@ -211,8 +208,8 @@ pub fn rss_part(
                                 );
                             let mut locked_not_ready_processed_posts =
                                 not_ready_processed_posts_handle.lock().unwrap();
-                            for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
-                                locked_not_ready_processed_posts.push((key, value));
+                            for unfiltered_post in unfiltered_posts_hashmap_after_fetch_and_parse {
+                                locked_not_ready_processed_posts.push(unfiltered_post);
                             }
                         });
                         threads_vector.push(thread);

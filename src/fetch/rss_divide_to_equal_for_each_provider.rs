@@ -5,9 +5,9 @@ use std::collections::HashMap;
 
 pub fn rss_divide_to_equal_for_each_provider<'a>(
     rss_available_providers_links: Vec<&str>,
-    links_temp_naming: HashMap<&'static str, String>,
+    links_temp_naming: Vec<String>,
     links_len: usize,
-) -> Vec<HashMap<&'a str, String>> {
+) -> Vec<Vec<String>> {
     let rss_available_providers_links_len = rss_available_providers_links.len();
     let links_for_each_provider: usize;
     let is_links_len_more_than_rss_available_providers_links_len =
@@ -25,8 +25,8 @@ pub fn rss_divide_to_equal_for_each_provider<'a>(
         links_for_each_provider = links_len;
         vec_of_hashmap_parts_len = links_len;
     }
-    let mut vec_of_hashmap_parts: Vec<HashMap<&str, String>> =
-        vec![HashMap::with_capacity(links_for_each_provider); vec_of_hashmap_parts_len];
+    let mut vec_of_hashmap_parts: Vec<Vec<String>> =
+        vec![Vec::with_capacity(links_for_each_provider); vec_of_hashmap_parts_len];
     let mut vec_of_hashmap_parts_element_index_counter = 0;
     let mut even_vec_of_hashmap_parts_element_index_counter = 0;
     let mut even_flag = false;
@@ -41,32 +41,29 @@ pub fn rss_divide_to_equal_for_each_provider<'a>(
                     {
                         vec_of_hashmap_parts_element_index_counter += 1;
                         vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
-                            .insert(element.0, element.1);
+                            .push(element);
                     } else {
                         even_flag = true;
                         vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
-                            .insert(element.0, element.1);
+                            .push(element);
                         even_vec_of_hashmap_parts_element_index_counter += 1;
                     }
                 } else {
-                    vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter]
-                        .insert(element.0, element.1);
+                    vec_of_hashmap_parts[vec_of_hashmap_parts_element_index_counter].push(element);
                 }
             } else if (vec_of_hashmap_parts.len() - 1)
                 != even_vec_of_hashmap_parts_element_index_counter
             {
                 even_vec_of_hashmap_parts_element_index_counter += 1;
-                vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
-                    .insert(element.0, element.1);
+                vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter].push(element);
             } else {
-                vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter]
-                    .insert(element.0, element.1);
+                vec_of_hashmap_parts[even_vec_of_hashmap_parts_element_index_counter].push(element);
                 even_vec_of_hashmap_parts_element_index_counter = 0;
             }
         }
     } else {
         for (element_index, element) in links_temp_naming.into_iter().enumerate() {
-            vec_of_hashmap_parts[element_index].insert(element.0, element.1);
+            vec_of_hashmap_parts[element_index].push(element);
         }
     }
     vec_of_hashmap_parts

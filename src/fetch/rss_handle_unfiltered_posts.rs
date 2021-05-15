@@ -18,14 +18,11 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-        ),
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
     )>,
     provider_kind: &'static ProviderKind,
     enable_prints: bool,
@@ -47,7 +44,7 @@ pub fn rss_handle_unfiltered_posts(
         unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
         rss_filter_fetched_and_parsed_posts(
-            unfiltered_posts_hashmap_after_fetch_and_parse.to_vec(),
+            unfiltered_posts_hashmap_after_fetch_and_parse,
             provider_kind,
         );
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {

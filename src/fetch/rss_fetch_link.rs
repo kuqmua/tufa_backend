@@ -17,7 +17,7 @@ use std::time::Instant;
 // }
 pub fn rss_fetch_link(
     link: &str,
-    key: &str,
+    // key: &str,
     time: Instant,
     enable_error_prints: bool,
     enable_time_measurement: bool,
@@ -25,11 +25,11 @@ pub fn rss_fetch_link(
     let res = reqwest::blocking::get(link)?;
     if enable_time_measurement {
         println!(
-            "fetch in {}.{}ms... status {} for {}",
+            "fetch in {}.{}ms... status {}", // for {}
             time.elapsed().as_secs(),
             time.elapsed().as_millis() / 10,
             res.status(),
-            key
+            // key
         );
     }
     let mut result_tuple: (String, HandledFetchStatusInfo) =
@@ -41,8 +41,9 @@ pub fn rss_fetch_link(
             Err(e) => {
                 result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
                 let error_message = format!(
-                    "KEY: {} LINK: {} ResToTextError...(decided to not show)",
-                    key, link
+                    "LINK: {} ResToTextError...(decided to not show)", //KEY: {}
+                    // key,
+                    link
                 );
                 if enable_error_prints {
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
@@ -51,7 +52,7 @@ pub fn rss_fetch_link(
         }
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
-        let error_message = format!("KEY: {} LINK: {} RES.STATUS: {}", key, link, res.status());
+        let error_message = format!("LINK: {} RES.STATUS: {}", link, res.status()); //KEY: {} //key,
         if enable_error_prints {
             print_error_red(file!().to_string(), line!().to_string(), error_message);
         }

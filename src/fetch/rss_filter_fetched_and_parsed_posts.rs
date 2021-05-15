@@ -8,14 +8,11 @@ use std::collections::HashMap;
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
 pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+        CommonRssPostStruct,
         String,
-        (
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-        ),
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
     )>,
     provider_kind: &ProviderKind,
 ) -> (
@@ -40,12 +37,11 @@ pub fn rss_filter_fetched_and_parsed_posts(
         AreThereItems,
         ProviderKind,
     )> = Vec::with_capacity(hashmap_length);
-    for (key, value) in unfiltered_posts_hashmap_after_fetch_and_parse {
+    for value in unfiltered_posts_hashmap_after_fetch_and_parse {
         match value.2 {
             UnhandledFetchStatusInfo::Success => match value.3 {
                 HandledFetchStatusInfo::Success => match value.4 {
                     AreThereItems::Yep => {
-                        println!("key{}", key);
                         unhandled_success_handled_success_are_there_items_yep_posts.push(value.0);
                     }
                     AreThereItems::Initialized => {

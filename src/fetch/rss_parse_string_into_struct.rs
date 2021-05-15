@@ -18,7 +18,7 @@ use strum::EnumMessage;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
-    key: &str,
+    // key: &str,
     value: &str,
     enable_error_prints: bool,
     provider_kind: ProviderKind,
@@ -45,7 +45,7 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.url.clone(),
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
-                                    key.to_string(),
+                                    // key.to_string(),
                                     provider_kind.get_message().unwrap().to_string(),
                                     //biorxiv specific
                                     None,
@@ -133,10 +133,7 @@ pub fn rss_parse_string_into_struct(
                 }
                 Err(e) => {
                     if enable_error_prints {
-                        let error_message = "Rss conversion from str for ".to_string()
-                            + key
-                            + "error: "
-                            + &e.to_string();
+                        let error_message = format!("Rss conversion from str error: {}", &e);
                         print_error_red(file!().to_string(), line!().to_string(), error_message)
                     };
                     are_there_items_handle =
@@ -159,10 +156,8 @@ pub fn rss_parse_string_into_struct(
                                             .to_string();
                                     }
                                     _ => {
-                                        let warning_message: String = format!(
-                                            "no </channel> in response for key: {} link: {}",
-                                            key, value
-                                        );
+                                        let warning_message: String =
+                                            format!("no </channel> in response link: {}", value);
                                         print_warning_yellow(
                                             file!().to_string(),
                                             line!().to_string(),
@@ -172,10 +167,8 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             _ => {
-                                let warning_message: String = format!(
-                                    "no <channel> in response for key: {} link: {}",
-                                    key, value
-                                );
+                                let warning_message: String =
+                                    format!("no <channel> in response link: {}", value);
                                 print_warning_yellow(
                                     file!().to_string(),
                                     line!().to_string(),
@@ -267,7 +260,7 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                key.to_string(),
+                                                // key.to_string(),
                                                 provider_kind.get_message().unwrap().to_string(),
                                                 //biorxiv specific
                                                 None,
@@ -352,10 +345,8 @@ pub fn rss_parse_string_into_struct(
                             }
                             Err(e) => {
                                 if enable_error_prints {
-                                    let error_message = "Rss conversion from str for ".to_string()
-                                        + key
-                                        + "error: "
-                                        + &e.to_string();
+                                    let error_message =
+                                        format!("Rss conversion from str error: {}", &e);
                                     print_error_red(
                                         file!().to_string(),
                                         line!().to_string(),
@@ -387,7 +378,6 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                key.to_string(),
                                                 provider_kind.get_message().unwrap().to_string(),
                                                 //biorxiv specific
                                                 rss_struct.items[count].date.clone(),
@@ -472,10 +462,8 @@ pub fn rss_parse_string_into_struct(
                             }
                             Err(e) => {
                                 if enable_error_prints {
-                                    let error_message = "Rss conversion from str for ".to_string()
-                                        + key
-                                        + "error: "
-                                        + &e.to_string();
+                                    let error_message =
+                                        format!("Rss conversion from str error: {}", &e);
                                     print_error_red(
                                         file!().to_string(),
                                         line!().to_string(),
@@ -507,7 +495,6 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                key.to_string(),
                                                 provider_kind.get_message().unwrap().to_string(),
                                                 //biorxiv specific
                                                 None,
@@ -592,10 +579,8 @@ pub fn rss_parse_string_into_struct(
                             }
                             Err(e) => {
                                 if enable_error_prints {
-                                    let error_message = "Rss conversion from str for ".to_string()
-                                        + key
-                                        + "error: "
-                                        + &e.to_string();
+                                    let error_message =
+                                        format!("Rss conversion from str error: {}", &e);
                                     print_error_red(
                                         file!().to_string(),
                                         line!().to_string(),
@@ -627,7 +612,6 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                key.to_string(),
                                                 provider_kind.get_message().unwrap().to_string(),
                                                 //biorxiv specific
                                                 None,
@@ -712,10 +696,8 @@ pub fn rss_parse_string_into_struct(
                             }
                             Err(e) => {
                                 if enable_error_prints {
-                                    let error_message = "Rss conversion from str for ".to_string()
-                                        + key
-                                        + "error: "
-                                        + &e.to_string();
+                                    let error_message =
+                                        format!("Rss conversion from str error: {}", &e);
                                     print_error_red(
                                         file!().to_string(),
                                         line!().to_string(),
@@ -747,7 +729,6 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                key.to_string(),
                                                 provider_kind.get_message().unwrap().to_string(),
                                                 //biorxiv specific
                                                 None,
@@ -832,10 +813,8 @@ pub fn rss_parse_string_into_struct(
                             }
                             Err(e) => {
                                 if enable_error_prints {
-                                    let error_message = "Rss conversion from str for ".to_string()
-                                        + key
-                                        + "error: "
-                                        + &e.to_string();
+                                    let error_message =
+                                        format!("Rss conversion from str error: {}", &e);
                                     print_error_red(
                                         file!().to_string(),
                                         line!().to_string(),
@@ -858,11 +837,9 @@ pub fn rss_parse_string_into_struct(
                 }
                 _ => {
                     if enable_error_prints {
-                        let warning_message: String = "wrong link or there is no items for key: "
-                            .to_string()
-                            + key
-                            + " link: "
-                            + value; //разделить логику при помощи нахождения паттерна архива урла
+                        //разделить логику при помощи нахождения паттерна архива урла
+                        let warning_message =
+                            format!("wrong link or there is no items link: {}", value);
                         print_warning_yellow(
                             file!().to_string(),
                             line!().to_string(),
