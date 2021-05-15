@@ -1,4 +1,5 @@
-#[derive(Default, Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,
+use crate::fetch::rss_provider_kind_enum::ProviderKind;
+#[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,//Default,
 pub struct CommonRssPostStruct {
     #[serde(rename = "item", default)]
     pub items: Vec<CommonRssPost>,
@@ -12,14 +13,14 @@ impl CommonRssPostStruct {
     }
 }
 
-#[derive(Default, Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] //PartialEq,
+#[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] //PartialEq,//Default,
 pub struct CommonRssPost {
     pub title: Option<String>,
     pub link: Option<String>,
     pub description: Option<String>,
     pub creator: Option<String>,
     //meta
-    pub provider_name: String,
+    pub provider_kind: ProviderKind,
     //meta
 
     //arxiv specific
@@ -103,7 +104,7 @@ impl CommonRssPost {
         description: Option<String>,
         creator: Option<String>,
         //meta
-        provider_name: String,
+        provider_kind: ProviderKind,
         //meta
 
         //arxiv specific
@@ -186,7 +187,7 @@ impl CommonRssPost {
             description,
             creator,
             //meta
-            provider_name,
+            provider_kind,
             //meta
 
             //arxiv specific

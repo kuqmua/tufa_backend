@@ -44,7 +44,8 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.url.clone(),
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
-                                    provider_kind.get_message().unwrap().to_string(),
+                                    // provider_kind.get_message().unwrap().to_string(),
+                                    provider_kind.clone(),
                                     //biorxiv specific
                                     None,
                                     None,
@@ -258,7 +259,8 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                provider_kind.get_message().unwrap().to_string(),
+                                                // provider_kind.get_message().unwrap().to_string(),
+                                                provider_kind.clone(),
                                                 //biorxiv specific
                                                 None,
                                                 None,
@@ -375,7 +377,8 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                provider_kind.get_message().unwrap().to_string(),
+                                                // provider_kind.get_message().unwrap().to_string(),
+                                                provider_kind.clone(),
                                                 //biorxiv specific
                                                 rss_struct.items[count].date.clone(),
                                                 rss_struct.items[count].identifier.clone(),
@@ -492,7 +495,8 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                provider_kind.get_message().unwrap().to_string(),
+                                                // provider_kind.get_message().unwrap().to_string(),
+                                                provider_kind.clone(),
                                                 //biorxiv specific
                                                 None,
                                                 None,
@@ -609,7 +613,8 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                provider_kind.get_message().unwrap().to_string(),
+                                                // provider_kind.get_message().unwrap().to_string(),
+                                                provider_kind.clone(),
                                                 //biorxiv specific
                                                 None,
                                                 None,
@@ -726,7 +731,8 @@ pub fn rss_parse_string_into_struct(
                                                 rss_struct.items[count].link.clone(),
                                                 rss_struct.items[count].description.clone(),
                                                 rss_struct.items[count].creator.clone(),
-                                                provider_kind.get_message().unwrap().to_string(),
+                                                // provider_kind.get_message().unwrap().to_string(),
+                                                provider_kind.clone(),
                                                 //biorxiv specific
                                                 None,
                                                 None,

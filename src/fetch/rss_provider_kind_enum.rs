@@ -1,5 +1,5 @@
 use strum::EnumMessage;
-#[derive(Clone, Debug, EnumMessage)]
+#[derive(Clone, Debug, EnumMessage, serde_derive::Serialize, serde_derive::Deserialize)]
 pub enum ProviderKind {
     #[strum(message = "arxiv")]
     Arxiv,
