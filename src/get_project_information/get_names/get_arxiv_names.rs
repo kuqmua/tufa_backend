@@ -1,157 +1,150 @@
-use std::collections::HashMap;
-pub fn get_arxiv_names() -> HashMap<&'static str, &'static str> {
-    let arxiv_names: HashMap<&str, &str> = [
-        ("Cosmology and Nongalactic Astrophysics", "astro-ph.CO"),
-        // ("Earth and Planetary Astrophysics", "astro-ph.EP"),
-        // ("Astrophysics of Galaxies", "astro-ph.GA"),
-        // ("High Energy Astrophysical Phenomena", "astro-ph.HE"),
-        // (
-        //     "Instrumentation and Methods for Astrophysics",
-        //     "astro-ph.IM",
-        // ),
-        // ("Solar and Stellar Astrophysics", "astro-ph.SR"),
-        // //Condensed Matter
-        // ("Disordered Systems and Neural Networks", "cond-mat.dis-nn"),
-        // ("Mesoscale and Nanoscale Physics", "cond-mat.mes-hall"),
-        // ("Materials Science", "cond-mat.mtrl-sci"),
-        // ("Other Condensed Matter", "cond-mat.other"), //typicly empty
-        // ("Quantum Gases", "cond-mat.quant-gas"),
-        // ("Soft Condensed Matter", "cond-mat.soft"),
-        // ("Statistical Mechanics", "cond-mat.stat-mech"),
-        // ("Strongly Correlated Electrons", "cond-mat.str-el"),
-        // ("Superconductivity", "cond-mat.supr-con"),
-        // //Computer Science
-        // ("Artificial Intelligence", "cs.AI"),
-        // ("Hardware Architecture", "cs.AR"),
-        // ("Computational Complexity", "cs.CC"),
-        // ("Computational Engineering, Finance, and Science", "cs.CE"),
-        // ("Computational Geometry", "cs.CG"),
-        // ("Computation and Language", "cs.CL"),
-        // ("Cryptography and Security", "cs.CR"),
-        // ("Computer Vision and Pattern Recognition", "cs.CV"),
-        // ("Computers and Society", "cs.CY"),
-        // ("Databases", "cs.DB"),
-        // ("Distributed, Parallel, and Cluster Computing", "cs.DC"),
-        // ("Digital Libraries", "cs.DL"),
-        // ("Discrete Mathematics", "cs.DM"),
-        // ("Data Structures and Algorithms", "cs.DS"),
-        // ("Emerging Technologies", "cs.ET"),
-        // ("Formal Languages and Automata Theory", "cs.FL"),
-        // ("General Literature", "cs.GL"),
-        // ("Graphics", "cs.GR"),
-        // ("Computer Science and Game Theory", "cs.GT"),
-        // ("Human-Computer Interaction", "cs.HC"),
-        // ("Information Retrieval", "cs.IR"),
-        // ("Information Theory", "cs.IT"),
-        // ("Machine Learning", "cs.LG"),
-        // ("Logic in Computer Science", "cs.LO"),
-        // ("Multiagent Systems", "cs.MA"),
-        // ("Multimedia", "cs.MM"),
-        // ("Mathematical Software", "cs.MS"),
-        // ("Numerical Analysis", "cs.NA"),
-        // ("Neural and Evolutionary Computing", "cs.NE"),
-        // ("Networking and Internet Architecture", "cs.NI"),
-        // ("Other Computer Science", "cs.OH"),
-        // ("Operating Systems", "cs.OS"),
-        // ("Performance", "cs.PF"),
-        // ("Programming Languages", "cs.PL"),
-        // ("Robotics", "cs.RO"),
-        // ("Sound", "cs.SC"),
-        // ("Sound", "cs.SD"),
-        // ("Software Engineering", "cs.SE"),
-        // ("Social and Information Networks", "cs.SI"),
-        // ("Systems and Control", "cs.SY"),
-        // //Electrical Engineering and Systems Science
-        // ("Audio and Speech Processing", "eess.AS"),
-        // ("Image and Video Processing", "eess.IV"),
-        // ("Signal Processing", "eess.SP"),
-        // ("Systems and Control", "eess.SY"),
-        // //Mathematics
-        // ("Commutative Algebra", "math.AC"),
-        // ("Algebraic Geometry", "math.AG"),
-        // ("Analysis of PDEs", "math.AP"),
-        // ("Algebraic Topology", "math.AT"),
-        // ("Classical Analysis and ODEs", "math.CA"),
-        // ("Combinatorics", "math.CO"),
-        // ("Category Theory", "math.CT"),
-        // ("Complex Variables", "math.CV"),
-        // ("Differential Geometry", "math.DG"),
-        // ("Dynamical Systems", "math.DS"),
-        // ("Functional Analysis", "math.FA"),
-        // ("General Mathematics", "math.GM"),
-        // ("General Topology", "math.GN"),
-        // ("Group Theory", "math.GR"),
-        // ("Geometric Topology", "math.GT"),
-        // ("History and Overview", "math.HO"),
-        // ("Information Theory", "math.IT"),
-        // ("K-Theory and Homology", "math.KT"),
-        // ("Logic", "math.LO"),
-        // ("Metric Geometry", "math.MG"),
-        // ("Mathematical Physics", "math.MP"),
-        // ("Numerical Analysis", "math.NA"),
-        // ("Number Theory", "math.NT"),
-        // ("Operator Algebras", "math.OA"),
-        // ("Optimization and Control", "math.OC"),
-        // ("Probability", "math.PR"),
-        // ("Quantum Algebra", "math.QA"),
-        // ("Rings and Algebras", "math.RA"),
-        // ("Representation Theory", "math.RT"),
-        // ("Symplectic Geometry", "math.SG"),
-        // ("Spectral Theory", "math.SP"),
-        // ("Statistics Theory", "math.ST"),
-        // //Nonlinear Sciences
-        // ("Adaptation and Self-Organizing System", "nlin.AO"),
-        // ("Chaotic Dynamics", "nlin.CD"),
-        // ("Cellular Automata and Lattice Gases", "nlin.CG"),
-        // ("Pattern Formation and Solitons", "nlin.PS"),
-        // ("Exactly Solvable and Integrable Systems", "nlin.SI"),
-        // //physics
-        // ("Accelerator Physics", "physics.acc-ph"),
-        // ("Atmospheric and Oceanic Physics", "physics.ao-ph"),
-        // ("Applied Physics", "physics.app-ph"),
-        // ("Atomic and Molecular Clusters", "physics.atm-clus"),
-        // ("Atomic Physics", "physics.atom-ph"),
-        // ("Biological Physics", "physics.bio-ph"),
-        // ("Chemical Physics", "physics.chem-ph"),
-        // ("Classical Physics", "physics.class-ph"),
-        // ("Computational Physics", "physics.comp-ph"),
-        // (
-        //     "Data Analysis, Statistics and Probability",
-        //     "physics.data-an",
-        // ),
-        // ("Physics Education", "physics.ed-ph"),
-        // ("Fluid Dynamics", "physics.flu-dyn"),
-        // ("General Physics", "physics.gen-ph"),
-        // ("Geophysics", "physics.geo-ph"),
-        // ("History and Philosophy of Physics", "physics.hist-ph"),
-        // ("Instrumentation and Detectors", "physics.ins-det"),
-        // ("Medical Physics", "physics.med-ph"),
-        // ("Optics", "physics.optics"),
-        // ("Plasma Physics", "physics.plasm-ph"),
-        // ("Popular Physics", "physics.pop-ph"),
-        // ("Physics and Society", "physics.soc-ph"),
-        // ("Space Physics", "physics.space-ph"),
-        // //Quantitative Biology
-        // ("Biomolecules", "q-bio.BM"),
-        // ("Cell Behavior", "q-bio.CB"),
-        // ("Genomics", "q-bio.GN"),
-        // ("Molecular Networks", "q-bio.MN"),
-        // ("Neurons and Cognition", "q-bio.NC"),
-        // ("Other Quantitative Biology", "q-bio.OT"),
-        // ("Populations and Evolution", "q-bio.PE"),
-        // ("Quantitative Methods", "q-bio.QM"),
-        // ("Subcellular Processes", "q-bio.SC"),
-        // ("Tissues and Organ", "q-bio.TO"),
-        // //Statistics
-        // ("General Relativity and Quantum Cosmology", "gr-qc"),
-        // ("High Energy Physics - Experiment", "hep-ex"),
-        // ("High Energy Physics - Lattice", "hep-lat"),
-        // ("High Energy Physics - Phenomenolog", "hep-ph"),
-        // ("High Energy Physics - Theory", "hep-th"),
-        // ("Quantum Physics", "quant-ph"),
-        // ("Nuclear Experiment", "nucl-ex"),
-        // ("Nuclear Theory", "nucl-th"),
-        // ("Mathematical Physic", "math-ph"),
+pub fn get_arxiv_names() -> Vec<&'static str> {
+    let arxiv_names: Vec<&str> = [
+        "astro-ph.CO", //Cosmology and Nongalactic Astrophysics
+        "astro-ph.EP", //Earth and Planetary Astrophysics
+        "astro-ph.GA", //Astrophysics of Galaxies
+        "astro-ph.HE", //High Energy Astrophysical Phenomena
+        "astro-ph.IM", //Instrumentation and Methods for Astrophysics
+        "astro-ph.SR", //Solar and Stellar Astrophysics
+        //Condensed Matter
+        "cond-mat.dis-nn",    //Disordered Systems and Neural Networks
+        "cond-mat.mes-hall",  //Mesoscale and Nanoscale Physics
+        "cond-mat.mtrl-sci",  //Materials Science
+        "cond-mat.other",     //Other Condensed Matter//typicly empty
+        "cond-mat.quant-gas", //Quantum Gases
+        "cond-mat.soft",      //Soft Condensed Matter
+        "cond-mat.stat-mech", //Statistical Mechanics
+        "cond-mat.str-el",    //Strongly Correlated Electrons
+        "cond-mat.supr-con",  //Superconductivity
+        //Computer Science
+        "cs.AI", //Artificial Intelligence
+        "cs.AR", //Hardware Architecture
+        "cs.CC", //Computational Complexity
+        "cs.CE", //Computational Engineering, Finance, and Science
+        "cs.CG", //Computational Geometry
+        "cs.CL", //Computation and Language
+        "cs.CR", //Cryptography and Security
+        "cs.CV", //Computer Vision and Pattern Recognition
+        "cs.CY", //Computers and Society
+        "cs.DB", //Databases
+        "cs.DC", //Distributed, Parallel, and Cluster Computing
+        "cs.DL", //Digital Libraries
+        "cs.DM", //Discrete Mathematics
+        "cs.DS", //Data Structures and Algorithms
+        "cs.ET", //Emerging Technologies
+        "cs.FL", //Formal Languages and Automata Theory
+        "cs.GL", //General Literature
+        "cs.GR", //Graphics
+        "cs.GT", //Computer Science and Game Theory
+        "cs.HC", //Human-Computer Interaction
+        "cs.IR", //Information Retrieval
+        "cs.IT", //Information Theory
+        "cs.LG", // Machine Learning
+        "cs.LO", //Logic in Computer Science
+        "cs.MA", //Multiagent Systems
+        "cs.MM", //Multimedia
+        "cs.MS", //Mathematical Software
+        "cs.NA", //Numerical Analysis
+        "cs.NE", //Neural and Evolutionary Computing
+        "cs.NI", //Networking and Internet Architecture
+        "cs.OH", //Other Computer Science
+        "cs.OS", //Operating Systems
+        "cs.PF", //Performance
+        "cs.PL", //Programming Languages
+        "cs.RO", //Robotics
+        "cs.SC", //Sound
+        "cs.SD", //Sound
+        "cs.SE", //Software Engineering
+        "cs.SI", //Social and Information Networks
+        "cs.SY", //Systems and Control
+        //Electrical Engineering and Systems Science
+        "eess.AS", //Audio and Speech Processing
+        "eess.IV", //Image and Video Processing
+        "eess.SP", //Signal Processing
+        "eess.SY", //Systems and Control
+        //Mathematics
+        "math.AC", //Commutative Algebra
+        "math.AG", //Algebraic Geometry
+        "math.AP", //Analysis of PDEs
+        "math.AT", //Algebraic Topology
+        "math.CA", //Classical Analysis and ODEs
+        "math.CO", //Combinatorics
+        "math.CT", //Category Theory
+        "math.CV", //Complex Variables
+        "math.DG", //Differential Geometry
+        "math.DS", //Dynamical Systems
+        "math.FA", //Functional Analysis
+        "math.GM", //General Mathematics
+        "math.GN", //General Topology
+        "math.GR", //Group Theory
+        "math.GT", //Geometric Topology
+        "math.HO", //History and Overview
+        "math.IT", //Information Theory
+        "math.KT", //K-Theory and Homology
+        "math.LO", //Logic
+        "math.MG", //Metric Geometry
+        "math.MP", //Mathematical Physics
+        "math.NA", //Numerical Analysis
+        "math.NT", //Number Theory
+        "math.OA", //Operator Algebras
+        "math.OC", //Optimization and Control
+        "math.PR", //Probability
+        "math.QA", //Quantum Algebra
+        "math.RA", //Rings and Algebras
+        "math.RT", //Representation Theory
+        "math.SG", //Symplectic Geometry
+        "math.SP", //Spectral Theory
+        "math.ST", //Statistics Theory
+        //Nonlinear Sciences
+        "nlin.AO", //Adaptation and Self-Organizing System
+        "nlin.CD", //Chaotic Dynamics
+        "nlin.CG", //Cellular Automata and Lattice Gases
+        "nlin.PS", //Pattern Formation and Solitons
+        "nlin.SI", //Exactly Solvable and Integrable Systems
+        //physics
+        "physics.acc-ph",   //Accelerator Physics
+        "physics.ao-ph",    //Atmospheric and Oceanic Physics
+        "physics.app-ph",   //Applied Physics
+        "physics.atm-clus", //Atomic and Molecular Clusters
+        "physics.atom-ph",  //Atomic Physics
+        "physics.bio-ph",   //Biological Physics
+        "physics.chem-ph",  //Chemical Physics
+        "physics.class-ph", //Classical Physics
+        "physics.comp-ph",  //Computational Physics
+        "physics.data-an",  //Data Analysis, Statistics and Probability
+        "physics.ed-ph",    //Physics Education
+        "physics.flu-dyn",  //Fluid Dynamics
+        "physics.gen-ph",   //General Physics
+        "physics.geo-ph",   //Geophysics
+        "physics.hist-ph",  //History and Philosophy of Physics
+        "physics.ins-det",  //Instrumentation and Detectors
+        "physics.med-ph",   //Medical Physics
+        "physics.optics",   //Optics
+        "physics.plasm-ph", //Plasma Physics
+        "physics.pop-ph",   //Popular Physics
+        "physics.soc-ph",   //Physics and Society
+        "physics.space-ph", //Space Physics
+        //Quantitative Biology
+        "q-bio.BM", //Biomolecules
+        "q-bio.CB", //Cell Behavior
+        "q-bio.GN", //Genomics
+        "q-bio.MN", //Molecular Networks
+        "q-bio.NC", //Neurons and Cognition
+        "q-bio.OT", //Other Quantitative Biology
+        "q-bio.PE", //Populations and Evolution
+        "q-bio.QM", //Quantitative Methods
+        "q-bio.SC", //Subcellular Processes
+        "q-bio.TO", //Tissues and Organ
+        //Statistics
+        "gr-qc",    //General Relativity and Quantum Cosmology
+        "hep-ex",   //High Energy Physics - Experiment
+        "hep-lat",  //High Energy Physics - Lattice
+        "hep-ph",   //High Energy Physics - Phenomenolog
+        "hep-th",   //High Energy Physics - Theory
+        "quant-ph", //Quantum Physics
+        "nucl-ex",  //Nuclear Experiment
+        "nucl-th",  //Nuclear Theory
+        "math-ph",  //Mathematical Physic
     ]
     .iter()
     .cloned()
