@@ -51,7 +51,6 @@ pub fn rss_part(
     Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
-            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,
@@ -240,7 +239,7 @@ pub fn rss_part(
                                 provider_kind,
                             );
                     } else {
-                        unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                        unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
                         if enable_error_prints {
                             print_error_red(
                                 file!().to_string(),

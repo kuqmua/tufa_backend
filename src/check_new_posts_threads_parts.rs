@@ -35,7 +35,6 @@ pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(6);
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     let error_posts = Arc::new(Mutex::new(Vec::<(
-        CommonRssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,

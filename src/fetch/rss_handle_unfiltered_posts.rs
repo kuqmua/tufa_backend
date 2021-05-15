@@ -30,7 +30,6 @@ pub fn rss_handle_unfiltered_posts(
     Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
-            CommonRssPostStruct,
             String,
             UnhandledFetchStatusInfo,
             HandledFetchStatusInfo,

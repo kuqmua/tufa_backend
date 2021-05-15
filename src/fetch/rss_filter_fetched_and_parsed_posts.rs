@@ -17,7 +17,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
 ) -> (
     Vec<CommonRssPostStruct>,
     Vec<(
-        CommonRssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -29,7 +28,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
     let mut unhandled_success_handled_success_are_there_items_yep_posts: Vec<CommonRssPostStruct> =
         Vec::new();
     let mut some_error_posts: Vec<(
-        CommonRssPostStruct,
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -45,7 +43,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     }
                     AreThereItems::Initialized => {
                         some_error_posts.push((
-                            value.0,
                             value.1,
                             value.2,
                             value.3,
@@ -56,7 +53,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                         //"</item>" tag
                         some_error_posts.push((
-                            value.0,
                             value.1,
                             value.2,
                             value.3,
@@ -66,7 +62,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     }
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
                         some_error_posts.push((
-                            value.0,
                             value.1,
                             value.2,
                             value.3,
@@ -76,7 +71,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     }
                     AreThereItems::NopeNoTag(fetch_result_string) => {
                         some_error_posts.push((
-                            value.0,
                             value.1,
                             value.2,
                             value.3,
@@ -87,7 +81,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                 },
                 HandledFetchStatusInfo::Initialized => {
                     some_error_posts.push((
-                        value.0,
                         value.1,
                         value.2,
                         HandledFetchStatusInfo::Initialized,
@@ -97,7 +90,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                 }
                 HandledFetchStatusInfo::ResToTextError(error) => {
                     some_error_posts.push((
-                        value.0,
                         value.1,
                         value.2,
                         HandledFetchStatusInfo::ResToTextError(error),
@@ -107,7 +99,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
                     some_error_posts.push((
-                        value.0,
                         value.1,
                         value.2,
                         HandledFetchStatusInfo::ResStatusError(status_code),
@@ -118,7 +109,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
             },
             UnhandledFetchStatusInfo::Initialized => {
                 some_error_posts.push((
-                    value.0,
                     value.1,
                     UnhandledFetchStatusInfo::Initialized,
                     value.3,
@@ -128,7 +118,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
             }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
                 some_error_posts.push((
-                    value.0,
                     value.1,
                     UnhandledFetchStatusInfo::Failure(box_dyn_error),
                     value.3,
