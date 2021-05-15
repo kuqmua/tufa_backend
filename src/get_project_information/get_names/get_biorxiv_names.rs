@@ -28,8 +28,6 @@ pub fn get_biorxiv_names() -> Vec<&'static str> {
         "systems_biology",
         "zoology",
     ]
-    .iter()
-    .cloned()
-    .collect();
+    .to_vec();
     biorxiv_names
 }
