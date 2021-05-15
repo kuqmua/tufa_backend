@@ -5,6 +5,5 @@ pub fn generate_arxiv_hashmap_links(arxiv_names: Vec<&'static str>) -> Vec<Strin
     for value in arxiv_names {
         arxiv_links.push(format!("{}{}", first_part_of_link, value));
     }
-    println!("arxiv_links{:#?}", arxiv_links);
     arxiv_links
 }
