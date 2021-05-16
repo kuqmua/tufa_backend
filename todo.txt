@@ -162,5 +162,3 @@ maybe cast struct into common rss with option type with fields for all providers
     change order
 --------------------
 twitter bug
---------------------
-writing to file
