@@ -1,6 +1,6 @@
 use reqwest::StatusCode;
 
-pub fn handle_error_status_code(error_status_code: StatusCode, link: String) -> bool {
+pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bool {
     // println!(" handle_error_status_code {}", error_status_code)
     if error_status_code == reqwest::StatusCode::CONTINUE {
         println!("status 100(Continue) link: {}", link);

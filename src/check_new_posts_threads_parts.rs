@@ -9,8 +9,6 @@ use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_na
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
 use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
-use crate::get_project_information::get_config::get_config_information::CONFIG;
-
 use crate::fetch::rss_part::rss_part;
 
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
@@ -26,10 +24,9 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use std::fs;
-use std::path::Path;
-
 use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
+
+use crate::get_project_information::get_config::get_config_information::CONFIG;
 
 pub async fn check_new_posts_threads_parts() {
     let mut threads_vec = Vec::with_capacity(6);
@@ -363,44 +360,15 @@ pub async fn check_new_posts_threads_parts() {
     let posts_done = posts.lock().unwrap().to_vec();
     let error_posts_done = error_posts.lock().unwrap().to_vec();
 
-    // let wrong_cases_thread = thread::spawn(move || {
-    //     //todo: async future writing in file (as paralell)
-    //     if CONFIG.params.enable_all_cleaning_warning_logs_directory {
-    //         let path = format!(
-    //             "logs/{}/{:?}",
-    //             &CONFIG.params.warning_logs_directory_name,
-    //             ProviderKind::Arxiv, //todo
-    //         );
-    //         if Path::new(&path).is_dir() {
-    //             let result_of_recursively_removing_warning_logs_directory =
-    //                 fs::remove_dir_all(&path);
-    //             match result_of_recursively_removing_warning_logs_directory {
-    //                 Ok(_) => {
-    //                     if CONFIG.enable_prints.enable_prints_arxiv {
-    //                         //todo
-    //                         println!("folder {} has been deleted", &path);
-    //                     }
-    //                 }
-    //                 Err(e) => {
-    //                     if CONFIG.enable_error_prints.enable_error_prints_for_arxiv {
-    //                         let error_message =
-    //                             format!("delete folder problem{} {}", &path, e.to_string());
-    //                         print_error_red(file!().to_string(), line!().to_string(), error_message)
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
-    //         &ProviderKind::Arxiv,                                     //todo
-    //         CONFIG.enable_prints.enable_prints_arxiv,                 //todo
-    //         CONFIG.enable_error_prints.enable_error_prints_for_arxiv, //todo
-    //         CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
-    //         error_posts_done,
-    //         &CONFIG.params.warning_logs_directory_name,
-    //     ));
-    // });
-    // wrong_cases_thread.join().unwrap();
+    let wrong_cases_thread = thread::spawn(move || {
+        println!("error_posts_done_len{:#?}", error_posts_done);
+
+        block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
+            CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
+            error_posts_done,
+            &CONFIG.params.warning_logs_directory_name,
+        ));
+    });
+    wrong_cases_thread.join().unwrap();
     // println!("posts_done_len{:#?}", posts_done[0]);
-    println!("error_posts_done_len{:#?}", error_posts_done);
 }

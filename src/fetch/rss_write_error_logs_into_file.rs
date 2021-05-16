@@ -12,6 +12,7 @@ pub fn rss_write_error_logs_into_file(
     enable_prints: bool,
     enable_error_prints: bool,
     warning_logs_directory_name: &str,
+    link: &str,
 ) {
     rss_logs_create_dir_if_dont_exists(
         dir,
@@ -20,9 +21,10 @@ pub fn rss_write_error_logs_into_file(
         enable_error_prints,
         &warning_logs_directory_name,
     );
+    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let file_name = format!(
-        "logs/{}/{:?}/{}/{:?}.json",
-        &warning_logs_directory_name, provider_kind, dir, provider_kind,
+        "logs/{}/{:?}/{}/{:?}-{}.json",
+        &warning_logs_directory_name, provider_kind, dir, provider_kind, replaced_link
     ); //add save function what convert string into save path
 
     let result_of_creating_file = File::create(&file_name);
