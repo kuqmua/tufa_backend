@@ -1,7 +1,5 @@
 use std::thread;
 
-use futures::executor::block_on;
-
 use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
 use crate::get_project_information::get_names::get_habr_names::get_habr_names;
@@ -24,11 +22,18 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
-
 use crate::get_project_information::get_config::get_config_information::CONFIG;
 
-pub async fn check_new_posts_threads_parts() {
+pub async fn check_new_posts_threads_parts() -> (
+    Vec<CommonRssPostStruct>,
+    Vec<(
+        String,
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+        ProviderKind,
+    )>,
+) {
     let mut threads_vec = Vec::with_capacity(6);
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     let error_posts = Arc::new(Mutex::new(Vec::<(
@@ -359,16 +364,5 @@ pub async fn check_new_posts_threads_parts() {
     }
     let posts_done = posts.lock().unwrap().to_vec();
     let error_posts_done = error_posts.lock().unwrap().to_vec();
-
-    let wrong_cases_thread = thread::spawn(move || {
-        println!("error_posts_done_len{:#?}", error_posts_done);
-
-        block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
-            CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
-            error_posts_done,
-            &CONFIG.params.warning_logs_directory_name,
-        ));
-    });
-    wrong_cases_thread.join().unwrap();
-    // println!("posts_done_len{:#?}", posts_done[0]);
+    (posts_done, error_posts_done)
 }

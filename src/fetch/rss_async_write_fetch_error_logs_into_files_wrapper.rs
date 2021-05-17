@@ -6,8 +6,9 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
+use crate::get_project_information::get_config::get_config_information::CONFIG;
+
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
-    enable_time_measurement: bool,
     some_error_posts: Vec<(
         String,
         UnhandledFetchStatusInfo,
@@ -15,23 +16,58 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         AreThereItems,
         ProviderKind,
     )>,
-    warning_logs_directory_name: &str,
 ) {
     let time = Instant::now();
+
     let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
-        "unhandled_success_handled_success_are_there_items_initialized_posts";
+        "unhandled_success_handled_success_are_there_items_initialized_posts"; //move to config
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
     for some_error_post in some_error_posts {
+        let enable_time_measurement: bool;
+        match some_error_post.4 {
+            ProviderKind::Arxiv => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG.enable_time_measurement.enable_arxiv_time_measurement
+            }
+            ProviderKind::Biorxiv => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG
+                        .enable_time_measurement
+                        .enable_biorxiv_time_measurement
+            }
+            ProviderKind::Habr => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG.enable_time_measurement.enable_habr_time_measurement
+            }
+            ProviderKind::Medrxiv => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG
+                        .enable_time_measurement
+                        .enable_medrxiv_time_measurement
+            }
+            ProviderKind::Reddit => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG
+                        .enable_time_measurement
+                        .enable_reddit_time_measurement
+            }
+            ProviderKind::Twitter => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG
+                        .enable_time_measurement
+                        .enable_twitter_time_measurement
+            }
+        }
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
             some_error_post,
             unhandled_success_handled_success_are_there_items_initialized_posts_dir,
             enable_time_measurement,
             time,
-            warning_logs_directory_name,
+            &CONFIG.params.warning_logs_directory_name,
         ));
     }
     let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
-    if enable_time_measurement {
+    if CONFIG.params.enable_all_time_measurement {
         println!(
             "write fetch error logs into files done in {} seconds {} miliseconds",
             time.elapsed().as_secs(),
