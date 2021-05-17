@@ -15,7 +15,7 @@ pub fn rss_check_handled_fetch_status_info(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_kind: ProviderKind,
-) -> (HandledFetchStatusInfo, CommonRssPostStruct, AreThereItems) {
+) -> (CommonRssPostStruct, HandledFetchStatusInfo, AreThereItems) {
     //todo: change order
     let value3: HandledFetchStatusInfo;
     let mut rxiv_post_struct_wrapper_handle: CommonRssPostStruct = CommonRssPostStruct::new();
@@ -57,8 +57,8 @@ pub fn rss_check_handled_fetch_status_info(
     //     rxiv_post_struct_wrapper_handle
     // );
     (
-        value3,
         rxiv_post_struct_wrapper_handle,
+        value3,
         are_there_items_wrapper_handle,
     )
 }

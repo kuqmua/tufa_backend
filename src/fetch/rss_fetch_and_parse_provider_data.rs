@@ -50,7 +50,7 @@ pub fn rss_fetch_and_parse_provider_data(
                 rss_fetch_link(&link, time, enable_error_prints, enable_time_measurement);
             match fetch_result {
                 Ok(fetch_tuple_result) => {
-                    let (value3, post_struct_wrapper_handle, are_there_items_wrapper_handle) =
+                    let (post_struct_wrapper_handle, value3, are_there_items_wrapper_handle) =
                         rss_check_handled_fetch_status_info(
                             fetch_tuple_result.1,
                             fetch_tuple_result.0,
