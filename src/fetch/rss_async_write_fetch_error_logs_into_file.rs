@@ -28,68 +28,53 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
     warning_logs_directory_name: &str,
 ) {
     let should_enable_prints: bool;
-    match value.4 {
-        ProviderKind::Arxiv => should_enable_prints = CONFIG.enable_prints.enable_prints_arxiv,
-        ProviderKind::Biorxiv => should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv,
-        ProviderKind::Habr => should_enable_prints = CONFIG.enable_prints.enable_prints_habr,
-        ProviderKind::Medrxiv => should_enable_prints = CONFIG.enable_prints.enable_prints_medrxiv,
-        ProviderKind::Reddit => should_enable_prints = CONFIG.enable_prints.enable_prints_reddit,
-        ProviderKind::Twitter => should_enable_prints = CONFIG.enable_prints.enable_prints_twitter,
-    }
     let should_enable_error_prints: bool;
-    match value.4 {
-        ProviderKind::Arxiv => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_arxiv
-        }
-        ProviderKind::Biorxiv => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv
-        }
-        ProviderKind::Habr => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr
-        }
-        ProviderKind::Medrxiv => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_medrxiv
-        }
-        ProviderKind::Reddit => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_reddit
-        }
-        ProviderKind::Twitter => {
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_twitter
-        }
-    }
     let should_enable_cleaning_warning_logs_directory: bool;
     match value.4 {
         ProviderKind::Arxiv => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_arxiv;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_arxiv;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_arxiv
+                .enable_cleaning_warning_logs_directory_for_arxiv;
         }
         ProviderKind::Biorxiv => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_biorxiv
+                .enable_cleaning_warning_logs_directory_for_biorxiv;
         }
         ProviderKind::Habr => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_habr;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_habr
+                .enable_cleaning_warning_logs_directory_for_habr;
         }
         ProviderKind::Medrxiv => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_medrxiv;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_medrxiv;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_medrxiv
+                .enable_cleaning_warning_logs_directory_for_medrxiv;
         }
         ProviderKind::Reddit => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_reddit;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_reddit;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_reddit
+                .enable_cleaning_warning_logs_directory_for_reddit;
         }
         ProviderKind::Twitter => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_twitter;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_twitter;
             should_enable_cleaning_warning_logs_directory = CONFIG
                 .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_twitter
+                .enable_cleaning_warning_logs_directory_for_twitter;
         }
     }
+
     if CONFIG.params.enable_all_cleaning_warning_logs_directory
         && should_enable_cleaning_warning_logs_directory
     {
