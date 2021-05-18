@@ -162,3 +162,5 @@ twitter bug
 --------------------
 let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
         "unhandled_success_handled_success_are_there_items_initialized_posts"; //move to config
+        ----------------------------
+        create big xml/json file to test parsing speed
