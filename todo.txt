@@ -161,3 +161,5 @@ maybe cast struct into common rss with option type with fields for all providers
 twitter bug
 ----------------------------
 create big xml/json file to test parsing speed
+----------------------------
+add write logs into dir if provider doesnt respond to request 
