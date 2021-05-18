@@ -18,9 +18,6 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     )>,
 ) {
     let time = Instant::now();
-
-    let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
-        "unhandled_success_handled_success_are_there_items_initialized_posts"; //move to config
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
     for some_error_post in some_error_posts {
         let enable_time_measurement: bool;
@@ -60,7 +57,9 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         }
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
             some_error_post,
-            unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+            &CONFIG
+                .params
+                .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
             enable_time_measurement,
             time,
             &CONFIG.params.warning_logs_directory_name,

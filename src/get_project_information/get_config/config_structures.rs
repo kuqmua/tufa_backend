@@ -108,6 +108,8 @@ pub struct EnableTimeMeasurement {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Params {
+    pub warning_logs_directory_name: String,
+    pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
     pub enable_all_providers: bool,
     pub enable_all_providers_prints: bool,
     pub enable_warning_prints_for_all_providers: bool,
@@ -115,7 +117,6 @@ pub struct Params {
     pub enable_all_cleaning_warning_logs_directory: bool,
     pub enable_prints_handle: bool,
     pub enable_error_prints_handle: bool,
-    pub warning_logs_directory_name: String,
     pub enable_all_time_measurement: bool,
     pub enable_common_time_measurement: bool,
 }

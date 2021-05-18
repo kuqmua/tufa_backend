@@ -159,8 +159,5 @@ write logs into file in different service
 maybe cast struct into common rss with option type with fields for all providers//bad idea
 --------------------
 twitter bug
---------------------
-let unhandled_success_handled_success_are_there_items_initialized_posts_dir =
-        "unhandled_success_handled_success_are_there_items_initialized_posts"; //move to config
-        ----------------------------
-        create big xml/json file to test parsing speed
+----------------------------
+create big xml/json file to test parsing speed
