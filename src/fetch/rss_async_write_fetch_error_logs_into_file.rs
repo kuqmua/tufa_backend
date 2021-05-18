@@ -7,11 +7,7 @@ use crate::fetch::rss_write_error_logs_into_file::rss_write_error_logs_into_file
 use crate::get_project_information::get_config::get_config_information::CONFIG;
 use chrono::Local;
 use serde_json::json;
-use std::fs;
-use std::path::Path;
 use std::time::Instant;
-
-use crate::overriding::prints::print_error_red;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub async fn rss_async_write_fetch_error_logs_into_file(
@@ -29,75 +25,30 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
 ) {
     let should_enable_prints: bool;
     let should_enable_error_prints: bool;
-    let should_enable_cleaning_warning_logs_directory: bool;
     match value.4 {
         ProviderKind::Arxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_arxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_arxiv;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_arxiv;
         }
         ProviderKind::Biorxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_biorxiv;
         }
         ProviderKind::Habr => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_habr;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_habr;
         }
         ProviderKind::Medrxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_medrxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_medrxiv;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_medrxiv;
         }
         ProviderKind::Reddit => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_reddit;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_reddit;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_reddit;
         }
         ProviderKind::Twitter => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_twitter;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_twitter;
-            should_enable_cleaning_warning_logs_directory = CONFIG
-                .enable_cleaning_warning_logs_directory
-                .enable_cleaning_warning_logs_directory_for_twitter;
-        }
-    }
-
-    if CONFIG.params.enable_all_cleaning_warning_logs_directory
-        && should_enable_cleaning_warning_logs_directory
-    {
-        let path = format!(
-            "logs/{}/{:?}",
-            &CONFIG.params.warning_logs_directory_name, value.4
-        );
-        if Path::new(&path).is_dir() {
-            let result_of_recursively_removing_warning_logs_directory = fs::remove_dir_all(&path);
-            match result_of_recursively_removing_warning_logs_directory {
-                Ok(_) => {
-                    if should_enable_prints {
-                        println!("folder {} has been deleted", &path);
-                    }
-                }
-                Err(e) => {
-                    if should_enable_error_prints {
-                        let error_message =
-                            format!("delete folder problem{} {}", &path, e.to_string());
-                        print_error_red(file!().to_string(), line!().to_string(), error_message)
-                    }
-                }
-            }
         }
     }
     match value.1 {

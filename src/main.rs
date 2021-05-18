@@ -4,6 +4,7 @@ mod fetch {
     pub mod rss_check_available_providers;
     pub mod rss_check_handled_fetch_status_info;
     pub mod rss_check_provider_status;
+    pub mod rss_clean_logs_directory;
     pub mod rss_divide_to_equal_for_each_provider;
     pub mod rss_fetch_and_parse_provider_data;
     pub mod rss_fetch_link;
