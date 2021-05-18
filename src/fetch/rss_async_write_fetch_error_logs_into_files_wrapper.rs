@@ -1,5 +1,5 @@
 use crate::fetch::rss_async_write_fetch_error_logs_into_file::rss_async_write_fetch_error_logs_into_file;
-use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
+use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wrapper;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -20,7 +20,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
 ) {
     let time = Instant::now();
     if CONFIG.params.enable_all_cleaning_warning_logs_directory {
-        rss_clean_logs_directory()
+        rss_clean_logs_directory_wrapper()
     }
 
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
