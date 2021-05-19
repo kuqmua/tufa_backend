@@ -5,7 +5,7 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use std::{fs::File, io::Write};
 
-pub fn rss_write_error_logs_into_file(
+pub fn rss_write_error_logs_into_file_for_provider(
     json_object: Value,
     provider_kind: &ProviderKind,
     dir: &str,
