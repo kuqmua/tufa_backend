@@ -163,3 +163,4 @@ twitter bug
 create big xml/json file to test parsing speed
 ----------------------------
 add write logs into dir if provider doesnt respond to request 
+there is no point for that before adding database
