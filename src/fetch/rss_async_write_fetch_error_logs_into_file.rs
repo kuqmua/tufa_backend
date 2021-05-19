@@ -34,6 +34,10 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
             should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv;
         }
+        ProviderKind::Github => {
+            should_enable_prints = CONFIG.enable_prints.enable_prints_github;
+            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_github;
+        }
         ProviderKind::Habr => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_habr;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr;

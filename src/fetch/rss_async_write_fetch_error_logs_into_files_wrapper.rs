@@ -37,6 +37,12 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                         .enable_time_measurement
                         .enable_biorxiv_time_measurement
             }
+            ProviderKind::Github => {
+                enable_time_measurement = CONFIG.params.enable_common_time_measurement
+                    && CONFIG
+                        .enable_time_measurement
+                        .enable_github_time_measurement
+            }
             ProviderKind::Habr => {
                 enable_time_measurement = CONFIG.params.enable_common_time_measurement
                     && CONFIG.enable_time_measurement.enable_habr_time_measurement

@@ -2,6 +2,7 @@ use std::thread;
 
 use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_project_information::get_names::get_github_names::get_github_names;
 use crate::get_project_information::get_names::get_habr_names::get_habr_names;
 use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
@@ -128,6 +129,60 @@ pub async fn check_new_posts_threads_parts() -> (
                             .enable_time_measurement
                             .enable_biorxiv_time_measurement,
                     &CONFIG.links.biorxiv_link,
+                    &PROVIDER_KIND,
+                    CONFIG.params.enable_error_prints_handle,
+                );
+                if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                    let mut posts_handle_locked = posts_handle.lock().unwrap();
+                    for value in success_posts {
+                        posts_handle_locked.push(value);
+                    }
+                }
+                if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                    let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
+                    }
+                }
+            }));
+        }
+    }
+    if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_github {
+        let github_links = get_github_names();
+        if github_links.is_empty() {
+            print_error_red(
+                file!().to_string(),
+                line!().to_string(),
+                "github_links.is_empty".to_string(),
+            )
+        } else {
+            const PROVIDER_KIND: ProviderKind = ProviderKind::Github;
+            if CONFIG.params.enable_all_providers_prints
+                && CONFIG.enable_prints.enable_prints_github
+            {
+                println!(
+                    "{:#?} elements in {:#?} HashMap",
+                    github_links.len(),
+                    PROVIDER_KIND
+                );
+            };
+            let posts_handle = Arc::clone(&posts);
+            let error_posts_handle = Arc::clone(&error_posts);
+            threads_vec.push(thread::spawn(move || {
+                let enum_success_unsuccess_option_posts = rss_part(
+                    CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_github,
+                    CONFIG.params.enable_warning_prints_for_all_providers
+                        && CONFIG
+                            .enable_warning_prints
+                            .enable_warning_prints_for_github,
+                    CONFIG.params.enable_error_prints_for_all_providers
+                        && CONFIG.enable_error_prints.enable_error_prints_for_github,
+                    CONFIG.params.enable_all_time_measurement
+                        && CONFIG
+                            .enable_time_measurement
+                            .enable_github_time_measurement,
+                    &CONFIG.links.github_link,
                     &PROVIDER_KIND,
                     CONFIG.params.enable_error_prints_handle,
                 );

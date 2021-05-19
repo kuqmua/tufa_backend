@@ -5,6 +5,8 @@ pub enum ProviderKind {
     Arxiv,
     #[strum(message = "biorxiv")]
     Biorxiv,
+    #[strum(message = "github")]
+    Github,
     #[strum(message = "habr")]
     Habr,
     #[strum(message = "medrxiv")]

@@ -13,6 +13,7 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
 use crate::get_project_information::generate_hashmap_links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
+use crate::get_project_information::generate_hashmap_links::generate_github_hashmap_links::generate_github_hashmap_links;
 use crate::get_project_information::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
 use crate::get_project_information::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
 use crate::get_project_information::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
@@ -20,6 +21,7 @@ use crate::get_project_information::generate_hashmap_links::generate_twitter_has
 
 use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
 use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use crate::get_project_information::get_names::get_github_names::get_github_names;
 use crate::get_project_information::get_names::get_habr_names::get_habr_names;
 use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
 use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
@@ -69,6 +71,11 @@ pub fn rss_part(
                 availability_checker_flag = true;
             }
         }
+        ProviderKind::Github => {
+            if check_link(provider_link, enable_error_prints_handle).0 {
+                availability_checker_flag = true;
+            }
+        }
         ProviderKind::Medrxiv => {
             if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true;
@@ -106,6 +113,9 @@ pub fn rss_part(
             ProviderKind::Biorxiv => {
                 twitter_available_providers_links = Vec::new();
             }
+            ProviderKind::Github => {
+                twitter_available_providers_links = Vec::new();
+            }
             ProviderKind::Medrxiv => {
                 twitter_available_providers_links = Vec::new();
             }
@@ -128,6 +138,9 @@ pub fn rss_part(
             }
             ProviderKind::Biorxiv => {
                 links_temp_naming = generate_biorxiv_hashmap_links(get_biorxiv_names());
+            }
+            ProviderKind::Github => {
+                links_temp_naming = generate_github_hashmap_links(get_github_names());
             }
             ProviderKind::Medrxiv => {
                 links_temp_naming = generate_medrxiv_hashmap_links(get_medrxiv_names());
@@ -165,6 +178,15 @@ pub fn rss_part(
                         );
                 }
                 ProviderKind::Biorxiv => {
+                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                        rss_fetch_and_parse_provider_data(
+                            enable_error_prints,
+                            enable_time_measurement,
+                            links_temp_naming,
+                            provider_kind,
+                        );
+                }
+                ProviderKind::Github => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(
                             enable_error_prints,
@@ -290,6 +312,11 @@ pub fn rss_part(
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
                 }
                 ProviderKind::Biorxiv => {
+                    let error_message =
+                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
+                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                }
+                ProviderKind::Github => {
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_error_red(file!().to_string(), line!().to_string(), error_message);
