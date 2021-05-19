@@ -4,6 +4,7 @@ use std::fmt;
 pub struct ConfigStruct {
     pub params: Params,
     pub enable_providers: EnableProvidersStruct,
+    pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
     pub links: Links,
     pub enable_prints: EnablePrints,
@@ -32,12 +33,16 @@ impl ConfigStruct {
 pub struct EnableProvidersStruct {
     pub enable_arxiv: bool,
     pub enable_biorxiv: bool,
+    pub enable_github: bool,
     pub enable_habr: bool,
     pub enable_medrxiv: bool,
     pub enable_reddit: bool,
     pub enable_twitter: bool,
 }
-
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct GithubAuthorization {
+    pub github_token: String,
+}
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct RedditAuthorization {
     pub reddit_user_agent: String,
@@ -51,6 +56,7 @@ pub struct Links {
     pub starting_check_link: String,
     pub arxiv_link: String,
     pub biorxiv_link: String,
+    pub github_link: String,
     pub habr_link: String,
     pub medrxiv_link: String,
     pub reddit_link: String,
@@ -61,6 +67,7 @@ pub struct Links {
 pub struct EnablePrints {
     pub enable_prints_arxiv: bool,
     pub enable_prints_biorxiv: bool,
+    pub enable_prints_github: bool,
     pub enable_prints_habr: bool,
     pub enable_prints_medrxiv: bool,
     pub enable_prints_reddit: bool,
@@ -71,6 +78,7 @@ pub struct EnablePrints {
 pub struct EnableWarningPrints {
     pub enable_warning_prints_for_arxiv: bool,
     pub enable_warning_prints_for_biorxiv: bool,
+    pub enable_warning_prints_for_github: bool,
     pub enable_warning_prints_for_habr: bool,
     pub enable_warning_prints_for_medrxiv: bool,
     pub enable_warning_prints_for_reddit: bool,
@@ -81,6 +89,7 @@ pub struct EnableWarningPrints {
 pub struct EnableErrorPrints {
     pub enable_error_prints_for_arxiv: bool,
     pub enable_error_prints_for_biorxiv: bool,
+    pub enable_error_prints_for_github: bool,
     pub enable_error_prints_for_habr: bool,
     pub enable_error_prints_for_medrxiv: bool,
     pub enable_error_prints_for_reddit: bool,
@@ -91,6 +100,7 @@ pub struct EnableErrorPrints {
 pub struct EnableCleaningWarningLogsDirectory {
     pub enable_cleaning_warning_logs_directory_for_arxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_biorxiv: bool,
+    pub enable_cleaning_warning_logs_directory_for_github: bool,
     pub enable_cleaning_warning_logs_directory_for_habr: bool,
     pub enable_cleaning_warning_logs_directory_for_medrxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_reddit: bool,
@@ -101,6 +111,7 @@ pub struct EnableCleaningWarningLogsDirectory {
 pub struct EnableTimeMeasurement {
     pub enable_arxiv_time_measurement: bool,
     pub enable_biorxiv_time_measurement: bool,
+    pub enable_github_time_measurement: bool,
     pub enable_habr_time_measurement: bool,
     pub enable_medrxiv_time_measurement: bool,
     pub enable_reddit_time_measurement: bool,
