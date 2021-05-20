@@ -34,6 +34,16 @@ pub struct CommonRssPost {
     pub biorxiv_publication_date: Option<String>,
     //biorxiv specific
 
+    //github specific
+    pub github_id: Option<String>,
+    pub github_published: Option<String>,
+    pub github_updated: Option<String>,
+    pub github_media: Option<String>,
+    pub github_content: Option<String>,
+    pub github_name: Option<String>,
+    pub github_uri: Option<String>,
+    //github specific
+
     //habr specific
     pub habr_guid: Option<String>,
     pub habr_pub_date: Option<String>,
@@ -118,6 +128,16 @@ impl CommonRssPost {
         biorxiv_publication_date: Option<String>,
         //biorxiv specific
 
+        //github specific
+        github_id: Option<String>,
+        github_published: Option<String>,
+        github_updated: Option<String>,
+        github_media: Option<String>,
+        github_content: Option<String>,
+        github_name: Option<String>,
+        github_uri: Option<String>,
+        //github specific
+
         //habr specific
         habr_guid: Option<String>,
         habr_pub_date: Option<String>,
@@ -200,6 +220,16 @@ impl CommonRssPost {
             biorxiv_publisher,
             biorxiv_publication_date,
             //biorxiv specific
+
+            //github specific
+            github_id,
+            github_published,
+            github_updated,
+            github_media,
+            github_content,
+            github_name,
+            github_uri,
+            //github specific
 
             //habr specific
             habr_guid,

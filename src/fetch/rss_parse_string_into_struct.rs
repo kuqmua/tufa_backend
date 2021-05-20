@@ -8,6 +8,7 @@ use crate::overriding::prints::print_warning_yellow;
 
 use crate::fetch::info_structures::structs_for_parsing::arxiv_struct_for_parsing::ArxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::biorxiv_struct_for_parsing::BiorxivStructForParsing;
+use crate::fetch::info_structures::structs_for_parsing::github_struct_for_parsing::GithubStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::habr_struct_for_parsing::HabrStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::medrxiv_struct_for_parsing::MedrxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsing::RedditStructForParsing;
@@ -52,6 +53,16 @@ pub fn rss_parse_string_into_struct(
                                     None,
                                     None,
                                     //biorxiv specific
+
+                                    //github specific
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    None,
+                                    //github specific
 
                                     //habr specific
                                     None,
@@ -141,7 +152,19 @@ pub fn rss_parse_string_into_struct(
             }
         }
         _ => {
-            match fetch_result_string.find("</item>") {
+            let what_should_find_in_fetch_result_string: &str;
+            match provider_kind {
+                ProviderKind::Arxiv => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Biorxiv => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Github => what_should_find_in_fetch_result_string = "</entry>",
+                ProviderKind::Habr => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Medrxiv => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Reddit => {
+                    panic!("ProviderKind::Reddit not in the right place wtf1?")
+                }
+                ProviderKind::Twitter => what_should_find_in_fetch_result_string = "</item>",
+            }
+            match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {
                     //preparation
                     if let ProviderKind::Twitter = provider_kind {
@@ -241,601 +264,787 @@ pub fn rss_parse_string_into_struct(
                         }
                     }
                     //preparation
-                    if let ProviderKind::Arxiv = provider_kind {
-                        let rss_struct_from_str_result: Result<
-                            ArxivStructForParsing,
-                            serde_xml_rs::Error,
-                        > = from_str(&fetch_result_string);
-                        match rss_struct_from_str_result {
-                            Ok(rss_struct) => {
-                                let mut count = 0;
-                                let mut rss_page_struct: CommonRssPostStruct =
-                                    CommonRssPostStruct::new();
-                                loop {
-                                    if count < rss_struct.items.len() {
-                                        rss_page_struct.items.push(
-                                            CommonRssPost::initialize_with_params(
-                                                rss_struct.items[count].title.clone(),
-                                                rss_struct.items[count].link.clone(),
-                                                rss_struct.items[count].description.clone(),
-                                                rss_struct.items[count].creator.clone(),
-                                                // provider_kind.get_message().unwrap().to_string(),
-                                                provider_kind.clone(),
-                                                //biorxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //biorxiv specific
+                    match provider_kind {
+                        ProviderKind::Arxiv => {
+                            let rss_struct_from_str_result: Result<
+                                ArxivStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.items.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    rss_struct.items[count].title.clone(),
+                                                    rss_struct.items[count].link.clone(),
+                                                    rss_struct.items[count].description.clone(),
+                                                    rss_struct.items[count].creator.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //biorxiv specific
 
-                                                //habr specific
-                                                None,
-                                                None,
-                                                None,
-                                                //habr specific
+                                                    //github specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //github specific
 
-                                                //medrxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //medrxiv specific
+                                                    //habr specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //habr specific
 
-                                                //reddit specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //reddit specific
+                                                    //medrxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //medrxiv specific
 
-                                                //twitter specific
-                                                None,
-                                                None,
-                                                None,
-                                                //twitter specific
-                                            ),
-                                        );
-                                        count += 1;
-                                    } else {
-                                        break;
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
                                 }
-                                if !rss_page_struct.items.is_empty() {
-                                    are_there_items_handle = AreThereItems::Yep;
-                                } else {
-                                    are_there_items_handle =
-                                        AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
                                 }
-                                rss_post_struct_handle = rss_page_struct;
-                            }
-                            Err(e) => {
-                                if enable_error_prints {
-                                    let error_message =
-                                        format!("Rss conversion from str error: {}", &e);
-                                    print_error_red(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        error_message,
-                                    )
-                                };
-                                are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                    fetch_result_string,
-                                    e.to_string(),
-                                );
                             }
                         }
-                    } else if let ProviderKind::Biorxiv = provider_kind {
-                        let rss_struct_from_str_result: Result<
-                            BiorxivStructForParsing,
-                            serde_xml_rs::Error,
-                        > = from_str(&fetch_result_string);
-                        match rss_struct_from_str_result {
-                            Ok(rss_struct) => {
-                                let mut count = 0;
-                                let mut rss_page_struct: CommonRssPostStruct =
-                                    CommonRssPostStruct::new();
-                                loop {
-                                    if count < rss_struct.items.len() {
-                                        rss_page_struct.items.push(
-                                            CommonRssPost::initialize_with_params(
-                                                //todo option fields
-                                                rss_struct.items[count].title.clone(),
-                                                rss_struct.items[count].link.clone(),
-                                                rss_struct.items[count].description.clone(),
-                                                rss_struct.items[count].creator.clone(),
-                                                // provider_kind.get_message().unwrap().to_string(),
-                                                provider_kind.clone(),
-                                                //biorxiv specific
-                                                rss_struct.items[count].date.clone(),
-                                                rss_struct.items[count].identifier.clone(),
-                                                rss_struct.items[count].publisher.clone(),
-                                                rss_struct.items[count].publication_date.clone(),
-                                                //biorxiv specific
+                        ProviderKind::Biorxiv => {
+                            let rss_struct_from_str_result: Result<
+                                BiorxivStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.items.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    //todo option fields
+                                                    rss_struct.items[count].title.clone(),
+                                                    rss_struct.items[count].link.clone(),
+                                                    rss_struct.items[count].description.clone(),
+                                                    rss_struct.items[count].creator.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    rss_struct.items[count].date.clone(),
+                                                    rss_struct.items[count].identifier.clone(),
+                                                    rss_struct.items[count].publisher.clone(),
+                                                    rss_struct.items[count]
+                                                        .publication_date
+                                                        .clone(),
+                                                    //biorxiv specific
 
-                                                //habr specific
-                                                None,
-                                                None,
-                                                None,
-                                                //habr specific
+                                                    //github specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //github specific
 
-                                                //medrxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //medrxiv specific
+                                                    //habr specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //habr specific
 
-                                                //reddit specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //reddit specific
+                                                    //medrxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //medrxiv specific
 
-                                                //twitter specific
-                                                None,
-                                                None,
-                                                None,
-                                                //twitter specific
-                                            ),
-                                        );
-                                        count += 1;
-                                    } else {
-                                        break;
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
                                 }
-                                if !rss_page_struct.items.is_empty() {
-                                    are_there_items_handle = AreThereItems::Yep;
-                                } else {
-                                    are_there_items_handle =
-                                        AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
                                 }
-                                rss_post_struct_handle = rss_page_struct;
-                            }
-                            Err(e) => {
-                                if enable_error_prints {
-                                    let error_message =
-                                        format!("Rss conversion from str error: {}", &e);
-                                    print_error_red(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        error_message,
-                                    )
-                                };
-                                are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                    fetch_result_string,
-                                    e.to_string(),
-                                );
                             }
                         }
-                    } else if let ProviderKind::Medrxiv = provider_kind {
-                        let rss_struct_from_str_result: Result<
-                            MedrxivStructForParsing,
-                            serde_xml_rs::Error,
-                        > = from_str(&fetch_result_string);
-                        match rss_struct_from_str_result {
-                            Ok(rss_struct) => {
-                                let mut count = 0;
-                                let mut rss_page_struct: CommonRssPostStruct =
-                                    CommonRssPostStruct::new();
-                                loop {
-                                    if count < rss_struct.items.len() {
-                                        rss_page_struct.items.push(
-                                            CommonRssPost::initialize_with_params(
-                                                //todo option fields
-                                                rss_struct.items[count].title.clone(),
-                                                rss_struct.items[count].link.clone(),
-                                                rss_struct.items[count].description.clone(),
-                                                rss_struct.items[count].creator.clone(),
-                                                // provider_kind.get_message().unwrap().to_string(),
-                                                provider_kind.clone(),
-                                                //biorxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //biorxiv specific
+                        ProviderKind::Github => {
+                            let rss_struct_from_str_result: Result<
+                                GithubStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.entries.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    //todo option fields
+                                                    rss_struct.entries[count].title.clone(),
+                                                    rss_struct.entries[count].link.clone(),
+                                                    rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
+                                                    Some("something".to_string()), //rss_struct.entries[count].author.name.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //biorxiv specific
 
-                                                //habr specific
-                                                None,
-                                                None,
-                                                None,
-                                                //habr specific
+                                                    //github specific
+                                                    rss_struct.entries[count].id.clone(),
+                                                    rss_struct.entries[count].published.clone(),
+                                                    rss_struct.entries[count].updated.clone(),
+                                                    rss_struct.entries[count].media.clone(),
+                                                    rss_struct.entries[count].content.clone(),
+                                                    rss_struct.entries[count].author.name.clone(),
+                                                    rss_struct.entries[count].author.uri.clone(),
+                                                    //github specific
 
-                                                //medrxiv specific
-                                                rss_struct.items[count].date.clone(),
-                                                rss_struct.items[count].identifier.clone(),
-                                                rss_struct.items[count].publisher.clone(),
-                                                rss_struct.items[count].publication_date.clone(),
-                                                //medrxiv specific
+                                                    //habr specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //habr specific
 
-                                                //reddit specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //reddit specific
+                                                    //medrxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //medrxiv specific
 
-                                                //twitter specific
-                                                None,
-                                                None,
-                                                None,
-                                                //twitter specific
-                                            ),
-                                        );
-                                        count += 1;
-                                    } else {
-                                        break;
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
                                 }
-                                if !rss_page_struct.items.is_empty() {
-                                    are_there_items_handle = AreThereItems::Yep;
-                                } else {
-                                    are_there_items_handle =
-                                        AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
                                 }
-                                rss_post_struct_handle = rss_page_struct;
-                            }
-                            Err(e) => {
-                                if enable_error_prints {
-                                    let error_message =
-                                        format!("Rss conversion from str error: {}", &e);
-                                    print_error_red(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        error_message,
-                                    )
-                                };
-                                are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                    fetch_result_string,
-                                    e.to_string(),
-                                );
                             }
                         }
-                    } else if let ProviderKind::Habr = provider_kind {
-                        let rss_struct_from_str_result: Result<
-                            HabrStructForParsing,
-                            serde_xml_rs::Error,
-                        > = from_str(&fetch_result_string);
-                        match rss_struct_from_str_result {
-                            Ok(rss_struct) => {
-                                let mut count = 0;
-                                let mut rss_page_struct: CommonRssPostStruct =
-                                    CommonRssPostStruct::new();
-                                loop {
-                                    if count < rss_struct.items.len() {
-                                        rss_page_struct.items.push(
-                                            CommonRssPost::initialize_with_params(
-                                                //todo option fields
-                                                rss_struct.items[count].title.clone(),
-                                                rss_struct.items[count].link.clone(),
-                                                rss_struct.items[count].description.clone(),
-                                                rss_struct.items[count].creator.clone(),
-                                                // provider_kind.get_message().unwrap().to_string(),
-                                                provider_kind.clone(),
-                                                //biorxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //biorxiv specific
+                        ProviderKind::Habr => {
+                            let rss_struct_from_str_result: Result<
+                                HabrStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.items.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    //todo option fields
+                                                    rss_struct.items[count].title.clone(),
+                                                    rss_struct.items[count].link.clone(),
+                                                    rss_struct.items[count].description.clone(),
+                                                    rss_struct.items[count].creator.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //biorxiv specific
 
-                                                //habr specific
-                                                rss_struct.items[count].guid.clone(),
-                                                rss_struct.items[count].pub_date.clone(),
-                                                rss_struct.items[count].category.clone(),
-                                                //habr specific
+                                                    //github specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //github specific
 
-                                                //medrxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //medrxiv specific
+                                                    //habr specific
+                                                    rss_struct.items[count].guid.clone(),
+                                                    rss_struct.items[count].pub_date.clone(),
+                                                    rss_struct.items[count].category.clone(),
+                                                    //habr specific
 
-                                                //reddit specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //reddit specific
+                                                    //medrxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //medrxiv specific
 
-                                                //twitter specific
-                                                None,
-                                                None,
-                                                None,
-                                                //twitter specific
-                                            ),
-                                        );
-                                        count += 1;
-                                    } else {
-                                        break;
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
                                 }
-                                if !rss_page_struct.items.is_empty() {
-                                    are_there_items_handle = AreThereItems::Yep;
-                                } else {
-                                    are_there_items_handle =
-                                        AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
                                 }
-                                rss_post_struct_handle = rss_page_struct;
-                            }
-                            Err(e) => {
-                                if enable_error_prints {
-                                    let error_message =
-                                        format!("Rss conversion from str error: {}", &e);
-                                    print_error_red(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        error_message,
-                                    )
-                                };
-                                are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                    fetch_result_string,
-                                    e.to_string(),
-                                );
                             }
                         }
-                    } else if let ProviderKind::Twitter = provider_kind {
-                        let rss_struct_from_str_result: Result<
-                            TwitterStructForParsing,
-                            serde_xml_rs::Error,
-                        > = from_str(&fetch_result_string);
-                        match rss_struct_from_str_result {
-                            Ok(rss_struct) => {
-                                let mut count = 0;
-                                let mut rss_page_struct: CommonRssPostStruct =
-                                    CommonRssPostStruct::new();
-                                loop {
-                                    if count < rss_struct.items.len() {
-                                        rss_page_struct.items.push(
-                                            CommonRssPost::initialize_with_params(
-                                                //todo option fields
-                                                rss_struct.items[count].title.clone(),
-                                                rss_struct.items[count].link.clone(),
-                                                rss_struct.items[count].description.clone(),
-                                                rss_struct.items[count].creator.clone(),
-                                                // provider_kind.get_message().unwrap().to_string(),
-                                                provider_kind.clone(),
-                                                //biorxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //biorxiv specific
+                        ProviderKind::Medrxiv => {
+                            let rss_struct_from_str_result: Result<
+                                MedrxivStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.items.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    //todo option fields
+                                                    rss_struct.items[count].title.clone(),
+                                                    rss_struct.items[count].link.clone(),
+                                                    rss_struct.items[count].description.clone(),
+                                                    rss_struct.items[count].creator.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //biorxiv specific
 
-                                                //habr specific
-                                                None,
-                                                None,
-                                                None,
-                                                //habr specific
+                                                    //github specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //github specific
 
-                                                //medrxiv specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //medrxiv specific
+                                                    //habr specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //habr specific
 
-                                                //reddit specific
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                None,
-                                                //reddit specific
+                                                    //medrxiv specific
+                                                    rss_struct.items[count].date.clone(),
+                                                    rss_struct.items[count].identifier.clone(),
+                                                    rss_struct.items[count].publisher.clone(),
+                                                    rss_struct.items[count]
+                                                        .publication_date
+                                                        .clone(),
+                                                    //medrxiv specific
 
-                                                //twitter specific
-                                                rss_struct.items[count].pub_date.clone(),
-                                                rss_struct.items[count].guid.clone(),
-                                                rss_struct.image.url.clone(),
-                                                //twitter specific
-                                            ),
-                                        );
-                                        count += 1;
-                                    } else {
-                                        break;
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
                                 }
-                                if !rss_page_struct.items.is_empty() {
-                                    are_there_items_handle = AreThereItems::Yep;
-                                } else {
-                                    are_there_items_handle =
-                                        AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
                                 }
-                                rss_post_struct_handle = rss_page_struct;
-                            }
-                            Err(e) => {
-                                if enable_error_prints {
-                                    let error_message =
-                                        format!("Rss conversion from str error: {}", &e);
-                                    print_error_red(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        error_message,
-                                    )
-                                };
-                                are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                    fetch_result_string,
-                                    e.to_string(),
-                                );
                             }
                         }
-                    } else {
-                        print_warning_yellow(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "UNIMPLEMENTED YET".to_string(),
-                        );
+                        ProviderKind::Reddit => {
+                            panic!("ProviderKind::Reddit not in the right place wtf2?")
+                        }
+                        ProviderKind::Twitter => {
+                            let rss_struct_from_str_result: Result<
+                                TwitterStructForParsing,
+                                serde_xml_rs::Error,
+                            > = from_str(&fetch_result_string);
+                            match rss_struct_from_str_result {
+                                Ok(rss_struct) => {
+                                    let mut count = 0;
+                                    let mut rss_page_struct: CommonRssPostStruct =
+                                        CommonRssPostStruct::new();
+                                    loop {
+                                        if count < rss_struct.items.len() {
+                                            rss_page_struct.items.push(
+                                                CommonRssPost::initialize_with_params(
+                                                    //todo option fields
+                                                    rss_struct.items[count].title.clone(),
+                                                    rss_struct.items[count].link.clone(),
+                                                    rss_struct.items[count].description.clone(),
+                                                    rss_struct.items[count].creator.clone(),
+                                                    // provider_kind.get_message().unwrap().to_string(),
+                                                    provider_kind.clone(),
+                                                    //biorxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //biorxiv specific
+
+                                                    //github specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //github specific
+
+                                                    //habr specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //habr specific
+
+                                                    //medrxiv specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //medrxiv specific
+
+                                                    //reddit specific
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    None,
+                                                    //reddit specific
+
+                                                    //twitter specific
+                                                    rss_struct.items[count].pub_date.clone(),
+                                                    rss_struct.items[count].guid.clone(),
+                                                    rss_struct.image.url.clone(),
+                                                    //twitter specific
+                                                ),
+                                            );
+                                            count += 1;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    if !rss_page_struct.items.is_empty() {
+                                        are_there_items_handle = AreThereItems::Yep;
+                                    } else {
+                                        are_there_items_handle =
+                                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                    }
+                                    rss_post_struct_handle = rss_page_struct;
+                                }
+                                Err(e) => {
+                                    if enable_error_prints {
+                                        let error_message =
+                                            format!("Rss conversion from str error: {}", &e);
+                                        print_error_red(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            error_message,
+                                        )
+                                    };
+                                    are_there_items_handle = AreThereItems::ConversionFromStrError(
+                                        fetch_result_string,
+                                        e.to_string(),
+                                    );
+                                }
+                            }
+                        }
                     }
                 }
                 _ => {
