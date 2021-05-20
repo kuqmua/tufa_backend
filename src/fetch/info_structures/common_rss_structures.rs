@@ -39,9 +39,7 @@ pub struct CommonRssPost {
     pub github_published: Option<String>,
     pub github_updated: Option<String>,
     pub github_media: Option<String>,
-    pub github_content: Option<String>,
-    pub github_name: Option<String>,
-    pub github_uri: Option<String>,
+    pub github_author_uri: Option<String>,
     //github specific
 
     //habr specific
@@ -133,9 +131,7 @@ impl CommonRssPost {
         github_published: Option<String>,
         github_updated: Option<String>,
         github_media: Option<String>,
-        github_content: Option<String>,
-        github_name: Option<String>,
-        github_uri: Option<String>,
+        github_author_uri: Option<String>,
         //github specific
 
         //habr specific
@@ -226,9 +222,7 @@ impl CommonRssPost {
             github_published,
             github_updated,
             github_media,
-            github_content,
-            github_name,
-            github_uri,
+            github_author_uri,
             //github specific
 
             //habr specific

@@ -24,7 +24,7 @@ pub fn rss_parse_string_into_struct(
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, AreThereItems) {
     let mut rss_post_struct_handle: CommonRssPostStruct = CommonRssPostStruct::new();
-    let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
+    let are_there_items_handle: AreThereItems;
     match provider_kind {
         ProviderKind::Reddit => {
             //todo option fields
@@ -55,8 +55,6 @@ pub fn rss_parse_string_into_struct(
                                     //biorxiv specific
 
                                     //github specific
-                                    None,
-                                    None,
                                     None,
                                     None,
                                     None,
@@ -298,8 +296,6 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
-                                                    None,
-                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -429,8 +425,6 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
-                                                    None,
-                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -542,7 +536,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.entries[count].title.clone(),
                                                     rss_struct.entries[count].link.clone(),
                                                     rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
-                                                    Some("something".to_string()), //rss_struct.entries[count].author.name.clone(),
+                                                    rss_struct.entries[count].author.name.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
                                                     provider_kind.clone(),
                                                     //biorxiv specific
@@ -557,8 +551,6 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.entries[count].published.clone(),
                                                     rss_struct.entries[count].updated.clone(),
                                                     rss_struct.entries[count].media.clone(),
-                                                    rss_struct.entries[count].content.clone(),
-                                                    rss_struct.entries[count].author.name.clone(),
                                                     rss_struct.entries[count].author.uri.clone(),
                                                     //github specific
 
@@ -682,8 +674,6 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
-                                                    None,
-                                                    None,
                                                     None,
                                                     None,
                                                     None,
@@ -816,8 +806,6 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
-                                                    None,
-                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -945,8 +933,6 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
-                                                    None,
-                                                    None,
                                                     None,
                                                     None,
                                                     None,
