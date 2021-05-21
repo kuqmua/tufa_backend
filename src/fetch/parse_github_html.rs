@@ -24,10 +24,22 @@ pub fn parse_github_html(option_content: Option<String>) {
                                                                     Node::Element(
                                                                         ref element7first,
                                                                     ) => {
-                                                                        println!(
-                                                                            "element7first {:#?}",
-                                                                            element7first
-                                                                        )
+                                                                        match element7first
+                                                                            .children
+                                                                            .first()
+                                                                        {
+                                                                            Some(element8first) => {
+                                                                                if let Node::Element(ref  element9first) =  element8first {
+                                                                                      println!(
+                                                                            "element9first {:#?}",
+                                                                            element9first
+                                                                        );
+                                                                        }
+                                                                            }
+                                                                            None => {
+                                                                                println!("fn")
+                                                                            }
+                                                                        }
                                                                     }
                                                                     _ => {
                                                                         println!("___")
