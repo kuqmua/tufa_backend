@@ -5,41 +5,71 @@ pub fn parse_github_html(option_content: Option<String>) {
         Some(content) => {
             let result_content = Dom::parse(&content);
             match result_content {
-                Ok(dom) => match dom.children.first() {
-                    Some(element1) => {
-                        if let Node::Element(ref element2) = element1 {
-                            match element2.children.first() {
-                                Some(element3) => {
-                                    if let Node::Element(ref element4) = element3 {
-                                        match element4.children.first() {
-                                            Some(element5) => {
-                                                if let Node::Element(ref element6) = element5 {
-                                                    match element6.children.first() {
-                                                        Some(element7) => {
-                                                            println!("fffff1 {:#?}", element7);
+                Ok(dom) => {
+                    match dom.children.first() {
+                        Some(element1) => {
+                            if let Node::Element(ref element2) = element1 {
+                                match element2.children.first() {
+                                    Some(element3) => {
+                                        if let Node::Element(ref element4) = element3 {
+                                            match element4.children.first() {
+                                                Some(element5) => {
+                                                    if let Node::Element(ref element6) = element5 {
+                                                        match element6.children.len() {
+                                                            0 => {
+                                                                println!("zero");
+                                                            }
+                                                            2 => {
+                                                                match element6.children[0] {
+                                                                    Node::Element(
+                                                                        ref element7first,
+                                                                    ) => {
+                                                                        println!(
+                                                                            "element7first {:#?}",
+                                                                            element7first
+                                                                        )
+                                                                    }
+                                                                    _ => {
+                                                                        println!("___")
+                                                                    }
+                                                                }
+                                                                match element6.children[1] {
+                                                                    Node::Element(
+                                                                        ref element7second,
+                                                                    ) => {
+                                                                        // println!(
+                                                                        //     "element7second {:#?}",
+                                                                        //     element7second
+                                                                        // )
+                                                                    }
+                                                                    _ => {
+                                                                        println!("___")
+                                                                    }
+                                                                }
+                                                            }
+                                                            _ => {
+                                                                println!("_____should handle what or ...?");
+                                                            }
                                                         }
-                                                        None => {
-                                                            println!("fn")
-                                                        } //second here need to parse
                                                     }
                                                 }
-                                            }
-                                            None => {
-                                                println!("fn")
+                                                None => {
+                                                    println!("fn")
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                None => {
-                                    println!("fn")
+                                    None => {
+                                        println!("fn")
+                                    }
                                 }
                             }
                         }
+                        None => {
+                            println!("fn")
+                        }
                     }
-                    None => {
-                        println!("fn")
-                    }
-                },
+                }
                 Err(e) => {
                     println!("fe")
                 }
