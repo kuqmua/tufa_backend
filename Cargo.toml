@@ -40,3 +40,4 @@ toml = "0.5"
 config = "0.10"
 lazy_static = "1.4"
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
+html_parser = "0.6.2"

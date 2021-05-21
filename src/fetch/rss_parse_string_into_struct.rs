@@ -13,7 +13,9 @@ use crate::fetch::info_structures::structs_for_parsing::habr_struct_for_parsing:
 use crate::fetch::info_structures::structs_for_parsing::medrxiv_struct_for_parsing::MedrxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsing::RedditStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
+use crate::fetch::parse_github_html::parse_github_html;
 
+use html_parser::{Dom, DomVariant, Node};
 use serde_xml_rs::from_str;
 // use strum::EnumMessage;
 
@@ -530,12 +532,15 @@ pub fn rss_parse_string_into_struct(
                                         CommonRssPostStruct::new();
                                     loop {
                                         if count < rss_struct.entries.len() {
+                                            parse_github_html(
+                                                rss_struct.entries[count].content.clone(),
+                                            );
                                             rss_page_struct.items.push(
                                                 CommonRssPost::initialize_with_params(
                                                     //todo option fields
                                                     rss_struct.entries[count].title.clone(),
                                                     rss_struct.entries[count].link.clone(),
-                                                    rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
+                                                    Some("fff".to_string()), //todo: content is html now, need parsing
                                                     rss_struct.entries[count].author.name.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
                                                     provider_kind.clone(),
