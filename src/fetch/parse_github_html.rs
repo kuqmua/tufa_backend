@@ -1,6 +1,7 @@
 use html_parser::{Dom, Node};
 
 pub fn parse_github_html(option_content: Option<String>) {
+    let mut avatar_link: Option<String> = None;
     match option_content {
         Some(content) => {
             let result_content = Dom::parse(&content);
@@ -30,10 +31,18 @@ pub fn parse_github_html(option_content: Option<String>) {
                                                                         {
                                                                             Some(element8first) => {
                                                                                 if let Node::Element(ref  element9first) =  element8first {
-                                                                                      println!(
-                                                                            "element9first {:#?}",
-                                                                            element9first
-                                                                        );
+                                                                                      
+                                                                        match element9first.children.first() {
+                                                                            Some(element10first) => {
+                                                                                
+                                                                        if let Node::Element(ref  element11first) =  element10first {
+                                                                       
+                                                                        avatar_link = element11first.attributes["src"].clone();
+                                                                        }
+                                                                            }
+                                                                            None => {println!("fn")}
+                                                                        }
+
                                                                         }
                                                                             }
                                                                             None => {
@@ -91,5 +100,6 @@ pub fn parse_github_html(option_content: Option<String>) {
             println!("fn")
         }
     }
+    println!("avatar_link {:#?}",avatar_link);
 }
 //Node::Element(ref el) => match el.children.len() {
