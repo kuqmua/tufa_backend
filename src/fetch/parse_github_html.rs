@@ -17,56 +17,13 @@ pub fn parse_github_html(option_content: Option<String>) {
                                                 Some(element5) => {
                                                     if let Node::Element(ref element6) = element5 {
                                                         match element6.children.len() {
-                                                            0 => {
-                                                                println!("zero");
-                                                            }
                                                             2 => {
-                                                                match element6.children[0] {
-                                                                    Node::Element(
-                                                                        ref element7first,
-                                                                    ) => {
-                                                                        match element7first
-                                                                            .children
-                                                                            .first()
-                                                                        {
-                                                                            Some(element8first) => {
-                                                                                if let Node::Element(ref  element9first) =  element8first {
-                                                                                      
-                                                                        match element9first.children.first() {
-                                                                            Some(element10first) => {
-                                                                                
-                                                                        if let Node::Element(ref  element11first) =  element10first {
-                                                                       
-                                                                        avatar_link = element11first.attributes["src"].clone();
-                                                                        }
-                                                                            }
-                                                                            None => {println!("fn")}
-                                                                        }
-
-                                                                        }
-                                                                            }
-                                                                            None => {
-                                                                                println!("fn")
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    _ => {
-                                                                        println!("___")
-                                                                    }
-                                                                }
-                                                                match element6.children[1] {
-                                                                    Node::Element(
-                                                                        ref element7second,
-                                                                    ) => {
-                                                                        // println!(
-                                                                        //     "element7second {:#?}",
-                                                                        //     element7second
-                                                                        // )
-                                                                    }
-                                                                    _ => {
-                                                                        println!("___")
-                                                                    }
-                                                                }
+                                                                parse_github_html_first_part(
+                                                                    &element6.children[0],
+                                                                );
+                                                                parse_github_html_second_part(
+                                                                    &element6.children[1],
+                                                                );
                                                             }
                                                             _ => {
                                                                 println!("_____should handle what or ...?");
@@ -100,6 +57,144 @@ pub fn parse_github_html(option_content: Option<String>) {
             println!("fn")
         }
     }
-    println!("avatar_link {:#?}",avatar_link);
+    // println!("avatar_link {:#?}",avatar_link);
 }
-//Node::Element(ref el) => match el.children.len() {
+
+pub fn parse_github_html_first_part(first_child: &Node) {
+    match first_child {
+        Node::Element(ref element7twochildrenfirst) => {
+            match element7twochildrenfirst.children.first() {
+                Some(element8twochildrenfirst) => {
+                    if let Node::Element(ref element9first) = element8twochildrenfirst {
+                        match element9first.children.first() {
+                            Some(element10first) => {
+                                if let Node::Element(ref element11first) = element10first {
+                                    // avatar_link = element11first.attributes["src"].clone();
+                                }
+                            }
+                            None => {
+                                println!("fn")
+                            }
+                        }
+                    }
+                }
+                None => {
+                    println!("fn")
+                }
+            }
+        }
+        _ => {
+            println!("___")
+        }
+    }
+}
+
+pub fn parse_github_html_second_part(second_child: &Node) {
+    let mut author: &str = "noone";
+    let mut action: &str = "noaction";
+    let mut repository: &str = "norepository";
+    let mut datejs: &str = "nodatejs";
+    let mut date: &str = "nodate";
+    match second_child {
+        Node::Element(ref second_child_element1) => {
+            match second_child_element1.children.len() {
+                1 => {
+                    // println!("1");
+                    match second_child_element1.children[0] {
+                        Node::Element(ref second_child_element2) => {
+                            match second_child_element2.children.len() {
+                                5 => {
+                                    println!("5");
+                                    match second_child_element2.children[0] {
+                                        Node::Element(ref second_child_element3first) => {
+                                            match second_child_element3first.children.len() {
+                                                1 => match second_child_element3first.children[0] {
+                                                    Node::Text(ref texttext) => {
+                                                        author = texttext;
+                                                    }
+                                                    _ => println!("something else2"),
+                                                },
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3first.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[1] {
+                                        Node::Text(ref second_child_element3second) => {
+                                            action = second_child_element3second
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[2] {
+                                        Node::Element(ref second_child_element3third) => {
+                                            match second_child_element3third.children.len() {
+                                                1 => match second_child_element3third.children[0] {
+                                                    Node::Text(ref texttext) => {
+                                                        repository = texttext;
+                                                    }
+                                                    _ => println!("something else2"),
+                                                },
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3third.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[3] {
+                                        Node::Element(ref second_child_element3fourth) => {
+                                            match second_child_element3fourth.children.len() {
+                                                1 => {
+                                                    match second_child_element3fourth.children[0] {
+                                                        Node::Element(
+                                                            ref second_child_element4fourth,
+                                                        ) => {
+                                                            println!(
+                                                                "second_child_element4fourth {:#?}",
+                                                                second_child_element4fourth
+                                                            );
+                                                        }
+                                                        _ => println!("something else2"),
+                                                    }
+                                                }
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3fourth.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    // match second_child_element2.children[4] {}
+                                }
+                                _ => {
+                                    println!("diff2 {}", second_child_element2.children.len());
+                                }
+                            }
+                        }
+                        _ => println!("something else1"),
+                    }
+                }
+                2 => {
+                    // println!("2");
+                }
+                5 => {
+                    // println!("5");
+                }
+                _ => {
+                    println!("diff {}", second_child_element1.children.len());
+                }
+            }
+        }
+        _ => {
+            println!("___")
+        }
+    }
+    // println!("author {}", author);
+    // println!("action {}", action);
+    // println!("repository {}", repository);
+}
