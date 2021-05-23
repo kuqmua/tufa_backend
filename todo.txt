@@ -168,3 +168,5 @@ there is no point for that before adding database
 generate_biorxiv_hashmap_links and others rename this - remove hashmap
 -------------------------------
 rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
+-------------------------------
+clean up config mess
