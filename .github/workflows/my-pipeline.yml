@@ -55,6 +55,12 @@ jobs:
       - name: lets test rustc if it is here
         run: rustc --version
         
+      - name: Rustup default nightly
+        run: rustup default nightly
+        
+      - name: Rustup update
+        run: rustup update
+        
       - name: Cargo test
         run: cargo +nightly test
   
