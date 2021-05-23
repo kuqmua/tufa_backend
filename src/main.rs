@@ -73,7 +73,7 @@ mod authorization {
 
 #[cfg(test)]
 mod tests {
-    pub mod check_secret_reddit_auth_info;
+    pub mod check_compromised_reddit_auth_info;
 }
 
 mod async_tokio_wrapper;
