@@ -34,15 +34,6 @@ jobs:
           echo "hello_message_few_commands2"
           echo "hello_message_few_commands3 Application_name: ${{ env.APPLICATION_NAME}}"
           echo "hello_message_few_commands3 Package_name: ${{ env.PACKAGE_NAME}}"
-          
-      - name: lets test cargo if it is here
-        run: cargo --version
-        
-      - name: lets test rustc if it is here
-        run: rustc --version
-        
-      - name: Cargo test
-        run: cargo test
         
   my-testing2:
     runs-on: ubuntu-latest
@@ -57,4 +48,13 @@ jobs:
         
       - name: List_current_folder2
         run: ls -la
+        
+      - name: lets test cargo if it is here
+        run: cargo --version
+        
+      - name: lets test rustc if it is here
+        run: rustc --version
+        
+      - name: Cargo test
+        run: cargo test
   
