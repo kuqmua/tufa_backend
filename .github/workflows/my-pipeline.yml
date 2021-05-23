@@ -2,6 +2,10 @@
 # Github actions
 # -------------------
 name: CI
+env: 
+   APPLICATION_NAME: "tufa"
+   PACKAGE_NAME: "tufa-backend-package-&{{ github.sha }}"
+   
 
 on: 
   push:
