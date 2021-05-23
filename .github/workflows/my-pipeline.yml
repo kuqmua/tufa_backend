@@ -4,7 +4,7 @@
 name: CI
 env: 
    APPLICATION_NAME: "tufa"
-   PACKAGE_NAME: "tufa-backend-package-&{{ github.sha }}"
+   PACKAGE_NAME: "tufa-backend-package-${{ github.sha }}"
    
 
 on: 
@@ -24,8 +24,8 @@ jobs:
         run: |
           echo "hello_message_few_commands1"
           echo "hello_message_few_commands2"
-          echo "hello_message_few_commands3 Application_name: &{{ env.APPLICATION_NAME}}"
-          echo "hello_message_few_commands3 Package_name: &{{ env.PACKAGE_NAME}}"
+          echo "hello_message_few_commands3 Application_name: ${{ env.APPLICATION_NAME}}"
+          echo "hello_message_few_commands3 Package_name: ${{ env.PACKAGE_NAME}}"
         
   my-testing2:
     runs-on: ubuntu-latest
