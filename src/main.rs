@@ -70,6 +70,12 @@ mod authorization {
         pub mod reddit_authorization;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    pub mod check_secret_reddit_auth_info;
+}
+
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
@@ -86,21 +92,6 @@ fn main() {
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry();
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::get_project_information::get_config::get_config_information::CONFIG;
-    #[test]
-    fn it_works() {
-        //     pub reddit_user_agent: String,
-        // pub reddit_client_id: String,
-        // pub reddit_client_secret: String,
-        // pub reddit_username: String,
-        // pub reddit_password: String,
-        let f = &CONFIG.reddit_authorization.reddit_user_agent;
-        assert_eq!(f, "example");
-    }
 }
 
 // use std::sync::mpsc::channel;
