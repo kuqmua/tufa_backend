@@ -31,7 +31,7 @@ jobs:
         run: aws --version
         
       - name: lets test rustc if it is here
-        run: $ rustc --version
+        run: rustc --version
         
   my-testing2:
     runs-on: ubuntu-latest
