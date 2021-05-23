@@ -27,6 +27,12 @@ impl ConfigStruct {
         config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
         config.try_into()
     }
+    pub fn test_values(mode: &str) -> Result<Self, ConfigError> {
+        let mut config = Config::new();
+        config.set("env", mode)?;
+        config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, mode)))?;
+        config.try_into()
+    }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
@@ -134,6 +140,7 @@ pub struct Params {
 
 #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
 pub enum Env {
+    Default,
     Development,
     Testing,
     Production,
@@ -142,9 +149,10 @@ pub enum Env {
 impl fmt::Display for Env {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
+            Env::Default => write!(f, "Default"),
             Env::Development => write!(f, "Development"),
-            Env::Testing => write!(f, "Testing"),
             Env::Production => write!(f, "Production"),
+            Env::Testing => write!(f, "Testing"),
         }
     }
 }
@@ -152,9 +160,11 @@ impl fmt::Display for Env {
 impl From<&str> for Env {
     fn from(env: &str) -> Self {
         match env {
-            "Testing" => Env::Testing,
+            "Default" => Env::Default,
+            "Development" => Env::Development,
             "Production" => Env::Production,
-            _ => Env::Development,
+            "Testing" => Env::Testing,
+            _ => Env::Default,
         }
     }
 }
