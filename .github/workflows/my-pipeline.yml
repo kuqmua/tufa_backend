@@ -10,14 +10,14 @@ on:
       
 jobs: 
   my-testing1:
-    runs-on: ubuntu/latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Print_Hello_Message1
         run: echo "hello_world1"
         
   my-testing2:
-    runs-on: ubuntu/latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Print_Hello_Message2
