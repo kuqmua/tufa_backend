@@ -32,9 +32,12 @@ jobs:
     needs: [my-testing1]
     
     steps:
-      - name: Print_Hello_Message2
-        run: echo "hello_world2"
+      - name: List_current_folder1
+        run: ls -la
         
-      - name: List_current_folder
+      - name: Git clone my repo
+        uses: actions/checkout@v1 
+        
+      - name: List_current_folder2
         run: ls -la
   
