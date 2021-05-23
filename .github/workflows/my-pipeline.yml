@@ -20,6 +20,13 @@ jobs:
       - name: Print_Hello_Message1
         run: echo "hello_world1"
         
+      - name: Execute_few_commands
+        run: |
+          echo "hello_message_few_commands1"
+          echo "hello_message_few_commands2"
+          echo "hello_message_few_commands3 Application_name: &{{ env.APPLICATION_NAME}}"
+          echo "hello_message_few_commands3 Package_name: &{{ env.PACKAGE_NAME}}"
+        
   my-testing2:
     runs-on: ubuntu-latest
     needs: [my-testing1]
