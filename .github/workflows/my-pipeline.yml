@@ -20,9 +20,6 @@ jobs:
       VAR2: "this is job level variable2"
     
     steps:
-      - name: Print_Hello_Message1
-        run: echo "hello_world1"
-        
       - name: Print var1 and var2
         run: | 
           echo "var1: ${{ env.VAR1 }}"
@@ -38,11 +35,14 @@ jobs:
           echo "hello_message_few_commands3 Application_name: ${{ env.APPLICATION_NAME}}"
           echo "hello_message_few_commands3 Package_name: ${{ env.PACKAGE_NAME}}"
           
-      - name: lets test aws if it is here
-        run: aws --version
+      - name: lets test cargo if it is here
+        run: cargo --version
         
       - name: lets test rustc if it is here
         run: rustc --version
+        
+      - name: Cargo test
+        run: cargo test
         
   my-testing2:
     runs-on: ubuntu-latest
