@@ -36,5 +36,5 @@ jobs:
         run: echo "hello_world2"
         
       - name: List_current_folder
-        run: ls -a
+        run: ls -la
   
