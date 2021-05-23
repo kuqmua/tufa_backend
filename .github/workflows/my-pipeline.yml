@@ -15,10 +15,21 @@ on:
 jobs: 
   my-testing1:
     runs-on: ubuntu-latest
+    env: 
+      VAR1: "this is job level variable1"
+      VAR2: "this is job level variable2"
     
     steps:
       - name: Print_Hello_Message1
         run: echo "hello_world1"
+        
+      - name: Print var1 and var2
+        run: | 
+          echo "var1: ${{ env.VAR1 }}"
+          echo "var1: ${{ env.VAR1 }}"
+          echo "var1: $LOCAL_VAR"
+        env: 
+          LOCAL_VAR: "this is super local env var"
         
       - name: Execute_few_commands
         run: |
