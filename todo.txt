@@ -170,3 +170,7 @@ generate_biorxiv_hashmap_links and others rename this - remove hashmap
 rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
 -------------------------------
 clean up config mess
+---------------------
+move user credentials in different file from config
+--------------------
+how to know order of tests execution?
