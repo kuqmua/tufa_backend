@@ -1,11 +1,11 @@
 use crate::get_project_information::get_config::config_structures::ConfigStruct;
-const USER_CREDENTIALS_DUMMY_HANDLE: &str = "example";
+use crate::project_constants::USER_CREDENTIALS_DUMMY_HANDLE;
+use crate::project_constants::VECTOR_OF_MODES;
 #[test]
 fn check_compromised_reddit_auth_info() {
-    let vec_of_modes: Vec<&str> = vec!["Development", "Production", "Testing"];
-    for mode in vec_of_modes {
+    for mode in VECTOR_OF_MODES {
         let config_for_test: ConfigStruct =
-            ConfigStruct::test_values(mode).expect("config cannot load config");
+            ConfigStruct::test_values(*mode).expect("config cannot load config");
         let reddit_user_agent = &config_for_test.reddit_authorization.reddit_user_agent;
         let reddit_client_id = &config_for_test.reddit_authorization.reddit_client_id;
         let reddit_client_secret = &config_for_test.reddit_authorization.reddit_client_secret;

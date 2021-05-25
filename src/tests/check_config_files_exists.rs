@@ -1,10 +1,10 @@
+use crate::project_constants::VECTOR_OF_MODES;
 use std::fs::File;
 #[test]
 fn check_config_files_exists() {
     let start: &str = "./config/";
     let end: &str = ".toml";
-    let vec_of_modes: Vec<&str> = vec!["Development", "Production", "Testing"];
-    for mode in vec_of_modes {
+    for mode in VECTOR_OF_MODES {
         let file = File::open(format!("{}{}{}", start, mode, end));
         match file {
             Ok(_) => {}
