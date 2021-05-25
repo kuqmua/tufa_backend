@@ -2,7 +2,7 @@ use crate::get_project_information::get_config::config_structures::ConfigStruct;
 const USER_CREDENTIALS_DUMMY_HANDLE: &str = "example";
 #[test]
 fn check_compromised_reddit_auth_info() {
-    let vec_of_modes: Vec<&str> = vec!["Default", "Development", "Production", "Testing"];
+    let vec_of_modes: Vec<&str> = vec!["Development", "Production", "Testing"];
     for mode in vec_of_modes {
         let config_for_test: ConfigStruct =
             ConfigStruct::test_values(mode).expect("config cannot load config");

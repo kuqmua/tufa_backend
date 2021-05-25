@@ -14,16 +14,15 @@ pub struct ConfigStruct {
     pub enable_time_measurement: EnableTimeMeasurement,
     pub env: Env,
 }
-const CONFIG_FILE_PATH: &str = "./config/Default.toml";
 const CONFIG_FILE_PREFIX: &str = "./config/";
+const PROJECT_MODE: &str = "Development";
 
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
         // RUN_ENV=Testing cargo run
-        let env = std::env::var("RUN_ENV").unwrap_or_else(|_| "Development".into());
+        let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
         let mut config = Config::new();
         config.set("env", env.clone())?;
-        config.merge(File::with_name(CONFIG_FILE_PATH))?;
         config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
         config.try_into()
     }
@@ -140,7 +139,6 @@ pub struct Params {
 
 #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
 pub enum Env {
-    Default,
     Development,
     Testing,
     Production,
@@ -149,7 +147,6 @@ pub enum Env {
 impl fmt::Display for Env {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Env::Default => write!(f, "Default"),
             Env::Development => write!(f, "Development"),
             Env::Production => write!(f, "Production"),
             Env::Testing => write!(f, "Testing"),
@@ -160,11 +157,10 @@ impl fmt::Display for Env {
 impl From<&str> for Env {
     fn from(env: &str) -> Self {
         match env {
-            "Default" => Env::Default,
             "Development" => Env::Development,
             "Production" => Env::Production,
             "Testing" => Env::Testing,
-            _ => Env::Default,
+            _ => Env::Development,
         }
     }
 }
