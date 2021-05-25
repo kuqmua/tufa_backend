@@ -11,15 +11,16 @@ unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhan
 # // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
 enable_all_time_measurement = true
 enable_common_time_measurement = true
+user_credentials_dummy_handle = "example"
 
 [enable_providers]
-enable_arxiv = true
-enable_biorxiv = true
+enable_arxiv = false
+enable_biorxiv = false
 enable_github = true
-enable_habr = true
-enable_medrxiv = true
-enable_reddit = true
-enable_twitter = true
+enable_habr = false
+enable_medrxiv = false
+enable_reddit = false
+enable_twitter = false
 
 [github_authorization]
 github_token = "example"
