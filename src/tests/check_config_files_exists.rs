@@ -1,4 +1,4 @@
-use crate::project_constants::VECTOR_OF_MODES;
+use crate::tests::tests_constants::VECTOR_OF_MODES;
 use std::fs::File;
 #[test]
 fn check_config_files_exists() {

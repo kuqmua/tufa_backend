@@ -75,6 +75,7 @@ mod authorization {
 mod tests {
     pub mod check_compromised_reddit_auth_info;
     pub mod check_config_files_exists;
+    pub mod tests_constants;
 }
 
 mod async_tokio_wrapper;

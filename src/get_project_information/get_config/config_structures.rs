@@ -124,6 +124,7 @@ pub struct EnableTimeMeasurement {
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Params {
+    pub user_credentials_dummy_handle: String,
     pub warning_logs_directory_name: String,
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
     pub enable_all_providers: bool,

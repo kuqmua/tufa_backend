@@ -1,6 +1,5 @@
 use crate::get_project_information::get_config::config_structures::ConfigStruct;
-use crate::project_constants::USER_CREDENTIALS_DUMMY_HANDLE;
-use crate::project_constants::VECTOR_OF_MODES;
+use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn check_compromised_reddit_auth_info() {
     for mode in VECTOR_OF_MODES {
@@ -11,34 +10,34 @@ fn check_compromised_reddit_auth_info() {
         let reddit_client_secret = &config_for_test.reddit_authorization.reddit_client_secret;
         let reddit_username = &config_for_test.reddit_authorization.reddit_username;
         let reddit_password = &config_for_test.reddit_authorization.reddit_password;
-        if reddit_user_agent != USER_CREDENTIALS_DUMMY_HANDLE {
+        if reddit_user_agent != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_user_agent != {} for mode {}",
-                USER_CREDENTIALS_DUMMY_HANDLE, mode
+                &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
-        if reddit_client_id != USER_CREDENTIALS_DUMMY_HANDLE {
+        if reddit_client_id != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_client_id != {} for mode {}",
-                USER_CREDENTIALS_DUMMY_HANDLE, mode
+                &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
-        if reddit_client_secret != USER_CREDENTIALS_DUMMY_HANDLE {
+        if reddit_client_secret != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_client_secret != {} for mode {}",
-                USER_CREDENTIALS_DUMMY_HANDLE, mode
+                &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
-        if reddit_username != USER_CREDENTIALS_DUMMY_HANDLE {
+        if reddit_username != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_username != {} for mode {}",
-                USER_CREDENTIALS_DUMMY_HANDLE, mode
+                &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
-        if reddit_password != USER_CREDENTIALS_DUMMY_HANDLE {
+        if reddit_password != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_password != {} for mode {}",
-                USER_CREDENTIALS_DUMMY_HANDLE, mode
+                &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
     }
