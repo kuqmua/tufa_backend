@@ -1,7 +1,7 @@
 use html_parser::{Dom, Node};
 
 pub fn parse_github_html(option_content: Option<String>) {
-    let mut avatar_link: Option<String> = None;
+    // let mut avatar_link: Option<String> = None;
     match option_content {
         Some(content) => {
             let result_content = Dom::parse(&content);
@@ -49,7 +49,7 @@ pub fn parse_github_html(option_content: Option<String>) {
                     }
                 }
                 Err(e) => {
-                    println!("fe")
+                    println!("Dom::parse error {}", e)
                 }
             }
         }
@@ -68,7 +68,7 @@ pub fn parse_github_html_first_part(first_child: &Node) {
                     if let Node::Element(ref element9first) = element8twochildrenfirst {
                         match element9first.children.first() {
                             Some(element10first) => {
-                                if let Node::Element(ref element11first) = element10first {
+                                if let Node::Element(ref _element11first) = element10first {
                                     // avatar_link = element11first.attributes["src"].clone();
                                 }
                             }

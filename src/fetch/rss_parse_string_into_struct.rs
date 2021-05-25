@@ -15,9 +15,7 @@ use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsin
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 use crate::fetch::parse_github_html::parse_github_html;
 
-use html_parser::{Dom, DomVariant, Node};
 use serde_xml_rs::from_str;
-// use strum::EnumMessage;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
