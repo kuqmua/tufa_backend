@@ -71,13 +71,6 @@ mod authorization {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    pub mod check_compromised_reddit_auth_info;
-    pub mod check_config_files_exists;
-    pub mod tests_constants;
-}
-
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
@@ -87,6 +80,13 @@ use entry::entry;
 
 #[macro_use]
 extern crate lazy_static;
+
+#[cfg(test)]
+mod tests {
+    pub mod check_compromised_reddit_auth_info;
+    pub mod check_config_files_exists;
+    pub mod tests_constants;
+}
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
