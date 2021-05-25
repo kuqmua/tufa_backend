@@ -171,6 +171,8 @@ rss_struct.entries[count].content.clone(), //todo: content is html now, need par
 -------------------------------
 clean up config mess
 ---------------------
-move user credentials in different file from config
+move user credentials in different file from config for more flexible and comfortable config usage
 --------------------
 how to know order of tests execution?
+--------------------
+thread pool with this let cpus = num_cpus::get();
