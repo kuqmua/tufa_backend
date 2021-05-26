@@ -55,6 +55,10 @@ mod get_project_information {
         pub mod config_structures;
         pub mod get_config_information;
     }
+    pub mod get_user_credentials {
+        pub mod get_user_credentials_information;
+        pub mod user_credentials_structures;
+    }
     pub mod get_twitter_providers_names;
 }
 mod check_net {
@@ -90,7 +94,7 @@ mod tests {
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
-
+use crate::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
 fn main() {
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
