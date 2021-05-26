@@ -29,9 +29,6 @@ jobs:
       - name: Rustup update
         run: rustup update
         
-      - name: check_config_files_exists
-        run: cargo +nightly test check_config_files_exists
-        
-      - name: check_compromised_reddit_auth_info
-        run: cargo +nightly test check_compromised_reddit_auth_info
+      - name: cargo test
+        run: cargo +nightly test 
   
