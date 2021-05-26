@@ -22,16 +22,6 @@ enable_medrxiv = false
 enable_reddit = false
 enable_twitter = false
 
-[github_authorization]
-github_token = "example"
-
-[reddit_authorization]
-reddit_user_agent = "example"
-reddit_client_id = "example"
-reddit_client_secret = "example"
-reddit_username = "example"
-reddit_password = "example"
-
 [links]
 starting_check_link = "https://www.google.com/"
 arxiv_link = "https://www.google.com/" # https://arxiv.org/   http://export.arxiv.org/rss/   http://export.arxiv.org/rss/astro-ph.CO

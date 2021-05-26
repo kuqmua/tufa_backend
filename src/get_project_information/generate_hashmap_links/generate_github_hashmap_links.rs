@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::get_config_information::CONFIG;
+use crate::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
 
 pub fn generate_github_hashmap_links(github_names: Vec<&'static str>) -> Vec<String> {
     //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG
@@ -8,7 +8,7 @@ pub fn generate_github_hashmap_links(github_names: Vec<&'static str>) -> Vec<Str
     for github_name in github_names {
         let github_link = format!(
             "{}{}{}{}",
-            start, github_name, middle, CONFIG.github_authorization.github_token
+            start, github_name, middle, USER_CREDENTIALS.github_authorization.github_token
         );
         github_links.push(github_link);
     }

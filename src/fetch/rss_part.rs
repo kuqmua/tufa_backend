@@ -36,7 +36,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::get_project_information::get_config::get_config_information::CONFIG;
+use crate::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
@@ -241,11 +241,11 @@ pub fn rss_part(
                 ProviderKind::Reddit => {
                     //what should i do with authorization?
                     let is_reddit_authorized = reddit_authorization::reddit_authorization(
-                        &CONFIG.reddit_authorization.reddit_user_agent,
-                        &CONFIG.reddit_authorization.reddit_client_id,
-                        &CONFIG.reddit_authorization.reddit_client_secret,
-                        &CONFIG.reddit_authorization.reddit_username,
-                        &CONFIG.reddit_authorization.reddit_password,
+                        &USER_CREDENTIALS.reddit_authorization.reddit_user_agent,
+                        &USER_CREDENTIALS.reddit_authorization.reddit_client_id,
+                        &USER_CREDENTIALS.reddit_authorization.reddit_client_secret,
+                        &USER_CREDENTIALS.reddit_authorization.reddit_username,
+                        &USER_CREDENTIALS.reddit_authorization.reddit_password,
                     );
                     if is_reddit_authorized {
                         if enable_prints {

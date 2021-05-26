@@ -94,7 +94,7 @@ mod tests {
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
-use crate::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+
 fn main() {
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();

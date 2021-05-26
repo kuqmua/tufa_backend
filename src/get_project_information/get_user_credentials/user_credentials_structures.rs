@@ -16,7 +16,7 @@ impl UserCredentialsStruct {
         )))?;
         config.try_into()
     }
-    pub fn test_values(mode: &str) -> Result<Self, ConfigError> {
+    pub fn test_values() -> Result<Self, ConfigError> {
         let mut config = Config::new();
         config.merge(File::with_name(&format!(
             "{}{}",

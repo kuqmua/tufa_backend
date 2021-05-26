@@ -4,8 +4,6 @@ use std::fmt;
 pub struct ConfigStruct {
     pub params: Params,
     pub enable_providers: EnableProvidersStruct,
-    pub github_authorization: GithubAuthorization,
-    pub reddit_authorization: RedditAuthorization,
     pub links: Links,
     pub enable_prints: EnablePrints,
     pub enable_warning_prints: EnableWarningPrints,
@@ -44,18 +42,7 @@ pub struct EnableProvidersStruct {
     pub enable_reddit: bool,
     pub enable_twitter: bool,
 }
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct GithubAuthorization {
-    pub github_token: String,
-}
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct RedditAuthorization {
-    pub reddit_user_agent: String,
-    pub reddit_client_id: String,
-    pub reddit_client_secret: String,
-    pub reddit_username: String,
-    pub reddit_password: String,
-}
+
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Links {
     pub starting_check_link: String,

@@ -1,15 +1,28 @@
 use crate::get_project_information::get_config::config_structures::ConfigStruct;
+use crate::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
 use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn check_compromised_reddit_auth_info() {
+    let user_credentials_for_test: UserCredentialsStruct =
+        UserCredentialsStruct::test_values().expect("сan not load user_credentials file");
     for mode in VECTOR_OF_MODES {
         let config_for_test: ConfigStruct =
-            ConfigStruct::test_values(*mode).expect("config cannot load config");
-        let reddit_user_agent = &config_for_test.reddit_authorization.reddit_user_agent;
-        let reddit_client_id = &config_for_test.reddit_authorization.reddit_client_id;
-        let reddit_client_secret = &config_for_test.reddit_authorization.reddit_client_secret;
-        let reddit_username = &config_for_test.reddit_authorization.reddit_username;
-        let reddit_password = &config_for_test.reddit_authorization.reddit_password;
+            ConfigStruct::test_values(*mode).expect("сan not load config file");
+        let reddit_user_agent = &user_credentials_for_test
+            .reddit_authorization
+            .reddit_user_agent;
+        let reddit_client_id = &user_credentials_for_test
+            .reddit_authorization
+            .reddit_client_id;
+        let reddit_client_secret = &user_credentials_for_test
+            .reddit_authorization
+            .reddit_client_secret;
+        let reddit_username = &user_credentials_for_test
+            .reddit_authorization
+            .reddit_username;
+        let reddit_password = &user_credentials_for_test
+            .reddit_authorization
+            .reddit_password;
         if reddit_user_agent != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "reddit_user_agent != {} for mode {}",
