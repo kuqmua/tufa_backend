@@ -5,7 +5,7 @@ pub struct UserCredentialsStruct {
     pub reddit_authorization: RedditAuthorization,
 }
 const CONFIG_FILE_PREFIX: &str = "./config/";
-const USER_CREDENTIALS_FILE_NAME: &str = "user_credentials";
+const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
 
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
