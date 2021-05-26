@@ -1,6 +1,3 @@
-# -------------------
-# Github actions
-# -------------------
 name: CI
 env: 
    APPLICATION_NAME: "tufa"
@@ -12,42 +9,14 @@ on:
     branches: 
       - master
       
-jobs: 
-  my-testing1:
+jobs:   
+  tests:
     runs-on: ubuntu-latest
-    env: 
-      VAR1: "this is job level variable1"
-      VAR2: "this is job level variable2"
+#     needs: [my-testing1]
     
     steps:
-      - name: Print var1 and var2
-        run: | 
-          echo "var1: ${{ env.VAR1 }}"
-          echo "var1: ${{ env.VAR1 }}"
-          echo "var1: $LOCAL_VAR"
-        env: 
-          LOCAL_VAR: "this is super local env var"
-        
-      - name: Execute_few_commands
-        run: |
-          echo "hello_message_few_commands1"
-          echo "hello_message_few_commands2"
-          echo "hello_message_few_commands3 Application_name: ${{ env.APPLICATION_NAME}}"
-          echo "hello_message_few_commands3 Package_name: ${{ env.PACKAGE_NAME}}"
-        
-  my-testing2:
-    runs-on: ubuntu-latest
-    needs: [my-testing1]
-    
-    steps:
-      - name: List_current_folder1
-        run: ls -la
-        
       - name: Git clone my repo
         uses: actions/checkout@v1 
-        
-      - name: List_current_folder2
-        run: ls -la
         
       - name: lets test cargo if it is here
         run: cargo --version
