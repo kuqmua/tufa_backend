@@ -176,3 +176,5 @@ move user credentials in different file from config for more flexible and comfor
 how to know order of tests execution?
 --------------------
 thread pool with this let cpus = num_cpus::get();
+-------------------
+tests for github actions and local tests separation
