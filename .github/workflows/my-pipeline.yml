@@ -2,7 +2,6 @@ name: CI
 env: 
    APPLICATION_NAME: "tufa"
    PACKAGE_NAME: "tufa-backend-package-${{ github.sha }}"
-   
 
 on: 
   push:
@@ -30,6 +29,9 @@ jobs:
       - name: Rustup update
         run: rustup update
         
-      - name: Cargo test
-        run: cargo +nightly test
+      - name: check_config_files_exists
+        run: cargo +nightly test check_config_files_exists
+        
+      - name: check_compromised_reddit_auth_info
+        run: cargo +nightly test check_compromised_reddit_auth_info
   
