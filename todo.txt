@@ -170,11 +170,11 @@ generate_biorxiv_hashmap_links and others rename this - remove hashmap
 rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
 -------------------------------
 clean up config mess
----------------------
-move user credentials in different file from config for more flexible and comfortable config usage
 --------------------
 how to know order of tests execution?
 --------------------
 thread pool with this let cpus = num_cpus::get();
 -------------------
 tests for github actions and local tests separation
+------------------
+project constants file
