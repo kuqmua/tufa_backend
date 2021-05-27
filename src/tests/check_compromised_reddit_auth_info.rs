@@ -1,13 +1,15 @@
 use crate::get_project_information::get_config::config_structures::ConfigStruct;
 use crate::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
+use crate::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+use crate::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
 use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn check_compromised_reddit_auth_info() {
     let user_credentials_for_test: UserCredentialsStruct =
-        UserCredentialsStruct::test_values().expect("сan not load user_credentials file");
+        UserCredentialsStruct::test_values().expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
     for mode in VECTOR_OF_MODES {
         let config_for_test: ConfigStruct =
-            ConfigStruct::test_values(*mode).expect("сan not load config file");
+            ConfigStruct::test_values(*mode).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let reddit_user_agent = &user_credentials_for_test
             .reddit_authorization
             .reddit_user_agent;
