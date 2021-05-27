@@ -1,3 +1,5 @@
+use crate::project_constants::PATH_TO_CONFIG;
+use crate::project_constants::PROJECT_MODE;
 use config::{Config, ConfigError, File};
 use std::fmt;
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
@@ -12,8 +14,6 @@ pub struct ConfigStruct {
     pub enable_time_measurement: EnableTimeMeasurement,
     pub env: Env,
 }
-const CONFIG_FILE_PREFIX: &str = "./config/";
-const PROJECT_MODE: &str = "Development";
 
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
@@ -21,13 +21,13 @@ impl ConfigStruct {
         let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
         let mut config = Config::new();
         config.set("env", env.clone())?;
-        config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
+        config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, env)))?;
         config.try_into()
     }
     pub fn test_values(mode: &str) -> Result<Self, ConfigError> {
         let mut config = Config::new();
         config.set("env", mode)?;
-        config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, mode)))?;
+        config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, mode)))?;
         config.try_into()
     }
 }
