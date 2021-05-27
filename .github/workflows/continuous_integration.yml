@@ -36,6 +36,8 @@ jobs:
         - uses: actions-rs/toolchain@v1
           with:
             toolchain: nightly
+        - name: rustup default nightly
+            run: rustup default nightly
         - name: build
           uses: actions-rs/cargo@v1
           with:
