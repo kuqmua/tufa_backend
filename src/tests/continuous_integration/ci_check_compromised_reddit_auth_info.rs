@@ -4,7 +4,7 @@ use crate::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
 use crate::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
 use crate::project_constants::VECTOR_OF_MODES;
 #[test]
-fn check_compromised_reddit_auth_info() {
+fn ci_check_compromised_reddit_auth_info() {
     let user_credentials_for_test: UserCredentialsStruct =
         UserCredentialsStruct::test_values().expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
     for mode in VECTOR_OF_MODES {

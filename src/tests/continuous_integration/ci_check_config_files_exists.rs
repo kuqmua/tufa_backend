@@ -3,7 +3,7 @@ use crate::project_constants::PATH_TO_CONFIG;
 use crate::project_constants::VECTOR_OF_MODES;
 use std::fs::File;
 #[test]
-fn check_config_files_exists() {
+fn ci_check_config_files_exists() {
     for mode in VECTOR_OF_MODES {
         let file = File::open(format!(
             "{}{}{}",
