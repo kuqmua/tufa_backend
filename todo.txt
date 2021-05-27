@@ -177,3 +177,5 @@ find out why constants which used in tests looks like unused
 --------------------
 We can specify part of a test name, and any test whose name matches that value will be run. For example, because two of our tests’ names contain add, we can run those two by running cargo test add
 its solution for github actions test running command
+--------------------
+write some logic and flag what choose between config values and in code constants for more efficient production variant 
