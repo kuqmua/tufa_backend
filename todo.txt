@@ -171,10 +171,6 @@ rss_struct.entries[count].content.clone(), //todo: content is html now, need par
 -------------------------------
 clean up config mess
 --------------------
-how to know order of tests execution?
---------------------
 thread pool with this let cpus = num_cpus::get();
 -------------------
 tests for github actions and local tests separation
-------------------
-project constants file
