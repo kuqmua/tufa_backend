@@ -174,3 +174,6 @@ clean up config mess
 thread pool with this let cpus = num_cpus::get();
 --------------------
 find out why constants which used in tests looks like unused
+--------------------
+We can specify part of a test name, and any test whose name matches that value will be run. For example, because two of our tests’ names contain add, we can run those two by running cargo test add
+its solution for github actions test running command
