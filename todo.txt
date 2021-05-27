@@ -172,3 +172,5 @@ rss_struct.entries[count].content.clone(), //todo: content is html now, need par
 clean up config mess
 --------------------
 thread pool with this let cpus = num_cpus::get();
+--------------------
+find out why constants which used in tests looks like unused
