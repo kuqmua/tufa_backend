@@ -199,46 +199,73 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                             match second_child_element3firth.children.len() {
                                                 3 => {
                                                     match second_child_element3firth.children[0] {
-                                                        Node::Element(ref second_child_element4firth) => {
-                                                            match second_child_element4firth.children.len() {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
+                                                            match second_child_element4firth
+                                                                .children
+                                                                .len()
+                                                            {
                                                                 1 => {
-                                                                    match second_child_element4firth.children[0]{
-                                                                        Node::Text(ref texttext) => {
+                                                                    match second_child_element4firth
+                                                                        .children[0]
+                                                                    {
+                                                                        Node::Text(
+                                                                            ref texttext,
+                                                                        ) => {
                                                                             actionto = texttext;
                                                                         }
-                                                                        _ => println!("diff node eee2"),
+                                                                        _ => println!(
+                                                                            "diff node eee2"
+                                                                        ),
                                                                     }
                                                                 }
                                                                 _ => println!(
                                                                     "diff4 {}",
-                                                                    second_child_element4firth.children.len()
+                                                                    second_child_element4firth
+                                                                        .children
+                                                                        .len()
                                                                 ),
                                                             }
                                                         }
                                                         _ => println!("diff node"),
-                                                        
                                                     }
                                                     match second_child_element3firth.children[1] {
-                                                        Node::Element(ref second_child_element4firth) => {
-                                                            match second_child_element4firth.children.len() {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
+                                                            match second_child_element4firth
+                                                                .children
+                                                                .len()
+                                                            {
                                                                 1 => {
-                                                                    match second_child_element4firth.children[0]{
-                                                                        Node::Text(ref texttext) => {
+                                                                    match second_child_element4firth
+                                                                        .children[0]
+                                                                    {
+                                                                        Node::Text(
+                                                                            ref texttext,
+                                                                        ) => {
                                                                             branch = texttext;
                                                                         }
-                                                                        _ => println!("diff node eee2"),
+                                                                        _ => println!(
+                                                                            "diff node eee2"
+                                                                        ),
                                                                     }
                                                                 }
                                                                 _ => println!(
                                                                     "diff4 {}",
-                                                                    second_child_element4firth.children.len()
+                                                                    second_child_element4firth
+                                                                        .children
+                                                                        .len()
                                                                 ),
                                                             }
                                                         }
                                                         _ => println!("diff node"),
                                                     }
                                                     match second_child_element3firth.children[2] {
-                                                        Node::Element(ref second_child_element4firth) => {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
                                                             match second_child_element4firth.children.len() {
                                                                 1 => {
                                                                     match second_child_element4firth.children[0]{
@@ -314,10 +341,47 @@ pub fn parse_github_html_second_part(second_child: &Node) {
 }
 
 pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node) {
+    let mut avatar_link: Option<String> = None;
     match inner_one_element {
-        Node::Element(ref inner_one_element1) => {
-            println!("inner_one_element1 {:#?}", inner_one_element1);
-        }
+        Node::Element(ref inner_one_element1) => match inner_one_element1.children.len() {
+            3 => match inner_one_element1.children[0] {
+                //todo 1 and 2
+                Node::Element(ref inner_one_element1first) => {
+                    match inner_one_element1first.children.len() {
+                        1 => match inner_one_element1first.children[0] {
+                            Node::Element(ref inner_one_element1first1) => {
+                                match inner_one_element1first1.children.len() {
+                                    1 => match inner_one_element1first1.children[0] {
+                                        Node::Element(ref inner_one_element1first11) => {
+                                            // println!(
+                                            //     "inner_one_element1first11 {:#?}",
+                                            //     inner_one_element1first11.attributes["src"]
+                                            // );
+                                            avatar_link = inner_one_element1first11.attributes["src"].clone();//.as_ref()
+                                        }
+                                        _ => println!("diff node"),
+                                    },
+                                    _ => {
+                                        println!(
+                                            "diff2 {}",
+                                            inner_one_element1first1.children.len()
+                                        );
+                                    }
+                                }
+                            }
+                            _ => println!("diff node"),
+                        },
+                        _ => {
+                            println!("diff2 {}", inner_one_element1first.children.len());
+                        }
+                    }
+                }
+                _ => println!("diff node"),
+            },
+            _ => {
+                println!("diff2 {}", inner_one_element1.children.len());
+            }
+        },
         _ => println!("diff node"),
     }
 }
