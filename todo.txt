@@ -179,3 +179,5 @@ We can specify part of a test name, and any test whose name matches that value w
 its solution for github actions test running command
 --------------------
 write some logic and flag what choose between config values and in code constants for more efficient production variant 
+--------------------
+google some style guide variable naming for project(parsing espesially) and rename variables
