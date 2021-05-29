@@ -218,7 +218,6 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                         _ => println!("diff node"),
                                                         
                                                     }
-                                                    // println!("second_child_element3firth.children[1] {:#?}", second_child_element3firth.children[1]);
                                                     match second_child_element3firth.children[1] {
                                                         Node::Element(ref second_child_element4firth) => {
                                                             match second_child_element4firth.children.len() {
@@ -238,9 +237,37 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                         }
                                                         _ => println!("diff node"),
                                                     }
-                                                    // match second_child_element3firth.children[2] {
-
-                                                    // }
+                                                    match second_child_element3firth.children[2] {
+                                                        Node::Element(ref second_child_element4firth) => {
+                                                            match second_child_element4firth.children.len() {
+                                                                1 => {
+                                                                    match second_child_element4firth.children[0]{
+                                                                        Node::Element(ref second_child_element5firth) => {
+                                                                            match second_child_element5firth.children.len() {
+                                                                                1 => {
+                                                                                    println!("1");
+                                                                                    parse_github_html_second_part_inner_one_element(&second_child_element5firth.children[0])
+                                                                                }
+                                                                                3 => {
+                                                                                    println!("3");
+                                                                                }
+                                                                                _ => println!(
+                                                                                    "diff4 {}",
+                                                                                    second_child_element4firth.children.len()
+                                                                                ),
+                                                                            }
+                                                                        }
+                                                                         _ => println!("diff node"),
+                                                                    }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff4 {}",
+                                                                    second_child_element4firth.children.len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("diff node"),
+                                                    }
                                                 }
                                                 _ => println!(
                                                     "diff4 {}",
@@ -283,5 +310,14 @@ pub fn parse_github_html_second_part(second_child: &Node) {
     // println!("date {}", date);
     // println!("repository {}", repository);
     // println!("actionto {}", actionto);
-    println!("branch {}", branch);
+    // println!("branch {}", branch);
+}
+
+pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node) {
+    match inner_one_element {
+        Node::Element(ref inner_one_element1) => {
+            println!("inner_one_element1 {:#?}", inner_one_element1);
+        }
+        _ => println!("diff node"),
+    }
 }
