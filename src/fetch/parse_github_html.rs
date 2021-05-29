@@ -342,46 +342,70 @@ pub fn parse_github_html_second_part(second_child: &Node) {
 
 pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node) {
     let mut avatar_link: Option<String> = None;
+    let mut relative_commit_link: Option<String> = None;
     match inner_one_element {
         Node::Element(ref inner_one_element1) => match inner_one_element1.children.len() {
-            3 => match inner_one_element1.children[0] {
-                //todo 1 and 2
-                Node::Element(ref inner_one_element1first) => {
-                    match inner_one_element1first.children.len() {
-                        1 => match inner_one_element1first.children[0] {
-                            Node::Element(ref inner_one_element1first1) => {
-                                match inner_one_element1first1.children.len() {
-                                    1 => match inner_one_element1first1.children[0] {
-                                        Node::Element(ref inner_one_element1first11) => {
-                                            // println!(
-                                            //     "inner_one_element1first11 {:#?}",
-                                            //     inner_one_element1first11.attributes["src"]
-                                            // );
-                                            avatar_link = inner_one_element1first11.attributes["src"].clone();//.as_ref()
+            3 => {
+                match inner_one_element1.children[0] {
+                    //todo 1 and 2
+                    Node::Element(ref inner_one_element1first) => {
+                        match inner_one_element1first.children.len() {
+                            1 => match inner_one_element1first.children[0] {
+                                Node::Element(ref inner_one_element1first1) => {
+                                    match inner_one_element1first1.children.len() {
+                                        1 => match inner_one_element1first1.children[0] {
+                                            Node::Element(ref inner_one_element1first11) => {
+                                                avatar_link = inner_one_element1first11.attributes
+                                                    ["src"]
+                                                    .clone(); //.as_ref()
+                                            }
+                                            _ => println!("diff node"),
+                                        },
+                                        _ => {
+                                            println!(
+                                                "diff2 {}",
+                                                inner_one_element1first1.children.len()
+                                            );
                                         }
-                                        _ => println!("diff node"),
-                                    },
-                                    _ => {
-                                        println!(
-                                            "diff2 {}",
-                                            inner_one_element1first1.children.len()
-                                        );
                                     }
                                 }
+                                _ => println!("diff node"),
+                            },
+                            _ => {
+                                println!("diff2 {}", inner_one_element1first.children.len());
                             }
-                            _ => println!("diff node"),
-                        },
-                        _ => {
-                            println!("diff2 {}", inner_one_element1first.children.len());
                         }
                     }
+                    _ => println!("diff node"),
                 }
-                _ => println!("diff node"),
-            },
+                match inner_one_element1.children[1] {
+                    Node::Element(ref inner_one_element1second) => {
+                        match inner_one_element1second.children.len() {
+                            1 => match inner_one_element1second.children[0] {
+                                Node::Element(ref inner_one_element1second1) => {
+                                    relative_commit_link =
+                                        inner_one_element1second1.attributes["href"].clone()
+                                }
+                                _ => println!("diff node"),
+                            },
+                            _ => {
+                                println!("diff2 {}", inner_one_element1second.children.len());
+                            }
+                        }
+                    }
+                    _ => println!("diff node"),
+                }
+                // println!(
+                //     "inner_one_element1.children[2] {:#?}",
+                //     inner_one_element1.children[2]
+                // );
+            }
             _ => {
                 println!("diff2 {}", inner_one_element1.children.len());
             }
         },
         _ => println!("diff node"),
     }
+    // println!("avatar_link {:#?}", avatar_link);
+    // println!("relative_commit_link {:#?}", relative_commit_link);
 }
