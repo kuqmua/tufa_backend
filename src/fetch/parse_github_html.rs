@@ -95,7 +95,8 @@ pub fn parse_github_html_second_part(second_child: &Node) {
     let mut repository: &str = "norepository";
     let mut datejs: Option<String> = None;
     let mut date: &str = "nodate";
-    let mut actionto: &str = "actionto";
+    let mut actionto: &str = "noactionto";
+    let mut branch: &str = "nobranch";
     match second_child {
         Node::Element(ref second_child_element1) => {
             match second_child_element1.children.len() {
@@ -217,9 +218,26 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                         _ => println!("diff node"),
                                                         
                                                     }
-                                                    // match second_child_element3firth.children[1] {
-
-                                                    // }
+                                                    // println!("second_child_element3firth.children[1] {:#?}", second_child_element3firth.children[1]);
+                                                    match second_child_element3firth.children[1] {
+                                                        Node::Element(ref second_child_element4firth) => {
+                                                            match second_child_element4firth.children.len() {
+                                                                1 => {
+                                                                    match second_child_element4firth.children[0]{
+                                                                        Node::Text(ref texttext) => {
+                                                                            branch = texttext;
+                                                                        }
+                                                                        _ => println!("diff node eee2"),
+                                                                    }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff4 {}",
+                                                                    second_child_element4firth.children.len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("diff node"),
+                                                    }
                                                     // match second_child_element3firth.children[2] {
 
                                                     // }
@@ -264,5 +282,6 @@ pub fn parse_github_html_second_part(second_child: &Node) {
     // println!("datejs {:#?}", datejs);
     // println!("date {}", date);
     // println!("repository {}", repository);
-    println!("actionto {}", actionto);
+    // println!("actionto {}", actionto);
+    println!("branch {}", branch);
 }
