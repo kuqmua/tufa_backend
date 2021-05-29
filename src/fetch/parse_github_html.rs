@@ -343,6 +343,7 @@ pub fn parse_github_html_second_part(second_child: &Node) {
 pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node) {
     let mut avatar_link: Option<String> = None;
     let mut relative_commit_link: Option<String> = None;
+    let mut commit_text: &str = "nocommittext";
     match inner_one_element {
         Node::Element(ref inner_one_element1) => match inner_one_element1.children.len() {
             3 => {
@@ -395,6 +396,35 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                     }
                     _ => println!("diff node"),
                 }
+                match inner_one_element1.children[2] {
+                    Node::Element(ref inner_one_element1third) => {
+                        match inner_one_element1third.children.len() {
+                            1 => match inner_one_element1third.children[0] {
+                                Node::Element(ref inner_one_element1third1) => {
+                                    match inner_one_element1third1.children.len() {
+                                        1 => match inner_one_element1third1.children[0] {
+                                            Node::Text(ref texttext) => {
+                                                commit_text = texttext;
+                                            }
+                                            _ => println!("diff node"),
+                                        },
+                                        _ => {
+                                            println!(
+                                                "diff2 {}",
+                                                inner_one_element1third1.children.len()
+                                            );
+                                        }
+                                    }
+                                }
+                                _ => println!("diff node"),
+                            },
+                            _ => {
+                                println!("diff2 {}", inner_one_element1third.children.len());
+                            }
+                        }
+                    }
+                    _ => println!("diff node"),
+                }
                 // println!(
                 //     "inner_one_element1.children[2] {:#?}",
                 //     inner_one_element1.children[2]
@@ -408,4 +438,5 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
     }
     // println!("avatar_link {:#?}", avatar_link);
     // println!("relative_commit_link {:#?}", relative_commit_link);
+    // println!("commit_text {:#?}", commit_text);
 }
