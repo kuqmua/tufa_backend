@@ -1,5 +1,5 @@
 mod fetch {
-    pub mod parse_github_html;
+    // pub mod parse_github_html;
     pub mod rss_async_write_fetch_error_logs_into_file;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_check_available_providers;
@@ -80,8 +80,6 @@ mod check_new_posts_threads_parts;
 mod entry;
 mod project_constants;
 
-use entry::entry;
-
 #[macro_use]
 extern crate lazy_static;
 
@@ -99,7 +97,7 @@ mod tests {
 fn main() {
     //with logs there is so much spam...
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
-    entry();
+    entry::entry();
 }
 
 // use std::sync::mpsc::channel;

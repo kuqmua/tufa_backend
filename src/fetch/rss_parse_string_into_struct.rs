@@ -13,7 +13,7 @@ use crate::fetch::info_structures::structs_for_parsing::habr_struct_for_parsing:
 use crate::fetch::info_structures::structs_for_parsing::medrxiv_struct_for_parsing::MedrxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsing::RedditStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
-use crate::fetch::parse_github_html::parse_github_html;
+// use crate::fetch::parse_github_html::parse_github_html;
 
 use serde_xml_rs::from_str;
 
@@ -530,9 +530,9 @@ pub fn rss_parse_string_into_struct(
                                         CommonRssPostStruct::new();
                                     loop {
                                         if count < rss_struct.entries.len() {
-                                            parse_github_html(
-                                                rss_struct.entries[count].content.clone(),
-                                            );
+                                            // parse_github_html(
+                                            //     rss_struct.entries[count].content.clone(),
+                                            // );
                                             rss_page_struct.items.push(
                                                 CommonRssPost::initialize_with_params(
                                                     //todo option fields
