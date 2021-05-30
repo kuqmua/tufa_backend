@@ -9,14 +9,13 @@ pub struct UserCredentialsStruct {
 
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        let mut config = Config::new();
-        config.merge(File::with_name(&format!(
-            "{}{}",
-            PATH_TO_CONFIG, USER_CREDENTIALS_FILE_NAME
-        )))?;
-        config.try_into()
-    }
-    pub fn test_values() -> Result<Self, ConfigError> {
+        //mode_handler: Option<&str>
+        //  match mode_handler {
+        //     Some(mode) => {}
+        //     None => {
+                
+        //     }
+        //  }
         let mut config = Config::new();
         config.merge(File::with_name(&format!(
             "{}{}",

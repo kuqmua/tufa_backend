@@ -16,19 +16,24 @@ pub struct ConfigStruct {
 }
 
 impl ConfigStruct {
-    pub fn new() -> Result<Self, ConfigError> {
-        // RUN_ENV=Testing cargo run
-        let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
-        let mut config = Config::new();
-        config.set("env", env.clone())?;
-        config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, env)))?;
-        config.try_into()
-    }
-    pub fn test_values(mode: &str) -> Result<Self, ConfigError> {
-        let mut config = Config::new();
-        config.set("env", mode)?;
-        config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, mode)))?;
-        config.try_into()
+    pub fn new(mode_handler: Option<&str>) -> Result<Self, ConfigError> {
+        match mode_handler {
+            Some(mode) => {
+                //for tests - maybe remove and copy code for testing later but its more comfortable for now
+                let mut config = Config::new();
+                config.set("env", mode)?;
+                config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, mode)))?;
+                config.try_into()
+            }
+            None => {
+                // RUN_ENV=Testing cargo run
+                let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
+                let mut config = Config::new();
+                config.set("env", env.clone())?;
+                config.merge(File::with_name(&format!("{}{}", PATH_TO_CONFIG, env)))?;
+                config.try_into()
+            }
+        }
     }
 }
 

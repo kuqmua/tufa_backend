@@ -6,10 +6,10 @@ use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
     let user_credentials_for_test: UserCredentialsStruct =
-        UserCredentialsStruct::test_values().expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
+        UserCredentialsStruct::new().expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
     for mode in VECTOR_OF_MODES {
         let config_for_test: ConfigStruct =
-            ConfigStruct::test_values(*mode).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
+            ConfigStruct::new(Some(*mode)).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let reddit_user_agent = &user_credentials_for_test
             .reddit_authorization
             .reddit_user_agent;
