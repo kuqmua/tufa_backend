@@ -101,6 +101,7 @@ pub fn parse_github_html_second_part(second_child: &Node) {
         Node::Element(ref second_child_element1) => {
             match second_child_element1.children.len() {
                 1 => {
+                    //  println!("second_child_element1.children {:#?}", second_child_element1.children);
                     // println!("1");
                     match second_child_element1.children[0] {
                         Node::Element(ref second_child_element2) => {
@@ -315,8 +316,41 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                     }
                 }
                 2 => {
-                    //here todo
-                     println!("second_child_element1.children {:#?}", second_child_element1.children);
+                    match second_child_element1.children[0] {
+                        Node::Element(ref second_child_element2) => {
+                            match second_child_element2.children.len() {
+                                1 => match second_child_element2.children[0] {
+                                    Node::Element(ref second_child_element3) => {
+                                        match second_child_element3.children.len() {
+                                            1 => {
+                                                two_elements_one_child(
+                                                    &second_child_element3.children[0],
+                                                );
+                                            }
+                                            4 => {
+                                                println!("5iiiiiiii");
+                                            }
+                                            6 => {
+                                                println!("6iiiiiiii");
+                                            }
+                                            _ => {
+                                                println!(
+                                                    "diff255 {}",
+                                                    second_child_element3.children.len()
+                                                );
+                                            }
+                                        }
+                                    }
+                                    _ => println!("diff node"),
+                                },
+                                _ => {
+                                    println!("diff255 {}", second_child_element2.children.len());
+                                }
+                            }
+                        }
+                        _ => println!("diff node"),
+                    }
+                    //here todo 2
                     // println!("2f");
                 }
                 5 => {
@@ -482,4 +516,12 @@ pub fn second_element(second_element: &Node) {
     // println!("data_id {:#?}", data_id);
     // println!("href {:#?}", href);
     // println!("data_url {:#?}", data_url);
+}
+pub fn two_elements_one_child(element: &Node) {
+    match element {
+        Node::Element(ref element1) => {
+            println!("ffff {}", element1.children.len());
+        }
+        _ => println!("diff node"),
+    }
 }
