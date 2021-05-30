@@ -183,5 +183,3 @@ write some logic and flag what choose between config values and in code constant
 google some style guide variable naming for project(parsing espesially) and rename variables
 --------------------
 [dependencies] and [dev-dependencies] 
---------------------
-create lib.rs and move all mod declaration into it from main.rs
