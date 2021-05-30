@@ -36,13 +36,13 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      - name: Rustup default nightly
-        run: rustup default nightly
+      # - name: Rustup default nightly
+      #   run: rustup default nightly
 
       - name: build
         uses: actions-rs/cargo@v1
         with:
           command: build
+
       - name: test CI
         run: cargo test ci
-#+nightly
