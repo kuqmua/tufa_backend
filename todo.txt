@@ -185,3 +185,7 @@ google some style guide variable naming for project(parsing espesially) and rena
 [dependencies] and [dev-dependencies] 
 --------------------
 pub const PROJECT_MODE: &str = "Development";//later as ENV variable only
+----------------------------
+impl UserCredentialsStruct {
+    pub fn new() -> Result<Self, ConfigError> {
+        maybe add different user logic later ?

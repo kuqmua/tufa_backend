@@ -9,13 +9,7 @@ pub struct UserCredentialsStruct {
 
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        //mode_handler: Option<&str>
-        //  match mode_handler {
-        //     Some(mode) => {}
-        //     None => {
-                
-        //     }
-        //  }
+        // maybe add different user logic later ?
         let mut config = Config::new();
         config.merge(File::with_name(&format!(
             "{}{}",
