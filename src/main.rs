@@ -60,6 +60,7 @@ mod get_project_information {
         pub mod user_credentials_structures;
     }
     pub mod get_twitter_providers_names;
+    pub mod project_constants;
 }
 mod check_net {
     pub mod check_link;
@@ -78,7 +79,6 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
-mod project_constants;
 
 #[macro_use]
 extern crate lazy_static;
@@ -89,6 +89,7 @@ mod tests {
         pub mod ci_check_compromised_reddit_auth_info;
         pub mod ci_check_config_files_exists;
     }
+    mod tests_constants;
 }
 
 // use log::LevelFilter;

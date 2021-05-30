@@ -1,5 +1,5 @@
-use crate::project_constants::PATH_TO_CONFIG;
-use crate::project_constants::PROJECT_MODE;
+use crate::get_project_information::project_constants::PATH_TO_CONFIG;
+use crate::get_project_information::project_constants::PROJECT_MODE;
 use config::{Config, ConfigError, File};
 use std::fmt;
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,

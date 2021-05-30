@@ -1,5 +1,5 @@
-use crate::project_constants::PATH_TO_CONFIG;
-use crate::project_constants::USER_CREDENTIALS_FILE_NAME;
+use crate::get_project_information::project_constants::PATH_TO_CONFIG;
+use crate::get_project_information::project_constants::USER_CREDENTIALS_FILE_NAME;
 use config::{Config, ConfigError, File};
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
 pub struct UserCredentialsStruct {
