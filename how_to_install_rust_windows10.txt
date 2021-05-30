@@ -30,7 +30,7 @@ You are probably missing the "Windows 10 SDK".
 Restart the "Build Tools for Visual Studio 2019 Installer"
 In the tile "Visual Studio Build Tools 2019" press "Modify"
 Under C++ Tools enable the "Windows 10 SDK", which at the time of writing is 10.0.18362.0.
-(тут была картинка)
+(picture)
 cargo command not found
 You are probably missing cargo in your %PATH%.
 

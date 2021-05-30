@@ -80,9 +80,6 @@ mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 
-#[macro_use]
-extern crate lazy_static;
-
 #[cfg(test)]
 mod tests {
     pub mod continuous_integration {
@@ -91,6 +88,9 @@ mod tests {
     }
     mod tests_constants;
 }
+
+#[macro_use]
+extern crate lazy_static;
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};
