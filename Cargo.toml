@@ -33,7 +33,7 @@ num_cpus = "1.0"
 # xml-rs = "0.8" 
 # xmlparser = "0.13.2" 
 #google-youtube3-cli = "1.0.13+20200402" коммандная строка - не то но как вариант можно стырить кое че
-strum = { version = "0.20", features = ["derive"] }#for enum into string
+# strum = { version = "0.20", features = ["derive"] }#for enum into string
 toml = "0.5"
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 # warp = "0.2"
