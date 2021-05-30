@@ -315,7 +315,9 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                     }
                 }
                 2 => {
-                    println!("2f");
+                    //here todo
+                     println!("second_child_element1.children {:#?}", second_child_element1.children);
+                    // println!("2f");
                 }
                 5 => {
                     println!("5f");
@@ -344,108 +346,140 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
     let mut avatar_link: Option<String> = None;
     let mut relative_commit_link: Option<String> = None;
     let mut commit_text: &str = "nocommittext";
+    let mut from_text: &str = "nofromtext";
     match inner_one_element {
-        Node::Element(ref inner_one_element1) => match inner_one_element1.children.len() {
-            3 => {
-                match inner_one_element1.children[0] {
-                    //todo 1 and 2
-                    Node::Element(ref inner_one_element1first) => {
-                        match inner_one_element1first.children.len() {
-                            1 => match inner_one_element1first.children[0] {
-                                Node::Element(ref inner_one_element1first1) => {
-                                    match inner_one_element1first1.children.len() {
-                                        0 => {}
-                                        1 => match inner_one_element1first1.children[0] {
-                                            Node::Element(ref inner_one_element1first11) => {
-                                                avatar_link = inner_one_element1first11.attributes
-                                                    ["src"]
-                                                    .clone(); //.as_ref()
+        Node::Element(ref inner_one_element1) => {
+            match inner_one_element1.children.len() {
+                3 => {
+                    match inner_one_element1.children[0] {
+                        //todo 1 and 2
+                        Node::Element(ref inner_one_element1first) => {
+                            match inner_one_element1first.children.len() {
+                                1 => match inner_one_element1first.children[0] {
+                                    Node::Element(ref inner_one_element1first1) => {
+                                        match inner_one_element1first1.children.len() {
+                                            0 => {}
+                                            1 => match inner_one_element1first1.children[0] {
+                                                Node::Element(ref inner_one_element1first11) => {
+                                                    avatar_link = inner_one_element1first11
+                                                        .attributes["src"]
+                                                        .clone(); //.as_ref()
+                                                }
+                                                _ => println!("diff node"),
+                                            },
+                                            _ => {
+                                                println!(
+                                                    "diff24 {}",
+                                                    inner_one_element1first1.children.len()
+                                                );
                                             }
-                                            _ => println!("diff node"),
-                                        },
-                                        _ => {
-                                            println!(
-                                                "diff24 {}",
-                                                inner_one_element1first1.children.len()
-                                            );
                                         }
                                     }
+                                    _ => println!("diff node"),
+                                },
+                                _ => {
+                                    println!("diff23 {}", inner_one_element1first.children.len());
                                 }
-                                _ => println!("diff node"),
-                            },
-                            _ => {
-                                println!("diff23 {}", inner_one_element1first.children.len());
                             }
                         }
+                        _ => println!("diff node"),
                     }
-                    _ => println!("diff node"),
-                }
-                match inner_one_element1.children[1] {
-                    Node::Element(ref inner_one_element1second) => {
-                        match inner_one_element1second.children.len() {
-                            1 => match inner_one_element1second.children[0] {
-                                Node::Element(ref inner_one_element1second1) => {
-                                    relative_commit_link =
-                                        inner_one_element1second1.attributes["href"].clone()
+                    match inner_one_element1.children[1] {
+                        Node::Element(ref inner_one_element1second) => {
+                            match inner_one_element1second.children.len() {
+                                1 => match inner_one_element1second.children[0] {
+                                    Node::Element(ref inner_one_element1second1) => {
+                                        relative_commit_link =
+                                            inner_one_element1second1.attributes["href"].clone()
+                                    }
+                                    _ => println!("diff node"),
+                                },
+                                _ => {
+                                    println!("diff22 {}", inner_one_element1second.children.len());
                                 }
-                                _ => println!("diff node"),
-                            },
-                            _ => {
-                                println!("diff22 {}", inner_one_element1second.children.len());
                             }
                         }
+                        _ => println!("diff node"),
                     }
-                    _ => println!("diff node"),
-                }
-                match inner_one_element1.children[2] {
-                    Node::Element(ref inner_one_element1third) => {
-                        match inner_one_element1third.children.len() {
-                            1 => match inner_one_element1third.children[0] {
-                                Node::Element(ref inner_one_element1third1) => {
-                                    match inner_one_element1third1.children.len() {
-                                        1 => match inner_one_element1third1.children[0] {
-                                            Node::Text(ref texttext) => {
-                                                commit_text = texttext;
+                    match inner_one_element1.children[2] {
+                        Node::Element(ref inner_one_element1third) => {
+                            match inner_one_element1third.children.len() {
+                                1 => match inner_one_element1third.children[0] {
+                                    Node::Element(ref inner_one_element1third1) => {
+                                        match inner_one_element1third1.children.len() {
+                                            1 => {
+                                                commit_text = handle_text_element(
+                                                    &inner_one_element1third1.children[0],
+                                                );
                                             }
-                                            _ => println!("diff node"),
-                                        },
-                                        3 => {
-                                            println!("3uuu");
-                                            // match inner_one_element1third1.children[0] {
-                                            // Node::Text(ref texttext) => {
-                                            //     commit_text = texttext;
-                                            // }
-                                            // _ => println!("diff node"),
-                                            // }
-                                        }
-                                        5 => {
-                                            println!("5uuu");
-                                        }
-                                        _ => {
-                                            println!(
+                                            3 => {
+                                                commit_text = handle_text_element(
+                                                    &inner_one_element1third1.children[0],
+                                                );
+                                                second_element(
+                                                    &inner_one_element1third1.children[1],
+                                                );
+                                                from_text = handle_text_element(
+                                                    &inner_one_element1third1.children[2],
+                                                );
+                                            }
+                                            5 => {
+                                                //todo
+                                                println!("5uuu");
+                                            }
+                                            _ => println!(
                                                 "diff21 {}",
                                                 inner_one_element1third1.children.len()
-                                            );
+                                            ),
                                         }
                                     }
-                                }
-                                _ => println!("diff node"),
-                            },
-                            _ => {
-                                println!("diff27 {}", inner_one_element1third.children.len());
+                                    _ => println!("diff node"),
+                                },
+                                _ => println!("diff27 {}", inner_one_element1third.children.len()),
                             }
                         }
+                        _ => println!("diff node"),
                     }
-                    _ => println!("diff node"),
                 }
+                _ => println!("diff26 {}", inner_one_element1.children.len()),
             }
-            _ => {
-                println!("diff26 {}", inner_one_element1.children.len());
-            }
-        },
+        }
         _ => println!("diff node"),
     }
     // println!("avatar_link {:#?}", avatar_link);
     // println!("relative_commit_link {:#?}", relative_commit_link);
     // println!("commit_text {:#?}", commit_text);
+    // println!("from_text {:#?}", from_text);
+}
+pub fn handle_text_element(first_element: &Node) -> &str {
+    let mut text_handle: &str = "";
+    match first_element {
+        Node::Text(ref text) => {
+            text_handle = text;
+        }
+        _ => println!("diff node"),
+    }
+    text_handle
+}
+pub fn second_element(second_element: &Node) {
+    let mut data_hovercard_type: Option<String> = None;
+    let mut data_hovercard_url: Option<String> = None;
+    let mut data_hovercard_url: Option<String> = None;
+    let mut href: Option<String> = None;
+    let mut data_url: Option<String> = None;
+    match second_element {
+        Node::Element(ref second_element1) => {
+            data_hovercard_type = second_element1.attributes["data-hovercard-type"].clone();
+            data_hovercard_url = second_element1.attributes["data-hovercard-url"].clone();
+            data_id = second_element1.attributes["data-id"].clone();
+            href = second_element1.attributes["href"].clone();
+            data_url = second_element1.attributes["data-url"].clone();
+        }
+        _ => println!("diff node"),
+    }
+    // println!("data_hovercard_type {:#?}", data_hovercard_type);
+    // println!("data_hovercard_url {:#?}", data_hovercard_url);
+    // println!("data_id {:#?}", data_id);
+    // println!("href {:#?}", href);
+    // println!("data_url {:#?}", data_url);
 }
