@@ -464,7 +464,7 @@ pub fn handle_text_element(first_element: &Node) -> &str {
 pub fn second_element(second_element: &Node) {
     let mut data_hovercard_type: Option<String> = None;
     let mut data_hovercard_url: Option<String> = None;
-    let mut data_hovercard_url: Option<String> = None;
+    let mut data_id: Option<String> = None;
     let mut href: Option<String> = None;
     let mut data_url: Option<String> = None;
     match second_element {
