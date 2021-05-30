@@ -183,3 +183,5 @@ write some logic and flag what choose between config values and in code constant
 google some style guide variable naming for project(parsing espesially) and rename variables
 --------------------
 [dependencies] and [dev-dependencies] 
+--------------------
+pub const PROJECT_MODE: &str = "Development";//later as ENV variable only
