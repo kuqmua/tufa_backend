@@ -1,4 +1,4 @@
-#[derive(Clone, Debug,  serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize)]
 pub enum ProviderKind {
     Arxiv,
     Biorxiv,

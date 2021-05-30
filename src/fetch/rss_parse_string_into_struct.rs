@@ -17,6 +17,8 @@ use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsi
 
 use serde_xml_rs::from_str;
 
+use regex::Regex;
+
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
@@ -216,19 +218,24 @@ pub fn rss_parse_string_into_struct(
                     }
                     if let ProviderKind::Medrxiv = provider_kind {
                         fetch_result_string.remove(0);
-                        while fetch_result_string.contains("<dc:title>") {
-                            match fetch_result_string.find("</dc:title>") {
-                                Some(_) => {
-                                    fetch_result_string =
-                                        fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                                    fetch_result_string =
-                                        fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                                }
-                                None => {
-                                    break;
-                                }
-                            }
-                        }
+                        let re = Regex::new(r"<dc:title>").unwrap();
+                        fetch_result_string = re.replace_all(&fetch_result_string, "<dccfifle>").to_string();
+                        let re = Regex::new(r"</dc:title>").unwrap();
+                        fetch_result_string = re.replace_all(&fetch_result_string, "</dccfifle>").to_string();
+                        
+                        // while fetch_result_string.contains("<dc:title>") {
+                        //     match fetch_result_string.find("</dc:title>") {
+                        //         Some(_) => {
+                        //             fetch_result_string =
+                        //                 fetch_result_string.replace("<dc:title>", "<dcstitle>");
+                        //             fetch_result_string =
+                        //                 fetch_result_string.replace("</dc:title>", "</dcstitle>");
+                        //         }
+                        //         None => {
+                        //             break;
+                        //         }
+                        //     }
+                        // }
                     }
                     if let ProviderKind::Biorxiv = provider_kind {
                         while fetch_result_string.contains("<dc:title>") {
@@ -1052,6 +1059,7 @@ pub fn rss_parse_string_into_struct(
             }
         }
     }
+    println!("{:#?}", rss_post_struct_handle);
 
     (rss_post_struct_handle, are_there_items_handle)
 }
