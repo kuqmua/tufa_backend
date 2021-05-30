@@ -44,7 +44,5 @@ jobs:
         with:
           command: build
       - name: test CI
-        # uses: actions-rs/cargo@v1
-        run: cargo +nightly test ci
-        # with:
-          # command: test ci
+        run: cargo test ci
+#+nightly
