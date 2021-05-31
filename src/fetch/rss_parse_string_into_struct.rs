@@ -19,6 +19,13 @@ use serde_xml_rs::from_str;
 
 use regex::Regex;
 
+// use std::time::Instant;
+// let time = Instant::now();
+// println!(
+//     "weeeeeeeee in {}.{}ms abs",
+//     time.elapsed().as_secs(),
+//     time.elapsed().as_millis()
+// );
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
@@ -198,75 +205,49 @@ pub fn rss_parse_string_into_struct(
                                 );
                             }
                         }
-                        while fetch_result_string.contains("<dc:creator>") {
-                            match fetch_result_string.find("</dc:creator>") {
-                                Some(_) => {
-                                    fetch_result_string =
-                                        fetch_result_string.replace("<dc:creator>", "<creator>");
-                                    fetch_result_string =
-                                        fetch_result_string.replace("</dc:creator>", "</creator>");
-                                }
-                                None => {
-                                    break;
-                                }
-                            }
-                        }
-                        while fetch_result_string.contains("<atom:link") {
-                            fetch_result_string =
-                                fetch_result_string.replace("<atom:link", "<atom_link");
-                        }
+                        let re = Regex::new("<dc:creator>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "bbb<creator>")
+                            .to_string();
+                        let re = Regex::new("</dc:creator>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "bbb</creator>")
+                            .to_string();
+                        let re = Regex::new("<atom:link").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "<atom_link")
+                            .to_string();
                     }
                     if let ProviderKind::Medrxiv = provider_kind {
                         fetch_result_string.remove(0);
-                        let re = Regex::new(r"<dc:title>").unwrap();
-                        fetch_result_string = re.replace_all(&fetch_result_string, "<dccfifle>").to_string();
-                        let re = Regex::new(r"</dc:title>").unwrap();
-                        fetch_result_string = re.replace_all(&fetch_result_string, "</dccfifle>").to_string();
-                        
-                        // while fetch_result_string.contains("<dc:title>") {
-                        //     match fetch_result_string.find("</dc:title>") {
-                        //         Some(_) => {
-                        //             fetch_result_string =
-                        //                 fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                        //             fetch_result_string =
-                        //                 fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                        //         }
-                        //         None => {
-                        //             break;
-                        //         }
-                        //     }
-                        // }
+                        let re = Regex::new("<dc:title>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "<dccfifle>")
+                            .to_string();
+                        let re = Regex::new("</dc:title>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "</dccfifle>")
+                            .to_string();
                     }
                     if let ProviderKind::Biorxiv = provider_kind {
-                        while fetch_result_string.contains("<dc:title>") {
-                            match fetch_result_string.find("</dc:title>") {
-                                Some(_) => {
-                                    fetch_result_string =
-                                        fetch_result_string.replace("<dc:title>", "<dcstitle>");
-                                    fetch_result_string =
-                                        fetch_result_string.replace("</dc:title>", "</dcstitle>");
-                                }
-                                None => {
-                                    break;
-                                }
-                            }
-                        }
+                        let re = Regex::new("<dc:title>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "<dcstitle>")
+                            .to_string();
+                        let re = Regex::new("</dc:title>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "</dcstitle>")
+                            .to_string();
                     }
                     if let ProviderKind::Habr = provider_kind {
-                        while fetch_result_string.contains("<channel>") {
-                            match fetch_result_string.find("</channel>") {
-                                Some(_) => {
-                                    fetch_result_string =
-                                        fetch_result_string.replace("<channel>", "         "); //replace wuth same string len -> no second allocation then?
-                                    fetch_result_string =
-                                        fetch_result_string.replace("</channel>", "          ");
-                                    //replace wuth same string len -> no second allocation then?
-                                }
-                                None => {
-                                    break;
-                                }
-                            }
-                        }
+                        let re = Regex::new("<channel>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "         ")
+                            .to_string();
+                        let re = Regex::new("</channel>").unwrap();
+                        fetch_result_string = re
+                            .replace_all(&fetch_result_string, "          ")
+                            .to_string();
                     }
                     //preparation
                     match provider_kind {
@@ -1043,23 +1024,11 @@ pub fn rss_parse_string_into_struct(
                         }
                     }
                 }
-                _ => {
-                    if enable_error_prints {
-                        //разделить логику при помощи нахождения паттерна архива урла
-                        let warning_message =
-                            format!("wrong link or there is no items link: {}", value);
-                        print_warning_yellow(
-                            file!().to_string(),
-                            line!().to_string(),
-                            warning_message,
-                        );
-                    };
-                    are_there_items_handle = AreThereItems::NopeNoTag(fetch_result_string);
-                }
+                None => todo!(),
             }
         }
     }
-    println!("{:#?}", rss_post_struct_handle);
+    // println!("{:#?}", rss_post_struct_handle);
 
     (rss_post_struct_handle, are_there_items_handle)
 }
