@@ -160,16 +160,17 @@ pub fn rss_parse_string_into_struct(
         }
         _ => {
             let what_should_find_in_fetch_result_string: &str;
+            let item: &str = "</item>";
             match provider_kind {
-                ProviderKind::Arxiv => what_should_find_in_fetch_result_string = "</item>",
-                ProviderKind::Biorxiv => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Arxiv => what_should_find_in_fetch_result_string = item,
+                ProviderKind::Biorxiv => what_should_find_in_fetch_result_string = item,
                 ProviderKind::Github => what_should_find_in_fetch_result_string = "</entry>",
-                ProviderKind::Habr => what_should_find_in_fetch_result_string = "</item>",
-                ProviderKind::Medrxiv => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Habr => what_should_find_in_fetch_result_string = item,
+                ProviderKind::Medrxiv => what_should_find_in_fetch_result_string = item,
                 ProviderKind::Reddit => {
                     panic!("ProviderKind::Reddit not in the right place wtf1?")
                 }
-                ProviderKind::Twitter => what_should_find_in_fetch_result_string = "</item>",
+                ProviderKind::Twitter => what_should_find_in_fetch_result_string = item,
             }
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {
