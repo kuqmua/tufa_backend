@@ -174,80 +174,87 @@ pub fn rss_parse_string_into_struct(
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {
                     //preparation
-                    if let ProviderKind::Twitter = provider_kind {
-                        match fetch_result_string.find("<channel>") {
-                            Some(find_item_position_start) => {
-                                match fetch_result_string.find("</channel>") {
-                                    Some(find_item_position_end) => {
-                                        fetch_result_string = fetch_result_string
-                                            [find_item_position_start
-                                                ..find_item_position_end + "</channel>".len()]
-                                            .to_string();
-                                    }
-                                    _ => {
-                                        let warning_message: String =
-                                            format!("no </channel> in response link: {}", value);
-                                        print_warning_yellow(
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            warning_message,
-                                        );
+                    match provider_kind {
+                        ProviderKind::Twitter => {
+                            match fetch_result_string.find("<channel>") {
+                                Some(find_item_position_start) => {
+                                    match fetch_result_string.find("</channel>") {
+                                        Some(find_item_position_end) => {
+                                            fetch_result_string = fetch_result_string
+                                                [find_item_position_start
+                                                    ..find_item_position_end + "</channel>".len()]
+                                                .to_string();
+                                        }
+                                        _ => {
+                                            let warning_message: String = format!(
+                                                "no </channel> in response link: {}",
+                                                value
+                                            );
+                                            print_warning_yellow(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            );
+                                        }
                                     }
                                 }
+                                _ => {
+                                    let warning_message: String =
+                                        format!("no <channel> in response link: {}", value);
+                                    print_warning_yellow(
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        warning_message,
+                                    );
+                                }
                             }
-                            _ => {
-                                let warning_message: String =
-                                    format!("no <channel> in response link: {}", value);
-                                print_warning_yellow(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    warning_message,
-                                );
-                            }
+                            let re = Regex::new("<dc:creator>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "bbb<creator>")
+                                .to_string();
+                            let re = Regex::new("</dc:creator>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "bbb</creator>")
+                                .to_string();
+                            let re = Regex::new("<atom:link").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "<atom_link")
+                                .to_string();
                         }
-                        let re = Regex::new("<dc:creator>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "bbb<creator>")
-                            .to_string();
-                        let re = Regex::new("</dc:creator>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "bbb</creator>")
-                            .to_string();
-                        let re = Regex::new("<atom:link").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "<atom_link")
-                            .to_string();
-                    }
-                    if let ProviderKind::Medrxiv = provider_kind {
-                        fetch_result_string.remove(0);
-                        let re = Regex::new("<dc:title>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "<dccfifle>")
-                            .to_string();
-                        let re = Regex::new("</dc:title>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "</dccfifle>")
-                            .to_string();
-                    }
-                    if let ProviderKind::Biorxiv = provider_kind {
-                        let re = Regex::new("<dc:title>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "<dcstitle>")
-                            .to_string();
-                        let re = Regex::new("</dc:title>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "</dcstitle>")
-                            .to_string();
-                    }
-                    if let ProviderKind::Habr = provider_kind {
-                        let re = Regex::new("<channel>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "         ")
-                            .to_string();
-                        let re = Regex::new("</channel>").unwrap();
-                        fetch_result_string = re
-                            .replace_all(&fetch_result_string, "          ")
-                            .to_string();
+                        ProviderKind::Medrxiv => {
+                            fetch_result_string.remove(0);
+                            let re = Regex::new("<dc:title>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "<dccfifle>")
+                                .to_string();
+                            let re = Regex::new("</dc:title>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "</dccfifle>")
+                                .to_string();
+                        }
+                        ProviderKind::Biorxiv => {
+                            let re = Regex::new("<dc:title>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "<dcstitle>")
+                                .to_string();
+                            let re = Regex::new("</dc:title>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "</dcstitle>")
+                                .to_string();
+                        }
+                        ProviderKind::Habr => {
+                            let re = Regex::new("<channel>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "         ")
+                                .to_string();
+                            let re = Regex::new("</channel>").unwrap();
+                            fetch_result_string = re
+                                .replace_all(&fetch_result_string, "          ")
+                                .to_string();
+                        }
+                        ProviderKind::Arxiv => {}
+                        ProviderKind::Github => {}
+                        ProviderKind::Reddit => {}
                     }
                     //preparation
                     match provider_kind {
