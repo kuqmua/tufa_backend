@@ -189,3 +189,5 @@ pub const PROJECT_MODE: &str = "Development";//later as ENV variable only
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
         maybe add different user logic later ?
+----------------------------
+move get config and user credentials into config
