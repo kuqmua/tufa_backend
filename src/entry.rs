@@ -2,8 +2,8 @@ use crate::async_tokio_wrapper::async_tokio_wrapper;
 use std::time::Instant;
 
 use crate::check_net::check_link::check_link;
-use crate::get_project_information::get_config::get_config_information::CONFIG;
 use crate::overriding::prints::print_error_red;
+use get_config_lib::CONFIG;
 
 extern crate num_cpus;
 

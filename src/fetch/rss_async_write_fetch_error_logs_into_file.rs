@@ -4,8 +4,8 @@ use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
-use crate::get_project_information::get_config::get_config_information::CONFIG;
 use chrono::Local;
+use get_config_lib::CONFIG;
 use serde_json::json;
 use std::time::Instant;
 

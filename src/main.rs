@@ -51,14 +51,6 @@ mod get_project_information {
         pub mod generate_reddit_hashmap_links;
         pub mod generate_twitter_hashmap_links;
     }
-    pub mod get_config {
-        pub mod config_structures;
-        pub mod get_config_information;
-    }
-    pub mod get_user_credentials {
-        pub mod get_user_credentials_information;
-        pub mod user_credentials_structures;
-    }
     pub mod get_twitter_providers_names;
     pub mod project_constants;
 }
@@ -79,9 +71,6 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
-
-#[macro_use]
-extern crate lazy_static;
 
 // use log::LevelFilter;
 // use simplelog::{Config, TermLogger, TerminalMode};

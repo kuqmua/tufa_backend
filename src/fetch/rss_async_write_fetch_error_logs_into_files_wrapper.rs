@@ -7,7 +7,7 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
-use crate::get_project_information::get_config::get_config_information::CONFIG;
+use get_config_lib::CONFIG;
 
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     some_error_posts: Vec<(

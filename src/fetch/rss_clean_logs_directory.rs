@@ -1,6 +1,6 @@
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::get_project_information::get_config::get_config_information::CONFIG;
 use crate::overriding::prints::print_error_red;
+use get_config_lib::CONFIG;
 use std::fs;
 use std::path::Path;
 

@@ -36,7 +36,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use get_config_lib::USER_CREDENTIALS;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(

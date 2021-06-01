@@ -37,9 +37,8 @@ num_cpus = "1.0"
 toml = "0.5"
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 # warp = "0.2"
-config = "0.10"
-lazy_static = "1.4"
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 html_parser = "0.6.2"
 regex = "1.5"
 tests_lib = { path = "./libs/tests_lib" }
+get_config_lib = { path = "./libs/get_config_lib" }
