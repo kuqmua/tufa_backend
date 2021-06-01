@@ -3,4 +3,4 @@
 Cargo.lock
 /logs
 /.vscode
-/library/target
+/libs/*/target

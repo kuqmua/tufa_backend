@@ -193,3 +193,5 @@ impl UserCredentialsStruct {
 move get config and user credentials into config
 ----------------------------
 todo: add medium
+----------------------------
+cannot do cargo build while docker build with this library = { path = "./library" }

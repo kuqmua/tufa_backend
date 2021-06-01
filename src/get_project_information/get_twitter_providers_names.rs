@@ -4,8 +4,8 @@ pub fn get_twitter_providers_names() -> Vec<&'static str> {
         // "nitter.pussthecsat.org",
         // "nitter.nixnet.services",
         // "nitter.mastodont.cat",
-        "nitter.tedomum.net",
-        // "nitter.fdn.fr",
+        // "nitter.tedomum.net",
+        "nitter.fdn.fr",
         // "nitter.1d4.us",
         // "nitter.kavin.rocks", //not working i think
         // "tweet.lambda.dance",
