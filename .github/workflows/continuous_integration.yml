@@ -44,5 +44,5 @@ jobs:
         with:
           command: build
           
-      - name: cd library && cargo test ci
+      - name: cd libs/tests_lib && cargo test ci
         run: cd library && cargo test ci
