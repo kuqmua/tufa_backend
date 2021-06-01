@@ -191,3 +191,5 @@ impl UserCredentialsStruct {
         maybe add different user logic later ?
 ----------------------------
 move get config and user credentials into config
+----------------------------
+todo: add medium
