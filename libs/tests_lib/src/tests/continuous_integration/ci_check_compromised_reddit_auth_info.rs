@@ -1,23 +1,19 @@
-use get_config_lib::UserCredentialsStruct;
-use get_config_lib::USER_CREDENTIALS;
+use get_config_lib::get_project_information::get_config::config_structures::ConfigStruct;
+use get_config_lib::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
 
-use get_config_lib::ConfigStruct;
-use get_config_lib::CONFIG;
-
-// use crate::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
-// use crate::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
-
-use get_config_lib::LOAD_CONFIG_FILE_ERROR_MESSAGE;
-use get_config_lib::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+use get_config_lib::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+use get_config_lib::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+use get_config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 
 use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
     let user_credentials_for_test: UserCredentialsStruct =
-        UserCredentialsStruct::new().expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
+        UserCredentialsStruct::new(PATH_TO_CONFIG_FOR_TEST)
+            .expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
     for mode in VECTOR_OF_MODES {
-        let config_for_test: ConfigStruct =
-            ConfigStruct::new(Some(*mode)).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
+        let config_for_test: ConfigStruct = ConfigStruct::new(Some(*mode), PATH_TO_CONFIG_FOR_TEST)
+            .expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let reddit_user_agent = &user_credentials_for_test
             .reddit_authorization
             .reddit_user_agent;

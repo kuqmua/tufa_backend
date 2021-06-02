@@ -23,7 +23,7 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use get_config_lib::CONFIG;
+use get_config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 pub async fn check_new_posts_threads_parts() -> (
     Vec<CommonRssPostStruct>,

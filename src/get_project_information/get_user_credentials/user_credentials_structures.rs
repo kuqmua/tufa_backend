@@ -10,6 +10,10 @@ pub struct UserCredentialsStruct {
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
         // maybe add different user logic later ?
+        println!(
+            "ppppppppp{}",
+            format!("{}{}", PATH_TO_CONFIG, USER_CREDENTIALS_FILE_NAME)
+        );
         let mut config = Config::new();
         config.merge(File::with_name(&format!(
             "{}{}",

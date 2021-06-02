@@ -1,7 +1,3 @@
-mod get_project_information {
-    pub mod project_constants;
-}
-
 #[cfg(test)]
 mod tests {
     pub mod continuous_integration {

@@ -1,6 +1,6 @@
 use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use get_config_lib::CONFIG;
+use get_config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 pub fn rss_clean_logs_directory_wrapper() {
     if CONFIG

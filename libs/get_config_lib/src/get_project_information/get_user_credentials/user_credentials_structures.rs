@@ -1,4 +1,3 @@
-use crate::get_project_information::project_constants::PATH_TO_CONFIG;
 use crate::get_project_information::project_constants::USER_CREDENTIALS_FILE_NAME;
 use config::{Config, ConfigError, File};
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
@@ -8,13 +7,13 @@ pub struct UserCredentialsStruct {
 }
 
 impl UserCredentialsStruct {
-    pub fn new() -> Result<Self, ConfigError> {
+    pub fn new(path_to_config: &str) -> Result<Self, ConfigError> {
         // maybe add different user logic later ?
         println!("www");
         let mut config = Config::new();
         config.merge(File::with_name(&format!(
             "{}{}",
-            PATH_TO_CONFIG, USER_CREDENTIALS_FILE_NAME
+            path_to_config, USER_CREDENTIALS_FILE_NAME
         )))?;
         config.try_into()
     }
