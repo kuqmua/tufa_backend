@@ -1,7 +1,15 @@
-use crate::get_project_information::get_config::config_structures::ConfigStruct;
-use crate::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
-use crate::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
-use crate::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+use get_config_lib::UserCredentialsStruct;
+use get_config_lib::USER_CREDENTIALS;
+
+use get_config_lib::ConfigStruct;
+use get_config_lib::CONFIG;
+
+// use crate::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+// use crate::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+
+use get_config_lib::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+use get_config_lib::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+
 use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
