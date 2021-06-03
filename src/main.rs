@@ -52,7 +52,6 @@ mod get_project_information {
         pub mod generate_twitter_hashmap_links;
     }
     pub mod get_twitter_providers_names;
-    pub mod project_constants;
 }
 mod check_net {
     pub mod check_link;
