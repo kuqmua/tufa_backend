@@ -3,7 +3,7 @@ use std::time::Instant;
 
 use crate::check_net::check_link::check_link;
 use crate::overriding::prints::print_error_red;
-use get_config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 extern crate num_cpus;
 

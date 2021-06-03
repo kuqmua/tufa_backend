@@ -1,6 +1,6 @@
 use crate::tests::tests_constants::CONFIG_FILE_EXTENSION;
 use crate::tests::tests_constants::VECTOR_OF_MODES;
-use get_config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
+use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 use std::fs::File;
 #[test]
 fn ci_check_config_files_exists() {

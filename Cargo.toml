@@ -41,4 +41,4 @@ toml = "0.5"
 html_parser = "0.6.2"
 regex = "1.5"
 tests_lib = { path = "./libs/tests_lib" }
-get_config_lib = { path = "./libs/get_config_lib" }
+config_lib = { path = "./libs/config_lib" }

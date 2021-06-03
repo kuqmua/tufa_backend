@@ -1,9 +1,9 @@
-use get_config_lib::get_project_information::get_config::config_structures::ConfigStruct;
-use get_config_lib::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
+use config_lib::get_project_information::get_config::config_structures::ConfigStruct;
+use config_lib::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
 
-use get_config_lib::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
-use get_config_lib::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
-use get_config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
+use config_lib::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+use config_lib::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
+use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 
 use crate::tests::tests_constants::VECTOR_OF_MODES;
 #[test]

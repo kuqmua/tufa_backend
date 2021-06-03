@@ -1,4 +1,4 @@
-use get_config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
 
 pub fn get_github_names() -> Vec<&'static str> {
     let github_names: Vec<&str> =
