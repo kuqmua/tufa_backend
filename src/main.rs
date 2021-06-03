@@ -32,27 +32,6 @@ mod fetch {
         pub mod common_rss_structures;
     }
 }
-mod get_project_information {
-    pub mod get_names {
-        pub mod get_arxiv_names;
-        pub mod get_biorxiv_names;
-        pub mod get_github_names;
-        pub mod get_habr_names;
-        pub mod get_medrxiv_names;
-        pub mod get_reddit_names;
-        pub mod get_twitter_names;
-    }
-    pub mod generate_hashmap_links {
-        pub mod generate_arxiv_hashmap_links;
-        pub mod generate_biorxiv_hashmap_links;
-        pub mod generate_github_hashmap_links;
-        pub mod generate_habr_hashmap_links;
-        pub mod generate_medrxiv_hashmap_links;
-        pub mod generate_reddit_hashmap_links;
-        pub mod generate_twitter_hashmap_links;
-    }
-    pub mod get_twitter_providers_names;
-}
 mod check_net {
     pub mod check_link;
     pub mod check_link_metainfo_structures;

@@ -1,12 +1,12 @@
 use std::thread;
 
-use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
-use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
-use crate::get_project_information::get_names::get_github_names::get_github_names;
-use crate::get_project_information::get_names::get_habr_names::get_habr_names;
-use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
-use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
-use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
+use providers_info_lib::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
+use providers_info_lib::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use providers_info_lib::get_project_information::get_names::get_github_names::get_github_names;
+use providers_info_lib::get_project_information::get_names::get_habr_names::get_habr_names;
+use providers_info_lib::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
+use providers_info_lib::get_project_information::get_names::get_reddit_names::get_reddit_names;
+use providers_info_lib::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
 use crate::fetch::rss_part::rss_part;
 
@@ -21,7 +21,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
+use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 

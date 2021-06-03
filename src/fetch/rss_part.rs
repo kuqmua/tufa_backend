@@ -11,23 +11,23 @@ use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provide
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
-use crate::get_project_information::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_github_hashmap_links::generate_github_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
-use crate::get_project_information::generate_hashmap_links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_github_hashmap_links::generate_github_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
+use providers_info_lib::get_project_information::generate_hashmap_links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
 
-use crate::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
-use crate::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
-use crate::get_project_information::get_names::get_github_names::get_github_names;
-use crate::get_project_information::get_names::get_habr_names::get_habr_names;
-use crate::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
-use crate::get_project_information::get_names::get_reddit_names::get_reddit_names;
-use crate::get_project_information::get_names::get_twitter_names::get_twitter_names;
+use providers_info_lib::get_project_information::get_names::get_arxiv_names::get_arxiv_names;
+use providers_info_lib::get_project_information::get_names::get_biorxiv_names::get_biorxiv_names;
+use providers_info_lib::get_project_information::get_names::get_github_names::get_github_names;
+use providers_info_lib::get_project_information::get_names::get_habr_names::get_habr_names;
+use providers_info_lib::get_project_information::get_names::get_medrxiv_names::get_medrxiv_names;
+use providers_info_lib::get_project_information::get_names::get_reddit_names::get_reddit_names;
+use providers_info_lib::get_project_information::get_names::get_twitter_names::get_twitter_names;
 
-use crate::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
+use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
 use crate::overriding::prints::print_error_red;
 
