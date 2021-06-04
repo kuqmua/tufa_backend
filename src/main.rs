@@ -1,5 +1,5 @@
 mod fetch {
-    // pub mod parse_github_html;
+    pub mod parse_github_html;
     pub mod rss_async_write_fetch_error_logs_into_file;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_check_available_providers;
