@@ -345,6 +345,9 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                     }
                                     _ => println!("diff node"),
                                 },
+                                6 => {
+                                    println!("six")
+                                }
                                 _ => {
                                     println!("diff255 {}", second_child_element2.children.len());
                                 }
@@ -553,8 +556,12 @@ pub fn two_elements_one_child(element: &Node) {
     let mut action_another: &str = "noactionanother";
     let mut the_accounts_repo_on_which_the_action_was_performed_relative_href: Option<String> =
         None;
+    let mut the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from: Option<
+        String,
+    > = None;
     let mut datejs_another: Option<String> = None;
     let mut date_another: &str = "nodate";
+    let mut from: &str = "nofrom";
     match element {
         Node::Element(ref element1) => {
             match element1.children.len() {
@@ -606,18 +613,87 @@ pub fn two_elements_one_child(element: &Node) {
                         _ => println!("diff node45767"),
                     }
                 }
-                // 6 => match element1.children[0] {
-                //     Node::Text(ref pppp) => {}
-                //     _ => println!("diff node"),
-                // },
+                6 => {
+                    // println!("element1.children {:#?}", element1.children);
+                    match element1.children[0] {
+                        Node::Element(ref qqqqq) => match qqqqq.children.len() {
+                            1 => match qqqqq.children[0] {
+                                Node::Text(ref yyyyyy) => {
+                                    author_name_another = yyyyyy;
+                                }
+                                _ => println!("diff node"),
+                            },
+                            _ => println!("diff2667 {}", element1.children.len()),
+                        },
+                        _ => println!("diff node"),
+                    }
+                    match element1.children[1] {
+                        Node::Text(ref wwwww) => {
+                            action_another = wwwww;
+                        }
+                        _ => println!("diff node457673"),
+                    }
+                    match element1.children[2] {
+                        Node::Element(ref eeeeee) => {
+                            the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                eeeeee.attributes["href"].clone();
+                        }
+                        _ => println!("diff node457672"),
+                    }
+                    match element1.children[3] {
+                        Node::Text(ref rrrrr_another) => {
+                            // println!("rrrrr_another {}", rrrrr_another)
+                            from = rrrrr_another;
+                        }
+                        _ => println!("diff node457671"),
+                    }
+                    match element1.children[4] {
+                        Node::Element(ref ttttt) => {
+                            // println!("ttttt {:#?}", ttttt);
+                            // from = rrrrr_another;
+                            the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from = ttttt.attributes["href"].clone();
+                        }
+                        _ => println!("diff node666777"),
+                    }
+                    match element1.children[5] {
+                        Node::Element(ref rrrrr) => match rrrrr.children.len() {
+                            1 => match rrrrr.children[0] {
+                                Node::Element(ref rrrrr2) => {
+                                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    match rrrrr2.children.len() {
+                                        1 => match rrrrr2.children[0] {
+                                            Node::Text(ref rrrrr23) => {
+                                                date_another = rrrrr23;
+                                            }
+                                            _ => println!("diff node"),
+                                        },
+                                        _ => println!("diff48 {}", rrrrr2.children.len()),
+                                    }
+                                }
+                                _ => println!("diff node45767899"),
+                            },
+                            _ => println!("diff266799 {}", rrrrr.children.len()),
+                        },
+                        _ => println!("diff node45767"),
+                    }
+                }
                 _ => println!("diff2667 {}", element1.children.len()),
             }
         }
         _ => println!("diff node"),
     }
+    // println!("-----------------");
     // println!("author_name_another {:#?}", author_name_another);
     // println!("action_another {:#?}", action_another);
-    // println!("action_another {:#?}", action_another);
+    // println!(
+    //     "the_accounts_repo_on_which_the_action_was_performed_relative_href {:#?}",
+    //     the_accounts_repo_on_which_the_action_was_performed_relative_href
+    // );
+    // println!(
+    //     "the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from {:#?}",
+    //     the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from
+    // );
     // println!("datejs_another {:#?}", datejs_another);
     // println!("date_another {}", date_another);
+    // println!("from {}", from);
 }
