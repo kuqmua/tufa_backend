@@ -381,10 +381,38 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
     let mut relative_commit_link: Option<String> = None;
     let mut commit_text: &str = "nocommittext";
     let mut from_text: &str = "nofromtext";
+    let mut commits_number: &str = "nonumberofcommits";
     match inner_one_element {
         Node::Element(ref inner_one_element1) => {
             match inner_one_element1.children.len() {
+                1 => {
+                    // println!(
+                    //     "inner_one_element1.children[0] {:#?}",
+                    //     inner_one_element1.children[0]
+                    // )
+                    match inner_one_element1.children[0] {
+                        Node::Element(ref inner_one_element1_one_element_first) => {
+                            match inner_one_element1_one_element_first.children.len() {
+                                1 => match inner_one_element1_one_element_first.children[0] {
+                                    Node::Text(ref pppp) => {
+                                        commits_number = pppp;
+                                    }
+                                    _ => println!("diff node"),
+                                },
+                                _ => println!(
+                                    "diff2667 {}",
+                                    inner_one_element1_one_element_first.children.len()
+                                ),
+                            }
+                        }
+                        _ => println!("diff node"),
+                    }
+                }
                 3 => {
+                    // println!(
+                    //     "inner_one_element1.children[0] {:#?}",
+                    //     inner_one_element1.children[0]
+                    // );
                     match inner_one_element1.children[0] {
                         //todo 1 and 2
                         Node::Element(ref inner_one_element1first) => {
@@ -484,6 +512,7 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
     // println!("relative_commit_link {:#?}", relative_commit_link);
     // println!("commit_text {:#?}", commit_text);
     // println!("from_text {:#?}", from_text);
+    // println!("commits_number {:#?}", commits_number);
 }
 pub fn handle_text_element(first_element: &Node) -> &str {
     let mut text_handle: &str = "";
