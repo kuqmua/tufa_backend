@@ -328,12 +328,22 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                 );
                                             }
                                             4 => {
-                                                //todo
-                                                println!("5iiiiiiii");
-                                            }
-                                            6 => {
-                                                //todo
-                                                println!("6iiiiiiii");
+                                                // println!(
+                                                //     "second_child_element3.children[0] {:#?}",
+                                                //     second_child_element3.children[0]
+                                                // );
+                                                two_elements_four_children_first(
+                                                    &second_child_element3.children[0],
+                                                );
+                                                two_elements_four_children_second(
+                                                    &second_child_element3.children[1],
+                                                );
+                                                two_elements_four_children_third(
+                                                    &second_child_element3.children[2],
+                                                );
+                                                two_elements_four_children_fourth(
+                                                    &second_child_element3.children[3],
+                                                );
                                             }
                                             _ => {
                                                 println!(
@@ -489,6 +499,10 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                 from_text = handle_text_element(
                                                     &inner_one_element1third1.children[2],
                                                 );
+                                            }
+                                            2 => {
+                                                //todo
+                                                println!("2uuu");
                                             }
                                             5 => {
                                                 //todo
@@ -696,4 +710,82 @@ pub fn two_elements_one_child(element: &Node) {
     // println!("datejs_another {:#?}", datejs_another);
     // println!("date_another {}", date_another);
     // println!("from {}", from);
+}
+
+pub fn two_elements_four_children_first(element: &Node) {
+    let mut author_another_another: &str = "noauthoranotheranother";
+    match element {
+        Node::Element(ref element1) => match element1.children.len() {
+            1 => match element1.children[0] {
+                Node::Text(ref uuuuu) => {
+                    author_another_another = uuuuu;
+                }
+                _ => println!("diff node"),
+            },
+            _ => println!("diff2667 {}", element1.children.len()),
+        },
+        _ => println!("diff node"),
+    }
+    // println!("author_another_another {}", author_another_another);
+}
+
+pub fn two_elements_four_children_second(element: &Node) {
+    let mut action_another_another: &str = "noactionanotheranother";
+    match element {
+        Node::Text(ref uuuuu) => {
+            // println!("{}", uuuuu);s
+            action_another_another = uuuuu;
+        }
+        _ => println!("diff node"),
+    }
+    // println!("action_another_another {}", action_another_another);
+}
+
+pub fn two_elements_four_children_third(element: &Node) {
+    let mut who_follow: &str = "nowhofollow";
+    match element {
+        Node::Element(ref element1) => match element1.children.len() {
+            1 => match element1.children[0] {
+                Node::Text(ref uuuuu) => {
+                    // println!("uuuuu{}", uuuuu);
+                    who_follow = uuuuu;
+                }
+                _ => println!("diff nodennn"),
+            },
+            _ => println!("diff2667 {}", element1.children.len()),
+        },
+        _ => println!("diff nodemm"),
+    }
+    // println!("who_follow {}", who_follow);
+}
+
+pub fn two_elements_four_children_fourth(element: &Node) {
+    let mut who_follow: &str = "nowhofollow";
+    let mut datejs_another: Option<String> = None;
+    let mut date_another: &str = "nodate";
+    match element {
+        Node::Element(ref element1) => match element1.children.len() {
+            1 => match element1.children[0] {
+                Node::Element(ref rrrrr2) => {
+                    // println!("rrrrr{:#?}", element12);
+                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                    match rrrrr2.children.len() {
+                        1 => match rrrrr2.children[0] {
+                            Node::Text(ref rrrrr23) => {
+                                date_another = rrrrr23;
+                            }
+                            _ => println!("diff node"),
+                        },
+                        _ => println!("diff48 {}", rrrrr2.children.len()),
+                    }
+                }
+                _ => println!("diff 4444"),
+            },
+            _ => println!("diff2667 {}", element1.children.len()),
+        },
+        _ => println!("diff 4444"),
+    }
+    // println!("who_follow {}", who_follow);
+    // println!("datejs_another {:#?}", datejs_another);
+    // println!("date_another {}", date_another);
 }
