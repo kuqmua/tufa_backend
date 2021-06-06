@@ -1,136 +1,136 @@
 use html_parser::{Dom, Node};
-use select::document::Document;
-use select::predicate::{Attr, Class, Name, Predicate};
-use serde::__private::ser::constrain;
-
-pub fn parse_github_html(option_content: Option<String>) {
-    match option_content {
-        Some(content) => {
-            // println!("content{}", content);
-            //include_str!("s.html")
-            let bbb: &str = &content;
-            let document = Document::from(bbb);
-            for node in document.find(Class("mr12")) {
-                //.descendant(Name("a"))
-                // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
-                // println!("{:#?}", node)
-            }
-            // println!();
-            // println!("# Top 5 Questions");
-            // for node in document.find(Class("question-summary")).take(5) {
-            //     let question = node.find(Class("question-hyperlink")).next().unwrap();
-            //     let votes = node.find(Class("vote-count-post")).next().unwrap().text();
-            //     let answers = node
-            //         .find(Class("status").descendant(Name("strong")))
-            //         .next()
-            //         .unwrap()
-            //         .text();
-            //     let tags = node
-            //         .find(Class("post-tag"))
-            //         .map(|tag| tag.text())
-            //         .collect::<Vec<_>>();
-            //     let asked_on = node.find(Class("relativetime")).next().unwrap().text();
-            //     let asker = node
-            //         .find(Class("user-details").descendant(Name("a")))
-            //         .next()
-            //         .unwrap()
-            //         .text();
-            //     println!(" Question: {}", question.text());
-            //     println!("  Answers: {}", answers);
-            //     println!("    Votes: {}", votes);
-            //     println!("   Tagged: {}", tags.join(", "));
-            //     println!(" Asked on: {}", asked_on);
-            //     println!("    Asker: {}", asker);
-            //     println!(
-            //         "Permalink: http://stackoverflow.com{}",
-            //         question.attr("href").unwrap()
-            //     );
-            //     println!();
-            // }
-            // println!("# Top 10 Related Tags");
-            // for node in document
-            //     .find(Attr("id", "h-related-tags"))
-            //     .next()
-            //     .unwrap()
-            //     .parent()
-            //     .unwrap()
-            //     .find(Name("div"))
-            //     .take(10)
-            // {
-            //     let tag = node.find(Name("a")).next().unwrap().text();
-            //     let count = node
-            //         .find(Class("item-multiplier-count"))
-            //         .next()
-            //         .unwrap()
-            //         .text();
-            //     println!("{} ({})", tag, count);
-            // }
-        }
-        None => {
-            println!("pressf")
-        }
-    }
-}
+// use select::document::Document;
+// use select::predicate::{Attr, Class, Name, Predicate};
+// use serde::__private::ser::constrain;
 
 // pub fn parse_github_html(option_content: Option<String>) {
-//     // let mut avatar_link: Option<String> = None;
 //     match option_content {
 //         Some(content) => {
-//             let result_content = Dom::parse(&content);
-//             match result_content {
-//                 Ok(dom) => {
-//                     match dom.children.first() {
-//                         Some(element1) => {
-//                             if let Node::Element(ref element2) = element1 {
-//                                 match element2.children.first() {
-//                                     Some(element3) => {
-//                                         if let Node::Element(ref element4) = element3 {
-//                                             match element4.children.first() {
-//                                                 Some(element5) => {
-//                                                     if let Node::Element(ref element6) = element5 {
-//                                                         match element6.children.len() {
-//                                                             2 => {
-//                                                                 parse_github_html_first_part(
-//                                                                     &element6.children[0],
-//                                                                 );
-//                                                                 parse_github_html_second_part(
-//                                                                     &element6.children[1],
-//                                                                 );
-//                                                             }
-//                                                             _ => {
-//                                                                 println!("_____should handle what or ...?");
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 None => {
-//                                                     println!("fn")
-//                                                 }
-//                                             }
-//                                         }
-//                                     }
-//                                     None => {
-//                                         println!("fn")
-//                                     }
-//                                 }
-//                             }
-//                         }
-//                         None => {
-//                             println!("fn")
-//                         }
-//                     }
-//                 }
-//                 Err(e) => {
-//                     println!("Dom::parse error {}", e)
-//                 }
+//             // println!("content{}", content);
+//             //include_str!("s.html")
+//             let bbb: &str = &content;
+//             let document = Document::from(bbb);
+//             for node in document.find(Class("mr12")) {
+//                 //.descendant(Name("a"))
+//                 // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
+//                 // println!("{:#?}", node)
 //             }
+//             // println!();
+//             // println!("# Top 5 Questions");
+//             // for node in document.find(Class("question-summary")).take(5) {
+//             //     let question = node.find(Class("question-hyperlink")).next().unwrap();
+//             //     let votes = node.find(Class("vote-count-post")).next().unwrap().text();
+//             //     let answers = node
+//             //         .find(Class("status").descendant(Name("strong")))
+//             //         .next()
+//             //         .unwrap()
+//             //         .text();
+//             //     let tags = node
+//             //         .find(Class("post-tag"))
+//             //         .map(|tag| tag.text())
+//             //         .collect::<Vec<_>>();
+//             //     let asked_on = node.find(Class("relativetime")).next().unwrap().text();
+//             //     let asker = node
+//             //         .find(Class("user-details").descendant(Name("a")))
+//             //         .next()
+//             //         .unwrap()
+//             //         .text();
+//             //     println!(" Question: {}", question.text());
+//             //     println!("  Answers: {}", answers);
+//             //     println!("    Votes: {}", votes);
+//             //     println!("   Tagged: {}", tags.join(", "));
+//             //     println!(" Asked on: {}", asked_on);
+//             //     println!("    Asker: {}", asker);
+//             //     println!(
+//             //         "Permalink: http://stackoverflow.com{}",
+//             //         question.attr("href").unwrap()
+//             //     );
+//             //     println!();
+//             // }
+//             // println!("# Top 10 Related Tags");
+//             // for node in document
+//             //     .find(Attr("id", "h-related-tags"))
+//             //     .next()
+//             //     .unwrap()
+//             //     .parent()
+//             //     .unwrap()
+//             //     .find(Name("div"))
+//             //     .take(10)
+//             // {
+//             //     let tag = node.find(Name("a")).next().unwrap().text();
+//             //     let count = node
+//             //         .find(Class("item-multiplier-count"))
+//             //         .next()
+//             //         .unwrap()
+//             //         .text();
+//             //     println!("{} ({})", tag, count);
+//             // }
 //         }
 //         None => {
-//             println!("fn")
+//             println!("pressf")
 //         }
 //     }
-//     // println!("avatar_link {:#?}",avatar_link);
 // }
+
+pub fn parse_github_html(option_content: Option<String>) {
+    // let mut avatar_link: Option<String> = None;
+    match option_content {
+        Some(content) => {
+            let result_content = Dom::parse(&content);
+            match result_content {
+                Ok(dom) => {
+                    match dom.children.first() {
+                        Some(element1) => {
+                            if let Node::Element(ref element2) = element1 {
+                                match element2.children.first() {
+                                    Some(element3) => {
+                                        if let Node::Element(ref element4) = element3 {
+                                            match element4.children.first() {
+                                                Some(element5) => {
+                                                    if let Node::Element(ref element6) = element5 {
+                                                        match element6.children.len() {
+                                                            2 => {
+                                                                parse_github_html_first_part(
+                                                                    &element6.children[0],
+                                                                );
+                                                                parse_github_html_second_part(
+                                                                    &element6.children[1],
+                                                                );
+                                                            }
+                                                            _ => {
+                                                                println!("_____should handle what or ...?");
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                None => {
+                                                    println!("fn")
+                                                }
+                                            }
+                                        }
+                                    }
+                                    None => {
+                                        println!("fn")
+                                    }
+                                }
+                            }
+                        }
+                        None => {
+                            println!("fn")
+                        }
+                    }
+                }
+                Err(e) => {
+                    println!("Dom::parse error {}", e)
+                }
+            }
+        }
+        None => {
+            println!("fn")
+        }
+    }
+    // println!("avatar_link {:#?}",avatar_link);
+}
 
 pub fn parse_github_html_first_part(first_child: &Node) {
     match first_child {
@@ -490,7 +490,7 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                     _ => println!("diff node"),
                                 },
                                 _ => println!(
-                                    "diff2667 {}",
+                                    "diff26671 {}",
                                     inner_one_element1_one_element_first.children.len()
                                 ),
                             }
@@ -564,6 +564,13 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                     &inner_one_element1third1.children[0],
                                                 );
                                             }
+                                            2 => {
+                                                //todo
+                                                println!(
+                                                    "2uuu {:#?}",
+                                                    inner_one_element1third1.children
+                                                );
+                                            }
                                             3 => {
                                                 commit_text = handle_text_element(
                                                     &inner_one_element1third1.children[0],
@@ -575,18 +582,23 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                     &inner_one_element1third1.children[2],
                                                 );
                                             }
-                                            2 => {
-                                                //todo
-                                                println!(
-                                                    "2uuu {:#?}",
-                                                    inner_one_element1third1.children
-                                                );
-                                            }
                                             5 => {
                                                 //todo
-                                                println!(
-                                                    "5uuu {:#?}",
-                                                    inner_one_element1third1.children
+                                                commit_text = handle_text_element(
+                                                    &inner_one_element1third1.children[0],
+                                                );
+                                                second_element(
+                                                    &inner_one_element1third1.children[1],
+                                                );
+                                                from_text = handle_text_element(
+                                                    &inner_one_element1third1.children[2],
+                                                );
+                                                second_element(
+                                                    &inner_one_element1third1.children[3],
+                                                );
+                                                handle_text_element(
+                                                    //some trash
+                                                    &inner_one_element1third1.children[4],
                                                 );
                                             }
                                             _ => println!(
@@ -669,7 +681,7 @@ pub fn two_elements_one_child(element: &Node) {
                                 }
                                 _ => println!("diff node"),
                             },
-                            _ => println!("diff2667 {}", element1.children.len()),
+                            _ => println!("diff26672 {}", element1.children.len()),
                         },
                         _ => println!("diff node"),
                     }
@@ -703,7 +715,62 @@ pub fn two_elements_one_child(element: &Node) {
                                 }
                                 _ => println!("diff node45767899"),
                             },
-                            _ => println!("diff266799 {}", rrrrr.children.len()),
+                            _ => println!("diff26679129 {}", rrrrr.children.len()),
+                        },
+                        _ => println!("diff node45767"),
+                    }
+                }
+                5 => {
+                    match element1.children[0] {
+                        Node::Element(ref qqqqq) => match qqqqq.children.len() {
+                            1 => match qqqqq.children[0] {
+                                Node::Text(ref yyyyyy) => {
+                                    author_name_another = yyyyyy;
+                                }
+                                _ => println!("diff node"),
+                            },
+                            _ => println!("diff26677 {}", element1.children.len()),
+                        },
+                        _ => println!("diff node"),
+                    }
+                    match element1.children[1] {
+                        Node::Text(ref wwwww) => {
+                            action_another = wwwww;
+                        }
+                        _ => println!("diff node457673"),
+                    }
+                    match element1.children[2] {
+                        Node::Element(ref eeeeee) => {
+                            the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                eeeeee.attributes["href"].clone();
+                        }
+                        _ => println!("diff node457672"),
+                    }
+                    match element1.children[3] {
+                        Node::Text(ref rrrrr_another) => {
+                            // println!("rrrrr_another {}", rrrrr_another)
+                            from = rrrrr_another;
+                        }
+                        _ => println!("diff node457671"),
+                    }
+                    match element1.children[4] {
+                        Node::Element(ref rrrrr) => match rrrrr.children.len() {
+                            1 => match rrrrr.children[0] {
+                                Node::Element(ref rrrrr2) => {
+                                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    match rrrrr2.children.len() {
+                                        1 => match rrrrr2.children[0] {
+                                            Node::Text(ref rrrrr23) => {
+                                                date_another = rrrrr23;
+                                            }
+                                            _ => println!("diff node"),
+                                        },
+                                        _ => println!("diff48 {}", rrrrr2.children.len()),
+                                    }
+                                }
+                                _ => println!("diff node45767899"),
+                            },
+                            _ => println!("diff26679129 {}", rrrrr.children.len()),
                         },
                         _ => println!("diff node45767"),
                     }
@@ -718,7 +785,7 @@ pub fn two_elements_one_child(element: &Node) {
                                 }
                                 _ => println!("diff node"),
                             },
-                            _ => println!("diff2667 {}", element1.children.len()),
+                            _ => println!("diff26677 {}", element1.children.len()),
                         },
                         _ => println!("diff node"),
                     }
@@ -772,7 +839,7 @@ pub fn two_elements_one_child(element: &Node) {
                         _ => println!("diff node45767"),
                     }
                 }
-                _ => println!("diff2667 {}", element1.children.len()),
+                _ => println!("diff26676 {}", element1.children.len()),
             }
         }
         _ => println!("diff node"),
@@ -803,7 +870,7 @@ pub fn two_elements_four_children_first(element: &Node) {
                 }
                 _ => println!("diff node"),
             },
-            _ => println!("diff2667 {}", element1.children.len()),
+            _ => println!("diff26675 {}", element1.children.len()),
         },
         _ => println!("diff node"),
     }
@@ -833,7 +900,7 @@ pub fn two_elements_four_children_third(element: &Node) {
                 }
                 _ => println!("diff nodennn"),
             },
-            _ => println!("diff2667 {}", element1.children.len()),
+            _ => println!("diff26674 {}", element1.children.len()),
         },
         _ => println!("diff nodemm"),
     }
@@ -862,7 +929,7 @@ pub fn two_elements_four_children_fourth(element: &Node) {
                 }
                 _ => println!("diff 4444"),
             },
-            _ => println!("diff2667 {}", element1.children.len()),
+            _ => println!("diff26673 {}", element1.children.len()),
         },
         _ => println!("diff 4444"),
     }
