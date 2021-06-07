@@ -133,6 +133,7 @@ pub fn parse_github_html(option_content: Option<String>) {
 }
 
 pub fn parse_github_html_first_part(first_child: &Node) {
+    let mut avatar_link: Option<String> = None;
     match first_child {
         Node::Element(ref element7twochildrenfirst) => {
             match element7twochildrenfirst.children.first() {
@@ -140,8 +141,12 @@ pub fn parse_github_html_first_part(first_child: &Node) {
                     if let Node::Element(ref element9first) = element8twochildrenfirst {
                         match element9first.children.first() {
                             Some(element10first) => {
-                                if let Node::Element(ref _element11first) = element10first {
-                                    // avatar_link = element11first.attributes["src"].clone();
+                                if let Node::Element(ref element11first) = element10first {
+                                    if element11first.attributes.contains_key("src") {
+                                        avatar_link = element11first.attributes["src"].clone();
+                                    } else {
+                                        println!("todo4");
+                                    }
                                 }
                             }
                             None => {
@@ -234,9 +239,20 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                             //     "second_child_element4fourth {:#?}",
                                                             //     second_child_element4fourth
                                                             // );
-                                                            datejs = second_child_element4fourth
-                                                                .attributes["datetime"]
-                                                                .clone();
+
+                                                            //
+                                                            if second_child_element4fourth
+                                                                .attributes
+                                                                .contains_key("datetime")
+                                                            {
+                                                                datejs =
+                                                                    second_child_element4fourth
+                                                                        .attributes["datetime"]
+                                                                        .clone();
+                                                            } else {
+                                                                println!("todo5");
+                                                            }
+                                                            //
                                                             match second_child_element4fourth
                                                                 .children
                                                                 .len()
@@ -508,9 +524,18 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                                             //     "second_child_element4fourth {:#?}",
                                                             //     second_child_element4fourth
                                                             // );
-                                                            datejs = second_child_element4fourth
-                                                                .attributes["datetime"]
-                                                                .clone();
+
+                                                            if second_child_element4fourth
+                                                                .attributes
+                                                                .contains_key("datetime")
+                                                            {
+                                                                datejs =
+                                                                    second_child_element4fourth
+                                                                        .attributes["datetime"]
+                                                                        .clone();
+                                                            } else {
+                                                                println!("todo6");
+                                                            }
                                                             match second_child_element4fourth
                                                                 .children
                                                                 .len()
@@ -622,9 +647,16 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                             0 => {}
                                             1 => match inner_one_element1first1.children[0] {
                                                 Node::Element(ref inner_one_element1first11) => {
-                                                    avatar_link = inner_one_element1first11
-                                                        .attributes["src"]
-                                                        .clone(); //.as_ref()
+                                                    if inner_one_element1first11
+                                                        .attributes
+                                                        .contains_key("src")
+                                                    {
+                                                        avatar_link = inner_one_element1first11
+                                                            .attributes["src"]
+                                                            .clone(); //.as_ref()
+                                                    } else {
+                                                        println!("todo7");
+                                                    }
                                                 }
                                                 _ => println!("diff node"),
                                             },
@@ -650,8 +682,13 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                             match inner_one_element1second.children.len() {
                                 1 => match inner_one_element1second.children[0] {
                                     Node::Element(ref inner_one_element1second1) => {
-                                        relative_commit_link =
-                                            inner_one_element1second1.attributes["href"].clone()
+                                        if inner_one_element1second1.attributes.contains_key("href")
+                                        {
+                                            relative_commit_link =
+                                                inner_one_element1second1.attributes["href"].clone()
+                                        } else {
+                                            println!("todo8");
+                                        }
                                     }
                                     _ => println!("diff node"),
                                 },
@@ -753,11 +790,41 @@ pub fn second_element(second_element: &Node) {
     let mut data_url: Option<String> = None;
     match second_element {
         Node::Element(ref second_element1) => {
-            data_hovercard_type = second_element1.attributes["data-hovercard-type"].clone();
-            data_hovercard_url = second_element1.attributes["data-hovercard-url"].clone();
-            data_id = second_element1.attributes["data-id"].clone();
-            href = second_element1.attributes["href"].clone();
-            data_url = second_element1.attributes["data-url"].clone();
+            if second_element1
+                .attributes
+                .contains_key("data-hovercard-type")
+            {
+                data_hovercard_type = second_element1.attributes["data-hovercard-type"].clone();
+            } else {
+                println!("todo9");
+            }
+
+            if second_element1
+                .attributes
+                .contains_key("data-hovercard-url")
+            {
+                data_hovercard_url = second_element1.attributes["data-hovercard-url"].clone();
+            } else {
+                println!("todo10");
+            }
+
+            if second_element1.attributes.contains_key("data-id") {
+                data_id = second_element1.attributes["data-id"].clone();
+            } else {
+                println!("todo11");
+            }
+
+            if second_element1.attributes.contains_key("href") {
+                href = second_element1.attributes["href"].clone();
+            } else {
+                println!("todo12");
+            }
+
+            if second_element1.attributes.contains_key("data-url") {
+                data_url = second_element1.attributes["data-url"].clone();
+            } else {
+                println!("todo13");
+            }
         }
         _ => println!("diff node"),
     }
@@ -803,8 +870,12 @@ pub fn two_elements_one_child(element: &Node) {
                     }
                     match element1.children[2] {
                         Node::Element(ref eeeeee) => {
-                            the_accounts_repo_on_which_the_action_was_performed_relative_href =
-                                eeeeee.attributes["href"].clone();
+                            if eeeeee.attributes.contains_key("href") {
+                                the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                    eeeeee.attributes["href"].clone();
+                            } else {
+                                println!("todo14");
+                            }
                         }
                         _ => println!("diff node45767"),
                     }
@@ -812,7 +883,11 @@ pub fn two_elements_one_child(element: &Node) {
                         Node::Element(ref rrrrr) => match rrrrr.children.len() {
                             1 => match rrrrr.children[0] {
                                 Node::Element(ref rrrrr2) => {
-                                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    if rrrrr2.attributes.contains_key("datetime") {
+                                        datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    } else {
+                                        println!("todo15");
+                                    }
                                     match rrrrr2.children.len() {
                                         1 => match rrrrr2.children[0] {
                                             Node::Text(ref rrrrr23) => {
@@ -851,8 +926,12 @@ pub fn two_elements_one_child(element: &Node) {
                     }
                     match element1.children[2] {
                         Node::Element(ref eeeeee) => {
-                            the_accounts_repo_on_which_the_action_was_performed_relative_href =
-                                eeeeee.attributes["href"].clone();
+                            if eeeeee.attributes.contains_key("href") {
+                                the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                    eeeeee.attributes["href"].clone();
+                            } else {
+                                println!("todo16");
+                            }
                         }
                         _ => println!("diff node457672"),
                     }
@@ -867,7 +946,11 @@ pub fn two_elements_one_child(element: &Node) {
                         Node::Element(ref rrrrr) => match rrrrr.children.len() {
                             1 => match rrrrr.children[0] {
                                 Node::Element(ref rrrrr2) => {
-                                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    if rrrrr2.attributes.contains_key("datetime") {
+                                        datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    } else {
+                                        println!("todo17");
+                                    }
                                     match rrrrr2.children.len() {
                                         1 => match rrrrr2.children[0] {
                                             Node::Text(ref rrrrr23) => {
@@ -911,8 +994,6 @@ pub fn two_elements_one_child(element: &Node) {
                                 the_accounts_repo_on_which_the_action_was_performed_relative_href =
                                     eeeeee.attributes["href"].clone();
                             } else {
-                                // println!("todo {:#?}", eeeeee);
-
                                 match eeeeee.children.len() {
                                     1 => match eeeeee.children[0] {
                                         Node::Text(ref eeeeee23) => {
@@ -935,9 +1016,11 @@ pub fn two_elements_one_child(element: &Node) {
                     }
                     match element1.children[4] {
                         Node::Element(ref ttttt) => {
-                            // println!("ttttt {:#?}", ttttt);
-                            // from = rrrrr_another;
-                            the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from = ttttt.attributes["href"].clone();
+                            if ttttt.attributes.contains_key("href") {
+                                the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from = ttttt.attributes["href"].clone();
+                            } else {
+                                println!("todo1");
+                            }
                         }
                         _ => println!("diff node666777"),
                     }
@@ -945,7 +1028,12 @@ pub fn two_elements_one_child(element: &Node) {
                         Node::Element(ref rrrrr) => match rrrrr.children.len() {
                             1 => match rrrrr.children[0] {
                                 Node::Element(ref rrrrr2) => {
-                                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    if rrrrr2.attributes.contains_key("datetime") {
+                                        datejs_another = rrrrr2.attributes["datetime"].clone();
+                                    } else {
+                                        println!("todo2");
+                                    }
+
                                     match rrrrr2.children.len() {
                                         1 => match rrrrr2.children[0] {
                                             Node::Text(ref rrrrr23) => {
@@ -1040,8 +1128,11 @@ pub fn two_elements_four_children_fourth(element: &Node) {
         Node::Element(ref element1) => match element1.children.len() {
             1 => match element1.children[0] {
                 Node::Element(ref rrrrr2) => {
-                    // println!("rrrrr{:#?}", element12);
-                    datejs_another = rrrrr2.attributes["datetime"].clone();
+                    if rrrrr2.attributes.contains_key("datetime") {
+                        datejs_another = rrrrr2.attributes["datetime"].clone();
+                    } else {
+                        println!("todo3");
+                    }
                     match rrrrr2.children.len() {
                         1 => match rrrrr2.children[0] {
                             Node::Text(ref rrrrr23) => {

@@ -189,5 +189,3 @@ move get config and user credentials into config
 todo: add medium
 ----------------------------
 cannot do cargo build while docker build with this library = { path = "./library" }
-----------------------------
-if !eeeeee.attributes.contains_key("href") {}
