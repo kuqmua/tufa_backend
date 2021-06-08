@@ -177,17 +177,15 @@ pub fn parse_github_html_second_part(second_child: &Node) {
     let mut branch: &str = "nobranch";
     let mut release_tag: &str = "noreleasetag";
     let mut of: &str = "of";
+    let mut bot_tag: &str = "nobotTag";
     match second_child {
         Node::Element(ref second_child_element1) => {
             match second_child_element1.children.len() {
                 1 => {
-                    //  println!("second_child_element1.children {:#?}", second_child_element1.children);
-                    // println!("1");
                     match second_child_element1.children[0] {
                         Node::Element(ref second_child_element2) => {
                             match second_child_element2.children.len() {
                                 5 => {
-                                    // println!("5");
                                     match second_child_element2.children[0] {
                                         Node::Element(ref second_child_element3first) => {
                                             match second_child_element3first.children.len() {
@@ -390,7 +388,223 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                     }
                                 }
                                 6 => {
-                                    println!("6 again")
+                                    match second_child_element2.children[0] {
+                                        Node::Element(ref second_child_element3first) => {
+                                            match second_child_element3first.children.len() {
+                                                1 => match second_child_element3first.children[0] {
+                                                    Node::Text(ref texttext) => {
+                                                        author = texttext;
+                                                    }
+                                                    _ => println!("diff node eee2"),
+                                                },
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3first.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[1] {
+                                        Node::Element(ref second_child_element3first) => {
+                                            match second_child_element3first.children.len() {
+                                                1 => match second_child_element3first.children[0] {
+                                                    Node::Text(ref texttext) => {
+                                                        bot_tag = texttext;
+                                                    }
+                                                    _ => println!("diff node eee2"),
+                                                },
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3first.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[2] {
+                                        Node::Text(ref second_child_element3second) => {
+                                            action = second_child_element3second
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[3] {
+                                        Node::Element(ref second_child_element3third) => {
+                                            match second_child_element3third.children.len() {
+                                                1 => match second_child_element3third.children[0] {
+                                                    Node::Text(ref texttext) => {
+                                                        repository = texttext;
+                                                    }
+                                                    _ => println!("something else2"),
+                                                },
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3third.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[4] {
+                                        Node::Element(ref second_child_element3fourth) => {
+                                            match second_child_element3fourth.children.len() {
+                                                1 => {
+                                                    match second_child_element3fourth.children[0] {
+                                                        Node::Element(
+                                                            ref second_child_element4fourth,
+                                                        ) => {
+                                                            match second_child_element4fourth
+                                                                .attributes
+                                                                .get("datetime")
+                                                            {
+                                                                Some(value) => {
+                                                                    datejs = value.clone();
+                                                                }
+                                                                None => println!("todo5"),
+                                                            }
+
+                                                            match second_child_element4fourth
+                                                                .children
+                                                                .len()
+                                                            {
+                                                                1 => {
+                                                                    match second_child_element4fourth
+                                                                .children[0] {
+                                                                    Node::Text(ref second_child_element5fourth) => {
+                                                                        date = second_child_element5fourth;
+                                                                    }
+                                                                    _ => println!("diff node"),
+                                                                }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff48 {}",
+                                                                    second_child_element4fourth
+                                                                        .children
+                                                                        .len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("something else2"),
+                                                    }
+                                                }
+                                                _ => println!(
+                                                    "diff3 {}",
+                                                    second_child_element3fourth.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
+                                    match second_child_element2.children[5] {
+                                        Node::Element(ref second_child_element3firth) => {
+                                            match second_child_element3firth.children.len() {
+                                                3 => {
+                                                    match second_child_element3firth.children[0] {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
+                                                            match second_child_element4firth
+                                                                .children
+                                                                .len()
+                                                            {
+                                                                1 => {
+                                                                    match second_child_element4firth
+                                                                        .children[0]
+                                                                    {
+                                                                        Node::Text(
+                                                                            ref texttext,
+                                                                        ) => {
+                                                                            actionto = texttext;
+                                                                        }
+                                                                        _ => println!(
+                                                                            "diff node eee2"
+                                                                        ),
+                                                                    }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff47 {}",
+                                                                    second_child_element4firth
+                                                                        .children
+                                                                        .len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("diff node qqq"),
+                                                    }
+                                                    match second_child_element3firth.children[1] {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
+                                                            match second_child_element4firth
+                                                                .children
+                                                                .len()
+                                                            {
+                                                                1 => {
+                                                                    match second_child_element4firth
+                                                                        .children[0]
+                                                                    {
+                                                                        Node::Text(
+                                                                            ref texttext,
+                                                                        ) => {
+                                                                            branch = texttext;
+                                                                        }
+                                                                        _ => println!(
+                                                                            "diff node eee2"
+                                                                        ),
+                                                                    }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff46 {}",
+                                                                    second_child_element4firth
+                                                                        .children
+                                                                        .len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("diff node www"),
+                                                    }
+                                                    match second_child_element3firth.children[2] {
+                                                        Node::Element(
+                                                            ref second_child_element4firth,
+                                                        ) => {
+                                                            match second_child_element4firth
+                                                                .children
+                                                                .len()
+                                                            {
+                                                                1 => {
+                                                                    match second_child_element4firth
+                                                                        .children[0]
+                                                                    {
+                                                                        Node::Element(
+                                                                            ref
+                                                                            second_child_element5firth,
+                                                                        ) => {
+                                                                            for i in &second_child_element5firth.children {
+                                                                                parse_github_html_second_part_inner_one_element(&i);
+                                                                            }
+                                                                        }
+                                                                        _ => println!("diff node tttt"),
+                                                                    }
+                                                                }
+                                                                _ => println!(
+                                                                    "diff45 {}",
+                                                                    second_child_element4firth
+                                                                        .children
+                                                                        .len()
+                                                                ),
+                                                            }
+                                                        }
+                                                        _ => println!("diff node eee"),
+                                                    }
+                                                }
+                                                _ => println!(
+                                                    "diff49 {}",
+                                                    second_child_element3firth.children.len()
+                                                ),
+                                            }
+                                        }
+                                        _ => println!("diff node"),
+                                    }
                                 }
                                 _ => {
                                     //something here exists
@@ -592,6 +806,7 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
     let mut commit_text: &str = "nocommittext";
     let mut from_text: &str = "nofromtext";
     let mut commits_number: &str = "nonumberofcommits";
+    let mut isssue_label: &str = "isssuelabel"; //todo or isssuelabel in struct by default in html
     match inner_one_element {
         Node::Element(ref inner_one_element1) => {
             match inner_one_element1.children.len() {
@@ -660,7 +875,7 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                 }
                             }
                         }
-                        _ => println!("diff node"),
+                        _ => println!("diff node uuuuuu"),
                     }
                     match inner_one_element1.children[1] {
                         Node::Element(ref inner_one_element1second) => {
@@ -695,9 +910,8 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                 );
                                             }
                                             2 => {
-                                                //todo
                                                 println!(
-                                                    "2uuu {:#?}",
+                                                    "todo 2uuu {:#?}",
                                                     inner_one_element1third1.children
                                                 );
                                             }
@@ -708,9 +922,27 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                 second_element(
                                                     &inner_one_element1third1.children[1],
                                                 );
-                                                from_text = handle_text_element(
-                                                    &inner_one_element1third1.children[2],
-                                                );
+                                                // println!(
+                                                //     "🚀inner_one_element1third1.children[2]{:#?}",
+                                                //     inner_one_element1third1.children[2]
+                                                // );
+                                                //here
+                                                match inner_one_element1third1.children[2] {
+                                                    Node::Text(ref text) => {
+                                                        from_text = text;
+                                                    }
+                                                    Node::Element(ref something) => {
+                                                        if something.name != "g-emoji" {
+                                                            println!("todo not g-emoji")
+                                                        }
+                                                    }
+                                                    _ => println!("diff node"),
+                                                }
+
+                                                // from_text = handle_text_element(
+                                                //     &inner_one_element1third1.children[2],
+                                                // );
+                                                //and here
                                             }
                                             5 => {
                                                 //todo
@@ -737,18 +969,18 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                             ),
                                         }
                                     }
-                                    _ => println!("diff node"),
+                                    _ => println!("diff node oooooooo"),
                                 },
                                 _ => println!("diff27 {}", inner_one_element1third.children.len()),
                             }
                         }
-                        _ => println!("diff node"),
+                        _ => println!("diff node iiiiiiii"),
                     }
                 }
                 _ => println!("diff26 {}", inner_one_element1.children.len()),
             }
         }
-        _ => println!("diff node"),
+        _ => println!("diff node yyyyyyy"),
     }
     // println!("avatar_link {:#?}", avatar_link);
     // println!("relative_commit_link {:#?}", relative_commit_link);
@@ -792,7 +1024,7 @@ pub fn second_element(second_element: &Node) {
                 Some(value) => {
                     data_id = value.clone();
                 }
-                None => println!("todo11"),
+                None => println!("todo11 kind of post without data-id"),
             }
 
             match second_element1.attributes.get("href") {
@@ -806,7 +1038,7 @@ pub fn second_element(second_element: &Node) {
                 Some(value) => {
                     data_url = value.clone();
                 }
-                None => println!("todo13"),
+                None => println!("todo13 kind of post without data-url"),
             }
         }
         _ => println!("diff node"),
@@ -952,7 +1184,6 @@ pub fn two_elements_one_child(element: &Node) {
                     }
                 }
                 6 => {
-                    // println!("element1.children {:#?}", element1.children);
                     match element1.children[0] {
                         Node::Element(ref qqqqq) => match qqqqq.children.len() {
                             1 => match qqqqq.children[0] {
@@ -1136,7 +1367,3 @@ pub fn two_elements_four_children_fourth(element: &Node) {
     // println!("datejs_another {:#?}", datejs_another);
     // println!("date_another {}", date_another);
 }
-
-// pub fn five_elements_first(){
-
-// }
