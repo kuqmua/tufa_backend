@@ -189,3 +189,9 @@ move get config and user credentials into config
 todo: add medium
 ----------------------------
 cannot do cargo build while docker build with this library = { path = "./library" }
+----------------------------
+parsing providers posts tests
+----------------------------
+command for run not a cargo run but cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
+----------------------------
+github user credentials tests
