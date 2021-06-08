@@ -15,16 +15,16 @@ fn ci_check_compromised_github_auth_info() {
         let config_for_test: ConfigStruct = ConfigStruct::new(Some(*mode), PATH_TO_CONFIG_FOR_TEST)
             .expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let github_name = &user_credentials_for_test.github_authorization.github_name;
-        let github_name = &user_credentials_for_test.github_authorization.github_token;
+        let github_token = &user_credentials_for_test.github_authorization.github_token;
         if github_name != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
                 "github_name != {} for mode {}",
                 &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
-        if github_name != &config_for_test.params.user_credentials_dummy_handle {
+        if github_token != &config_for_test.params.user_credentials_dummy_handle {
             panic!(
-                "github_name != {} for mode {}",
+                "github_token != {} for mode {}",
                 &config_for_test.params.user_credentials_dummy_handle, mode
             );
         }
