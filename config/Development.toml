@@ -14,13 +14,13 @@ enable_common_time_measurement = true
 user_credentials_dummy_handle = "example"
 
 [enable_providers]
-enable_arxiv = false
-enable_biorxiv = false
+enable_arxiv = true
+enable_biorxiv = true
 enable_github = true
-enable_habr = false
-enable_medrxiv = false
-enable_reddit = false
-enable_twitter = false
+enable_habr = true
+enable_medrxiv = true
+enable_reddit = true
+enable_twitter = true
 
 [links]
 starting_check_link = "https://www.google.com/"
