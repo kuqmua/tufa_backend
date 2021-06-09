@@ -194,6 +194,6 @@ parsing providers posts tests
 ----------------------------
 command for run not a cargo run but cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
 ----------------------------
-test for user credentials structure fields - if there is any new then fail
-----------------------------
 why hashmap['key'] do not return Result ?????7
+----------------------------
+server what running web tests every hour like http requests and get valid data or not
