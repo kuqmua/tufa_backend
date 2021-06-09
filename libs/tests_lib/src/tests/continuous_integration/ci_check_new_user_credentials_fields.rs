@@ -23,7 +23,7 @@ pub fn ci_check_new_user_credentials_fields() {
                 Err(e) => {
                     panic!(
                         "cannot read_to_string from file {}{}, reason: {}",
-                        USER_CREDENTIALS_FILE_NAME, USER_CREDENTIALS_FILE_NAME, e
+                        USER_CREDENTIALS_FILE_NAME, CONFIG_FILE_EXTENSION, e
                     )
                 }
             }
@@ -31,7 +31,7 @@ pub fn ci_check_new_user_credentials_fields() {
         Err(e) => {
             panic!(
                 "cannot open {}{}, reason: {}",
-                USER_CREDENTIALS_FILE_NAME, USER_CREDENTIALS_FILE_NAME, e
+                USER_CREDENTIALS_FILE_NAME, CONFIG_FILE_EXTENSION, e
             )
         }
     }
