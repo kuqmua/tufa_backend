@@ -1012,39 +1012,31 @@ pub fn second_element(second_element: &Node) {
     let mut data_url: Option<String> = None;
     match second_element {
         Node::Element(ref second_element1) => {
-            match second_element1.attributes.get("data-hovercard-type") {
-                Some(value) => {
-                    data_hovercard_type = value.clone();
-                }
-                None => println!("todo9"),
+            if let Some(value) = second_element1.attributes.get("data-hovercard-type") {
+                data_hovercard_type = value.clone();
             }
 
-            match second_element1.attributes.get("data-hovercard-url") {
-                Some(value) => {
-                    data_hovercard_url = value.clone();
-                }
-                None => println!("todo10"),
+            if let Some(value) = second_element1.attributes.get("data-hovercard-url") {
+                data_hovercard_url = value.clone();
             }
 
-            match second_element1.attributes.get("data-id") {
-                Some(value) => {
-                    data_id = value.clone();
-                }
-                None => println!("todo11 kind of post without data-id"),
+            if let Some(value) = second_element1.attributes.get("data-id") {
+                data_id = value.clone();
             }
 
-            match second_element1.attributes.get("href") {
-                Some(value) => {
-                    href = value.clone();
-                }
-                None => println!("todo12"),
+            if let Some(value) = second_element1.attributes.get("href") {
+                href = value.clone();
             }
 
-            match second_element1.attributes.get("data-url") {
-                Some(value) => {
-                    data_url = value.clone();
-                }
-                None => println!("todo13 kind of post without data-url"),
+            if let Some(value) = second_element1.attributes.get("data-url") {
+                data_url = value.clone();
+            }
+            match second_element1.children.len() {
+                1 => match second_element1.children[0] {
+                    Node::Text(_) => {}
+                    _ => println!("diff node"),
+                },
+                _ => println!("diff children len {}", second_element1.children.len()),
             }
         }
         _ => println!("diff node"),
