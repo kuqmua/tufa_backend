@@ -1031,10 +1031,19 @@ pub fn second_element(second_element: &Node) {
             if let Some(value) = second_element1.attributes.get("data-url") {
                 data_url = value.clone();
             }
+            //just to check any new formats
             match second_element1.children.len() {
                 1 => match second_element1.children[0] {
                     Node::Text(_) => {}
-                    _ => println!("diff node"),
+                    Node::Element(ref elelem) => match elelem.children.len() {
+                        1 => match elelem.children[0] {
+                            Node::Text(_) => {}
+                            _ => println!("diff node1212{:#?}", elelem.children[0]),
+                        },
+
+                        _ => println!("diff children len {}", elelem.children.len()),
+                    },
+                    _ => println!("diff node1212{:#?}", second_element1.children[0]),
                 },
                 _ => println!("diff children len {}", second_element1.children.len()),
             }
