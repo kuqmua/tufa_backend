@@ -197,3 +197,5 @@ command for run not a cargo run but cd libs/tests_lib && cargo test local && cd 
 why hashmap['key'] do not return Result ?????7
 ----------------------------
 server what running web tests every hour like http requests and get valid data or not
+----------------------------
+github parsing version to check different structs of posts as test in the loop
