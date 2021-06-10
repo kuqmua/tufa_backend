@@ -1,7 +1,0 @@
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-sudo apt install build-essential
-source $HOME/.cargo/env
-sudo apt install pkg-config //optionally
-sudo apt-get install pkg-config libssl-dev
-rustup default nightly
-rustup update //update every week cause nightly
