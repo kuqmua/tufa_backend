@@ -652,7 +652,7 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                     _ => println!("diff node"),
                                 },
                                 6 => {
-                                    println!("six{:#?}", second_child_element2.children);
+                                    // println!("six{:#?}", second_child_element2.children);
                                     match second_child_element2.children[0] {
                                         Node::Element(ref second_child_element3) => {
                                             match second_child_element3.children.len() {
@@ -682,7 +682,7 @@ pub fn parse_github_html_second_part(second_child: &Node) {
                                             match second_child_element3.children.len() {
                                                 1 => match second_child_element3.children[0] {
                                                     Node::Text(ref pppp) => {
-                                                        println!("pppp{}", pppp);
+                                                        // println!("pppp{}", pppp);
                                                         release_tag = pppp;
                                                     }
                                                     _ => println!("diff node"),
@@ -910,9 +910,15 @@ pub fn parse_github_html_second_part_inner_one_element(inner_one_element: &Node)
                                                 );
                                             }
                                             2 => {
-                                                println!(
-                                                    "todo 2uuu {:#?}",
-                                                    inner_one_element1third1.children
+                                                // println!(
+                                                //     "todo 2uuu {:#?}",
+                                                //     inner_one_element1third1.children
+                                                // );
+                                                commit_text = handle_text_element(
+                                                    &inner_one_element1third1.children[0],
+                                                );
+                                                second_element(
+                                                    &inner_one_element1third1.children[1],
                                                 );
                                             }
                                             3 => {
