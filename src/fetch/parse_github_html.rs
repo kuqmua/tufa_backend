@@ -1,136 +1,234 @@
 use html_parser::{Dom, Node};
-// use select::document::Document;
-// use select::predicate::{Attr, Class, Name, Predicate};
-// use serde::__private::ser::constrain;
-
-// pub fn parse_github_html(option_content: Option<String>) {
-//     match option_content {
-//         Some(content) => {
-//             // println!("content{}", content);
-//             //include_str!("s.html")
-//             let bbb: &str = &content;
-//             let document = Document::from(bbb);
-//             for node in document.find(Class("mr12")) {
-//                 //.descendant(Name("a"))
-//                 // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
-//                 // println!("{:#?}", node)
-//             }
-//             // println!();
-//             // println!("# Top 5 Questions");
-//             // for node in document.find(Class("question-summary")).take(5) {
-//             //     let question = node.find(Class("question-hyperlink")).next().unwrap();
-//             //     let votes = node.find(Class("vote-count-post")).next().unwrap().text();
-//             //     let answers = node
-//             //         .find(Class("status").descendant(Name("strong")))
-//             //         .next()
-//             //         .unwrap()
-//             //         .text();
-//             //     let tags = node
-//             //         .find(Class("post-tag"))
-//             //         .map(|tag| tag.text())
-//             //         .collect::<Vec<_>>();
-//             //     let asked_on = node.find(Class("relativetime")).next().unwrap().text();
-//             //     let asker = node
-//             //         .find(Class("user-details").descendant(Name("a")))
-//             //         .next()
-//             //         .unwrap()
-//             //         .text();
-//             //     println!(" Question: {}", question.text());
-//             //     println!("  Answers: {}", answers);
-//             //     println!("    Votes: {}", votes);
-//             //     println!("   Tagged: {}", tags.join(", "));
-//             //     println!(" Asked on: {}", asked_on);
-//             //     println!("    Asker: {}", asker);
-//             //     println!(
-//             //         "Permalink: http://stackoverflow.com{}",
-//             //         question.attr("href").unwrap()
-//             //     );
-//             //     println!();
-//             // }
-//             // println!("# Top 10 Related Tags");
-//             // for node in document
-//             //     .find(Attr("id", "h-related-tags"))
-//             //     .next()
-//             //     .unwrap()
-//             //     .parent()
-//             //     .unwrap()
-//             //     .find(Name("div"))
-//             //     .take(10)
-//             // {
-//             //     let tag = node.find(Name("a")).next().unwrap().text();
-//             //     let count = node
-//             //         .find(Class("item-multiplier-count"))
-//             //         .next()
-//             //         .unwrap()
-//             //         .text();
-//             //     println!("{} ({})", tag, count);
-//             // }
-//         }
-//         None => {
-//             println!("pressf")
-//         }
-//     }
-// }
+use select::document::Document;
+use select::predicate::{Attr, Class, Name, Predicate};
+use serde::__private::ser::constrain;
 
 pub fn parse_github_html(option_content: Option<String>) {
-    // let mut avatar_link: Option<String> = None;
+    let mut avatar_link: Option<String> = None; //can be an array
+    let mut updated: Option<String> = None;
+    let mut date: Option<String> = None;
+    let mut author: &str = "noone";
+    let mut action: &str = "noaction";
+    let mut repository: &str = "norepository";
+
+    let mut actionto: &str = "noactionto";
+    let mut branch: &str = "nobranch";
+    let mut release_tag: &str = "noreleasetag";
+    let mut of: &str = "of";
+    let mut bot_tag: &str = "nobotTag";
+    let mut relative_commit_link: Option<String> = None;
+    let mut commit_text: &str = "nocommittext";
+    let mut from_text: &str = "nofromtext";
+    let mut commits_number: &str = "nonumberofcommits";
+    let mut isssue_label: &str = "isssuelabel";
+    let mut data_hovercard_type: Option<String> = None;
+    let mut data_hovercard_url: Option<String> = None;
+    let mut data_id: Option<String> = None;
+    let mut href: Option<String> = None;
+    let mut data_url: Option<String> = None;
+    let mut the_accounts_repo_on_which_the_action_was_performed_relative_href: Option<String> =
+        None;
+    let mut the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from: Option<
+        String,
+    > = None;
+    let mut from: &str = "nofrom";
+    let mut isssue_label: &str = "isssuelabel";
+    let mut who_follow: &str = "nowhofollow";
     match option_content {
         Some(content) => {
-            let result_content = Dom::parse(&content);
-            match result_content {
-                Ok(dom) => {
-                    match dom.children.first() {
-                        Some(element1) => {
-                            if let Node::Element(ref element2) = element1 {
-                                match element2.children.first() {
-                                    Some(element3) => {
-                                        if let Node::Element(ref element4) = element3 {
-                                            match element4.children.first() {
-                                                Some(element5) => {
-                                                    if let Node::Element(ref element6) = element5 {
-                                                        match element6.children.len() {
-                                                            2 => {
-                                                                parse_github_html_first_part(
-                                                                    &element6.children[0],
-                                                                );
-                                                                parse_github_html_second_part(
-                                                                    &element6.children[1],
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                println!("_____should handle what or ...?");
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                None => {
-                                                    println!("fn")
-                                                }
-                                            }
-                                        }
-                                    }
-                                    None => {
-                                        println!("fn")
-                                    }
-                                }
-                            }
-                        }
-                        None => {
-                            println!("fn")
-                        }
-                    }
-                }
-                Err(e) => {
-                    println!("Dom::parse error {}", e)
+            // println!("content{}", content);
+            let content = r#"<div class="repo" data-test-selector="visible-event"><div class="body">
+<div class="d-flex flex-items-baseline border-bottom color-border-secondary py-3">
+    <span class="mr-2"><a class="d-inline-block" href="/JamesPatrickGill" rel="noreferrer"><img class="avatar avatar-user" src="https://avatars.githubusercontent.com/u/44863195?s=64&amp;v=4" width="32" height="32" alt="@JamesPatrickGill"></a></span>
+
+
+  <div class="d-flex flex-column width-full">
+        <div class="d-flex flex-items-baseline">
+          <div>
+            <a class="Link--primary no-underline text-bold wb-break-all d-inline-block" href="/JamesPatrickGill" rel="noreferrer">JamesPatrickGill</a>
+            created a
+            repository
+            <a class="Link--primary no-underline text-bold wb-break-all d-inline-block" href="/JamesPatrickGill/npm7-auto-upgrades-test" rel="noreferrer">JamesPatrickGill/npm7-auto-upgrades-test</a>
+
+
+            <span class="f6 color-text-tertiary no-wrap ml-1">
+              <relative-time datetime="2021-06-11T11:06:23Z" class="no-wrap">Jun 11, 2021</relative-time>
+            </span>
+
+            
+          </div>
+        </div>
+    <div class="Box p-3 mt-2">
+      <div>
+        <div class="f4 lh-condensed text-bold color-text-primary">
+            <a class="Link--primary no-underline text-bold wb-break-all d-inline-block" href="/JamesPatrickGill/npm7-auto-upgrades-test" rel="noreferrer">JamesPatrickGill/npm7-auto-upgrades-test</a>
+        </div>
+
+
+          <p class="f6 color-text-secondary mt-2 mb-0">
+            <span>Updated Jun 11</span>
+          </p>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>"#;
+            let converted_str_to_use_as_document: &str = &content;
+            let document = Document::from(converted_str_to_use_as_document);
+
+            if let Some(node) = document.find(Class("mb-0").descendant(Name("span"))).next() {
+                updated = Some(node.text())
+            }
+            if let Some(node) = document.find(Name("relative-time")).next() {
+                if let Some(date_handle) = node.attr("datetime") {
+                    date = Some(date_handle.to_string());
                 }
             }
+            let mut vec_of_nodes_a = Vec::<select::node::Node>::with_capacity(4); //change later
+            for node in document.find(Name("a")) {
+                vec_of_nodes_a.push(node);
+            }
+            // println!("vec_of_nodes_a.len() {}", vec_of_nodes_a.len());
+            for node in document.find(Class("avatar-user")) {
+                if let Some(avatar_link_handle) = node.attr("src") {
+                    avatar_link = Some(avatar_link_handle.to_string());
+                }
+            }
+            if vec_of_nodes_a.len() == 4 {
+                //0 user relative link and avatar link
+                //1 user relative link and user name
+                //2 user's repo relative link and user/repo
+                //3 user's repo relative link and user/repo
+                for node in vec_of_nodes_a {
+                    println!("sss{:#?}", node)
+                }
+            } else {
+                println!("todo len == {}", vec_of_nodes_a.len())
+            }
+
+            // let mm = document.find(Name("a")).into_iter().enumerate().len();
+            // match  {
+            //     4 => {}
+            //     _ => {}
+            // }
+            // for node in document.find(Class("question-summary")).take(5) {
+            //     let question = node.find(Class("question-hyperlink")).next().unwrap();
+            //     let votes = node.find(Class("vote-count-post")).next().unwrap().text();
+            //     let answers = node
+            //         .find(Class("status").descendant(Name("strong")))
+            //         .next()
+            //         .unwrap()
+            //         .text();
+            //     let tags = node
+            //         .find(Class("post-tag"))
+            //         .map(|tag| tag.text())
+            //         .collect::<Vec<_>>();
+            //     let asked_on = node.find(Class("relativetime")).next().unwrap().text();
+            //     let asker = node
+            //         .find(Class("user-details").descendant(Name("a")))
+            //         .next()
+            //         .unwrap()
+            //         .text();
+            //     println!(" Question: {}", question.text());
+            //     println!("  Answers: {}", answers);
+            //     println!("    Votes: {}", votes);
+            //     println!("   Tagged: {}", tags.join(", "));
+            //     println!(" Asked on: {}", asked_on);
+            //     println!("    Asker: {}", asker);
+            //     println!(
+            //         "Permalink: http://stackoverflow.com{}",
+            //         question.attr("href").unwrap()
+            //     );
+            //     println!();
+            // }
+            // for node in document
+            //     .find(Attr("id", "h-related-tags"))
+            //     .next()
+            //     .unwrap()
+            //     .parent()
+            //     .unwrap()
+            //     .find(Name("div"))
+            //     .take(10)
+            // {
+            //     let tag = node.find(Name("a")).next().unwrap().text();
+            //     let count = node
+            //         .find(Class("item-multiplier-count"))
+            //         .next()
+            //         .unwrap()
+            //         .text();
+            //     println!("{} ({})", tag, count);
+            // }
         }
         None => {
-            println!("fn")
+            println!("pressf")
         }
     }
-    // println!("avatar_link {:#?}",avatar_link);
+    // println!("avatar_link {:#?}", avatar_link);
+    // println!("updated {:#?}", updated);
+    println!("date{:#?}", date);
 }
+
+// pub fn parse_github_html(option_content: Option<String>) {
+//     // let mut avatar_link: Option<String> = None;
+//     match option_content {
+//         Some(content) => {
+//             let result_content = Dom::parse(&content);
+//             match result_content {
+//                 Ok(dom) => {
+//                     match dom.children.first() {
+//                         Some(element1) => {
+//                             if let Node::Element(ref element2) = element1 {
+//                                 match element2.children.first() {
+//                                     Some(element3) => {
+//                                         if let Node::Element(ref element4) = element3 {
+//                                             match element4.children.first() {
+//                                                 Some(element5) => {
+//                                                     if let Node::Element(ref element6) = element5 {
+//                                                         match element6.children.len() {
+//                                                             2 => {
+//                                                                 parse_github_html_first_part(
+//                                                                     &element6.children[0],
+//                                                                 );
+//                                                                 parse_github_html_second_part(
+//                                                                     &element6.children[1],
+//                                                                 );
+//                                                             }
+//                                                             _ => {
+//                                                                 println!("_____should handle what or ...?");
+//                                                             }
+//                                                         }
+//                                                     }
+//                                                 }
+//                                                 None => {
+//                                                     println!("fn")
+//                                                 }
+//                                             }
+//                                         }
+//                                     }
+//                                     None => {
+//                                         println!("fn")
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                         None => {
+//                             println!("fn")
+//                         }
+//                     }
+//                 }
+//                 Err(e) => {
+//                     println!("Dom::parse error {}", e)
+//                 }
+//             }
+//         }
+//         None => {
+//             println!("fn")
+//         }
+//     }
+//     // println!("avatar_link {:#?}",avatar_link);
+// }
 
 pub fn parse_github_html_first_part(first_child: &Node) {
     let mut avatar_link: Option<String> = None;
