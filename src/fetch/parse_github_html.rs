@@ -2330,17 +2330,23 @@ pub fn two_elements_four_children_third(node: &Node) {
 }
 
 pub fn two_elements_four_children_fourth(node: &Node) {
-    let mut who_follow: &str = "nowhofollow";
+    let mut who_follow: Option<String> = None;
     let mut datejs_another: Option<String> = None;
-    let mut date_another: &str = "nodate";
+    let mut date_another: Option<String> = None;
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
             1 => match node_element.children[0] {
                 Node::Element(ref node_element_first) => {
                     let attribute = "datetime";
+                    let mut datejs_another_handle_attribute: Option<String> = None;
+                    let mut datejs_another_handle_text: Option<String> = None;
                     match node_element_first.attributes.get(attribute) {
                         Some(datejs_another_handle) => {
-                            datejs_another = datejs_another_handle.clone();
+                            println!(
+                                "datejs_another_handle_attribute {:#?}",
+                                datejs_another_handle_attribute
+                            );
+                            datejs_another_handle_attribute = datejs_another_handle.clone();
                         }
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
@@ -2354,7 +2360,11 @@ pub fn two_elements_four_children_fourth(node: &Node) {
                     match node_element_first.children.len() {
                         1 => match node_element_first.children[0] {
                             Node::Text(ref date_another_handle) => {
-                                date_another = date_another_handle;
+                                println!(
+                                    "datejs_another_handle_text {:#?}",
+                                    datejs_another_handle_text
+                                );
+                                datejs_another_handle_text = Some(date_another_handle.to_string());
                             }
                             _ => print_warning_orange(
                                 file!().to_string(),
@@ -2374,6 +2384,33 @@ pub fn two_elements_four_children_fourth(node: &Node) {
                             )
                         }
                     }
+                    // if datejs_another_handle_attribute == datejs_another_handle_text {
+                    //     datejs_another = datejs_another_handle_attribute;
+                    // } else {
+                    //     match datejs_another_handle_attribute {
+                    //         Some(ref datejs_attribute) => match datejs_another_handle_text {
+                    //             Some(ref datejs_text) => {
+                    //                 let warning_message = format!(
+                    //             "different between dates: datejs_another_handle_attribute: {:#?}, datejs_another_handle_text: {:#?}",
+                    //             datejs_another_handle_attribute,
+                    //             datejs_another_handle_text
+                    //         );
+                    //                 print_warning_orange(
+                    //                     file!().to_string(),
+                    //                     line!().to_string(),
+                    //                     warning_message,
+                    //                 );
+                    //             }
+                    //             None => datejs_another = datejs_another_handle_attribute,
+                    //         },
+                    //         None => match datejs_another_handle_text {
+                    //             Some(ref datejs_text) => {
+
+                    //             }
+                    //             None => {},
+                    //         }
+                    //     }
+                    // }
                 }
                 _ => print_warning_orange(
                     file!().to_string(),
@@ -2395,5 +2432,5 @@ pub fn two_elements_four_children_fourth(node: &Node) {
     }
     // println!("who_follow {}", who_follow);
     // println!("datejs_another {:#?}", datejs_another);
-    // println!("date_another {}", date_another);
+    // println!("date_another {:#?}", date_another);
 }
