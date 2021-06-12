@@ -524,11 +524,16 @@ pub fn rss_parse_string_into_struct(
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
                                         CommonRssPostStruct::new();
+
                                     loop {
                                         if count < rss_struct.entries.len() {
-                                            parse_github_html(
-                                                rss_struct.entries[count].content.clone(),
-                                            );
+                                            if count == 0 {
+                                                //for debugging
+                                                parse_github_html(
+                                                    rss_struct.entries[count].content.clone(),
+                                                );
+                                            }
+
                                             rss_page_struct.items.push(
                                                 CommonRssPost::initialize_with_params(
                                                     //todo option fields
