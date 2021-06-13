@@ -69,6 +69,7 @@ pub fn rss_parse_string_into_struct(
                                     None,
                                     None,
                                     None,
+                                    None,
                                     //github specific
 
                                     //habr specific
@@ -292,6 +293,7 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
+                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -421,6 +423,7 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
+                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -529,7 +532,7 @@ pub fn rss_parse_string_into_struct(
                                         if count < rss_struct.entries.len() {
                                             // if count == 0 {
                                             //for debugging
-                                            parse_github_html(
+                                            let github_info_from_html = parse_github_html(
                                                 rss_struct.entries[count].content.clone(),
                                             );
                                             // }
@@ -556,6 +559,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.entries[count].updated.clone(),
                                                     rss_struct.entries[count].media.clone(),
                                                     rss_struct.entries[count].author.uri.clone(),
+                                                    Some(github_info_from_html),
                                                     //github specific
 
                                                     //habr specific
@@ -678,6 +682,7 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
+                                                    None,
                                                     None,
                                                     None,
                                                     None,
@@ -810,6 +815,7 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
+                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -937,6 +943,7 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
+                                                    None,
                                                     None,
                                                     None,
                                                     None,

@@ -1,6 +1,9 @@
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_orange;
 use html_parser::{Dom, Node};
+
+use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
+
 // use select::document::Document;
 // use select::predicate::{Attr, Class, Name, Predicate};
 // use serde::__private::ser::constrain;
@@ -187,37 +190,7 @@ use html_parser::{Dom, Node};
 //     println!("commit_relative_link{:#?}", commit_relative_link);
 // }
 
-pub fn parse_github_html(
-    option_content: Option<String>,
-) -> (
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Vec<(
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-    )>,
-) {
+pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     let mut avatar_link: Option<String> = None;
     let mut author: Option<String> = None;
     let mut action: Option<String> = None;
