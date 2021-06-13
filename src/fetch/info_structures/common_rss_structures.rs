@@ -40,6 +40,7 @@ pub struct CommonRssPost {
     pub github_updated: Option<String>,
     pub github_media: Option<String>,
     pub github_author_uri: Option<String>,
+    pub github_info_from_html: Option<GithubInfoFromHtml>,
     //github specific
 
     //habr specific
@@ -133,6 +134,7 @@ impl CommonRssPost {
         github_updated: Option<String>,
         github_media: Option<String>,
         github_author_uri: Option<String>,
+        github_info_from_html: Option<GithubInfoFromHtml>,
         //github specific
 
         //habr specific
@@ -224,6 +226,7 @@ impl CommonRssPost {
             github_updated,
             github_media,
             github_author_uri,
+            github_info_from_html,
             //github specific
 
             //habr specific
@@ -288,6 +291,88 @@ impl CommonRssPost {
             twitter_author_link,
             //from TwitterStructForParsingImage
             //twitter specific
+        }
+    }
+}
+
+#[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct GithubInfoFromHtml {
+    pub avatar_link: Option<String>,
+    pub author: Option<String>,
+    pub action: Option<String>,
+    pub repository: Option<String>,
+    pub from_what_repository_forked: Option<String>,
+    pub from: Option<String>,
+    pub datejs: Option<String>,
+    pub date: Option<String>,
+    pub actionto: Option<String>,
+    pub branch: Option<String>,
+    pub release_tag: Option<String>,
+    pub of: Option<String>,
+    pub bot_tag: Option<String>,
+    pub who_follow: Option<String>,
+    pub vec_of_something: Vec<(
+        Option<String>, //avatar_link_handle
+        Option<String>, //relative_commit_link_handle
+        Option<String>, //commit_text_handle
+        Option<String>, //from_text_handle
+        Option<String>, //commits_number_handle
+        Option<String>, //isssue_label_handle
+        Option<String>, //data_hovercard_type,
+        Option<String>, //data_hovercard_url,
+        Option<String>, //data_id,
+        Option<String>, //href,
+        Option<String>, //data_url,
+    )>,
+}
+
+impl GithubInfoFromHtml {
+    #[allow(clippy::clippy::too_many_arguments)]
+    pub fn initialize_with_params(
+        avatar_link: Option<String>,
+        author: Option<String>,
+        action: Option<String>,
+        repository: Option<String>,
+        from_what_repository_forked: Option<String>,
+        from: Option<String>,
+        datejs: Option<String>,
+        date: Option<String>,
+        actionto: Option<String>,
+        branch: Option<String>,
+        release_tag: Option<String>,
+        of: Option<String>,
+        bot_tag: Option<String>,
+        who_follow: Option<String>,
+        vec_of_something: Vec<(
+            Option<String>, //avatar_link_handle
+            Option<String>, //relative_commit_link_handle
+            Option<String>, //commit_text_handle
+            Option<String>, //from_text_handle
+            Option<String>, //commits_number_handle
+            Option<String>, //isssue_label_handle
+            Option<String>, //data_hovercard_type,
+            Option<String>, //data_hovercard_url,
+            Option<String>, //data_id,
+            Option<String>, //href,
+            Option<String>, //data_url,
+        )>,
+    ) -> Self {
+        GithubInfoFromHtml {
+            avatar_link,
+            author,
+            action,
+            repository,
+            from_what_repository_forked,
+            from,
+            datejs,
+            date,
+            actionto,
+            branch,
+            release_tag,
+            of,
+            bot_tag,
+            who_follow,
+            vec_of_something,
         }
     }
 }

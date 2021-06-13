@@ -185,7 +185,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     // for i in vec_of_something {
 
     // }
-    (
+    GithubInfoFromHtml::initialize_with_params(
         avatar_link,
         author,
         action,
