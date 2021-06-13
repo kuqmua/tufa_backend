@@ -527,12 +527,12 @@ pub fn rss_parse_string_into_struct(
 
                                     loop {
                                         if count < rss_struct.entries.len() {
-                                            if count == 0 {
-                                                //for debugging
-                                                parse_github_html(
-                                                    rss_struct.entries[count].content.clone(),
-                                                );
-                                            }
+                                            // if count == 0 {
+                                            //for debugging
+                                            parse_github_html(
+                                                rss_struct.entries[count].content.clone(),
+                                            );
+                                            // }
 
                                             rss_page_struct.items.push(
                                                 CommonRssPost::initialize_with_params(
