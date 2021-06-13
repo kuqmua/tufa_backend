@@ -33,7 +33,7 @@ pub fn rss_parse_string_into_struct(
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, AreThereItems) {
     let mut rss_post_struct_handle: CommonRssPostStruct = CommonRssPostStruct::new();
-    let are_there_items_handle: AreThereItems;
+    let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
     match provider_kind {
         ProviderKind::Reddit => {
             //todo option fields
@@ -173,6 +173,7 @@ pub fn rss_parse_string_into_struct(
                 }
                 ProviderKind::Twitter => what_should_find_in_fetch_result_string = item,
             }
+
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {
                     //preparation
@@ -1044,7 +1045,13 @@ pub fn rss_parse_string_into_struct(
                         }
                     }
                 }
-                None => todo!(),
+                None => {
+                    let warning_message = format!(
+                        "cannot find {} for {:#?} in fetch_result_string",
+                        what_should_find_in_fetch_result_string, provider_kind
+                    );
+                    print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+                }
             }
         }
     }
