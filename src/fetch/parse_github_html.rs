@@ -347,23 +347,23 @@ pub fn parse_github_html(option_content: Option<String>) {
             "option content is None".to_string(),
         ),
     }
-    println!("avatar_link {:#?}", avatar_link);
-    println!("author {:#?}", author);
-    println!("action {:#?}", action);
-    println!("repository {:#?}", repository);
-    println!(
-        "from_what_repository_forked {:#?}",
-        from_what_repository_forked
-    );
-    println!("from {:#?}", from);
-    println!("datejs {:#?}", datejs);
-    println!("date {:#?}", date);
-    println!("actionto {:#?}", actionto);
-    println!("branch {:#?}", branch);
-    println!("release_tag {:#?}", release_tag);
-    println!("of {:#?}", of);
-    println!("bot_tag {:#?}", bot_tag);
-    println!("who_follow {:#?}", who_follow);
+    // println!("avatar_link {:#?}", avatar_link);
+    // println!("author {:#?}", author);
+    // println!("action {:#?}", action);
+    // println!("repository {:#?}", repository);
+    // println!(
+    //     "from_what_repository_forked {:#?}",
+    //     from_what_repository_forked
+    // );
+    // println!("from {:#?}", from);
+    // println!("datejs {:#?}", datejs);
+    // println!("date {:#?}", date);
+    // println!("actionto {:#?}", actionto);
+    // println!("branch {:#?}", branch);
+    // println!("release_tag {:#?}", release_tag);
+    // println!("of {:#?}", of);
+    // println!("bot_tag {:#?}", bot_tag);
+    // println!("who_follow {:#?}", who_follow);
 }
 
 pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
@@ -1872,6 +1872,18 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                 ) = second_element(
                                                     &node_element_first_first.children[1],
                                                 );
+                                                println!(
+                                                    "data_hovercard_type_handle1 {:#?}",
+                                                    data_hovercard_type_handle
+                                                );
+                                                println!(
+                                                    "data_hovercard_url_handle1{:#?}",
+                                                    data_hovercard_url_handle
+                                                );
+                                                println!("data_id_handle1 {:#?}", data_id_handle);
+                                                println!("href_handle1 {:#?}", href_handle);
+                                                println!("data_url_handle1 {:#?}", data_url_handle);
+                                                println!("----------------------");
                                                 data_hovercard_type = data_hovercard_type_handle;
                                                 data_hovercard_url = data_hovercard_url_handle;
                                                 data_id = data_id_handle;
@@ -1889,6 +1901,17 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                 ) = second_element(
                                                     &node_element_first_first.children[3],
                                                 );
+                                                println!(
+                                                    "data_hovercard_type_handle2 {:#?}",
+                                                    data_hovercard_type_handle
+                                                );
+                                                println!(
+                                                    "data_hovercard_url_handle2 {:#?}",
+                                                    data_hovercard_url_handle
+                                                );
+                                                println!("data_id_handle2 {:#?}", data_id_handle);
+                                                println!("href_handle2 {:#?}", href_handle);
+                                                println!("data_url_handle2 {:#?}", data_url_handle);
                                                 data_hovercard_type = data_hovercard_type_handle;
                                                 data_hovercard_url = data_hovercard_url_handle;
                                                 data_id = data_id_handle;
@@ -2185,8 +2208,6 @@ pub fn two_elements_one_child(
                                         {
                                             Some(datejs_another_handle) => {
                                                 datejs_another = datejs_another_handle.clone();
-                                                println!("datejs_another1 {:#?}", datejs_another);
-                                                //same as in text
                                             }
                                             None => {
                                                 let warning_message =
@@ -2204,10 +2225,6 @@ pub fn two_elements_one_child(
                                                     //same as in datetime attrubute
                                                     date_another =
                                                         Some(date_another_handle.to_string());
-                                                    println!(
-                                                        "datejs_another2 {:#?}",
-                                                        datejs_another
-                                                    );
                                                 }
                                                 _ => print_warning_orange(
                                                     file!().to_string(),
