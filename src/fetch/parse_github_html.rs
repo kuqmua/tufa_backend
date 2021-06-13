@@ -187,7 +187,37 @@ use html_parser::{Dom, Node};
 //     println!("commit_relative_link{:#?}", commit_relative_link);
 // }
 
-pub fn parse_github_html(option_content: Option<String>) {
+pub fn parse_github_html(
+    option_content: Option<String>,
+) -> (
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Vec<(
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+    )>,
+) {
     let mut avatar_link: Option<String> = None;
     let mut author: Option<String> = None;
     let mut action: Option<String> = None;
@@ -364,6 +394,27 @@ pub fn parse_github_html(option_content: Option<String>) {
     // println!("of {:#?}", of);
     // println!("bot_tag {:#?}", bot_tag);
     // println!("who_follow {:#?}", who_follow);
+    // println!("vec_of_something {:#?}", vec_of_something);
+    // for i in vec_of_something {
+
+    // }
+    (
+        avatar_link,
+        author,
+        action,
+        repository,
+        from_what_repository_forked,
+        from,
+        datejs,
+        date,
+        actionto,
+        branch,
+        release_tag,
+        of,
+        bot_tag,
+        who_follow,
+        vec_of_something,
+    )
 }
 
 pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
@@ -1833,19 +1884,20 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                 data_id = data_id_handle;
                                                 href = href_handle;
                                                 data_url = data_url_handle;
-                                                // println!(
-                                                //     "🚀node_element_first_first.children[2]{:#?}",
-                                                //     node_element_first_first.children[2]
-                                                // );
-                                                //here
+
                                                 match node_element_first_first.children[2] {
                                                     Node::Text(ref text) => {
                                                         from_text = Some(text.to_string());
                                                     }
                                                     Node::Element(ref something) => {
-                                                        if something.name != "g-emoji" {
-                                                            println!("todo not g-emoji")
-                                                        }
+                                                        //todo
+                                                        println!(
+                                                            "🚀g-emoji? something{:#?}",
+                                                            something
+                                                        );
+                                                        // if something.name != "g-emoji" {
+                                                        //     println!("todo not g-emoji")
+                                                        // }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1853,11 +1905,6 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                         "different node".to_string(),
                                                     ),
                                                 }
-                                                //todo
-                                                // from_text = handle_text_element(
-                                                //     &node_element_first_first.children[2],
-                                                // );
-                                                //and here
                                             }
                                             5 => {
                                                 commit_text = handle_text_element(
