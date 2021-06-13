@@ -43,6 +43,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          
-      - name: cd libs/tests_lib && cargo test ci
-        run: cd libs/tests_lib && cargo test ci
+
+      - name: cd libs/tests_lib && cargo test ci --show-output
+        run: cd libs/tests_lib && cargo test ci --show-output

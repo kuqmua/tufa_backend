@@ -2,22 +2,25 @@
 Status of last deployment: <br/>
 <img src="https://github.com/kuqmua/tufa_backend/workflows/CI/badge.svg?branch=master"><br/>
 
-## change project config
+### change project config
 ./config <br/>
 
-## change project constants
+### change tests constants
 .libs/config_lib/src/get_project_information/project_constans.rs <br/>
 
-## change tests constants
-.libs/config_lib/src/get_project_information/project_constans.rs <br/>
-
-## start docker daemon
+### start docker daemon
 sudo dockerd
 
-## start command
+### start command
 cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
 
-## how to install rust in wsl2
+### run ci tests
+cd libs/tests_lib && cargo test ci --show-output
+
+### run local tests
+cd libs/tests_lib && cargo test local --show-output
+
+### how to install rust in wsl2
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 sudo apt install build-essential
 source $HOME/.cargo/env
@@ -26,7 +29,7 @@ sudo apt-get install pkg-config libssl-dev
 rustup default nightly
 rustup update //update every week cause nightly
 
-## how to install rust in windows 10
+### how to install rust in windows 10
 https://estada.ch/2020/4/19/installing-rust-on-windows-10-native/
 
 This is a quick how to for Windows 10 2004.
