@@ -200,3 +200,16 @@ github parsing version to check different structs of posts as test in the loop
 ----------------------------
 logs were written in file logs/warning_logs/Twitter/unhandled_success_handled_success_are_there_items_initialized_posts/Twitter-.json
 why only half of the name????/
+value.1"https://nitter.fdn.fr/Tom_McGurl/rss"
+value.1"https://nitter.fdn.fr/OK9UWU/rss"
+value.1"https://nitter.fdn.fr/r2x0t/rss"
+value.1""
+value.1"https://nitter.fdn.fr/PataniLab/rss"
+value.1"https://nitter.fdn.fr/AlexSerbul/rss"
+value.1""
+value.1""
+value.1""
+value.1""
+value.1""
+value.1""
+value.1""
