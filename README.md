@@ -15,10 +15,10 @@ sudo dockerd
 cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
 
 ### run ci tests
-cd libs/tests_lib && cargo test ci --show-output
+cd libs/tests_lib && cargo test ci -- --show-output
 
 ### run local tests
-cd libs/tests_lib && cargo test local --show-output
+cd libs/tests_lib && cargo test local -- --show-output
 
 ### how to install rust in wsl2
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
