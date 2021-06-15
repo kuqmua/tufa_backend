@@ -216,4 +216,6 @@ value.1""
 ---------------------------
 parsing check field is empty
 ---------------------------
-check if there already file with same name while writinig error logs into file system
+thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
+---------------------------
+err.description() is deprecated
