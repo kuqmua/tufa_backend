@@ -73,6 +73,7 @@ pub fn rss_fetch_and_parse_provider_data(
                 Err(e) => {
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
+                    hashmap_to_return_handle_locked[element_index].1 = link;
                     hashmap_to_return_handle_locked[element_index].2 =
                         UnhandledFetchStatusInfo::Failure(e.to_string());
                     if enable_error_prints {
