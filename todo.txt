@@ -213,3 +213,5 @@ value.1""
 value.1""
 value.1""
 value.1""
+---------------------------
+parsing check field is empty
