@@ -4,9 +4,7 @@ use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_don
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_orange;
-use std::error::Error;
 use std::io::ErrorKind;
-use std::path;
 use std::{fs::File, io::Write};
 
 pub fn write_into_file(
@@ -64,6 +62,7 @@ pub fn rss_write_error_logs_into_file_for_provider(
     provider_kind: &ProviderKind,
     dir: &str,
     enable_prints: bool,
+    enable_warning_prints: bool,
     enable_error_prints: bool,
     warning_logs_directory_name: &str,
     link: &str,
@@ -83,13 +82,15 @@ pub fn rss_write_error_logs_into_file_for_provider(
     let result_of_opening_file = File::open(&file_name);
     match result_of_opening_file {
         Ok(_) => {
-            let warning_message = format!("there is file with the same name: {}", &file_name);
-            print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            if enable_warning_prints {
+                let warning_message = format!("there is file with the same name: {}", &file_name);
+                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            }
         }
         Err(ref err) => {
             if err.kind() == ErrorKind::NotFound {
                 write_into_file(enable_prints, enable_error_prints, file_name, json_object);
-            } else {
+            } else if enable_warning_prints {
                 let warning_message = format!(
                     "unexpected error while opening file, description: {:#?}",
                     &err.kind()
