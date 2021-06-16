@@ -3,7 +3,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
+use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
 use chrono::Local;
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
@@ -86,7 +86,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", value.4),
                         "date": Local::now().to_string()
                     });
-                    rss_write_error_logs_into_file_for_provider(
+                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -105,7 +105,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", value.4),
                         "date": Local::now().to_string()
                     });
-                    rss_write_error_logs_into_file_for_provider(
+                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -124,7 +124,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", value.4),
                         "date": Local::now().to_string()
                     });
-                    rss_write_error_logs_into_file_for_provider(
+                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -142,7 +142,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         "part_of": format!("{:?}", value.4),
                         "date": Local::now().to_string()
                     });
-                    rss_write_error_logs_into_file_for_provider(
+                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -160,7 +160,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     "part_of": format!("{:?}", value.4),
                     "date": Local::now().to_string()
                 });
-                rss_write_error_logs_into_file_for_provider(
+                rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     json_object,
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -178,7 +178,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     "part_of": format!("{:?}", value.4),
                     "date": Local::now().to_string()
                 });
-                rss_write_error_logs_into_file_for_provider(
+                rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     json_object,
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -197,7 +197,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     "date": Local::now().to_string()
                 });
                 handle_error_status_code(status_code, &value.0);
-                rss_write_error_logs_into_file_for_provider(
+                rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     json_object,
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -215,7 +215,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 "part_of": format!("{:?}", value.4),
                 "date": Local::now().to_string()
             });
-            rss_write_error_logs_into_file_for_provider(
+            rss_write_error_logs_into_file_for_provider_wrapper_checker(
                 json_object,
                 &value.4,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
@@ -233,7 +233,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 "part_of": format!("{:?}", value.4),
                 "date": Local::now().to_string()
             });
-            rss_write_error_logs_into_file_for_provider(
+            rss_write_error_logs_into_file_for_provider_wrapper_checker(
                 json_object,
                 &value.4,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
