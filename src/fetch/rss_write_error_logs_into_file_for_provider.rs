@@ -5,6 +5,7 @@ use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::overriding::prints::print_error_red;
 use crate::overriding::prints::print_warning_orange;
 use std::error::Error;
+use std::io::ErrorKind;
 use std::path;
 use std::{fs::File, io::Write};
 
@@ -86,18 +87,16 @@ pub fn rss_write_error_logs_into_file_for_provider(
             print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
         }
         Err(ref err) => {
-            if err.description() == "entity not found" {
+            if err.kind() == ErrorKind::NotFound {
                 write_into_file(enable_prints, enable_error_prints, file_name, json_object);
             } else {
                 let warning_message = format!(
                     "unexpected error while opening file, description: {:#?}",
-                    &err.description()
+                    &err.kind()
                 );
                 print_warning_orange(file!().to_string(), line!().to_string(), warning_message);
                 write_into_file(enable_prints, enable_error_prints, file_name, json_object);
             }
-            // println!("description {:#?}", ffs.description());
-            // println!("ERRROR      {:#?}", error);
         }
     }
 }
