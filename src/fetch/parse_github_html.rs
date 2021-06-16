@@ -1698,15 +1698,44 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     Node::Text(ref text) => {
                                                         from_text = Some(text.to_string());
                                                     }
-                                                    Node::Element(ref something) => {
-                                                        //todo
-                                                        println!(
-                                                            "🚀g-emoji? something{:#?}",
-                                                            something
-                                                        );
-                                                        // if something.name != "g-emoji" {
-                                                        //     println!("todo not g-emoji")
-                                                        // }
+                                                    Node::Element(ref emoji_element) => {
+                                                        let attribute = "fallback-src";
+                                                        match emoji_element
+                                                            .attributes
+                                                            .get(attribute)
+                                                        {
+                                                            Some(link_option) => {
+                                                                match link_option {
+                                                                    Some(link) => {
+                                                                         if link != "https://github.githubassets.com/images/icons/emoji/unicode/1f680.png" {
+                                                                    let warning_message = format!(
+                                                                                "different emoji link: {:#?}",
+                                                                                emoji_element.attributes.get(attribute)
+                                                                            );
+                                                                            print_warning_orange(
+                                                                                file!().to_string(),
+                                                                                line!().to_string(),
+                                                                                warning_message,
+                                                                            )
+                                                                }
+                                                                    }
+                                                                    None => {
+                                                                        print_warning_orange(
+                                                                file!().to_string(),
+                                                                line!().to_string(),
+                                                                "unexpected, emoji link is None"
+                                                                    .to_string(),
+                                                            )
+                                                                    }
+                                                                }
+                                                            }
+                                                            None => print_warning_orange(
+                                                                file!().to_string(),
+                                                                line!().to_string(),
+                                                                "unexpected, no emoji link"
+                                                                    .to_string(),
+                                                            ),
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
