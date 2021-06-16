@@ -1327,8 +1327,6 @@ pub fn parse_github_html_second_part(
                             "different node".to_string(),
                         ),
                     }
-                    //here todo 2
-                    // println!("2f node_element.children[1]{:#?}", node_element.children[1]);
                     match node_element.children[0] {
                         Node::Element(ref node_element_second) => {
                             match node_element_second.children.len() {
@@ -1506,6 +1504,26 @@ pub fn parse_github_html_second_part_inner_one_element(
                                 1 => match node_element_first.children[0] {
                                     Node::Element(ref node_element_first_first) => {
                                         match node_element_first_first.children.len() {
+                                            0 => {
+                                                let attribute = "data-canonical-src";
+                                                match node_element_first_first
+                                                    .attributes
+                                                    .get(attribute)
+                                                {
+                                                    Some(_) => {
+                                                        //useless default github avatar
+                                                    }
+                                                    None => {
+                                                        let warning_message =
+                                                            format!("no {} attribute", attribute);
+                                                        print_warning_orange(
+                                                            file!().to_string(),
+                                                            line!().to_string(),
+                                                            warning_message,
+                                                        )
+                                                    }
+                                                }
+                                            }
                                             1 => match node_element_first_first.children[0] {
                                                 Node::Element(
                                                     ref node_element_first_first_element,
@@ -1547,7 +1565,11 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
-                                                )
+                                                );
+                                                println!(
+                                                    "node_element_first_first{:#?}",
+                                                    node_element_first_first
+                                                );
                                             }
                                         }
                                     }
