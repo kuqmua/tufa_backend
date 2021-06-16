@@ -197,25 +197,20 @@ why hashmap['key'] do not return Result ?????7
 server what running web tests every hour like http requests and get valid data or not
 ----------------------------
 github parsing version to check different structs of posts as test in the loop
-----------------------------
-logs were written in file logs/warning_logs/Twitter/unhandled_success_handled_success_are_there_items_initialized_posts/Twitter-.json
-why only half of the name????/
-value.1"https://nitter.fdn.fr/Tom_McGurl/rss"
-value.1"https://nitter.fdn.fr/OK9UWU/rss"
-value.1"https://nitter.fdn.fr/r2x0t/rss"
-value.1""
-value.1"https://nitter.fdn.fr/PataniLab/rss"
-value.1"https://nitter.fdn.fr/AlexSerbul/rss"
-value.1""
-value.1""
-value.1""
-value.1""
-value.1""
-value.1""
-value.1""
 ---------------------------
 parsing check field is empty
 ---------------------------
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
----------------------------
-err.description() is deprecated
++++++++++++++++++++++++++++
+    Finished dev [unoptimized + debuginfo] target(s) in 0.10s
+     Running `target/debug/tufa_backend`
+We are on a multicore system with 12 CPUs
+ENV: Development
+server can reach https://www.google.com/
+20 elements in Twitter HashMap
+i can reach https://www.google.com/
+file: src/fetch/rss_check_available_providers.rs:32
+UnhandledFetchStatusInfo::Failureerror sending request for url (https://nitter.fdn.fr/TheCherno/rss): error trying to connect: tcp connect error: Network is unreachable (os error 101)
+thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
