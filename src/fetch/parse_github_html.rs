@@ -1371,6 +1371,10 @@ pub fn parse_github_html_second_part(
                                         "different node".to_string(),
                                     ),
                                 },
+                                6 => {
+                                    //todo
+                                    println!("six {:#?}", node_element_second.children)
+                                }
                                 _ => {
                                     let warning_message = format!(
                                         "different children.len(): {}",
