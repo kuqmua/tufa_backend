@@ -1388,8 +1388,225 @@ pub fn parse_github_html_second_part(
                                     ),
                                 },
                                 6 => {
-                                    //todo
-                                    println!("six {:#?}", node_element_second.children)
+                                    match node_element_second.children[0] {
+                                        Node::Element(ref node_element_second_first_element) => {
+                                            match node_element_second_first_element.children.len() {
+                                                1 => match node_element_second_first_element
+                                                    .children[0]
+                                                {
+                                                    Node::Text(ref author_handle) => {
+                                                        author = Some(author_handle.to_string())
+                                                    }
+                                                    _ => print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        "different node".to_string(),
+                                                    ),
+                                                },
+                                                _ => {
+                                                    let warning_message = format!(
+                                                        "different children.len(): {}",
+                                                        node_element_second_first_element
+                                                            .children
+                                                            .len()
+                                                    );
+                                                    print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        warning_message,
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
+                                    match node_element_second.children[1] {
+                                        Node::Text(ref action_handle) => {
+                                            action = Some(action_handle.to_string())
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
+                                    match node_element_second.children[2] {
+                                        Node::Element(ref node_element_second_second_element) => {
+                                            match node_element_second_second_element.children.len()
+                                            {
+                                                1 => match node_element_second_second_element
+                                                    .children[0]
+                                                {
+                                                    Node::Text(ref release_tag_handle) => {
+                                                        release_tag =
+                                                            Some(release_tag_handle.to_string())
+                                                    }
+                                                    _ => print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        "different node".to_string(),
+                                                    ),
+                                                },
+                                                _ => {
+                                                    let warning_message = format!(
+                                                        "different children.len(): {}",
+                                                        node_element_second_second_element
+                                                            .children
+                                                            .len()
+                                                    );
+                                                    print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        warning_message,
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
+                                    match node_element_second.children[3] {
+                                        Node::Text(ref of_handle) => {
+                                            of = Some(of_handle.to_string())
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
+                                    match node_element_second.children[4] {
+                                        Node::Element(ref node_element_second_firth_element) => {
+                                            match node_element_second_firth_element.children.len() {
+                                                1 => match node_element_second_firth_element
+                                                    .children[0]
+                                                {
+                                                    Node::Text(ref repository_handle) => {
+                                                        repository =
+                                                            Some(repository_handle.to_string())
+                                                    }
+                                                    _ => print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        "different node".to_string(),
+                                                    ),
+                                                },
+                                                _ => {
+                                                    let warning_message = format!(
+                                                        "different children.len(): {}",
+                                                        node_element_second_firth_element
+                                                            .children
+                                                            .len()
+                                                    );
+                                                    print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        warning_message,
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
+                                    match node_element_second.children[5] {
+                                        Node::Element(ref node_element_second_six_element) => {
+                                            match node_element_second_six_element.children.len() {
+                                                1 => match node_element_second_six_element.children
+                                                    [0]
+                                                {
+                                                    Node::Element(
+                                                        ref node_element_second_six_element,
+                                                    ) => {
+                                                        let attribute = "datetime";
+                                                        match node_element_second_six_element
+                                                            .attributes
+                                                            .get(attribute)
+                                                        {
+                                                            Some(datejs_handle) => {
+                                                                datejs = datejs_handle.clone();
+                                                            }
+                                                            None => {
+                                                                let warning_message = format!(
+                                                                    "no {} attribute",
+                                                                    attribute
+                                                                );
+                                                                print_warning_orange(
+                                                                    file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    warning_message,
+                                                                )
+                                                            }
+                                                        }
+                                                        match node_element_second_six_element.children.len() {
+                                                            1 => match node_element_second_six_element.children
+                                                                [0]
+                                                            {
+                                                                Node::Text(
+                                                                    ref date_handle,
+                                                                ) => {
+                                                                    date = Some(
+                                                                        date_handle
+                                                                            .to_string(),
+                                                                    );
+                                                                }
+                                                                _ => print_warning_orange(
+                                                                    file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    "different node".to_string(),
+                                                                ),
+                                                            },
+                                                            _ => {
+                                                                let warning_message =
+                                                                    format!(
+                                "different children.len(): {}",
+                                node_element_second_six_element.children.len()
+                            );
+                                                                print_warning_orange(
+                                                                    file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    warning_message,
+                                                                )
+                                                            }
+                                                        }
+                                                    }
+                                                    _ => print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        "different node".to_string(),
+                                                    ),
+                                                },
+                                                _ => {
+                                                    let warning_message = format!(
+                                                        "different children.len(): {}",
+                                                        node_element_second_six_element
+                                                            .children
+                                                            .len()
+                                                    );
+                                                    print_warning_orange(
+                                                        file!().to_string(),
+                                                        line!().to_string(),
+                                                        warning_message,
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        _ => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "different node".to_string(),
+                                        ),
+                                    }
                                 }
                                 _ => {
                                     let warning_message = format!(
