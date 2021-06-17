@@ -1352,6 +1352,22 @@ pub fn parse_github_html_second_part(
                                                 datejs = datejs_handle;
                                                 date = date_handle;
                                             }
+                                            4 => {
+                                                let (
+                                                    author_handle,
+                                                    action_handle,
+                                                    who_follow_handle,
+                                                    datejs_handle,
+                                                    date_handle,
+                                                ) = four_cases(
+                                                    &node_element_second_element.children,
+                                                );
+                                                author = author_handle;
+                                                action = action_handle;
+                                                who_follow = who_follow_handle;
+                                                datejs = datejs_handle;
+                                                date = date_handle;
+                                            }
                                             _ => {
                                                 let warning_message = format!(
                                                     "different children.len(): {}",
@@ -3069,4 +3085,143 @@ pub fn parse_github_html_second_part_two_children_first(
         datejs,
         date,
     )
+}
+
+pub fn four_cases(
+    vec_of_nodes: &[Node],
+) -> (
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+) {
+    let mut author: Option<String> = None;
+    let mut action: Option<String> = None;
+    let mut who_follow: Option<String> = None;
+    let mut datejs: Option<String> = None;
+    let mut date: Option<String> = None;
+    match vec_of_nodes[0] {
+        Node::Element(ref first_element) => match first_element.children.len() {
+            1 => match first_element.children[0] {
+                Node::Text(ref author_handle) => author = Some(author_handle.to_string()),
+                _ => print_warning_orange(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "different node".to_string(),
+                ),
+            },
+            _ => {
+                let warning_message =
+                    format!("different children.len(): {}", first_element.children.len());
+                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            }
+        },
+        _ => print_warning_orange(
+            file!().to_string(),
+            line!().to_string(),
+            "different node".to_string(),
+        ),
+    }
+    match vec_of_nodes[1] {
+        Node::Text(ref action_handle) => action = Some(action_handle.to_string()),
+        _ => print_warning_orange(
+            file!().to_string(),
+            line!().to_string(),
+            "different node".to_string(),
+        ),
+    }
+    match vec_of_nodes[2] {
+        Node::Element(ref third_element) => match third_element.children.len() {
+            1 => match third_element.children[0] {
+                Node::Text(ref who_follow_handle) => {
+                    who_follow = Some(who_follow_handle.to_string())
+                }
+                _ => print_warning_orange(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "different node".to_string(),
+                ),
+            },
+            _ => {
+                let warning_message =
+                    format!("different children.len(): {}", third_element.children.len());
+                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            }
+        },
+        _ => print_warning_orange(
+            file!().to_string(),
+            line!().to_string(),
+            "different node".to_string(),
+        ),
+    }
+    match vec_of_nodes[3] {
+        Node::Element(ref node_element_fourth) => match node_element_fourth.children.len() {
+            1 => match node_element_fourth.children[0] {
+                Node::Element(ref node_element_fourth) => {
+                    let attribute = "datetime";
+                    match node_element_fourth.attributes.get(attribute) {
+                        Some(value) => {
+                            datejs = value.clone();
+                        }
+                        None => {
+                            let warning_message = format!("no {} attribute", attribute);
+                            print_warning_orange(
+                                file!().to_string(),
+                                line!().to_string(),
+                                warning_message,
+                            )
+                        }
+                    }
+
+                    match node_element_fourth.children.len() {
+                        1 => match node_element_fourth.children[0] {
+                            Node::Text(ref second_child_element5fourth) => {
+                                date = Some(second_child_element5fourth.to_string());
+                            }
+                            _ => print_warning_orange(
+                                file!().to_string(),
+                                line!().to_string(),
+                                "different node".to_string(),
+                            ),
+                        },
+                        _ => {
+                            let warning_message = format!(
+                                "different children.len(): {}",
+                                node_element_fourth.children.len()
+                            );
+                            print_warning_orange(
+                                file!().to_string(),
+                                line!().to_string(),
+                                warning_message,
+                            )
+                        }
+                    }
+                }
+                _ => print_warning_orange(
+                    file!().to_string(),
+                    line!().to_string(),
+                    "different node".to_string(),
+                ),
+            },
+            _ => {
+                let warning_message = format!(
+                    "different children.len(): {}",
+                    node_element_fourth.children.len()
+                );
+                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            }
+        },
+        _ => print_warning_orange(
+            file!().to_string(),
+            line!().to_string(),
+            "different node".to_string(),
+        ),
+    }
+    // println!("author {:#?}", author);
+    // println!("action {:#?}", action);
+    // println!("who_follow {:#?}", who_follow);
+    // println!("datejs {:#?}", datejs);
+    // println!("date {:#?}", date);
+    (author, action, who_follow, datejs, date)
 }
