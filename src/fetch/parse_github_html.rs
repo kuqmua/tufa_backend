@@ -25,7 +25,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
         Option<String>, //commit_text_handle
         Option<String>, //from_text_handle
         Option<String>, //commits_number_handle
-        Option<String>, //isssue_label_handle
+        Option<String>, //isssue_label_handle//somewhere wrong like "brotzeit/nyxt" or "taiki-e/criterion.rs"
         Option<String>, //data_hovercard_type,
         Option<String>, //data_hovercard_url,
         Option<String>, //data_id,
@@ -182,8 +182,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     // println!("bot_tag {:#?}", bot_tag);
     // println!("who_follow {:#?}", who_follow);
     // println!("vec_of_something {:#?}", vec_of_something);
-    // for i in vec_of_something {
-
+    // for i in &vec_of_something {
+    //     println!("label{:#?}", i.5)
     // }
     GithubInfoFromHtml::initialize_with_params(
         avatar_link,
@@ -2585,18 +2585,27 @@ pub fn two_elements_one_child(
                     match node_element.children[2] {
                         Node::Element(ref node_element_third) => {
                             let attribute = "href";
+                            let attribute_check_case = "data-view-component";
                             match node_element_third.attributes.get(attribute) {
                                 Some(value) => {
                                     the_accounts_repo_on_which_the_action_was_performed_relative_href =
                                         value.clone();
                                 }
                                 None => {
-                                    let warning_message = format!("no {} attribute", attribute);
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    );
+                                    match node_element_third.attributes.get(attribute_check_case) {
+                                        Some(_) => {}
+                                        None => {
+                                            let warning_message = format!(
+                                                "no {} attribute or {} attribute",
+                                                attribute, attribute_check_case
+                                            );
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            );
+                                        }
+                                    }
                                 }
                             }
                             match node_element_third.children.len() {
@@ -3321,7 +3330,11 @@ pub fn four_cases(
     match vec_of_nodes[0] {
         Node::Element(ref first_element) => match first_element.children.len() {
             1 => match first_element.children[0] {
-                Node::Text(ref author_handle) => author = Some(author_handle.to_string()),
+                Node::Text(ref author_handle) => {
+                    if !author_handle.is_empty() {
+                        author = Some(author_handle.to_string())
+                    }
+                }
                 _ => print_warning_orange(
                     file!().to_string(),
                     line!().to_string(),
@@ -3352,7 +3365,9 @@ pub fn four_cases(
         Node::Element(ref third_element) => match third_element.children.len() {
             1 => match third_element.children[0] {
                 Node::Text(ref who_follow_handle) => {
-                    who_follow = Some(who_follow_handle.to_string())
+                    if !who_follow_handle.is_empty() {
+                        who_follow = Some(who_follow_handle.to_string())
+                    }
                 }
                 _ => print_warning_orange(
                     file!().to_string(),
@@ -3378,9 +3393,14 @@ pub fn four_cases(
                 Node::Element(ref node_element_fourth) => {
                     let attribute = "datetime";
                     match node_element_fourth.attributes.get(attribute) {
-                        Some(value) => {
-                            datejs = value.clone();
-                        }
+                        Some(option_datejs_handle) => match option_datejs_handle {
+                            Some(datejs_handle) => {
+                                if !datejs_handle.is_empty() {
+                                    datejs = option_datejs_handle.clone();
+                                }
+                            }
+                            None => {}
+                        },
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
                             print_warning_orange(
@@ -3394,7 +3414,9 @@ pub fn four_cases(
                     match node_element_fourth.children.len() {
                         1 => match node_element_fourth.children[0] {
                             Node::Text(ref second_child_element5fourth) => {
-                                date = Some(second_child_element5fourth.to_string());
+                                if !second_child_element5fourth.is_empty() {
+                                    date = Some(second_child_element5fourth.to_string());
+                                }
                             }
                             _ => print_warning_orange(
                                 file!().to_string(),
