@@ -198,8 +198,6 @@ server what running web tests every hour like http requests and get valid data o
 ----------------------------
 github parsing version to check different structs of posts as test in the loop
 ---------------------------
-parsing check field is empty
----------------------------
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
     Finished dev [unoptimized + debuginfo] target(s) in 0.10s
@@ -216,3 +214,5 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
 -----------------------------
 parts of config as feature flags? 
+-----------------------------
+handle all todos in parse_github_html
