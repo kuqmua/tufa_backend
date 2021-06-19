@@ -214,8 +214,15 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         Node::Element(ref node_element_first_first) => {
                             let attribute = "src"; //todo move variable like this into some whole variable structure
                             match node_element_first_first.attributes.get(attribute) {
-                                Some(value) => {
-                                    avatar_link = value.clone();
+                                Some(avatar_link_handle_option) => {
+                                    match avatar_link_handle_option {
+                                        Some(avatar_link_handle) => {
+                                            if !avatar_link_handle.is_empty() {
+                                                avatar_link = avatar_link_handle_option.clone();
+                                            }
+                                        }
+                                        None => {}
+                                    }
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
@@ -336,7 +343,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_first.children.len() {
                                                 1 => match node_element_first_first.children[0] {
                                                     Node::Text(ref author_handle) => {
-                                                        author = Some(author_handle.to_string());
+                                                        if !author_handle.is_empty() {
+                                                            author =
+                                                                Some(author_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -365,7 +375,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_first.children[1] {
                                         Node::Text(ref action_handle) => {
-                                            action = Some(action_handle.to_string())
+                                            if !action_handle.is_empty() {
+                                                action = Some(action_handle.to_string())
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -378,8 +390,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_third.children.len() {
                                                 1 => match node_element_first_third.children[0] {
                                                     Node::Text(ref repository_handle) => {
-                                                        repository =
-                                                            Some(repository_handle.to_string());
+                                                        if !repository_handle.is_empty() {
+                                                            repository =
+                                                                Some(repository_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -418,8 +432,16 @@ pub fn parse_github_html_second_part(
                                                             .attributes
                                                             .get(attribute)
                                                         {
-                                                            Some(value) => {
-                                                                datejs = value.clone();
+                                                            Some(datejs_handle_option) => {
+                                                                match datejs_handle_option {
+                                                                    Some(datejs_handle) => {
+                                                                        if !datejs_handle.is_empty()
+                                                                        {
+                                                                            datejs = datejs_handle_option.clone();
+                                                                        }
+                                                                    }
+                                                                    None => {}
+                                                                }
                                                             }
                                                             None => {
                                                                 let warning_message = format!(
@@ -433,7 +455,6 @@ pub fn parse_github_html_second_part(
                                                                 )
                                                             }
                                                         }
-
                                                         match node_element_first_fourth_first
                                                         .children
                                                         .len()
@@ -443,10 +464,12 @@ pub fn parse_github_html_second_part(
                                                                 .children[0]
                                                             {
                                                                 Node::Text(
-                                                                    ref second_child_element5fourth,
+                                                                    ref date_handle,
                                                                 ) => {
-                                                                    date =
-                                                                        Some(second_child_element5fourth.to_string());
+                                                                    if !date_handle.is_empty() {
+                                                                        date =
+                                                                        Some(date_handle.to_string());
+                                                                    }
                                                                 }
                                                                 _ => print_warning_orange(
                                                                     file!().to_string(),
@@ -512,7 +535,9 @@ pub fn parse_github_html_second_part(
                                                                     Node::Text(
                                                                         ref actionto_handle,
                                                                     ) => {
-                                                                        actionto = Some(actionto_handle.to_string());
+                                                                        if !actionto_handle.is_empty() {
+                                                                            actionto = Some(actionto_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
                                                                         file!().to_string(),
@@ -555,7 +580,9 @@ pub fn parse_github_html_second_part(
                                                                     .children[0]
                                                                 {
                                                                     Node::Text(ref branch_handle) => {
-                                                                        branch = Some(branch_handle.to_string());
+                                                                        if !branch_handle.is_empty() {
+                                                                            branch = Some(branch_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -657,7 +684,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_first.children.len() {
                                                 1 => match node_element_first_first.children[0] {
                                                     Node::Text(ref author_handle) => {
-                                                        author = Some(author_handle.to_string());
+                                                        if !author_handle.is_empty() {
+                                                            author =
+                                                                Some(author_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -689,7 +719,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_second.children.len() {
                                                 1 => match node_element_first_second.children[0] {
                                                     Node::Text(ref bot_tag_handle) => {
-                                                        bot_tag = Some(bot_tag_handle.to_string());
+                                                        if !bot_tag_handle.is_empty() {
+                                                            bot_tag =
+                                                                Some(bot_tag_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -718,7 +751,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_first.children[2] {
                                         Node::Text(ref action_handle) => {
-                                            action = Some(action_handle.to_string())
+                                            if !action_handle.is_empty() {
+                                                action = Some(action_handle.to_string())
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -731,8 +766,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_fourth.children.len() {
                                                 1 => match node_element_first_fourth.children[0] {
                                                     Node::Text(ref repository_handle) => {
-                                                        repository =
-                                                            Some(repository_handle.to_string());
+                                                        if !repository_handle.is_empty() {
+                                                            repository =
+                                                                Some(repository_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -772,8 +809,17 @@ pub fn parse_github_html_second_part(
                                                                 .attributes
                                                                 .get(attribute)
                                                             {
-                                                                Some(value) => {
-                                                                    datejs = value.clone();
+                                                                Some(datejs_handle_value) => {
+                                                                    match datejs_handle_value {
+                                                                        Some(datejs_handle) => {
+                                                                            if !datejs_handle
+                                                                                .is_empty()
+                                                                            {
+                                                                                datejs = datejs_handle_value.clone();
+                                                                            }
+                                                                        }
+                                                                        None => {}
+                                                                    }
                                                                 }
                                                                 None => {
                                                                     let warning_message = format!(
@@ -796,7 +842,9 @@ pub fn parse_github_html_second_part(
                                                                     .children[0]
                                                                 {
                                                                     Node::Text(ref date_handle) => {
-                                                                        date = Some(date_handle.to_string());
+                                                                        if !date_handle.is_empty() {
+                                                                            date = Some(date_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
                                                                         file!().to_string(),
@@ -866,7 +914,9 @@ pub fn parse_github_html_second_part(
                                                                     Node::Text(
                                                                         ref actionto_handle,
                                                                     ) => {
-                                                                        actionto = Some(actionto_handle.to_string());
+                                                                        if !actionto_handle.is_empty() {
+                                                                            actionto = Some(actionto_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
                                                                         file!().to_string(),
@@ -909,7 +959,9 @@ pub fn parse_github_html_second_part(
                                                                     .children[0]
                                                                 {
                                                                     Node::Text(ref branch_handle) => {
-                                                                        branch = Some(branch_handle.to_string());
+                                                                        if !branch_handle.is_empty() {
+                                                                            branch = Some(branch_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
                                                                         file!().to_string(),
@@ -1079,22 +1131,23 @@ pub fn parse_github_html_second_part(
                                                 who_follow = two_elements_four_children_third(
                                                     &second_child_element3.children[2],
                                                 );
-                                                let (
-                                                    who_follow_handle,
-                                                    datejs_another_handle,
-                                                    date_another_handle,
-                                                ) = two_elements_four_children_fourth(
-                                                    &second_child_element3.children[3],
-                                                );
-                                                who_follow = who_follow_handle;
+                                                let (datejs_another_handle, date_another_handle) =
+                                                    two_elements_four_children_fourth(
+                                                        &second_child_element3.children[3],
+                                                    );
                                                 datejs = datejs_another_handle;
                                                 date = date_another_handle;
                                             }
                                             _ => {
-                                                println!(
-                                                    "diff255pp {}",
+                                                let warning_message = format!(
+                                                    "different children.len(): {}",
                                                     second_child_element3.children.len()
                                                 );
+                                                print_warning_orange(
+                                                    file!().to_string(),
+                                                    line!().to_string(),
+                                                    warning_message,
+                                                )
                                             }
                                         }
                                     }
@@ -1110,7 +1163,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_first.children.len() {
                                                 1 => match node_element_first_first.children[0] {
                                                     Node::Text(ref author_handle) => {
-                                                        author = Some(author_handle.to_string());
+                                                        if !author_handle.is_empty() {
+                                                            author =
+                                                                Some(author_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1139,7 +1195,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_first.children[1] {
                                         Node::Text(ref action_handle) => {
-                                            action = Some(action_handle.to_string());
+                                            if !action_handle.is_empty() {
+                                                action = Some(action_handle.to_string());
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -1152,8 +1210,11 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_third.children.len() {
                                                 1 => match node_element_first_third.children[0] {
                                                     Node::Text(ref release_tag_handle) => {
-                                                        release_tag =
-                                                            Some(release_tag_handle.to_string());
+                                                        if !release_tag_handle.is_empty() {
+                                                            release_tag = Some(
+                                                                release_tag_handle.to_string(),
+                                                            );
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1182,7 +1243,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_first.children[3] {
                                         Node::Text(ref of_handle) => {
-                                            of = Some(of_handle.to_string());
+                                            if !of_handle.is_empty() {
+                                                of = Some(of_handle.to_string());
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -1195,8 +1258,10 @@ pub fn parse_github_html_second_part(
                                             match node_element_first_fourth.children.len() {
                                                 1 => match node_element_first_fourth.children[0] {
                                                     Node::Text(ref repository_handle) => {
-                                                        repository =
-                                                            Some(repository_handle.to_string());
+                                                        if !repository_handle.is_empty() {
+                                                            repository =
+                                                                Some(repository_handle.to_string());
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1236,8 +1301,17 @@ pub fn parse_github_html_second_part(
                                                                 .attributes
                                                                 .get(attribute)
                                                             {
-                                                                Some(datejs_handle) => {
-                                                                    datejs = datejs_handle.clone();
+                                                                Some(datejs_handle_option) => {
+                                                                    match datejs_handle_option {
+                                                                        Some(datejs_handle) => {
+                                                                            if !datejs_handle
+                                                                                .is_empty()
+                                                                            {
+                                                                                datejs = datejs_handle_option.clone();
+                                                                            }
+                                                                        }
+                                                                        None => {}
+                                                                    }
                                                                 }
                                                                 None => {
                                                                     let warning_message = format!(
@@ -1259,27 +1333,29 @@ pub fn parse_github_html_second_part(
                                                                     match node_element_first_sixth_first
                                                                 .children[0] {
                                                                     Node::Text(ref date_handle) => {
-                                                                        date = Some(date_handle.to_string());
+                                                                        if !date_handle.is_empty() {
+                                                                            date = Some(date_handle.to_string());
+                                                                        }
                                                                     }
                                                                     _ => print_warning_orange(
-            file!().to_string(),
-            line!().to_string(),
-            "different node".to_string(),
-        ),
+                                                                        file!().to_string(),
+                                                                        line!().to_string(),
+                                                                        "different node".to_string(),
+                                                                    ),
                                                                 }
                                                                 }
                                                                 _ => {
-                                                    let warning_message = format!(
-                                                        "different children.len(): {}",
-                                                        node_element_first_sixth_first.children.len()
-                                                    );
-                                                    print_warning_orange(
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        warning_message,
-                                                    )
-                                                }
+                                                                    let warning_message = format!(
+                                                                        "different children.len(): {}",
+                                                                        node_element_first_sixth_first.children.len()
+                                                                    );
+                                                                    print_warning_orange(
+                                                                    file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    warning_message,
+                                                                )
                                                             }
+                                                        }
                                                         }
                                                         _ => print_warning_orange(
                                                             file!().to_string(),
@@ -1395,7 +1471,9 @@ pub fn parse_github_html_second_part(
                                                     .children[0]
                                                 {
                                                     Node::Text(ref author_handle) => {
-                                                        author = Some(author_handle.to_string())
+                                                        if !author_handle.is_empty() {
+                                                            author = Some(author_handle.to_string())
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1426,7 +1504,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_second.children[1] {
                                         Node::Text(ref action_handle) => {
-                                            action = Some(action_handle.to_string())
+                                            if !action_handle.is_empty() {
+                                                action = Some(action_handle.to_string())
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -1442,8 +1522,10 @@ pub fn parse_github_html_second_part(
                                                     .children[0]
                                                 {
                                                     Node::Text(ref release_tag_handle) => {
-                                                        release_tag =
-                                                            Some(release_tag_handle.to_string())
+                                                        if !release_tag_handle.is_empty() {
+                                                            release_tag =
+                                                                Some(release_tag_handle.to_string())
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1474,7 +1556,9 @@ pub fn parse_github_html_second_part(
                                     }
                                     match node_element_second.children[3] {
                                         Node::Text(ref of_handle) => {
-                                            of = Some(of_handle.to_string())
+                                            if !of_handle.is_empty() {
+                                                of = Some(of_handle.to_string())
+                                            }
                                         }
                                         _ => print_warning_orange(
                                             file!().to_string(),
@@ -1489,8 +1573,10 @@ pub fn parse_github_html_second_part(
                                                     .children[0]
                                                 {
                                                     Node::Text(ref repository_handle) => {
-                                                        repository =
-                                                            Some(repository_handle.to_string())
+                                                        if !repository_handle.is_empty() {
+                                                            repository =
+                                                                Some(repository_handle.to_string())
+                                                        }
                                                     }
                                                     _ => print_warning_orange(
                                                         file!().to_string(),
@@ -1533,8 +1619,16 @@ pub fn parse_github_html_second_part(
                                                             .attributes
                                                             .get(attribute)
                                                         {
-                                                            Some(datejs_handle) => {
-                                                                datejs = datejs_handle.clone();
+                                                            Some(datejs_handle_option) => {
+                                                                match datejs_handle_option {
+                                                                    Some(datejs_handle) => {
+                                                                        if !datejs_handle.is_empty()
+                                                                        {
+                                                                            datejs = datejs_handle_option.clone();
+                                                                        }
+                                                                    }
+                                                                    None => {}
+                                                                }
                                                             }
                                                             None => {
                                                                 let warning_message = format!(
@@ -1555,10 +1649,12 @@ pub fn parse_github_html_second_part(
                                                                 Node::Text(
                                                                     ref date_handle,
                                                                 ) => {
-                                                                    date = Some(
-                                                                        date_handle
+                                                                    if !date_handle.is_empty() {
+                                                                        date = Some(
+                                                                            date_handle
                                                                             .to_string(),
                                                                     );
+                                                                    }
                                                                 }
                                                                 _ => print_warning_orange(
                                                                     file!().to_string(),
@@ -1707,7 +1803,9 @@ pub fn parse_github_html_second_part_inner_one_element(
                         match node_element_first.children.len() {
                             1 => match node_element_first.children[0] {
                                 Node::Text(ref commits_number_handle) => {
-                                    commits_number = Some(commits_number_handle.to_string());
+                                    if !commits_number_handle.is_empty() {
+                                        commits_number = Some(commits_number_handle.to_string());
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -1770,9 +1868,18 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                         .attributes
                                                         .get(attribute)
                                                     {
-                                                        Some(avatar_link_handle) => {
-                                                            avatar_link =
-                                                                avatar_link_handle.clone();
+                                                        Some(avatar_link_handle_option) => {
+                                                            match avatar_link_handle_option {
+                                                                Some(avatar_link_handle) => {
+                                                                    if !avatar_link_handle
+                                                                        .is_empty()
+                                                                    {
+                                                                        avatar_link =
+                                                                        avatar_link_handle_option.clone();
+                                                                    }
+                                                                }
+                                                                None => {}
+                                                            }
                                                         }
                                                         None => {
                                                             let warning_message = format!(
@@ -1842,9 +1949,17 @@ pub fn parse_github_html_second_part_inner_one_element(
                                     Node::Element(ref node_element_first_element) => {
                                         let attribute = "href";
                                         match node_element_first_element.attributes.get(attribute) {
-                                            Some(relative_commit_link_handle) => {
-                                                relative_commit_link =
-                                                    relative_commit_link_handle.clone();
+                                            Some(relative_commit_link_handle_option) => {
+                                                match relative_commit_link_handle_option {
+                                                    Some(relative_commit_link_handle) => {
+                                                        if !relative_commit_link_handle.is_empty() {
+                                                            relative_commit_link =
+                                                                relative_commit_link_handle_option
+                                                                    .clone();
+                                                        }
+                                                    }
+                                                    None => {}
+                                                }
                                             }
                                             None => {
                                                 let warning_message =
@@ -1933,7 +2048,9 @@ pub fn parse_github_html_second_part_inner_one_element(
 
                                                 match node_element_first_first.children[2] {
                                                     Node::Text(ref text) => {
-                                                        from_text = Some(text.to_string());
+                                                        if !text.is_empty() {
+                                                            from_text = Some(text.to_string());
+                                                        }
                                                     }
                                                     Node::Element(ref emoji_element) => {
                                                         let attribute = "fallback-src";
@@ -2120,7 +2237,9 @@ pub fn handle_text_element(node: &Node) -> Option<String> {
     let mut text: Option<String> = None;
     match node {
         Node::Text(ref text_handle) => {
-            text = Some(text_handle.to_string());
+            if !text_handle.is_empty() {
+                text = Some(text_handle.to_string());
+            }
         }
         _ => print_warning_orange(
             file!().to_string(),
@@ -2146,20 +2265,59 @@ pub fn second_element(
     let mut data_url: Option<String> = None;
     match node {
         Node::Element(ref node_element) => {
-            if let Some(value) = node_element.attributes.get("data-hovercard-type") {
-                data_hovercard_type = value.clone();
+            if let Some(data_hovercard_type_handle_option) =
+                node_element.attributes.get("data-hovercard-type")
+            {
+                match data_hovercard_type_handle_option {
+                    Some(data_hovercard_type_handle) => {
+                        if !data_hovercard_type_handle.is_empty() {
+                            data_hovercard_type = data_hovercard_type_handle_option.clone()
+                        }
+                    }
+                    None => {}
+                }
             }
-            if let Some(value) = node_element.attributes.get("data-hovercard-url") {
-                data_hovercard_url = value.clone();
+            if let Some(data_hovercard_url_handle_option) =
+                node_element.attributes.get("data-hovercard-url")
+            {
+                match data_hovercard_url_handle_option {
+                    Some(data_hovercard_url_handle) => {
+                        if !data_hovercard_url_handle.is_empty() {
+                            data_hovercard_url = data_hovercard_url_handle_option.clone()
+                        }
+                    }
+                    None => {}
+                }
             }
-            if let Some(value) = node_element.attributes.get("data-id") {
-                data_id = value.clone();
+            if let Some(data_id_handle_option) = node_element.attributes.get("data-id") {
+                match data_id_handle_option {
+                    Some(data_id_handle) => {
+                        if !data_id_handle.is_empty() {
+                            data_id = data_id_handle_option.clone()
+                        }
+                    }
+                    None => {}
+                }
             }
-            if let Some(value) = node_element.attributes.get("href") {
-                href = value.clone();
+            if let Some(href_handle_option) = node_element.attributes.get("href") {
+                match href_handle_option {
+                    Some(href_handle) => {
+                        if !href_handle.is_empty() {
+                            href = href_handle_option.clone()
+                        }
+                    }
+                    None => {}
+                }
             }
-            if let Some(value) = node_element.attributes.get("data-url") {
-                data_url = value.clone();
+            if let Some(data_url_handle_option) = node_element.attributes.get("data-url") {
+                match data_url_handle_option {
+                    Some(data_url_handle) => {
+                        if !data_url_handle.is_empty() {
+                            data_url = data_url_handle_option.clone()
+                        }
+                    }
+                    None => {}
+                }
             }
             //just to check any new formats
             match node_element.children.len() {
@@ -2236,216 +2394,239 @@ pub fn two_elements_one_child(
     Option<String>,
     Option<String>,
 ) {
-    let mut author_name_another: Option<String> = None;
-    let mut action_another: Option<String> = None;
+    let mut author: Option<String> = None;
+    let mut action: Option<String> = None;
     let mut the_accounts_repo_on_which_the_action_was_performed_relative_href: Option<String> =
         None;
     let mut the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from: Option<
         String,
     > = None;
-    let mut datejs_another: Option<String> = None;
-    let mut date_another: Option<String> = None;
+    let mut datejs: Option<String> = None;
+    let mut date: Option<String> = None;
     let mut from: Option<String> = None;
     let mut isssue_label: Option<String> = None; //todo or isssuelabel in struct by default in html
     match node {
-        Node::Element(ref node_element) => {
-            match node_element.children.len() {
-                4 => {
-                    match node_element.children[0] {
-                        Node::Element(ref node_element_first) => {
-                            match node_element_first.children.len() {
-                                1 => match node_element_first.children[0] {
-                                    Node::Text(ref author_name_another_handle) => {
-                                        author_name_another =
-                                            Some(author_name_another_handle.to_string());
+        Node::Element(ref node_element) => match node_element.children.len() {
+            4 => {
+                match node_element.children[0] {
+                    Node::Element(ref node_element_first) => {
+                        match node_element_first.children.len() {
+                            1 => match node_element_first.children[0] {
+                                Node::Text(ref author_handle) => {
+                                    if !author_handle.is_empty() {
+                                        author = Some(author_handle.to_string());
                                     }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_first.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
                                 }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_first.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
                             }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[1] {
-                        Node::Text(ref action_another_handle) => {
-                            action_another = Some(action_another_handle.to_string());
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
-                    }
-                    match node_element.children[2] {
-                        Node::Element(ref node_element_third) => {
-                            let attribute = "href";
-                            match node_element_third.attributes.get(attribute) {
-                                Some(
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_handle,
-                                ) => {
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href =
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_handle.clone();
-                                }
-                                None => {
-                                    let warning_message = format!("no {} attribute", attribute);
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
-                                }
-                            }
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
-                    }
-                    match node_element.children[3] {
-                        Node::Element(ref node_element_fourth) => {
-                            match node_element_fourth.children.len() {
-                                1 => match node_element_fourth.children[0] {
-                                    Node::Element(ref node_element_fourth_element) => {
-                                        let attribute = "datetime";
-                                        match node_element_fourth_element.attributes.get(attribute)
-                                        {
-                                            Some(datejs_another_handle) => {
-                                                datejs_another = datejs_another_handle.clone();
-                                            }
-                                            None => {
-                                                let warning_message =
-                                                    format!("no {} attribute", attribute);
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
-                                            }
-                                        }
-                                        match node_element_fourth_element.children.len() {
-                                            1 => match node_element_fourth_element.children[0] {
-                                                Node::Text(ref date_another_handle) => {
-                                                    //same as in datetime attrubute
-                                                    date_another =
-                                                        Some(date_another_handle.to_string());
-                                                }
-                                                _ => print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    "different node".to_string(),
-                                                ),
-                                            },
-                                            _ => {
-                                                let warning_message = format!(
-                                                    "different children.len(): {}",
-                                                    node_element_fourth_element.children.len()
-                                                );
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
-                                            }
-                                        }
-                                    }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_fourth.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
-                                }
-                            }
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
-                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
                 }
-                5 => {
-                    match node_element.children[0] {
-                        Node::Element(ref node_element_first) => {
-                            match node_element_first.children.len() {
-                                1 => match node_element_first.children[0] {
-                                    Node::Text(ref author_name_another_handle) => {
-                                        author_name_another =
-                                            Some(author_name_another_handle.to_string());
+                match node_element.children[1] {
+                    Node::Text(ref action_handle) => {
+                        if !action_handle.is_empty() {
+                            action = Some(action_handle.to_string());
+                        }
+                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[2] {
+                    Node::Element(ref node_element_third) => {
+                        let attribute = "href";
+                        match node_element_third.attributes.get(attribute) {
+                            Some(
+                                the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option,
+                            ) => {
+                                match the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option {
+                                    Some(the_accounts_repo_on_which_the_action_was_performed_relative_href_handle) => {
+                                        if !the_accounts_repo_on_which_the_action_was_performed_relative_href_handle.is_empty() {
+                                            the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                            the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option.clone();
+                                        }
                                     }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_first.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    None => {}
                                 }
                             }
+                            None => {
+                                let warning_message = format!("no {} attribute", attribute);
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
+                            }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[1] {
-                        Node::Text(ref action_another_handle) => {
-                            action_another = Some(action_another_handle.to_string());
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[3] {
+                    Node::Element(ref node_element_fourth) => {
+                        match node_element_fourth.children.len() {
+                            1 => match node_element_fourth.children[0] {
+                                Node::Element(ref node_element_fourth_element) => {
+                                    let attribute = "datetime";
+                                    match node_element_fourth_element.attributes.get(attribute) {
+                                        Some(datejs_handle_option) => match datejs_handle_option {
+                                            Some(datejs_handle) => {
+                                                if !datejs_handle.is_empty() {
+                                                    datejs = datejs_handle_option.clone();
+                                                }
+                                            }
+                                            None => {}
+                                        },
+                                        None => {
+                                            let warning_message =
+                                                format!("no {} attribute", attribute);
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
+                                        }
+                                    }
+                                    match node_element_fourth_element.children.len() {
+                                        1 => match node_element_fourth_element.children[0] {
+                                            Node::Text(ref date_handle) => {
+                                                if !date_handle.is_empty() {
+                                                    date = Some(date_handle.to_string());
+                                                }
+                                            }
+                                            _ => print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                "different node".to_string(),
+                                            ),
+                                        },
+                                        _ => {
+                                            let warning_message = format!(
+                                                "different children.len(): {}",
+                                                node_element_fourth_element.children.len()
+                                            );
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
+                                        }
+                                    }
+                                }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_fourth.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
+                            }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[2] {
-                        Node::Element(ref node_element_third) => {
-                            let attribute = "href";
-                            match node_element_third.attributes.get(attribute) {
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+            }
+            5 => {
+                match node_element.children[0] {
+                    Node::Element(ref node_element_first) => {
+                        match node_element_first.children.len() {
+                            1 => match node_element_first.children[0] {
+                                Node::Text(ref author_handle) => {
+                                    if !author_handle.is_empty() {
+                                        author = Some(author_handle.to_string());
+                                    }
+                                }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_first.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
+                            }
+                        }
+                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[1] {
+                    Node::Text(ref action_handle) => {
+                        if !action_handle.is_empty() {
+                            action = Some(action_handle.to_string());
+                        }
+                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[2] {
+                    Node::Element(ref node_element_third) => {
+                        let attribute = "href";
+                        match node_element_third.attributes.get(attribute) {
                                 Some(
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_handle,
+                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option,
                                 ) => {
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href =
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_handle.clone();
+                                    match the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option {
+                                        Some(the_accounts_repo_on_which_the_action_was_performed_relative_href_handle) => {
+                                            if !the_accounts_repo_on_which_the_action_was_performed_relative_href_handle.is_empty() {
+                                                 the_accounts_repo_on_which_the_action_was_performed_relative_href =
+                                                 the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option.clone();
+                                            }
+                                        }
+                                        None => {}
+                                    }
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
@@ -2456,140 +2637,159 @@ pub fn two_elements_one_child(
                                     )
                                 }
                             }
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[3] {
-                        Node::Text(ref from_handle) => {
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[3] {
+                    Node::Text(ref from_handle) => {
+                        if !from_handle.is_empty() {
                             from = Some(from_handle.to_string());
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[4] {
-                        Node::Element(ref node_element_firth) => {
-                            match node_element_firth.children.len() {
-                                1 => match node_element_firth.children[0] {
-                                    Node::Element(ref node_element_firth_element) => {
-                                        let attribute = "datetime";
-                                        match node_element_firth_element.attributes.get(attribute) {
-                                            Some(datejs_another_handle) => {
-                                                datejs_another = datejs_another_handle.clone();
-                                                //same as in text
-                                            }
-                                            None => println!("todo15"),
-                                        }
-                                        match node_element_firth_element.children.len() {
-                                            1 => match node_element_firth_element.children[0] {
-                                                Node::Text(ref date_another_handle) => {
-                                                    //same as in datetime attrubute
-                                                    date_another =
-                                                        Some(date_another_handle.to_string());
-                                                }
-                                                _ => print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    "different node".to_string(),
-                                                ),
-                                            },
-                                            _ => {
-                                                let warning_message = format!(
-                                                    "different children.len(): {}",
-                                                    node_element_firth_element.children.len()
-                                                );
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
-                                            }
-                                        }
-                                    }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_firth.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
-                                }
-                            }
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
-                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
                 }
-                6 => {
-                    match node_element.children[0] {
-                        Node::Element(ref node_element_first) => {
-                            match node_element_first.children.len() {
-                                1 => match node_element_first.children[0] {
-                                    Node::Text(ref author_name_another_handle) => {
-                                        author_name_another =
-                                            Some(author_name_another_handle.to_string());
+                match node_element.children[4] {
+                    Node::Element(ref node_element_firth) => {
+                        match node_element_firth.children.len() {
+                            1 => match node_element_firth.children[0] {
+                                Node::Element(ref node_element_firth_element) => {
+                                    let attribute = "datetime";
+                                    match node_element_firth_element.attributes.get(attribute) {
+                                        Some(datejs_handle_option) => match datejs_handle_option {
+                                            Some(datejs_handle) => {
+                                                if !datejs_handle.is_empty() {
+                                                    datejs = datejs_handle_option.clone();
+                                                }
+                                            }
+                                            None => {}
+                                        },
+                                        None => print_warning_orange(
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            format!("no {} attrubite", attribute),
+                                        ),
                                     }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_first.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    match node_element_firth_element.children.len() {
+                                        1 => match node_element_firth_element.children[0] {
+                                            Node::Text(ref date_handle) => {
+                                                if !date_handle.is_empty() {
+                                                    date = Some(date_handle.to_string());
+                                                }
+                                            }
+                                            _ => print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                "different node".to_string(),
+                                            ),
+                                        },
+                                        _ => {
+                                            let warning_message = format!(
+                                                "different children.len(): {}",
+                                                node_element_firth_element.children.len()
+                                            );
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
+                                        }
+                                    }
                                 }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_firth.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
                             }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[1] {
-                        Node::Text(ref action_another_handle) => {
-                            action_another = Some(action_another_handle.to_string());
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+            }
+            6 => {
+                match node_element.children[0] {
+                    Node::Element(ref node_element_first) => {
+                        match node_element_first.children.len() {
+                            1 => match node_element_first.children[0] {
+                                Node::Text(ref author_handle) => {
+                                    if !author_handle.is_empty() {
+                                        author = Some(author_handle.to_string());
+                                    }
+                                }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_first.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
+                            }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[2] {
-                        Node::Element(ref node_element_third) => {
-                            let attribute = "href";
-                            let attribute_check_case = "data-view-component";
-                            match node_element_third.attributes.get(attribute) {
-                                Some(value) => {
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href =
-                                        value.clone();
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[1] {
+                    Node::Text(ref action_handle) => {
+                        if !action_handle.is_empty() {
+                            action = Some(action_handle.to_string());
+                        }
+                    }
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[2] {
+                    Node::Element(ref node_element_third) => {
+                        let attribute = "href";
+                        let attribute_check_case = "data-view-component";
+                        match node_element_third.attributes.get(attribute) {
+                                Some(the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option) => {
+                                    match the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option {
+                                        Some(the_accounts_repo_on_which_the_action_was_performed_relative_href_handle) => {
+                                            if !the_accounts_repo_on_which_the_action_was_performed_relative_href_handle.is_empty() {
+                                                  the_accounts_repo_on_which_the_action_was_performed_relative_href = the_accounts_repo_on_which_the_action_was_performed_relative_href_handle_option.clone();
+                                            }
+                                        }
+                                        None => {}
+                                    }
                                 }
                                 None => {
                                     match node_element_third.attributes.get(attribute_check_case) {
@@ -2608,54 +2808,65 @@ pub fn two_elements_one_child(
                                     }
                                 }
                             }
-                            match node_element_third.children.len() {
-                                1 => match node_element_third.children[0] {
-                                    Node::Text(ref isssue_label_handle) => {
+                        match node_element_third.children.len() {
+                            1 => match node_element_third.children[0] {
+                                Node::Text(ref isssue_label_handle) => {
+                                    if !isssue_label_handle.is_empty() {
                                         isssue_label = Some(isssue_label_handle.to_string());
                                     }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_third.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
                                 }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_third.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
                             }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[3] {
-                        Node::Text(ref from_handle) => {
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[3] {
+                    Node::Text(ref from_handle) => {
+                        if !from_handle.is_empty() {
                             from = Some(from_handle.to_string());
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[4] {
-                        Node::Element(ref node_element_firth) => {
-                            let attribute = "href";
-                            match node_element_firth.attributes.get(attribute) {
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[4] {
+                    Node::Element(ref node_element_firth) => {
+                        let attribute = "href";
+                        match node_element_firth.attributes.get(attribute) {
                                 Some(
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle,
+                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle_option,
                                 ) => {
-                                    the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from = the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle.clone();
+                                    match the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle_option {
+                                        Some(the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle) => {
+                                            if !the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle.is_empty() {
+                                                the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from = the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from_handle_option.clone();
+                                            }
+                                        }
+                                        None => {}
+                                    }
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
@@ -2666,91 +2877,96 @@ pub fn two_elements_one_child(
                                     )
                                 }
                             }
-                        }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                    match node_element.children[5] {
-                        Node::Element(ref node_element_sixth) => {
-                            match node_element_sixth.children.len() {
-                                1 => match node_element_sixth.children[0] {
-                                    Node::Element(ref node_element_sixth_first) => {
-                                        let attribute = "datetime";
-                                        match node_element_sixth_first.attributes.get(attribute) {
-                                            Some(value) => {
-                                                datejs_another = value.clone();
-                                            }
-                                            None => {
-                                                let warning_message =
-                                                    format!("no {} attribute", attribute);
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
-                                            }
-                                        }
-                                        match node_element_sixth_first.children.len() {
-                                            1 => match node_element_sixth_first.children[0] {
-                                                Node::Text(ref date_another_handle) => {
-                                                    date_another =
-                                                        Some(date_another_handle.to_string());
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
+                }
+                match node_element.children[5] {
+                    Node::Element(ref node_element_sixth) => {
+                        match node_element_sixth.children.len() {
+                            1 => match node_element_sixth.children[0] {
+                                Node::Element(ref node_element_sixth_first) => {
+                                    let attribute = "datetime";
+                                    match node_element_sixth_first.attributes.get(attribute) {
+                                        Some(datejs_handle_option) => match datejs_handle_option {
+                                            Some(datejs_handle) => {
+                                                if !datejs_handle.is_empty() {
+                                                    datejs = datejs_handle_option.clone();
                                                 }
-                                                _ => print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    "different node".to_string(),
-                                                ),
-                                            },
-                                            _ => {
-                                                let warning_message = format!(
-                                                    "different children.len(): {}",
-                                                    node_element_sixth_first.children.len()
-                                                );
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
                                             }
+                                            None => {}
+                                        },
+                                        None => {
+                                            let warning_message =
+                                                format!("no {} attribute", attribute);
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
                                         }
                                     }
-                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
-                                },
-                                _ => {
-                                    let warning_message = format!(
-                                        "different children.len(): {}",
-                                        node_element_sixth.children.len()
-                                    );
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    match node_element_sixth_first.children.len() {
+                                        1 => match node_element_sixth_first.children[0] {
+                                            Node::Text(ref date_handle) => {
+                                                if !date_handle.is_empty() {
+                                                    date = Some(date_handle.to_string());
+                                                }
+                                            }
+                                            _ => print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                "different node".to_string(),
+                                            ),
+                                        },
+                                        _ => {
+                                            let warning_message = format!(
+                                                "different children.len(): {}",
+                                                node_element_sixth_first.children.len()
+                                            );
+                                            print_warning_orange(
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
+                                        }
+                                    }
                                 }
+                                _ => print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
+                            },
+                            _ => {
+                                let warning_message = format!(
+                                    "different children.len(): {}",
+                                    node_element_sixth.children.len()
+                                );
+                                print_warning_orange(
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    warning_message,
+                                )
                             }
                         }
-                        _ => print_warning_orange(
-                            file!().to_string(),
-                            line!().to_string(),
-                            "different node".to_string(),
-                        ),
                     }
-                }
-                _ => {
-                    let warning_message =
-                        format!("different children.len(): {}", node_element.children.len());
-                    print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                    _ => print_warning_orange(
+                        file!().to_string(),
+                        line!().to_string(),
+                        "different node".to_string(),
+                    ),
                 }
             }
-        }
+            _ => {
+                let warning_message =
+                    format!("different children.len(): {}", node_element.children.len());
+                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+            }
+        },
         _ => print_warning_orange(
             file!().to_string(),
             line!().to_string(),
@@ -2758,8 +2974,8 @@ pub fn two_elements_one_child(
         ),
     }
     // println!("-----------------");
-    // println!("author_name_another {:#?}", author_name_another);
-    // println!("action_another {:#?}", action_another);
+    // println!("author_name {:#?}", author_name);
+    // println!("action {:#?}", action);
     // println!(
     //     "the_accounts_repo_on_which_the_action_was_performed_relative_href {:#?}",
     //     the_accounts_repo_on_which_the_action_was_performed_relative_href
@@ -2768,17 +2984,17 @@ pub fn two_elements_one_child(
     //     "the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from {:#?}",
     //     the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from
     // );
-    // println!("datejs_another {:#?}", datejs_another);
-    // println!("date_another {}", date_another);
+    // println!("datejs {:#?}", datejs);
+    // println!("date {}", date);
     // println!("from {}", from);
     // println!("isssue_label {}", isssue_label);
     (
-        author_name_another,
-        action_another,
+        author,
+        action,
         the_accounts_repo_on_which_the_action_was_performed_relative_href,
         the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from,
-        datejs_another,
-        date_another,
+        datejs,
+        date,
         from,
         isssue_label,
     )
@@ -2790,7 +3006,9 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
         Node::Element(ref node_element) => match node_element.children.len() {
             1 => match node_element.children[0] {
                 Node::Text(ref author_another_another_handle) => {
-                    author_another_another = Some(author_another_another_handle.to_string());
+                    if !author_another_another_handle.is_empty() {
+                        author_another_another = Some(author_another_another_handle.to_string());
+                    }
                 }
                 _ => print_warning_orange(
                     file!().to_string(),
@@ -2818,7 +3036,9 @@ pub fn two_elements_four_children_second(node: &Node) -> Option<String> {
     let mut action_another_another: Option<String> = None;
     match node {
         Node::Text(ref action_another_another_handle) => {
-            action_another_another = Some(action_another_another_handle.to_string());
+            if !action_another_another_handle.is_empty() {
+                action_another_another = Some(action_another_another_handle.to_string());
+            }
         }
         _ => print_warning_orange(
             file!().to_string(),
@@ -2836,7 +3056,9 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
         Node::Element(ref node_element) => match node_element.children.len() {
             1 => match node_element.children[0] {
                 Node::Text(ref who_follow_handle) => {
-                    who_follow = Some(who_follow_handle.to_string());
+                    if !who_follow_handle.is_empty() {
+                        who_follow = Some(who_follow_handle.to_string());
+                    }
                 }
                 _ => print_warning_orange(
                     file!().to_string(),
@@ -2860,21 +3082,23 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
     who_follow
 }
 
-pub fn two_elements_four_children_fourth(
-    node: &Node,
-) -> (Option<String>, Option<String>, Option<String>) {
-    let mut who_follow: Option<String> = None;
-    let mut datejs_another: Option<String> = None;
-    let mut date_another: Option<String> = None;
+pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<String>) {
+    let mut datejs: Option<String> = None;
+    let mut date: Option<String> = None;
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
             1 => match node_element.children[0] {
                 Node::Element(ref node_element_first) => {
                     let attribute = "datetime";
                     match node_element_first.attributes.get(attribute) {
-                        Some(datejs_another_handle) => {
-                            datejs_another = datejs_another_handle.clone();
-                        }
+                        Some(datejs_handle_option) => match datejs_handle_option {
+                            Some(datejs_handle) => {
+                                if !datejs_handle.is_empty() {
+                                    datejs = datejs_handle_option.clone();
+                                }
+                            }
+                            None => {}
+                        },
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
                             print_warning_orange(
@@ -2886,8 +3110,10 @@ pub fn two_elements_four_children_fourth(
                     }
                     match node_element_first.children.len() {
                         1 => match node_element_first.children[0] {
-                            Node::Text(ref date_another_handle) => {
-                                date_another = Some(date_another_handle.to_string());
+                            Node::Text(ref date_handle) => {
+                                if !date_handle.is_empty() {
+                                    date = Some(date_handle.to_string());
+                                }
                             }
                             _ => print_warning_orange(
                                 file!().to_string(),
@@ -2926,10 +3152,9 @@ pub fn two_elements_four_children_fourth(
             "different node".to_string(),
         ),
     }
-    // println!("who_follow {}", who_follow);
-    // println!("datejs_another {:#?}", datejs_another);
-    // println!("date_another {:#?}", date_another);
-    (who_follow, datejs_another, date_another)
+    // println!("datejs {:#?}", datejs);
+    // println!("date {:#?}", date);
+    (datejs, date)
 }
 
 pub fn parse_github_html_second_part_two_children_first(
@@ -2953,13 +3178,14 @@ pub fn parse_github_html_second_part_two_children_first(
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
             4 => {
-                // println!("node_element.children4 {:#?}", node_element.children);
                 match node_element.children[0] {
                     Node::Element(ref node_element_first) => {
                         match node_element_first.children.len() {
                             1 => match node_element_first.children[0] {
                                 Node::Text(ref author_handle) => {
-                                    author = Some(author_handle.to_string())
+                                    if !author_handle.is_empty() {
+                                        author = Some(author_handle.to_string())
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -2987,7 +3213,11 @@ pub fn parse_github_html_second_part_two_children_first(
                     ),
                 }
                 match node_element.children[1] {
-                    Node::Text(ref action_handle) => action = Some(action_handle.to_string()),
+                    Node::Text(ref action_handle) => {
+                        if !action_handle.is_empty() {
+                            action = Some(action_handle.to_string())
+                        }
+                    }
                     _ => print_warning_orange(
                         file!().to_string(),
                         line!().to_string(),
@@ -2999,7 +3229,9 @@ pub fn parse_github_html_second_part_two_children_first(
                         match node_element_third.children.len() {
                             1 => match node_element_third.children[0] {
                                 Node::Text(ref repository_handle) => {
-                                    repository = Some(repository_handle.to_string())
+                                    if !repository_handle.is_empty() {
+                                        repository = Some(repository_handle.to_string())
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -3033,9 +3265,14 @@ pub fn parse_github_html_second_part_two_children_first(
                                 Node::Element(ref node_element_fourth_first) => {
                                     let attribute = "datetime";
                                     match node_element_fourth_first.attributes.get(attribute) {
-                                        Some(datejs_handle) => {
-                                            datejs = datejs_handle.clone();
-                                        }
+                                        Some(datejs_handle_option) => match datejs_handle_option {
+                                            Some(datejs_handle) => {
+                                                if !datejs_handle.is_empty() {
+                                                    datejs = datejs_handle_option.clone();
+                                                }
+                                            }
+                                            None => {}
+                                        },
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
@@ -3049,7 +3286,9 @@ pub fn parse_github_html_second_part_two_children_first(
                                     match node_element_fourth_first.children.len() {
                                         1 => match node_element_fourth_first.children[0] {
                                             Node::Text(ref date_handle) => {
-                                                date = Some(date_handle.to_string());
+                                                if !date_handle.is_empty() {
+                                                    date = Some(date_handle.to_string());
+                                                }
                                             }
                                             _ => print_warning_orange(
                                                 file!().to_string(),
@@ -3102,7 +3341,9 @@ pub fn parse_github_html_second_part_two_children_first(
                         match node_element_first.children.len() {
                             1 => match node_element_first.children[0] {
                                 Node::Text(ref author_handle) => {
-                                    author = Some(author_handle.to_string())
+                                    if !author_handle.is_empty() {
+                                        author = Some(author_handle.to_string())
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -3130,7 +3371,11 @@ pub fn parse_github_html_second_part_two_children_first(
                     ),
                 }
                 match node_element.children[1] {
-                    Node::Text(ref action_handle) => action = Some(action_handle.to_string()),
+                    Node::Text(ref action_handle) => {
+                        if !action_handle.is_empty() {
+                            action = Some(action_handle.to_string())
+                        }
+                    }
                     _ => print_warning_orange(
                         file!().to_string(),
                         line!().to_string(),
@@ -3142,7 +3387,9 @@ pub fn parse_github_html_second_part_two_children_first(
                         match node_element_third.children.len() {
                             1 => match node_element_third.children[0] {
                                 Node::Text(ref repository_handle) => {
-                                    repository = Some(repository_handle.to_string())
+                                    if !repository_handle.is_empty() {
+                                        repository = Some(repository_handle.to_string())
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -3170,7 +3417,11 @@ pub fn parse_github_html_second_part_two_children_first(
                     ),
                 }
                 match node_element.children[3] {
-                    Node::Text(ref from_handle) => from = Some(from_handle.to_string()),
+                    Node::Text(ref from_handle) => {
+                        if !from_handle.is_empty() {
+                            from = Some(from_handle.to_string())
+                        }
+                    }
                     _ => print_warning_orange(
                         file!().to_string(),
                         line!().to_string(),
@@ -3182,8 +3433,10 @@ pub fn parse_github_html_second_part_two_children_first(
                         match node_element_firth.children.len() {
                             1 => match node_element_firth.children[0] {
                                 Node::Text(ref from_what_repository_forked_handle) => {
-                                    from_what_repository_forked =
-                                        Some(from_what_repository_forked_handle.to_string())
+                                    if !from_what_repository_forked_handle.is_empty() {
+                                        from_what_repository_forked =
+                                            Some(from_what_repository_forked_handle.to_string())
+                                    }
                                 }
                                 _ => print_warning_orange(
                                     file!().to_string(),
@@ -3217,9 +3470,14 @@ pub fn parse_github_html_second_part_two_children_first(
                                 Node::Element(ref node_element_sixth_first) => {
                                     let attribute = "datetime";
                                     match node_element_sixth_first.attributes.get(attribute) {
-                                        Some(datejs_handle) => {
-                                            datejs = datejs_handle.clone();
-                                        }
+                                        Some(datejs_handle_option) => match datejs_handle_option {
+                                            Some(datejs_handle) => {
+                                                if !datejs_handle.is_empty() {
+                                                    datejs = datejs_handle_option.clone();
+                                                }
+                                            }
+                                            None => {}
+                                        },
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
@@ -3233,7 +3491,9 @@ pub fn parse_github_html_second_part_two_children_first(
                                     match node_element_sixth_first.children.len() {
                                         1 => match node_element_sixth_first.children[0] {
                                             Node::Text(ref date_handle) => {
-                                                date = Some(date_handle.to_string());
+                                                if !date_handle.is_empty() {
+                                                    date = Some(date_handle.to_string());
+                                                }
                                             }
                                             _ => print_warning_orange(
                                                 file!().to_string(),
@@ -3354,7 +3614,11 @@ pub fn four_cases(
         ),
     }
     match vec_of_nodes[1] {
-        Node::Text(ref action_handle) => action = Some(action_handle.to_string()),
+        Node::Text(ref action_handle) => {
+            if !action_handle.is_empty() {
+                action = Some(action_handle.to_string())
+            }
+        }
         _ => print_warning_orange(
             file!().to_string(),
             line!().to_string(),
