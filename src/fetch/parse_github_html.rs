@@ -83,6 +83,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                             branch = branch_handle;
                                                             release_tag = release_tag_handle;
                                                             of = of_handle;
+                                                            who_follow = who_follow_handle;
                                                             bot_tag  = bot_tag_handle;
                                                             vec_of_something = vec_of_something_handle;
                                                         }
