@@ -220,3 +220,5 @@ handle all todos in parse_github_html
 different files todos and thoughts
 -----------------------------
 db mongodb or postgres
+-----------------------------
+get concrete number of provider links as function or command line or env
