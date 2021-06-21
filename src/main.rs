@@ -59,6 +59,25 @@ fn main() {
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry::entry();
 }
+//mongodb older version working example start
+// use futures::executor::block_on;
+// use mongodb::{error::Error, options::ClientOptions, Client};
+
+// pub async fn something() -> Result<(), Error> {
+//     let client_options = ClientOptions::parse("mongodb://localhost:27017").unwrap();
+//     println!("0");
+//     let client = Client::with_options(client_options).unwrap();
+//     println!("1");
+//     let db = client.database("mydb");
+//     println!("2");
+//     let user_collection = db.collection("users");
+//     println!("3 {:#?}", user_collection);
+//     Ok(())
+// }
+// fn main() {
+//     block_on(something());
+// }
+//mongodb older version working example end
 
 // use std::sync::mpsc::channel;
 // use std::time::Instant;
