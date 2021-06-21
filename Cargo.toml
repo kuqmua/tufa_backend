@@ -22,6 +22,7 @@ num_cpus = "1.0"
 toml = "0.5"
 html_parser = "0.6.2"
 regex = "1.5"
+mongodb = "1.2.2"
 config_lib = { path = "./libs/config_lib" }
 providers_info_lib = { path = "./libs/providers_info_lib" }
 #egg-mode = "0.15.0"//twitter

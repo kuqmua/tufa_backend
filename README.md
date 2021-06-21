@@ -11,6 +11,9 @@ Status of last deployment: <br/>
 ### start docker daemon
 sudo dockerd
 
+### run mongodb docker container
+sudo docker run -d -p 27017:27017 -v ~/mongo:/data/db --name mongo-tufa-wsl2 mongo:latest
+
 ### start command
 cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
 
