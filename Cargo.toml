@@ -23,7 +23,7 @@ toml = "0.5"
 html_parser = "0.6.2"
 regex = "1.5"
 # mongodb = "1.2.2"
-# mongodb = "0.9.2"
+# mongodb = "0.9.2"#some error while running tests with it
 diesel = { version = "1.4.7", features = ["postgres"] }
 dotenv = "0.15.0" #for diesel tutorial
 config_lib = { path = "./libs/config_lib" }
