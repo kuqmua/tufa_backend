@@ -226,3 +226,6 @@ get concrete number of provider links as function or command line or env
 where postgres and mongo volumes?
 -----------------------------
 move containers commands into docker compose
+-----------------------------
+Add tests for new libraries versions and what version i use. 
+Like http request to crates.io or something similar
