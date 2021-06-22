@@ -59,6 +59,33 @@ fn main() {
     // TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
     entry::entry();
 }
+
+//postgres diesel example
+// extern crate diesel_demo;
+// extern crate diesel;
+
+// use self::diesel_demo::*;
+// use self::models::*;
+// use self::diesel::prelude::*;
+
+// fn main() {
+//     use diesel_demo::schema::posts::dsl::*;
+
+//     let connection = establish_connection();
+//     let results = posts.filter(published.eq(true))
+//         .limit(5)
+//         .load::<Post>(&connection)
+//         .expect("Error loading posts");
+
+//     println!("Displaying {} posts", results.len());
+//     for post in results {
+//         println!("{}", post.title);
+//         println!("----------\n");
+//         println!("{}", post.body);
+//     }
+// }
+//postgres diesel example
+
 //mongodb older version working example start
 // use futures::executor::block_on;
 // use mongodb::{error::Error, options::ClientOptions, Client};
