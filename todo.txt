@@ -224,3 +224,5 @@ db mongodb or postgres
 get concrete number of provider links as function or command line or env
 -----------------------------
 where postgres and mongo volumes?
+-----------------------------
+move containers commands into docker compose
