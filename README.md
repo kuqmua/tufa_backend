@@ -11,8 +11,21 @@ Status of last deployment: <br/>
 ### start docker daemon
 sudo dockerd
 
-### run mongodb docker container
-sudo docker run -d -p 27017:27017 -v ~/mongo:/data/db --name mongo-tufa-wsl2 mongo:latest
+### pull mongodb docker container
+sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mongodb-volumes/tufa-dev-volume -d mongo:latest
+
+### start mongodb docker container
+sudo docker start mongo-tufa-wsl2
+
+### pull postgres docker container
+docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
+
+### start postres docker container
+sudo docker start postgres-tufa-wsl2
+
+### give priviligies to volumes folder
+sudo chown -R username /folderexample 
+(/db-volumes/mongodb or postgresql)
 
 ### start command
 cd libs/tests_lib && cargo test local && cd .. && cd .. && cargo run
