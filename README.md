@@ -11,17 +11,23 @@ Status of last deployment: <br/>
 ### start docker daemon
 sudo dockerd
 
-### pull mongodb docker container
+### pull and run mongodb docker container
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mongodb-volumes/tufa-dev-volume -d mongo:latest
 
 ### start mongodb docker container
-sudo docker start mongo-tufa-wsl2
+with docker: sudo docker start mongo-tufa-wsl2
+with docker-compose: sudo docker-compose -f docker-compose-postgresql.yml up -d
 
-### pull postgres docker container
-docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
+### pull and run postgres docker container
+sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
 ### start postres docker container
-sudo docker start postgres-tufa-wsl2
+with docker: sudo docker start postgres-tufa-wsl2
+with docker-compose: sudo docker-compose -f docker-compose-postgresql.yml up -d
+
+### shutdown wsl(if db clients cannot connect to db in wsl2)
+windows console: wsl --shutdown
+then reopen wsl
 
 ### give priviligies to volumes folder
 sudo chown -R username /folderexample 
@@ -35,6 +41,10 @@ cd libs/tests_lib && cargo test ci -- --show-output
 
 ### run local tests
 cd libs/tests_lib && cargo test local -- --show-output
+
+### install docker-compose on wsl2
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 ### how to install rust in wsl2
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
