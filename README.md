@@ -16,14 +16,14 @@ sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mon
 
 ### start mongodb docker container
 with docker: sudo docker start mongo-tufa-wsl2
-with docker-compose: sudo docker-compose -f docker-compose-postgresql.yml up -d
+with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d
 
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
 ### start postres docker container
 with docker: sudo docker start postgres-tufa-wsl2
-with docker-compose: sudo docker-compose -f docker-compose-postgresql.yml up -d
+with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d
 
 ### shutdown wsl(if db clients cannot connect to db in wsl2)
 windows console: wsl --shutdown

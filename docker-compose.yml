@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  postgres_service:
+    container_name: postgres_container
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      # - POSTGRES_DB=stage
+    volumes:
+      - pg_project:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+  mongodb_service:
+    container_name: mongodb_container
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+  # rust-backend:
+  #   image: "rust:1.47"
+  #   volumes:
+  #     - ./tufa_backend:/tufa_backend
+  #   environment: 
+  #     - USER=sergey
+volumes:
+  pg_project:
+  mongodb_data_container:
