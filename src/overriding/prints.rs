@@ -14,7 +14,7 @@ pub fn print_error_red(file: String, line: String, error: String) {
 
     // let result_of_writing = fileonos.write(error.as_bytes());
     // match result_of_writing {
-    //     Ok(_) => println!("записано"),
+    //     Ok(_) => println!("written"),
     //     Err(e) => println!("error {}", e),
     // }
     eprintln!(

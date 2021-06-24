@@ -47,7 +47,7 @@ pub struct RedditStructForParsingVectorChildData {
     pub created_utc: Option<f64>,
     pub subreddit_subscribers: Option<f64>,
     pub ups: Option<f64>,
-    pub score: Option<f64>, //difference between score от ups?
+    pub score: Option<f64>, //difference between score and ups?
     pub num_comments: Option<u64>,
     pub downs: Option<f64>,
     pub upvote_ratio: Option<f64>,

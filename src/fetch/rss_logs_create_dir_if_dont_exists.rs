@@ -22,14 +22,14 @@ pub fn rss_logs_create_dir_if_dont_exists(
             Ok(_) => {
                 if enable_prints {
                     println!(
-                        "папка logs/{}/{:?}/{} создана!",
+                        "folder logs/{}/{:?}/{} created!",
                         warning_logs_directory_name, provider_kind, underdirectory
                     )
                 }
             }
             Err(e) => {
                 let message = format!(
-                    "ошибка при создании папки logs/{}/{:?}/{} {}",
+                    "folder creation error logs/{}/{:?}/{} {}",
                     warning_logs_directory_name,
                     provider_kind,
                     underdirectory,

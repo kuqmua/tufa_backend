@@ -41,7 +41,7 @@ providers_info_lib = { path = "./libs/providers_info_lib" }
 # RustyXML = "0.3.0"
 # xml-rs = "0.8" 
 # xmlparser = "0.13.2" 
-#google-youtube3-cli = "1.0.13+20200402" коммандная строка - не то но как вариант можно стырить кое че
+#google-youtube3-cli = "1.0.13+20200402" comand line interface as variant or just can use source code
 # strum = { version = "0.20", features = ["derive"] }#for enum into string
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 # warp = "0.2"

@@ -11,9 +11,9 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
     if error_status_code == reqwest::StatusCode::PROCESSING {
         println!("status 102(Processing) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 103 status code in reqwest
 
-    //     println!("status 103(Early Hints) link: {}", link); //Early Hints («ранняя метаинформация», link);
+    //     println!("status 103(Early Hints) link: {}", link); //early metainformation
     // }
     if error_status_code == reqwest::StatusCode::OK {
         println!("status 200(Success) link: {}", link);
@@ -64,9 +64,8 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
     if error_status_code == reqwest::StatusCode::USE_PROXY {
         println!("status 305(Use Proxy) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
-
-    //     println!("status 306() link: {}", link); //— зарезервировано (код использовался только в ранних спецификациях)
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 306 status code in reqwest
+    //     println!("status 306() link: {}", link); //— reserved (code used only in early specifications)
     // }
     if error_status_code == reqwest::StatusCode::TEMPORARY_REDIRECT {
         println!("status 307(Temporary Redirect) link: {}", link);
@@ -74,7 +73,7 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
     if error_status_code == reqwest::StatusCode::PERMANENT_REDIRECT {
         println!("status 308(Permanent Redirect) link: {}", link);
     }
-    // 4xx: Client Error (ошибка клиента):
+    // 4xx: Client Error:
     if error_status_code == reqwest::StatusCode::BAD_REQUEST {
         println!("status 400(Bad Request) link: {}", link);
     }
@@ -130,15 +129,15 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
         println!("status 417(Expectation Failed) link: {}", link);
     }
     if error_status_code == reqwest::StatusCode::IM_A_TEAPOT {
-        //что это за херня???????
+        //wtf???????
 
         println!("status 418(I’m a teapot) link: {}", link); //I’m a teapot
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 419 status code in reqwest
 
     //     println!("status 419() link: {}", link); //Authentication Timeout
     // }
-    //да, нет 420 хз поч
+    //there is no 420 status code
     if error_status_code == reqwest::StatusCode::MISDIRECTED_REQUEST {
         println!("status 421(Misdirected Request) link: {}", link);
     }
@@ -151,36 +150,36 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
     if error_status_code == reqwest::StatusCode::FAILED_DEPENDENCY {
         println!("status 424(Failed Dependency) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 425 status code in reqwest
 
     //     println!("status 425(Too Early) link: {}", link);
     // }
     if error_status_code == reqwest::StatusCode::UPGRADE_REQUIRED {
         println!("status 426(Upgrade Required) link: {}", link);
     }
-    //да, нет 427 хз поч
+    //there is no 427 status code
     if error_status_code == reqwest::StatusCode::PRECONDITION_REQUIRED {
         println!("status 428(Precondition Required) link: {}", link);
     }
     if error_status_code == reqwest::StatusCode::TOO_MANY_REQUESTS {
         println!("status 429(Too Many Requests) link: {}", link);
     }
-    //да, нет 430 хз поч
+    //there is no 430 status code
     if error_status_code == reqwest::StatusCode::REQUEST_HEADER_FIELDS_TOO_LARGE {
         println!("status 431(Request Header Fields Too Large) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 449 status code in reqwest
 
     //     println!("status 449(Retry With) link: {}", link);
     // }
     if error_status_code == reqwest::StatusCode::UNAVAILABLE_FOR_LEGAL_REASONS {
         println!("status 451(Unavailable For Legal Reasons) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 499 status code in reqwest
 
     //     println!("status 499(Client Closed Request) link: {}", link);
     // }
-    // 5xx: Server Error (ошибка сервера):
+    // 5xx: Server Error:
     if error_status_code == reqwest::StatusCode::INTERNAL_SERVER_ERROR {
         println!("status 500(Internal Server Error) link: {}", link);
     }
@@ -208,7 +207,7 @@ pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bo
     if error_status_code == reqwest::StatusCode::LOOP_DETECTED {
         println!("status 508(Loop Detected) link: {}", link);
     }
-    // if error_status_code == reqwest::StatusCode:: {//почему то в реквесте этого нет
+    // if error_status_code == reqwest::StatusCode:: {//for some reason there is no 509 status code in reqwest
 
     //     println!("status 509(Bandwidth Limit Exceeded) link: {}", link);
     // }
