@@ -1,1 +1,8 @@
 target/
+libs/config_lib/target
+libs/providers_info_lib/target
+libs/tests_lib/target
+/logs
+/.vscode
+/mongodb_volume
+/postgresql_volume

@@ -4,3 +4,5 @@ Cargo.lock
 /logs
 /.vscode
 /libs/*/target
+/mongodb_volume
+/postgresql_volume
