@@ -229,3 +229,5 @@ move containers commands into docker compose
 -----------------------------
 Add tests for new libraries versions and what version i use. 
 Like http request to crates.io or something similar
+-----------------------------
+write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
