@@ -1,0 +1,80 @@
+ // `iter()` for vecs yields `&i32`.
+    let mut iter = vec1.iter();
+    // `into_iter()` for vecs yields `i32`.
+    let mut into_iter = vec2.into_iter();
+
+    // `iter()` for vecs yields `&i32`, and we want to reference one of its
+    // items, so we have to destructure `&&i32` to `i32`
+    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
+    // `into_iter()` for vecs yields `i32`, and we want to reference one of
+    // its items, so we have to destructure `&i32` to `i32`
+    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
+--------------
+extern crate rayon;
+
+use rayon::prelude::*;
+
+fn main() {
+    let mut arr = [0, 7, 9, 11];
+    arr.par_iter_mut().for_each(|p| *p -= 1);
+    println!("{:?}", arr);
+}
+---------------------
+for loop into iterators?
+---------------------
+add everywhere explicit types
+-----------------
+std::stringify
+--------------------
+std::str::SplitN
+-------------
+split().map()
+instead of find(<item></item>)
+-------------
+error had .description method
+maybe rewrite error messages?
+-----------------
+hashmaps into vecs
+------------
+&str instead of String everywhere if possible
+-----------
+'static remove if possible or maybe add if its better 
+-----------
+ensure! macros
+----------
+RES.STATUS: 521 <unknown status code>
+----------
+operation timed out print time elapsed
+----------
+Rc<RefCell<Data>>
+Rc::new(<RefCell::new(Data { value: 42}))
+------------------
+find out why constants which used in tests looks like unused
+--------------------
+google some style guide variable naming for project(parsing espesially) and rename variables
+--------------------
+[dependencies] and [dev-dependencies] read about it
+--------------------
+impl UserCredentialsStruct {
+    pub fn new() -> Result<Self, ConfigError> {
+        maybe add different user logic later ?
+----------------------------
+why hashmap['key'] do not return Result ?????7  maybe switch to stable instead of nightly
+----------------------------
+thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
++++++++++++++++++++++++++++
+    Finished dev [unoptimized + debuginfo] target(s) in 0.10s
+     Running `target/debug/tufa_backend`
+We are on a multicore system with 12 CPUs
+ENV: Development
+server can reach https://www.google.com/
+20 elements in Twitter HashMap
+i can reach https://www.google.com/
+file: src/fetch/rss_check_available_providers.rs:32
+UnhandledFetchStatusInfo::Failureerror sending request for url (https://nitter.fdn.fr/TheCherno/rss): error trying to connect: tcp connect error: Network is unreachable (os error 101)
+thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
+-----------------------------
+parts of config as feature flags? 
+-----------------------------

@@ -1,7 +1,24 @@
-чекать каждую ссылку на статус мало ли переименуют еще
-только на статус без тела
+get rid of russian comments
 ----------
-записывать результат фетчинга в файл и проверять нет ли там таких постов
+db for provider links
+------------------
+write logs into db in different service
+--------------------
+add write logs in db into dir if provider doesnt respond to request 
+-------------------------------
+write fetching result in file and check if there same posts or not
+----------
+providers statistics in files. if 3 time provider is inactive then do not fetch him next time then next two times...
+--------------------
+check every link's status code - maybe they rename it or something
+only status without body
+------------
+do http reqwest again for some unsuccess http statuses in vec of unsuccess links
+reqwest::StatusCode::REQUEST_TIMEOUT 
+let wrong_cases_thread = thread::spawn(move || {
+refetch logic
+-------------------
+compute post's hash and send hashes from client app to server to check server already send them or not 
 ---
 items: vec![BiorxivPageStructItem::new(); 30],
 whats strange what only 30...weird
@@ -9,182 +26,50 @@ whats strange what only 30...weird
 rename some local variables in functions
 ------
 service for date/time checking and executing arxiv for example one time per week and check of server restarted in this timestamp
--------
-делать хеш от поста и отправлять хеши постов с клиента на сервер чтобы сервер видел отправлял ли уже эти посты или нет
-----------------------
-в reach_provider вместо полного запроса на тело изменить ток на запрос статуса типо пинга
----------
-запихнуть в enum тест\статус код
 -----------
-проблема еще в том что он дожидается фетча ввсех ссылок. не над так
-----------
-организация перезапуска фетча ссылок только для тех которые вернули эррор
+problem - now code waiting for all http reqwests to complete. rewrite it into event loop
 ------
-проблема с основной ссылкой архива
--------
- // `iter()` for vecs yields `&i32`.
-    let mut iter = vec1.iter();
-    // `into_iter()` for vecs yields `i32`.
-    let mut into_iter = vec2.into_iter();
-
-    // `iter()` for vecs yields `&i32`, and we want to reference one of its
-    // items, so we have to destructure `&&i32` to `i32`
-    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
-    // `into_iter()` for vecs yields `i32`, and we want to reference one of
-    // its items, so we have to destructure `&i32` to `i32`
-    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
---------------
-let slice: &[u8] = &b;
-                let converted_str = str::from_utf8(&slice).unwrap();
-                let mut dots_unfiltered_str = converted_str.to_string();
-                dots_unfiltered_str.remove(0); //ОЧЕНЬ ВАЖНАЯ СТРОЧКА. НУЖНО УДАЛИТЬ ПЕРВУЮ ЧАСТЬ ЧТОБЫ ФАЙЛ ПРАВИЛЬНО СЧИТАЛСЯ
- ----------------
- extern crate rayon;
-
-use rayon::prelude::*;
-
-fn main() {
-    let mut arr = [0, 7, 9, 11];
-    arr.par_iter_mut().for_each(|p| *p -= 1);
-    println!("{:?}", arr);
-}
---------------------
-2 302 кода чего ????
----------------------
-заменить цикл for на итераторы?
+there is a problem with main arxiv link to check if provider available or not. and not only with arxiv
 -----------
-принты щас не оч корректные на счет цвета
----------------
- reqwest::StatusCode::REQUEST_TIMEOUT рефетч сделать
- -------------
- подобрать функцию которая из стринги делает сейвовый путь заменяя символы
- -------------
- избавиться от всех русскоязычных комментариев
- -------------
- split().map()
- вместо find(<item></item>)
- -------------
- if size of working dir > 100mb then remove all containg
- -----------------
- must be not only 1 str but many - twitter and many nitters
----------------------
-https://doc.rust-lang.org/std/primitive.i32.html#method.checked_add
-переписать места в которых мб есть переполнение буфера
----------------------
-add everywhere explicit types
---------------------
-error had .description method 0_o
------------------
-std::stringify
------------------
-std::str::SplitN
+do some work on better differences in colors in prints
 -------------
-providers statistics in files. if 3 time provider is inactive then do not fetch him next time then next two times...
-------------
-hashmaps into vecs
-------------
-twitter errors:
-builder error: Too many open files (os error 24)
-
-error sending request for url (https://nitter.cattube.org/_baku89/rss): error trying to connect: dns error: Too many open files (os error 24)
-
-error sending request for url (https://tweet.lambda.dance/_CPResearch_/rss): error trying to connect: tcp open error: Too many open files (os error 24)
-
-error sending request for url (https://nitter.40two.app/_davideast/rss): operation timed out
-
+function to write save path from string and change some symbols
+-------------
+if size of working dir > 100mb then remove all containg
+-----------------
+write analog for twitter an use not only nitters
 404 Not Found - CAUSE
 This account's tweets are protected.
 Only confirmed followers have access to @_KudoHiroyuki's tweets.
+---------------------
+https://doc.rust-lang.org/std/primitive.i32.html#method.checked_add
+rewrite code in which there is a buffer overflow
+--------------------
+futures in some cases instead of threads (like file open or write in file)
+-----------
+thread pool instead of for loop
+-----------
+implement that with config params
 
-429 Too Many Requests
------------
-futures in some cases instead of threads
------------
-thread pool
------------
-do something with that 
 pub async fn check_new_posts_threads_parts() {
-    let mut threads_vec = Vec::with_capacity(4); arxiv biorxiv medrxiv twitter reddit ...
+    let mut threads_vec = Vec::with_capacity(6); arxiv biorxiv medrxiv twitter reddit ...    
 -----------
-&str instead of String everywhere if possible
------------
-'static remove if possible or maybe add if its better 
------------
-ensure! macros
-----------
 let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
 -----------
 if let Ok(something) = something.lock() {}
 instead of 
 something.lock().unwrap();
+or match some none
 ----------
-RES.STATUS: 521 <unknown status code>
-----------
-operation timed out print time elapsed
-----------
-github newsfeed
-----------
-redo fetch link cuz method not allowed error error
-------------------
-write a test and run before commit to check if i for some reason have user data in config
-------------------
-let mut threads_vec = Vec::with_capacity(6  thisssss);
-implement that with config params 
-------------------
-Rc<RefCell<Data>>
-Rc::new(<RefCell::new(Data { value: 42}))
-------------------
-db for provider links
-------------------
-let wrong_cases_thread = thread::spawn(move || {
-refetch logic
--------------------
-block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
-                provider_kind,
-                enable_prints,
-                // enable_warning_prints: bool,
-                enable_error_prints,
-                enable_time_measurement,
-                some_error_posts,
-                warning_logs_directory_name,
-            ));
-move this code into upper tree positions - no need no waiting for writing files
---------------------
-write logs into file in different service
---------------------
-maybe cast struct into common rss with option type with fields for all providers//bad idea
---------------------
-twitter bug
+create big json file to test parsing speed
 ----------------------------
-create big xml/json file to test parsing speed
-----------------------------
-add write logs into dir if provider doesnt respond to request 
-there is no point for that before adding database
--------------------------------
 generate_biorxiv_hashmap_links and others rename this - remove hashmap
 -------------------------------
-rss_struct.entries[count].content.clone(), //todo: content is html now, need parsing
---------------------
 thread pool with this let cpus = num_cpus::get();
 --------------------
-find out why constants which used in tests looks like unused
---------------------
-We can specify part of a test name, and any test whose name matches that value will be run. For example, because two of our tests’ names contain add, we can run those two by running cargo test add
-its solution for github actions test running command
---------------------
-write some logic and flag what choose between config values and in code constants for more efficient production variant 
---------------------
-google some style guide variable naming for project(parsing espesially) and rename variables
---------------------
-[dependencies] and [dev-dependencies] 
+write some logic and flag what choose between config values, env and in code constants for more efficient production variant 
 --------------------
 pub const PROJECT_MODE: &str = "Development";//later as ENV variable only
-----------------------------
-impl UserCredentialsStruct {
-    pub fn new() -> Result<Self, ConfigError> {
-        maybe add different user logic later ?
-----------------------------
-move get config and user credentials into config
 ----------------------------
 todo: add medium
 ----------------------------
@@ -192,42 +77,16 @@ cannot do cargo build while docker build with this library = { path = "./library
 ----------------------------
 parsing providers posts tests
 ----------------------------
-why hashmap['key'] do not return Result ?????7  maybe switch to stable instead of nightly
-----------------------------
 server what running web tests every hour like http requests and get valid data or not
-----------------------------
 github parsing version to check different structs of posts as test in the loop
 ---------------------------
-thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
-+++++++++++++++++++++++++++
-    Finished dev [unoptimized + debuginfo] target(s) in 0.10s
-     Running `target/debug/tufa_backend`
-We are on a multicore system with 12 CPUs
-ENV: Development
-server can reach https://www.google.com/
-20 elements in Twitter HashMap
-i can reach https://www.google.com/
-file: src/fetch/rss_check_available_providers.rs:32
-UnhandledFetchStatusInfo::Failureerror sending request for url (https://nitter.fdn.fr/TheCherno/rss): error trying to connect: tcp connect error: Network is unreachable (os error 101)
-thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
------------------------------
-parts of config as feature flags? 
------------------------------
 handle all todos in parse_github_html
 -----------------------------
-different files todos and thoughts
------------------------------
-db mongodb or postgres
------------------------------
 get concrete number of provider links as function or command line or env
------------------------------
-where postgres and mongo volumes?
------------------------------
-move containers commands into docker compose
 -----------------------------
 Add tests for new libraries versions and what version i use. 
 Like http request to crates.io or something similar
 -----------------------------
 write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
+-----------------------------
+todo: different todo for code and for tests
