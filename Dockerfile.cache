@@ -2,7 +2,13 @@ FROM rust:1.41-slim
 WORKDIR /cache
 RUN apt-get update
 RUN USER=root cargo init --bin --vcs none
-COPY Cargo.lock Cargo.toml /cache/
+RUN ls
+COPY . .
+RUN ls
+COPY Cargo.lock Cargo.toml /cache/ 
+COPY /libs/config_lib/ .
+COPY /libs/providers_info_lib/ .
+RUN ls
 RUN cargo build
 RUN rm src/*.rs
 RUN rm ./target/debug/deps/tufa_backend*
