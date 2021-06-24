@@ -6,3 +6,4 @@ libs/tests_lib/target
 /.vscode
 /mongodb_volume
 /postgresql_volume
+/parsing_file_examples
