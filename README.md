@@ -17,6 +17,9 @@ sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mon
 ### start mongodb docker container
 with docker: sudo docker start mongo-tufa-wsl2
 with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d
+### install diesel cli for postgres(diesel dependency)
+sudo apt install libpq-dev
+cargo install diesel_cli --no-default-features --features postgres
 
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
