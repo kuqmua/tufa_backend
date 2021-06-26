@@ -90,3 +90,8 @@ Like http request to crates.io or something similar
 write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
 -----------------------------
 todo: different todo for code and for tests
+------------------------------
+5 => {
+                println!("todo 5 elements github parsing")
+            }
+github parsing
