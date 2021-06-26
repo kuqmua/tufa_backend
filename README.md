@@ -21,6 +21,14 @@ with docker-compose(other services too): sudo docker-compose -f docker-compose.y
 sudo apt install libpq-dev
 cargo install diesel_cli --no-default-features --features postgres
 
+### diesel examples (libs/diesel_demo/)
+diesel setup
+diesel migration run
+diesel migration redo
+cargo run --bin write_post
+cargo run --bin publish_post 1
+cargo run --bin show_posts
+cargo run --bin delete_post (post name)
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
