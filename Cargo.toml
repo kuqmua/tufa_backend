@@ -16,18 +16,18 @@ serde-xml-rs = "0.4.0"
 serde_derive = "1.0"
 serde_json = "1.0"
 chrono = "0.4"
-tokio = {version = "1.5.0", features = ["macros"]}
+tokio = {version = "1.7.1", features = ["macros"]}
 ansi_term = "0.12"
 num_cpus = "1.0"
 toml = "0.5"
 html_parser = "0.6.2"
 regex = "1.5"
-# mongodb = "1.2.2"
 # mongodb = "0.9.2"#some error while running tests with it
 diesel = { version = "1.4.7", features = ["postgres"] }
 dotenv = "0.15.0" #for diesel tutorial
 config_lib = { path = "./libs/config_lib" }
 providers_info_lib = { path = "./libs/providers_info_lib" }
+mongo_demo = { path = "./libs/mongo_demo" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
