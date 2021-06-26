@@ -15,33 +15,33 @@ sudo dockerd
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mongodb-volumes/tufa-dev-volume -d mongo:latest
 
 ### start mongodb docker container
-with docker: sudo docker start mongo-tufa-wsl2
-with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d
+with docker: sudo docker start mongo-tufa-wsl2 <br/>
+with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d 
 ### install diesel cli for postgres(diesel dependency)
-sudo apt install libpq-dev
+sudo apt install libpq-dev <br/>
 cargo install diesel_cli --no-default-features --features postgres
 
 ### diesel examples (libs/diesel_demo/)
-diesel setup
-diesel migration run
-diesel migration redo
-cargo run --bin write_post
-cargo run --bin publish_post 1
-cargo run --bin show_posts
+diesel setup <br/>
+diesel migration run <br/>
+diesel migration redo <br/>
+cargo run --bin write_post <br/>
+cargo run --bin publish_post 1 <br/>
+cargo run --bin show_posts <br/>
 cargo run --bin delete_post (post name)
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
 ### start postres docker container
-with docker: sudo docker start postgres-tufa-wsl2
-with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d
+with docker: sudo docker start postgres-tufa-wsl2 <br/>
+with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d <br/>
 
 ### shutdown wsl(if db clients cannot connect to db in wsl2)
-windows console: wsl --shutdown
+windows console: wsl --shutdown <br/>
 then reopen wsl
 
 ### give priviligies to volumes folder
-sudo chown -R username /folderexample 
+sudo chown -R username /folderexample <br/>
 (/db-volumes/mongodb or postgresql)
 
 ### start command
@@ -54,20 +54,20 @@ cd libs/tests_lib && cargo test ci -- --show-output
 cd libs/tests_lib && cargo test local -- --show-output
 
 ### install docker-compose on wsl2
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose <br/>
 sudo chmod +x /usr/local/bin/docker-compose
 
 ### how to install rust in wsl2
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-sudo apt install build-essential
-source $HOME/.cargo/env
-sudo apt install pkg-config //optionally
-sudo apt-get install pkg-config libssl-dev
-rustup default nightly
-rustup update //update every week cause nightly
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh <br/>
+sudo apt install build-essential <br/>
+source $HOME/.cargo/env <br/>
+sudo apt install pkg-config //optionally <br/>
+sudo apt-get install pkg-config libssl-dev <br/>
+rustup default nightly <br/>
+rustup update //update every week cause nightly <br/>
 
 ### how to install rust in windows 10
-https://estada.ch/2020/4/19/installing-rust-on-windows-10-native/
+https://estada.ch/2020/4/19/installing-rust-on-windows-10-native/ 
 
 This is a quick how to for Windows 10 2004.
 
