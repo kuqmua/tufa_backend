@@ -1,5 +1,3 @@
-get rid of russian comments
-----------
 db for provider links
 ------------------
 write logs into db in different service
