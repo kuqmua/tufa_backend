@@ -95,3 +95,9 @@ todo: different todo for code and for tests
                 println!("todo 5 elements github parsing")
             }
 github parsing
+------------------------------
+### pull and run postgres docker container
+sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
+
+how to change default volume folder for this command?
+and mongo
