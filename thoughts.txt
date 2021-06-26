@@ -79,3 +79,7 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', sr
 parts of config as feature flags? 
 -----------------------------
 is there some service whats run postgres and mongo in cloud for free like 100mb for free?
+-----------------------------
+Dynamic library (dylib)
+Find out about it 
+crate-type = ["dylib"]
