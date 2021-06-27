@@ -83,3 +83,5 @@ is there some service whats run postgres and mongo in cloud for free like 100mb 
 Dynamic library (dylib)
 Find out about it 
 crate-type = ["dylib"]
+-----------------
+difference between "".to_string() and String::new()
