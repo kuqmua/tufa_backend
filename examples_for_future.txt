@@ -42,3 +42,7 @@ use log::LevelFilter;
 use simplelog::{Config, TermLogger, TerminalMode};
 TermLogger::init(LevelFilter::Trace, Config::default(), TerminalMode::Stdout).unwrap();
 //logger example
+
+//async tokio chat server example
+https://youtu.be/4DqP57BHaXI
+//async tokio chat server example
