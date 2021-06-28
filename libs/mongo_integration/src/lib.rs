@@ -38,6 +38,9 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
     // Insert some documents into the "mydb.books" collection.
     collection.insert_many(docs, None).await?;
     println!("4");
+    for collection_name in db.list_collection_names(None).await? {
+        println!("{}", collection_name);
+    }
     db.run_command(doc! {"ping": 1}, None).await?;
     println!("Connected successfully.");
     //List the names of the databases in that cluster
