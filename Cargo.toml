@@ -27,7 +27,6 @@ diesel = { version = "1.4.7", features = ["postgres"] }
 dotenv = "0.15.0" #for diesel tutorial
 config_lib = { path = "./libs/config_lib" }
 providers_info_lib = { path = "./libs/providers_info_lib" }
-mongo_demo = { path = "./libs/mongo_demo" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"

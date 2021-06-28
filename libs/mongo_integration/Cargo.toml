@@ -1,5 +1,5 @@
 [package]
-name = "mongo_demo"
+name = "mongo_integration"
 version = "0.1.0"
 authors = ["kuqmua <serezhashmakov@outlook.com>"]
 edition = "2018"

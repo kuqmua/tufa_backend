@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 config_lib = { path = "../config_lib" }
+mongo_integration = { path = "../mongo_integration" }
