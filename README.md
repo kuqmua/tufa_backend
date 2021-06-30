@@ -53,6 +53,9 @@ cd libs/tests_lib && cargo test ci -- --show-output
 ### run local tests
 cd libs/tests_lib && cargo test local -- --show-output
 
+### show tree visualization of a dependency graph
+cargo tree
+
 ### install docker-compose on wsl2
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose <br/>
 sudo chmod +x /usr/local/bin/docker-compose
