@@ -1,18 +1,15 @@
 use mongodb::{
     bson::{doc, Document},
     options::ClientOptions,
-    // options::CreateCollectionOptions,
     Client,
 };
-// This trait is required to use `try_next()` on the cursor
-use futures::stream::TryStreamExt;
-// use mongodb::options::FindOptions;
 
 #[tokio::main]
 pub async fn mongo_insert_docs_in_empty_collection(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle: &str,
+    db_collection_document_field_name: &str,
     vec_of_values: Vec<&str>,
 ) -> mongodb::error::Result<()> {
     let client_options = ClientOptions::parse(mongo_url).await?;
@@ -25,14 +22,24 @@ pub async fn mongo_insert_docs_in_empty_collection(
             match documents_number_result {
                 Ok(documents_number) => {
                     if documents_number > 0 {
-                        let docs = vec![doc! { "link_part": "1984" }];
-                        let dd = collection.insert_many(docs, None).await;
-                        match dd {
-                            Ok(_) => println!("@@@@"),
+                        println!("collection is not empty, docs did not inserted");
+                    } else {
+                        let mut docs: Vec<Document> = Vec::with_capacity(vec_of_values.len());
+                        for value in &vec_of_values {
+                            println!("value {}", value.len());
+                            docs.push(doc! { db_collection_document_field_name: value });
+                        }
+                        let insert_many_result = collection.insert_many(docs, None).await;
+                        match insert_many_result {
+                            Ok(_) => {
+                                println!(
+                                    "successfull insertion {} elements to {} collection!",
+                                    vec_of_values.len(),
+                                    db_collection_handle
+                                )
+                            }
                             Err(e) => println!("####, {:#?}", e),
                         }
-                    } else {
-                        println!("collection is not empty, docs did not inserted");
                     }
                 }
                 Err(e) => println!("####, {:#?}", e),
