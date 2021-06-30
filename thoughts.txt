@@ -87,3 +87,7 @@ crate-type = ["dylib"]
 difference between "".to_string() and String::new()
 -------------------
 refactor project into rust workspaces to reuse dependencies
+--------------------
+caret requirements 
+tilde requirements
+wildcard requirements
