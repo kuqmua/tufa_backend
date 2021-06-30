@@ -7,6 +7,7 @@ use mongodb::{
 // This trait is required to use `try_next()` on the cursor
 use futures::stream::TryStreamExt;
 // use mongodb::options::FindOptions;
+pub mod mongo_insert_docs_in_empty_collection;
 
 #[tokio::main]
 pub async fn mongo_integration() -> mongodb::error::Result<()> {
@@ -16,30 +17,78 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
         ClientOptions::parse("mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority").await?;
     // client_options.app_name = Some("Rust Demo".to_string());
     let client_result = Client::with_options(client_options);
+    let db_name_handle = "testdatabase";
+    let db_collection_handle = "testcollection";
+    let db_collection_key_handle = "link_part";
+    let mut vec_of_strings: Vec<String> = Vec::new();
     match client_result {
         Ok(client) => {
             println!("client");
-            //List the names of the databases in that cluster
-            // let vec_of_db_names: Vec<String> = Vec::new();
-            let mut needed_db_name: Option<String> = None;
-            for db_name in client.list_database_names(None, None).await? {
-                if db_name == *"testdatabase" {
-                    needed_db_name = Some(db_name);
+            //declare db name. there is no create db method in mongo
+            let db = client.database(db_name_handle);
+            let mut needed_db_collection: Option<String> = None;
+            for collection_name in db.list_collection_names(None).await? {
+                if collection_name == *db_collection_handle {
+                    println!("+++++++++++++++++++={}", collection_name);
+                    needed_db_collection = Some(collection_name);
                 }
             }
-            match needed_db_name {
-                Some(db_name) => {
-                    let db = client.database(&db_name);
-                    let mut needed_db_collection: Option<String> = None;
-                    for collection_name in db.list_collection_names(None).await? {
-                        println!("+++++++++++++++++++={}", collection_name);
-                        if collection_name == *"testcollection" {
-                            needed_db_collection = Some(collection_name);
+            match needed_db_collection {
+                Some(collection_name) => {
+                    let collection = db.collection(&collection_name);
+                    // let docs = vec![doc! { "link_part": "1984" }];
+                    // let dd = collection.insert_many(docs, None).await;
+                    // match dd {
+                    //     Ok(_) => println!("@@@@"),
+                    //     Err(e) => println!("####, {:#?}", e),
+                    // }
+                    let documents_number_result = collection.count_documents(None, None).await;
+                    match documents_number_result {
+                        Ok(documents_number) => {
+                            if documents_number > 0 {
+                                println!("collection.count_documents {}", documents_number);
+                                // db.run_command(doc! {"ping": 1}, None).await?;
+                                // let filter = doc! { "author": "George Orwell" };
+                                // let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
+                                let cursor_result = collection.find(None, None).await;
+                                match cursor_result {
+                                    Ok(mut cursor) => {
+                                        while let Some(document) = cursor.try_next().await? {
+                                            let bson_option =
+                                                document.get(db_collection_key_handle);
+                                            match bson_option {
+                                                Some(bson_handle) => {
+                                                    println!(
+                                                        "link_part: {}",
+                                                        bson_handle.to_string()
+                                                    );
+                                                    vec_of_strings.push(bson_handle.to_string())
+                                                }
+                                                None => {
+                                                    println!(
+                                                        "no db_collection_key_handle: {}",
+                                                        db_collection_key_handle
+                                                    );
+                                                }
+                                            }
+                                        }
+                                        // collection.drop(None).await?;
+                                    }
+                                    Err(e) => println!("####, {:#?}", e),
+                                }
+                            } else {
+                                println!("documents_number is {}", documents_number)
+                            }
                         }
+                        Err(e) => println!("####, {:#?}", e),
                     }
-                    match needed_db_collection {
-                        Some(collection_name) => {
-                            let collection = db.collection(&collection_name);
+                }
+                None => {
+                    //create collection?
+                    let dd = db.create_collection("testcollection", None).await;
+                    match dd {
+                        Ok(()) => {
+                            let collection = db.collection("test collection");
                             let docs = vec![doc! { "link_part": "1984" }];
                             let dd = collection.insert_many(docs, None).await;
                             match dd {
@@ -49,7 +98,6 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
                             let bbbb = collection.count_documents(None, None).await?;
                             println!("collection.count_documents {}", bbbb);
                             db.run_command(doc! {"ping": 1}, None).await?;
-                            //
                             // let filter = doc! { "author": "George Orwell" };
                             // let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
                             let mut cursor = collection.find(None, None).await?;
@@ -58,9 +106,8 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
                                 let reslt = book.get("link_part");
                                 match reslt {
                                     Some(title) => {
+                                        //there is an _id field
                                         println!("link_part: {}", title.to_string());
-                                        // let rss_struct_from_str_result: Result<RedditStructForParsing, serde_json::Error> =
-                                        //     serde_json::from_str(&fetch_result_string);
                                     }
                                     None => {
                                         println!("no link_part");
@@ -69,52 +116,10 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
                             }
                             collection.drop(None).await?;
                         }
-                        None => {
-                            //create collection?
-                            let dd = db.create_collection("testcollection", None).await;
-                            match dd {
-                                Ok(()) => {
-                                    println!("@@@@");
-                                    let collection = db.collection("test collection");
-                                    let docs = vec![doc! { "link_part": "1984" }];
-                                    let dd = collection.insert_many(docs, None).await;
-                                    match dd {
-                                        Ok(_) => println!("@@@@"),
-                                        Err(e) => println!("####, {:#?}", e),
-                                    }
-                                    let bbbb = collection.count_documents(None, None).await?;
-                                    println!("collection.count_documents {}", bbbb);
-                                    db.run_command(doc! {"ping": 1}, None).await?;
-                                    //
-                                    // let filter = doc! { "author": "George Orwell" };
-                                    // let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
-                                    let mut cursor = collection.find(None, None).await?;
-                                    // Iterate over the results of the cursor.
-                                    while let Some(book) = cursor.try_next().await? {
-                                        let reslt = book.get("link_part");
-                                        match reslt {
-                                            Some(title) => {
-                                                println!("link_part: {}", title.to_string());
-                                                // let rss_struct_from_str_result: Result<RedditStructForParsing, serde_json::Error> =
-                                                //     serde_json::from_str(&fetch_result_string);
-                                            }
-                                            None => {
-                                                println!("no link_part");
-                                            }
-                                        }
-                                    }
-                                    collection.drop(None).await?;
-                                }
-                                Err(e) => {
-                                    println!("####, {:#?}", e);
-                                }
-                            }
+                        Err(e) => {
+                            println!("####, {:#?}", e);
                         }
                     }
-                }
-                None => {
-                    // create db?
-                    println!("create db?")
                 }
             }
         }
@@ -122,13 +127,6 @@ pub async fn mongo_integration() -> mongodb::error::Result<()> {
             println!("no client , {:#?}", e);
         }
     }
-
+    println!("vec_of_strings {:#?}", vec_of_strings);
     Ok(())
-}
-
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct CommonProviderLinkPartMongoStruct {
-    #[serde(rename = "_id", default)]
-    pub id: Option<String>, //ObjectId("60db5fb500afe50b00c5a797")
-    pub link_part: Option<String>,
 }
