@@ -1,4 +1,4 @@
-pub fn get_arxiv_names() -> Vec<&'static str> {
+pub fn get_arxiv_names() -> Vec<String> {
     let arxiv_names: Vec<&str> = [
         "astro-ph.CO", //Cosmology and Nongalactic Astrophysics
                        // "astro-ph.EP", //Earth and Planetary Astrophysics
@@ -147,25 +147,48 @@ pub fn get_arxiv_names() -> Vec<&'static str> {
                        // "math-ph",  //Mathematical Physic
     ]
     .to_vec();
-    // let result_of_mongo_integration = mongo_integration::mongo_integration();
-    let result_of_mongo_integration = mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection(
+    //mongodb://root:rootpassword@localhost:27017
+    //mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+    let result_of_mongo_integration = mongo_integration::mongo_get_provider_link_parts::mongo_get_provider_link_parts(
         "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-        "testdatabase",
-        "testcollection",
-        "link_part",
-         arxiv_names.clone()
+    "testdatabase",
+    "testcollection",
+    "link_part",
     );
+    let mut arxiv_names: Vec<String> = Vec::new();
     match result_of_mongo_integration {
-        Ok(result_flag) => {
-            if result_flag {
-                println!("nice!");
-            } else {
+        Ok(option_vec_of_strings) => match option_vec_of_strings {
+            Some(vec_of_strings) => {
+                println!("nice! {:#?}", vec_of_strings);
+                arxiv_names = vec_of_strings;
+            }
+            None => {
                 println!("not nice!");
             }
-        }
+        },
         Err(e) => {
-            println!("F");
+            println!("F {:#?}", e);
         }
     }
+
+    // let result_of_mongo_integration = mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection(
+    //     "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    //     "testdatabase",
+    //     "testcollection",
+    //     "link_part",
+    //      arxiv_names.clone()
+    // );
+    // match result_of_mongo_integration {
+    //     Ok(result_flag) => {
+    //         if result_flag {
+    //             println!("nice!");
+    //         } else {
+    //             println!("not nice!");
+    //         }
+    //     }
+    //     Err(e) => {
+    //         println!("F");
+    //     }
+    // }
     arxiv_names
 }
