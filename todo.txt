@@ -99,3 +99,7 @@ sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postg
 
 how to change default volume folder for this command?
 and mongo
+-----------------------------
+colorful prints as lib
+----------------------------
+find this in code and fix "(todo change this print)" 
