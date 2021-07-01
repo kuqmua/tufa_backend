@@ -4,6 +4,15 @@ let filter = doc! { "author": "George Orwell" };
 let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
 //mongodb run command
 
+//mongodb filter
+let filter = doc! { "author": "George Orwell" };
+let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
+//mongodb filter
+
+//mongodv drop collection example
+collection.drop(None).await?;
+//mongodb drop collection example
+
 //treadpool example
  use std::sync::mpsc::channel;
  use std::time::Instant;
