@@ -147,17 +147,21 @@ pub fn get_arxiv_names() -> Vec<&'static str> {
                        // "math-ph",  //Mathematical Physic
     ]
     .to_vec();
-    let result_of_mongo_integration = mongo_integration::mongo_integration();
-    // let result_of_mongo_integration = mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection(
-    //     "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    //     "testdatabase",
-    //     "testcollection",
-    //     "link_part",
-    //      arxiv_names.clone()
-    // );
+    // let result_of_mongo_integration = mongo_integration::mongo_integration();
+    let result_of_mongo_integration = mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection(
+        "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+        "testdatabase",
+        "testcollection",
+        "link_part",
+         arxiv_names.clone()
+    );
     match result_of_mongo_integration {
-        Ok(()) => {
-            println!("nice!");
+        Ok(result_flag) => {
+            if result_flag {
+                println!("nice!");
+            } else {
+                println!("not nice!");
+            }
         }
         Err(e) => {
             println!("F");
