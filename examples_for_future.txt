@@ -13,6 +13,11 @@ let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
 collection.drop(None).await?;
 //mongodb drop collection example
 
+//mongodb app_name
+client_options.app_name = Some("Rust Demo".to_string());
+//mongodb app_name
+
+
 //treadpool example
  use std::sync::mpsc::channel;
  use std::time::Instant;
