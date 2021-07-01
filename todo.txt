@@ -103,3 +103,5 @@ and mongo
 colorful prints as lib
 ----------------------------
 find this in code and fix "(todo change this print)" 
+----------------------------
+limit for mongo "get data" functions
