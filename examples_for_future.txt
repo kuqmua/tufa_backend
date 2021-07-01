@@ -1,11 +1,8 @@
-//mongodb as lib for main example
-extern crate mongo_demo;
-use futures::executor::block_on;
-#[tokio::main]
-async fn main() {
-    mongo_demo::mongo_main();
-}
-//mongodb as lib for main example
+//mongodb run command
+db.run_command(doc! {"ping": 1}, None).await?;
+let filter = doc! { "author": "George Orwell" };
+let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
+//mongodb run command
 
 //treadpool example
  use std::sync::mpsc::channel;
