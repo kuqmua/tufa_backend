@@ -157,15 +157,10 @@ pub fn get_arxiv_names() -> Vec<String> {
     );
     let mut arxiv_names: Vec<String> = Vec::new();
     match result_of_mongo_integration {
-        Ok(option_vec_of_strings) => match option_vec_of_strings {
-            Some(vec_of_strings) => {
-                println!("nice! {:#?}", vec_of_strings);
-                arxiv_names = vec_of_strings;
-            }
-            None => {
-                println!("not nice!");
-            }
-        },
+        Ok(vec_of_strings) => {
+            println!("nice! {:#?}", vec_of_strings);
+            arxiv_names = vec_of_strings;
+        }
         Err(e) => {
             println!("F {:#?}", e);
         }

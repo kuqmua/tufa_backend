@@ -1,5 +1,5 @@
 use futures::stream::TryStreamExt;
-use mongodb::{options::ClientOptions, Client};
+use mongodb::{bson, options::ClientOptions, Client};
 
 #[tokio::main]
 pub async fn mongo_get_provider_link_parts(
@@ -7,11 +7,10 @@ pub async fn mongo_get_provider_link_parts(
     db_name_handle: &str,
     db_collection_handle: &str,
     db_collection_key_handle: &str,
-) -> Result<Option<Vec<String>>, mongodb::error::Error> {
-    println!("BIG F");
+) -> Result<Vec<String>, mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
-    let mut option_vec_of_strings: Option<Vec<String>> = None;
+    let vec_of_strings_to_return: Vec<String>;
     match client_result {
         Ok(client) => {
             //declare db name. there is no create db method in mongo
@@ -38,13 +37,15 @@ pub async fn mongo_get_provider_link_parts(
                                             let bson_option =
                                                 document.get(db_collection_key_handle);
                                             match bson_option {
-                                                Some(bson_handle) => {
-                                                    println!(
-                                                        "link_part: {}",
-                                                        bson_handle.to_string()
-                                                    );
-                                                    vec_of_strings.push(bson_handle.to_string())
-                                                }
+                                                Some(bson_handle) => match bson_handle {
+                                                    bson::Bson::String(stringified_bson) => {
+                                                        vec_of_strings
+                                                            .push(stringified_bson.to_string())
+                                                    }
+                                                    _ => {
+                                                        println!("(todo change this print) different mongo type")
+                                                    }
+                                                },
                                                 None => {
                                                     println!(
                                                         "no db_collection_key_handle: {}",
@@ -53,31 +54,44 @@ pub async fn mongo_get_provider_link_parts(
                                                 }
                                             }
                                         }
-                                        option_vec_of_strings = Some(vec_of_strings)
+                                        if vec_of_strings.len() > 0 {
+                                            vec_of_strings_to_return = vec_of_strings
+                                        } else {
+                                            vec_of_strings_to_return = Vec::new()
+                                        }
                                     }
-                                    Err(e) => println!(
-                                        "(todo change this print)  collection.find, {:#?}",
-                                        e
-                                    ),
+                                    Err(e) => {
+                                        vec_of_strings_to_return = Vec::new();
+                                        println!(
+                                            "(todo change this print)  collection.find, {:#?}",
+                                            e
+                                        )
+                                    }
                                 }
                             } else {
+                                vec_of_strings_to_return = Vec::new();
                                 println!("documents_number is {}", documents_number)
                             }
                         }
-                        Err(e) => println!(
-                            "(todo change this print) collection.count_documents, {:#?}",
-                            e
-                        ),
+                        Err(e) => {
+                            vec_of_strings_to_return = Vec::new();
+                            println!(
+                                "(todo change this print) collection.count_documents, {:#?}",
+                                e
+                            )
+                        }
                     }
                 }
                 None => {
+                    vec_of_strings_to_return = Vec::new();
                     println!("(todo change this print) no such collection");
                 }
             }
         }
         Err(e) => {
+            vec_of_strings_to_return = Vec::new();
             println!("(todo change this print) no client , {:#?}", e);
         }
     }
-    Ok(option_vec_of_strings)
+    Ok(vec_of_strings_to_return)
 }
