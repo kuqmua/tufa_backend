@@ -1,2 +1,2 @@
-pub mod mongo_get_provider_link_parts;
+pub mod mongo_get_provider_link_parts_as_bson_string;
 pub mod mongo_insert_docs_in_empty_collection;

@@ -2,7 +2,7 @@ use futures::stream::TryStreamExt;
 use mongodb::{bson, options::ClientOptions, Client};
 
 #[tokio::main]
-pub async fn mongo_get_provider_link_parts(
+pub async fn mongo_get_provider_link_parts_as_bson_string(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle: &str,

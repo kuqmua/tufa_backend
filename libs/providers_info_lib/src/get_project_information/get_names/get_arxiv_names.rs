@@ -1,7 +1,7 @@
 pub fn get_arxiv_names() -> Vec<String> {
     //mongodb://root:rootpassword@localhost:27017
     //mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-    let result_of_mongo_integration = mongo_integration::mongo_get_provider_link_parts::mongo_get_provider_link_parts(
+    let result_of_mongo_integration = mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string(
         "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "testdatabase",
 "testcollection",
