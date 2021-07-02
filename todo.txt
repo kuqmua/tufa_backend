@@ -105,3 +105,8 @@ colorful prints as lib
 find this in code and fix "(todo change this print)" 
 ----------------------------
 limit for mongo "get data" functions
+----------------------------
+move 
+//mongodb://root:rootpassword@localhost:27017
+    //mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+    to user credentials
