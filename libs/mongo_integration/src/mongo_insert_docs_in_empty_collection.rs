@@ -9,8 +9,8 @@ pub async fn mongo_insert_docs_in_empty_collection(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle: &str,
-    db_collection_document_field_name: &str,
-    vec_of_values: Vec<&str>,
+    db_collection_document_field_name_handle: &str,
+    vec_of_values: Vec<String>,
 ) -> Result<bool, mongodb::error::Error> {
     let result_flag: bool;
     let client_options = ClientOptions::parse(mongo_url).await?;
@@ -28,7 +28,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
                     } else {
                         let mut docs: Vec<Document> = Vec::with_capacity(vec_of_values.len());
                         for value in &vec_of_values {
-                            docs.push(doc! { db_collection_document_field_name: value });
+                            docs.push(doc! { db_collection_document_field_name_handle: value });
                         }
                         let insert_many_result = collection.insert_many(docs, None).await;
                         match insert_many_result {

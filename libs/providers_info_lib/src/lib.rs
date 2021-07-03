@@ -19,3 +19,8 @@ pub mod get_project_information {
     }
     pub mod get_twitter_providers_names;
 }
+
+pub mod init_mongo_db_and_collections {
+    pub mod get_providers_json_local_data;
+    pub mod put_data_in_mongo;
+}

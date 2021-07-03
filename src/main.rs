@@ -51,6 +51,8 @@ mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 
+use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 fn main() {
-    entry::entry();
+    put_data_in_mongo();
+    // entry::entry();
 }
