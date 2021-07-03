@@ -1,4 +1,4 @@
-use mongo_integration::mongo_drop_collection_non_check::mongo_drop_collection_non_check;
+use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 
 pub fn get_arxiv_names() -> Vec<String> {
@@ -20,10 +20,11 @@ pub fn get_arxiv_names() -> Vec<String> {
             println!("F {:#?}", e);
         }
     }
-    let future_possible_drop_collection = mongo_drop_collection_non_check(
+    let future_possible_drop_collection = mongo_drop_collection_wrapper(
         "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "testdatabase",
 "testcollection",
+false
     );
     match future_possible_drop_collection {
         Ok(result_flag) => {
