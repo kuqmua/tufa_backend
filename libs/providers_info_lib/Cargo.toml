@@ -12,3 +12,4 @@ serde_json = "1.0"
 serde_derive = "1.0"
 config_lib = { path = "../config_lib" }
 mongo_integration = { path = "../mongo_integration" }
+mongodb = "1.2.2" #to have possibility type checking mongo::bson
