@@ -91,3 +91,5 @@ refactor project into rust workspaces to reuse dependencies
 caret requirements 
 tilde requirements
 wildcard requirements
+--------------------------
+different user_credentials files for project databases and providers
