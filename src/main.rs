@@ -51,8 +51,18 @@ mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 
+use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
+
 fn main() {
-    put_data_in_mongo();
+    put_data_in_mongo(
+        &CONFIG.mongo_params.mongo_url,
+        &CONFIG.mongo_params.db_name_handle,
+        &CONFIG.mongo_params.db_collection_handle_second_part,
+        &CONFIG.mongo_params.db_collection_document_field_name_handle,
+        &CONFIG.mongo_params.path_to_provider_link_parts_folder,
+        CONFIG.mongo_params.vec_of_provider_names.clone(),
+        &CONFIG.mongo_params.file_extension,
+    );
     // entry::entry();
 }

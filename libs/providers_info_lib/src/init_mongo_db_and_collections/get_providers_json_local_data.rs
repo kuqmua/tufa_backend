@@ -4,11 +4,11 @@ use std::io::prelude::*;
 
 pub fn get_providers_json_local_data(
     path: &str,
-    vec_of_provider_names: std::vec::Vec<&'static str>,
+    vec_of_provider_names: std::vec::Vec<String>,
     second_part_of_file_name: &str,
     file_extension: &str,
-) -> HashMap<&'static str, Vec<String>> {
-    let mut vec_of_link_parts_hashmap: HashMap<&str, Vec<String>> = HashMap::new();
+) -> HashMap<String, Vec<String>> {
+    let mut vec_of_link_parts_hashmap: HashMap<String, Vec<String>> = HashMap::new();
     //todo: do it async in parallel
     for provider_name in vec_of_provider_names {
         let result_of_opening_file = File::open(format!(
@@ -29,20 +29,16 @@ pub fn get_providers_json_local_data(
                             Ok(file_content_as_struct) => {
                                 let mut vec_of_link_parts: Vec<String> =
                                     Vec::with_capacity(file_content_as_struct.data.len());
-                                // println!(
-                                //     "file_content_as_struct {:#?}",
-                                //     file_content_as_struct.data
-                                // );
                                 for link_part in file_content_as_struct.data {
                                     vec_of_link_parts.push(link_part)
                                 }
                                 vec_of_link_parts_hashmap.insert(provider_name, vec_of_link_parts);
                             }
-                            Err(e) => panic!("file_content_from_str_result error {:#?}", e),
+                            Err(e) => println!("file_content_from_str_result error {:#?}", e),
                         }
                     }
                     Err(e) => {
-                        panic!(
+                        println!(
                             "cannot read_to_string from file {}{}{}{}, reason: {}",
                             path, provider_name, second_part_of_file_name, file_extension, e
                         )
@@ -50,7 +46,7 @@ pub fn get_providers_json_local_data(
                 }
             }
             Err(e) => {
-                panic!(
+                println!(
                     "cannot open {}{}{}{}, reason: {}",
                     path, provider_name, second_part_of_file_name, file_extension, e
                 )

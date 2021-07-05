@@ -4,6 +4,7 @@ use std::fmt;
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
 pub struct ConfigStruct {
     pub params: Params,
+    pub mongo_params: MongoParams,
     pub enable_providers: EnableProvidersStruct,
     pub links: Links,
     pub enable_prints: EnablePrints,
@@ -127,6 +128,17 @@ pub struct Params {
     pub enable_error_prints_handle: bool,
     pub enable_all_time_measurement: bool,
     pub enable_common_time_measurement: bool,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct MongoParams {
+    pub mongo_url: String,
+    pub db_name_handle: String,
+    pub db_collection_handle_second_part: String,
+    pub db_collection_document_field_name_handle: String,
+    pub path_to_provider_link_parts_folder: String,
+    pub vec_of_provider_names: Vec<String>,
+    pub file_extension: String,
 }
 
 #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
