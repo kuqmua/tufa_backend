@@ -17,6 +17,16 @@ enable_all_time_measurement = true
 enable_common_time_measurement = true
 user_credentials_dummy_handle = "example"
 
+[mongo_params]
+# mongo_url="mongodb://root:rootpassword@localhost:27017"
+mongo_url = "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+db_name_handle = "provider_links"
+db_collection_handle_second_part = "_link_parts"
+db_collection_document_field_name_handle = "link_part"
+path_to_provider_link_parts_folder = "./providers_link_parts/"
+vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
+file_extension = ".json"
+
 [enable_providers]
 enable_arxiv = true
 enable_biorxiv = true
@@ -35,6 +45,7 @@ habr_link = "https://www.google.com/" # https://habr.com/ru/
 medrxiv_link = "https://www.google.com/" # http://connect.medrxiv.org/
 reddit_link = "https://www.reddit.com/"
 twitter_link = "https://www.google.com/" # must be not only 1 str but many - twitter and many nitters
+
 
 [enable_prints]
 enable_prints_arxiv = true
