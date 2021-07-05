@@ -101,4 +101,11 @@ reddit_user_agent = "example"
 reddit_client_id = "example"
 reddit_client_secret = "example"
 reddit_username = "example"
-reddit_password = "example""#;
+reddit_password = "example"
+
+[mongo_authorization]
+is_remote = true
+mongo_local_login = "example"
+mongo_local_password = "example"
+mongo_remote_login = "example"
+mongo_remote_password = "example""#;
