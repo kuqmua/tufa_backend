@@ -1,3 +1,28 @@
+//mongodb://root:rootpassword@localhost:27017
+    //mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+////
+    // let future_possible_drop_collection = mongo_drop_collection_wrapper(
+    //     mongo_url,
+    //     db_name_handle,
+    //     db_collection_document_field_name_handle,
+    //     false,
+    // );
+    // match future_possible_drop_collection {
+    //     Ok(result_flag) => {
+    //         if result_flag {
+    //             println!("drop done!");
+    //         } else {
+    //             println!("drop fail with flag");
+    //         }
+    //     }
+    //     Err(e) => {
+    //         println!("drop fail with error {:#?}", e);
+    //     }
+    // }
+    ////////////////////
+
+
 //mongodb run command
 db.run_command(doc! {"ping": 1}, None).await?;
 let filter = doc! { "author": "George Orwell" };
