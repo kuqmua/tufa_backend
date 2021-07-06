@@ -112,7 +112,7 @@ mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.ne
 to user credentials
 ----------------------------- 
 #![deny(clippy::indexing_slicing, clippy::unwrap_used)]
-Клиппи может варнить/денаить при таком использовании хешмапы
+clippy can warn/deny with this hashmap usage
 use std::collections::HashMap;
 fn main() {
   let mut hashmap = HashMap::new();
@@ -145,3 +145,5 @@ fn main() {
     println!("no key with scope");
   }
 }
+-----------------------------------
+github parsing return in second parameter option<String, line! file!> to analize missing parse logic 
