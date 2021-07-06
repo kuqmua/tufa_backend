@@ -18,14 +18,23 @@ enable_common_time_measurement = true
 user_credentials_dummy_handle = "example"
 
 [mongo_params]
-# mongo_url="mongodb://root:rootpassword@localhost:27017"
-mongo_url = "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+is_cloud = true
 db_name_handle = "provider_links"
 db_collection_handle_second_part = "_link_parts"
 db_collection_document_field_name_handle = "link_part"
 path_to_provider_link_parts_folder = "./providers_link_parts/"
 vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 file_extension = ".json"
+#
+mongo_own_first_handle_url_part = "mongodb://"
+mongo_own_second_handle_url_part = ":"
+mongo_own_third_handle_url_part = "@"
+mongo_own_fourth_handle_url_part = ":"
+#
+mongo_cloud_first_handle_url_part = "mongodb+srv://"
+mongo_cloud_second_handle_url_part = ":"
+mongo_cloud_third_handle_url_part = "@"
+mongo_cloud_fourth_handle_url_part = "/"
 
 [enable_providers]
 enable_arxiv = true
@@ -103,9 +112,14 @@ reddit_client_secret = "example"
 reddit_username = "example"
 reddit_password = "example"
 
-[mongo_authorization]
-is_remote = true
-mongo_local_login = "example"
-mongo_local_password = "example"
-mongo_remote_login = "example"
-mongo_remote_password = "example""#;
+[mongo_own_authorization]
+mongo_own_login = "example"
+mongo_own_password = "example"
+mongo_own_ip = "example"
+mongo_own_port = "example"
+
+[mongo_cloud_authorization]
+mongo_cloud_login = "example"
+mongo_cloud_password = "example"
+mongo_cloud_cluster_name = "example"
+mongo_cloud_cluster_params = "example""#;

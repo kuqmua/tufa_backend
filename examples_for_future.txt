@@ -1,3 +1,6 @@
+# mongo_url="mongodb://root:rootpassword@localhost:27017"
+# mongo_url = "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
 //mongodb run command
 db.run_command(doc! {"ping": 1}, None).await?;
 let filter = doc! { "author": "George Orwell" };

@@ -4,7 +4,8 @@ use config::{Config, ConfigError, File};
 pub struct UserCredentialsStruct {
     pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
-    pub mongo_authorization: MongoAuthorization,
+    pub mongo_own_authorization: MongoOwnAuthorization,
+    pub mongo_cloud_authorization: MongoCloudAuthorization,
 }
 
 impl UserCredentialsStruct {
@@ -34,10 +35,17 @@ pub struct RedditAuthorization {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct MongoAuthorization {
-    pub is_remote: bool,
-    pub mongo_local_login: String,
-    pub mongo_local_password: String,
-    pub mongo_remote_login: String,
-    pub mongo_remote_password: String,
+pub struct MongoOwnAuthorization {
+    pub mongo_own_login: String,
+    pub mongo_own_password: String,
+    pub mongo_own_ip: String,
+    pub mongo_own_port: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct MongoCloudAuthorization {
+    pub mongo_cloud_login: String,
+    pub mongo_cloud_password: String,
+    pub mongo_cloud_cluster_name: String,
+    pub mongo_cloud_cluster_params: String,
 }
