@@ -111,3 +111,37 @@ mongodb://root:rootpassword@localhost:27017
 mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 to user credentials
 ----------------------------- 
+#![deny(clippy::indexing_slicing, clippy::unwrap_used)]
+Клиппи может варнить/денаить при таком использовании хешмапы
+use std::collections::HashMap;
+fn main() {
+  let mut hashmap = HashMap::new();
+  hashmap.insert(
+    "different key".to_string(),
+    "value".to_string(),
+  );
+  //#1
+  match hashmap.get("key") {
+      Some(_) => {
+          println!("key with get");
+      }
+      None => {
+          println!("no key with get");
+      }
+  }
+  //#2
+  if hashmap.contains_key("key") {
+    println!("key with contains_key");
+  }
+  else{
+    println!("no key with contains_key");
+  }
+  //#3
+  if hashmap["key"] == "value".to_string(){
+    //thread 'main' panicked at 'no entry found for key',
+    println!("key with scope");
+  }
+  else{
+    println!("no key with scope");
+  }
+}
