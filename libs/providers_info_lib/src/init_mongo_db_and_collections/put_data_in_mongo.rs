@@ -56,6 +56,10 @@ pub fn put_data_in_mongo(
             }
         }
     } else {
+        println!(
+            "vec_of_link_parts_hashmap.len() {}",
+            vec_of_link_parts_hashmap.len()
+        );
         result_flag = false;
     }
     result_flag

@@ -53,6 +53,7 @@ mod entry;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use providers_info_lib::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
 fn main() {
@@ -110,14 +111,22 @@ fn main() {
             mongo_own_port
         );
     }
-    put_data_in_mongo(
+    // put_data_in_mongo(
+    //     &mongo_url,
+    //     &CONFIG.mongo_params.db_name_handle,
+    //     &CONFIG.mongo_params.db_collection_handle_second_part,
+    //     &CONFIG.mongo_params.db_collection_document_field_name_handle,
+    //     &CONFIG.mongo_params.path_to_provider_link_parts_folder,
+    //     CONFIG.mongo_params.vec_of_provider_names.clone(),
+    //     &CONFIG.mongo_params.file_extension,
+    // );
+    // entry::entry();
+    let providers_link_parts = get_providers_link_parts(
         &mongo_url,
         &CONFIG.mongo_params.db_name_handle,
         &CONFIG.mongo_params.db_collection_handle_second_part,
         &CONFIG.mongo_params.db_collection_document_field_name_handle,
-        &CONFIG.mongo_params.path_to_provider_link_parts_folder,
         CONFIG.mongo_params.vec_of_provider_names.clone(),
-        &CONFIG.mongo_params.file_extension,
     );
-    // entry::entry();
+    // println!("providers_link_parts {:#?}", providers_link_parts)
 }

@@ -5,8 +5,8 @@ use mongodb::{bson, options::ClientOptions, Client};
 pub async fn mongo_get_provider_link_parts_as_bson_string(
     mongo_url: &str,
     db_name_handle: &str,
-    db_collection_handle: &str,
-    db_collection_key_handle: &str,
+    db_collection_name_handle: String,
+    db_collection_document_field_name_handle: &str,
 ) -> Result<Vec<String>, mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
@@ -17,7 +17,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
             let db = client.database(db_name_handle);
             let mut needed_db_collection: Option<String> = None;
             for collection_name in db.list_collection_names(None).await? {
-                if collection_name == *db_collection_handle {
+                if collection_name == *db_collection_name_handle {
                     needed_db_collection = Some(collection_name);
                 }
             }
@@ -34,8 +34,8 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                     Ok(mut cursor) => {
                                         let mut vec_of_strings: Vec<String> = Vec::new();
                                         while let Some(document) = cursor.try_next().await? {
-                                            let bson_option =
-                                                document.get(db_collection_key_handle);
+                                            let bson_option = document
+                                                .get(db_collection_document_field_name_handle);
                                             match bson_option {
                                                 Some(bson_handle) => match bson_handle {
                                                     bson::Bson::String(stringified_bson) => {
@@ -48,13 +48,13 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 },
                                                 None => {
                                                     println!(
-                                                        "no db_collection_key_handle: {}",
-                                                        db_collection_key_handle
+                                                        "no db_collection_document_field_name_handle: {}",
+                                                        db_collection_document_field_name_handle
                                                     );
                                                 }
                                             }
                                         }
-                                        if vec_of_strings.len() > 0 {
+                                        if !vec_of_strings.is_empty() {
                                             vec_of_strings_to_return = vec_of_strings
                                         } else {
                                             vec_of_strings_to_return = Vec::new()

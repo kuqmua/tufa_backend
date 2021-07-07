@@ -6,7 +6,7 @@ pub fn get_arxiv_names() -> Vec<String> {
     let future_possible_vec_of_strings = mongo_get_provider_link_parts_as_bson_string(
   "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "provider_links",
-"arxiv_names",
+"arxiv_names".to_string(),
         "link_part",
         );
     match future_possible_vec_of_strings {

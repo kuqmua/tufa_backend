@@ -17,6 +17,7 @@ pub mod get_project_information {
         pub mod generate_reddit_hashmap_links;
         pub mod generate_twitter_hashmap_links;
     }
+    pub mod get_providers_link_parts;
     pub mod get_twitter_providers_names;
 }
 
