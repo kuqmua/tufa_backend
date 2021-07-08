@@ -120,8 +120,21 @@ fn main() {
     //     CONFIG.mongo_params.vec_of_provider_names.clone(),
     //     &CONFIG.mongo_params.file_extension,
     // );
+    let db_collection_handle_second_part = &CONFIG.mongo_params.db_collection_handle_second_part;
+
+    let db_collection_document_field_name_handle =
+        &CONFIG.mongo_params.db_collection_document_field_name_handle;
+    let vec_of_provider_names = &CONFIG.mongo_params.vec_of_provider_names;
+    let db_name_handle = &CONFIG.mongo_params.db_name_handle;
     // entry::entry();
-    let providers_link_parts = get_providers_link_parts(&Resource::Mongodb);
+    let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
+        mongo_url,
+        db_name_handle: db_name_handle.to_string(),
+        db_collection_handle_second_part: db_collection_handle_second_part.to_string(),
+        db_collection_document_field_name_handle: db_collection_document_field_name_handle
+            .to_string(),
+        vec_of_provider_names: vec_of_provider_names.to_vec(),
+    });
 
     // println!("providers_link_parts {:#?}", providers_link_parts)
 }

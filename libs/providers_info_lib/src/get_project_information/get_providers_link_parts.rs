@@ -4,13 +4,31 @@ use config_lib::get_project_information::get_user_credentials::get_user_credenti
 
 use std::collections::HashMap;
 
+use crate::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
+
 pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<String>> {
-    let mut vec_of_link_parts_hashmap: HashMap<String, Vec<String>> = HashMap::new();
+    let vec_of_link_parts_hashmap: HashMap<String, Vec<String>>;
     match resource {
-        Local => {
-            todo!()
+        Resource::Local {
+            path_to_provider_link_parts_folder,
+            vec_of_provider_names,
+            second_part_of_file_name,
+            file_extension,
+        } => {
+            vec_of_link_parts_hashmap = get_providers_json_local_data(
+                path_to_provider_link_parts_folder,
+                vec_of_provider_names.to_vec(),
+                second_part_of_file_name,
+                file_extension,
+            );
         }
-        Mongodb => {
+        Resource::Mongodb {
+            mongo_url,
+            db_name_handle,
+            db_collection_handle_second_part,
+            db_collection_document_field_name_handle,
+            vec_of_provider_names,
+        } => {
             let mongo_url: String;
             if CONFIG.mongo_params.is_cloud {
                 let mongo_cloud_first_handle_url_part =
@@ -77,7 +95,7 @@ pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<Stri
                 CONFIG.mongo_params.vec_of_provider_names.clone(),
             );
         }
-        Mongodb => {
+        Resource::PostgreSql => {
             todo!()
         }
     }
@@ -85,7 +103,18 @@ pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<Stri
 }
 // #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
 pub enum Resource {
-    Local,
-    Mongodb,
+    Local {
+        path_to_provider_link_parts_folder: String,
+        vec_of_provider_names: Vec<String>,
+        second_part_of_file_name: String,
+        file_extension: String,
+    },
+    Mongodb {
+        mongo_url: String,
+        db_name_handle: String,
+        db_collection_handle_second_part: String,
+        db_collection_document_field_name_handle: String,
+        vec_of_provider_names: Vec<String>,
+    },
     PostgreSql,
 }
