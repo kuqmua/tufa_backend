@@ -58,6 +58,7 @@ use providers_info_lib::get_project_information::get_providers_link_parts::Resou
 
 fn main() {
     let mongo_url: String;
+
     if CONFIG.mongo_params.is_cloud {
         let mongo_cloud_first_handle_url_part =
             &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
@@ -120,21 +121,43 @@ fn main() {
     //     CONFIG.mongo_params.vec_of_provider_names.clone(),
     //     &CONFIG.mongo_params.file_extension,
     // );
-    let db_collection_handle_second_part = &CONFIG.mongo_params.db_collection_handle_second_part;
-
-    let db_collection_document_field_name_handle =
-        &CONFIG.mongo_params.db_collection_document_field_name_handle;
-    let vec_of_provider_names = &CONFIG.mongo_params.vec_of_provider_names;
-    let db_name_handle = &CONFIG.mongo_params.db_name_handle;
     // entry::entry();
+
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
-        db_name_handle: db_name_handle.to_string(),
-        db_collection_handle_second_part: db_collection_handle_second_part.to_string(),
-        db_collection_document_field_name_handle: db_collection_document_field_name_handle
+        db_name_handle: CONFIG.mongo_params.db_name_handle.to_string(),
+        db_collection_handle_second_part: CONFIG
+            .mongo_params
+            .db_collection_handle_second_part
             .to_string(),
-        vec_of_provider_names: vec_of_provider_names.to_vec(),
+        db_collection_document_field_name_handle: CONFIG
+            .mongo_params
+            .db_collection_document_field_name_handle
+            .to_string(),
+        vec_of_provider_names: CONFIG.mongo_params.vec_of_provider_names.clone(),
     });
+    if !providers_link_parts.is_empty() {
+        println!("mongodb not empty")
+    } else {
+        println!("mongodb is empty... FeelsBadman :(");
+        let providers_link_parts_local = get_providers_link_parts(&Resource::Local {
+            path_to_provider_link_parts_folder: CONFIG
+                .mongo_params
+                .path_to_provider_link_parts_folder
+                .to_string(),
+            vec_of_provider_names: CONFIG.mongo_params.vec_of_provider_names.clone(),
+            second_part_of_file_name: CONFIG
+                .mongo_params
+                .db_collection_handle_second_part
+                .to_string(),
+            file_extension: CONFIG.mongo_params.file_extension.to_string(),
+        });
+        if !providers_link_parts_local.is_empty() {
+            println!("local not empty")
+        } else {
+            println!("local is empty too :(")
+        }
+    }
 
     // println!("providers_link_parts {:#?}", providers_link_parts)
 }
