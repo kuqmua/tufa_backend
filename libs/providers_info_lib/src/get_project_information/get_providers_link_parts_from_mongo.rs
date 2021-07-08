@@ -1,7 +1,7 @@
 use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 use std::collections::HashMap;
 
-pub fn get_providers_link_parts(
+pub fn get_providers_link_parts_from_mongo(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle_second_part: &str,
