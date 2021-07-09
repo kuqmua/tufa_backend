@@ -153,3 +153,5 @@ test commit2
 ----------------------------------------------------------------
 get_providers_link_parts whole and for each provider
 and maybe rewrite it as struct with methods
+----------------------------------------------------------------
+test to check what cargo run executes in the right folder
