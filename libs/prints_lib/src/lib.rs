@@ -2,7 +2,8 @@ use ansi_term::Colour::RGB;
 
 pub enum PrintType {
     Error,
-    Warning,
+    WarningHigh,
+    WarningLow,
     Success,
     PartialSuccess,
 }
@@ -10,10 +11,11 @@ pub enum PrintType {
 pub fn print_colorful_message(print_type: PrintType, file: String, line: String, message: String) {
     let rgb_color: ansi_term::Colour;
     match print_type {
-        PrintType::Error => rgb_color = RGB(0, 255, 0),
-        PrintType::Warning => rgb_color = RGB(0, 255, 0),
-        PrintType::Success => rgb_color = RGB(0, 255, 0),
-        PrintType::PartialSuccess => rgb_color = RGB(0, 255, 0),
+        PrintType::Error => rgb_color = RGB(255, 0, 0), //red
+        PrintType::WarningHigh => rgb_color = RGB(255, 165, 0), //orange
+        PrintType::WarningLow => rgb_color = RGB(255, 255, 0), //yellow
+        PrintType::Success => rgb_color = RGB(0, 255, 0), //green
+        PrintType::PartialSuccess => rgb_color = RGB(0, 200, 155), //cyan
     }
     // debug!("something {}", error);
     // error!("waaarn {}", error);
