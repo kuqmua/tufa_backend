@@ -53,10 +53,19 @@ mod entry;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 use providers_info_lib::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use providers_info_lib::get_project_information::get_providers_link_parts::Resource;
 
 fn main() {
+    print_colorful_message(
+        PrintType::Error,
+        file!().to_string(),
+        line!().to_string(),
+        "kekw".to_string(),
+    );
+
     let mongo_url: String;
 
     if CONFIG.mongo_params.is_cloud {

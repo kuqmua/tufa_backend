@@ -25,12 +25,10 @@ db_collection_document_field_name_handle = "link_part"
 path_to_provider_link_parts_folder = "./providers_link_parts/"
 vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 file_extension = ".json"
-#
 mongo_own_first_handle_url_part = "mongodb://"
 mongo_own_second_handle_url_part = ":"
 mongo_own_third_handle_url_part = "@"
 mongo_own_fourth_handle_url_part = ":"
-#
 mongo_cloud_first_handle_url_part = "mongodb+srv://"
 mongo_cloud_second_handle_url_part = ":"
 mongo_cloud_third_handle_url_part = "@"
@@ -54,7 +52,6 @@ habr_link = "https://www.google.com/" # https://habr.com/ru/
 medrxiv_link = "https://www.google.com/" # http://connect.medrxiv.org/
 reddit_link = "https://www.reddit.com/"
 twitter_link = "https://www.google.com/" # must be not only 1 str but many - twitter and many nitters
-
 
 [enable_prints]
 enable_prints_arxiv = true
@@ -99,7 +96,24 @@ enable_github_time_measurement = true
 enable_habr_time_measurement = true
 enable_medrxiv_time_measurement = true
 enable_reddit_time_measurement = true
-enable_twitter_time_measurement = true"#;
+enable_twitter_time_measurement = true
+
+[print_colors]
+error_red = 255
+error_green = 0
+error_blue = 0
+warning_high_red = 255
+warning_high_green = 165
+warning_high_blue = 0
+warning_low_red = 255
+warning_low_green = 255
+warning_low_blue = 0
+success_red = 0
+success_green = 255
+success_blue = 0
+partial_success_red = 0
+partial_success_green = 200
+partial_success_blue = 155"#;
 //its important to have EXACT copy without spaces or Line feed character
 pub const USER_CREDENTIALS_CONTENT: &str = r#"[github_authorization]
 github_name = "example"

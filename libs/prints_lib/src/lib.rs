@@ -1,4 +1,5 @@
 use ansi_term::Colour::RGB;
+use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 pub enum PrintType {
     Error,
@@ -11,11 +12,41 @@ pub enum PrintType {
 pub fn print_colorful_message(print_type: PrintType, file: String, line: String, message: String) {
     let rgb_color: ansi_term::Colour;
     match print_type {
-        PrintType::Error => rgb_color = RGB(255, 0, 0), //red
-        PrintType::WarningHigh => rgb_color = RGB(255, 165, 0), //orange
-        PrintType::WarningLow => rgb_color = RGB(255, 255, 0), //yellow
-        PrintType::Success => rgb_color = RGB(0, 255, 0), //green
-        PrintType::PartialSuccess => rgb_color = RGB(0, 200, 155), //cyan
+        PrintType::Error => {
+            rgb_color = RGB(
+                CONFIG.print_colors.error_red,
+                CONFIG.print_colors.error_green,
+                CONFIG.print_colors.error_blue,
+            )
+        }
+        PrintType::WarningHigh => {
+            rgb_color = RGB(
+                CONFIG.print_colors.warning_high_red,
+                CONFIG.print_colors.warning_high_green,
+                CONFIG.print_colors.warning_high_blue,
+            )
+        }
+        PrintType::WarningLow => {
+            rgb_color = RGB(
+                CONFIG.print_colors.warning_low_red,
+                CONFIG.print_colors.warning_low_green,
+                CONFIG.print_colors.warning_low_blue,
+            )
+        }
+        PrintType::Success => {
+            rgb_color = RGB(
+                CONFIG.print_colors.success_red,
+                CONFIG.print_colors.success_green,
+                CONFIG.print_colors.success_blue,
+            )
+        }
+        PrintType::PartialSuccess => {
+            rgb_color = RGB(
+                CONFIG.print_colors.partial_success_red,
+                CONFIG.print_colors.partial_success_green,
+                CONFIG.print_colors.partial_success_blue,
+            )
+        }
     }
     // debug!("something {}", error);
     // error!("waaarn {}", error);

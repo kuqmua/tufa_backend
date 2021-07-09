@@ -13,6 +13,7 @@ pub struct ConfigStruct {
     pub enable_cleaning_warning_logs_directory: EnableCleaningWarningLogsDirectory,
     pub enable_time_measurement: EnableTimeMeasurement,
     pub env: Env,
+    pub print_colors: PrintColors,
 }
 
 impl ConfigStruct {
@@ -149,6 +150,25 @@ pub struct MongoParams {
     pub mongo_cloud_second_handle_url_part: String,
     pub mongo_cloud_third_handle_url_part: String,
     pub mongo_cloud_fourth_handle_url_part: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct PrintColors {
+    pub error_red: u8,
+    pub error_green: u8,
+    pub error_blue: u8,
+    pub warning_high_red: u8,
+    pub warning_high_green: u8,
+    pub warning_high_blue: u8,
+    pub warning_low_red: u8,
+    pub warning_low_green: u8,
+    pub warning_low_blue: u8,
+    pub success_red: u8,
+    pub success_green: u8,
+    pub success_blue: u8,
+    pub partial_success_red: u8,
+    pub partial_success_green: u8,
+    pub partial_success_blue: u8,
 }
 
 #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
