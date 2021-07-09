@@ -1,13 +1,25 @@
 use ansi_term::Colour::RGB;
 
-pub fn print_error_red(file: String, line: String, error: String) {
+pub enum PrintType {
+    Error,
+    Warning,
+    Success,
+    PartialSuccess,
+}
+
+pub fn print_colorful_message(print_type: PrintType, file: String, line: String, message: String) {
+    let rgb_color: ansi_term::Colour;
+    match print_type {
+        PrintType::Error => rgb_color = RGB(0, 255, 0),
+        PrintType::Warning => rgb_color = RGB(0, 255, 0),
+        PrintType::Success => rgb_color = RGB(0, 255, 0),
+        PrintType::PartialSuccess => rgb_color = RGB(0, 255, 0),
+    }
     // debug!("something {}", error);
     // error!("waaarn {}", error);
-
     // println!("print error red, {}", error);
     // let mut fileonos = File::create("errorlogs.txt").expect("could not create file");
     // writeln!(&mut fileonos, "{}", error).unwrap();
-
     // let result_of_writing = fileonos.write(error.as_bytes());
     // match result_of_writing {
     //     Ok(_) => println!("written"),
@@ -15,19 +27,10 @@ pub fn print_error_red(file: String, line: String, error: String) {
     // }
     eprintln!(
         "{}{}{}{}\n{}",
-        Red.paint("file: "),
-        Red.paint(file),
-        Red.paint(":"),
-        Red.paint(line),
-        Red.bold().paint(error)
+        rgb_color.paint("file: "),
+        rgb_color.paint(file),
+        rgb_color.paint(":"),
+        rgb_color.paint(line),
+        rgb_color.bold().paint(message)
     );
-}
-pub enum PrintType {
-    PrintColorRed { red: u8, green: u8, blue: u8 },
-    PrintColorGreen { red: u8, green: u8, blue: u8 },
-}
-
-pub enum PrintColor {
-    PrintColorRed { red: u8, green: u8, blue: u8 },
-    PrintColorGreen { red: u8, green: u8, blue: u8 },
 }
