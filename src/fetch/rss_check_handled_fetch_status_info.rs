@@ -4,7 +4,7 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_check_handled_fetch_status_info(

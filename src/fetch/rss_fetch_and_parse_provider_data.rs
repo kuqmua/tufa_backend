@@ -4,7 +4,7 @@ use crate::fetch::rss_fetch_link::rss_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;

@@ -1,8 +1,8 @@
 use serde_json::Value;
 
 use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_dont_exists;
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;

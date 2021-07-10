@@ -8,6 +8,7 @@ pub mod get_project_information {
         pub mod user_credentials_structures;
     }
     pub mod project_constants;
+    pub mod provider_kind_enum;
 }
 
 #[macro_use]

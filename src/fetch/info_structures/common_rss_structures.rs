@@ -1,4 +1,4 @@
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 #[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,//Default,
 pub struct CommonRssPostStruct {
     #[serde(rename = "item", default)]

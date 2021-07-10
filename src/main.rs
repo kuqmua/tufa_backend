@@ -17,7 +17,6 @@ mod fetch {
     pub mod rss_metainfo_fetch_structures;
     pub mod rss_parse_string_into_struct;
     pub mod rss_part;
-    pub mod rss_provider_kind_enum;
     pub mod rss_write_error_logs_into_file_for_provider;
     pub mod rss_write_error_logs_into_file_for_provider_wrapper_checker;
     pub mod info_structures {

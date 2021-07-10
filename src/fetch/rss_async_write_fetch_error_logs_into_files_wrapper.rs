@@ -3,7 +3,7 @@ use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wra
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 

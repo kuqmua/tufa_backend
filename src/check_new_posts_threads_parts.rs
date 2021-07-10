@@ -10,7 +10,7 @@ use providers_info_lib::get_project_information::get_names::get_twitter_names::g
 
 use crate::fetch::rss_part::rss_part;
 
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;

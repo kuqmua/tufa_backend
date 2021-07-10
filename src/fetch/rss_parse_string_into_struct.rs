@@ -2,7 +2,7 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_provider_kind_enum::ProviderKind;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;
