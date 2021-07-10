@@ -4,9 +4,10 @@ extern crate serde_xml_rs;
 
 use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_parsed_posts;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_partial_success_cyan;
-use crate::overriding::prints::print_success_green;
-use crate::overriding::prints::print_warning_orange;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use std::mem;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
@@ -47,7 +48,8 @@ pub fn rss_handle_unfiltered_posts(
         );
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
         if enable_warning_prints {
-            print_warning_orange(
+            print_colorful_message(
+                PrintType::WarningHigh,
                 file!().to_string(),
                 line!().to_string(),
                 "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
@@ -60,13 +62,18 @@ pub fn rss_handle_unfiltered_posts(
     {
         if enable_prints {
             let message = format!(
-                                        "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
-                                        unhandled_success_handled_success_are_there_items_yep_posts.len(),
-                                        unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
-                                        provider_kind,
-                                        mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
-                                    );
-            print_partial_success_cyan(file!().to_string(), line!().to_string(), message);
+                "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
+                unhandled_success_handled_success_are_there_items_yep_posts.len(),
+                unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
+                provider_kind,
+                mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
+            );
+            print_colorful_message(
+                PrintType::PartialSuccess,
+                file!().to_string(),
+                line!().to_string(),
+                message,
+            );
         }
         (
             Some(unhandled_success_handled_success_are_there_items_yep_posts),
@@ -81,7 +88,12 @@ pub fn rss_handle_unfiltered_posts(
             mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
         );
         if enable_prints {
-            print_success_green(file!().to_string(), line!().to_string(), message);
+            print_colorful_message(
+                PrintType::Success,
+                file!().to_string(),
+                line!().to_string(),
+                message,
+            );
         }
         (
             Some(unhandled_success_handled_success_are_there_items_yep_posts),
