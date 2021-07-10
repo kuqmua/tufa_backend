@@ -38,9 +38,6 @@ mod check_net {
     pub mod check_link_metainfo_structures;
     pub mod fetch_link;
 }
-mod overriding {
-    pub mod prints;
-}
 mod authorization {
     pub mod reddit {
         pub mod reddit_authorization;
@@ -53,8 +50,10 @@ mod entry;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;
+
 use providers_info_lib::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use providers_info_lib::get_project_information::get_providers_link_parts::Resource;
 
@@ -130,7 +129,7 @@ fn main() {
     //     CONFIG.mongo_params.vec_of_provider_names.clone(),
     //     &CONFIG.mongo_params.file_extension,
     // );
-    // entry::entry();
+    entry::entry();
 
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
