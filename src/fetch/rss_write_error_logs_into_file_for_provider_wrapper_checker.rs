@@ -3,7 +3,10 @@ use serde_json::Value;
 use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_dont_exists;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
-use crate::overriding::prints::print_warning_orange;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use std::fs::File;
 use std::io::ErrorKind;
 
@@ -35,7 +38,12 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
         Ok(_) => {
             if enable_warning_prints {
                 let warning_message = format!("there is file with the same name: {}", &file_name);
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                );
             }
         }
         Err(ref err) => {
@@ -51,7 +59,12 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     "unexpected error while opening file, description: {:#?}",
                     &err.kind()
                 );
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message);
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                );
                 rss_write_error_logs_into_file_for_provider(
                     enable_prints,
                     enable_error_prints,
