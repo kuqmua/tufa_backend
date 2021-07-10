@@ -2,7 +2,10 @@ use crate::async_tokio_wrapper::async_tokio_wrapper;
 use std::time::Instant;
 
 use crate::check_net::check_link::check_link;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 extern crate num_cpus;
@@ -35,11 +38,12 @@ pub fn entry() {
     } else if CONFIG.params.enable_error_prints_handle {
         let its_not_good_message =
             "server cannot reach ".to_string() + &CONFIG.links.starting_check_link;
-        print_error_red(
+        print_colorful_message(
+            PrintType::Error,
             file!().to_string(),
             line!().to_string(),
             its_not_good_message,
-        )
+        );
     }
 
     if enable_common_time_measurement {
