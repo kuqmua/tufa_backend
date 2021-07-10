@@ -3,8 +3,9 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
-use crate::overriding::prints::print_warning_yellow;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 use crate::fetch::info_structures::structs_for_parsing::arxiv_struct_for_parsing::ArxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::biorxiv_struct_for_parsing::BiorxivStructForParsing;
@@ -152,7 +153,12 @@ pub fn rss_parse_string_into_struct(
                 Err(e) => {
                     if enable_error_prints {
                         let error_message = format!("Rss conversion from str error: {}", &e);
-                        print_error_red(file!().to_string(), line!().to_string(), error_message)
+                        print_colorful_message(
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            error_message,
+                        );
                     };
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
@@ -193,7 +199,8 @@ pub fn rss_parse_string_into_struct(
                                                 "no </channel> in response link: {}",
                                                 value
                                             );
-                                            print_warning_yellow(
+                                            print_colorful_message(
+                                                PrintType::WarningLow,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -204,7 +211,8 @@ pub fn rss_parse_string_into_struct(
                                 _ => {
                                     let warning_message: String =
                                         format!("no <channel> in response link: {}", value);
-                                    print_warning_yellow(
+                                    print_colorful_message(
+                                        PrintType::WarningLow,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -375,11 +383,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -505,11 +514,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -641,11 +651,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -769,11 +780,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -899,11 +911,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -1030,11 +1043,12 @@ pub fn rss_parse_string_into_struct(
                                     if enable_error_prints {
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
-                                        print_error_red(
+                                        print_colorful_message(
+                                            PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
                                             error_message,
-                                        )
+                                        );
                                     };
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
@@ -1050,7 +1064,12 @@ pub fn rss_parse_string_into_struct(
                         "cannot find {} for {:#?} in fetch_result_string",
                         what_should_find_in_fetch_result_string, provider_kind
                     );
-                    print_warning_yellow(file!().to_string(), line!().to_string(), warning_message)
+                    print_colorful_message(
+                        PrintType::WarningLow,
+                        file!().to_string(),
+                        line!().to_string(),
+                        warning_message,
+                    );
                 }
             }
         }
