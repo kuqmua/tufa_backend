@@ -12,7 +12,8 @@ use crate::fetch::rss_part::rss_part;
 
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
 
-use crate::overriding::prints::print_error_red;
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use std::sync::{Arc, Mutex};
@@ -47,11 +48,12 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_arxiv {
         let arxiv_links = get_arxiv_names();
         if arxiv_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
                 "arxiv_links.is_empty".to_string(),
-            )
+            );
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
             if CONFIG.params.enable_all_providers_prints && CONFIG.enable_prints.enable_prints_arxiv
@@ -96,7 +98,8 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_biorxiv {
         let biorxiv_links = get_biorxiv_names();
         if biorxiv_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
                 "biorxiv_links.is_empty".to_string(),
@@ -150,7 +153,8 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_github {
         let github_links = get_github_names();
         if github_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
                 "github_links.is_empty".to_string(),
@@ -204,7 +208,8 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_habr {
         let habr_links = get_habr_names();
         if habr_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
                 "habr_links.is_empty".to_string(),
@@ -253,7 +258,8 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_medrxiv {
         let medrxiv_links = get_medrxiv_names();
         if medrxiv_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
                 "medrxiv_links.is_empty".to_string(),
@@ -307,10 +313,11 @@ pub async fn check_new_posts_threads_parts() -> (
     if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_reddit {
         let reddit_links = get_reddit_names();
         if reddit_links.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
-                "arxiv_links.is_empty".to_string(),
+                "reddit_links.is_empty".to_string(),
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
@@ -363,10 +370,11 @@ pub async fn check_new_posts_threads_parts() -> (
         let twitter_links = get_twitter_names();
         let twitter_providers = get_twitter_providers_names();
         if twitter_links.is_empty() || twitter_providers.is_empty() {
-            print_error_red(
+            print_colorful_message(
+                PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),
-                "twitter_links.is_empty".to_string(),
+                "twiter_links.is_empty".to_string(),
             )
         } else {
             const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
