@@ -1,5 +1,8 @@
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use std::fs;
 use std::path::Path;
 
@@ -28,7 +31,7 @@ pub fn rss_logs_create_dir_if_dont_exists(
                 }
             }
             Err(e) => {
-                let message = format!(
+                let error_message = format!(
                     "folder creation error logs/{}/{:?}/{} {}",
                     warning_logs_directory_name,
                     provider_kind,
@@ -36,7 +39,12 @@ pub fn rss_logs_create_dir_if_dont_exists(
                     e.to_string()
                 );
                 if enable_error_prints {
-                    print_error_red(file!().to_string(), line!().to_string(), message)
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
             }
         }
