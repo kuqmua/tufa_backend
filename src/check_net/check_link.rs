@@ -1,7 +1,9 @@
 use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
 use crate::check_net::fetch_link::fetch_link;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 pub fn check_link(
     link: &str,
@@ -30,15 +32,30 @@ pub fn check_link(
                                 link,
                                 status_code.clone().to_string()
                             );
-                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                            print_colorful_message(
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                error_message,
+                            );
                         }
                         HandledReachProviderStatusInfo::Initialized => {
                             let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Initialized??? wtf", link);
-                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                            print_colorful_message(
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                error_message,
+                            );
                         }
                         HandledReachProviderStatusInfo::Success => {
                             let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Success??? wtf", link);
-                            print_error_red(file!().to_string(), line!().to_string(), error_message)
+                            print_colorful_message(
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                error_message,
+                            );
                         }
                     }
                 }
@@ -53,7 +70,12 @@ pub fn check_link(
             if enable_error_prints_handle {
                 let error_message =
                     format!("{} check_link fetch_result Box<dyn Error> {}", link, e);
-                print_error_red(file!().to_string(), line!().to_string(), error_message)
+                print_colorful_message(
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    error_message,
+                );
             }
         }
     }
