@@ -5,7 +5,9 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -77,9 +79,14 @@ pub fn rss_fetch_and_parse_provider_data(
                     hashmap_to_return_handle_locked[element_index].2 =
                         UnhandledFetchStatusInfo::Failure(e.to_string());
                     if enable_error_prints {
-                        let concated_error =
+                        let error_message =
                             "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), concated_error)
+                        print_colorful_message(
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            error_message,
+                        );
                     }
                 }
             }
