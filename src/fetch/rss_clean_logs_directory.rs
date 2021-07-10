@@ -1,5 +1,8 @@
 use crate::fetch::rss_provider_kind_enum::ProviderKind;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use std::fs;
 use std::path::Path;
@@ -24,7 +27,12 @@ pub fn rss_clean_logs_directory(
             Err(e) => {
                 if enable_error_prints {
                     let error_message = format!("delete folder problem{} {}", &path, e.to_string());
-                    print_error_red(file!().to_string(), line!().to_string(), error_message)
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
             }
         }
