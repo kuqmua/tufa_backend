@@ -1,5 +1,8 @@
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 // use std::time::Instant;
 //async
 // let res = reqwest::get(link).await?;
@@ -28,7 +31,12 @@ pub fn rss_check_provider_status(
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
         if enable_error_prints {
             let error_message = format!("{} {}", link, res.status());
-            print_error_red(file!().to_string(), line!().to_string(), error_message);
+            print_colorful_message(
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                error_message,
+            );
         }
     }
     Ok(result_tuple)
