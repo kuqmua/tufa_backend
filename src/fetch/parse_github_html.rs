@@ -1,5 +1,6 @@
-use crate::overriding::prints::print_error_red;
-use crate::overriding::prints::print_warning_orange;
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use html_parser::{Dom, Node};
 
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
@@ -92,15 +93,17 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     "different children.len(): {}",
                                                     dom_first_child_first_child_first_child.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
-                                                )
+                                                );
                                             }
                                                     }
                                                 }
-                                                _ => print_warning_orange(
+                                                _ => print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     "different node".to_string(),
@@ -111,32 +114,36 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     "different children.len(): {}",
                                                     dom_first_child_first_child.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
+                                                line!().to_string(),
+                                                warning_message,
+                                            );
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
+                                    line!().to_string(),
+                                    "different node".to_string(),
+                                ),
                                 },
                                 _ => {
                                     let warning_message =
                                         format!("different children.len(): {}", dom_first_child.children.len());
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    line!().to_string(),
+                                    warning_message,
+                                )
                                 }
                             }
                             }
-                            _ => print_warning_orange(
+                            _ => print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 "different node".to_string(),
@@ -145,7 +152,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                         _ => {
                             let warning_message =
                                 format!("different children.len(): {}", dom.children.len());
-                            print_warning_orange(
+                            print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 warning_message,
@@ -155,11 +163,17 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                 }
                 Err(e) => {
                     let error_message = format!("Dom::parse error {}", e);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message)
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    )
                 }
             }
         }
-        None => print_warning_orange(
+        None => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "option content is None".to_string(),
@@ -222,12 +236,15 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                                 avatar_link = avatar_link_handle_option.clone();
                                             }
                                         }
-                                        None => {}
+                                        None => {
+                                            //todo?
+                                        }
                                     }
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -235,7 +252,8 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -246,14 +264,16 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             "different children.len(): {}",
                             node_element_first.children.len()
                         );
-                        print_warning_orange(
+                        print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             warning_message,
                         )
                     }
                 },
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -262,10 +282,16 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -349,7 +375,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(author_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -360,7 +387,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_first.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -368,7 +396,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -380,7 +409,8 @@ pub fn parse_github_html_second_part(
                                                 action = Some(action_handle.to_string())
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -396,7 +426,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(repository_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -407,7 +438,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_third.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -415,7 +447,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -441,7 +474,9 @@ pub fn parse_github_html_second_part(
                                                                             datejs = datejs_handle_option.clone();
                                                                         }
                                                                     }
-                                                                    None => {}
+                                                                    None => {
+                                                                        //todo
+                                                                    }
                                                                 }
                                                             }
                                                             None => {
@@ -449,7 +484,8 @@ pub fn parse_github_html_second_part(
                                                                     "no {} attribute",
                                                                     attribute
                                                                 );
-                                                                print_warning_orange(
+                                                                print_colorful_message(
+                                                                    PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                     line!().to_string(),
                                                                     warning_message,
@@ -472,11 +508,12 @@ pub fn parse_github_html_second_part(
                                                                         Some(date_handle.to_string());
                                                                     }
                                                                 }
-                                                                _ => print_warning_orange(
+                                                                _ => print_colorful_message(
+                                                                    PrintType::WarningHigh,
                                                                     file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    "different node".to_string(),
-                                                                ),
+                                                                line!().to_string(),
+                                                                "different node".to_string(),
+                                                            ),
                                                             }
                                                         }
                                                         _ => {
@@ -484,15 +521,17 @@ pub fn parse_github_html_second_part(
                                                     "different children.len(): {}",
                                                     node_element_first_fourth_first.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
+                                                line!().to_string(),
+                                                warning_message,
+                                            )
                                             }
                                                     }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -503,7 +542,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_fourth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -511,7 +551,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -540,12 +581,12 @@ pub fn parse_github_html_second_part(
                                                                             actionto = Some(actionto_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
+                                                                    _ => print_colorful_message(
+                                                                        PrintType::WarningHigh,
                                                                         file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node"
-                                                                            .to_string(),
-                                                                    ),
+                                                                    line!().to_string(),
+                                                                    "different node".to_string(),
+                                                                ),
                                                                 }
                                                             }
                                                             _ => {
@@ -554,15 +595,17 @@ pub fn parse_github_html_second_part(
                                     "different children.len(): {}",
                                    node_element_first_firth_first.children.len()
                                 );
-                                                                print_warning_orange(
+                                                                print_colorful_message(
+                                                                    PrintType::WarningHigh,
                                                                     file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                line!().to_string(),
+                                                                warning_message,
+                                                            )
                                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -585,11 +628,12 @@ pub fn parse_github_html_second_part(
                                                                             branch = Some(branch_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "different node".to_string(),
-                                                    ),
+                                                                    _ => print_colorful_message(
+                                                                        PrintType::WarningHigh,
+                                                                        file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    "different node".to_string(),
+                                                                ),
                                                                 }
                                                             }
                                                             _ => {
@@ -597,15 +641,17 @@ pub fn parse_github_html_second_part(
                                     "different children.len(): {}",
                                     node_element_first_firth_second.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
-                                    line!().to_string(),
-                                    warning_message,
-                                )
+                                line!().to_string(),
+                                warning_message,
+                            )
                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -631,11 +677,12 @@ pub fn parse_github_html_second_part(
                                                                                 vec_of_something.push(parse_github_html_second_part_inner_one_element(&i));
                                                                             }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "different node".to_string(),
-                                    ),
+                                                                    _ => print_colorful_message(
+                                                                        PrintType::WarningHigh,
+                                                                        file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    "different node".to_string(),
+                                                                ),
                                                                 }
                                                             }
                                                             _ => {
@@ -644,15 +691,17 @@ pub fn parse_github_html_second_part(
                                     "different children.len(): {}",
                                     node_element_first_firth_third.children.len()
                                 );
-                                                                print_warning_orange(
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -664,7 +713,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_firth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -672,7 +722,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -690,7 +741,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(author_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -701,7 +753,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_first.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -709,7 +762,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -725,7 +779,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(bot_tag_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -736,7 +791,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_second.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -744,7 +800,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -756,7 +813,8 @@ pub fn parse_github_html_second_part(
                                                 action = Some(action_handle.to_string())
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -772,7 +830,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(repository_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -783,7 +842,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_fourth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -791,7 +851,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -827,7 +888,8 @@ pub fn parse_github_html_second_part(
                                                                         "no {} attribute",
                                                                         attribute
                                                                     );
-                                                                    print_warning_orange(
+                                                                    print_colorful_message(
+                                                                        PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                         line!().to_string(),
                                                                         warning_message,
@@ -847,12 +909,12 @@ pub fn parse_github_html_second_part(
                                                                             date = Some(date_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node"
-                                                                            .to_string(),
-                                                                    ),
+                                                                    _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                                 }
                                                             }
                                                             _ => {
@@ -862,15 +924,17 @@ pub fn parse_github_html_second_part(
                                                                         .children
                                                                         .len()
                                                                 );
-                                                                print_warning_orange(
+                                                                print_colorful_message(
+                                                                    PrintType::WarningHigh,
                                                                     file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                line!().to_string(),
+                                                                warning_message,
+                                                            )
                                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -882,7 +946,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_firth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -890,7 +955,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -919,12 +985,12 @@ pub fn parse_github_html_second_part(
                                                                             actionto = Some(actionto_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node"
-                                                                            .to_string(),
-                                                                    ),
+                                                                    _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                                 }
                                                             }
                                                             _ => {
@@ -933,15 +999,17 @@ pub fn parse_github_html_second_part(
                                     "different children.len(): {}",
                                     node_element_first_sixth_first.children.len()
                                 );
-                                                                print_warning_orange(
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -964,12 +1032,12 @@ pub fn parse_github_html_second_part(
                                                                             branch = Some(branch_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node"
-                                                                            .to_string(),
-                                                                    ),
+                                                                    _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                                 }
                                                             }
                                                             _ => {
@@ -977,15 +1045,17 @@ pub fn parse_github_html_second_part(
                                                     "different children.len(): {}",
                                                     node_element_first_sixth_second.children.len()
                                                 );
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
+                                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -1011,12 +1081,12 @@ pub fn parse_github_html_second_part(
                                                                                 vec_of_something.push(parse_github_html_second_part_inner_one_element(&i));
                                                                             }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node"
-                                                                            .to_string(),
-                                                                    ),
+                                                                    _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                                 }
                                                             }
                                                             _ => {
@@ -1024,15 +1094,17 @@ pub fn parse_github_html_second_part(
                                                     "different children.len(): {}",
                                                     node_element_first_sixth_third.children.len()
                                                 );
-                                                print_warning_orange(
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    warning_message,
-                                                )
+                                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -1044,7 +1116,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_sixth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1052,7 +1125,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1064,7 +1138,8 @@ pub fn parse_github_html_second_part(
                                         "different children.len(): {}",
                                         node_element_first.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -1072,7 +1147,8 @@ pub fn parse_github_html_second_part(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -1144,7 +1220,8 @@ pub fn parse_github_html_second_part(
                                                     "different children.len(): {}",
                                                     second_child_element3.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
@@ -1152,7 +1229,8 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         "different node".to_string(),
@@ -1169,7 +1247,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(author_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1180,7 +1259,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_first.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1188,7 +1268,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1200,7 +1281,8 @@ pub fn parse_github_html_second_part(
                                                 action = Some(action_handle.to_string());
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1217,7 +1299,8 @@ pub fn parse_github_html_second_part(
                                                             );
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1228,7 +1311,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_third.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1236,7 +1320,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1248,7 +1333,8 @@ pub fn parse_github_html_second_part(
                                                 of = Some(of_handle.to_string());
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1264,7 +1350,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(repository_handle.to_string());
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1275,7 +1362,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_fourth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1283,7 +1371,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1319,7 +1408,8 @@ pub fn parse_github_html_second_part(
                                                                         "no {} attribute",
                                                                         attribute
                                                                     );
-                                                                    print_warning_orange(
+                                                                    print_colorful_message(
+                                                                        PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                         line!().to_string(),
                                                                         warning_message,
@@ -1338,11 +1428,12 @@ pub fn parse_github_html_second_part(
                                                                             date = Some(date_handle.to_string());
                                                                         }
                                                                     }
-                                                                    _ => print_warning_orange(
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
-                                                                        "different node".to_string(),
-                                                                    ),
+                                                                    _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                                 }
                                                                 }
                                                                 _ => {
@@ -1350,15 +1441,17 @@ pub fn parse_github_html_second_part(
                                                                         "different children.len(): {}",
                                                                         node_element_first_sixth_first.children.len()
                                                                     );
-                                                                    print_warning_orange(
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                    print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                                             }
                                                         }
                                                         }
-                                                        _ => print_warning_orange(
+                                                        _ => print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             "different node".to_string(),
@@ -1370,7 +1463,8 @@ pub fn parse_github_html_second_part(
                                                         "different children.len(): {}",
                                                         node_element_first_sixth.children.len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1378,7 +1472,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1390,7 +1485,8 @@ pub fn parse_github_html_second_part(
                                         "different children.len(): {}",
                                         node_element_first.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -1398,7 +1494,8 @@ pub fn parse_github_html_second_part(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -1450,7 +1547,8 @@ pub fn parse_github_html_second_part(
                                                     "different children.len(): {}",
                                                     node_element_second_element.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
@@ -1458,7 +1556,8 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         "different node".to_string(),
@@ -1476,7 +1575,8 @@ pub fn parse_github_html_second_part(
                                                             author = Some(author_handle.to_string())
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1489,7 +1589,8 @@ pub fn parse_github_html_second_part(
                                                             .children
                                                             .len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1497,7 +1598,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1509,7 +1611,8 @@ pub fn parse_github_html_second_part(
                                                 action = Some(action_handle.to_string())
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1528,7 +1631,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(release_tag_handle.to_string())
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1541,7 +1645,8 @@ pub fn parse_github_html_second_part(
                                                             .children
                                                             .len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1549,7 +1654,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1561,7 +1667,8 @@ pub fn parse_github_html_second_part(
                                                 of = Some(of_handle.to_string())
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1579,7 +1686,8 @@ pub fn parse_github_html_second_part(
                                                                 Some(repository_handle.to_string())
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1592,7 +1700,8 @@ pub fn parse_github_html_second_part(
                                                             .children
                                                             .len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1600,7 +1709,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1636,7 +1746,8 @@ pub fn parse_github_html_second_part(
                                                                     "no {} attribute",
                                                                     attribute
                                                                 );
-                                                                print_warning_orange(
+                                                                print_colorful_message(
+                                                                    PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                     line!().to_string(),
                                                                     warning_message,
@@ -1657,11 +1768,12 @@ pub fn parse_github_html_second_part(
                                                                     );
                                                                     }
                                                                 }
-                                                                _ => print_warning_orange(
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    "different node".to_string(),
-                                                                ),
+                                                                _ => print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        "different node".to_string(),
+    ),
                                                             },
                                                             _ => {
                                                                 let warning_message =
@@ -1669,15 +1781,17 @@ pub fn parse_github_html_second_part(
                                 "different children.len(): {}",
                                 node_element_second_six_element.children.len()
                             );
-                                                                print_warning_orange(
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
-                                                                    warning_message,
-                                                                )
+                                                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                                             }
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -1690,7 +1804,8 @@ pub fn parse_github_html_second_part(
                                                             .children
                                                             .len()
                                                     );
-                                                    print_warning_orange(
+                                                    print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         warning_message,
@@ -1698,7 +1813,8 @@ pub fn parse_github_html_second_part(
                                                 }
                                             }
                                         }
-                                        _ => print_warning_orange(
+                                        _ => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             "different node".to_string(),
@@ -1710,7 +1826,8 @@ pub fn parse_github_html_second_part(
                                         "different children.len(): {}",
                                         node_element_second.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -1718,7 +1835,8 @@ pub fn parse_github_html_second_part(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -1731,11 +1849,17 @@ pub fn parse_github_html_second_part(
                 _ => {
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
-                    print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                    print_colorful_message(
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        warning_message,
+                    )
                 }
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -1808,7 +1932,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         commits_number = Some(commits_number_handle.to_string());
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -1819,7 +1944,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -1827,7 +1953,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -1852,7 +1979,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     None => {
                                                         let warning_message =
                                                             format!("no {} attribute", attribute);
-                                                        print_warning_orange(
+                                                        print_colorful_message(
+                                                            PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
                                                             warning_message,
@@ -1879,7 +2007,9 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                         avatar_link_handle_option.clone();
                                                                     }
                                                                 }
-                                                                None => {}
+                                                                None => {
+                                                                    //todo
+                                                                }
                                                             }
                                                         }
                                                         None => {
@@ -1887,7 +2017,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                 "no {} attribute",
                                                                 attribute
                                                             );
-                                                            print_warning_orange(
+                                                            print_colorful_message(
+                                                                PrintType::WarningHigh,
                                                                 file!().to_string(),
                                                                 line!().to_string(),
                                                                 warning_message,
@@ -1895,7 +2026,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                         }
                                                     }
                                                 }
-                                                _ => print_warning_orange(
+                                                _ => print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     "different node".to_string(),
@@ -1906,7 +2038,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     "different children.len(): {}",
                                                     node_element_first_first.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
@@ -1918,7 +2051,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         "different node".to_string(),
@@ -1929,7 +2063,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         "different children.len(): {}",
                                         node_element_first.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -1937,7 +2072,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -1965,7 +2101,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                             None => {
                                                 let warning_message =
                                                     format!("no {} attribute", attribute);
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
@@ -1973,7 +2110,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         "different node".to_string(),
@@ -1984,7 +2122,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         "different children.len(): {}",
                                         node_element_first.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -1992,7 +2131,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -2067,32 +2207,40 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                                 "different emoji link: {:#?}",
                                                                                 emoji_element.attributes.get(attribute)
                                                                             );
-                                                                            print_warning_orange(
+                                                                            print_colorful_message(
+                                                                                PrintType::WarningHigh,
                                                                                 file!().to_string(),
-                                                                                line!().to_string(),
-                                                                                warning_message,
-                                                                            )
+                                                                            line!().to_string(),
+                                                                            warning_message,
+                                                                        )
                                                                 }
                                                                     }
                                                                     None => {
-                                                                        print_warning_orange(
-                                                                file!().to_string(),
-                                                                line!().to_string(),
-                                                                "unexpected, emoji link is None"
-                                                                    .to_string(),
-                                                            )
+                                                                        let warning_message = "unexpected, emoji link is None"
+                                                                    .to_string();
+                                                                         print_colorful_message(
+                                                                                PrintType::WarningHigh,
+                                                                                file!().to_string(),
+                                                                            line!().to_string(),
+                                                                            warning_message,
+                                                                        )
                                                                     }
                                                                 }
                                                             }
-                                                            None => print_warning_orange(
-                                                                file!().to_string(),
-                                                                line!().to_string(),
-                                                                "unexpected, no emoji link"
-                                                                    .to_string(),
-                                                            ),
+                                                            None => {
+                                                                let warning_message = "unexpected, no emoji link"
+                                                                    .to_string();
+                                                                    print_colorful_message(
+                                                                        PrintType::WarningHigh,
+                                                                        file!().to_string(),
+                                                                    line!().to_string(),
+                                                                    warning_message,
+                                                                )
+                                                            },
                                                         }
                                                     }
-                                                    _ => print_warning_orange(
+                                                    _ => print_colorful_message(
+                                                        PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
                                                         "different node".to_string(),
@@ -2168,7 +2316,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     "different children.len(): {}",
                                                     node_element_first_first.children.len()
                                                 );
-                                                print_warning_orange(
+                                                print_colorful_message(
+                                                    PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
                                                     warning_message,
@@ -2176,7 +2325,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                             }
                                         }
                                     }
-                                    _ => print_warning_orange(
+                                    _ => print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         "different node".to_string(),
@@ -2187,7 +2337,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         "different children.len(): {}",
                                         node_element_first.children.len()
                                     );
-                                    print_warning_orange(
+                                    print_colorful_message(
+                                        PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
                                         warning_message,
@@ -2195,7 +2346,8 @@ pub fn parse_github_html_second_part_inner_one_element(
                                 }
                             }
                         }
-                        _ => print_warning_orange(
+                        _ => print_colorful_message(
+                            PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
                             "different node".to_string(),
@@ -2205,11 +2357,17 @@ pub fn parse_github_html_second_part_inner_one_element(
                 _ => {
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
-                    print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                    print_colorful_message(
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        warning_message,
+                    )
                 }
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -2242,7 +2400,8 @@ pub fn handle_text_element(node: &Node) -> Option<String> {
                 text = Some(text_handle.to_string());
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -2332,7 +2491,8 @@ pub fn second_element(
                                 Node::Text(_) => {
                                     //todo what should do with this
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2343,7 +2503,8 @@ pub fn second_element(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2351,7 +2512,8 @@ pub fn second_element(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2360,11 +2522,17 @@ pub fn second_element(
                 _ => {
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
-                    print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                    print_colorful_message(
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        warning_message,
+                    )
                 }
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -2418,7 +2586,8 @@ pub fn two_elements_one_child(
                                         author = Some(author_handle.to_string());
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2429,7 +2598,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2437,7 +2607,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2449,7 +2620,8 @@ pub fn two_elements_one_child(
                             action = Some(action_handle.to_string());
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2474,15 +2646,17 @@ pub fn two_elements_one_child(
                             }
                             None => {
                                 let warning_message = format!("no {} attribute", attribute);
-                                print_warning_orange(
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    warning_message,
-                                )
+                                print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2506,7 +2680,8 @@ pub fn two_elements_one_child(
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -2520,7 +2695,8 @@ pub fn two_elements_one_child(
                                                     date = Some(date_handle.to_string());
                                                 }
                                             }
-                                            _ => print_warning_orange(
+                                            _ => print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 "different node".to_string(),
@@ -2531,7 +2707,8 @@ pub fn two_elements_one_child(
                                                 "different children.len(): {}",
                                                 node_element_fourth_element.children.len()
                                             );
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -2539,7 +2716,8 @@ pub fn two_elements_one_child(
                                         }
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2550,7 +2728,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_fourth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2558,7 +2737,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2575,7 +2755,8 @@ pub fn two_elements_one_child(
                                         author = Some(author_handle.to_string());
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2586,7 +2767,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2594,7 +2776,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2606,7 +2789,8 @@ pub fn two_elements_one_child(
                             action = Some(action_handle.to_string());
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2631,15 +2815,17 @@ pub fn two_elements_one_child(
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                 }
                             }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2651,7 +2837,8 @@ pub fn two_elements_one_child(
                             from = Some(from_handle.to_string());
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2672,7 +2859,8 @@ pub fn two_elements_one_child(
                                             }
                                             None => {}
                                         },
-                                        None => print_warning_orange(
+                                        None => print_colorful_message(
+                                            PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
                                             format!("no {} attrubite", attribute),
@@ -2685,7 +2873,8 @@ pub fn two_elements_one_child(
                                                     date = Some(date_handle.to_string());
                                                 }
                                             }
-                                            _ => print_warning_orange(
+                                            _ => print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 "different node".to_string(),
@@ -2696,7 +2885,8 @@ pub fn two_elements_one_child(
                                                 "different children.len(): {}",
                                                 node_element_firth_element.children.len()
                                             );
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -2704,7 +2894,8 @@ pub fn two_elements_one_child(
                                         }
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2715,7 +2906,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_firth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2723,7 +2915,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2740,7 +2933,8 @@ pub fn two_elements_one_child(
                                         author = Some(author_handle.to_string());
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2751,7 +2945,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2759,7 +2954,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2771,7 +2967,8 @@ pub fn two_elements_one_child(
                             action = Some(action_handle.to_string());
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2800,11 +2997,12 @@ pub fn two_elements_one_child(
                                                 "no {} attribute or {} attribute",
                                                 attribute, attribute_check_case
                                             );
-                                            print_warning_orange(
-                                                file!().to_string(),
-                                                line!().to_string(),
-                                                warning_message,
-                                            );
+                                            print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    );
                                         }
                                     }
                                 }
@@ -2816,7 +3014,8 @@ pub fn two_elements_one_child(
                                         isssue_label = Some(isssue_label_handle.to_string());
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2827,7 +3026,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_third.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2835,7 +3035,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2847,7 +3048,8 @@ pub fn two_elements_one_child(
                             from = Some(from_handle.to_string());
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2871,15 +3073,17 @@ pub fn two_elements_one_child(
                                 }
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
-                                    print_warning_orange(
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        warning_message,
-                                    )
+                                    print_colorful_message(
+        PrintType::WarningHigh,
+        file!().to_string(),
+        line!().to_string(),
+        warning_message,
+    )
                                 }
                             }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2898,12 +3102,15 @@ pub fn two_elements_one_child(
                                                     datejs = datejs_handle_option.clone();
                                                 }
                                             }
-                                            None => {}
+                                            None => {
+                                                //todo
+                                            }
                                         },
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -2917,7 +3124,8 @@ pub fn two_elements_one_child(
                                                     date = Some(date_handle.to_string());
                                                 }
                                             }
-                                            _ => print_warning_orange(
+                                            _ => print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 "different node".to_string(),
@@ -2928,7 +3136,8 @@ pub fn two_elements_one_child(
                                                 "different children.len(): {}",
                                                 node_element_sixth_first.children.len()
                                             );
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -2936,7 +3145,8 @@ pub fn two_elements_one_child(
                                         }
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -2947,7 +3157,8 @@ pub fn two_elements_one_child(
                                     "different children.len(): {}",
                                     node_element_sixth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -2955,7 +3166,8 @@ pub fn two_elements_one_child(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -2965,10 +3177,16 @@ pub fn two_elements_one_child(
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3011,7 +3229,8 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
                         author_another_another = Some(author_another_another_handle.to_string());
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3020,10 +3239,16 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3041,7 +3266,8 @@ pub fn two_elements_four_children_second(node: &Node) -> Option<String> {
                 action_another_another = Some(action_another_another_handle.to_string());
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3061,7 +3287,8 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
                         who_follow = Some(who_follow_handle.to_string());
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3070,10 +3297,16 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3102,7 +3335,8 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                         },
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
-                            print_warning_orange(
+                            print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 warning_message,
@@ -3116,7 +3350,8 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                                     date = Some(date_handle.to_string());
                                 }
                             }
-                            _ => print_warning_orange(
+                            _ => print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 "different node".to_string(),
@@ -3127,7 +3362,8 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                                 "different children.len(): {}",
                                 node_element_first.children.len()
                             );
-                            print_warning_orange(
+                            print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 warning_message,
@@ -3135,7 +3371,8 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                         }
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3144,10 +3381,16 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3188,7 +3431,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         author = Some(author_handle.to_string())
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3199,7 +3443,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3207,7 +3452,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3219,7 +3465,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             action = Some(action_handle.to_string())
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3234,7 +3481,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         repository = Some(repository_handle.to_string())
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3245,7 +3493,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_third.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3253,7 +3502,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3277,7 +3527,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -3291,7 +3542,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                                     date = Some(date_handle.to_string());
                                                 }
                                             }
-                                            _ => print_warning_orange(
+                                            _ => print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 "different node".to_string(),
@@ -3302,7 +3554,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 "different children.len(): {}",
                                                 node_element_fourth_first.children.len()
                                             );
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -3310,7 +3563,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         }
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3321,7 +3575,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_fourth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3329,7 +3584,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3349,7 +3605,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         author = Some(author_handle.to_string())
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3360,7 +3617,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_first.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3368,7 +3626,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3380,7 +3639,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             action = Some(action_handle.to_string())
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3395,7 +3655,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         repository = Some(repository_handle.to_string())
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3406,7 +3667,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_third.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3414,7 +3676,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3426,7 +3689,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             from = Some(from_handle.to_string())
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3442,7 +3706,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                             Some(from_what_repository_forked_handle.to_string())
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3453,7 +3718,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_firth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3461,7 +3727,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3485,7 +3752,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         None => {
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -3499,7 +3767,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                                     date = Some(date_handle.to_string());
                                                 }
                                             }
-                                            _ => print_warning_orange(
+                                            _ => print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 "different node".to_string(),
@@ -3510,7 +3779,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 "different children.len(): {}",
                                                 node_element_sixth_first.children.len()
                                             );
-                                            print_warning_orange(
+                                            print_colorful_message(
+                                                PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
                                                 warning_message,
@@ -3518,7 +3788,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                         }
                                     }
                                 }
-                                _ => print_warning_orange(
+                                _ => print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     "different node".to_string(),
@@ -3529,7 +3800,8 @@ pub fn parse_github_html_second_part_two_children_first(
                                     "different children.len(): {}",
                                     node_element_sixth.children.len()
                                 );
-                                print_warning_orange(
+                                print_colorful_message(
+                                    PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
                                     warning_message,
@@ -3537,7 +3809,8 @@ pub fn parse_github_html_second_part_two_children_first(
                             }
                         }
                     }
-                    _ => print_warning_orange(
+                    _ => print_colorful_message(
+                        PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
                         "different node".to_string(),
@@ -3547,10 +3820,16 @@ pub fn parse_github_html_second_part_two_children_first(
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3599,7 +3878,8 @@ pub fn four_cases(
                         author = Some(author_handle.to_string())
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3608,10 +3888,16 @@ pub fn four_cases(
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", first_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3623,7 +3909,8 @@ pub fn four_cases(
                 action = Some(action_handle.to_string())
             }
         }
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3637,7 +3924,8 @@ pub fn four_cases(
                         who_follow = Some(who_follow_handle.to_string())
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3646,10 +3934,16 @@ pub fn four_cases(
             _ => {
                 let warning_message =
                     format!("different children.len(): {}", third_element.children.len());
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
@@ -3671,7 +3965,8 @@ pub fn four_cases(
                         },
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
-                            print_warning_orange(
+                            print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 warning_message,
@@ -3686,7 +3981,8 @@ pub fn four_cases(
                                     date = Some(second_child_element5fourth.to_string());
                                 }
                             }
-                            _ => print_warning_orange(
+                            _ => print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 "different node".to_string(),
@@ -3697,7 +3993,8 @@ pub fn four_cases(
                                 "different children.len(): {}",
                                 node_element_fourth.children.len()
                             );
-                            print_warning_orange(
+                            print_colorful_message(
+                                PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
                                 warning_message,
@@ -3705,7 +4002,8 @@ pub fn four_cases(
                         }
                     }
                 }
-                _ => print_warning_orange(
+                _ => print_colorful_message(
+                    PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     "different node".to_string(),
@@ -3716,10 +4014,16 @@ pub fn four_cases(
                     "different children.len(): {}",
                     node_element_fourth.children.len()
                 );
-                print_warning_orange(file!().to_string(), line!().to_string(), warning_message)
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    warning_message,
+                )
             }
         },
-        _ => print_warning_orange(
+        _ => print_colorful_message(
+            PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
             "different node".to_string(),
