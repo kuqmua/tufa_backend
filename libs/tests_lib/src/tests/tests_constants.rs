@@ -16,6 +16,7 @@ unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhan
 enable_all_time_measurement = true
 enable_common_time_measurement = true
 user_credentials_dummy_handle = "example"
+vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 
 [mongo_params]
 is_cloud = true
@@ -23,7 +24,6 @@ db_name_handle = "provider_links"
 db_collection_handle_second_part = "_link_parts"
 db_collection_document_field_name_handle = "link_part"
 path_to_provider_link_parts_folder = "./providers_link_parts/"
-vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 file_extension = ".json"
 mongo_own_first_handle_url_part = "mongodb://"
 mongo_own_second_handle_url_part = ":"

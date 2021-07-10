@@ -92,7 +92,7 @@ pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<Stri
                 &CONFIG.mongo_params.db_name_handle,
                 &CONFIG.mongo_params.db_collection_handle_second_part,
                 &CONFIG.mongo_params.db_collection_document_field_name_handle,
-                CONFIG.mongo_params.vec_of_provider_names.clone(),
+                CONFIG.params.vec_of_provider_names.clone(),
             );
         }
         Resource::PostgreSql => {
