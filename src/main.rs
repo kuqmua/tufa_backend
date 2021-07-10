@@ -141,7 +141,7 @@ fn main() {
             .mongo_params
             .db_collection_document_field_name_handle
             .to_string(),
-        vec_of_provider_names: CONFIG.mongo_params.vec_of_provider_names.clone(),
+        vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
     });
     if !providers_link_parts.is_empty() {
         println!("mongodb not empty")
@@ -152,7 +152,7 @@ fn main() {
                 .mongo_params
                 .path_to_provider_link_parts_folder
                 .to_string(),
-            vec_of_provider_names: CONFIG.mongo_params.vec_of_provider_names.clone(),
+            vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
             second_part_of_file_name: CONFIG
                 .mongo_params
                 .db_collection_handle_second_part
