@@ -29,7 +29,8 @@ use providers_info_lib::get_project_information::get_names::get_twitter_names::g
 
 use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use crate::overriding::prints::print_error_red;
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -261,11 +262,12 @@ pub fn rss_part(
                     } else {
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
                         if enable_error_prints {
-                            print_error_red(
-                                file!().to_string(),
-                                line!().to_string(),
-                                "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
-                            )
+                            print_colorful_message(
+        PrintType::Error,
+        file!().to_string(),
+        line!().to_string(),
+        "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
+    );
                         }
                     }
                 }
@@ -292,14 +294,24 @@ pub fn rss_part(
                         "unfiltered_posts_hashmap_after_fetch_and_parse is empty for{:#?}",
                         provider_kind
                     );
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 (None, None)
             }
         } else {
             if enable_error_prints {
                 let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
-                print_error_red(file!().to_string(), line!().to_string(), error_message)
+                print_colorful_message(
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    error_message,
+                );
             }
             (None, None)
         }
@@ -309,41 +321,76 @@ pub fn rss_part(
                 ProviderKind::Arxiv => {
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Biorxiv => {
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Github => {
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Medrxiv => {
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Twitter => {
                     let error_message = format!(
                         "i cannot reach any of provider links for {:#?}",
                         provider_kind
                     );
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Reddit => {
                     //todo
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
                 ProviderKind::Habr => {
                     //todo
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_error_red(file!().to_string(), line!().to_string(), error_message);
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        error_message,
+                    );
                 }
             }
         };
