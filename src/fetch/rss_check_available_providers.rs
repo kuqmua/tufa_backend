@@ -1,5 +1,7 @@
 use crate::fetch::rss_check_provider_status::rss_check_provider_status;
-use crate::overriding::prints::print_error_red;
+
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -29,7 +31,12 @@ pub fn rss_check_available_providers(
                     if enable_error_prints {
                         let error_message =
                             "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
-                        print_error_red(file!().to_string(), line!().to_string(), error_message)
+                        print_colorful_message(
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            error_message,
+                        );
                     }
                 }
             }
