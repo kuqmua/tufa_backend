@@ -1,6 +1,8 @@
 use serde_json::Value;
 
-use crate::overriding::prints::print_error_red;
+use prints_lib::print_colorful_message;
+use prints_lib::PrintType;
+
 use std::{fs::File, io::Write};
 
 pub fn rss_write_error_logs_into_file_for_provider(
@@ -27,7 +29,12 @@ pub fn rss_write_error_logs_into_file_for_provider(
                             let message =
                                 format!("error writing in file {} {}", file_name, e.to_string());
                             if enable_error_prints {
-                                print_error_red(file!().to_string(), line!().to_string(), message)
+                                print_colorful_message(
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    message,
+                                );
                             }
                         }
                     }
@@ -39,7 +46,12 @@ pub fn rss_write_error_logs_into_file_for_provider(
                         e.to_string()
                     );
                     if enable_error_prints {
-                        print_error_red(file!().to_string(), line!().to_string(), message)
+                        print_colorful_message(
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            message,
+                        );
                     }
                 }
             }
@@ -47,7 +59,12 @@ pub fn rss_write_error_logs_into_file_for_provider(
         Err(e) => {
             let message = format!("error creating file {} {}", &file_name, e.to_string());
             if enable_error_prints {
-                print_error_red(file!().to_string(), line!().to_string(), message)
+                print_colorful_message(
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    message,
+                );
             }
         }
     }
