@@ -161,3 +161,5 @@ remove enable prints for provider function parameter and move it to print_colorf
 time measurement as prints_lib - check with config in implementation, not in function what use it 
 ----------------------------------------------------------------
 somehow merge ProviderKind enum and in config vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
+--------------------------------------------------------------------------------------------------------------------------------
+Resource::PostgreSql => { 
