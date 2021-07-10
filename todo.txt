@@ -47,11 +47,6 @@ futures in some cases instead of threads (like file open or write in file)
 -----------
 thread pool instead of for loop
 -----------
-implement that with config params
-
-pub async fn check_new_posts_threads_parts() {
-    let mut threads_vec = Vec::with_capacity(6); arxiv biorxiv medrxiv twitter reddit ...    
------------
 let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
 -----------
 if let Ok(something) = something.lock() {}

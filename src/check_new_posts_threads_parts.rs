@@ -26,7 +26,7 @@ use providers_info_lib::get_project_information::get_twitter_providers_names::ge
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
-pub async fn check_new_posts_threads_parts() -> (
+pub async fn check_new_posts_threads_parts() -> Option<(
     Vec<CommonRssPostStruct>,
     Vec<(
         String,
@@ -35,8 +35,8 @@ pub async fn check_new_posts_threads_parts() -> (
         AreThereItems,
         ProviderKind,
     )>,
-) {
-    let mut threads_vec = Vec::with_capacity(6);
+)> {
+    let mut threads_vec = Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
     let error_posts = Arc::new(Mutex::new(Vec::<(
         String,
@@ -427,5 +427,5 @@ pub async fn check_new_posts_threads_parts() -> (
     }
     let posts_done = posts.lock().unwrap().to_vec();
     let error_posts_done = error_posts.lock().unwrap().to_vec();
-    (posts_done, error_posts_done)
+    Some((posts_done, error_posts_done))
 }
