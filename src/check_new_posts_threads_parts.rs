@@ -24,13 +24,14 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
-use config_lib::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::BIORXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::GITHUB_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::HABR_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::MEDRXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::REDDIT_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+use config_lib::get_project_information::project_constants::TWITTER_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT;
+
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 pub async fn check_new_posts_threads_parts() -> Option<(
@@ -43,425 +44,453 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         ProviderKind,
     )>,
 )> {
-    if !CONFIG.params.vec_of_provider_names.is_empty() {
-        let mut threads_vec: Vec<JoinHandle<()>> =
-            Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
-        let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
-        let error_posts = Arc::new(Mutex::new(Vec::<(
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        )>::new()));
-        let mut vec_of_enums: Vec<ProviderKind> =
-            Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
-        //check if provider_names are unique
-        for provider_name in &CONFIG.params.vec_of_provider_names {
-            if provider_name == ARXIV_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Arxiv)
-            } else if provider_name == BIORXIV_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Biorxiv)
-            } else if provider_name == GITHUB_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Github)
-            } else if provider_name == HABR_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Habr)
-            } else if provider_name == MEDRXIV_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Medrxiv)
-            } else if provider_name == REDDIT_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Reddit)
-            } else if provider_name == TWITTER_NAME_TO_CHECK {
-                vec_of_enums.push(ProviderKind::Twitter)
-            } else {
-                panic!("incorrect provider_name {:#?}", provider_name)
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_arxiv {
-            let arxiv_links = get_arxiv_names();
-            if arxiv_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "arxiv_links.is_empty".to_string(),
-                );
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_arxiv
+    if CONFIG.params.enable_all_providers {
+        if !CONFIG.params.vec_of_provider_names.is_empty() {
+            let mut threads_vec: Vec<JoinHandle<()>> =
+                Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
+            let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
+            let error_posts = Arc::new(Mutex::new(Vec::<(
+                String,
+                UnhandledFetchStatusInfo,
+                HandledFetchStatusInfo,
+                AreThereItems,
+                ProviderKind,
+            )>::new()));
+            let mut vec_of_enums: Vec<ProviderKind> =
+                Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
+            //check if provider_names are unique
+            for provider_name in &CONFIG.params.vec_of_provider_names {
+                if provider_name == ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value {
+                    vec_of_enums.push(ProviderKind::Arxiv)
+                } else if provider_name
+                    == BIORXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        arxiv_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_arxiv,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG.enable_warning_prints.enable_warning_prints_for_arxiv,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_arxiv,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
-                        &CONFIG.links.arxiv_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_biorxiv {
-            let biorxiv_links = get_biorxiv_names();
-            if biorxiv_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "biorxiv_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Biorxiv;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_biorxiv
+                    vec_of_enums.push(ProviderKind::Biorxiv)
+                } else if provider_name
+                    == GITHUB_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        biorxiv_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_biorxiv,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG
-                                .enable_warning_prints
-                                .enable_warning_prints_for_biorxiv,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_biorxiv,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG
-                                .enable_time_measurement
-                                .enable_biorxiv_time_measurement,
-                        &CONFIG.links.biorxiv_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_github {
-            let github_links = get_github_names();
-            if github_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "github_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Github;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_github
+                    vec_of_enums.push(ProviderKind::Github)
+                } else if provider_name
+                    == HABR_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        github_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_github,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG
-                                .enable_warning_prints
-                                .enable_warning_prints_for_github,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_github,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG
-                                .enable_time_measurement
-                                .enable_github_time_measurement,
-                        &CONFIG.links.github_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_habr {
-            let habr_links = get_habr_names();
-            if habr_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "habr_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Habr;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_habr
+                    vec_of_enums.push(ProviderKind::Habr)
+                } else if provider_name
+                    == MEDRXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        habr_links.len(),
-                        &PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_habr,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG.enable_warning_prints.enable_warning_prints_for_habr,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_habr,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG.enable_time_measurement.enable_habr_time_measurement,
-                        &CONFIG.links.habr_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_medrxiv {
-            let medrxiv_links = get_medrxiv_names();
-            if medrxiv_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "medrxiv_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Medrxiv;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_medrxiv
+                    vec_of_enums.push(ProviderKind::Medrxiv)
+                } else if provider_name
+                    == REDDIT_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        medrxiv_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_medrxiv,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG
-                                .enable_warning_prints
-                                .enable_warning_prints_for_medrxiv,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_medrxiv,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG
-                                .enable_time_measurement
-                                .enable_medrxiv_time_measurement,
-                        &CONFIG.links.medrxiv_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
-            }
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_reddit {
-            let reddit_links = get_reddit_names();
-            if reddit_links.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "reddit_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_reddit
+                    vec_of_enums.push(ProviderKind::Reddit)
+                } else if provider_name
+                    == TWITTER_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                 {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        reddit_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_reddit,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG
-                                .enable_warning_prints
-                                .enable_warning_prints_for_reddit,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG
-                                .enable_time_measurement
-                                .enable_reddit_time_measurement,
-                        &CONFIG.links.reddit_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }))
-            };
-        }
-        if CONFIG.params.enable_all_providers && CONFIG.enable_providers.enable_twitter {
-            let twitter_links = get_twitter_names();
-            let twitter_providers = get_twitter_providers_names();
-            if twitter_links.is_empty() || twitter_providers.is_empty() {
-                print_colorful_message(
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "twiter_links.is_empty".to_string(),
-                )
-            } else {
-                const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
-                if CONFIG.params.enable_all_providers_prints
-                    && CONFIG.enable_prints.enable_prints_twitter
-                {
-                    println!(
-                        "{:#?} elements in {:#?} HashMap",
-                        twitter_links.len(),
-                        PROVIDER_KIND
-                    );
-                };
-                let posts_handle = Arc::clone(&posts);
-                let error_posts_handle = Arc::clone(&error_posts);
-                threads_vec.push(thread::spawn(move || {
-                    let enum_success_unsuccess_option_posts = rss_part(
-                        CONFIG.params.enable_all_providers_prints
-                            && CONFIG.enable_prints.enable_prints_twitter,
-                        CONFIG.params.enable_warning_prints_for_all_providers
-                            && CONFIG
-                                .enable_warning_prints
-                                .enable_warning_prints_for_twitter,
-                        CONFIG.params.enable_error_prints_for_all_providers
-                            && CONFIG.enable_error_prints.enable_error_prints_for_twitter,
-                        CONFIG.params.enable_all_time_measurement
-                            && CONFIG
-                                .enable_time_measurement
-                                .enable_twitter_time_measurement,
-                        &CONFIG.links.twitter_link,
-                        &PROVIDER_KIND,
-                        CONFIG.params.enable_error_prints_handle,
-                    );
-                    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-                        let mut posts_handle_locked = posts_handle.lock().unwrap();
-                        for value in success_posts {
-                            posts_handle_locked.push(value);
-                        }
-                    }
-                    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-                        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-                        for unsuccess_post in unsuccess_posts {
-                            error_posts_handle_locked.push(unsuccess_post);
-                        }
-                    }
-                }));
+                    vec_of_enums.push(ProviderKind::Twitter)
+                } else {
+                    panic!("incorrect provider_name {:#?}", provider_name)
+                }
             }
+            if CONFIG.enable_providers.enable_arxiv {
+                let arxiv_links = get_arxiv_names();
+                if arxiv_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "arxiv_links.is_empty".to_string(),
+                    );
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Arxiv;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_arxiv
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            arxiv_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_arxiv,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG.enable_warning_prints.enable_warning_prints_for_arxiv,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_arxiv,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG.enable_time_measurement.enable_arxiv_time_measurement,
+                            &CONFIG.links.arxiv_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            if CONFIG.enable_providers.enable_biorxiv {
+                let biorxiv_links = get_biorxiv_names();
+                if biorxiv_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "biorxiv_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Biorxiv;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_biorxiv
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            biorxiv_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_biorxiv,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG
+                                    .enable_warning_prints
+                                    .enable_warning_prints_for_biorxiv,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_biorxiv,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG
+                                    .enable_time_measurement
+                                    .enable_biorxiv_time_measurement,
+                            &CONFIG.links.biorxiv_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            if CONFIG.enable_providers.enable_github {
+                let github_links = get_github_names();
+                if github_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "github_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Github;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_github
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            github_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_github,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG
+                                    .enable_warning_prints
+                                    .enable_warning_prints_for_github,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_github,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG
+                                    .enable_time_measurement
+                                    .enable_github_time_measurement,
+                            &CONFIG.links.github_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            if CONFIG.enable_providers.enable_habr {
+                let habr_links = get_habr_names();
+                if habr_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "habr_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Habr;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_habr
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            habr_links.len(),
+                            &PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_habr,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG.enable_warning_prints.enable_warning_prints_for_habr,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_habr,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG.enable_time_measurement.enable_habr_time_measurement,
+                            &CONFIG.links.habr_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            if CONFIG.enable_providers.enable_medrxiv {
+                let medrxiv_links = get_medrxiv_names();
+                if medrxiv_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "medrxiv_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Medrxiv;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_medrxiv
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            medrxiv_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_medrxiv,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG
+                                    .enable_warning_prints
+                                    .enable_warning_prints_for_medrxiv,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_medrxiv,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG
+                                    .enable_time_measurement
+                                    .enable_medrxiv_time_measurement,
+                            &CONFIG.links.medrxiv_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            if CONFIG.enable_providers.enable_reddit {
+                let reddit_links = get_reddit_names();
+                if reddit_links.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "reddit_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Reddit;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_reddit
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            reddit_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_reddit,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG
+                                    .enable_warning_prints
+                                    .enable_warning_prints_for_reddit,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG
+                                    .enable_time_measurement
+                                    .enable_reddit_time_measurement,
+                            &CONFIG.links.reddit_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_reddit,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }))
+                };
+            }
+            if CONFIG.enable_providers.enable_twitter {
+                let twitter_links = get_twitter_names();
+                let twitter_providers = get_twitter_providers_names();
+                if twitter_links.is_empty() || twitter_providers.is_empty() {
+                    print_colorful_message(
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "twiter_links.is_empty".to_string(),
+                    )
+                } else {
+                    const PROVIDER_KIND: ProviderKind = ProviderKind::Twitter;
+                    if CONFIG.params.enable_all_providers_prints
+                        && CONFIG.enable_prints.enable_prints_twitter
+                    {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            twitter_links.len(),
+                            PROVIDER_KIND
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    threads_vec.push(thread::spawn(move || {
+                        let enum_success_unsuccess_option_posts = rss_part(
+                            CONFIG.params.enable_all_providers_prints
+                                && CONFIG.enable_prints.enable_prints_twitter,
+                            CONFIG.params.enable_warning_prints_for_all_providers
+                                && CONFIG
+                                    .enable_warning_prints
+                                    .enable_warning_prints_for_twitter,
+                            CONFIG.params.enable_error_prints_for_all_providers
+                                && CONFIG.enable_error_prints.enable_error_prints_for_twitter,
+                            CONFIG.params.enable_all_time_measurement
+                                && CONFIG
+                                    .enable_time_measurement
+                                    .enable_twitter_time_measurement,
+                            &CONFIG.links.twitter_link,
+                            &PROVIDER_KIND,
+                            CONFIG.params.enable_error_prints_handle,
+                        );
+                        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+                            let mut posts_handle_locked = posts_handle.lock().unwrap();
+                            for value in success_posts {
+                                posts_handle_locked.push(value);
+                            }
+                        }
+                        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+                            let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
+                            for unsuccess_post in unsuccess_posts {
+                                error_posts_handle_locked.push(unsuccess_post);
+                            }
+                        }
+                    }));
+                }
+            }
+            for i in threads_vec {
+                i.join().unwrap();
+            }
+            let posts_done = posts.lock().unwrap().to_vec();
+            let error_posts_done = error_posts.lock().unwrap().to_vec();
+            Some((posts_done, error_posts_done))
+        } else {
+            print_colorful_message(
+                PrintType::WarningLow,
+                file!().to_string(),
+                line!().to_string(),
+                "CONFIG.params.vec_of_provider_names is empty".to_string(),
+            );
+            None
         }
-        for i in threads_vec {
-            i.join().unwrap();
-        }
-        let posts_done = posts.lock().unwrap().to_vec();
-        let error_posts_done = error_posts.lock().unwrap().to_vec();
-        Some((posts_done, error_posts_done))
     } else {
+        print_colorful_message(
+            PrintType::WarningLow,
+            file!().to_string(),
+            line!().to_string(),
+            "CONFIG.params.enable_all_providers is false".to_string(),
+        );
         None
     }
 }
