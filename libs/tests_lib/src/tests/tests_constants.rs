@@ -17,6 +17,7 @@ enable_all_time_measurement = true
 enable_common_time_measurement = true
 user_credentials_dummy_handle = "example"
 vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
+#it can be only one of them: "arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter" - check project_constants.rs
 
 [mongo_params]
 is_cloud = true

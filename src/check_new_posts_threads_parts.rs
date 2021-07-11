@@ -24,6 +24,13 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use config_lib::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
+use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 pub async fn check_new_posts_threads_parts() -> Option<(
@@ -51,19 +58,19 @@ pub async fn check_new_posts_threads_parts() -> Option<(
             Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
         //check if provider_names are unique
         for provider_name in &CONFIG.params.vec_of_provider_names {
-            if provider_name == "arxiv" {
+            if provider_name == ARXIV_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Arxiv)
-            } else if provider_name == "biorxiv" {
+            } else if provider_name == BIORXIV_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Biorxiv)
-            } else if provider_name == "github" {
+            } else if provider_name == GITHUB_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Github)
-            } else if provider_name == "habr" {
+            } else if provider_name == HABR_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Habr)
-            } else if provider_name == "medrxiv" {
+            } else if provider_name == MEDRXIV_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Medrxiv)
-            } else if provider_name == "reddit" {
+            } else if provider_name == REDDIT_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Reddit)
-            } else if provider_name == "twitter" {
+            } else if provider_name == TWITTER_NAME_TO_CHECK {
                 vec_of_enums.push(ProviderKind::Twitter)
             } else {
                 panic!("incorrect provider_name {:#?}", provider_name)
