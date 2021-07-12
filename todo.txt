@@ -168,3 +168,5 @@ rename this check_new_posts_threads_parts
 Struct itertools::structs::Unique
 //check if provider_names are unique
             for provider_name in &CONFIG.params.vec_of_provider_names {
+--------------------------------------------------------------------------------------------------------------------------------
+rss_part Vec of link as input parameter (huge changes)
