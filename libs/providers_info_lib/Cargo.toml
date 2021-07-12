@@ -12,3 +12,4 @@ serde_json = "1.0"
 serde_derive = "1.0"
 config_lib = { path = "../config_lib" }
 mongo_integration = { path = "../mongo_integration" }
+prints_lib = { path = "../prints_lib" }
