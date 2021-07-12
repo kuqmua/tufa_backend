@@ -5,6 +5,7 @@ use config_lib::get_project_information::get_user_credentials::get_user_credenti
 
 use crate::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::get_project_information::get_providers_link_parts::Resource;
+// use crate::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;
@@ -64,6 +65,15 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
             mongo_own_port
         );
     }
+    // put_data_in_mongo(
+    //     &mongo_url,
+    //     &CONFIG.mongo_params.db_name_handle,
+    //     &CONFIG.mongo_params.db_collection_handle_second_part,
+    //     &CONFIG.mongo_params.db_collection_document_field_name_handle,
+    //     &CONFIG.mongo_params.path_to_provider_link_parts_folder,
+    //     CONFIG.params.vec_of_provider_names.clone(),
+    //     &CONFIG.mongo_params.file_extension,
+    // );
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.db_name_handle.to_string(),

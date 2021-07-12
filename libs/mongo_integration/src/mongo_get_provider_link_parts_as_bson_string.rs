@@ -84,7 +84,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                 }
                 None => {
                     vec_of_strings_to_return = Vec::new();
-                    println!("(todo change this print) no such collection");
+                    println!("(todo change this print) no such collection2");
                 }
             }
         }

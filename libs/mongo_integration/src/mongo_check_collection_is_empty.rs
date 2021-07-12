@@ -42,7 +42,7 @@ pub async fn mongo_check_collection_is_empty(
                 }
                 None => {
                     result_flag = None;
-                    println!("(todo change this print) no such collection");
+                    println!("(todo change this print) no such collection1");
                 }
             }
         }

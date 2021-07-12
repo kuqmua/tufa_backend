@@ -68,69 +68,90 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                 == ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT.config_name_value
                             {
                                 if CONFIG.enable_providers.enable_arxiv {
-                                    let arxiv_links = get_arxiv_names();
-                                    if arxiv_links.is_empty() {
+                                    if providers_link_parts.contains_key(
+                                        ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
+                                            .config_name_value,
+                                    ) {
+                                        let arxiv_links = &providers_link_parts
+                                            [ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
+                                                .config_name_value];
+                                        if arxiv_links.is_empty() {
+                                            print_colorful_message(
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                "arxiv_links.is_empty".to_string(),
+                                            );
+                                        } else {
+                                            if CONFIG.params.enable_all_providers_prints
+                                                && CONFIG.enable_prints.enable_prints_arxiv
+                                            {
+                                                println!(
+                                                    "{:#?} elements in {:#?} HashMap",
+                                                    arxiv_links.len(),
+                                                    ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
+                                                        .provider_kind_enum_type
+                                                );
+                                            };
+                                            let posts_handle = Arc::clone(&posts);
+                                            let error_posts_handle = Arc::clone(&error_posts);
+                                            threads_vec.push(thread::spawn(move || {
+                                                let enum_success_unsuccess_option_posts = rss_part(
+                                                    CONFIG.params.enable_all_providers_prints
+                                                        && CONFIG.enable_prints.enable_prints_arxiv,
+                                                    CONFIG
+                                                        .params
+                                                        .enable_warning_prints_for_all_providers
+                                                        && CONFIG
+                                                            .enable_warning_prints
+                                                            .enable_warning_prints_for_arxiv,
+                                                    CONFIG
+                                                        .params
+                                                        .enable_error_prints_for_all_providers
+                                                        && CONFIG
+                                                            .enable_error_prints
+                                                            .enable_error_prints_for_arxiv,
+                                                    CONFIG.params.enable_all_time_measurement
+                                                        && CONFIG
+                                                            .enable_time_measurement
+                                                            .enable_arxiv_time_measurement,
+                                                    &CONFIG.links.arxiv_link,
+                                                    &ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
+                                                        .provider_kind_enum_type,
+                                                    CONFIG.params.enable_error_prints_handle,
+                                                );
+                                                if let Some(success_posts) =
+                                                    enum_success_unsuccess_option_posts.0
+                                                {
+                                                    let mut posts_handle_locked =
+                                                        posts_handle.lock().unwrap();
+                                                    for value in success_posts {
+                                                        posts_handle_locked.push(value);
+                                                    }
+                                                }
+                                                if let Some(unsuccess_posts) =
+                                                    enum_success_unsuccess_option_posts.1
+                                                {
+                                                    let mut error_posts_handle_locked =
+                                                        error_posts_handle.lock().unwrap();
+                                                    for unsuccess_post in unsuccess_posts {
+                                                        error_posts_handle_locked
+                                                            .push(unsuccess_post);
+                                                    }
+                                                }
+                                            }));
+                                        }
+                                    } else {
                                         print_colorful_message(
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
-                                            "arxiv_links.is_empty".to_string(),
-                                        );
-                                    } else {
-                                        if CONFIG.params.enable_all_providers_prints
-                                            && CONFIG.enable_prints.enable_prints_arxiv
-                                        {
-                                            println!(
-                                                "{:#?} elements in {:#?} HashMap",
-                                                arxiv_links.len(),
+                                            format!(
+                                                "providers_link_parts.contains_key({}) is false",
                                                 ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
-                                                    .provider_kind_enum_type
-                                            );
-                                        };
-                                        let posts_handle = Arc::clone(&posts);
-                                        let error_posts_handle = Arc::clone(&error_posts);
-                                        threads_vec.push(thread::spawn(move || {
-                                            let enum_success_unsuccess_option_posts = rss_part(
-                                                CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_arxiv,
-                                                CONFIG
-                                                    .params
-                                                    .enable_warning_prints_for_all_providers
-                                                    && CONFIG
-                                                        .enable_warning_prints
-                                                        .enable_warning_prints_for_arxiv,
-                                                CONFIG.params.enable_error_prints_for_all_providers
-                                                    && CONFIG
-                                                        .enable_error_prints
-                                                        .enable_error_prints_for_arxiv,
-                                                CONFIG.params.enable_all_time_measurement
-                                                    && CONFIG
-                                                        .enable_time_measurement
-                                                        .enable_arxiv_time_measurement,
-                                                &CONFIG.links.arxiv_link,
-                                                &ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT
-                                                    .provider_kind_enum_type,
-                                                CONFIG.params.enable_error_prints_handle,
-                                            );
-                                            if let Some(success_posts) =
-                                                enum_success_unsuccess_option_posts.0
-                                            {
-                                                let mut posts_handle_locked =
-                                                    posts_handle.lock().unwrap();
-                                                for value in success_posts {
-                                                    posts_handle_locked.push(value);
-                                                }
-                                            }
-                                            if let Some(unsuccess_posts) =
-                                                enum_success_unsuccess_option_posts.1
-                                            {
-                                                let mut error_posts_handle_locked =
-                                                    error_posts_handle.lock().unwrap();
-                                                for unsuccess_post in unsuccess_posts {
-                                                    error_posts_handle_locked.push(unsuccess_post);
-                                                }
-                                            }
-                                        }));
+                                                    .config_name_value
+                                            ),
+                                        );
                                     }
                                 }
                             } else if provider_name
