@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
@@ -6,33 +8,38 @@ pub const PATH_TO_CONFIG: &str = "./config/";
 pub const PATH_TO_CONFIG_FOR_TEST: &str = "../../config/";
 pub const PROJECT_MODE: &str = "Development"; //later as ENV variable only
 pub const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
-pub const ARXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("arxiv", ProviderKind::Arxiv);
-pub const BIORXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("biorxiv", ProviderKind::Biorxiv);
-pub const GITHUB_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("github", ProviderKind::Github);
-pub const HABR_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("habr", ProviderKind::Habr);
-pub const MEDRXIV_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("medrxiv", ProviderKind::Medrxiv);
-pub const REDDIT_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("reddit", ProviderKind::Reddit);
-pub const TWITTER_CONFIG_PROVIDER_STRING_TO_ENUM_STRUCT: ConfigProviderStringToEnumTypeStruct =
-    ConfigProviderStringToEnumTypeStruct::new("twitter", ProviderKind::Twitter);
-pub struct ConfigProviderStringToEnumTypeStruct {
-    pub config_name_value: &'static str,
-    pub provider_kind_enum_type: ProviderKind,
+
+use crate::get_project_information::get_config::get_config_information::CONFIG;
+
+pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
+    let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
+        HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
+    config_provider_string_to_enum_struct_hasmap.insert("arxiv".to_string(), ProviderKind::Arxiv);
+    config_provider_string_to_enum_struct_hasmap
+        .insert("biorxiv".to_string(), ProviderKind::Biorxiv);
+    config_provider_string_to_enum_struct_hasmap.insert("github".to_string(), ProviderKind::Github);
+    config_provider_string_to_enum_struct_hasmap.insert("habr".to_string(), ProviderKind::Habr);
+    config_provider_string_to_enum_struct_hasmap
+        .insert("medrxiv".to_string(), ProviderKind::Medrxiv);
+    config_provider_string_to_enum_struct_hasmap.insert("reddit".to_string(), ProviderKind::Reddit);
+    config_provider_string_to_enum_struct_hasmap
+        .insert("twitter".to_string(), ProviderKind::Twitter);
+    config_provider_string_to_enum_struct_hasmap
 }
 
-impl ConfigProviderStringToEnumTypeStruct {
-    pub const fn new(
-        config_name_value: &'static str,
-        provider_kind_enum_type: ProviderKind,
-    ) -> Self {
-        ConfigProviderStringToEnumTypeStruct {
-            config_name_value,
-            provider_kind_enum_type,
-        }
-    }
-}
+// pub struct ConfigProviderStringToEnumTypeStruct {
+//     pub config_name_value: &'static str,
+//     pub provider_kind_enum_type: ProviderKind,
+// }
+
+// impl ConfigProviderStringToEnumTypeStruct {
+//     pub const fn new(
+//         config_name_value: &'static str,
+//         provider_kind_enum_type: ProviderKind,
+//     ) -> Self {
+//         ConfigProviderStringToEnumTypeStruct {
+//             config_name_value,
+//             provider_kind_enum_type,
+//         }
+//     }
+// }

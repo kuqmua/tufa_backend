@@ -46,8 +46,9 @@ pub fn rss_part(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     provider_link: &str,
-    provider_kind: &'static ProviderKind,
+    provider_kind: ProviderKind,
     enable_error_prints_handle: bool,
+    vec_of_provider_links: Vec<String>,
 ) -> (
     Option<Vec<CommonRssPostStruct>>,
     Option<
@@ -159,6 +160,7 @@ pub fn rss_part(
                 links_temp_naming = generate_habr_hashmap_links(get_habr_names());
             }
         }
+        let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
             let unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
@@ -175,7 +177,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind,
+                            provider_kind.clone(),
                         );
                 }
                 ProviderKind::Biorxiv => {
@@ -184,7 +186,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind,
+                            provider_kind.clone(),
                         );
                 }
                 ProviderKind::Github => {
@@ -193,7 +195,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind,
+                            provider_kind.clone(),
                         );
                 }
                 ProviderKind::Medrxiv => {
@@ -202,7 +204,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind,
+                            provider_kind.clone(),
                         );
                 }
                 ProviderKind::Twitter => {
@@ -217,13 +219,14 @@ pub fn rss_part(
                     for element in &mut vec_of_hashmap_parts.into_iter() {
                         let not_ready_processed_posts_handle =
                             Arc::clone(&not_ready_processed_posts);
+                        let provider_kind_clone = provider_kind.clone();
                         let thread = thread::spawn(move || {
                             let unfiltered_posts_hashmap_after_fetch_and_parse =
                                 rss_fetch_and_parse_provider_data(
                                     enable_error_prints,
                                     enable_time_measurement,
                                     element.clone(),
-                                    &provider_kind,
+                                    provider_kind_clone,
                                 );
                             let mut locked_not_ready_processed_posts =
                                 not_ready_processed_posts_handle.lock().unwrap();
@@ -284,7 +287,7 @@ pub fn rss_part(
             if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
                 rss_handle_unfiltered_posts(
                     unfiltered_posts_hashmap_after_fetch_and_parse,
-                    provider_kind,
+                    provider_kind_handle,
                     enable_prints,
                     enable_warning_prints,
                 )
@@ -292,7 +295,7 @@ pub fn rss_part(
                 if enable_error_prints {
                     let error_message = format!(
                         "unfiltered_posts_hashmap_after_fetch_and_parse is empty for{:#?}",
-                        provider_kind
+                        provider_kind_handle
                     );
                     print_colorful_message(
                         PrintType::Error,

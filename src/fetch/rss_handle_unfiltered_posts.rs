@@ -24,7 +24,7 @@ pub fn rss_handle_unfiltered_posts(
         HandledFetchStatusInfo,
         AreThereItems,
     )>,
-    provider_kind: &'static ProviderKind,
+    provider_kind: ProviderKind,
     enable_prints: bool,
     enable_warning_prints: bool,
 ) -> (
@@ -44,7 +44,7 @@ pub fn rss_handle_unfiltered_posts(
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
         rss_filter_fetched_and_parsed_posts(
             unfiltered_posts_hashmap_after_fetch_and_parse,
-            provider_kind,
+            provider_kind.clone(),
         );
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
         if enable_warning_prints {

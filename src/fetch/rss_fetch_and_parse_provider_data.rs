@@ -17,7 +17,7 @@ pub fn rss_fetch_and_parse_provider_data(
     enable_error_prints: bool,
     enable_time_measurement: bool,
     links: Vec<String>,
-    provider_kind: &ProviderKind,
+    provider_kind: ProviderKind,
 ) -> Vec<(
     CommonRssPostStruct,
     String,

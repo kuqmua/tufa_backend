@@ -13,7 +13,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
         HandledFetchStatusInfo,
         AreThereItems,
     )>,
-    provider_kind: &ProviderKind,
+    provider_kind: ProviderKind,
 ) -> (
     Vec<CommonRssPostStruct>,
     Vec<(
