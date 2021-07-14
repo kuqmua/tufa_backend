@@ -1,4 +1,4 @@
-pub fn generate_reddit_hashmap_links(subreddits_names: Vec<&'static str>) -> Vec<String> {
+pub fn generate_reddit_hashmap_links(subreddits_names: Vec<String>) -> Vec<String> {
     //example https://www.reddit.com/r/3Dprinting/new.json
     let start: &str = "https://www.reddit.com/r/";
     let end: &str = "/new.json";

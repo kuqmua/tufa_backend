@@ -1,5 +1,5 @@
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
-pub fn generate_github_hashmap_links(github_names: Vec<&'static str>) -> Vec<String> {
+pub fn generate_github_hashmap_links(github_names: Vec<String>) -> Vec<String> {
     //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG
     let start: &str = "https://github.com/";
     let middle: &str = ".private.atom?token=";
