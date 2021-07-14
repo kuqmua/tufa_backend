@@ -170,3 +170,8 @@ Struct itertools::structs::Unique
             for provider_name in &CONFIG.params.vec_of_provider_names {
 --------------------------------------------------------------------------------------------------------------------------------
 rss_part Vec of link as input parameter (huge changes)
+--------------------------------------------------------------------------------------------------------------------------------
+file: src/fetch/parse_github_html.rs:1226
+different children.len(): 3
+file: src/fetch/parse_github_html.rs:1553
+different children.len(): 3
