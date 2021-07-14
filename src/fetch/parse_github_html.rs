@@ -1215,6 +1215,7 @@ pub fn parse_github_html_second_part(
                                                 datejs = datejs_another_handle;
                                                 date = date_another_handle;
                                             }
+                                            //todo case 3
                                             _ => {
                                                 let warning_message = format!(
                                                     "different children.len(): {}",
@@ -1542,6 +1543,7 @@ pub fn parse_github_html_second_part(
                                                 datejs = datejs_handle;
                                                 date = date_handle;
                                             }
+                                            //todo case 3
                                             _ => {
                                                 let warning_message = format!(
                                                     "different children.len(): {}",

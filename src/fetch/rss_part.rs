@@ -11,14 +11,6 @@ use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provide
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_github_hashmap_links::generate_github_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
-use providers_info_lib::get_project_information::generate_hashmap_links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
-
 use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
 use prints_lib::print_colorful_message;
@@ -128,28 +120,25 @@ pub fn rss_part(
         }
         match provider_kind {
             ProviderKind::Arxiv => {
-                links_temp_naming = generate_arxiv_hashmap_links(vec_of_provider_links);
+                links_temp_naming = vec_of_provider_links;
             }
             ProviderKind::Biorxiv => {
-                links_temp_naming = generate_biorxiv_hashmap_links(vec_of_provider_links);
+                links_temp_naming = vec_of_provider_links;
             }
             ProviderKind::Github => {
-                links_temp_naming = generate_github_hashmap_links(vec_of_provider_links);
-            }
-            ProviderKind::Medrxiv => {
-                links_temp_naming = generate_medrxiv_hashmap_links(vec_of_provider_links);
-            }
-            ProviderKind::Twitter => {
-                links_temp_naming = generate_twitter_hashmap_links(
-                    twitter_available_providers_links.clone(),
-                    vec_of_provider_links,
-                );
-            }
-            ProviderKind::Reddit => {
-                links_temp_naming = generate_reddit_hashmap_links(vec_of_provider_links);
+                links_temp_naming = vec_of_provider_links;
             }
             ProviderKind::Habr => {
-                links_temp_naming = generate_habr_hashmap_links(vec_of_provider_links);
+                links_temp_naming = vec_of_provider_links;
+            }
+            ProviderKind::Medrxiv => {
+                links_temp_naming = vec_of_provider_links;
+            }
+            ProviderKind::Reddit => {
+                links_temp_naming = vec_of_provider_links;
+            }
+            ProviderKind::Twitter => {
+                links_temp_naming = vec_of_provider_links;
             }
         }
         let provider_kind_handle = provider_kind.clone();
