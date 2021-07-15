@@ -8,8 +8,8 @@ use std::thread;
 
 pub fn rss_check_available_providers(
     enable_error_prints: bool,
-    twitter_providers_names: std::vec::Vec<&'static str>,
-) -> Vec<&str> {
+    twitter_providers_names: Vec<String>,
+) -> Vec<String> {
     let mut threads_vector = Vec::with_capacity(twitter_providers_names.len());
     let twitter_providers_links_available = Arc::new(Mutex::new(Vec::new()));
     for provider_name in &mut twitter_providers_names.into_iter() {

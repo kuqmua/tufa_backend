@@ -11,8 +11,6 @@ use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provide
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
-
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;
 
@@ -33,7 +31,7 @@ pub fn rss_part(
     provider_kind: ProviderKind,
     enable_error_prints_handle: bool,
     vec_of_provider_links: Vec<String>,
-    twitter_providers_names: Option<Vec<&str>>,
+    option_twitter_providers_names: Option<Vec<String>>,
 ) -> (
     Option<Vec<CommonRssPostStruct>>,
     Option<
@@ -68,14 +66,23 @@ pub fn rss_part(
                 availability_checker_flag = true;
             }
         }
-        ProviderKind::Twitter => {
-            let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
-            let twitter_available_providers_links: Vec<&str> =
-                rss_check_available_providers(enable_error_prints, twitter_providers_names);
-            if !twitter_available_providers_links.is_empty() {
-                availability_checker_flag = true;
+        ProviderKind::Twitter => match option_twitter_providers_names.clone() {
+            Some(twitter_providers_names) => {
+                let twitter_available_providers_links: Vec<String> =
+                    rss_check_available_providers(enable_error_prints, twitter_providers_names);
+                if !twitter_available_providers_links.is_empty() {
+                    availability_checker_flag = true;
+                }
             }
-        }
+            None => {
+                print_colorful_message(
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    "option_twitter_providers_names is None for Twitter".to_string(),
+                );
+            }
+        },
         ProviderKind::Reddit => {
             if check_link(provider_link, enable_error_prints_handle).0 {
                 availability_checker_flag = true; //todo
@@ -92,33 +99,6 @@ pub fn rss_part(
             println!("i can reach {}", provider_link)
         };
         let links_temp_naming: Vec<String> = vec_of_provider_links;
-        let twitter_available_providers_links: Vec<&str>;
-        match provider_kind {
-            ProviderKind::Arxiv => {
-                twitter_available_providers_links = Vec::new();
-            }
-            ProviderKind::Biorxiv => {
-                twitter_available_providers_links = Vec::new();
-            }
-            ProviderKind::Github => {
-                twitter_available_providers_links = Vec::new();
-            }
-            ProviderKind::Medrxiv => {
-                twitter_available_providers_links = Vec::new();
-            }
-            ProviderKind::Twitter => {
-                let twitter_providers_names: Vec<&str> = get_twitter_providers_names();
-                // let twitter_available_providers_links: Vec<String> =
-                twitter_available_providers_links =
-                    rss_check_available_providers(enable_error_prints, twitter_providers_names);
-            }
-            ProviderKind::Reddit => {
-                twitter_available_providers_links = Vec::new(); //todo
-            }
-            ProviderKind::Habr => {
-                twitter_available_providers_links = Vec::new();
-            }
-        }
         let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
@@ -167,39 +147,59 @@ pub fn rss_part(
                         );
                 }
                 ProviderKind::Twitter => {
-                    let vec_of_hashmap_parts = rss_divide_to_equal_for_each_provider(
-                        twitter_available_providers_links,
-                        links_temp_naming,
-                        links_len,
-                    );
-                    let not_ready_processed_posts =
-                        Arc::new(Mutex::new(Vec::with_capacity(links_len)));
-                    let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
-                    for element in &mut vec_of_hashmap_parts.into_iter() {
-                        let not_ready_processed_posts_handle =
-                            Arc::clone(&not_ready_processed_posts);
-                        let provider_kind_clone = provider_kind.clone();
-                        let thread = thread::spawn(move || {
-                            let unfiltered_posts_hashmap_after_fetch_and_parse =
-                                rss_fetch_and_parse_provider_data(
-                                    enable_error_prints,
-                                    enable_time_measurement,
-                                    element.clone(),
-                                    provider_kind_clone,
-                                );
-                            let mut locked_not_ready_processed_posts =
-                                not_ready_processed_posts_handle.lock().unwrap();
-                            for unfiltered_post in unfiltered_posts_hashmap_after_fetch_and_parse {
-                                locked_not_ready_processed_posts.push(unfiltered_post);
+                    let twitter_available_providers_links: Vec<String>;
+                    match option_twitter_providers_names {
+                        Some(twitter_providers_names) => {
+                            twitter_available_providers_links = rss_check_available_providers(
+                                enable_error_prints,
+                                twitter_providers_names,
+                            );
+                            let vec_of_hashmap_parts = rss_divide_to_equal_for_each_provider(
+                                twitter_available_providers_links,
+                                links_temp_naming,
+                                links_len,
+                            );
+                            let not_ready_processed_posts =
+                                Arc::new(Mutex::new(Vec::with_capacity(links_len)));
+                            let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
+                            for element in &mut vec_of_hashmap_parts.into_iter() {
+                                let not_ready_processed_posts_handle =
+                                    Arc::clone(&not_ready_processed_posts);
+                                let provider_kind_clone = provider_kind.clone();
+                                let thread = thread::spawn(move || {
+                                    let unfiltered_posts_hashmap_after_fetch_and_parse =
+                                        rss_fetch_and_parse_provider_data(
+                                            enable_error_prints,
+                                            enable_time_measurement,
+                                            element.clone(),
+                                            provider_kind_clone,
+                                        );
+                                    let mut locked_not_ready_processed_posts =
+                                        not_ready_processed_posts_handle.lock().unwrap();
+                                    for unfiltered_post in
+                                        unfiltered_posts_hashmap_after_fetch_and_parse
+                                    {
+                                        locked_not_ready_processed_posts.push(unfiltered_post);
+                                    }
+                                });
+                                threads_vector.push(thread);
                             }
-                        });
-                        threads_vector.push(thread);
+                            for thread in threads_vector {
+                                thread.join().unwrap();
+                            }
+                            let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
+                            unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
+                        }
+                        None => {
+                            unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                            print_colorful_message(
+                                PrintType::WarningHigh,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "option_twitter_providers_names is None for Twitter".to_string(),
+                            );
+                        }
                     }
-                    for thread in threads_vector {
-                        thread.join().unwrap();
-                    }
-                    let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
-                    unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
                 }
                 ProviderKind::Reddit => {
                     //what should i do with authorization?
@@ -225,11 +225,11 @@ pub fn rss_part(
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
                         if enable_error_prints {
                             print_colorful_message(
-        PrintType::Error,
-        file!().to_string(),
-        line!().to_string(),
-        "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
-    );
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
+                            );
                         }
                     }
                 }

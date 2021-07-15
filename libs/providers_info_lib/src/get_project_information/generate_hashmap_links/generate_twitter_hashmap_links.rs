@@ -1,5 +1,5 @@
 pub fn generate_twitter_hashmap_links(
-    twitter_provider_names: Vec<&str>,
+    twitter_provider_names: Vec<String>,
     twitter_subs_names: Vec<String>,
 ) -> Vec<String> {
     //example https://nitter.pussthecat.org/Tom_McGurl/rss

@@ -3,7 +3,7 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 pub fn rss_divide_to_equal_for_each_provider(
-    rss_available_providers_links: Vec<&str>,
+    rss_available_providers_links: Vec<String>,
     links_temp_naming: Vec<String>,
     links_len: usize,
 ) -> Vec<Vec<String>> {
