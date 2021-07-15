@@ -115,6 +115,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -193,6 +194,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -277,6 +279,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -353,6 +356,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -431,6 +435,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -509,6 +514,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    None
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0
@@ -575,7 +581,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
 
                                                 let vec_of_provider_links =
                                                     generate_twitter_hashmap_links(
-                                                        twitter_providers,
+                                                        twitter_providers.clone(),
                                                         twitter_link_parts,
                                                     );
                                                 println!(
@@ -606,6 +612,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints_handle,
                                                     vec_of_provider_links,
+                                                    Some(twitter_providers)
                                                 );
                                                 if let Some(success_posts) =
                                                     enum_success_unsuccess_option_posts.0

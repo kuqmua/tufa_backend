@@ -33,6 +33,7 @@ pub fn rss_part(
     provider_kind: ProviderKind,
     enable_error_prints_handle: bool,
     vec_of_provider_links: Vec<String>,
+    twitter_providers_names: Option<Vec<&str>>,
 ) -> (
     Option<Vec<CommonRssPostStruct>>,
     Option<
@@ -90,7 +91,7 @@ pub fn rss_part(
         if enable_prints {
             println!("i can reach {}", provider_link)
         };
-        let links_temp_naming: Vec<String>;
+        let links_temp_naming: Vec<String> = vec_of_provider_links;
         let twitter_available_providers_links: Vec<&str>;
         match provider_kind {
             ProviderKind::Arxiv => {
@@ -118,29 +119,6 @@ pub fn rss_part(
                 twitter_available_providers_links = Vec::new();
             }
         }
-        match provider_kind {
-            ProviderKind::Arxiv => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Biorxiv => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Github => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Habr => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Medrxiv => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Reddit => {
-                links_temp_naming = vec_of_provider_links;
-            }
-            ProviderKind::Twitter => {
-                links_temp_naming = vec_of_provider_links;
-            }
-        }
         let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
@@ -158,7 +136,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind.clone(),
+                            provider_kind,
                         );
                 }
                 ProviderKind::Biorxiv => {
@@ -167,7 +145,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind.clone(),
+                            provider_kind,
                         );
                 }
                 ProviderKind::Github => {
@@ -176,7 +154,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind.clone(),
+                            provider_kind,
                         );
                 }
                 ProviderKind::Medrxiv => {
@@ -185,7 +163,7 @@ pub fn rss_part(
                             enable_error_prints,
                             enable_time_measurement,
                             links_temp_naming,
-                            provider_kind.clone(),
+                            provider_kind,
                         );
                 }
                 ProviderKind::Twitter => {
