@@ -154,8 +154,6 @@ test to check what cargo run executes in the right folder
 remove enable prints for provider function parameter and move it to print_colorful_message
 ----------------------------------------------------------------
 time measurement as prints_lib - check with config in implementation, not in function what use it 
-----------------------------------------------------------------
-somehow merge ProviderKind enum and in config vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 --------------------------------------------------------------------------------------------------------------------------------
 Resource::PostgreSql => { 
 ------------------------------------------------------------------------------------------------------
@@ -168,8 +166,6 @@ rename this check_new_posts_threads_parts
 Struct itertools::structs::Unique
 //check if provider_names are unique
             for provider_name in &CONFIG.params.vec_of_provider_names {
---------------------------------------------------------------------------------------------------------------------------------
-rss_part Vec of link as input parameter (huge changes)
 --------------------------------------------------------------------------------------------------------------------------------
 file: src/fetch/parse_github_html.rs:1226
 different children.len(): 3
