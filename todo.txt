@@ -75,8 +75,6 @@ github parsing version to check different structs of posts as test in the loop
 ---------------------------
 handle all todos in parse_github_html
 -----------------------------
-get concrete number of provider links as function or command line or env
------------------------------
 Add tests for new libraries versions and what version i use. 
 Like http request to crates.io or something similar
 -----------------------------
@@ -84,27 +82,16 @@ write test what checks if something missing in .dockerignore and .gitignore - lo
 -----------------------------
 todo: different todo for code and for tests
 ------------------------------
-5 => {
-                println!("todo 5 elements github parsing")
-            }
-github parsing
-------------------------------
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
 how to change default volume folder for this command?
 and mongo
------------------------------
-colorful prints as lib
 ----------------------------
 find this in code and fix "(todo change this print)" 
 ----------------------------
 limit for mongo "get data" functions
-----------------------------
-move this from config 
-mongodb://root:rootpassword@localhost:27017
-mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-to user credentials
+get concrete number of provider links as function or command line or env
 ----------------------------- 
 #![deny(clippy::indexing_slicing, clippy::unwrap_used)]
 clippy can warn/deny with this hashmap usage
@@ -171,3 +158,8 @@ file: src/fetch/parse_github_html.rs:1226
 different children.len(): 3
 file: src/fetch/parse_github_html.rs:1553
 different children.len(): 3
+------------------------------
+5 => {
+                println!("todo 5 elements github parsing")
+            }
+github parsing
