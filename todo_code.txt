@@ -68,20 +68,8 @@ todo: add medium
 ----------------------------
 cannot do cargo build while docker build with this library = { path = "./library" }
 ----------------------------
-parsing providers posts tests
-----------------------------
-server what running web tests every hour like http requests and get valid data or not
-github parsing version to check different structs of posts as test in the loop
----------------------------
 handle all todos in parse_github_html
 -----------------------------
-Add tests for new libraries versions and what version i use. 
-Like http request to crates.io or something similar
------------------------------
-write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
------------------------------
-todo: different todo for code and for tests
-------------------------------
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
@@ -131,12 +119,9 @@ fn main() {
 github parsing return in second parameter option<String, line! file!> to analize missing parse logic 
 -----------------------------------
 implement get_providers_link_parts with all success completed and with not all
-test commit2
 ----------------------------------------------------------------
 get_providers_link_parts whole and for each provider
 and maybe rewrite it as struct with methods
-----------------------------------------------------------------
-test to check what cargo run executes in the right folder
 ----------------------------------------------------------------
 remove enable prints for provider function parameter and move it to print_colorful_message
 ----------------------------------------------------------------
