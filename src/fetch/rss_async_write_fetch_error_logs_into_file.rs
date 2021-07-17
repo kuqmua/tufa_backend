@@ -25,54 +25,56 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
     warning_logs_directory_name: &str,
 ) {
     let should_enable_prints: bool;
-    let should_enable_warning_prints: bool;
+    let should_enable_warning_high_prints: bool;
     let should_enable_error_prints: bool;
     match value.4 {
         ProviderKind::Arxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_arxiv;
-            should_enable_warning_prints =
-                CONFIG.enable_warning_prints.enable_warning_prints_for_arxiv;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_arxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_arxiv;
         }
         ProviderKind::Biorxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv;
-            should_enable_warning_prints = CONFIG
-                .enable_warning_prints
-                .enable_warning_prints_for_biorxiv;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_biorxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv;
         }
         ProviderKind::Github => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_github;
-            should_enable_warning_prints = CONFIG
-                .enable_warning_prints
-                .enable_warning_prints_for_github;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_github;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_github;
         }
         ProviderKind::Habr => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_habr;
-            should_enable_warning_prints =
-                CONFIG.enable_warning_prints.enable_warning_prints_for_habr;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_habr;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr;
         }
         ProviderKind::Medrxiv => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_medrxiv;
-            should_enable_warning_prints = CONFIG
-                .enable_warning_prints
-                .enable_warning_prints_for_medrxiv;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_medrxiv;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_medrxiv;
         }
         ProviderKind::Reddit => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_reddit;
-            should_enable_warning_prints = CONFIG
-                .enable_warning_prints
-                .enable_warning_prints_for_reddit;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_reddit;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_reddit;
         }
         ProviderKind::Twitter => {
             should_enable_prints = CONFIG.enable_prints.enable_prints_twitter;
-            should_enable_warning_prints = CONFIG
-                .enable_warning_prints
-                .enable_warning_prints_for_twitter;
+            should_enable_warning_high_prints = CONFIG
+                .enable_warning_high_prints
+                .enable_warning_high_prints_for_twitter;
             should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_twitter;
         }
     }
@@ -91,7 +93,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         should_enable_prints,
-                        should_enable_warning_prints,
+                        should_enable_warning_high_prints,
                         should_enable_error_prints,
                         warning_logs_directory_name,
                         &value.0,
@@ -110,7 +112,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         should_enable_prints,
-                        should_enable_warning_prints,
+                        should_enable_warning_high_prints,
                         should_enable_error_prints,
                         warning_logs_directory_name,
                         &value.0,
@@ -129,7 +131,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         should_enable_prints,
-                        should_enable_warning_prints,
+                        should_enable_warning_high_prints,
                         should_enable_error_prints,
                         warning_logs_directory_name,
                         &value.0,
@@ -147,7 +149,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                         &value.4,
                         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         should_enable_prints,
-                        should_enable_warning_prints,
+                        should_enable_warning_high_prints,
                         should_enable_error_prints,
                         warning_logs_directory_name,
                         &value.0,
@@ -165,7 +167,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     should_enable_prints,
-                    should_enable_warning_prints,
+                    should_enable_warning_high_prints,
                     should_enable_error_prints,
                     warning_logs_directory_name,
                     &value.0,
@@ -183,7 +185,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     should_enable_prints,
-                    should_enable_warning_prints,
+                    should_enable_warning_high_prints,
                     should_enable_error_prints,
                     warning_logs_directory_name,
                     &value.0,
@@ -202,7 +204,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                     &value.4,
                     unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     should_enable_prints,
-                    should_enable_warning_prints,
+                    should_enable_warning_high_prints,
                     should_enable_error_prints,
                     warning_logs_directory_name,
                     &value.0,
@@ -220,7 +222,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 &value.4,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                 should_enable_prints,
-                should_enable_warning_prints,
+                should_enable_warning_high_prints,
                 should_enable_error_prints,
                 warning_logs_directory_name,
                 &value.0,
@@ -238,7 +240,7 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
                 &value.4,
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                 should_enable_prints,
-                should_enable_warning_prints,
+                should_enable_warning_high_prints,
                 should_enable_error_prints,
                 warning_logs_directory_name,
                 &value.0,

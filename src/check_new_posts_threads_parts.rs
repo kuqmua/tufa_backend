@@ -97,10 +97,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_arxiv,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_arxiv,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_arxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -176,10 +176,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_biorxiv,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_biorxiv,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_biorxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -261,10 +261,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_github,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_github,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_github,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -338,10 +338,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_habr,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_habr,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_habr,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -417,10 +417,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_medrxiv,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_medrxiv,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_medrxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -496,10 +496,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_reddit,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_reddit,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_reddit,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
@@ -594,10 +594,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG.enable_prints.enable_prints_twitter,
                                                     CONFIG
                                                         .params
-                                                        .enable_warning_prints_for_all_providers
+                                                        .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_prints
-                                                            .enable_warning_prints_for_twitter,
+                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_prints_for_twitter,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers

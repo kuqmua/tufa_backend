@@ -5,7 +5,7 @@ pub static VECTOR_OF_MODES: &[&str] = &["Development", "Production", "Testing"];
 pub const CONFIG_CONTENT: &str = r#"[params]
 enable_all_providers = true
 enable_all_providers_prints = true
-enable_warning_prints_for_all_providers = true
+enable_warning_high_prints_for_all_providers = true
 enable_error_prints_for_all_providers = true
 enable_all_cleaning_warning_logs_directory = true
 enable_prints_handle = true
@@ -63,14 +63,14 @@ enable_prints_medrxiv = true
 enable_prints_reddit = true
 enable_prints_twitter = true
 
-[enable_warning_prints]
-enable_warning_prints_for_arxiv = true
-enable_warning_prints_for_biorxiv = true
-enable_warning_prints_for_github = true
-enable_warning_prints_for_habr = true
-enable_warning_prints_for_medrxiv = true
-enable_warning_prints_for_reddit = true
-enable_warning_prints_for_twitter = true
+[enable_warning_high_prints]
+enable_warning_high_prints_for_arxiv = true
+enable_warning_high_prints_for_biorxiv = true
+enable_warning_high_prints_for_github = true
+enable_warning_high_prints_for_habr = true
+enable_warning_high_prints_for_medrxiv = true
+enable_warning_high_prints_for_reddit = true
+enable_warning_high_prints_for_twitter = true
 
 [enable_error_prints]
 enable_error_prints_for_arxiv = true

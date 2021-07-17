@@ -8,7 +8,7 @@ pub struct ConfigStruct {
     pub enable_providers: EnableProvidersStruct,
     pub links: Links,
     pub enable_prints: EnablePrints,
-    pub enable_warning_prints: EnableWarningPrints,
+    pub enable_warning_high_prints: EnableWarningHighPrints,
     pub enable_error_prints: EnableErrorPrints,
     pub enable_cleaning_warning_logs_directory: EnableCleaningWarningLogsDirectory,
     pub enable_time_measurement: EnableTimeMeasurement,
@@ -73,14 +73,14 @@ pub struct EnablePrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableWarningPrints {
-    pub enable_warning_prints_for_arxiv: bool,
-    pub enable_warning_prints_for_biorxiv: bool,
-    pub enable_warning_prints_for_github: bool,
-    pub enable_warning_prints_for_habr: bool,
-    pub enable_warning_prints_for_medrxiv: bool,
-    pub enable_warning_prints_for_reddit: bool,
-    pub enable_warning_prints_for_twitter: bool,
+pub struct EnableWarningHighPrints {
+    pub enable_warning_high_prints_for_arxiv: bool,
+    pub enable_warning_high_prints_for_biorxiv: bool,
+    pub enable_warning_high_prints_for_github: bool,
+    pub enable_warning_high_prints_for_habr: bool,
+    pub enable_warning_high_prints_for_medrxiv: bool,
+    pub enable_warning_high_prints_for_reddit: bool,
+    pub enable_warning_high_prints_for_twitter: bool,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
@@ -121,7 +121,7 @@ pub struct Params {
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
     pub enable_all_providers: bool,
     pub enable_all_providers_prints: bool,
-    pub enable_warning_prints_for_all_providers: bool,
+    pub enable_warning_high_prints_for_all_providers: bool,
     pub enable_error_prints_for_all_providers: bool,
     pub enable_all_cleaning_warning_logs_directory: bool,
     pub enable_prints_handle: bool,
