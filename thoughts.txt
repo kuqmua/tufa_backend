@@ -102,3 +102,6 @@ arxiv_params = { name: "arxiv", enable_arxiv: true, something else...}
 Faster docker build 
 Cargo chef
 https://github.com/LukeMathWalker/cargo-chef
+--------------------------
+Redis rust library
+https://github.com/mitsuhiko/redis-rs
