@@ -87,6 +87,24 @@ enable_error_prints_for_medrxiv = true
 enable_error_prints_for_reddit = true
 enable_error_prints_for_twitter = true
 
+[enable_success_prints]
+enable_success_prints_for_arxiv = true
+enable_success_prints_for_biorxiv = true
+enable_success_prints_for_github = true
+enable_success_prints_for_habr = true
+enable_success_prints_for_medrxiv = true
+enable_success_prints_for_reddit = true
+enable_success_prints_for_twitter = true
+
+[enable_partial_success_prints]
+enable_partial_success_prints_for_arxiv = true
+enable_partial_success_prints_for_biorxiv = true
+enable_partial_success_prints_for_github = true
+enable_partial_success_prints_for_habr = true
+enable_partial_success_prints_for_medrxiv = true
+enable_partial_success_prints_for_reddit = true
+enable_partial_success_prints_for_twitter = true
+
 [enable_cleaning_warning_logs_directory]
 enable_cleaning_warning_logs_directory_for_arxiv = true
 enable_cleaning_warning_logs_directory_for_biorxiv = true
