@@ -93,3 +93,5 @@ tilde requirements
 wildcard requirements
 --------------------------
 different user_credentials files for project databases and providers
+--------------------------
+config as dynamic library maybe?
