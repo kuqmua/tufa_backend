@@ -95,3 +95,6 @@ wildcard requirements
 different user_credentials files for project databases and providers
 --------------------------
 config as dynamic library maybe?
+--------------------------
+Restructure config for providers like this
+arxiv_params = { name: "arxiv", enable_arxiv: true, something else...}
