@@ -98,3 +98,7 @@ config as dynamic library maybe?
 --------------------------
 Restructure config for providers like this
 arxiv_params = { name: "arxiv", enable_arxiv: true, something else...}
+--------------------------
+Faster docker build 
+Cargo chef
+https://github.com/LukeMathWalker/cargo-chef
