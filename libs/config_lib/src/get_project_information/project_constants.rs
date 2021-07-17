@@ -9,6 +9,14 @@ pub const PATH_TO_CONFIG_FOR_TEST: &str = "../../config/";
 pub const PROJECT_MODE: &str = "Development"; //later as ENV variable only
 pub const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
 
+pub const ARXIV_NAME_TO_CHECK: &str = "arxiv";
+pub const BIORXIV_NAME_TO_CHECK: &str = "biorxiv";
+pub const GITHUB_NAME_TO_CHECK: &str = "github";
+pub const HABR_NAME_TO_CHECK: &str = "habr";
+pub const MEDRXIV_NAME_TO_CHECK: &str = "medrxiv";
+pub const REDDIT_NAME_TO_CHECK: &str = "reddit";
+pub const TWITTER_NAME_TO_CHECK: &str = "twitter";
+
 use crate::get_project_information::get_config::get_config_information::CONFIG;
 
 pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
@@ -26,6 +34,8 @@ pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKi
         .insert("twitter".to_string(), ProviderKind::Twitter);
     config_provider_string_to_enum_struct_hasmap
 }
+
+//     config_provider_string_to_enum_struct_hasmap
 
 // pub struct ConfigProviderStringToEnumTypeStruct {
 //     pub config_name_value: &'static str,
