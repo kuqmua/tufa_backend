@@ -205,6 +205,12 @@ pub struct PrintColors {
     pub partial_success_red: u8,
     pub partial_success_green: u8,
     pub partial_success_blue: u8,
+    pub cleaning_red: u8,
+    pub cleaning_green: u8,
+    pub cleaning_blue: u8,
+    pub time_measurement_red: u8,
+    pub time_measurement_green: u8,
+    pub time_measurement_blue: u8,
 }
 
 #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]

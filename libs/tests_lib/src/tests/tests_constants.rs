@@ -142,7 +142,13 @@ success_green = 255
 success_blue = 0
 partial_success_red = 0
 partial_success_green = 200
-partial_success_blue = 155"#;
+partial_success_blue = 155
+cleaning_red = 230
+cleaning_green = 234
+cleaning_blue = 255
+time_measurement_red = 255
+time_measurement_green = 153
+time_measurement_blue = 170"#;
 //its important to have EXACT copy without spaces or Line feed character
 pub const USER_CREDENTIALS_CONTENT: &str = r#"[github_authorization]
 github_name = "example"
