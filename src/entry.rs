@@ -14,7 +14,7 @@ pub fn entry() {
     let time = Instant::now();
     let cpus = num_cpus::get();
 
-    if CONFIG.params.enable_prints_handle {
+    if CONFIG.params.enable_prints {
         if cpus > 1 {
             println!("We are on a multicore system with {} CPUs", cpus);
         } else {
@@ -22,20 +22,20 @@ pub fn entry() {
         }
     }
     println!("ENV: {}", CONFIG.env);
-    let enable_common_time_measurement = CONFIG.params.enable_common_time_measurement; //need to be different variable cuz move happpens
+    let enable_common_time_measurement = CONFIG.params.enable_time_measurement; //need to be different variable cuz move happpens
     if check_link(
         &CONFIG.links.starting_check_link,
-        CONFIG.params.enable_error_prints_handle,
+        CONFIG.params.enable_error_prints,
     )
     .0
     {
-        if CONFIG.params.enable_prints_handle {
+        if CONFIG.params.enable_prints {
             let its_all_good_message =
                 "server can reach ".to_string() + &CONFIG.links.starting_check_link;
             println!("{}", its_all_good_message);
         }
         async_tokio_wrapper();
-    } else if CONFIG.params.enable_error_prints_handle {
+    } else if CONFIG.params.enable_error_prints {
         let its_not_good_message =
             "server cannot reach ".to_string() + &CONFIG.links.starting_check_link;
         print_colorful_message(

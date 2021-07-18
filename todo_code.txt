@@ -148,3 +148,5 @@ different children.len(): 3
                 println!("todo 5 elements github parsing")
             }
 github parsing
+--------------------------
+check config for unused variables

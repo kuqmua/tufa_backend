@@ -1,20 +1,29 @@
 [params]
-enable_all_providers = true
-enable_all_providers_prints = true
-enable_warning_high_prints_for_all_providers = true
-enable_warning_low_prints_for_all_providers = true
-enable_error_prints_for_all_providers = true
-enable_all_cleaning_warning_logs_directory = true
-enable_prints_handle = true
-enable_error_prints_handle = true
+vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
+#it can be only one of them: "arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter" - check project_constants.rs
+user_credentials_dummy_handle = "example"
 warning_logs_directory_name = "warning_logs"
 unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhandled_success_handled_success_are_there_items_initialized_posts"
 # // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
-enable_all_time_measurement = true
-enable_common_time_measurement = true
-user_credentials_dummy_handle = "example"
-vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
-#it can be only one of them: "arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter" - check project_constants.rs
+enable_providers = true
+enable_cleaning_warning_logs_directory = true
+enable_time_measurement = true
+enable_prints = true
+enable_error_prints = true
+enable_warning_high_prints = true
+enable_warning_low_prints = true
+enable_success_prints = true
+enable_partial_success_prints = true
+enable_time_measurement_prints = true
+enable_cleaning_warning_logs_directory_prints = true
+enable_all_providers_prints = true
+enable_error_prints_for_all_providers = true
+enable_warning_high_prints_for_all_providers = true
+enable_warning_low_prints_for_all_providers = true
+enable_success_prints_for_all_providers = true
+enable_partial_success_prints_for_all_providers = true
+enable_time_measurement_prints_for_all_providers = true
+enable_cleaning_warning_logs_directory_prints_for_all_providers = true
 
 [mongo_params]
 is_cloud = true

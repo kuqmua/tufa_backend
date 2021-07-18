@@ -40,7 +40,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         ProviderKind,
     )>,
 )> {
-    if CONFIG.params.enable_all_providers {
+    if CONFIG.params.enable_providers {
         if !CONFIG.params.vec_of_provider_names.is_empty() {
             let option_providers_link_parts = get_providers_link_parts_wrapper();
             match option_providers_link_parts {
@@ -107,13 +107,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_arxiv,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_arxiv_time_measurement,
                                                     &CONFIG.links.arxiv_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -186,13 +186,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_biorxiv,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_biorxiv_time_measurement,
                                                     &CONFIG.links.biorxiv_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -271,13 +271,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_github,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_github_time_measurement,
                                                     &CONFIG.links.github_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -348,13 +348,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_habr,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_habr_time_measurement,
                                                     &CONFIG.links.habr_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -427,13 +427,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_medrxiv,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_medrxiv_time_measurement,
                                                     &CONFIG.links.medrxiv_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -506,13 +506,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_reddit,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_reddit_time_measurement,
                                                     &CONFIG.links.reddit_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     None
                                                 );
@@ -604,13 +604,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         && CONFIG
                                                             .enable_error_prints
                                                             .enable_error_prints_for_twitter,
-                                                    CONFIG.params.enable_all_time_measurement
+                                                    CONFIG.params.enable_time_measurement
                                                         && CONFIG
                                                             .enable_time_measurement
                                                             .enable_twitter_time_measurement,
                                                     &CONFIG.links.twitter_link,
                                                     provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints_handle,
+                                                    CONFIG.params.enable_error_prints,
                                                     vec_of_provider_links,
                                                     Some(twitter_providers)
                                                 );
