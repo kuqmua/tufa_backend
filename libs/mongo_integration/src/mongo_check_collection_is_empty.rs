@@ -1,5 +1,6 @@
 use mongodb::{options::ClientOptions, Client};
-// use prints_lib::print_colorful_message;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 #[tokio::main]
 pub async fn mongo_check_collection_is_empty(
@@ -34,22 +35,37 @@ pub async fn mongo_check_collection_is_empty(
                         }
                         Err(e) => {
                             result_flag = None;
-                            println!(
-                                "(todo change this print) collection.count_documents, {:#?}",
-                                e
-                            )
+                            print_colorful_message(
+                                None,
+                                PrintType::WarningHigh,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("documents_number_result error, {:#?}", e),
+                            );
                         }
                     }
                 }
                 None => {
                     result_flag = None;
-                    println!("(todo change this print) no such collection1");
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningLow,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "needed_db_collection is None".to_string(),
+                    );
                 }
             }
         }
         Err(e) => {
             result_flag = None;
-            println!("(todo change this print) no client , {:#?}", e);
+            print_colorful_message(
+                None,
+                PrintType::WarningLow,
+                file!().to_string(),
+                line!().to_string(),
+                format!("client_result error, {:#?}", e),
+            );
         }
     }
     Ok(result_flag)
