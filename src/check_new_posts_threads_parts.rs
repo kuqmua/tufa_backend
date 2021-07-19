@@ -78,7 +78,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_arxiv
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_arxiv
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -95,23 +97,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_arxiv,
+                                                        && CONFIG.enable_providers_prints.enable_prints_arxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_arxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_arxiv,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_arxiv_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_arxiv,
                                                     &CONFIG.links.arxiv_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -156,7 +158,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_biorxiv
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_biorxiv
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -175,23 +179,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_biorxiv,
+                                                        && CONFIG.enable_providers_prints.enable_prints_biorxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_biorxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_biorxiv,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_biorxiv_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_biorxiv,
                                                     &CONFIG.links.biorxiv_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -236,7 +240,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_github
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_github
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -261,23 +267,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_github,
+                                                        && CONFIG.enable_providers_prints.enable_prints_github,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_github,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_github,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_github_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_github,
                                                     &CONFIG.links.github_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -322,7 +328,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_habr
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_habr
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -339,23 +347,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_habr,
+                                                        && CONFIG.enable_providers_prints.enable_prints_habr,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_habr,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_habr,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_habr_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_habr,
                                                     &CONFIG.links.habr_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -400,7 +408,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_medrxiv
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_medrxiv
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -419,23 +429,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_medrxiv,
+                                                        && CONFIG.enable_providers_prints.enable_prints_medrxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_medrxiv,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_medrxiv,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_medrxiv_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_medrxiv,
                                                     &CONFIG.links.medrxiv_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -480,7 +490,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_reddit
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_reddit
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} HashMap",
@@ -499,23 +511,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_reddit,
+                                                        && CONFIG.enable_providers_prints.enable_prints_reddit,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_reddit,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_reddit,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_reddit_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_reddit,
                                                     &CONFIG.links.reddit_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,
@@ -569,7 +581,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else {
                                                 if CONFIG.params.enable_all_providers_prints
-                                                    && CONFIG.enable_prints.enable_prints_twitter
+                                                    && CONFIG
+                                                        .enable_providers_prints
+                                                        .enable_prints_twitter
                                                 {
                                                     println!(
                                                         "{:#?} elements in {:#?} twitter_link_parts HashMap",
@@ -599,23 +613,23 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 threads_vec.push(thread::spawn(move || {
                                                 let enum_success_unsuccess_option_posts = rss_part(
                                                     CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_prints.enable_prints_twitter,
+                                                        && CONFIG.enable_providers_prints.enable_prints_twitter,
                                                     CONFIG
                                                         .params
                                                         .enable_warning_high_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_warning_high_prints
+                                                            .enable_warning_high_providers_prints
                                                             .enable_warning_high_prints_for_twitter,
                                                     CONFIG
                                                         .params
                                                         .enable_error_prints_for_all_providers
                                                         && CONFIG
-                                                            .enable_error_prints
+                                                            .enable_error_providers_prints
                                                             .enable_error_prints_for_twitter,
                                                     CONFIG.params.enable_time_measurement
                                                         && CONFIG
-                                                            .enable_time_measurement
-                                                            .enable_twitter_time_measurement,
+                                                            .enable_providers_time_measurement
+                                                            .enable_time_measurement_for_twitter,
                                                     &CONFIG.links.twitter_link,
                                                     provider_kind_handle_clone,
                                                     CONFIG.params.enable_error_prints,

@@ -60,7 +60,7 @@ medrxiv_link = "https://www.google.com/" # http://connect.medrxiv.org/
 reddit_link = "https://www.reddit.com/"
 twitter_link = "https://www.google.com/" # must be not only 1 str but many - twitter and many nitters
 
-[enable_prints]
+[enable_providers_prints]
 enable_prints_arxiv = true
 enable_prints_biorxiv = true
 enable_prints_github = true
@@ -69,7 +69,7 @@ enable_prints_medrxiv = true
 enable_prints_reddit = true
 enable_prints_twitter = true
 
-[enable_warning_high_prints]
+[enable_warning_high_providers_prints]
 enable_warning_high_prints_for_arxiv = true
 enable_warning_high_prints_for_biorxiv = true
 enable_warning_high_prints_for_github = true
@@ -78,7 +78,7 @@ enable_warning_high_prints_for_medrxiv = true
 enable_warning_high_prints_for_reddit = true
 enable_warning_high_prints_for_twitter = true
 
-[enable_warning_low_prints]
+[enable_warning_low_providers_prints]
 enable_warning_low_prints_for_arxiv = true
 enable_warning_low_prints_for_biorxiv = true
 enable_warning_low_prints_for_github = true
@@ -87,7 +87,7 @@ enable_warning_low_prints_for_medrxiv = true
 enable_warning_low_prints_for_reddit = true
 enable_warning_low_prints_for_twitter = true
 
-[enable_error_prints]
+[enable_error_providers_prints]
 enable_error_prints_for_arxiv = true
 enable_error_prints_for_biorxiv = true
 enable_error_prints_for_github = true
@@ -96,7 +96,7 @@ enable_error_prints_for_medrxiv = true
 enable_error_prints_for_reddit = true
 enable_error_prints_for_twitter = true
 
-[enable_success_prints]
+[enable_success_providers_prints]
 enable_success_prints_for_arxiv = true
 enable_success_prints_for_biorxiv = true
 enable_success_prints_for_github = true
@@ -105,7 +105,7 @@ enable_success_prints_for_medrxiv = true
 enable_success_prints_for_reddit = true
 enable_success_prints_for_twitter = true
 
-[enable_partial_success_prints]
+[enable_partial_success_providers_prints]
 enable_partial_success_prints_for_arxiv = true
 enable_partial_success_prints_for_biorxiv = true
 enable_partial_success_prints_for_github = true
@@ -114,7 +114,7 @@ enable_partial_success_prints_for_medrxiv = true
 enable_partial_success_prints_for_reddit = true
 enable_partial_success_prints_for_twitter = true
 
-[enable_cleaning_warning_logs_directory]
+[enable_providers_cleaning_warning_logs_directory]
 enable_cleaning_warning_logs_directory_for_arxiv = true
 enable_cleaning_warning_logs_directory_for_biorxiv = true
 enable_cleaning_warning_logs_directory_for_github = true
@@ -123,14 +123,14 @@ enable_cleaning_warning_logs_directory_for_medrxiv = true
 enable_cleaning_warning_logs_directory_for_reddit = true
 enable_cleaning_warning_logs_directory_for_twitter = true
 
-[enable_time_measurement]
-enable_arxiv_time_measurement = true
-enable_biorxiv_time_measurement = true
-enable_github_time_measurement = true
-enable_habr_time_measurement = true
-enable_medrxiv_time_measurement = true
-enable_reddit_time_measurement = true
-enable_twitter_time_measurement = true
+[enable_providers_time_measurement]
+enable_time_measurement_for_arxiv = true
+enable_time_measurement_for_biorxiv = true
+enable_time_measurement_for_github = true
+enable_time_measurement_for_habr = true
+enable_time_measurement_for_medrxiv = true
+enable_time_measurement_for_reddit = true
+enable_time_measurement_for_twitter = true
 
 [print_colors]
 error_red = 255

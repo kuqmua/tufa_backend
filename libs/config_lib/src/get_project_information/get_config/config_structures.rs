@@ -7,14 +7,15 @@ pub struct ConfigStruct {
     pub mongo_params: MongoParams,
     pub enable_providers: EnableProvidersStruct,
     pub links: Links,
-    pub enable_prints: EnablePrints,
-    pub enable_warning_high_prints: EnableWarningHighPrints, //todo maybe rename it into  EnableWarningHighPrintsForProviders
-    pub enable_warning_low_prints: EnableWarningLowPrints,
-    pub enable_success_prints: EnableSuccessPrints,
-    pub enable_partial_success_prints: EnablePartialSuccessPrints,
-    pub enable_error_prints: EnableErrorPrints,
-    pub enable_cleaning_warning_logs_directory: EnableCleaningWarningLogsDirectory,
-    pub enable_time_measurement: EnableTimeMeasurement,
+    pub enable_providers_prints: EnableProvidersPrints,
+    pub enable_warning_high_providers_prints: EnableWarningHighProvidersPrints, //todo maybe rename it into  EnableWarningHighPrintsForProviders
+    pub enable_warning_low_providers_prints: EnableWarningLowProvidersPrints,
+    pub enable_success_providers_prints: EnableSuccessProvidersPrints,
+    pub enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints,
+    pub enable_error_providers_prints: EnableErrorProvidersPrints,
+    pub enable_providers_cleaning_warning_logs_directory:
+        EnableProvidersCleaningWarningLogsDirectory,
+    pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub env: Env,
     pub print_colors: PrintColors,
 }
@@ -65,7 +66,7 @@ pub struct Links {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnablePrints {
+pub struct EnableProvidersPrints {
     pub enable_prints_arxiv: bool,
     pub enable_prints_biorxiv: bool,
     pub enable_prints_github: bool,
@@ -76,7 +77,7 @@ pub struct EnablePrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableWarningHighPrints {
+pub struct EnableWarningHighProvidersPrints {
     pub enable_warning_high_prints_for_arxiv: bool,
     pub enable_warning_high_prints_for_biorxiv: bool,
     pub enable_warning_high_prints_for_github: bool,
@@ -87,7 +88,7 @@ pub struct EnableWarningHighPrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableWarningLowPrints {
+pub struct EnableWarningLowProvidersPrints {
     pub enable_warning_low_prints_for_arxiv: bool,
     pub enable_warning_low_prints_for_biorxiv: bool,
     pub enable_warning_low_prints_for_github: bool,
@@ -98,7 +99,7 @@ pub struct EnableWarningLowPrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableSuccessPrints {
+pub struct EnableSuccessProvidersPrints {
     pub enable_success_prints_for_arxiv: bool,
     pub enable_success_prints_for_biorxiv: bool,
     pub enable_success_prints_for_github: bool,
@@ -109,7 +110,7 @@ pub struct EnableSuccessPrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnablePartialSuccessPrints {
+pub struct EnablePartialSuccessProvidersPrints {
     pub enable_partial_success_prints_for_arxiv: bool,
     pub enable_partial_success_prints_for_biorxiv: bool,
     pub enable_partial_success_prints_for_github: bool,
@@ -119,7 +120,7 @@ pub struct EnablePartialSuccessPrints {
     pub enable_partial_success_prints_for_twitter: bool,
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableErrorPrints {
+pub struct EnableErrorProvidersPrints {
     pub enable_error_prints_for_arxiv: bool,
     pub enable_error_prints_for_biorxiv: bool,
     pub enable_error_prints_for_github: bool,
@@ -130,7 +131,7 @@ pub struct EnableErrorPrints {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableCleaningWarningLogsDirectory {
+pub struct EnableProvidersCleaningWarningLogsDirectory {
     pub enable_cleaning_warning_logs_directory_for_arxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_biorxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_github: bool,
@@ -141,14 +142,14 @@ pub struct EnableCleaningWarningLogsDirectory {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct EnableTimeMeasurement {
-    pub enable_arxiv_time_measurement: bool,
-    pub enable_biorxiv_time_measurement: bool,
-    pub enable_github_time_measurement: bool,
-    pub enable_habr_time_measurement: bool,
-    pub enable_medrxiv_time_measurement: bool,
-    pub enable_reddit_time_measurement: bool,
-    pub enable_twitter_time_measurement: bool,
+pub struct EnableProvidersTimeMeasurement {
+    pub enable_time_measurement_for_arxiv: bool,
+    pub enable_time_measurement_for_biorxiv: bool,
+    pub enable_time_measurement_for_github: bool,
+    pub enable_time_measurement_for_habr: bool,
+    pub enable_time_measurement_for_medrxiv: bool,
+    pub enable_time_measurement_for_reddit: bool,
+    pub enable_time_measurement_for_twitter: bool,
 }
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Params {

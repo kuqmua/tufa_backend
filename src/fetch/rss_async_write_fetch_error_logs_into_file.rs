@@ -29,53 +29,67 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
     let should_enable_error_prints: bool;
     match value.4 {
         ProviderKind::Arxiv => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_arxiv;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_arxiv;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_arxiv;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_arxiv;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_arxiv;
         }
         ProviderKind::Biorxiv => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_biorxiv;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_biorxiv;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_biorxiv;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_biorxiv;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_biorxiv;
         }
         ProviderKind::Github => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_github;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_github;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_github;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_github;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_github;
         }
         ProviderKind::Habr => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_habr;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_habr;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_habr;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_habr;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_habr;
         }
         ProviderKind::Medrxiv => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_medrxiv;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_medrxiv;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_medrxiv;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_medrxiv;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_medrxiv;
         }
         ProviderKind::Reddit => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_reddit;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_reddit;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_reddit;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_reddit;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_reddit;
         }
         ProviderKind::Twitter => {
-            should_enable_prints = CONFIG.enable_prints.enable_prints_twitter;
+            should_enable_prints = CONFIG.enable_providers_prints.enable_prints_twitter;
             should_enable_warning_high_prints = CONFIG
-                .enable_warning_high_prints
+                .enable_warning_high_providers_prints
                 .enable_warning_high_prints_for_twitter;
-            should_enable_error_prints = CONFIG.enable_error_prints.enable_error_prints_for_twitter;
+            should_enable_error_prints = CONFIG
+                .enable_error_providers_prints
+                .enable_error_prints_for_twitter;
         }
     }
     match value.1 {

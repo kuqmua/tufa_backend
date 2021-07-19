@@ -29,41 +29,45 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         match some_error_post.4 {
             ProviderKind::Arxiv => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG.enable_time_measurement.enable_arxiv_time_measurement
+                    && CONFIG
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_arxiv
             }
             ProviderKind::Biorxiv => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
                     && CONFIG
-                        .enable_time_measurement
-                        .enable_biorxiv_time_measurement
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_biorxiv
             }
             ProviderKind::Github => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
                     && CONFIG
-                        .enable_time_measurement
-                        .enable_github_time_measurement
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_github
             }
             ProviderKind::Habr => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG.enable_time_measurement.enable_habr_time_measurement
+                    && CONFIG
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_habr
             }
             ProviderKind::Medrxiv => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
                     && CONFIG
-                        .enable_time_measurement
-                        .enable_medrxiv_time_measurement
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_medrxiv
             }
             ProviderKind::Reddit => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
                     && CONFIG
-                        .enable_time_measurement
-                        .enable_reddit_time_measurement
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_reddit
             }
             ProviderKind::Twitter => {
                 enable_time_measurement = CONFIG.params.enable_time_measurement
                     && CONFIG
-                        .enable_time_measurement
-                        .enable_twitter_time_measurement
+                        .enable_providers_time_measurement
+                        .enable_time_measurement_for_twitter
             }
         }
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
