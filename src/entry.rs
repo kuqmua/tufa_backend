@@ -3,8 +3,8 @@ use std::time::Instant;
 
 use crate::check_net::check_link::check_link;
 
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 

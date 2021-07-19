@@ -1,4 +1,5 @@
 use mongodb::{options::ClientOptions, Client};
+// use prints_lib::print_colorful_message;
 
 #[tokio::main]
 pub async fn mongo_check_collection_is_empty(

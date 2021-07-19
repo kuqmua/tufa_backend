@@ -2,8 +2,8 @@ use roux::util::error::RouxError;
 use roux::Reddit;
 
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 pub fn reddit_authorization(
     user_agent: &str,

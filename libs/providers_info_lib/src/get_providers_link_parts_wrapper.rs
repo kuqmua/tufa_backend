@@ -7,8 +7,8 @@ use crate::get_project_information::get_providers_link_parts::get_providers_link
 use crate::get_project_information::get_providers_link_parts::Resource;
 // use crate::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url: String;

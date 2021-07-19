@@ -1,5 +1,5 @@
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 use html_parser::{Dom, Node};
 

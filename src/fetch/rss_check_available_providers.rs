@@ -1,7 +1,7 @@
 use crate::fetch::rss_check_provider_status::rss_check_provider_status;
 
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 use std::sync::{Arc, Mutex};
 use std::thread;

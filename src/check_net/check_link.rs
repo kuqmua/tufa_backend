@@ -2,8 +2,8 @@ use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatus
 use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
 use crate::check_net::fetch_link::fetch_link;
 
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 pub fn check_link(
     link: &str,

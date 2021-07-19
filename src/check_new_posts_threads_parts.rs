@@ -3,8 +3,8 @@ use std::thread::JoinHandle;
 
 use crate::fetch::rss_part::rss_part;
 
-use prints_lib::print_colorful_message;
-use prints_lib::PrintType;
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use std::sync::{Arc, Mutex};
