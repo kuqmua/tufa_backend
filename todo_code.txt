@@ -152,3 +152,5 @@ github parsing
 check config for unused variables
 ----------------------------
 remove pub from innner fucntions in parse_github_html
+----------------------------
+add provider_kind into inner related to providers functions as input parameter
