@@ -154,3 +154,5 @@ check config for unused variables
 remove pub from innner fucntions in parse_github_html
 ----------------------------
 add provider_kind into inner related to providers functions as input parameter
+----------------------------
+remove all if enable_prints like code in functions except print_colorful_message and its inner function
