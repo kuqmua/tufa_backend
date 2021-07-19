@@ -150,3 +150,5 @@ different children.len(): 3
 github parsing
 --------------------------
 check config for unused variables
+----------------------------
+remove pub from innner fucntions in parse_github_html
