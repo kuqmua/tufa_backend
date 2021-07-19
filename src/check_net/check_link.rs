@@ -33,6 +33,7 @@ pub fn check_link(
                                 status_code.clone().to_string()
                             );
                             print_colorful_message(
+                                None,
                                 PrintType::Error,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -42,6 +43,7 @@ pub fn check_link(
                         HandledReachProviderStatusInfo::Initialized => {
                             let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Initialized??? wtf", link);
                             print_colorful_message(
+                                None,
                                 PrintType::Error,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -51,6 +53,7 @@ pub fn check_link(
                         HandledReachProviderStatusInfo::Success => {
                             let error_message = format!("{} check_link false, and HandledReachProviderStatusInfo::Success??? wtf", link);
                             print_colorful_message(
+                                None,
                                 PrintType::Error,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -71,6 +74,7 @@ pub fn check_link(
                 let error_message =
                     format!("{} check_link fetch_result Box<dyn Error> {}", link, e);
                 print_colorful_message(
+                    None,
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),

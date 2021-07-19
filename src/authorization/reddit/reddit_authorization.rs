@@ -1,6 +1,7 @@
 use roux::util::error::RouxError;
 use roux::Reddit;
 
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use prints_lib::print_colorful_message;
 use prints_lib::PrintType;
 
@@ -22,6 +23,7 @@ pub fn reddit_authorization(
                 RouxError::Network(error_instans) => {
                     if let Some(eshe_errorishe) = error_instans.get_ref() {
                         print_colorful_message(
+                            Some(&ProviderKind::Reddit),
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),
@@ -29,6 +31,7 @@ pub fn reddit_authorization(
                         );
                     } else {
                         print_colorful_message(
+                            Some(&ProviderKind::Reddit),
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),
@@ -37,6 +40,7 @@ pub fn reddit_authorization(
                     }
                 }
                 _ => print_colorful_message(
+                    Some(&ProviderKind::Reddit),
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),

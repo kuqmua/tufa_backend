@@ -39,6 +39,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
             if enable_warning_prints {
                 let warning_message = format!("there is file with the same name: {}", &file_name);
                 print_colorful_message(
+                    Some(provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -60,6 +61,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     &err.kind()
                 );
                 print_colorful_message(
+                    Some(provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),

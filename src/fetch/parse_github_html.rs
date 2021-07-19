@@ -94,6 +94,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     dom_first_child_first_child_first_child.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -103,6 +104,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     }
                                                 }
                                                 _ => print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -115,6 +117,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     dom_first_child_first_child.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                 line!().to_string(),
@@ -124,6 +127,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                         }
                                     }
                                     _ => print_colorful_message(
+                                                    None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                     line!().to_string(),
@@ -134,6 +138,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     let warning_message =
                                         format!("different children.len(): {}", dom_first_child.children.len());
                                     print_colorful_message(
+                                                    None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                     line!().to_string(),
@@ -143,6 +148,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             }
                             }
                             _ => print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -153,6 +159,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             let warning_message =
                                 format!("different children.len(): {}", dom.children.len());
                             print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -164,6 +171,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                 Err(e) => {
                     let error_message = format!("Dom::parse error {}", e);
                     print_colorful_message(
+                        None,
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -173,6 +181,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
             }
         }
         None => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -244,6 +253,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -253,6 +263,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -265,6 +276,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             node_element_first.children.len()
                         );
                         print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -273,6 +285,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     }
                 },
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -283,6 +296,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -291,6 +305,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -376,6 +391,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -388,6 +404,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_first.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -397,6 +414,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -410,6 +428,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -427,6 +446,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -439,6 +459,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_third.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -448,6 +469,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -485,6 +507,7 @@ pub fn parse_github_html_second_part(
                                                                     attribute
                                                                 );
                                                                 print_colorful_message(
+                                                                    None,
                                                                     PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                     line!().to_string(),
@@ -509,6 +532,7 @@ pub fn parse_github_html_second_part(
                                                                     }
                                                                 }
                                                                 _ => print_colorful_message(
+                                                    None,
                                                                     PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                 line!().to_string(),
@@ -522,6 +546,7 @@ pub fn parse_github_html_second_part(
                                                     node_element_first_fourth_first.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                 line!().to_string(),
@@ -531,6 +556,7 @@ pub fn parse_github_html_second_part(
                                                     }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -543,6 +569,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_fourth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -552,6 +579,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -582,6 +610,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                     line!().to_string(),
@@ -596,6 +625,7 @@ pub fn parse_github_html_second_part(
                                    node_element_first_firth_first.children.len()
                                 );
                                                                 print_colorful_message(
+                                                    None,
                                                                     PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                 line!().to_string(),
@@ -605,6 +635,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -629,6 +660,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                     line!().to_string(),
@@ -642,6 +674,7 @@ pub fn parse_github_html_second_part(
                                     node_element_first_firth_second.children.len()
                                 );
                                 print_colorful_message(
+                                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                 line!().to_string(),
@@ -651,6 +684,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -678,6 +712,7 @@ pub fn parse_github_html_second_part(
                                                                             }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                     line!().to_string(),
@@ -692,6 +727,7 @@ pub fn parse_github_html_second_part(
                                     node_element_first_firth_third.children.len()
                                 );
                                                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -701,6 +737,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -714,6 +751,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_firth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -723,6 +761,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -742,6 +781,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -754,6 +794,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_first.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -763,6 +804,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -780,6 +822,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -792,6 +835,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_second.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -801,6 +845,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -814,6 +859,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -831,6 +877,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -843,6 +890,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_fourth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -852,6 +900,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -889,6 +938,7 @@ pub fn parse_github_html_second_part(
                                                                         attribute
                                                                     );
                                                                     print_colorful_message(
+                                                                        None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                         line!().to_string(),
@@ -910,6 +960,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -925,6 +976,7 @@ pub fn parse_github_html_second_part(
                                                                         .len()
                                                                 );
                                                                 print_colorful_message(
+                                                    None,
                                                                     PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                 line!().to_string(),
@@ -934,6 +986,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -947,6 +1000,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_firth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -956,6 +1010,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -986,6 +1041,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1000,6 +1056,7 @@ pub fn parse_github_html_second_part(
                                     node_element_first_sixth_first.children.len()
                                 );
                                                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1009,6 +1066,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -1033,6 +1091,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1046,6 +1105,7 @@ pub fn parse_github_html_second_part(
                                                     node_element_first_sixth_second.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1055,6 +1115,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -1082,6 +1143,7 @@ pub fn parse_github_html_second_part(
                                                                             }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1095,6 +1157,7 @@ pub fn parse_github_html_second_part(
                                                     node_element_first_sixth_third.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1104,6 +1167,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -1117,6 +1181,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_sixth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1126,6 +1191,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1139,6 +1205,7 @@ pub fn parse_github_html_second_part(
                                         node_element_first.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -1148,6 +1215,7 @@ pub fn parse_github_html_second_part(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -1222,6 +1290,7 @@ pub fn parse_github_html_second_part(
                                                     second_child_element3.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -1231,6 +1300,7 @@ pub fn parse_github_html_second_part(
                                         }
                                     }
                                     _ => print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -1249,6 +1319,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1261,6 +1332,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_first.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1270,6 +1342,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1283,6 +1356,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1301,6 +1375,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1313,6 +1388,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_third.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1322,6 +1398,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1335,6 +1412,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1352,6 +1430,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1364,6 +1443,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_fourth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1373,6 +1453,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1410,6 +1491,7 @@ pub fn parse_github_html_second_part(
                                                                         attribute
                                                                     );
                                                                     print_colorful_message(
+                                                                        None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                         line!().to_string(),
@@ -1430,6 +1512,7 @@ pub fn parse_github_html_second_part(
                                                                         }
                                                                     }
                                                                     _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1443,6 +1526,7 @@ pub fn parse_github_html_second_part(
                                                                         node_element_first_sixth_first.children.len()
                                                                     );
                                                                     print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1452,6 +1536,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                         }
                                                         _ => print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -1465,6 +1550,7 @@ pub fn parse_github_html_second_part(
                                                         node_element_first_sixth.children.len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1474,6 +1560,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1487,6 +1574,7 @@ pub fn parse_github_html_second_part(
                                         node_element_first.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -1496,6 +1584,7 @@ pub fn parse_github_html_second_part(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -1550,6 +1639,7 @@ pub fn parse_github_html_second_part(
                                                     node_element_second_element.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -1559,6 +1649,7 @@ pub fn parse_github_html_second_part(
                                         }
                                     }
                                     _ => print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -1578,6 +1669,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1592,6 +1684,7 @@ pub fn parse_github_html_second_part(
                                                             .len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1601,6 +1694,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1614,6 +1708,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1634,6 +1729,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1648,6 +1744,7 @@ pub fn parse_github_html_second_part(
                                                             .len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1657,6 +1754,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1670,6 +1768,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1689,6 +1788,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1703,6 +1803,7 @@ pub fn parse_github_html_second_part(
                                                             .len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1712,6 +1813,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1749,6 +1851,7 @@ pub fn parse_github_html_second_part(
                                                                     attribute
                                                                 );
                                                                 print_colorful_message(
+                                                                    None,
                                                                     PrintType::WarningHigh,
                                                                     file!().to_string(),
                                                                     line!().to_string(),
@@ -1771,6 +1874,7 @@ pub fn parse_github_html_second_part(
                                                                     }
                                                                 }
                                                                 _ => print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1784,6 +1888,7 @@ pub fn parse_github_html_second_part(
                                 node_element_second_six_element.children.len()
                             );
                                                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -1793,6 +1898,7 @@ pub fn parse_github_html_second_part(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1807,6 +1913,7 @@ pub fn parse_github_html_second_part(
                                                             .len()
                                                     );
                                                     print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -1816,6 +1923,7 @@ pub fn parse_github_html_second_part(
                                             }
                                         }
                                         _ => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1829,6 +1937,7 @@ pub fn parse_github_html_second_part(
                                         node_element_second.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -1838,6 +1947,7 @@ pub fn parse_github_html_second_part(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -1852,6 +1962,7 @@ pub fn parse_github_html_second_part(
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -1861,6 +1972,7 @@ pub fn parse_github_html_second_part(
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -1935,6 +2047,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -1947,6 +2060,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -1956,6 +2070,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -1982,6 +2097,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                         let warning_message =
                                                             format!("no {} attribute", attribute);
                                                         print_colorful_message(
+                                                            None,
                                                             PrintType::WarningHigh,
                                                             file!().to_string(),
                                                             line!().to_string(),
@@ -2020,6 +2136,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                 attribute
                                                             );
                                                             print_colorful_message(
+                                                                None,
                                                                 PrintType::WarningHigh,
                                                                 file!().to_string(),
                                                                 line!().to_string(),
@@ -2029,6 +2146,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     }
                                                 }
                                                 _ => print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -2041,6 +2159,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     node_element_first_first.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -2054,6 +2173,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         }
                                     }
                                     _ => print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2066,6 +2186,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         node_element_first.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2075,6 +2196,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -2104,6 +2226,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                 let warning_message =
                                                     format!("no {} attribute", attribute);
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -2113,6 +2236,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         }
                                     }
                                     _ => print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2125,6 +2249,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         node_element_first.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2134,6 +2259,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -2210,6 +2336,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                                 emoji_element.attributes.get(attribute)
                                                                             );
                                                                             print_colorful_message(
+                                                    None,
                                                                                 PrintType::WarningHigh,
                                                                                 file!().to_string(),
                                                                             line!().to_string(),
@@ -2221,6 +2348,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                         let warning_message = "unexpected, emoji link is None"
                                                                     .to_string();
                                                                          print_colorful_message(
+                                                    None,
                                                                                 PrintType::WarningHigh,
                                                                                 file!().to_string(),
                                                                             line!().to_string(),
@@ -2233,6 +2361,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                                 let warning_message = "unexpected, no emoji link"
                                                                     .to_string();
                                                                     print_colorful_message(
+                                                    None,
                                                                         PrintType::WarningHigh,
                                                                         file!().to_string(),
                                                                     line!().to_string(),
@@ -2242,6 +2371,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                         }
                                                     }
                                                     _ => print_colorful_message(
+                                                        None,
                                                         PrintType::WarningHigh,
                                                         file!().to_string(),
                                                         line!().to_string(),
@@ -2319,6 +2449,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                                     node_element_first_first.children.len()
                                                 );
                                                 print_colorful_message(
+                                                    None,
                                                     PrintType::WarningHigh,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -2328,6 +2459,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         }
                                     }
                                     _ => print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2340,6 +2472,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                                         node_element_first.children.len()
                                     );
                                     print_colorful_message(
+                                        None,
                                         PrintType::WarningHigh,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -2349,6 +2482,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                             }
                         }
                         _ => print_colorful_message(
+                            None,
                             PrintType::WarningHigh,
                             file!().to_string(),
                             line!().to_string(),
@@ -2360,6 +2494,7 @@ pub fn parse_github_html_second_part_inner_one_element(
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2369,6 +2504,7 @@ pub fn parse_github_html_second_part_inner_one_element(
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -2403,6 +2539,7 @@ pub fn handle_text_element(node: &Node) -> Option<String> {
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -2494,6 +2631,7 @@ pub fn second_element(
                                     //todo what should do with this
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2506,6 +2644,7 @@ pub fn second_element(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2515,6 +2654,7 @@ pub fn second_element(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2525,6 +2665,7 @@ pub fn second_element(
                     let warning_message =
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2534,6 +2675,7 @@ pub fn second_element(
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -2589,6 +2731,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2601,6 +2744,7 @@ pub fn two_elements_one_child(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2610,6 +2754,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2623,6 +2768,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2649,6 +2795,7 @@ pub fn two_elements_one_child(
                             None => {
                                 let warning_message = format!("no {} attribute", attribute);
                                 print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -2658,6 +2805,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2683,6 +2831,7 @@ pub fn two_elements_one_child(
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -2698,6 +2847,7 @@ pub fn two_elements_one_child(
                                                 }
                                             }
                                             _ => print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -2710,6 +2860,7 @@ pub fn two_elements_one_child(
                                                 node_element_fourth_element.children.len()
                                             );
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -2719,6 +2870,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2731,6 +2883,7 @@ pub fn two_elements_one_child(
                                     node_element_fourth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2740,6 +2893,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2758,6 +2912,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2770,6 +2925,7 @@ pub fn two_elements_one_child(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2779,6 +2935,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2792,6 +2949,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2818,6 +2976,7 @@ pub fn two_elements_one_child(
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
                                     print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -2827,6 +2986,7 @@ pub fn two_elements_one_child(
                             }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2840,6 +3000,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2862,6 +3023,7 @@ pub fn two_elements_one_child(
                                             None => {}
                                         },
                                         None => print_colorful_message(
+                                            None,
                                             PrintType::WarningHigh,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -2876,6 +3038,7 @@ pub fn two_elements_one_child(
                                                 }
                                             }
                                             _ => print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -2888,6 +3051,7 @@ pub fn two_elements_one_child(
                                                 node_element_firth_element.children.len()
                                             );
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -2897,6 +3061,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2909,6 +3074,7 @@ pub fn two_elements_one_child(
                                     node_element_firth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2918,6 +3084,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2936,6 +3103,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2948,6 +3116,7 @@ pub fn two_elements_one_child(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -2957,6 +3126,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -2970,6 +3140,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3000,6 +3171,7 @@ pub fn two_elements_one_child(
                                                 attribute, attribute_check_case
                                             );
                                             print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -3017,6 +3189,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3029,6 +3202,7 @@ pub fn two_elements_one_child(
                                     node_element_third.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3038,6 +3212,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3051,6 +3226,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3076,6 +3252,7 @@ pub fn two_elements_one_child(
                                 None => {
                                     let warning_message = format!("no {} attribute", attribute);
                                     print_colorful_message(
+                                                    None,
         PrintType::WarningHigh,
         file!().to_string(),
         line!().to_string(),
@@ -3085,6 +3262,7 @@ pub fn two_elements_one_child(
                             }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3112,6 +3290,7 @@ pub fn two_elements_one_child(
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3127,6 +3306,7 @@ pub fn two_elements_one_child(
                                                 }
                                             }
                                             _ => print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3139,6 +3319,7 @@ pub fn two_elements_one_child(
                                                 node_element_sixth_first.children.len()
                                             );
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3148,6 +3329,7 @@ pub fn two_elements_one_child(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3160,6 +3342,7 @@ pub fn two_elements_one_child(
                                     node_element_sixth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3169,6 +3352,7 @@ pub fn two_elements_one_child(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3180,6 +3364,7 @@ pub fn two_elements_one_child(
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3188,6 +3373,7 @@ pub fn two_elements_one_child(
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3232,6 +3418,7 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3242,6 +3429,7 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3250,6 +3438,7 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3269,6 +3458,7 @@ pub fn two_elements_four_children_second(node: &Node) -> Option<String> {
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3290,6 +3480,7 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3300,6 +3491,7 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3308,6 +3500,7 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3338,6 +3531,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
                             print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -3353,6 +3547,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                                 }
                             }
                             _ => print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -3365,6 +3560,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                                 node_element_first.children.len()
                             );
                             print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -3374,6 +3570,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3384,6 +3581,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3392,6 +3590,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3434,6 +3633,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3446,6 +3646,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3455,6 +3656,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3468,6 +3670,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3484,6 +3687,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3496,6 +3700,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_third.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3505,6 +3710,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3530,6 +3736,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3545,6 +3752,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 }
                                             }
                                             _ => print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3557,6 +3765,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 node_element_fourth_first.children.len()
                                             );
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3566,6 +3775,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3578,6 +3788,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_fourth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3587,6 +3798,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3608,6 +3820,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3620,6 +3833,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_first.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3629,6 +3843,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3642,6 +3857,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3658,6 +3874,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3670,6 +3887,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_third.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3679,6 +3897,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3692,6 +3911,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3709,6 +3929,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3721,6 +3942,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_firth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3730,6 +3952,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3755,6 +3978,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                             let warning_message =
                                                 format!("no {} attribute", attribute);
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3770,6 +3994,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 }
                                             }
                                             _ => print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3782,6 +4007,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                                 node_element_sixth_first.children.len()
                                             );
                                             print_colorful_message(
+                                                None,
                                                 PrintType::WarningHigh,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -3791,6 +4017,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     }
                                 }
                                 _ => print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3803,6 +4030,7 @@ pub fn parse_github_html_second_part_two_children_first(
                                     node_element_sixth.children.len()
                                 );
                                 print_colorful_message(
+                                    None,
                                     PrintType::WarningHigh,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -3812,6 +4040,7 @@ pub fn parse_github_html_second_part_two_children_first(
                         }
                     }
                     _ => print_colorful_message(
+                        None,
                         PrintType::WarningHigh,
                         file!().to_string(),
                         line!().to_string(),
@@ -3823,6 +4052,7 @@ pub fn parse_github_html_second_part_two_children_first(
                 let warning_message =
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3831,6 +4061,7 @@ pub fn parse_github_html_second_part_two_children_first(
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3881,6 +4112,7 @@ pub fn four_cases(
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3891,6 +4123,7 @@ pub fn four_cases(
                 let warning_message =
                     format!("different children.len(): {}", first_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3899,6 +4132,7 @@ pub fn four_cases(
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3912,6 +4146,7 @@ pub fn four_cases(
             }
         }
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3927,6 +4162,7 @@ pub fn four_cases(
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3937,6 +4173,7 @@ pub fn four_cases(
                 let warning_message =
                     format!("different children.len(): {}", third_element.children.len());
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -3945,6 +4182,7 @@ pub fn four_cases(
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
@@ -3968,6 +4206,7 @@ pub fn four_cases(
                         None => {
                             let warning_message = format!("no {} attribute", attribute);
                             print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -3984,6 +4223,7 @@ pub fn four_cases(
                                 }
                             }
                             _ => print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -3996,6 +4236,7 @@ pub fn four_cases(
                                 node_element_fourth.children.len()
                             );
                             print_colorful_message(
+                                None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -4005,6 +4246,7 @@ pub fn four_cases(
                     }
                 }
                 _ => print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -4017,6 +4259,7 @@ pub fn four_cases(
                     node_element_fourth.children.len()
                 );
                 print_colorful_message(
+                    None,
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -4025,6 +4268,7 @@ pub fn four_cases(
             }
         },
         _ => print_colorful_message(
+            None,
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),

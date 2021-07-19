@@ -32,6 +32,7 @@ pub fn rss_check_available_providers(
                         let error_message =
                             "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
                         print_colorful_message(
+                            None,
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),

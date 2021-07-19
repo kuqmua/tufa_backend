@@ -36,13 +36,14 @@ pub fn entry() {
         }
         async_tokio_wrapper();
     } else if CONFIG.params.enable_error_prints {
-        let its_not_good_message =
+        let warning_high_message =
             "server cannot reach ".to_string() + &CONFIG.links.starting_check_link;
         print_colorful_message(
+            None,
             PrintType::Error,
             file!().to_string(),
             line!().to_string(),
-            its_not_good_message,
+            warning_high_message,
         );
     }
 

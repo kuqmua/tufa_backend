@@ -28,6 +28,7 @@ pub fn rss_clean_logs_directory(
                 if enable_error_prints {
                     let error_message = format!("delete folder problem{} {}", &path, e.to_string());
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),

@@ -76,6 +76,7 @@ pub fn rss_part(
             }
             None => {
                 print_colorful_message(
+                    Some(&provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
@@ -109,6 +110,7 @@ pub fn rss_part(
                 HandledFetchStatusInfo,
                 AreThereItems,
             )>;
+            let provider_kind_clone_for_prints = provider_kind.clone();
             match provider_kind {
                 ProviderKind::Arxiv => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
@@ -193,6 +195,7 @@ pub fn rss_part(
                         None => {
                             unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
                             print_colorful_message(
+                                Some(&provider_kind),
                                 PrintType::WarningHigh,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -225,6 +228,7 @@ pub fn rss_part(
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
                         if enable_error_prints {
                             print_colorful_message(
+                                Some(&provider_kind),
                                 PrintType::Error,
                                 file!().to_string(),
                                 line!().to_string(),
@@ -257,6 +261,7 @@ pub fn rss_part(
                         provider_kind_handle
                     );
                     print_colorful_message(
+                        Some(&provider_kind_clone_for_prints),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -269,6 +274,7 @@ pub fn rss_part(
             if enable_error_prints {
                 let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
                 print_colorful_message(
+                    Some(&provider_kind),
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
@@ -284,6 +290,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -294,6 +301,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -304,6 +312,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -314,6 +323,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -326,6 +336,7 @@ pub fn rss_part(
                         provider_kind
                     );
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -337,6 +348,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -348,6 +360,7 @@ pub fn rss_part(
                     let error_message =
                         format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),

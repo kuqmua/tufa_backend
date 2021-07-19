@@ -32,6 +32,7 @@ pub fn rss_check_provider_status(
         if enable_error_prints {
             let error_message = format!("{} {}", link, res.status());
             print_colorful_message(
+                None,
                 PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),

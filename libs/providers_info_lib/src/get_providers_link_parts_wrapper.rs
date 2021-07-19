@@ -91,6 +91,7 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
         Some(providers_link_parts)
     } else {
         print_colorful_message(
+            None,
             PrintType::WarningLow,
             file!().to_string(),
             line!().to_string(),
@@ -112,6 +113,7 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
             Some(providers_link_parts_local)
         } else {
             print_colorful_message(
+                None,
                 PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),

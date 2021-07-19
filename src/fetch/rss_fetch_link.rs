@@ -45,6 +45,7 @@ pub fn rss_fetch_link(
                     format!("LINK: {} ResToTextError...(decided to not show)", link);
                 if enable_error_prints {
                     print_colorful_message(
+                        None,
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -58,6 +59,7 @@ pub fn rss_fetch_link(
         let error_message = format!("LINK: {} RES.STATUS: {}", link, res.status());
         if enable_error_prints {
             print_colorful_message(
+                None,
                 PrintType::Error,
                 file!().to_string(),
                 line!().to_string(),

@@ -49,6 +49,7 @@ pub fn rss_handle_unfiltered_posts(
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
         if enable_warning_prints {
             print_colorful_message(
+                Some(&provider_kind),
                 PrintType::WarningHigh,
                 file!().to_string(),
                 line!().to_string(),
@@ -69,6 +70,7 @@ pub fn rss_handle_unfiltered_posts(
                 mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
             );
             print_colorful_message(
+                Some(&provider_kind),
                 PrintType::PartialSuccess,
                 file!().to_string(),
                 line!().to_string(),
@@ -89,6 +91,7 @@ pub fn rss_handle_unfiltered_posts(
         );
         if enable_prints {
             print_colorful_message(
+                Some(&provider_kind),
                 PrintType::Success,
                 file!().to_string(),
                 line!().to_string(),

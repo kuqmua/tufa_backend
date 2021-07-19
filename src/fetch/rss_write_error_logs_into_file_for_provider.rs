@@ -30,6 +30,7 @@ pub fn rss_write_error_logs_into_file_for_provider(
                                 format!("error writing in file {} {}", file_name, e.to_string());
                             if enable_error_prints {
                                 print_colorful_message(
+                                    None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
@@ -47,6 +48,7 @@ pub fn rss_write_error_logs_into_file_for_provider(
                     );
                     if enable_error_prints {
                         print_colorful_message(
+                            None,
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),
@@ -60,6 +62,7 @@ pub fn rss_write_error_logs_into_file_for_provider(
             let message = format!("error creating file {} {}", &file_name, e.to_string());
             if enable_error_prints {
                 print_colorful_message(
+                    None,
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),

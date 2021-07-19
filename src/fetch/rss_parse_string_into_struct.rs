@@ -154,6 +154,7 @@ pub fn rss_parse_string_into_struct(
                     if enable_error_prints {
                         let error_message = format!("Rss conversion from str error: {}", &e);
                         print_colorful_message(
+                            Some(&provider_kind),
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),
@@ -200,6 +201,7 @@ pub fn rss_parse_string_into_struct(
                                                 value
                                             );
                                             print_colorful_message(
+                                                Some(&provider_kind),
                                                 PrintType::WarningLow,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -212,6 +214,7 @@ pub fn rss_parse_string_into_struct(
                                     let warning_message: String =
                                         format!("no <channel> in response link: {}", value);
                                     print_colorful_message(
+                                        Some(&provider_kind),
                                         PrintType::WarningLow,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -384,6 +387,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -515,6 +519,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -652,6 +657,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -781,6 +787,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -912,6 +919,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1044,6 +1052,7 @@ pub fn rss_parse_string_into_struct(
                                         let error_message =
                                             format!("Rss conversion from str error: {}", &e);
                                         print_colorful_message(
+                                            Some(&provider_kind),
                                             PrintType::Error,
                                             file!().to_string(),
                                             line!().to_string(),
@@ -1065,6 +1074,7 @@ pub fn rss_parse_string_into_struct(
                         what_should_find_in_fetch_result_string, provider_kind
                     );
                     print_colorful_message(
+                        Some(&provider_kind),
                         PrintType::WarningLow,
                         file!().to_string(),
                         line!().to_string(),

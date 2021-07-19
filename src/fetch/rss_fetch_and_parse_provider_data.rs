@@ -82,6 +82,7 @@ pub fn rss_fetch_and_parse_provider_data(
                         let error_message =
                             "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
                         print_colorful_message(
+                            Some(&provider_kind_clone),
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),

@@ -70,6 +70,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if arxiv_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -147,6 +148,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if biorxiv_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -226,6 +228,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if github_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -311,6 +314,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if habr_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -388,6 +392,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if medrxiv_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -467,6 +472,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 providers_link_parts[provider_name].clone(); //redo this later - .clone() its just to compile the code
                                             if reddit_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -547,6 +553,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                             let twitter_providers = get_twitter_providers_names();
                                             if twitter_link_parts.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -554,6 +561,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
                                             } else if twitter_providers.is_empty() {
                                                 print_colorful_message(
+                                                    Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
@@ -640,7 +648,13 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 },
                                 None => {
-                                    println!("FF")
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::WarningLow,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        "config_provider_string_to_enum_struct_hashmap.get(provider_name) is None".to_string(),
+                                    );
                                 }
                             }
                         }
@@ -652,6 +666,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         Some((posts_done, error_posts_done))
                     } else {
                         print_colorful_message(
+                            None,
                             PrintType::Error,
                             file!().to_string(),
                             line!().to_string(),
@@ -662,6 +677,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                 }
                 None => {
                     print_colorful_message(
+                        None,
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -675,6 +691,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
             }
         } else {
             print_colorful_message(
+                None,
                 PrintType::WarningLow,
                 file!().to_string(),
                 line!().to_string(),
@@ -684,6 +701,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         }
     } else {
         print_colorful_message(
+            None,
             PrintType::WarningLow,
             file!().to_string(),
             line!().to_string(),
