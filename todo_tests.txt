@@ -12,12 +12,3 @@ Write tests what checks all function to have #![deny(clippy::indexing_slicing, c
 ----------------------------------------------------------------
 test to check what cargo run executes in the right folder
 ----------------------------------------------------------------
-rename enable_prints -> enable_provider_prints
-[enable_prints]
-enable_prints_arxiv = true
-enable_prints_biorxiv = true
-enable_prints_github = true
-enable_prints_habr = true
-enable_prints_medrxiv = true
-enable_prints_reddit = true
-enable_prints_twitter = true

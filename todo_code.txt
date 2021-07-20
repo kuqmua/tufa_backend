@@ -122,10 +122,6 @@ implement get_providers_link_parts with all success completed and with not all
 ----------------------------------------------------------------
 get_providers_link_parts whole and for each provider
 and maybe rewrite it as struct with methods
-----------------------------------------------------------------
-remove enable prints for provider function parameter and move it to print_colorful_message
-----------------------------------------------------------------
-time measurement as prints_lib - check with config in implementation, not in function what use it 
 --------------------------------------------------------------------------------------------------------------------------------
 Resource::PostgreSql => { 
 ------------------------------------------------------------------------------------------------------
@@ -155,4 +151,3 @@ remove pub from innner fucntions in parse_github_html
 ----------------------------
 add provider_kind into inner related to providers functions as input parameter
 ----------------------------
-remove all if enable_prints like code in functions except print_colorful_message and its inner function
