@@ -17,7 +17,7 @@ pub fn print_colorful_message(
                 if CONFIG.params.enable_all_providers_prints {
                     match provider_kind {
                         ProviderKind::Arxiv => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_arxiv,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -40,7 +40,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Biorxiv => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_biorxiv,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -63,7 +63,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Github => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_github,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -86,7 +86,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Habr => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_habr,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -109,7 +109,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Medrxiv => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_medrxiv,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -132,7 +132,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Reddit => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_reddit,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -155,7 +155,7 @@ pub fn print_colorful_message(
                             );
                         }
                         ProviderKind::Twitter => {
-                            handle(
+                            handle_provider_prints(
                                 CONFIG.enable_providers_prints.enable_prints_twitter,
                                 CONFIG.params.enable_error_prints_for_all_providers,
                                 CONFIG.params.enable_warning_high_prints_for_all_providers,
@@ -305,7 +305,7 @@ pub fn print_colorful_message(
     }
 }
 
-fn handle(
+fn handle_provider_prints(
     enable_prints_provider: bool,
     enable_error_prints_for_all_providers: bool,
     enable_warning_high_prints_for_all_providers: bool,
@@ -329,7 +329,10 @@ fn handle(
     if enable_prints_provider {
         match print_type {
             PrintType::Error => {
-                if enable_error_prints_for_all_providers && enable_error_prints_for_provider {
+                if CONFIG.params.enable_error_prints
+                    && enable_error_prints_for_all_providers
+                    && enable_error_prints_for_provider
+                {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.error_red,
                         CONFIG.print_colors.error_green,
@@ -346,7 +349,8 @@ fn handle(
                 }
             }
             PrintType::WarningHigh => {
-                if enable_warning_high_prints_for_all_providers
+                if CONFIG.params.enable_warning_high_prints
+                    && enable_warning_high_prints_for_all_providers
                     && enable_warning_high_prints_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -365,7 +369,8 @@ fn handle(
                 }
             }
             PrintType::WarningLow => {
-                if enable_warning_low_prints_for_all_providers
+                if CONFIG.params.enable_warning_low_prints
+                    && enable_warning_low_prints_for_all_providers
                     && enable_warning_low_prints_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -384,7 +389,10 @@ fn handle(
                 }
             }
             PrintType::Success => {
-                if enable_success_prints_for_all_providers && enable_success_prints_for_provider {
+                if CONFIG.params.enable_success_prints
+                    && enable_success_prints_for_all_providers
+                    && enable_success_prints_for_provider
+                {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.success_red,
                         CONFIG.print_colors.success_green,
@@ -401,7 +409,8 @@ fn handle(
                 }
             }
             PrintType::PartialSuccess => {
-                if enable_partial_success_prints_for_all_providers
+                if CONFIG.params.enable_partial_success_prints
+                    && enable_partial_success_prints_for_all_providers
                     && enable_partial_success_prints_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -420,7 +429,8 @@ fn handle(
                 }
             }
             PrintType::TimeMeasurement => {
-                if enable_time_measurement_prints_for_all_providers
+                if CONFIG.params.enable_time_measurement_prints
+                    && enable_time_measurement_prints_for_all_providers
                     && enable_provider_time_measurement
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -439,7 +449,8 @@ fn handle(
                 }
             }
             PrintType::CleaningWarningLogsDirectory => {
-                if enable_cleaning_warning_logs_directory_prints_for_all_providers
+                if CONFIG.params.enable_cleaning_warning_logs_directory_prints
+                    && enable_cleaning_warning_logs_directory_prints_for_all_providers
                     && enable_cleaning_warning_logs_directory_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
