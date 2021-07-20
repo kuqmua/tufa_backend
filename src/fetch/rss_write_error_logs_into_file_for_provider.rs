@@ -21,54 +21,48 @@ pub fn rss_write_error_logs_into_file_for_provider(
                         created_for_logs_file.write(string_json_prettyfied.as_bytes()); //warning_message
                     match result_of_writing {
                         Ok(_) => {
-                            if enable_prints {
-                                println!("logs were written in file {}", &file_name);
-                            }
+                            print_colorful_message(
+                                None,
+                                PrintType::Success,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("logs were written in file {}", &file_name),
+                            );
                         }
                         Err(e) => {
-                            let message =
-                                format!("error writing in file {} {}", file_name, e.to_string());
-                            if enable_error_prints {
-                                print_colorful_message(
-                                    None,
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    message,
-                                );
-                            }
+                            print_colorful_message(
+                                None,
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("error writing in file {} {}", file_name, e.to_string()),
+                            );
                         }
                     }
                 }
                 Err(e) => {
-                    let message = format!(
-                        "error cast json into string {} {}",
-                        &json_object,
-                        e.to_string()
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!(
+                            "error cast json into string {} {}",
+                            &json_object,
+                            e.to_string()
+                        ),
                     );
-                    if enable_error_prints {
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            message,
-                        );
-                    }
                 }
             }
         }
         Err(e) => {
-            let message = format!("error creating file {} {}", &file_name, e.to_string());
-            if enable_error_prints {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    message,
-                );
-            }
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("error creating file {} {}", &file_name, e.to_string()),
+            );
         }
     }
 }

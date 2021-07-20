@@ -36,20 +36,23 @@ pub fn rss_fetch_and_parse_provider_data(
         );
         links.len()
     ]));
-    if enable_time_measurement {
-        println!(
+    print_colorful_message(
+        Some(&provider_kind),
+        PrintType::TimeMeasurement,
+        file!().to_string(),
+        line!().to_string(),
+        format!(
             "hashmap init in {}.{}ms",
             time.elapsed().as_secs(),
             time.elapsed().as_millis(),
-        );
-    };
+        ),
+    );
     let mut thread_vector = Vec::with_capacity(links.len());
     for (element_index, link) in &mut links.into_iter().enumerate() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
-            let fetch_result =
-                rss_fetch_link(&link, time, enable_error_prints, enable_time_measurement);
+            let fetch_result = rss_fetch_link(&link, time, enable_time_measurement);
             match fetch_result {
                 Ok(fetch_tuple_result) => {
                     let (post_struct_wrapper_handle, value3, are_there_items_wrapper_handle) =
@@ -78,17 +81,13 @@ pub fn rss_fetch_and_parse_provider_data(
                     hashmap_to_return_handle_locked[element_index].1 = link;
                     hashmap_to_return_handle_locked[element_index].2 =
                         UnhandledFetchStatusInfo::Failure(e.to_string());
-                    if enable_error_prints {
-                        let error_message =
-                            "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
-                        print_colorful_message(
-                            Some(&provider_kind_clone),
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            error_message,
-                        );
-                    }
+                    print_colorful_message(
+                        Some(&provider_kind_clone),
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("UnhandledFetchStatusInfo::Failure {:#?}", &e.to_string()),
+                    );
                 }
             }
         });

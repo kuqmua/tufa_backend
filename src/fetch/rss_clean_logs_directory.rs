@@ -20,21 +20,22 @@ pub fn rss_clean_logs_directory(
         let result_of_recursively_removing_warning_logs_directory = fs::remove_dir_all(&path);
         match result_of_recursively_removing_warning_logs_directory {
             Ok(_) => {
-                if enable_prints {
-                    println!("folder {} has been deleted", &path);
-                }
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Success,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("folder {} has been deleted", &path),
+                );
             }
             Err(e) => {
-                if enable_error_prints {
-                    let error_message = format!("delete folder problem{} {}", &path, e.to_string());
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("delete folder problem{} {}", &path, e.to_string()),
+                );
             }
         }
     }

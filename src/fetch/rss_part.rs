@@ -69,7 +69,7 @@ pub fn rss_part(
         ProviderKind::Twitter => match option_twitter_providers_names.clone() {
             Some(twitter_providers_names) => {
                 let twitter_available_providers_links: Vec<String> =
-                    rss_check_available_providers(enable_error_prints, twitter_providers_names);
+                    rss_check_available_providers(twitter_providers_names);
                 if !twitter_available_providers_links.is_empty() {
                     availability_checker_flag = true;
                 }
@@ -96,9 +96,13 @@ pub fn rss_part(
         }
     }
     if availability_checker_flag {
-        if enable_prints {
-            println!("i can reach {}", provider_link)
-        };
+        print_colorful_message(
+            Some(&provider_kind),
+            PrintType::Success,
+            file!().to_string(),
+            line!().to_string(),
+            format!("i can reach {}", provider_link),
+        );
         let links_temp_naming: Vec<String> = vec_of_provider_links;
         let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
@@ -152,10 +156,8 @@ pub fn rss_part(
                     let twitter_available_providers_links: Vec<String>;
                     match option_twitter_providers_names {
                         Some(twitter_providers_names) => {
-                            twitter_available_providers_links = rss_check_available_providers(
-                                enable_error_prints,
-                                twitter_providers_names,
-                            );
+                            twitter_available_providers_links =
+                                rss_check_available_providers(twitter_providers_names);
                             let vec_of_hashmap_parts = rss_divide_to_equal_for_each_provider(
                                 twitter_available_providers_links,
                                 links_temp_naming,
@@ -214,9 +216,13 @@ pub fn rss_part(
                         &USER_CREDENTIALS.reddit_authorization.reddit_password,
                     );
                     if is_reddit_authorized {
-                        if enable_prints {
-                            println!("success reddit authorization");
-                        }
+                        print_colorful_message(
+                            Some(&provider_kind),
+                            PrintType::Success,
+                            file!().to_string(),
+                            line!().to_string(),
+                            "success reddit authorization".to_string(),
+                        );
                         unfiltered_posts_hashmap_after_fetch_and_parse =
                             rss_fetch_and_parse_provider_data(
                                 enable_error_prints,
@@ -226,15 +232,13 @@ pub fn rss_part(
                             );
                     } else {
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
-                        if enable_error_prints {
-                            print_colorful_message(
+                        print_colorful_message(
                                 Some(&provider_kind),
                                 PrintType::Error,
                                 file!().to_string(),
                                 line!().to_string(),
                                 "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
                             );
-                        }
                     }
                 }
                 ProviderKind::Habr => {
@@ -255,120 +259,99 @@ pub fn rss_part(
                     enable_warning_prints,
                 )
             } else {
-                if enable_error_prints {
-                    let error_message = format!(
+                print_colorful_message(
+                    Some(&provider_kind_clone_for_prints),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
                         "unfiltered_posts_hashmap_after_fetch_and_parse is empty for{:#?}",
                         provider_kind_handle
-                    );
-                    print_colorful_message(
-                        Some(&provider_kind_clone_for_prints),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
+                    ),
+                );
                 (None, None)
             }
         } else {
-            if enable_error_prints {
-                let error_message = format!("links_temp_naming is empty for{:#?}", provider_kind);
+            print_colorful_message(
+                Some(&provider_kind),
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("links_temp_naming is empty for{:#?}", provider_kind),
+            );
+            (None, None)
+        }
+    } else {
+        match provider_kind {
+            ProviderKind::Arxiv => {
                 print_colorful_message(
                     Some(&provider_kind),
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    error_message,
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
                 );
             }
-            (None, None)
-        }
-    } else {
-        if enable_error_prints {
-            match provider_kind {
-                ProviderKind::Arxiv => {
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Biorxiv => {
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Github => {
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Medrxiv => {
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Twitter => {
-                    let error_message = format!(
+            ProviderKind::Biorxiv => {
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                );
+            }
+            ProviderKind::Github => {
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                );
+            }
+            ProviderKind::Medrxiv => {
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                );
+            }
+            ProviderKind::Twitter => {
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
                         "i cannot reach any of provider links for {:#?}",
                         provider_kind
-                    );
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Reddit => {
-                    //todo
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
-                ProviderKind::Habr => {
-                    //todo
-                    let error_message =
-                        format!("i cannot reach {} for {:#?}", provider_link, provider_kind);
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
+                    ),
+                );
             }
-        };
+            ProviderKind::Reddit => {
+                //todo
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                );
+            }
+            ProviderKind::Habr => {
+                //todo
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                );
+            }
+        }
         (None, None)
     }
 }

@@ -47,57 +47,48 @@ pub fn rss_handle_unfiltered_posts(
             provider_kind.clone(),
         );
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
-        if enable_warning_prints {
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::WarningHigh,
-                file!().to_string(),
-                line!().to_string(),
-                "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!"
-                    .to_string(),
-            );
-        }
+        print_colorful_message(
+            Some(&provider_kind),
+            PrintType::WarningHigh,
+            file!().to_string(),
+            line!().to_string(),
+            "unhandled_success_handled_success_are_there_items_yep_posts is EMPTY!!!".to_string(),
+        );
         (None, Some(some_error_posts))
     } else if unhandled_success_handled_success_are_there_items_yep_posts.len()
         != unfiltered_posts_hashmap_after_fetch_and_parse_len_counter
     {
-        if enable_prints {
-            let message = format!(
+        print_colorful_message(
+                Some(&provider_kind),
+                PrintType::PartialSuccess,
+                file!().to_string(),
+                line!().to_string(),
+                format!(
                 "(partially)succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
                 unhandled_success_handled_success_are_there_items_yep_posts.len(),
                 unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
                 provider_kind,
                 mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
+            ),
             );
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::PartialSuccess,
-                file!().to_string(),
-                line!().to_string(),
-                message,
-            );
-        }
         (
             Some(unhandled_success_handled_success_are_there_items_yep_posts),
             Some(some_error_posts),
         )
     } else {
-        let message = format!(
+        print_colorful_message(
+            Some(&provider_kind),
+            PrintType::Success,
+            file!().to_string(),
+            line!().to_string(),
+            format!(
             "succesfully_fetched_and_parsed_posts {} out of {} for {:#?}, allocated: {} byte/bytes",
             unhandled_success_handled_success_are_there_items_yep_posts.len(),
             unfiltered_posts_hashmap_after_fetch_and_parse_len_counter,
             provider_kind,
             mem::size_of_val(&unhandled_success_handled_success_are_there_items_yep_posts)
+        ),
         );
-        if enable_prints {
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::Success,
-                file!().to_string(),
-                line!().to_string(),
-                message,
-            );
-        }
         (
             Some(unhandled_success_handled_success_are_there_items_yep_posts),
             None,

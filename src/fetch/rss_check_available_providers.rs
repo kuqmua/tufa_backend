@@ -6,10 +6,7 @@ use prints_lib::print_type_enum::PrintType;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-pub fn rss_check_available_providers(
-    enable_error_prints: bool,
-    twitter_providers_names: Vec<String>,
-) -> Vec<String> {
+pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Vec<String> {
     let mut threads_vector = Vec::with_capacity(twitter_providers_names.len());
     let twitter_providers_links_available = Arc::new(Mutex::new(Vec::new()));
     for provider_name in &mut twitter_providers_names.into_iter() {
@@ -17,8 +14,7 @@ pub fn rss_check_available_providers(
             Arc::clone(&twitter_providers_links_available);
         let handle = thread::spawn(move || {
             let provider_link: String = format!("https://{}/TheCherno/rss", provider_name); //choose random account from following
-            let check_status_result =
-                rss_check_provider_status(&provider_link, enable_error_prints);
+            let check_status_result = rss_check_provider_status(&provider_link);
             match check_status_result {
                 Ok(fetch_tuple_result) => {
                     if fetch_tuple_result.0 {
@@ -28,17 +24,13 @@ pub fn rss_check_available_providers(
                     }
                 }
                 Err(e) => {
-                    if enable_error_prints {
-                        let error_message =
-                            "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            error_message,
-                        );
-                    }
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("UnhandledFetchStatusInfo::Failure {:#?}", &e.to_string()),
+                    );
                 }
             }
         });
@@ -122,11 +114,9 @@ pub fn rss_check_available_providers(
 //             }
 //         }
 //         Err(e) => {
-//             if enable_error_prints {
 //                 let error_message =
 //                     "UnhandledFetchStatusInfo::Failure".to_string() + &e.to_string();
 //                 print_error_red(file!().to_string(), line!().to_string(), error_message)
-//             }
 //         }
 //     }
 //     // println!("iteration end");

@@ -151,16 +151,13 @@ pub fn rss_parse_string_into_struct(
                     rss_post_struct_handle = rss_page_struct;
                 }
                 Err(e) => {
-                    if enable_error_prints {
-                        let error_message = format!("Rss conversion from str error: {}", &e);
-                        print_colorful_message(
-                            Some(&provider_kind),
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            error_message,
-                        );
-                    };
+                    print_colorful_message(
+                        Some(&provider_kind),
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("Rss conversion from str error: {}", &e),
+                    );
                     are_there_items_handle =
                         AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string());
                 }
@@ -383,17 +380,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -515,17 +508,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -653,17 +642,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -783,17 +768,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -915,17 +896,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -1048,17 +1025,13 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    if enable_error_prints {
-                                        let error_message =
-                                            format!("Rss conversion from str error: {}", &e);
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            error_message,
-                                        );
-                                    };
+                                    print_colorful_message(
+                                        Some(&provider_kind),
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("Rss conversion from str error: {}", &e),
+                                    );
                                     are_there_items_handle = AreThereItems::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),

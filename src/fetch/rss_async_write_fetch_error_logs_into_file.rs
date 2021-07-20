@@ -7,6 +7,9 @@ use chrono::Local;
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
 use serde_json::json;
 use std::time::Instant;
 
@@ -261,12 +264,16 @@ pub async fn rss_async_write_fetch_error_logs_into_file(
             )
         }
     }
-    if enable_time_measurement {
-        println!(
+    print_colorful_message(
+        Some(&value.4),
+        PrintType::TimeMeasurement,
+        file!().to_string(),
+        line!().to_string(),
+        format!(
             "write fetch error logs into file done in {} seconds {} miliseconds for {:#?}",
             time.elapsed().as_secs(),
             time.elapsed().as_millis(),
             value.4
-        );
-    }
+        ),
+    );
 }

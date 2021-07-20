@@ -20,7 +20,6 @@ use prints_lib::print_type_enum::PrintType;
 // }
 pub fn rss_check_provider_status(
     link: &str,
-    enable_error_prints: bool,
 ) -> Result<(bool, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
     let mut result_tuple: (bool, HandledFetchStatusInfo) =
@@ -29,16 +28,13 @@ pub fn rss_check_provider_status(
         result_tuple.0 = true;
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
-        if enable_error_prints {
-            let error_message = format!("{} {}", link, res.status());
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                error_message,
-            );
-        }
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!("{} {}", link, res.status()),
+        );
     }
     Ok(result_tuple)
 }

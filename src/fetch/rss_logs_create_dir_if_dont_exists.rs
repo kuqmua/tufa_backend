@@ -23,30 +23,31 @@ pub fn rss_logs_create_dir_if_dont_exists(
         let result_of_creating_directory = fs::create_dir_all(path_to_log_file);
         match result_of_creating_directory {
             Ok(_) => {
-                if enable_prints {
-                    println!(
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Success,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
                         "folder logs/{}/{:?}/{} created!",
                         warning_logs_directory_name, provider_kind, underdirectory
-                    )
-                }
+                    ),
+                );
             }
             Err(e) => {
-                let error_message = format!(
-                    "folder creation error logs/{}/{:?}/{} {}",
-                    warning_logs_directory_name,
-                    provider_kind,
-                    underdirectory,
-                    e.to_string()
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "folder creation error logs/{}/{:?}/{} {}",
+                        warning_logs_directory_name,
+                        provider_kind,
+                        underdirectory,
+                        e.to_string()
+                    ),
                 );
-                if enable_error_prints {
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
             }
         }
     }

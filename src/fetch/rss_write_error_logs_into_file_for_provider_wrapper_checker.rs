@@ -36,16 +36,13 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     let result_of_opening_file = File::open(&file_name);
     match result_of_opening_file {
         Ok(_) => {
-            if enable_warning_prints {
-                let warning_message = format!("there is file with the same name: {}", &file_name);
-                print_colorful_message(
-                    Some(provider_kind),
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    warning_message,
-                );
-            }
+            print_colorful_message(
+                Some(provider_kind),
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("there is file with the same name: {}", &file_name),
+            );
         }
         Err(ref err) => {
             if err.kind() == ErrorKind::NotFound {
@@ -55,17 +52,16 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     file_name,
                     json_object,
                 );
-            } else if enable_warning_prints {
-                let warning_message = format!(
-                    "unexpected error while opening file, description: {:#?}",
-                    &err.kind()
-                );
+            } else {
                 print_colorful_message(
                     Some(provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
-                    warning_message,
+                    format!(
+                        "unexpected error while opening file, description: {:#?}",
+                        &err.kind()
+                    ),
                 );
                 rss_write_error_logs_into_file_for_provider(
                     enable_prints,

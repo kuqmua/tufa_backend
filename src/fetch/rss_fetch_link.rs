@@ -21,18 +21,22 @@ use std::time::Instant;
 pub fn rss_fetch_link(
     link: &str,
     time: Instant,
-    enable_error_prints: bool,
     enable_time_measurement: bool,
 ) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
-    if enable_time_measurement {
-        println!(
-            "fetch in {}.{}ms... status {}", // for {}
+    print_colorful_message(
+        None,
+        PrintType::TimeMeasurement,
+        file!().to_string(),
+        line!().to_string(),
+        format!(
+            "fetch in {}.{}ms... status {}",
             time.elapsed().as_secs(),
             time.elapsed().as_millis() / 10,
             res.status(),
-        );
-    }
+        ),
+    );
+
     let mut result_tuple: (String, HandledFetchStatusInfo) =
         ("".to_string(), HandledFetchStatusInfo::Initialized);
     if res.status() == reqwest::StatusCode::OK {
@@ -41,31 +45,24 @@ pub fn rss_fetch_link(
             Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
             Err(e) => {
                 result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
-                let error_message =
-                    format!("LINK: {} ResToTextError...(decided to not show)", link);
-                if enable_error_prints {
-                    print_colorful_message(
-                        None,
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        error_message,
-                    );
-                }
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("LINK: {} ResToTextError...(decided to not show)", link),
+                );
             }
         }
     } else {
         result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
-        let error_message = format!("LINK: {} RES.STATUS: {}", link, res.status());
-        if enable_error_prints {
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                error_message,
-            );
-        }
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!("LINK: {} RES.STATUS: {}", link, res.status()),
+        );
     }
     Ok(result_tuple)
 }
