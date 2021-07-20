@@ -15,19 +15,10 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,
     provider_kind: &ProviderKind,
     dir: &str,
-    enable_prints: bool,
-    enable_warning_prints: bool,
-    enable_error_prints: bool,
     warning_logs_directory_name: &str,
     link: &str,
 ) {
-    rss_logs_create_dir_if_dont_exists(
-        dir,
-        &provider_kind,
-        enable_prints,
-        enable_error_prints,
-        &warning_logs_directory_name,
-    );
+    rss_logs_create_dir_if_dont_exists(dir, &provider_kind, &warning_logs_directory_name);
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let file_name = format!(
         "logs/{}/{:?}/{}/{:?}-{}.json",
@@ -46,12 +37,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
         }
         Err(ref err) => {
             if err.kind() == ErrorKind::NotFound {
-                rss_write_error_logs_into_file_for_provider(
-                    enable_prints,
-                    enable_error_prints,
-                    file_name,
-                    json_object,
-                );
+                rss_write_error_logs_into_file_for_provider(file_name, json_object);
             } else {
                 print_colorful_message(
                     Some(provider_kind),
@@ -63,12 +49,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         &err.kind()
                     ),
                 );
-                rss_write_error_logs_into_file_for_provider(
-                    enable_prints,
-                    enable_error_prints,
-                    file_name,
-                    json_object,
-                );
+                rss_write_error_logs_into_file_for_provider(file_name, json_object);
             }
         }
     }

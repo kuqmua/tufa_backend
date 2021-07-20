@@ -30,7 +30,6 @@ use regex::Regex;
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
-    enable_error_prints: bool,
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, AreThereItems) {
     let mut rss_post_struct_handle: CommonRssPostStruct = CommonRssPostStruct::new();

@@ -15,8 +15,6 @@ pub fn rss_check_handled_fetch_status_info(
     fetch_result_string: String,
     time: Instant,
     value: &str,
-    enable_error_prints: bool,
-    enable_time_measurement: bool,
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, HandledFetchStatusInfo, AreThereItems) {
     //todo: change order
@@ -37,12 +35,8 @@ pub fn rss_check_handled_fetch_status_info(
             let since_fetch = Instant::now();
             value3 = HandledFetchStatusInfo::Success;
             let provider_kind_clone_for_prints = provider_kind.clone();
-            let (rxiv_post_struct_handle, are_there_items_handle) = rss_parse_string_into_struct(
-                fetch_result_string,
-                &value,
-                enable_error_prints,
-                provider_kind,
-            );
+            let (rxiv_post_struct_handle, are_there_items_handle) =
+                rss_parse_string_into_struct(fetch_result_string, &value, provider_kind);
             rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
             are_there_items_wrapper_handle = are_there_items_handle;
             print_colorful_message(

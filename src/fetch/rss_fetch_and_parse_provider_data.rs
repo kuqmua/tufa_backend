@@ -14,8 +14,6 @@ use std::thread;
 use std::time::Instant;
 
 pub fn rss_fetch_and_parse_provider_data(
-    enable_error_prints: bool,
-    enable_time_measurement: bool,
     links: Vec<String>,
     provider_kind: ProviderKind,
 ) -> Vec<(
@@ -52,7 +50,7 @@ pub fn rss_fetch_and_parse_provider_data(
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind.clone();
         let handle = thread::spawn(move || {
-            let fetch_result = rss_fetch_link(&link, time, enable_time_measurement);
+            let fetch_result = rss_fetch_link(&link, time);
             match fetch_result {
                 Ok(fetch_tuple_result) => {
                     let (post_struct_wrapper_handle, value3, are_there_items_wrapper_handle) =
@@ -61,8 +59,6 @@ pub fn rss_fetch_and_parse_provider_data(
                             fetch_tuple_result.0,
                             time,
                             &link,
-                            enable_error_prints,
-                            enable_time_measurement,
                             provider_kind_clone,
                         );
                     let mut hashmap_to_return_handle_locked =

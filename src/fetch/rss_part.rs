@@ -23,10 +23,6 @@ use config_lib::get_project_information::get_user_credentials::get_user_credenti
 
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
-    enable_prints: bool,
-    enable_warning_prints: bool,
-    enable_error_prints: bool,
-    enable_time_measurement: bool,
     provider_link: &str,
     provider_kind: ProviderKind,
     enable_error_prints_handle: bool,
@@ -118,39 +114,19 @@ pub fn rss_part(
             match provider_kind {
                 ProviderKind::Arxiv => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Biorxiv => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Github => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Medrxiv => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Twitter => {
                     let twitter_available_providers_links: Vec<String>;
@@ -173,8 +149,6 @@ pub fn rss_part(
                                 let thread = thread::spawn(move || {
                                     let unfiltered_posts_hashmap_after_fetch_and_parse =
                                         rss_fetch_and_parse_provider_data(
-                                            enable_error_prints,
-                                            enable_time_measurement,
                                             element.clone(),
                                             provider_kind_clone,
                                         );
@@ -224,12 +198,7 @@ pub fn rss_part(
                             "success reddit authorization".to_string(),
                         );
                         unfiltered_posts_hashmap_after_fetch_and_parse =
-                            rss_fetch_and_parse_provider_data(
-                                enable_error_prints,
-                                enable_time_measurement,
-                                links_temp_naming,
-                                provider_kind,
-                            );
+                            rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                     } else {
                         unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
                         print_colorful_message(
@@ -243,20 +212,13 @@ pub fn rss_part(
                 }
                 ProviderKind::Habr => {
                     unfiltered_posts_hashmap_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(
-                            enable_error_prints,
-                            enable_time_measurement,
-                            links_temp_naming,
-                            provider_kind,
-                        );
+                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
             }
             if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
                 rss_handle_unfiltered_posts(
                     unfiltered_posts_hashmap_after_fetch_and_parse,
                     provider_kind_handle,
-                    enable_prints,
-                    enable_warning_prints,
                 )
             } else {
                 print_colorful_message(

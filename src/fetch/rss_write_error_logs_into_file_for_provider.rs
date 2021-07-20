@@ -5,12 +5,7 @@ use prints_lib::print_type_enum::PrintType;
 
 use std::{fs::File, io::Write};
 
-pub fn rss_write_error_logs_into_file_for_provider(
-    enable_prints: bool,
-    enable_error_prints: bool,
-    file_name: String,
-    json_object: Value,
-) {
+pub fn rss_write_error_logs_into_file_for_provider(file_name: String, json_object: Value) {
     let result_of_creating_file = File::create(&file_name);
     match result_of_creating_file {
         Ok(mut created_for_logs_file) => {

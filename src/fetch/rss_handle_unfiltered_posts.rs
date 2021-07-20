@@ -25,8 +25,6 @@ pub fn rss_handle_unfiltered_posts(
         AreThereItems,
     )>,
     provider_kind: ProviderKind,
-    enable_prints: bool,
-    enable_warning_prints: bool,
 ) -> (
     Option<Vec<CommonRssPostStruct>>,
     Option<

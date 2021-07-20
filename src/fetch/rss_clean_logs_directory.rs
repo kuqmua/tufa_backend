@@ -7,11 +7,7 @@ use config_lib::get_project_information::get_config::get_config_information::CON
 use std::fs;
 use std::path::Path;
 
-pub fn rss_clean_logs_directory(
-    provider_kind: ProviderKind,
-    enable_prints: bool,
-    enable_error_prints: bool,
-) {
+pub fn rss_clean_logs_directory(provider_kind: ProviderKind) {
     let path = format!(
         "logs/{}/{:?}",
         &CONFIG.params.warning_logs_directory_name, provider_kind

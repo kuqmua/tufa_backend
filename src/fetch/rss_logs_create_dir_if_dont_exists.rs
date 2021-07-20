@@ -9,8 +9,6 @@ use std::path::Path;
 pub fn rss_logs_create_dir_if_dont_exists(
     underdirectory: &str,
     provider_kind: &ProviderKind,
-    enable_prints: bool,
-    enable_error_prints: bool,
     warning_logs_directory_name: &str,
 ) {
     let path_to_log_file = format!(

@@ -95,52 +95,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 let vec_of_provider_links =
                                                     generate_arxiv_hashmap_links(arxiv_link_parts);
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_arxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_arxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_arxiv,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_arxiv,
-                                                    &CONFIG.links.arxiv_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.arxiv_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -177,52 +159,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         biorxiv_link_parts,
                                                     );
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_biorxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_biorxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_biorxiv,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_biorxiv,
-                                                    &CONFIG.links.biorxiv_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.biorxiv_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -265,52 +229,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 );
 
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_github,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_github,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_github,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_github,
-                                                    &CONFIG.links.github_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.github_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -345,52 +291,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                 let vec_of_provider_links =
                                                     generate_habr_hashmap_links(habr_link_parts);
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_habr,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_habr,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_habr,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_habr,
-                                                    &CONFIG.links.habr_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.habr_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -427,52 +355,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         medrxiv_link_parts,
                                                     );
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_medrxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_medrxiv,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_medrxiv,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_medrxiv,
-                                                    &CONFIG.links.medrxiv_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.medrxiv_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -509,52 +419,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         reddit_link_parts,
                                                     );
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_reddit,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_reddit,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_reddit,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_reddit,
-                                                    &CONFIG.links.reddit_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    None
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.reddit_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            None,
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }
@@ -611,52 +503,34 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     vec_of_provider_links
                                                 );
                                                 threads_vec.push(thread::spawn(move || {
-                                                let enum_success_unsuccess_option_posts = rss_part(
-                                                    CONFIG.params.enable_all_providers_prints
-                                                        && CONFIG.enable_providers_prints.enable_prints_twitter,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_warning_high_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_warning_high_providers_prints
-                                                            .enable_warning_high_prints_for_twitter,
-                                                    CONFIG
-                                                        .params
-                                                        .enable_error_prints_for_all_providers
-                                                        && CONFIG
-                                                            .enable_error_providers_prints
-                                                            .enable_error_prints_for_twitter,
-                                                    CONFIG.params.enable_time_measurement
-                                                        && CONFIG
-                                                            .enable_providers_time_measurement
-                                                            .enable_time_measurement_for_twitter,
-                                                    &CONFIG.links.twitter_link,
-                                                    provider_kind_handle_clone,
-                                                    CONFIG.params.enable_error_prints,
-                                                    vec_of_provider_links,
-                                                    Some(twitter_providers)
-                                                );
-                                                if let Some(success_posts) =
-                                                    enum_success_unsuccess_option_posts.0
-                                                {
-                                                    let mut posts_handle_locked =
-                                                        posts_handle.lock().unwrap();
-                                                    for value in success_posts {
-                                                        posts_handle_locked.push(value);
+                                                    let enum_success_unsuccess_option_posts =
+                                                        rss_part(
+                                                            &CONFIG.links.twitter_link,
+                                                            provider_kind_handle_clone,
+                                                            CONFIG.params.enable_error_prints,
+                                                            vec_of_provider_links,
+                                                            Some(twitter_providers),
+                                                        );
+                                                    if let Some(success_posts) =
+                                                        enum_success_unsuccess_option_posts.0
+                                                    {
+                                                        let mut posts_handle_locked =
+                                                            posts_handle.lock().unwrap();
+                                                        for value in success_posts {
+                                                            posts_handle_locked.push(value);
+                                                        }
                                                     }
-                                                }
-                                                if let Some(unsuccess_posts) =
-                                                    enum_success_unsuccess_option_posts.1
-                                                {
-                                                    let mut error_posts_handle_locked =
-                                                        error_posts_handle.lock().unwrap();
-                                                    for unsuccess_post in unsuccess_posts {
-                                                        error_posts_handle_locked
-                                                            .push(unsuccess_post);
+                                                    if let Some(unsuccess_posts) =
+                                                        enum_success_unsuccess_option_posts.1
+                                                    {
+                                                        let mut error_posts_handle_locked =
+                                                            error_posts_handle.lock().unwrap();
+                                                        for unsuccess_post in unsuccess_posts {
+                                                            error_posts_handle_locked
+                                                                .push(unsuccess_post);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        ));
+                                                }));
                                             }
                                         }
                                     }

@@ -25,57 +25,11 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
 
     let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
     for some_error_post in some_error_posts {
-        let enable_time_measurement: bool;
-        match some_error_post.4 {
-            ProviderKind::Arxiv => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_arxiv
-            }
-            ProviderKind::Biorxiv => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_biorxiv
-            }
-            ProviderKind::Github => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_github
-            }
-            ProviderKind::Habr => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_habr
-            }
-            ProviderKind::Medrxiv => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_medrxiv
-            }
-            ProviderKind::Reddit => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_reddit
-            }
-            ProviderKind::Twitter => {
-                enable_time_measurement = CONFIG.params.enable_time_measurement
-                    && CONFIG
-                        .enable_providers_time_measurement
-                        .enable_time_measurement_for_twitter
-            }
-        }
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
             some_error_post,
             &CONFIG
                 .params
                 .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-            enable_time_measurement,
             time,
             &CONFIG.params.warning_logs_directory_name,
         ));

@@ -21,7 +21,6 @@ use std::time::Instant;
 pub fn rss_fetch_link(
     link: &str,
     time: Instant,
-    enable_time_measurement: bool,
 ) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
     print_colorful_message(
