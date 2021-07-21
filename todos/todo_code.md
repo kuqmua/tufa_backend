@@ -239,9 +239,5 @@ check config for unused variables
 <br/>
 
 ### -------------------
-remove pub from innner functions in parse_github_html
-<br/>
-
-### -------------------
 add provider_kind into inner related to providers functions as input parameter
 <br/>
