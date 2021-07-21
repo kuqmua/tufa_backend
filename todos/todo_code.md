@@ -235,9 +235,5 @@ github parsing
 <br/>
 
 ### -------------------
-check config for unused variables
-<br/>
-
-### -------------------
 add provider_kind into inner related to providers functions as input parameter
 <br/>
