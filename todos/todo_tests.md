@@ -25,3 +25,7 @@ Write tests what checks all function to have #![deny(clippy::indexing_slicing, c
 ### -------------------
 test to check what cargo run executes in the right folder
 <br/>
+
+### -------------------
+test what check commit name for only eng symbols
+<br/>
