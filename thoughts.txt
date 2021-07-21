@@ -105,3 +105,5 @@ https://github.com/LukeMathWalker/cargo-chef
 --------------------------
 Redis rust library
 https://github.com/mitsuhiko/redis-rs
+------------------------------
+AVIF imag format in some cases better than webp, png and jpeg
