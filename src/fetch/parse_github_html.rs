@@ -228,7 +228,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     )
 }
 
-pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
+fn parse_github_html_first_part(node: &Node) -> Option<String> {
     let mut avatar_link: Option<String> = None;
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
@@ -315,7 +315,7 @@ pub fn parse_github_html_first_part(node: &Node) -> Option<String> {
     avatar_link
 }
 
-pub fn parse_github_html_second_part(
+fn parse_github_html_second_part(
     node: &Node,
 ) -> (
     Option<String>,
@@ -2006,7 +2006,7 @@ pub fn parse_github_html_second_part(
     )
 }
 
-pub fn parse_github_html_second_part_inner_one_element(
+fn parse_github_html_second_part_inner_one_element(
     node: &Node,
 ) -> (
     Option<String>,
@@ -2530,7 +2530,7 @@ pub fn parse_github_html_second_part_inner_one_element(
         data_url,
     )
 }
-pub fn handle_text_element(node: &Node) -> Option<String> {
+fn handle_text_element(node: &Node) -> Option<String> {
     let mut text: Option<String> = None;
     match node {
         Node::Text(ref text_handle) => {
@@ -2548,7 +2548,7 @@ pub fn handle_text_element(node: &Node) -> Option<String> {
     }
     text
 }
-pub fn second_element(
+fn second_element(
     node: &Node,
 ) -> (
     Option<String>,
@@ -2695,7 +2695,7 @@ pub fn second_element(
         data_url,
     )
 }
-pub fn two_elements_one_child(
+fn two_elements_one_child(
     node: &Node,
 ) -> (
     Option<String>,
@@ -3407,7 +3407,7 @@ pub fn two_elements_one_child(
     )
 }
 
-pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
+fn two_elements_four_children_first(node: &Node) -> Option<String> {
     let mut author_another_another: Option<String> = None;
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
@@ -3449,7 +3449,7 @@ pub fn two_elements_four_children_first(node: &Node) -> Option<String> {
     author_another_another
 }
 
-pub fn two_elements_four_children_second(node: &Node) -> Option<String> {
+fn two_elements_four_children_second(node: &Node) -> Option<String> {
     let mut action_another_another: Option<String> = None;
     match node {
         Node::Text(ref action_another_another_handle) => {
@@ -3469,7 +3469,7 @@ pub fn two_elements_four_children_second(node: &Node) -> Option<String> {
     action_another_another
 }
 
-pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
+fn two_elements_four_children_third(node: &Node) -> Option<String> {
     let mut who_follow: Option<String> = None;
     match node {
         Node::Element(ref node_element) => match node_element.children.len() {
@@ -3511,7 +3511,7 @@ pub fn two_elements_four_children_third(node: &Node) -> Option<String> {
     who_follow
 }
 
-pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<String>) {
+fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<String>) {
     let mut datejs: Option<String> = None;
     let mut date: Option<String> = None;
     match node {
@@ -3602,7 +3602,7 @@ pub fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option
     (datejs, date)
 }
 
-pub fn parse_github_html_second_part_two_children_first(
+fn parse_github_html_second_part_two_children_first(
     node: &Node,
 ) -> (
     Option<String>,
@@ -4089,7 +4089,7 @@ pub fn parse_github_html_second_part_two_children_first(
     )
 }
 
-pub fn four_cases(
+fn four_cases(
     vec_of_nodes: &[Node],
 ) -> (
     Option<String>,
