@@ -181,5 +181,6 @@ todo files folder
 <br/>
 
 ### -------------------
-todo files as .md files (like Readme)
+clippy rust flags (can use deny for them - code would be more safe)
+https://efanzh.org/2021/05/25/rust-lints.html
 <br/>
