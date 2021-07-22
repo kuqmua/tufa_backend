@@ -10,6 +10,7 @@ use config_lib::get_project_information::get_config::get_config_information::CON
 
 extern crate num_cpus;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
     let cpus = num_cpus::get();

@@ -47,6 +47,7 @@ mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
     entry::entry();
 }
