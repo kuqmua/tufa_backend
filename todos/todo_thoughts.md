@@ -184,3 +184,8 @@ todo files folder
 clippy rust flags (can use deny for them - code would be more safe)
 https://efanzh.org/2021/05/25/rust-lints.html
 <br/>
+
+### -------------------
+global .gitignore
+https://www.youtube.com/watch?v=D97rnxDqq1I
+<br/>
