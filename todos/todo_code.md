@@ -237,3 +237,25 @@ github parsing
 ### -------------------
 add provider_kind into inner related to providers functions as input parameter
 <br/>
+
+
+### -------------------
+restruct config to remove this 
+[enable_providers]
+enable_arxiv = true
+enable_biorxiv = true
+enable_github = true
+enable_habr = false
+enable_medrxiv = false
+enable_reddit = false
+enable_twitter = false
+
+into this 
+vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
+
+as {
+  name: "biorxiv",
+  enable: true,
+  enable_warning_high_prints: true,
+}
+<br/>
