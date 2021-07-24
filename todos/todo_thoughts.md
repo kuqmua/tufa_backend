@@ -189,3 +189,8 @@ https://efanzh.org/2021/05/25/rust-lints.html
 global .gitignore
 https://www.youtube.com/watch?v=D97rnxDqq1I
 <br/>
+
+### -------------------
+#[deny(clippy::unwrap_used)]
+is it triggers for all async functions? or only for tokio?
+<br/>
