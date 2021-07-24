@@ -1,3 +1,4 @@
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_twitter_providers_names() -> Vec<String> {
     let twitter_providers_names: Vec<String> = vec![
         // "nitter.42l.fr".to_string(),

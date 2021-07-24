@@ -1,3 +1,4 @@
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn generate_medrxiv_hashmap_links(medrxiv_names: Vec<String>) -> Vec<String> {
     //example http://connect.medrxiv.org/medrxiv_xml.php?subject=Addiction_Medicine
     let first_part_of_link: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";

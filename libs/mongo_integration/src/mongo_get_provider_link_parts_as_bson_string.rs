@@ -1,6 +1,7 @@
 use futures::stream::TryStreamExt;
 use mongodb::{bson, options::ClientOptions, Client};
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
 pub async fn mongo_get_provider_link_parts_as_bson_string(
     mongo_url: &str,

@@ -6,6 +6,7 @@ use prints_lib::print_type_enum::PrintType;
 use std::fs;
 use std::path::Path;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_logs_create_dir_if_dont_exists(
     underdirectory: &str,
     provider_kind: &ProviderKind,

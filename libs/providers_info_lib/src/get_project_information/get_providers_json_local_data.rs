@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_json_local_data(
     path: &str,
     vec_of_provider_names: std::vec::Vec<String>,

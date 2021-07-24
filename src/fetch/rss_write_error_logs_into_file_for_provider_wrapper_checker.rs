@@ -10,6 +10,7 @@ use prints_lib::print_type_enum::PrintType;
 use std::fs::File;
 use std::io::ErrorKind;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,

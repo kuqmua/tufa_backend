@@ -9,6 +9,7 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_check_handled_fetch_status_info(
     handled_fetch_status_info: HandledFetchStatusInfo,

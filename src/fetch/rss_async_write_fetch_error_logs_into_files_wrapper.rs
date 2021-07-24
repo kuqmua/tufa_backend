@@ -9,6 +9,7 @@ use std::time::Instant;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     some_error_posts: Vec<(
         String,

@@ -4,6 +4,7 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::print_type_enum::PrintType;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn print_colorful_message(
     provider_kind: Option<&ProviderKind>,
     print_type: PrintType,
@@ -305,6 +306,7 @@ pub fn print_colorful_message(
     }
 }
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn handle_provider_prints(
     enable_prints_provider: bool,
     enable_error_prints_for_all_providers: bool,

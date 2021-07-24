@@ -18,6 +18,7 @@ pub const MEDRXIV_NAME_TO_CHECK: &str = "medrxiv";
 pub const REDDIT_NAME_TO_CHECK: &str = "reddit";
 pub const TWITTER_NAME_TO_CHECK: &str = "twitter";
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
     let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
         HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());

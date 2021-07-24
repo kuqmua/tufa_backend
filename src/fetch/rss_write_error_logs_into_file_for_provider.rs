@@ -5,6 +5,7 @@ use prints_lib::print_type_enum::PrintType;
 
 use std::{fs::File, io::Write};
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_write_error_logs_into_file_for_provider(file_name: String, json_object: Value) {
     let result_of_creating_file = File::create(&file_name);
     match result_of_creating_file {

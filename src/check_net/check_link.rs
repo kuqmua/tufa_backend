@@ -5,6 +5,7 @@ use crate::check_net::fetch_link::fetch_link;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_link(
     link: &str,
     enable_error_prints_handle: bool,

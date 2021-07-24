@@ -2,6 +2,7 @@ use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_clean_logs_directory_wrapper() {
     if CONFIG
         .enable_providers_cleaning_warning_logs_directory

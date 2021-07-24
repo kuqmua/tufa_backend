@@ -2,6 +2,7 @@ use crate::get_project_information::get_providers_json_local_data::get_providers
 // use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn put_data_in_mongo(
     mongo_url: &str,
     db_name_handle: &str,

@@ -7,6 +7,7 @@ use crate::tests::tests_constants::VECTOR_OF_MODES;
 
 use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 pub fn ci_check_new_config_fields() {
     for mode in VECTOR_OF_MODES {

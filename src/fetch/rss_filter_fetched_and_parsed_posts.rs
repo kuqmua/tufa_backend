@@ -4,6 +4,7 @@ use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[allow(clippy::clippy::too_many_arguments, clippy::clippy::type_complexity)]
 pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(

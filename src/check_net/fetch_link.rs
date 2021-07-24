@@ -1,5 +1,6 @@
 use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn fetch_link(
     link: &str,
 ) -> Result<(bool, HandledReachProviderStatusInfo), Box<dyn std::error::Error>> {

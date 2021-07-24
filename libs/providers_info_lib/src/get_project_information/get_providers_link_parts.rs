@@ -6,6 +6,7 @@ use std::collections::HashMap;
 
 use crate::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<String>> {
     let vec_of_link_parts_hashmap: HashMap<String, Vec<String>>;
     match resource {

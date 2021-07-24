@@ -18,6 +18,7 @@ use std::time::Instant;
 //     println!("fetch_link res.status() not ok");
 //     result_tuplefff.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
 // }
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_fetch_link(
     link: &str,
     time: Instant,

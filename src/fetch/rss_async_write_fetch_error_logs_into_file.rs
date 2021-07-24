@@ -4,7 +4,6 @@ use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
 use chrono::Local;
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message::print_colorful_message;
@@ -13,6 +12,7 @@ use prints_lib::print_type_enum::PrintType;
 use serde_json::json;
 use std::time::Instant;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[allow(clippy::clippy::too_many_arguments)]
 pub async fn rss_async_write_fetch_error_logs_into_file(
     value: (

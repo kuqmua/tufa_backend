@@ -6,6 +6,7 @@ use crate::tests::tests_constants::USER_CREDENTIALS_CONTENT;
 use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 use config_lib::get_project_information::project_constants::USER_CREDENTIALS_FILE_NAME;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 pub fn ci_check_new_user_credentials_fields() {
     let result_of_opening_file = File::open(format!(

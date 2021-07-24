@@ -10,6 +10,7 @@ use crate::get_project_information::get_providers_link_parts::Resource;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url: String;
     if CONFIG.mongo_params.is_cloud {

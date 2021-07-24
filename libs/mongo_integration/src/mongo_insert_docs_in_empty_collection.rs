@@ -4,6 +4,7 @@ use mongodb::{
     Client,
 };
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
 pub async fn mongo_insert_docs_in_empty_collection(
     mongo_url: &str,

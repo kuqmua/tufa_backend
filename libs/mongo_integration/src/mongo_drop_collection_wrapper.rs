@@ -1,5 +1,6 @@
 use mongodb::{options::ClientOptions, Client};
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
 pub async fn mongo_drop_collection_wrapper(
     mongo_url: &str,

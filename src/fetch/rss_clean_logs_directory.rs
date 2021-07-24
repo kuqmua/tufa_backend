@@ -7,6 +7,7 @@ use config_lib::get_project_information::get_config::get_config_information::CON
 use std::fs;
 use std::path::Path;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_clean_logs_directory(provider_kind: ProviderKind) {
     let path = format!(
         "logs/{}/{:?}",

@@ -6,6 +6,8 @@ use config_lib::get_project_information::project_constants::LOAD_USER_CREDENTIAL
 use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
 
 use crate::tests::tests_constants::VECTOR_OF_MODES;
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
     let user_credentials_for_test: UserCredentialsStruct =

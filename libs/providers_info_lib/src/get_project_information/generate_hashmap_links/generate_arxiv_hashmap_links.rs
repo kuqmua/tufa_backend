@@ -1,3 +1,4 @@
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn generate_arxiv_hashmap_links(arxiv_names: Vec<String>) -> Vec<String> {
     //example http://export.arxiv.org/rss/astro-ph.CO
     let first_part_of_link: &str = "http://export.arxiv.org/rss/";
