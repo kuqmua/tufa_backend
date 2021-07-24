@@ -6,6 +6,10 @@ use futures::executor::block_on;
 
 use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
+#[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
     let option_tuple = check_new_posts_threads_parts().await;
@@ -18,11 +22,28 @@ pub async fn async_tokio_wrapper() {
                         error_posts,
                     ));
                 });
-                wrong_cases_thread.join().unwrap();
+                match wrong_cases_thread.join() {
+                    Ok(_) => {}
+                    Err(e) => {
+                        print_colorful_message(
+                            None,
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("wrong_cases_thread.join() error: {:#?}", e),
+                        );
+                    }
+                }
             }
         }
         None => {
-            println!("NONENONENONE (todo)")
+            print_colorful_message(
+                None,
+                PrintType::WarningLow,
+                file!().to_string(),
+                line!().to_string(),
+                "check_new_posts_threads_parts().await - no new posts".to_string(),
+            );
         }
     }
 }
