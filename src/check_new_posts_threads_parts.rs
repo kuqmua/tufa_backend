@@ -561,9 +561,49 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         if *is_all_elelements_false {
                             None
                         } else {
-                            let posts_done = posts.lock().unwrap().to_vec();
-                            let error_posts_done = error_posts.lock().unwrap().to_vec();
-                            Some((posts_done, error_posts_done))
+                            let posts_done: Vec<CommonRssPostStruct>;
+                            let error_posts_done: Vec<(
+                                String,
+                                UnhandledFetchStatusInfo,
+                                HandledFetchStatusInfo,
+                                AreThereItems,
+                                ProviderKind,
+                            )>;
+                            match posts.lock() {
+                                Ok(ok_posts_lock) => {
+                                    posts_done = ok_posts_lock.to_vec();
+                                }
+                                Err(e) => {
+                                    posts_done = Vec::new();
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("posts.lock() error: {:#?}", e),
+                                    );
+                                }
+                            }
+                            match error_posts.lock() {
+                                Ok(ok_error_posts_lock) => {
+                                    error_posts_done = ok_error_posts_lock.to_vec();
+                                }
+                                Err(e) => {
+                                    error_posts_done = Vec::new();
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("error_posts.lock() error: {:#?}", e),
+                                    );
+                                }
+                            }
+                            if posts_done.is_empty() && error_posts_done.is_empty() {
+                                None
+                            } else {
+                                Some((posts_done, error_posts_done))
+                            }
                         }
                     } else {
                         print_colorful_message(
