@@ -259,3 +259,17 @@ as {
   enable_warning_high_prints: true,
 }
 <br/>
+
+### -------------------
+pub enum PrintType {
+    Error,
+    WarningHigh,
+    WarningLow,
+    Success,
+    PartialSuccess,
+    TimeMeasurement,
+    CleaningWarningLogsDirectory,
+}
+add ThreadError
+and other specific errors
+<br/>
