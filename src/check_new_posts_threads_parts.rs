@@ -47,7 +47,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
             match option_providers_link_parts {
                 Some(providers_link_parts) => {
                     if !providers_link_parts.is_empty() {
-                        // This
                         let mut threads_vec: Vec<JoinHandle<()>> =
                             Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
                         let mut threads_vec_checker =

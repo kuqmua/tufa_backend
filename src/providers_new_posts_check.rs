@@ -11,6 +11,10 @@ use config_lib::get_project_information::get_config::get_config_information::CON
 
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
     provider_link: &str,
     provider_kind_handle_clone: ProviderKind,
@@ -36,16 +40,44 @@ pub fn providers_new_posts_check(
         vec_of_provider_links,
         option_provider_providers,
     );
+    //maybe do it in parrallel? success and error posts
     if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-        let mut posts_handle_locked = posts_handle.lock().unwrap();
-        for value in success_posts {
-            posts_handle_locked.push(value);
+        match posts_handle.lock() {
+            Ok(mut posts_handle_locked) => {
+                for success_post in success_posts {
+                    posts_handle_locked.push(success_post);
+                }
+            }
+            Err(e) => {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("posts_handle.lock() (success_posts) error: {:#?}", e),
+                );
+            }
         }
     }
     if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-        for unsuccess_post in unsuccess_posts {
-            error_posts_handle_locked.push(unsuccess_post);
+        match error_posts_handle.lock() {
+            Ok(mut error_posts_handle_locked) => {
+                for unsuccess_post in unsuccess_posts {
+                    error_posts_handle_locked.push(unsuccess_post);
+                }
+            }
+            Err(e) => {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "error_posts_handle.lock() (unsuccess_posts_posts) error: {:#?}",
+                        e
+                    ),
+                );
+            }
         }
     }
 }
