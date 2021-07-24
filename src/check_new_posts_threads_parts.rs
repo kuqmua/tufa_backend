@@ -50,6 +50,8 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         // This
                         let mut threads_vec: Vec<JoinHandle<()>> =
                             Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
+                        let mut threads_vec_checker =
+                            Vec::<bool>::with_capacity(CONFIG.params.vec_of_provider_names.len());
                         let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
                         let error_posts = Arc::new(Mutex::new(Vec::<(
                             String,
@@ -58,7 +60,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                             AreThereItems,
                             ProviderKind,
                         )>::new()));
-
                         let config_provider_string_to_enum_struct_hashmap =
                             get_config_provider_string_to_enum_struct();
                         //check if provider_names are unique
@@ -98,6 +99,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_arxiv_hashmap_links(
                                                                 arxiv_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -161,6 +163,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_biorxiv_hashmap_links(
                                                                 biorxiv_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -224,6 +227,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_github_hashmap_links(
                                                                 github_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -286,6 +290,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_habr_hashmap_links(
                                                                 habr_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -349,6 +354,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_medrxiv_hashmap_links(
                                                                 medrxiv_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -412,6 +418,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             generate_reddit_hashmap_links(
                                                                 reddit_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -477,6 +484,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                                 twitter_providers.clone(),
                                                                 twitter_link_parts.to_vec(),
                                                             );
+                                                        threads_vec_checker.push(true);
                                                         threads_vec.push(thread::spawn(
                                                             move || {
                                                                 providers_new_posts_check(
@@ -518,12 +526,45 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                 }
                             }
                         }
-                        for i in threads_vec {
-                            i.join().unwrap();
+                        for (index, thread_vec) in threads_vec.into_iter().enumerate() {
+                            match thread_vec.join() {
+                                Ok(_) => {}
+                                Err(e) => {
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("thread_vec.join() error: {:#?}", e),
+                                    );
+                                    let option_element = threads_vec_checker.get_mut(index);
+                                    match option_element {
+                                        Some(element) => {
+                                            *element = false;
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                None,
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                "threads_vec_checker.get_mut(index) is None"
+                                                    .to_string(),
+                                            );
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        let posts_done = posts.lock().unwrap().to_vec();
-                        let error_posts_done = error_posts.lock().unwrap().to_vec();
-                        Some((posts_done, error_posts_done))
+                        let is_all_elelements_false =
+                            &threads_vec_checker.iter().all(|&item| !item);
+                        if *is_all_elelements_false {
+                            None
+                        } else {
+                            let posts_done = posts.lock().unwrap().to_vec();
+                            let error_posts_done = error_posts.lock().unwrap().to_vec();
+                            Some((posts_done, error_posts_done))
+                        }
                     } else {
                         print_colorful_message(
                             None,
