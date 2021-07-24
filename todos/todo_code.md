@@ -150,40 +150,16 @@ get concrete number of provider links as function or command line or env
 <br/>
 
 ### -------------------
-#![deny(clippy::indexing_slicing, clippy::unwrap_used)]
-clippy can warn/deny with this hashmap usage
-use std::collections::HashMap;
-fn main() {
-  let mut hashmap = HashMap::new();
-  hashmap.insert(
-    "different key".to_string(),
-    "value".to_string(),
-  );
-  //#1
-  match hashmap.get("key") {
-      Some(_) => {
-          println!("key with get");
-      }
-      None => {
-          println!("no key with get");
-      }
-  }
-  //#2
-  if hashmap.contains_key("key") {
-    println!("key with contains_key");
-  }
-  else{
-    println!("no key with contains_key");
-  }
-  //#3
-  if hashmap["key"] == "value".to_string(){
-    //thread 'main' panicked at 'no entry found for key',
-    println!("key with scope");
-  }
-  else{
-    println!("no key with scope");
-  }
-}
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+files to write warnings:
+rss_part
+rss_parse_string_into_struct
+rss_fetch_and_parse_provider_data
+rss_divide_to_equal_for_each_provider
+rss_check_available_providers
+parse_github_html and inner
+get_providers_link_parts_from_mongo
+generate_twitter_hashmap_links
 <br/>
 
 ### -------------------
