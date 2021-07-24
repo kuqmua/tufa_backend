@@ -1,8 +1,6 @@
 use std::thread;
 use std::thread::JoinHandle;
 
-use crate::fetch::rss_part::rss_part;
-
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
@@ -29,6 +27,8 @@ use providers_info_lib::get_project_information::generate_hashmap_links::generat
 use providers_info_lib::get_project_information::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
 use providers_info_lib::get_project_information::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
 use providers_info_lib::get_project_information::generate_hashmap_links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
+
+use crate::providers_new_posts_check::providers_new_posts_check;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn check_new_posts_threads_parts() -> Option<(
@@ -100,7 +100,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.arxiv_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -163,7 +163,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.biorxiv_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -226,7 +226,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.github_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -288,7 +288,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.habr_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -351,7 +351,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.medrxiv_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -414,7 +414,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.reddit_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -479,7 +479,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             );
                                                         threads_vec.push(thread::spawn(
                                                             move || {
-                                                                thread_new_posts_check_inner(
+                                                                providers_new_posts_check(
                                                                     &CONFIG.links.twitter_link,
                                                                     provider_kind_handle_clone,
                                                                     vec_of_provider_links,
@@ -570,51 +570,3 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         None
     }
 }
-
-fn thread_new_posts_check_inner(
-    provider_link: &str,
-    provider_kind_handle_clone: ProviderKind,
-    vec_of_provider_links: Vec<String>,
-    option_provider_providers: Option<Vec<String>>,
-    posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
-    error_posts_handle: Arc<
-        Mutex<
-            Vec<(
-                String,
-                UnhandledFetchStatusInfo,
-                HandledFetchStatusInfo,
-                AreThereItems,
-                ProviderKind,
-            )>,
-        >,
-    >,
-) {
-    let enum_success_unsuccess_option_posts = rss_part(
-        provider_link,
-        provider_kind_handle_clone,
-        CONFIG.params.enable_error_prints,
-        vec_of_provider_links,
-        option_provider_providers,
-    );
-    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-        let mut posts_handle_locked = posts_handle.lock().unwrap();
-        for value in success_posts {
-            posts_handle_locked.push(value);
-        }
-    }
-    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-        let mut error_posts_handle_locked = error_posts_handle.lock().unwrap();
-        for unsuccess_post in unsuccess_posts {
-            error_posts_handle_locked.push(unsuccess_post);
-        }
-    }
-}
-
-// let posts = Arc::new(Mutex::new(Vec::<>::new()));
-// let error_posts = Arc::new(Mutex::new(Vec::<(
-//     String,
-//     UnhandledFetchStatusInfo,
-//     HandledFetchStatusInfo,
-//     AreThereItems,
-//     ProviderKind,
-// )>::new()));

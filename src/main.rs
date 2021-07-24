@@ -46,6 +46,7 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
+mod providers_new_posts_check;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
