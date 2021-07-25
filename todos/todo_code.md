@@ -248,3 +248,7 @@ pub enum PrintType {
 add ThreadError
 and other specific errors
 <br/>
+
+### -------------------
+twitter fetch Syntax: 2:97 Element atom:link prefix is unbound
+<br/>
