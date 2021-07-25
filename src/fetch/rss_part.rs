@@ -21,6 +21,7 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_part(
     provider_link: &str,
@@ -103,7 +104,7 @@ pub fn rss_part(
         let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
-            let unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+            let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
                 CommonRssPostStruct,
                 String,
                 UnhandledFetchStatusInfo,
@@ -113,19 +114,19 @@ pub fn rss_part(
             let provider_kind_clone_for_prints = provider_kind.clone();
             match provider_kind {
                 ProviderKind::Arxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                    unfiltered_posts_vec_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Biorxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                    unfiltered_posts_vec_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Github => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                    unfiltered_posts_vec_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Medrxiv => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                    unfiltered_posts_vec_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
                 ProviderKind::Twitter => {
@@ -142,34 +143,90 @@ pub fn rss_part(
                             let not_ready_processed_posts =
                                 Arc::new(Mutex::new(Vec::with_capacity(links_len)));
                             let mut threads_vector = Vec::with_capacity(vec_of_hashmap_parts.len());
+                            let mut threads_vec_checker =
+                                Vec::<bool>::with_capacity(vec_of_hashmap_parts.len());
                             for element in &mut vec_of_hashmap_parts.into_iter() {
                                 let not_ready_processed_posts_handle =
                                     Arc::clone(&not_ready_processed_posts);
                                 let provider_kind_clone = provider_kind.clone();
                                 let thread = thread::spawn(move || {
-                                    let unfiltered_posts_hashmap_after_fetch_and_parse =
+                                    let unfiltered_posts_vec_after_fetch_and_parse =
                                         rss_fetch_and_parse_provider_data(
                                             element.clone(),
                                             provider_kind_clone,
                                         );
-                                    let mut locked_not_ready_processed_posts =
-                                        not_ready_processed_posts_handle.lock().unwrap();
-                                    for unfiltered_post in
-                                        unfiltered_posts_hashmap_after_fetch_and_parse
-                                    {
-                                        locked_not_ready_processed_posts.push(unfiltered_post);
+                                    match not_ready_processed_posts_handle.lock() {
+                                        Ok(mut locked_not_ready_processed_posts) => {
+                                            for unfiltered_post in
+                                                unfiltered_posts_vec_after_fetch_and_parse
+                                            {
+                                                locked_not_ready_processed_posts
+                                                    .push(unfiltered_post);
+                                            }
+                                        }
+                                        Err(e) => {
+                                            print_colorful_message(
+                                                None,
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!("not_ready_processed_posts_handle.lock() error: {:#?}", e),
+                                            );
+                                        }
                                     }
                                 });
                                 threads_vector.push(thread);
                             }
                             for thread in threads_vector {
-                                thread.join().unwrap();
+                                match thread.join() {
+                                    Ok(_) => threads_vec_checker.push(true),
+                                    Err(e) => {
+                                        threads_vec_checker.push(false);
+                                        print_colorful_message(
+                                            None,
+                                            PrintType::Error,
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            format!("thread.join()  error: {:#?}", e),
+                                        );
+                                    }
+                                }
                             }
-                            let f = &*not_ready_processed_posts.lock().unwrap().to_vec();
-                            unfiltered_posts_hashmap_after_fetch_and_parse = f.to_vec();
+                            let is_all_elelements_false =
+                                &threads_vec_checker.iter().all(|&item| !item);
+                            if *is_all_elelements_false {
+                                print_colorful_message(
+                                            None,
+                                            PrintType::Error,
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            "is_all_elelements_false for threads_vec_checker in twitter_available_providers_links".to_string(),
+                                        );
+                                return (None, None);
+                            } else {
+                                match not_ready_processed_posts.lock() {
+                                    Ok(not_ready_processed_posts_locked) => {
+                                        unfiltered_posts_vec_after_fetch_and_parse =
+                                            not_ready_processed_posts_locked.to_vec();
+                                    }
+                                    Err(e) => {
+                                        print_colorful_message(
+                                            None,
+                                            PrintType::Error,
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            format!(
+                                                "not_ready_processed_posts.lock()  error: {:#?}",
+                                                e
+                                            ),
+                                        );
+                                        return (None, None);
+                                    }
+                                }
+                            }
                         }
                         None => {
-                            unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new();
+                            unfiltered_posts_vec_after_fetch_and_parse = Vec::new();
                             print_colorful_message(
                                 Some(&provider_kind),
                                 PrintType::WarningHigh,
@@ -197,10 +254,10 @@ pub fn rss_part(
                             line!().to_string(),
                             "success reddit authorization".to_string(),
                         );
-                        unfiltered_posts_hashmap_after_fetch_and_parse =
+                        unfiltered_posts_vec_after_fetch_and_parse =
                             rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                     } else {
-                        unfiltered_posts_hashmap_after_fetch_and_parse = Vec::new(); //rethink this
+                        unfiltered_posts_vec_after_fetch_and_parse = Vec::new(); //rethink this
                         print_colorful_message(
                                 Some(&provider_kind),
                                 PrintType::Error,
@@ -211,13 +268,13 @@ pub fn rss_part(
                     }
                 }
                 ProviderKind::Habr => {
-                    unfiltered_posts_hashmap_after_fetch_and_parse =
+                    unfiltered_posts_vec_after_fetch_and_parse =
                         rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
                 }
             }
-            if !unfiltered_posts_hashmap_after_fetch_and_parse.is_empty() {
+            if !unfiltered_posts_vec_after_fetch_and_parse.is_empty() {
                 rss_handle_unfiltered_posts(
-                    unfiltered_posts_hashmap_after_fetch_and_parse,
+                    unfiltered_posts_vec_after_fetch_and_parse,
                     provider_kind_handle,
                 )
             } else {
@@ -227,7 +284,7 @@ pub fn rss_part(
                     file!().to_string(),
                     line!().to_string(),
                     format!(
-                        "unfiltered_posts_hashmap_after_fetch_and_parse is empty for{:#?}",
+                        "unfiltered_posts_vec_after_fetch_and_parse is empty for{:#?}",
                         provider_kind_handle
                     ),
                 );

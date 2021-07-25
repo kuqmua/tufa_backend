@@ -152,7 +152,6 @@ get concrete number of provider links as function or command line or env
 ### -------------------
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 files to write warnings:
-rss_part
 rss_parse_string_into_struct
 rss_fetch_and_parse_provider_data
 rss_divide_to_equal_for_each_provider
