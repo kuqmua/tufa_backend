@@ -2,6 +2,33 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use config_lib::get_project_information::project_constants::COMMON_PROVIDER_ITEM_HANDLE;
+use config_lib::get_project_information::project_constants::FIRST_TWITTER_FILTER_HANDLE_TO_REMOVE;
+use config_lib::get_project_information::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
+use config_lib::get_project_information::project_constants::LAST_TWITTER_FILTER_HANDLE_TO_REMOVE;
+
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
+
+use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_1;
+use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_2;
+use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+
+use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
+use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
+use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+
+use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_1;
+use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
+use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message::print_colorful_message;
@@ -27,6 +54,7 @@ use regex::Regex;
 //     time.elapsed().as_secs(),
 //     time.elapsed().as_millis()
 // );
+// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
@@ -164,17 +192,28 @@ pub fn rss_parse_string_into_struct(
         }
         _ => {
             let what_should_find_in_fetch_result_string: &str;
-            let item: &str = "</item>";
             match provider_kind {
-                ProviderKind::Arxiv => what_should_find_in_fetch_result_string = item,
-                ProviderKind::Biorxiv => what_should_find_in_fetch_result_string = item,
-                ProviderKind::Github => what_should_find_in_fetch_result_string = "</entry>",
-                ProviderKind::Habr => what_should_find_in_fetch_result_string = item,
-                ProviderKind::Medrxiv => what_should_find_in_fetch_result_string = item,
+                ProviderKind::Arxiv => {
+                    what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+                }
+                ProviderKind::Biorxiv => {
+                    what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+                }
+                ProviderKind::Github => {
+                    what_should_find_in_fetch_result_string = GITHUB_PROVIDER_ITEM_HANDLE
+                }
+                ProviderKind::Habr => {
+                    what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+                }
+                ProviderKind::Medrxiv => {
+                    what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+                }
                 ProviderKind::Reddit => {
                     panic!("ProviderKind::Reddit not in the right place wtf1?")
                 }
-                ProviderKind::Twitter => what_should_find_in_fetch_result_string = item,
+                ProviderKind::Twitter => {
+                    what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+                }
             }
 
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
@@ -218,48 +257,79 @@ pub fn rss_parse_string_into_struct(
                                     );
                                 }
                             }
-                            let re = Regex::new("<dc:creator>").unwrap();
+                            let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "bbb<creator>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
+                                )
                                 .to_string();
-                            let re = Regex::new("</dc:creator>").unwrap();
+
+                            let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "bbb</creator>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2,
+                                )
                                 .to_string();
-                            let re = Regex::new("<atom:link").unwrap();
+
+                            // //why its here?
+                            let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_3).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "<atom_link")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3,
+                                )
                                 .to_string();
+                            // //why its here?
                         }
                         ProviderKind::Medrxiv => {
                             fetch_result_string.remove(0);
-                            let re = Regex::new("<dc:title>").unwrap();
+                            let re = Regex::new(MEDRXIV_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "<dccfifle>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
+                                )
                                 .to_string();
-                            let re = Regex::new("</dc:title>").unwrap();
+                            let re = Regex::new(MEDRXIV_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "</dccfifle>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2,
+                                )
                                 .to_string();
                         }
                         ProviderKind::Biorxiv => {
-                            let re = Regex::new("<dc:title>").unwrap();
+                            let re = Regex::new(BIORXIV_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "<dcstitle>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
+                                )
                                 .to_string();
-                            let re = Regex::new("</dc:title>").unwrap();
+                            let re = Regex::new(BIORXIV_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "</dcstitle>")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2,
+                                )
                                 .to_string();
                         }
                         ProviderKind::Habr => {
-                            let re = Regex::new("<channel>").unwrap();
+                            let re = Regex::new(HABR_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "         ")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
+                                )
                                 .to_string();
-                            let re = Regex::new("</channel>").unwrap();
+                            let re = Regex::new(HABR_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
-                                .replace_all(&fetch_result_string, "          ")
+                                .replace_all(
+                                    &fetch_result_string,
+                                    HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2,
+                                )
                                 .to_string();
                         }
                         ProviderKind::Arxiv => {}
