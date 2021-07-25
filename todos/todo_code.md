@@ -252,3 +252,10 @@ and other specific errors
 ### -------------------
 twitter fetch Syntax: 2:97 Element atom:link prefix is unbound
 <br/>
+
+### -------------------
+ProviderKind::Medrxiv => {
+                            fetch_result_string.remove(0);
+
+rewrite it without extra allocation. like let f = fetch_result_string[1..]
+<br/>
