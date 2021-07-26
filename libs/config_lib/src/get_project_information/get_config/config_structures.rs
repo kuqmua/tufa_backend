@@ -17,6 +17,7 @@ pub struct ConfigStruct {
         EnableProvidersCleaningWarningLogsDirectory,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
+    pub providers_links_limits: ProvidersLinksLimits,
     pub print_colors: PrintColors,
     pub env: Env,
 }
@@ -213,6 +214,17 @@ pub struct EnableProvidersLinksLimit {
     pub enable_links_limit_for_medrxiv: bool,
     pub enable_links_limit_for_reddit: bool,
     pub enable_links_limit_for_twitter: bool,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct ProvidersLinksLimits {
+    pub links_limit_for_arxiv: u32,
+    pub links_limit_for_biorxiv: u32,
+    pub links_limit_for_github: u32,
+    pub links_limit_for_habr: u32,
+    pub links_limit_for_medrxiv: u32,
+    pub links_limit_for_reddit: u32,
+    pub links_limit_for_twitter: u32,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]

@@ -142,6 +142,15 @@ enable_links_limit_for_medrxiv = true
 enable_links_limit_for_reddit = true
 enable_links_limit_for_twitter = true
 
+[providers_links_limits]
+links_limit_for_arxiv = 10
+links_limit_for_biorxiv = 10
+links_limit_for_github = 10
+links_limit_for_habr = 10
+links_limit_for_medrxiv = 10
+links_limit_for_reddit = 10
+links_limit_for_twitter = 10
+
 [print_colors]
 error_red = 255
 error_green = 0
