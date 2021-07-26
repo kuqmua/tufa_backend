@@ -8,6 +8,7 @@ unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhan
 enable_providers = true
 enable_cleaning_warning_logs_directory = true
 enable_time_measurement = true
+enable_provider_links_limit = true
 enable_prints = true
 enable_error_prints = true
 enable_warning_high_prints = true
