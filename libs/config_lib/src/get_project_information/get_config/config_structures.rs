@@ -54,6 +54,8 @@ pub struct Params {
     pub enable_cleaning_warning_logs_directory: bool,
     pub enable_time_measurement: bool,
     pub enable_provider_links_limit: bool,
+    pub enable_common_providers_links_limit: bool,
+    pub common_providers_links_limit: u32,
     //
     pub enable_prints: bool,
     pub enable_error_prints: bool,
