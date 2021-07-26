@@ -194,3 +194,7 @@ https://www.youtube.com/watch?v=D97rnxDqq1I
 #[deny(clippy::unwrap_used)]
 is it triggers for all async functions? or only for tokio?
 <br/>
+
+### -------------------
+rename get_config_information to lazy_initialized_config
+<br/>
