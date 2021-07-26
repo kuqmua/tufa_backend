@@ -137,6 +137,15 @@ enable_time_measurement_for_medrxiv = true
 enable_time_measurement_for_reddit = true
 enable_time_measurement_for_twitter = true
 
+[enable_providers_links_limits]
+enable_links_limit_for_arxiv = true
+enable_links_limit_for_biorxiv = true
+enable_links_limit_for_github = true
+enable_links_limit_for_habr = true
+enable_links_limit_for_medrxiv = true
+enable_links_limit_for_reddit = true
+enable_links_limit_for_twitter = true
+
 [print_colors]
 error_red = 255
 error_green = 0

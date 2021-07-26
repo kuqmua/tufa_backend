@@ -16,8 +16,9 @@ pub struct ConfigStruct {
     pub enable_providers_cleaning_warning_logs_directory:
         EnableProvidersCleaningWarningLogsDirectory,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
-    pub env: Env,
+    pub enable_providers_links_limits: EnableProvidersLinksLimit,
     pub print_colors: PrintColors,
+    pub env: Env,
 }
 
 impl ConfigStruct {
@@ -201,6 +202,17 @@ pub struct EnableProvidersTimeMeasurement {
     pub enable_time_measurement_for_medrxiv: bool,
     pub enable_time_measurement_for_reddit: bool,
     pub enable_time_measurement_for_twitter: bool,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct EnableProvidersLinksLimit {
+    pub enable_links_limit_for_arxiv: bool,
+    pub enable_links_limit_for_biorxiv: bool,
+    pub enable_links_limit_for_github: bool,
+    pub enable_links_limit_for_habr: bool,
+    pub enable_links_limit_for_medrxiv: bool,
+    pub enable_links_limit_for_reddit: bool,
+    pub enable_links_limit_for_twitter: bool,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
