@@ -260,3 +260,14 @@ ProviderKind::Medrxiv => {
 
 rewrite it without extra allocation. like let f = fetch_result_string[1..]
 <br/>
+
+### -------------------
+implement this for mongo_get_provider_link_parts_as_bson_string
+links_limit_for_arxiv = 10 # i64
+links_limit_for_biorxiv = 10 # i64
+links_limit_for_github = 10 # i64
+links_limit_for_habr = 10 # i64
+links_limit_for_medrxiv = 10 # i64
+links_limit_for_reddit = 10 # i64
+links_limit_for_twitter = 10 # i64
+<br/>
