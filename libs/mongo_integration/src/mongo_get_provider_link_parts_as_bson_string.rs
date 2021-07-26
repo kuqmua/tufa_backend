@@ -5,6 +5,8 @@ use mongodb::{
     Client,
 };
 
+use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
 pub async fn mongo_get_provider_link_parts_as_bson_string(
@@ -34,7 +36,17 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                         Ok(documents_number) => {
                             if documents_number > 0 {
                                 println!("collection.count_documents {}", documents_number);
-                                let find_options = FindOptions::builder().limit(10).build();
+                                let find_options: Option<FindOptions>;
+                                if CONFIG.params.enable_common_providers_links_limit {
+                                    find_options = Some(
+                                        FindOptions::builder()
+                                            .limit(CONFIG.params.common_providers_links_limit)
+                                            .build(),
+                                    );
+                                } else {
+                                    find_options = None;
+                                }
+
                                 let cursor_result = collection.find(None, find_options).await;
                                 match cursor_result {
                                     Ok(mut cursor) => {

@@ -10,7 +10,7 @@ enable_cleaning_warning_logs_directory = true
 enable_time_measurement = true
 enable_provider_links_limit = true
 enable_common_providers_links_limit = true
-common_providers_links_limit = 10 # u32 
+common_providers_links_limit = 10 # i64 
 enable_prints = true
 enable_error_prints = true
 enable_warning_high_prints = true
@@ -145,13 +145,13 @@ enable_links_limit_for_reddit = true
 enable_links_limit_for_twitter = true
 
 [providers_links_limits]
-links_limit_for_arxiv = 10 # u32
-links_limit_for_biorxiv = 10 # u32
-links_limit_for_github = 10 # u32
-links_limit_for_habr = 10 # u32
-links_limit_for_medrxiv = 10 # u32
-links_limit_for_reddit = 10 # u32
-links_limit_for_twitter = 10 # u32
+links_limit_for_arxiv = 10 # i64
+links_limit_for_biorxiv = 10 # i64
+links_limit_for_github = 10 # i64
+links_limit_for_habr = 10 # i64
+links_limit_for_medrxiv = 10 # i64
+links_limit_for_reddit = 10 # i64
+links_limit_for_twitter = 10 # i64
 
 [print_colors]
 error_red = 255 # u8

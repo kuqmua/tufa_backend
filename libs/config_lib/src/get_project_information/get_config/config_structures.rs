@@ -55,7 +55,7 @@ pub struct Params {
     pub enable_time_measurement: bool,
     pub enable_provider_links_limit: bool,
     pub enable_common_providers_links_limit: bool,
-    pub common_providers_links_limit: u32,
+    pub common_providers_links_limit: i64,
     //
     pub enable_prints: bool,
     pub enable_error_prints: bool,
@@ -220,13 +220,13 @@ pub struct EnableProvidersLinksLimit {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ProvidersLinksLimits {
-    pub links_limit_for_arxiv: u32,
-    pub links_limit_for_biorxiv: u32,
-    pub links_limit_for_github: u32,
-    pub links_limit_for_habr: u32,
-    pub links_limit_for_medrxiv: u32,
-    pub links_limit_for_reddit: u32,
-    pub links_limit_for_twitter: u32,
+    pub links_limit_for_arxiv: i64,
+    pub links_limit_for_biorxiv: i64,
+    pub links_limit_for_github: i64,
+    pub links_limit_for_habr: i64,
+    pub links_limit_for_medrxiv: i64,
+    pub links_limit_for_reddit: i64,
+    pub links_limit_for_twitter: i64,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
