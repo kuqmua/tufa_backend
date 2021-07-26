@@ -245,6 +245,7 @@ pub enum PrintType {
     TimeMeasurement,
     CleaningWarningLogsDirectory,
 }
+add Info
 add ThreadError
 and other specific errors
 <br/>
