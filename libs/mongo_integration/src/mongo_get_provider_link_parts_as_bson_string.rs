@@ -1,5 +1,9 @@
 use futures::stream::TryStreamExt;
-use mongodb::{bson, options::ClientOptions, Client};
+use mongodb::{
+    bson,
+    options::{ClientOptions, FindOptions},
+    Client,
+};
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
@@ -30,7 +34,8 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                         Ok(documents_number) => {
                             if documents_number > 0 {
                                 println!("collection.count_documents {}", documents_number);
-                                let cursor_result = collection.find(None, None).await;
+                                let find_options = FindOptions::builder().limit(10).build();
+                                let cursor_result = collection.find(None, find_options).await;
                                 match cursor_result {
                                     Ok(mut cursor) => {
                                         let mut vec_of_strings: Vec<String> = Vec::new();
@@ -94,5 +99,9 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
             println!("(todo change this print) no client , {:#?}", e);
         }
     }
+    println!(
+        "vec_of_strings_to_return.len() {}",
+        vec_of_strings_to_return.len()
+    );
     Ok(vec_of_strings_to_return)
 }
