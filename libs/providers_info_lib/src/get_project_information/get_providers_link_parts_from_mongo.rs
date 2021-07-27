@@ -6,6 +6,7 @@ use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 use std::collections::HashMap;
@@ -48,6 +49,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Arxiv,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -72,6 +74,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Biorxiv,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -96,6 +99,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Github,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -120,6 +124,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Habr,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -144,6 +149,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Medrxiv,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -168,6 +174,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Reddit,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
@@ -192,6 +199,7 @@ pub fn get_providers_link_parts_from_mongo(
                                 provider_name, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
+                            ProviderKind::Twitter,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {

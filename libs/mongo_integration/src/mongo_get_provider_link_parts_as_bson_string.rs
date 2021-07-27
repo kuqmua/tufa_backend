@@ -5,6 +5,8 @@ use mongodb::{
     Client,
 };
 
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -14,6 +16,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     db_name_handle: &str,
     db_collection_name_handle: String,
     db_collection_document_field_name_handle: &str,
+    provider_kind: ProviderKind,
 ) -> Result<Vec<String>, mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
@@ -37,12 +40,143 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                             if documents_number > 0 {
                                 println!("collection.count_documents {}", documents_number);
                                 let find_options: Option<FindOptions>;
-                                if CONFIG.params.enable_common_providers_links_limit {
-                                    find_options = Some(
-                                        FindOptions::builder()
-                                            .limit(CONFIG.params.common_providers_links_limit)
-                                            .build(),
-                                    );
+                                if CONFIG.params.enable_provider_links_limit {
+                                    if CONFIG.params.enable_common_providers_links_limit {
+                                        find_options = Some(
+                                            FindOptions::builder()
+                                                .limit(CONFIG.params.common_providers_links_limit)
+                                                .build(),
+                                        );
+                                    } else {
+                                        match provider_kind {
+                                            ProviderKind::Arxiv => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_arxiv
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_arxiv,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Biorxiv => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_biorxiv
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_biorxiv,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Github => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_github
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_github,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Habr => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_habr
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_habr,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Medrxiv => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_medrxiv
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_medrxiv,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Reddit => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_reddit
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_reddit,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                            ProviderKind::Twitter => {
+                                                if CONFIG
+                                                    .enable_providers_links_limits
+                                                    .enable_links_limit_for_twitter
+                                                {
+                                                    find_options = Some(
+                                                        FindOptions::builder()
+                                                            .limit(
+                                                                CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_twitter,
+                                                            )
+                                                            .build(),
+                                                    );
+                                                } else {
+                                                    find_options = None;
+                                                }
+                                            }
+                                        }
+                                    }
                                 } else {
                                     find_options = None;
                                 }
