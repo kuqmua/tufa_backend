@@ -271,3 +271,7 @@ links_limit_for_medrxiv = 10 # i64
 links_limit_for_reddit = 10 # i64
 links_limit_for_twitter = 10 # i64
 <br/>
+            
+### -------------------
+get links_limit in random order not first 10
+<br/>
