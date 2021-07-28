@@ -6,6 +6,7 @@ use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
@@ -24,12 +25,13 @@ pub fn get_providers_link_parts_from_mongo(
     db_name_handle: String,
     db_collection_handle_second_part: String,
     db_collection_document_field_name_handle: String,
-    vec_of_provider_names: Vec<String>,
+    providers_string_into_enum_hashmap: HashMap<String, ProviderKind>,
 ) -> HashMap<String, Vec<String>> {
-    let mut threads_vec: Vec<JoinHandle<()>> = Vec::with_capacity(vec_of_provider_names.len());
+    let mut threads_vec: Vec<JoinHandle<()>> =
+        Vec::with_capacity(providers_string_into_enum_hashmap.len());
     let vec_of_link_parts_hashmap_under_arc =
         Arc::new(Mutex::new(HashMap::<String, Vec<String>>::new()));
-    for provider_name in vec_of_provider_names {
+    for provider_tuple in providers_string_into_enum_hashmap {
         let mongo_url_clone = mongo_url.clone();
         let db_name_handle_clone = db_name_handle.clone();
         let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
@@ -38,7 +40,7 @@ pub fn get_providers_link_parts_from_mongo(
         let vec_of_link_parts_hashmap_under_arc_handle =
             Arc::clone(&vec_of_link_parts_hashmap_under_arc);
         threads_vec.push(thread::spawn(move || {
-            if provider_name == ARXIV_NAME_TO_CHECK {
+            if provider_tuple.0 == ARXIV_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_arxiv {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -46,24 +48,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Arxiv,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == BIORXIV_NAME_TO_CHECK {
+            } else if provider_tuple.0 == BIORXIV_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_biorxiv {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -71,24 +73,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Biorxiv,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == GITHUB_NAME_TO_CHECK {
+            } else if provider_tuple.0 == GITHUB_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_github {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -96,24 +98,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Github,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == HABR_NAME_TO_CHECK {
+            } else if provider_tuple.0 == HABR_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_habr {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -121,24 +123,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Habr,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == MEDRXIV_NAME_TO_CHECK {
+            } else if provider_tuple.0 == MEDRXIV_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_medrxiv {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -146,24 +148,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Medrxiv,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == REDDIT_NAME_TO_CHECK {
+            } else if provider_tuple.0 == REDDIT_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_reddit {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -171,24 +173,24 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Reddit,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
                         }
                     }
                 }
-            } else if provider_name == TWITTER_NAME_TO_CHECK {
+            } else if provider_tuple.0 == TWITTER_NAME_TO_CHECK {
                 if CONFIG.enable_providers.enable_twitter {
                     let result_getting_provider_link_parts =
                         mongo_get_provider_link_parts_as_bson_string(
@@ -196,17 +198,17 @@ pub fn get_providers_link_parts_from_mongo(
                             &db_name_handle_clone,
                             format!(
                                 "{}{}",
-                                provider_name, db_collection_handle_second_part_clone
+                                provider_tuple.0, db_collection_handle_second_part_clone
                             ),
                             &db_collection_document_field_name_handle_clone,
-                            ProviderKind::Twitter,
+                            provider_tuple.1,
                         );
                     match result_getting_provider_link_parts {
                         Ok(provider_link_parts) => {
                             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
                                 vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
                             vec_of_link_parts_hashmap_under_arc_handle_locked
-                                .insert(provider_name, provider_link_parts);
+                                .insert(provider_tuple.0, provider_link_parts);
                         }
                         Err(e) => {
                             println!("result_getting_provider_link_parts error {:#?}", e);
@@ -219,7 +221,7 @@ pub fn get_providers_link_parts_from_mongo(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("some different provider {}", provider_name),
+                    format!("some different provider {}", provider_tuple.0),
                 );
             }
         }));
