@@ -56,6 +56,7 @@ pub struct Params {
     pub enable_provider_links_limit: bool,
     pub enable_common_providers_links_limit: bool,
     pub common_providers_links_limit: i64,
+    pub enable_common_randomize_order_for_mongo: bool,
     //
     pub enable_prints: bool,
     pub enable_error_prints: bool,
