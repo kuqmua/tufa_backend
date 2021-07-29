@@ -268,3 +268,7 @@ rewrite ProviderKind input params as function params in get_providers_link_parts
 ### -------------------
 get links_limit in random order not first 10
 <br/>
+
+### -------------------
+check config values on non negative, overflow, more than capacity, not zero
+<br/>
