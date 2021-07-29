@@ -1,6 +1,6 @@
 use futures::stream::TryStreamExt;
 use mongodb::{
-    bson,
+    bson::{self, doc, Document},
     options::{ClientOptions, FindOptions},
     Client,
 };
@@ -39,14 +39,10 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                         Ok(documents_number) => {
                             if documents_number > 0 {
                                 println!("collection.count_documents {}", documents_number);
-                                let find_options: Option<FindOptions>;
+                                let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
                                 if CONFIG.params.enable_provider_links_limit {
                                     if CONFIG.params.enable_common_providers_links_limit {
-                                        find_options = Some(
-                                            FindOptions::builder()
-                                                .limit(CONFIG.params.common_providers_links_limit)
-                                                .build(),
-                                        );
+                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }});
                                     } else {
                                         match provider_kind {
                                             ProviderKind::Arxiv => {
@@ -54,17 +50,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_arxiv
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_arxiv,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_arxiv }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Biorxiv => {
@@ -72,17 +62,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_biorxiv
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_biorxiv,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_biorxiv }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Github => {
@@ -90,17 +74,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_github
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_github,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_github }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Habr => {
@@ -108,17 +86,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_habr
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_habr,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_habr }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Medrxiv => {
@@ -126,17 +98,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_medrxiv
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_medrxiv,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_medrxiv }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Reddit => {
@@ -144,17 +110,11 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_reddit
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_reddit,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_reddit }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                             ProviderKind::Twitter => {
@@ -162,62 +122,114 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_twitter
                                                 {
-                                                    find_options = Some(
-                                                        FindOptions::builder()
-                                                            .limit(
-                                                                CONFIG
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
-                                                                    .links_limit_for_twitter,
-                                                            )
-                                                            .build(),
-                                                    );
+                                                                    .links_limit_for_twitter }});
                                                 } else {
-                                                    find_options = None;
+                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
                                             }
                                         }
                                     }
                                 } else {
-                                    find_options = None;
+                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                 }
-
-                                let cursor_result = collection.find(None, find_options).await;
-                                match cursor_result {
-                                    Ok(mut cursor) => {
-                                        let mut vec_of_strings: Vec<String> = Vec::new();
-                                        while let Some(document) = cursor.try_next().await? {
-                                            let bson_option = document
-                                                .get(db_collection_document_field_name_handle);
-                                            match bson_option {
-                                                Some(bson_handle) => match bson_handle {
-                                                    bson::Bson::String(stringified_bson) => {
-                                                        vec_of_strings
-                                                            .push(stringified_bson.to_string())
-                                                    }
-                                                    _ => {
-                                                        println!("(todo change this print) different mongo type")
-                                                    }
-                                                },
-                                                None => {
-                                                    println!(
+                                match option_aggregation_stage_1_get_docs_in_random_order_with_limit
+                                {
+                                    Some(
+                                        aggregation_stage_1_get_docs_in_random_order_with_limit,
+                                    ) => {
+                                        // let aggregation_stage_1_get_docs_in_random_order_with_limit =
+                                        //     doc! { "$sample" : {"size": 5 }};
+                                        // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
+                                        let pipeline = vec![
+                                            aggregation_stage_1_get_docs_in_random_order_with_limit,
+                                        ];
+                                        let cursor_result =
+                                            collection.aggregate(pipeline, None).await;
+                                        match cursor_result {
+                                            Ok(mut cursor) => {
+                                                let mut vec_of_strings: Vec<String> = Vec::new();
+                                                while let Some(document) = cursor.try_next().await?
+                                                {
+                                                    let bson_option = document.get(
+                                                        db_collection_document_field_name_handle,
+                                                    );
+                                                    match bson_option {
+                                                        Some(bson_handle) => match bson_handle {
+                                                            bson::Bson::String(
+                                                                stringified_bson,
+                                                            ) => vec_of_strings
+                                                                .push(stringified_bson.to_string()),
+                                                            _ => {
+                                                                println!("(todo change this print) different mongo type")
+                                                            }
+                                                        },
+                                                        None => {
+                                                            println!(
                                                         "no db_collection_document_field_name_handle: {}",
                                                         db_collection_document_field_name_handle
                                                     );
+                                                        }
+                                                    }
+                                                }
+                                                if !vec_of_strings.is_empty() {
+                                                    vec_of_strings_to_return = vec_of_strings
+                                                } else {
+                                                    vec_of_strings_to_return = Vec::new()
                                                 }
                                             }
-                                        }
-                                        if !vec_of_strings.is_empty() {
-                                            vec_of_strings_to_return = vec_of_strings
-                                        } else {
-                                            vec_of_strings_to_return = Vec::new()
-                                        }
-                                    }
-                                    Err(e) => {
-                                        vec_of_strings_to_return = Vec::new();
-                                        println!(
+                                            Err(e) => {
+                                                vec_of_strings_to_return = Vec::new();
+                                                println!(
                                             "(todo change this print)  collection.find, {:#?}",
                                             e
                                         )
+                                            }
+                                        }
+                                    }
+                                    None => {
+                                        let cursor_result = collection.aggregate(None, None).await;
+                                        match cursor_result {
+                                            Ok(mut cursor) => {
+                                                let mut vec_of_strings: Vec<String> = Vec::new();
+                                                while let Some(document) = cursor.try_next().await?
+                                                {
+                                                    let bson_option = document.get(
+                                                        db_collection_document_field_name_handle,
+                                                    );
+                                                    match bson_option {
+                                                        Some(bson_handle) => match bson_handle {
+                                                            bson::Bson::String(
+                                                                stringified_bson,
+                                                            ) => vec_of_strings
+                                                                .push(stringified_bson.to_string()),
+                                                            _ => {
+                                                                println!("(todo change this print) different mongo type")
+                                                            }
+                                                        },
+                                                        None => {
+                                                            println!(
+                                                        "no db_collection_document_field_name_handle: {}",
+                                                        db_collection_document_field_name_handle
+                                                    );
+                                                        }
+                                                    }
+                                                }
+                                                if !vec_of_strings.is_empty() {
+                                                    vec_of_strings_to_return = vec_of_strings
+                                                } else {
+                                                    vec_of_strings_to_return = Vec::new()
+                                                }
+                                            }
+                                            Err(e) => {
+                                                vec_of_strings_to_return = Vec::new();
+                                                println!(
+                                            "(todo change this print)  collection.find, {:#?}",
+                                            e
+                                        )
+                                            }
+                                        }
                                     }
                                 }
                             } else {
