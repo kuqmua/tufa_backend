@@ -42,7 +42,12 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
                                 if CONFIG.params.enable_provider_links_limit {
                                     if CONFIG.params.enable_common_providers_links_limit {
-                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }});
+                                        if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo {
+                                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }});
+                                        }
+                                        else {
+                                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
+                                        }
                                     } else {
                                         match provider_kind {
                                             ProviderKind::Arxiv => {
@@ -50,9 +55,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_arxiv
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_arxiv_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_arxiv }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_arxiv });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -62,9 +74,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_biorxiv
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_biorxiv_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_biorxiv }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_biorxiv });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -74,9 +93,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_github
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_github_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_github }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_github });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -86,9 +112,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_habr
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_habr_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_habr }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_habr });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -98,9 +131,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_medrxiv
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_medrxiv_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_medrxiv }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_medrxiv });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -110,9 +150,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_reddit
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_reddit_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_reddit }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_reddit });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -122,9 +169,16 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                     .enable_providers_links_limits
                                                     .enable_links_limit_for_twitter
                                                 {
-                                                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
+                                                    if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo && CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_twitter_link_parts_for_mongo {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG
                                                                     .providers_links_limits
                                                                     .links_limit_for_twitter }});
+                                                    }
+                                                    else {
+                                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG
+                                                                    .providers_links_limits
+                                                                    .links_limit_for_twitter });
+                                                    }
                                                 } else {
                                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
                                                 }
@@ -175,10 +229,10 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
             println!("(todo change this print) no client , {:#?}", e);
         }
     }
-    println!(
-        "vec_of_strings_to_return.len() {}",
-        vec_of_strings_to_return.len()
-    );
+    // println!(
+    //     "vec_of_strings_to_return.len() {}",
+    //     vec_of_strings_to_return.len()
+    // );
     Ok(vec_of_strings_to_return)
 }
 
