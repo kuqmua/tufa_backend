@@ -18,6 +18,8 @@ pub struct ConfigStruct {
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
     pub providers_links_limits: ProvidersLinksLimits,
+    pub enable_randomize_order_for_providers_link_parts_for_mongo:
+        EnableRandomizeOrderForProvidersLinkPartsForMongo,
     pub print_colors: PrintColors,
     pub env: Env,
 }
@@ -56,7 +58,7 @@ pub struct Params {
     pub enable_provider_links_limit: bool,
     pub enable_common_providers_links_limit: bool,
     pub common_providers_links_limit: i64,
-    pub enable_common_randomize_order_for_mongo: bool,
+    pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
     //
     pub enable_prints: bool,
     pub enable_error_prints: bool,
@@ -228,6 +230,17 @@ pub struct ProvidersLinksLimits {
     pub links_limit_for_medrxiv: i64,
     pub links_limit_for_reddit: i64,
     pub links_limit_for_twitter: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+pub struct EnableRandomizeOrderForProvidersLinkPartsForMongo {
+    pub enable_randomize_order_for_arxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_github_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_habr_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_medrxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_reddit_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_twitter_link_parts_for_mongo: bool,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]

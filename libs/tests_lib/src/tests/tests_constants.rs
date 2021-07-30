@@ -15,7 +15,7 @@ enable_time_measurement = true
 enable_provider_links_limit = true
 enable_common_providers_links_limit = true
 common_providers_links_limit = 2 # i64 
-enable_common_randomize_order_for_mongo = true
+enable_randomize_order_for_providers_link_parts_for_mongo = true
 enable_prints = true
 enable_error_prints = true
 enable_warning_high_prints = true
@@ -148,6 +148,15 @@ enable_links_limit_for_habr = true
 enable_links_limit_for_medrxiv = true
 enable_links_limit_for_reddit = true
 enable_links_limit_for_twitter = true
+
+[enable_randomize_order_for_providers_link_parts_for_mongo]
+enable_randomize_order_for_arxiv_link_parts_for_mongo = true
+enable_randomize_order_for_biorxiv_link_parts_for_mongo = true
+enable_randomize_order_for_github_link_parts_for_mongo = true
+enable_randomize_order_for_habr_link_parts_for_mongo = true
+enable_randomize_order_for_medrxiv_link_parts_for_mongo = true
+enable_randomize_order_for_reddit_link_parts_for_mongo = true
+enable_randomize_order_for_twitter_link_parts_for_mongo = true
 
 [providers_links_limits]
 links_limit_for_arxiv = 3 # i64
