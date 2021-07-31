@@ -198,3 +198,7 @@ is it triggers for all async functions? or only for tokio?
 ### -------------------
 rename get_config_information to lazy_initialized_config
 <br/>
+
+### -------------------
+rewrite something with "from" and "into" traits
+<br/>
