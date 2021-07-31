@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::get_project_information::get_providers_link_parts::Resource;
@@ -75,6 +76,8 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
     //     CONFIG.params.vec_of_provider_names.clone(),
     //     &CONFIG.mongo_params.file_extension,
     // );
+    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
+        HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.db_name_handle.to_string(),
@@ -86,7 +89,7 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
             .mongo_params
             .db_collection_document_field_name_handle
             .to_string(),
-        vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
+        providers_string_into_enum_hashmap,
     });
     if !providers_link_parts.is_empty() {
         Some(providers_link_parts)
