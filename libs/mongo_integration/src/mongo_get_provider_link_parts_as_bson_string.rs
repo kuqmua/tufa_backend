@@ -1,13 +1,14 @@
-use futures::stream::TryStreamExt;
 use mongodb::{
-    bson::{self, doc, Document},
+    bson::{doc, Document},
     options::ClientOptions,
-    Client, Collection,
+    Client,
 };
 
+use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
+use crate::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
@@ -51,7 +52,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                     } else {
                                         match provider_kind {
                                             ProviderKind::Arxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_arxiv,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_arxiv_link_parts_for_mongo,
@@ -59,7 +60,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Biorxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_biorxiv,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_biorxiv_link_parts_for_mongo,
@@ -67,7 +68,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Github => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_github,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_github_link_parts_for_mongo,
@@ -75,7 +76,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Habr => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_habr,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_habr_link_parts_for_mongo,
@@ -83,7 +84,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Medrxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_medrxiv,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_medrxiv_link_parts_for_mongo,
@@ -91,7 +92,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Reddit => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_reddit,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_reddit_link_parts_for_mongo,
@@ -99,7 +100,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                                 );
                                             }
                                             ProviderKind::Twitter => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = provider_logic(
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
                                                     CONFIG.enable_providers_links_limits.enable_links_limit_for_twitter,
                                                     CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
     CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_twitter_link_parts_for_mongo,
@@ -114,7 +115,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                 // let aggregation_stage_1_get_docs_in_random_order_with_limit =
                                 //     doc! { "$sample" : {"size": 5 }};
                                 // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
-                                let result = do_something(
+                                let result = mongo_possibly_get_documents_as_string_vector(
                                     collection,
                                     db_collection_document_field_name_handle,
                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
@@ -157,69 +158,4 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     //     vec_of_strings_to_return.len()
     // );
     Ok(vec_of_strings_to_return)
-}
-
-fn provider_logic(
-    enable_links_limit_for_provider: bool,
-    enable_randomize_order_for_providers_link_parts_for_mongo: bool,
-    enable_randomize_order_for_provider_link_parts_for_mongo: bool,
-    link_limits_for_provider: i64,
-) -> Option<Document> {
-    if enable_links_limit_for_provider {
-        if enable_randomize_order_for_providers_link_parts_for_mongo
-            && enable_randomize_order_for_provider_link_parts_for_mongo
-        {
-            Some(doc! { "$sample" : {"size": link_limits_for_provider }})
-        } else {
-            Some(doc! { "$limit" : link_limits_for_provider })
-        }
-    } else {
-        None
-    }
-}
-
-async fn do_something(
-    collection: Collection<Document>,
-    db_collection_document_field_name_handle: &str,
-    option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>,
-) -> Result<Vec<String>, mongodb::error::Error> {
-    let cursor_result = collection
-        .aggregate(
-            option_aggregation_stage_1_get_docs_in_random_order_with_limit,
-            None,
-        )
-        .await;
-    match cursor_result {
-        Ok(mut cursor) => {
-            let mut vec_of_strings: Vec<String> = Vec::new();
-            while let Some(document) = cursor.try_next().await? {
-                let bson_option = document.get(db_collection_document_field_name_handle);
-                match bson_option {
-                    Some(bson_handle) => match bson_handle {
-                        bson::Bson::String(stringified_bson) => {
-                            vec_of_strings.push(stringified_bson.to_string())
-                        }
-                        _ => {
-                            println!("(todo change this print) different mongo type")
-                        }
-                    },
-                    None => {
-                        println!(
-                            "no db_collection_document_field_name_handle: {}",
-                            db_collection_document_field_name_handle
-                        );
-                    }
-                }
-            }
-            if !vec_of_strings.is_empty() {
-                return Ok(vec_of_strings);
-            } else {
-                return Ok(Vec::new());
-            }
-        }
-        Err(e) => {
-            println!("(todo change this print)  collection.find, {:#?}", e);
-            return Ok(Vec::new());
-        }
-    }
 }
