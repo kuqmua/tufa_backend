@@ -29,3 +29,8 @@ test to check what cargo run executes in the right folder
 ### -------------------
 test what check commit name for only eng symbols
 <br/>
+
+### -------------------
+#[should_panic(expected = "99")]
+write some tests with with macro
+<br/>
