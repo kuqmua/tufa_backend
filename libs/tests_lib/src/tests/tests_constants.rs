@@ -14,7 +14,7 @@ enable_cleaning_warning_logs_directory = true
 enable_time_measurement = true
 enable_provider_links_limit = true
 enable_common_providers_links_limit = true
-common_providers_links_limit = 2 # i64 
+common_providers_links_limit = 1 # u64 
 enable_randomize_order_for_providers_link_parts_for_mongo = true
 enable_prints = true
 enable_error_prints = true
@@ -22,7 +22,7 @@ enable_warning_high_prints = true
 enable_warning_low_prints = true
 enable_success_prints = true
 enable_partial_success_prints = true
-enable_time_measurement_prints = true
+enable_time_measurement_prints = false
 enable_cleaning_warning_logs_directory_prints = true
 enable_all_providers_prints = true
 enable_error_prints_for_all_providers = true
@@ -159,13 +159,13 @@ enable_randomize_order_for_reddit_link_parts_for_mongo = true
 enable_randomize_order_for_twitter_link_parts_for_mongo = true
 
 [providers_links_limits]
-links_limit_for_arxiv = 3 # i64
-links_limit_for_biorxiv = 3 # i64
-links_limit_for_github = 3 # i64
-links_limit_for_habr = 3 # i64
-links_limit_for_medrxiv = 3 # i64
-links_limit_for_reddit = 3 # i64
-links_limit_for_twitter = 3 # i64
+links_limit_for_arxiv = 3 # u64
+links_limit_for_biorxiv = 3 # u64
+links_limit_for_github = 3 # u64
+links_limit_for_habr = 3 # u64
+links_limit_for_medrxiv = 3 # u64
+links_limit_for_reddit = 3 # u64
+links_limit_for_twitter = 3 # u64
 
 [print_colors]
 error_red = 255 # u8
