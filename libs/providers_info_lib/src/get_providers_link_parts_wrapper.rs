@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::project_constants::get_config_provider_string_to_enum_struct;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::get_providers_link_parts::get_providers_link_parts;
@@ -76,8 +77,26 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
     //     CONFIG.params.vec_of_provider_names.clone(),
     //     &CONFIG.mongo_params.file_extension,
     // );
-    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
+    let mut providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
         HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
+    let config_provider_string_to_enum_struct_hashmap = get_config_provider_string_to_enum_struct();
+    for provider_name in &CONFIG.params.vec_of_provider_names {
+        match config_provider_string_to_enum_struct_hashmap.get(provider_name) {
+            Some(provider_kind_handle) => {
+                providers_string_into_enum_hashmap
+                    .insert(provider_name.to_string(), provider_kind_handle.clone());
+            }
+            None => {
+                print_colorful_message(
+                    None,
+                    PrintType::Success,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("{} was disabled", provider_name),
+                );
+            }
+        }
+    }
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.db_name_handle.to_string(),
