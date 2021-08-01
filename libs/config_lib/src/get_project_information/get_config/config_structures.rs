@@ -57,7 +57,7 @@ pub struct Params {
     pub enable_time_measurement: bool,
     pub enable_provider_links_limit: bool,
     pub enable_common_providers_links_limit: bool,
-    pub common_providers_links_limit: i64,
+    pub common_providers_links_limit: u64,
     pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
     //
     pub enable_prints: bool,
