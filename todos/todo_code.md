@@ -272,3 +272,9 @@ get links_limit in random order not first 10
 ### -------------------
 check config values on non negative, overflow, more than capacity, not zero
 <br/>
+
+### -------------------
+Add method to config struct what check integer value for correct value 
+and use this method instead of use fields directly. 
+Make fields private and use get/set. Check strings too
+<br/>
