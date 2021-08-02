@@ -155,13 +155,13 @@ enable_randomize_order_for_reddit_link_parts_for_mongo = true
 enable_randomize_order_for_twitter_link_parts_for_mongo = true
 
 [providers_links_limits]
-links_limit_for_arxiv = 3 # u64
-links_limit_for_biorxiv = 3 # u64
-links_limit_for_github = 3 # u64
-links_limit_for_habr = 3 # u64
-links_limit_for_medrxiv = 3 # u64
-links_limit_for_reddit = 3 # u64
-links_limit_for_twitter = 3 # u64
+links_limit_for_arxiv = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_biorxiv = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_github = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_habr = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_medrxiv = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_reddit = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
+links_limit_for_twitter = 3 # u64 but max actually is 9_223_372_036_854_775_807 == i64 max (mongodb api dependency)
 
 [print_colors]
 error_red = 255 # u8
