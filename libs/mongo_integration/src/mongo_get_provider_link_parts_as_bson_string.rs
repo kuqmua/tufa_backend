@@ -4,8 +4,12 @@ use mongodb::{
     Client,
 };
 
+use config_lib::get_project_information::get_config::config_structures::ConfigStruct;
 use config_lib::get_project_information::get_config::get_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
 use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
 use crate::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
@@ -19,6 +23,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     db_collection_document_field_name_handle: &str,
     provider_kind: ProviderKind,
 ) -> Result<Vec<String>, mongodb::error::Error> {
+    let cloned_config = CONFIG.clone(); //todo maybe later remove clone somehow??
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
     let vec_of_strings_to_return: Vec<String>;
@@ -50,64 +55,10 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
                                         }
                                     } else {
-                                        match provider_kind {
-                                            ProviderKind::Arxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_arxiv,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_arxiv_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_arxiv,
-                                                );
-                                            }
-                                            ProviderKind::Biorxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_biorxiv,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_biorxiv_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_biorxiv,
-                                                );
-                                            }
-                                            ProviderKind::Github => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_github,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_github_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_github,
-                                                );
-                                            }
-                                            ProviderKind::Habr => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_habr,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_habr_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_habr,
-                                                );
-                                            }
-                                            ProviderKind::Medrxiv => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_medrxiv,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_medrxiv_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_medrxiv,
-                                                );
-                                            }
-                                            ProviderKind::Reddit => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_reddit,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_reddit_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_reddit,
-                                                );
-                                            }
-                                            ProviderKind::Twitter => {
-                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                    CONFIG.enable_providers_links_limits.enable_links_limit_for_twitter,
-                                                    CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo,
-    CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_twitter_link_parts_for_mongo,
-                            CONFIG.providers_links_limits.links_limit_for_twitter,
-                                                );
-                                            }
-                                        }
+                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
+                                                    cloned_config,
+                                                    provider_kind
+                                        );
                                     }
                                 } else {
                                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
@@ -158,4 +109,35 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     //     vec_of_strings_to_return.len()
     // );
     Ok(vec_of_strings_to_return)
+}
+
+fn mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
+    cloned_config: ConfigStruct,
+    provider_kind: ProviderKind,
+) -> Option<Document> {
+    let option_limit = cloned_config.get_links_limit_wrapper_for_provider(&provider_kind);
+    match option_limit {
+        Some(limit) => mongo_get_possible_aggregation_with_randomization_doc_for_provider(
+            CONFIG
+                .enable_providers_links_limits
+                .enable_links_limit_for_arxiv,
+            CONFIG
+                .params
+                .enable_randomize_order_for_providers_link_parts_for_mongo,
+            CONFIG
+                .enable_randomize_order_for_providers_link_parts_for_mongo
+                .enable_randomize_order_for_arxiv_link_parts_for_mongo,
+            limit,
+        ),
+        None => {
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("option_limit for {:#?} is None", provider_kind),
+            );
+            None
+        }
+    }
 }

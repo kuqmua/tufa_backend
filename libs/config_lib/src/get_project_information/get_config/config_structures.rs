@@ -1,6 +1,8 @@
-use crate::get_project_information::project_constants::PROJECT_MODE;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::{self, project_constants::PROJECT_MODE};
 use config::{Config, ConfigError, File};
 use std::fmt;
+
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
 pub struct ConfigStruct {
     pub params: Params,
@@ -42,6 +44,38 @@ impl ConfigStruct {
                 config.merge(File::with_name(&format!("{}{}", path_to_config, env)))?;
                 config.try_into()
             }
+        }
+    }
+    pub fn get_links_limit_wrapper_for_provider(self, provider_kind: &ProviderKind) -> Option<u64> {
+        match provider_kind {
+            ProviderKind::Arxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_arxiv,
+            ),
+            ProviderKind::Biorxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_biorxiv,
+            ),
+            ProviderKind::Github => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_github,
+            ),
+            ProviderKind::Habr => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_habr,
+            ),
+            ProviderKind::Medrxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_medrxiv,
+            ),
+            ProviderKind::Reddit => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_reddit,
+            ),
+            ProviderKind::Twitter => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
+                self.providers_links_limits.links_limit_for_twitter,
+            ),
+        }
+    }
+    fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
+        if limit > (std::i64::MAX as u64) {
+            Some(limit)
+        } else {
+            None
         }
     }
 }
@@ -223,13 +257,13 @@ pub struct EnableProvidersLinksLimit {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ProvidersLinksLimits {
-    pub links_limit_for_arxiv: u64,
-    pub links_limit_for_biorxiv: u64,
-    pub links_limit_for_github: u64,
-    pub links_limit_for_habr: u64,
-    pub links_limit_for_medrxiv: u64,
-    pub links_limit_for_reddit: u64,
-    pub links_limit_for_twitter: u64,
+    links_limit_for_arxiv: u64,
+    links_limit_for_biorxiv: u64,
+    links_limit_for_github: u64,
+    links_limit_for_habr: u64,
+    links_limit_for_medrxiv: u64,
+    links_limit_for_reddit: u64,
+    links_limit_for_twitter: u64,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
