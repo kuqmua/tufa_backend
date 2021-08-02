@@ -46,9 +46,6 @@ pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "         ";
 pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 
-pub const I64_MAX: i64 = 9_223_372_036_854_775_807;
-pub const U64_FOR_I64_MAX_CAST: u64 = 9_223_372_036_854_775_807;
-
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
     let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
