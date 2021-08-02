@@ -202,3 +202,15 @@ rename get_config_information to lazy_initialized_config
 ### -------------------
 rewrite something with "from" and "into" traits
 <br/>
+
+### -------------------
+fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
+        if limit > (std::i64::MAX as u64) {
+            Some(limit)
+        } else {
+            //todo: maybe i should panic here?
+            None
+        }
+    }
+<br/>
+

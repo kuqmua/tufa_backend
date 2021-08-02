@@ -75,6 +75,7 @@ impl ConfigStruct {
         if limit > (std::i64::MAX as u64) {
             Some(limit)
         } else {
+            //todo: maybe i should panic here?
             None
         }
     }
