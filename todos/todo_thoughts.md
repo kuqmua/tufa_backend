@@ -214,3 +214,6 @@ fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
     }
 <br/>
 
+### -------------------
+check rust-analyzer flags to enable
+<br/>
