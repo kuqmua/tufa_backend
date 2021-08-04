@@ -115,29 +115,17 @@ fn mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
     cloned_config: ConfigStruct,
     provider_kind: ProviderKind,
 ) -> Option<Document> {
-    let option_limit = cloned_config.get_links_limit_wrapper_for_provider(&provider_kind);
-    match option_limit {
-        Some(limit) => mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-            CONFIG
-                .enable_providers_links_limits
-                .enable_links_limit_for_arxiv,
-            CONFIG
-                .params
-                .enable_randomize_order_for_providers_link_parts_for_mongo,
-            CONFIG
-                .enable_randomize_order_for_providers_link_parts_for_mongo
-                .enable_randomize_order_for_arxiv_link_parts_for_mongo,
-            limit,
-        ),
-        None => {
-            print_colorful_message(
-                None,
-                PrintType::WarningHigh,
-                file!().to_string(),
-                line!().to_string(),
-                format!("option_limit for {:#?} is None", provider_kind),
-            );
-            None
-        }
-    }
+    let limit = cloned_config.get_links_limit_wrapper_for_provider(&provider_kind);
+    mongo_get_possible_aggregation_with_randomization_doc_for_provider(
+        CONFIG
+            .enable_providers_links_limits
+            .enable_links_limit_for_arxiv,
+        CONFIG
+            .params
+            .enable_randomize_order_for_providers_link_parts_for_mongo,
+        CONFIG
+            .enable_randomize_order_for_providers_link_parts_for_mongo
+            .enable_randomize_order_for_arxiv_link_parts_for_mongo,
+        limit,
+    )
 }

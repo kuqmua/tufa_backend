@@ -27,25 +27,6 @@ pub struct ConfigStruct {
 }
 
 impl ConfigStruct {
-    pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
-        match mode_handler {
-            Some(mode) => {
-                //for tests - maybe remove and copy code for testing later but its more comfortable for now
-                let mut config = Config::new();
-                config.set("env", mode)?;
-                config.merge(File::with_name(&format!("{}{}", path_to_config, mode)))?;
-                config.try_into()
-            }
-            None => {
-                // RUN_ENV=Testing cargo run
-                let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
-                let mut config = Config::new();
-                config.set("env", env.clone())?;
-                config.merge(File::with_name(&format!("{}{}", path_to_config, env)))?;
-                config.try_into()
-            }
-        }
-    }
     pub fn f(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
         match mode_handler {
             Some(mode) => {
@@ -58,7 +39,9 @@ impl ConfigStruct {
                             Ok(_) => {
                                 let f: Result<Self, ConfigError> = config.try_into();
                                 match f {
-                                    Ok(selff) => Ok(selff),
+                                    Ok(config_handle) => {
+                                        get_project_information::get_config::config_structures::ConfigStruct::check_valid_ints(config_handle)
+                                    }
                                     Err(e) => Err(e),
                                 }
                             }
@@ -78,7 +61,9 @@ impl ConfigStruct {
                             Ok(_) => {
                                 let f: Result<Self, ConfigError> = config.try_into();
                                 match f {
-                                    Ok(selff) => Ok(selff),
+                                    Ok(config_handle) => {
+                                        get_project_information::get_config::config_structures::ConfigStruct::check_valid_ints(config_handle)
+                                    }
                                     Err(e) => Err(e),
                                 }
                             }
@@ -90,37 +75,46 @@ impl ConfigStruct {
             }
         }
     }
-    pub fn get_links_limit_wrapper_for_provider(self, provider_kind: &ProviderKind) -> Option<u64> {
-        match provider_kind {
-            ProviderKind::Arxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_arxiv,
-            ),
-            ProviderKind::Biorxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_biorxiv,
-            ),
-            ProviderKind::Github => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_github,
-            ),
-            ProviderKind::Habr => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_habr,
-            ),
-            ProviderKind::Medrxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_medrxiv,
-            ),
-            ProviderKind::Reddit => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_reddit,
-            ),
-            ProviderKind::Twitter => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
-                self.providers_links_limits.links_limit_for_twitter,
-            ),
+    pub fn check_valid_ints(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+        let mut checker = true;
+        if config_handle.providers_links_limits.links_limit_for_arxiv <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_biorxiv <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_github <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_habr <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_medrxiv <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_reddit <= 0 {
+            checker = false;
+        }
+        if config_handle.providers_links_limits.links_limit_for_twitter <= 0 {
+            checker = false;
+        }
+        if checker {
+            Ok(config_handle)
+        } else {
+            Err(ConfigError::Message(
+                "invalid providers_links_limits value".to_string(),
+            ))
         }
     }
-    fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
-        if limit > (std::i64::MAX as u64) {
-            Some(limit)
-        } else {
-            //todo: maybe i should panic here?
-            None
+    pub fn get_links_limit_wrapper_for_provider(self, provider_kind: &ProviderKind) -> i64 {
+        match provider_kind {
+            ProviderKind::Arxiv => self.providers_links_limits.links_limit_for_arxiv,
+            ProviderKind::Biorxiv => self.providers_links_limits.links_limit_for_biorxiv,
+            ProviderKind::Github => self.providers_links_limits.links_limit_for_github,
+            ProviderKind::Habr => self.providers_links_limits.links_limit_for_habr,
+            ProviderKind::Medrxiv => self.providers_links_limits.links_limit_for_medrxiv,
+            ProviderKind::Reddit => self.providers_links_limits.links_limit_for_reddit,
+            ProviderKind::Twitter => self.providers_links_limits.links_limit_for_twitter,
         }
     }
 }
@@ -302,24 +296,14 @@ pub struct EnableProvidersLinksLimit {
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct ProvidersLinksLimits {
-    links_limit_for_arxiv: u64,
-    links_limit_for_biorxiv: u64,
-    links_limit_for_github: u64,
-    links_limit_for_habr: u64,
-    links_limit_for_medrxiv: u64,
-    links_limit_for_reddit: u64,
-    links_limit_for_twitter: u64,
+    pub links_limit_for_arxiv: i64,
+    pub links_limit_for_biorxiv: i64,
+    pub links_limit_for_github: i64,
+    pub links_limit_for_habr: i64,
+    pub links_limit_for_medrxiv: i64,
+    pub links_limit_for_reddit: i64,
+    pub links_limit_for_twitter: i64,
 }
-
-// impl ProvidersLinksLimits {
-//     pub fn new() {
-//         //-> Self
-//         println!("fppppppppp new")
-//         // ProvidersLinksLimits {
-//         //     items: Vec::<CommonRssPost>::new(),
-//         // }
-//     }
-// }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct EnableRandomizeOrderForProvidersLinkPartsForMongo {
