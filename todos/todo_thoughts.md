@@ -217,3 +217,8 @@ fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
 ### -------------------
 check rust-analyzer flags to enable
 <br/>
+
+### -------------------
+reorganize config to toml objects(key value)?
+https://parsetoml.readthedocs.io/en/latest/access.html
+<br/>
