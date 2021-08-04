@@ -4,5 +4,5 @@ use crate::get_project_information::project_constants::PATH_TO_CONFIG;
 
 lazy_static! {
     pub static ref CONFIG: ConfigStruct =
-        ConfigStruct::new(None, PATH_TO_CONFIG).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
+        ConfigStruct::f(None, PATH_TO_CONFIG).expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
 }

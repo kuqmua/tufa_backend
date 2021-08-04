@@ -46,6 +46,50 @@ impl ConfigStruct {
             }
         }
     }
+    pub fn f(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
+        match mode_handler {
+            Some(mode) => {
+                //for tests - maybe remove and copy code for testing later but its more comfortable for now
+                let mut config = Config::new();
+                match config.set("env", mode) {
+                    Ok(_) => {
+                        match config.merge(File::with_name(&format!("{}{}", path_to_config, mode)))
+                        {
+                            Ok(_) => {
+                                let f: Result<Self, ConfigError> = config.try_into();
+                                match f {
+                                    Ok(selff) => Ok(selff),
+                                    Err(e) => Err(e),
+                                }
+                            }
+                            Err(e) => Err(e),
+                        }
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+            None => {
+                // RUN_ENV=Testing cargo run
+                let env = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
+                let mut config = Config::new();
+                match config.set("env", env.clone()) {
+                    Ok(_) => {
+                        match config.merge(File::with_name(&format!("{}{}", path_to_config, env))) {
+                            Ok(_) => {
+                                let f: Result<Self, ConfigError> = config.try_into();
+                                match f {
+                                    Ok(selff) => Ok(selff),
+                                    Err(e) => Err(e),
+                                }
+                            }
+                            Err(e) => Err(e),
+                        }
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+    }
     pub fn get_links_limit_wrapper_for_provider(self, provider_kind: &ProviderKind) -> Option<u64> {
         match provider_kind {
             ProviderKind::Arxiv => get_project_information::get_config::config_structures::ConfigStruct::get_option_links_limit_for_provider(
@@ -266,6 +310,16 @@ pub struct ProvidersLinksLimits {
     links_limit_for_reddit: u64,
     links_limit_for_twitter: u64,
 }
+
+// impl ProvidersLinksLimits {
+//     pub fn new() {
+//         //-> Self
+//         println!("fppppppppp new")
+//         // ProvidersLinksLimits {
+//         //     items: Vec::<CommonRssPost>::new(),
+//         // }
+//     }
+// }
 
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct EnableRandomizeOrderForProvidersLinkPartsForMongo {
