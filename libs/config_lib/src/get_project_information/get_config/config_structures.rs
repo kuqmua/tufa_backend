@@ -78,21 +78,32 @@ impl ConfigStruct {
     fn wrap_custom_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
         let is_common_providers_links_limit_valid =
             ConfigStruct::check_valid_i64_common_providers_links_limit_for_mongo(&config_handle);
-        let is_providers_links_limits_valid =
+        let are_providers_links_limits_valid =
             ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle);
-        if is_common_providers_links_limit_valid {
-            if is_providers_links_limits_valid {
-                Ok(config_handle)
+        let is_warning_logs_directory_name_valid =
+            ConfigStruct::check_warning_logs_directory_name(&config_handle);
+        if is_warning_logs_directory_name_valid {
+            if is_common_providers_links_limit_valid {
+                if are_providers_links_limits_valid {
+                    Ok(config_handle)
+                } else {
+                    Err(ConfigError::Message(
+                        "providers_links_limits are not valid".to_string(),
+                    ))
+                }
             } else {
                 Err(ConfigError::Message(
-                    "providers_links_limits are not valid".to_string(),
+                    "common_providers_links_limit is not valid".to_string(),
                 ))
             }
         } else {
             Err(ConfigError::Message(
-                "common_providers_links_limit is not valid".to_string(),
+                "warning_logs_directory_name is not valid".to_string(),
             ))
         }
+    }
+    fn check_warning_logs_directory_name(config_handle: &ConfigStruct) -> bool {
+        !config_handle.params.warning_logs_directory_name.is_empty()
     }
     fn check_valid_i64_common_providers_links_limit_for_mongo(
         config_handle: &ConfigStruct,
