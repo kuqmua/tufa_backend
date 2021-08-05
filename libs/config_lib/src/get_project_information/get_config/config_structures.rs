@@ -1,5 +1,5 @@
+use crate::get_project_information::project_constants::PROJECT_MODE;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
-use crate::get_project_information::{self, project_constants::PROJECT_MODE};
 use config::{Config, ConfigError, File};
 use std::fmt;
 
@@ -27,7 +27,7 @@ pub struct ConfigStruct {
 }
 
 impl ConfigStruct {
-    pub fn f(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
+    pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
         match mode_handler {
             Some(mode) => {
                 //for tests - maybe remove and copy code for testing later but its more comfortable for now
@@ -37,10 +37,10 @@ impl ConfigStruct {
                         match config.merge(File::with_name(&format!("{}{}", path_to_config, mode)))
                         {
                             Ok(_) => {
-                                let f: Result<Self, ConfigError> = config.try_into();
-                                match f {
+                                let config_result: Result<Self, ConfigError> = config.try_into();
+                                match config_result {
                                     Ok(config_handle) => {
-                                        get_project_information::get_config::config_structures::ConfigStruct::check_valid_ints(config_handle)
+                                        ConfigStruct::wrap_custom_config_checks(config_handle)
                                     }
                                     Err(e) => Err(e),
                                 }
@@ -59,10 +59,10 @@ impl ConfigStruct {
                     Ok(_) => {
                         match config.merge(File::with_name(&format!("{}{}", path_to_config, env))) {
                             Ok(_) => {
-                                let f: Result<Self, ConfigError> = config.try_into();
-                                match f {
+                                let config_result: Result<Self, ConfigError> = config.try_into();
+                                match config_result {
                                     Ok(config_handle) => {
-                                        get_project_information::get_config::config_structures::ConfigStruct::check_valid_ints(config_handle)
+                                        ConfigStruct::wrap_custom_config_checks(config_handle)
                                     }
                                     Err(e) => Err(e),
                                 }
@@ -75,7 +75,31 @@ impl ConfigStruct {
             }
         }
     }
-    pub fn check_valid_ints(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+    fn wrap_custom_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+        let is_common_providers_links_limit_valid =
+            ConfigStruct::check_valid_i64_common_providers_links_limit_for_mongo(&config_handle);
+        let is_providers_links_limits_valid =
+            ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle);
+        if is_common_providers_links_limit_valid {
+            if is_providers_links_limits_valid {
+                Ok(config_handle)
+            } else {
+                Err(ConfigError::Message(
+                    "providers_links_limits are not valid".to_string(),
+                ))
+            }
+        } else {
+            Err(ConfigError::Message(
+                "common_providers_links_limit is not valid".to_string(),
+            ))
+        }
+    }
+    fn check_valid_i64_common_providers_links_limit_for_mongo(
+        config_handle: &ConfigStruct,
+    ) -> bool {
+        config_handle.params.common_providers_links_limit > 0
+    }
+    fn check_valid_i64_providers_links_limits_for_mongo(config_handle: &ConfigStruct) -> bool {
         let mut checker = true;
         if config_handle.providers_links_limits.links_limit_for_arxiv <= 0 {
             checker = false;
@@ -98,13 +122,7 @@ impl ConfigStruct {
         if config_handle.providers_links_limits.links_limit_for_twitter <= 0 {
             checker = false;
         }
-        if checker {
-            Ok(config_handle)
-        } else {
-            Err(ConfigError::Message(
-                "invalid providers_links_limits value".to_string(),
-            ))
-        }
+        checker
     }
     pub fn get_links_limit_wrapper_for_provider(self, provider_kind: &ProviderKind) -> i64 {
         match provider_kind {
@@ -130,7 +148,7 @@ pub struct Params {
     pub enable_time_measurement: bool,
     pub enable_provider_links_limit: bool,
     pub enable_common_providers_links_limit: bool,
-    pub common_providers_links_limit: u64,
+    pub common_providers_links_limit: i64,
     pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
     //
     pub enable_prints: bool,
