@@ -2379,6 +2379,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                     ),
                                                 }
                                             }
+                                            4 => {
+                                                println!("TODO")
+                                            }
                                             5 => {
                                                 commit_text = handle_text_element(
                                                     &node_element_first_first.children[0],
