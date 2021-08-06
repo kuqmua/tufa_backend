@@ -86,31 +86,47 @@ impl ConfigStruct {
             ConfigStruct::check_valid_unhandled_success_handled_success_are_there_items_initialized_posts_dir(
                 &config_handle,
             );
-        if is_unhandled_success_handled_success_are_there_items_initialized_posts_dir_valid {
-            if is_warning_logs_directory_name_valid {
-                if is_common_providers_links_limit_valid {
-                    if are_providers_links_limits_valid {
-                        Ok(config_handle)
-                    } else {
-                        Err(ConfigError::Message(
-                            "providers_links_limits are not valid".to_string(),
-                        ))
-                    }
-                } else {
-                    Err(ConfigError::Message(
-                        "common_providers_links_limit is not valid".to_string(),
-                    ))
-                }
-            } else {
-                Err(ConfigError::Message(
-                    "warning_logs_directory_name is not valid".to_string(),
-                ))
-            }
-        } else {
-            Err(ConfigError::Message(
-                    "unhandled_success_handled_success_are_there_items_initialized_posts_dir is not valid".to_string(),
-                ))
+        let is_db_name_handle_valid =
+            ConfigStruct::check_valid_db_name_handle_for_mongo(&config_handle);
+        if !is_db_name_handle_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "db_name_handle is not valid".to_string(),
+            ));
+            drop(error);
         }
+        if !is_unhandled_success_handled_success_are_there_items_initialized_posts_dir_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                    "unhandled_success_handled_success_are_there_items_initialized_posts_dir is not valid".to_string(),
+                ));
+            drop(error);
+        }
+        if !is_warning_logs_directory_name_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "warning_logs_directory_name is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !is_common_providers_links_limit_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "common_providers_links_limit is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !are_providers_links_limits_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "providers_links_limits are not valid".to_string(),
+            ));
+            drop(error);
+        }
+        Ok(config_handle)
+    }
+
+    // db_collection_handle_second_part = "_link_parts"
+    // db_collection_document_field_name_handle = "link_part"
+    // path_to_provider_link_parts_folder = "./providers_link_parts/"
+    // file_extension = ".json"
+    fn check_valid_db_name_handle_for_mongo(config_handle: &ConfigStruct) -> bool {
+        !config_handle.mongo_params.db_name_handle.is_empty()
     }
     fn check_valid_unhandled_success_handled_success_are_there_items_initialized_posts_dir(
         config_handle: &ConfigStruct,
