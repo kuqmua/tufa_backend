@@ -10,25 +10,30 @@ pub struct UserCredentialsStruct {
 
 impl UserCredentialsStruct {
     pub fn new(path_to_config: &str) -> Result<Self, ConfigError> {
-        //todo: check path_to_config is empty
         // maybe add different user logic later ?
-        let mut config = Config::new();
-        let config_merge_result = config.merge(File::with_name(&format!(
-            "{}{}",
-            path_to_config, USER_CREDENTIALS_FILE_NAME
-        )));
-        match config_merge_result {
-            Ok(_) => {
-                // config.try_into();
-                let config_result: Result<Self, ConfigError> = config.try_into();
-                match config_result {
-                    Ok(user_credentials_handle) => {
-                        UserCredentialsStruct::wrap_custom_config_checks(user_credentials_handle)
+        if !path_to_config.is_empty() {
+            let mut config = Config::new();
+            let config_merge_result = config.merge(File::with_name(&format!(
+                "{}{}",
+                path_to_config, USER_CREDENTIALS_FILE_NAME
+            )));
+            match config_merge_result {
+                Ok(_) => {
+                    // config.try_into();
+                    let config_result: Result<Self, ConfigError> = config.try_into();
+                    match config_result {
+                        Ok(user_credentials_handle) => {
+                            UserCredentialsStruct::wrap_custom_config_checks(
+                                user_credentials_handle,
+                            )
+                        }
+                        Err(e) => Err(e),
                     }
-                    Err(e) => Err(e),
                 }
+                Err(e) => Err(e),
             }
-            Err(e) => Err(e),
+        } else {
+            Err(ConfigError::Message("path_to_config.is_empty".to_string()))
         }
     }
     #[allow(clippy::unnecessary_wraps)]
