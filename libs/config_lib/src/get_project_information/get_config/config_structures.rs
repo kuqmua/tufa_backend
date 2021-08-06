@@ -88,6 +88,40 @@ impl ConfigStruct {
             );
         let is_db_name_handle_valid =
             ConfigStruct::check_valid_db_name_handle_for_mongo(&config_handle);
+        let is_db_collection_handle_second_part_valid =
+            ConfigStruct::check_valid_db_collection_handle_second_part_for_mongo(&config_handle);
+        let is_db_collection_document_field_name_handle_valid =
+            ConfigStruct::check_valid_db_collection_document_field_name_handle_for_mongo(
+                &config_handle,
+            );
+        let is_path_to_provider_link_parts_folder_valid =
+            ConfigStruct::check_valid_path_to_provider_link_parts_folder_for_mongo(&config_handle);
+        let is_file_extension_valid =
+            ConfigStruct::check_valid_file_extension_for_mongo(&config_handle);
+        if !is_file_extension_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "is_file_extension_valid is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !is_path_to_provider_link_parts_folder_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "path_to_provider_link_parts_folder is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !is_db_collection_document_field_name_handle_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "db_collection_document_field_name_handle is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !is_db_collection_handle_second_part_valid {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "db_collection_handle_second_part is not valid".to_string(),
+            ));
+            drop(error);
+        }
         if !is_db_name_handle_valid {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "db_name_handle is not valid".to_string(),
@@ -120,11 +154,33 @@ impl ConfigStruct {
         }
         Ok(config_handle)
     }
-
-    // db_collection_handle_second_part = "_link_parts"
-    // db_collection_document_field_name_handle = "link_part"
-    // path_to_provider_link_parts_folder = "./providers_link_parts/"
-    // file_extension = ".json"
+    fn check_valid_file_extension_for_mongo(config_handle: &ConfigStruct) -> bool {
+        !config_handle.mongo_params.file_extension.is_empty()
+    }
+    fn check_valid_path_to_provider_link_parts_folder_for_mongo(
+        config_handle: &ConfigStruct,
+    ) -> bool {
+        !config_handle
+            .mongo_params
+            .path_to_provider_link_parts_folder
+            .is_empty()
+    }
+    fn check_valid_db_collection_document_field_name_handle_for_mongo(
+        config_handle: &ConfigStruct,
+    ) -> bool {
+        !config_handle
+            .mongo_params
+            .db_collection_document_field_name_handle
+            .is_empty()
+    }
+    fn check_valid_db_collection_handle_second_part_for_mongo(
+        config_handle: &ConfigStruct,
+    ) -> bool {
+        !config_handle
+            .mongo_params
+            .db_collection_handle_second_part
+            .is_empty()
+    }
     fn check_valid_db_name_handle_for_mongo(config_handle: &ConfigStruct) -> bool {
         !config_handle.mongo_params.db_name_handle.is_empty()
     }
