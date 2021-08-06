@@ -82,30 +82,26 @@ impl ConfigStruct {
         let are_providers_links_limits_valid =
             ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle);
         let is_warning_logs_directory_name_valid =
-            ConfigStruct::check_valid_value(&config_handle.params.warning_logs_directory_name);
+            !config_handle.params.warning_logs_directory_name.is_empty();
         let is_unhandled_success_handled_success_are_there_items_initialized_posts_dir_valid =
-            ConfigStruct::check_valid_value(
-                &config_handle
-                    .params
-                    .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-            );
-        let is_db_name_handle_valid =
-            ConfigStruct::check_valid_value(&config_handle.mongo_params.db_name_handle);
-        let is_db_collection_handle_second_part_valid = ConfigStruct::check_valid_value(
-            &config_handle.mongo_params.db_collection_handle_second_part,
-        );
-        let is_db_collection_document_field_name_handle_valid = ConfigStruct::check_valid_value(
-            &config_handle
-                .mongo_params
-                .db_collection_document_field_name_handle,
-        );
-        let is_path_to_provider_link_parts_folder_valid = ConfigStruct::check_valid_value(
-            &config_handle
-                .mongo_params
-                .path_to_provider_link_parts_folder,
-        );
-        let is_file_extension_valid =
-            ConfigStruct::check_valid_value(&config_handle.mongo_params.file_extension);
+            !config_handle
+                .params
+                .unhandled_success_handled_success_are_there_items_initialized_posts_dir
+                .is_empty();
+        let is_db_name_handle_valid = !config_handle.mongo_params.db_name_handle.is_empty();
+        let is_db_collection_handle_second_part_valid = !config_handle
+            .mongo_params
+            .db_collection_handle_second_part
+            .is_empty();
+        let is_db_collection_document_field_name_handle_valid = !config_handle
+            .mongo_params
+            .db_collection_document_field_name_handle
+            .is_empty();
+        let is_path_to_provider_link_parts_folder_valid = !config_handle
+            .mongo_params
+            .path_to_provider_link_parts_folder
+            .is_empty();
+        let is_file_extension_valid = !config_handle.mongo_params.file_extension.is_empty();
         if !is_file_extension_valid {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "is_file_extension_valid is not valid".to_string(),
@@ -161,9 +157,6 @@ impl ConfigStruct {
             drop(error);
         }
         Ok(config_handle)
-    }
-    fn check_valid_value(value: &str) -> bool {
-        !value.is_empty()
     }
     fn check_valid_i64_common_providers_links_limit_for_mongo(
         config_handle: &ConfigStruct,
