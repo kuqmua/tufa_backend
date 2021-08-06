@@ -222,3 +222,7 @@ check rust-analyzer flags to enable
 reorganize config to toml objects(key value)?
 https://parsetoml.readthedocs.io/en/latest/access.html
 <br/>
+
+### -------------------
+move config structure and user credentials struct function implementation in different file
+<br/>
