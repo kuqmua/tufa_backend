@@ -24,7 +24,6 @@ pub mod get_project_information {
             pub mod config_struct_impl;
             pub mod env_impl;
         }
-        pub mod config_structures;
         pub mod get_config_information;
     }
     pub mod get_user_credentials {
