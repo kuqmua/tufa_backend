@@ -21,7 +21,12 @@ pub mod get_project_information {
             pub mod providers_links_limits_def;
         }
         pub mod structures_implementations {
-            pub mod config_struct_impl;
+            pub mod config_struct_impl {
+                pub mod check_valid_i64_providers_links_limits_for_mongo_impl;
+                pub mod get_links_limit_wrapper_for_provider_impl;
+                pub mod new_impl;
+                pub mod wrap_config_checks_impl;
+            }
             pub mod env_impl;
         }
         pub mod get_lazy_config_information;
