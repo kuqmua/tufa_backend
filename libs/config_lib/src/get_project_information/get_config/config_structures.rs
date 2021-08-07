@@ -81,66 +81,70 @@ impl ConfigStruct {
             ConfigStruct::check_valid_i64_common_providers_links_limit_for_mongo(&config_handle);
         let are_providers_links_limits_valid =
             ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle);
-        let is_warning_logs_directory_name_valid =
-            !config_handle.params.warning_logs_directory_name.is_empty();
-        let is_unhandled_success_handled_success_are_there_items_initialized_posts_dir_valid =
-            !config_handle
-                .params
-                .unhandled_success_handled_success_are_there_items_initialized_posts_dir
-                .is_empty();
-        let is_db_name_handle_valid = !config_handle.mongo_params.db_name_handle.is_empty();
-        let is_db_collection_handle_second_part_valid = !config_handle
-            .mongo_params
-            .db_collection_handle_second_part
-            .is_empty();
-        let is_db_collection_document_field_name_handle_valid = !config_handle
-            .mongo_params
-            .db_collection_document_field_name_handle
-            .is_empty();
-        let is_path_to_provider_link_parts_folder_valid = !config_handle
+        if config_handle.mongo_params.file_extension.is_empty() {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "config_handle.mongo_params.file_extension is not empty".to_string(),
+            ));
+            drop(error);
+        }
+        if config_handle
             .mongo_params
             .path_to_provider_link_parts_folder
-            .is_empty();
-        let is_file_extension_valid = !config_handle.mongo_params.file_extension.is_empty();
-        if !is_file_extension_valid {
+            .is_empty()
+        {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "is_file_extension_valid is not valid".to_string(),
+                "config_handle
+            .mongo_params
+            .path_to_provider_link_parts_folder is empty"
+                    .to_string(),
             ));
             drop(error);
         }
-        if !is_path_to_provider_link_parts_folder_valid {
+        if config_handle
+            .mongo_params
+            .db_collection_document_field_name_handle
+            .is_empty()
+        {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "path_to_provider_link_parts_folder is not valid".to_string(),
+                "config_handle
+            .mongo_params
+            .db_collection_document_field_name_handle is empty"
+                    .to_string(),
             ));
             drop(error);
         }
-        if !is_db_collection_document_field_name_handle_valid {
+        if config_handle
+            .mongo_params
+            .db_collection_handle_second_part
+            .is_empty()
+        {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "db_collection_document_field_name_handle is not valid".to_string(),
+                "config_handle
+            .mongo_params
+            .db_collection_handle_second_part is empty"
+                    .to_string(),
             ));
             drop(error);
         }
-        if !is_db_collection_handle_second_part_valid {
+        if config_handle.mongo_params.db_name_handle.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "db_collection_handle_second_part is not valid".to_string(),
+                "config_handle.mongo_params.db_name_handle is empty".to_string(),
             ));
             drop(error);
         }
-        if !is_db_name_handle_valid {
+        if config_handle
+            .params
+            .unhandled_success_handled_success_are_there_items_initialized_posts_dir
+            .is_empty()
+        {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "db_name_handle is not valid".to_string(),
-            ));
-            drop(error);
-        }
-        if !is_unhandled_success_handled_success_are_there_items_initialized_posts_dir_valid {
-            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                    "unhandled_success_handled_success_are_there_items_initialized_posts_dir is not valid".to_string(),
+                    "config_handle.params.unhandled_success_handled_success_are_there_items_initialized_posts_dir is empty".to_string(),
                 ));
             drop(error);
         }
-        if !is_warning_logs_directory_name_valid {
+        if config_handle.params.warning_logs_directory_name.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "warning_logs_directory_name is not valid".to_string(),
+                "config_handle.params.warning_logs_directory_name is empty".to_string(),
             ));
             drop(error);
         }
