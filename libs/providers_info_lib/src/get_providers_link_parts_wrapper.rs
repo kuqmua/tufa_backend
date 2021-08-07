@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
-use config_lib::get_project_information::get_user_credentials::get_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use config_lib::get_project_information::project_constants::get_config_provider_string_to_enum_struct;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 

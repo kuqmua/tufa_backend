@@ -13,7 +13,7 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use providers_info_lib::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::project_constants::get_config_provider_string_to_enum_struct;
 
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;

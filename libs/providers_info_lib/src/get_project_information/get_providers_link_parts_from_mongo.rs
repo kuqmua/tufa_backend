@@ -1,4 +1,4 @@
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;

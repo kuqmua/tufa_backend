@@ -7,7 +7,7 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
-use config_lib::get_project_information::get_config::get_config_information::CONFIG;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(

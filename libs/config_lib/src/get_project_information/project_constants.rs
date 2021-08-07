@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::get_project_information::get_config::get_config_information::CONFIG;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
