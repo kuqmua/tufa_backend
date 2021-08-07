@@ -10,14 +10,3 @@ impl fmt::Display for Env {
         }
     }
 }
-
-impl From<&str> for Env {
-    fn from(env: &str) -> Self {
-        match env {
-            "Development" => Env::Development,
-            "Production" => Env::Production,
-            "Testing" => Env::Testing,
-            _ => Env::Development,
-        }
-    }
-}

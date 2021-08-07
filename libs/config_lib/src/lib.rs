@@ -27,7 +27,10 @@ pub mod get_project_information {
                 pub mod new_impl;
                 pub mod wrap_config_checks_impl;
             }
-            pub mod env_impl;
+            pub mod env_impl {
+                pub mod display_impl;
+                pub mod from_str_impl;
+            }
         }
         pub mod get_lazy_config_information;
     }
