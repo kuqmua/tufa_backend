@@ -28,6 +28,16 @@ pub mod get_project_information {
         pub mod get_config_information;
     }
     pub mod get_user_credentials {
+        pub mod structures_definitions {
+            pub mod github_authorization_def;
+            pub mod mongo_cloud_authorization_def;
+            pub mod mongo_own_authorization_def;
+            pub mod reddit_authorization_def;
+            pub mod user_credentials_struct_def;
+        }
+        pub mod structures_implementations {
+            pub mod user_credentials_struct_impl;
+        }
         pub mod get_user_credentials_information;
         pub mod user_credentials_structures;
     }
