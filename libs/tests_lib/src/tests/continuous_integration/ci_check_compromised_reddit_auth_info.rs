@@ -1,5 +1,5 @@
-use config_lib::get_project_information::get_config::config_structures::ConfigStruct;
-use config_lib::get_project_information::get_user_credentials::user_credentials_structures::UserCredentialsStruct;
+use config_lib::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
+use config_lib::get_project_information::get_user_credentials::structures_definitions::user_credentials_struct_def::UserCredentialsStruct;
 
 use config_lib::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
 use config_lib::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
