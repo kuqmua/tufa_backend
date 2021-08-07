@@ -196,22 +196,7 @@ is it triggers for all async functions? or only for tokio?
 <br/>
 
 ### -------------------
-rename get_config_information to lazy_initialized_config
-<br/>
-
-### -------------------
 rewrite something with "from" and "into" traits
-<br/>
-
-### -------------------
-fn get_option_links_limit_for_provider(limit: u64) -> Option<u64> {
-        if limit > (std::i64::MAX as u64) {
-            Some(limit)
-        } else {
-            //todo: maybe i should panic here?
-            None
-        }
-    }
 <br/>
 
 ### -------------------
@@ -221,8 +206,4 @@ check rust-analyzer flags to enable
 ### -------------------
 reorganize config to toml objects(key value)?
 https://parsetoml.readthedocs.io/en/latest/access.html
-<br/>
-
-### -------------------
-move config structure and user credentials struct function implementation in different file
 <br/>
