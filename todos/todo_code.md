@@ -278,3 +278,18 @@ Add method to config struct what check integer value for correct value
 and use this method instead of use fields directly. 
 Make fields private and use get/set. Check strings too
 <br/>
+
+### -------------------
+pub struct Links {
+    pub starting_check_link: String,
+    pub arxiv_link: String,
+    pub biorxiv_link: String,
+    pub github_link: String,
+    pub habr_link: String,
+    pub medrxiv_link: String,
+    pub reddit_link: String,
+    pub twitter_link: String,
+}
+into ProviderLinks and params.starting_check_link
+<br/>
+
