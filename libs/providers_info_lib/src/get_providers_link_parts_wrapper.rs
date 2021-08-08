@@ -13,7 +13,7 @@ use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
+pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url: String;
     if CONFIG.mongo_params.is_cloud {
         let mongo_cloud_first_handle_url_part =
@@ -109,7 +109,8 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
             .db_collection_document_field_name_handle
             .to_string(),
         providers_string_into_enum_hashmap,
-    });
+    })
+    .await;
     if !providers_link_parts.is_empty() {
         Some(providers_link_parts)
     } else {
@@ -131,7 +132,8 @@ pub fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>
                 .db_collection_handle_second_part //why that in mongo_params?
                 .to_string(),
             file_extension: CONFIG.mongo_params.file_extension.to_string(),
-        });
+        })
+        .await;
         if !providers_link_parts_local.is_empty() {
             Some(providers_link_parts_local)
         } else {

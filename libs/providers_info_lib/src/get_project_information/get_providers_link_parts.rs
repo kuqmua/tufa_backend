@@ -6,7 +6,7 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use std::collections::HashMap;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<String>> {
+pub async fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<String>> {
     let vec_of_link_parts_hashmap: HashMap<String, Vec<String>>;
     match resource {
         Resource::Local {
@@ -35,7 +35,8 @@ pub fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<Stri
                 db_collection_handle_second_part.to_string(),
                 db_collection_document_field_name_handle.to_string(),
                 providers_string_into_enum_hashmap.clone(),
-            );
+            )
+            .await;
         }
         Resource::PostgreSql => {
             todo!()

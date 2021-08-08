@@ -43,7 +43,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
 )> {
     if CONFIG.params.enable_providers {
         if !CONFIG.params.vec_of_provider_names.is_empty() {
-            let option_providers_link_parts = get_providers_link_parts_wrapper();
+            let option_providers_link_parts = get_providers_link_parts_wrapper().await;
             match option_providers_link_parts {
                 Some(providers_link_parts) => {
                     if !providers_link_parts.is_empty() {
