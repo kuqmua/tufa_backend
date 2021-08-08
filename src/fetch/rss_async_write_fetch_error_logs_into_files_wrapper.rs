@@ -11,7 +11,7 @@ use config_lib::get_project_information::get_config::get_lazy_config_information
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
-    some_error_posts: Vec<(
+    error_posts: Vec<(
         String,
         UnhandledFetchStatusInfo,
         HandledFetchStatusInfo,
@@ -24,10 +24,10 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         rss_clean_logs_directory_wrapper()
     }
 
-    let mut vec_of_write_into_files_futures = Vec::with_capacity(some_error_posts.len());
-    for some_error_post in some_error_posts {
+    let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
+    for error_post in error_posts {
         vec_of_write_into_files_futures.push(rss_async_write_fetch_error_logs_into_file(
-            some_error_post,
+            error_post,
             &CONFIG
                 .params
                 .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
