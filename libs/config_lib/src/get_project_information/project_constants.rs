@@ -9,6 +9,7 @@ pub const PATH_TO_CONFIG: &str = "./config/";
 pub const PATH_TO_CONFIG_FOR_TEST: &str = "../../config/";
 pub const PROJECT_MODE: &str = "Development"; //later as ENV variable only
 pub const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
+pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
 pub const ARXIV_NAME_TO_CHECK: &str = "arxiv";
 pub const BIORXIV_NAME_TO_CHECK: &str = "biorxiv";

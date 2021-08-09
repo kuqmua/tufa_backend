@@ -1,6 +1,6 @@
 use serde_json::Value;
 
-use crate::fetch::rss_logs_create_dir_if_dont_exists::rss_logs_create_dir_if_dont_exists;
+use crate::fetch::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
@@ -19,7 +19,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     warning_logs_directory_name: &str,
     link: &str,
 ) {
-    rss_logs_create_dir_if_dont_exists(dir, &provider_kind, &warning_logs_directory_name);
+    create_dir_if_dont_exists(dir, Some(&provider_kind), &warning_logs_directory_name);
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let file_name = format!(
         "logs/{}/{:?}/{}/{:?}-{}.json",
