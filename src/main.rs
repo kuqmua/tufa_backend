@@ -1,5 +1,5 @@
 mod fetch {
-    pub mod create_dir_if_dont_exists;
+    // pub mod create_dir_if_dont_exists;
     pub mod parse_github_html;
     pub mod rss_async_write_fetch_error_logs_into_file;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
@@ -41,6 +41,9 @@ mod authorization {
     pub mod reddit {
         pub mod reddit_authorization;
     }
+}
+mod helpers {
+    pub mod create_dir_if_dont_exists;
 }
 
 mod async_tokio_wrapper;

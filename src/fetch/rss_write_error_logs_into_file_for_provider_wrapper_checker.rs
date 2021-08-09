@@ -1,7 +1,7 @@
 use serde_json::Value;
 
-use crate::fetch::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_logs_into_file_for_provider;
+use crate::helpers::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use prints_lib::print_colorful_message::print_colorful_message;
