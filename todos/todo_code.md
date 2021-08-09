@@ -293,3 +293,7 @@ pub struct Links {
 into ProviderLinks and params.starting_check_link
 <br/>
 
+### -------------------
+//todo write into mongo collection and create flag where to write logs
+rss_write_error_logs_into_file_for_provider(file_name, json_object);
+<br/>

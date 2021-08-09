@@ -33,11 +33,15 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                 PrintType::WarningHigh,
                 file!().to_string(),
                 line!().to_string(),
-                format!("there is file with the same name: {}", &file_name),
+                format!(
+                    "there is file with the same name: {}, file was not written",
+                    &file_name
+                ),
             );
         }
         Err(ref err) => {
             if err.kind() == ErrorKind::NotFound {
+                //todo write into mongo collection and create flag where to write logs
                 rss_write_error_logs_into_file_for_provider(file_name, json_object);
             } else {
                 print_colorful_message(
@@ -50,6 +54,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         &err.kind()
                     ),
                 );
+                //todo write into mongo collection and create flag where to write logs
                 rss_write_error_logs_into_file_for_provider(file_name, json_object);
             }
         }
