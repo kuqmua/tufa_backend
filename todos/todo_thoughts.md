@@ -207,3 +207,7 @@ check rust-analyzer flags to enable
 reorganize config to toml objects(key value)?
 https://parsetoml.readthedocs.io/en/latest/access.html
 <br/>
+    
+### -------------------
+"Rust Doc Viewer" vscode extension
+<br/>
