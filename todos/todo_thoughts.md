@@ -211,3 +211,8 @@ https://parsetoml.readthedocs.io/en/latest/access.html
 ### -------------------
 "Rust Doc Viewer" vscode extension
 <br/>
+
+### -------------------
+check if i have dependency with std::net in code. (vulnerability in std::net)
+<br/>
+    
