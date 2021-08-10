@@ -3,8 +3,6 @@ use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::r
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wrapper;
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use serde_json::Value;
@@ -20,9 +18,6 @@ pub async fn async_write_json_into_file(
     link: String,
 ) {
     let time = Instant::now();
-    if CONFIG.params.enable_cleaning_warning_logs_directory {
-        rss_clean_logs_directory_wrapper()
-    }
     rss_write_error_logs_into_file_for_provider_wrapper_checker(
         json_object,
         &provider_kind,
