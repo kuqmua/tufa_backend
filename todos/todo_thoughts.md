@@ -213,6 +213,6 @@ https://parsetoml.readthedocs.io/en/latest/access.html
 <br/>
 
 ### -------------------
-check if i have dependency with std::net in code. (vulnerability in std::net)
+check if i have dependency with std::net in code. (vulnerability in std::net), after Rust 1.53.0 no problem with that
 <br/>
     
