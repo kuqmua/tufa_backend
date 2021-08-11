@@ -5,6 +5,7 @@ use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 use futures::executor::block_on;
 
 use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
+use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_write_fetch_error_logs_into_mongo_wrapper;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
@@ -18,9 +19,11 @@ pub async fn async_tokio_wrapper() {
             if !error_posts.is_empty() {
                 let wrong_cases_thread = thread::spawn(move || {
                     // println!("error_posts_done_len{:#?}", error_posts);
-                    block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
-                        error_posts,
-                    ));
+                    //here write into mongo
+                    block_on(async_write_fetch_error_logs_into_mongo_wrapper(error_posts));
+                    // block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
+                    // error_posts,
+                    // ));
                 });
                 match wrong_cases_thread.join() {
                     Ok(_) => {}
