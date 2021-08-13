@@ -20,7 +20,8 @@ pub async fn async_tokio_wrapper() {
                 let wrong_cases_thread = thread::spawn(move || {
                     // println!("error_posts_done_len{:#?}", error_posts);
                     //here write into mongo
-                    block_on(async_write_fetch_error_logs_into_mongo_wrapper(error_posts));
+                    // block_on();
+                    let f = async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
                     // block_on(rss_async_write_fetch_error_logs_into_files_wrapper(
                     // error_posts,
                     // ));

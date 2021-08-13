@@ -8,7 +8,7 @@ use std::time::Instant;
 //under development
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
-use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
+use mongo_integration::mongo_drop_collection_wrapper_without_tokio_main::mongo_drop_collection_wrapper_without_tokio_main;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 //under development
 
@@ -18,6 +18,7 @@ use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[tokio::main]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     error_posts: Vec<(
         String,
@@ -26,7 +27,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         AreThereItems,
         ProviderKind,
     )>,
-) {
+) -> bool {
     let time = Instant::now();
     ////////////////////////////////
     let mut vec_of_json = Vec::with_capacity(error_posts.len());
@@ -60,8 +61,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             }
         }
     }
-    ////////////////////////////////
-
     //todo write into mongo collection and create flag where to write logs
     let mongo_cloud_first_handle_url_part = &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
     let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
@@ -105,25 +104,38 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     ////////////////////////////////
     //here only one insert. Need many
     ////////////////////////////////
-    ////////
-    let future_possible_drop_collection = mongo_drop_collection_wrapper(
+    let db_collection_name = &format!("{}{}", key, db_collection_handle_second_part);
+    let future_possible_drop_collection = mongo_drop_collection_wrapper_without_tokio_main(
         &mongo_url,
         db_name_handle,
-        &format!("{}{}", key, db_collection_handle_second_part),
+        db_collection_name,
         false,
     );
-    match future_possible_drop_collection {
-        Ok(result_flag) => {
-            if result_flag {
-                println!("drop done!");
-            } else {
-                println!("drop fail with flag");
-            }
-        }
-        Err(e) => {
-            println!("drop fail with error {:#?}", e);
-        }
-    }
+    ////////////////////////////////
+    // .await
+    // .expect("fff");
+    // match future_possible_drop_collection {
+    //     // Some(result_flag) => {
+    //     //     if result_flag {
+    //     //         println!("drop done!");
+    //     //     } else {
+    //     //         println!("drop fail with flag");
+    //     //     }
+    //     // }
+    //     // None => {
+    //     //     println!("drop fail with error")
+    //     // }
+    //     Ok(result_flag) => {
+    //         if result_flag {
+    //             println!("drop done!");
+    //         } else {
+    //             println!("drop fail with flag");
+    //         }
+    //     }
+    //     Err(e) => {
+    //         println!("drop fail with error {:#?}", e);
+    //     }
+    // }
     //////////////////////////////////////////////////////////////////////////////////////////////
     let future_inserting_docs = mongo_insert_docs_in_empty_collection(
         &mongo_url,
@@ -150,5 +162,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             time.elapsed().as_secs(),
             time.elapsed().as_millis(),
         );
-    }
+    };
+    true
 }
