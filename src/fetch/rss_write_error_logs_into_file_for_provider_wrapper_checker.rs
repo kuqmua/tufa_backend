@@ -4,13 +4,6 @@ use crate::fetch::rss_write_error_logs_into_file_for_provider::rss_write_error_l
 use crate::helpers::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-//under development
-// use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-// use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
-// use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
-// use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
-//under development
-
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
@@ -61,50 +54,6 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         &err.kind()
                     ),
                 );
-                //todo write into mongo collection and create flag where to write logs
-                // let mongo_url = get_mongo_url();
-                // let db_name_handle = "logs";
-                // let db_collection_name = "arxiv";
-                // let check_if_collection_empty = false;
-                // let db_collection_document_field_name_handle = "data";
-                // let vec_of_link_parts = vec_of_values: Vec<String>, but it must be doc! type
-                ////////////////////////////////
-                //here only one insert. Need many
-                ////////////////////////////////
-                //////////
-                //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
-                //         mongo_url,
-                //         db_name_handle,
-                //         &format!("{}{}", key, db_collection_handle_second_part),
-                //         false,
-                //     );
-                //     match future_possible_drop_collection {
-                //         Ok(result_flag) => {
-                //             if result_flag {
-                //                 println!("drop done!");
-                //             } else {
-                //                 println!("drop fail with flag");
-                //             }
-                //         }
-                //         Err(e) => {
-                //             println!("drop fail with error {:#?}", e);
-                //         }
-                //     }
-                ////////////////////////////////////////////////////////////////////////////////////////////////
-                //     let future_inserting_docs = mongo_insert_docs_in_empty_collection(
-                //     mongo_url,
-                //     db_name_handle,
-                //     &format!("{}{}", key, db_collection_handle_second_part),
-                //     db_collection_document_field_name_handle,
-                //     vec_of_link_parts,
-                // );
-                // match future_inserting_docs {
-                //     Ok(_) => {}
-                //     Err(e) => {
-                //         result_flag = false;
-                //         println!("future_inserting_docs error {:#?}", e);
-                //     }
-                // }
                 rss_write_error_logs_into_file_for_provider(file_name, json_object);
             }
         }
