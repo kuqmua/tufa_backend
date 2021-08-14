@@ -301,3 +301,8 @@ rss_write_error_logs_into_file_for_provider(file_name, json_object);
 ### -------------------
 add bool or option return type to create_dir_if_dont_exists. maybe it would be runtime error if i dont
 <br/>
+
+### -------------------
+std::path::PathBuf instead if string in path to file logic
+<br/>
+
