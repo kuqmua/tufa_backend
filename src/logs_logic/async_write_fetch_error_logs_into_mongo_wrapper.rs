@@ -7,7 +7,7 @@ use std::time::Instant;
 
 //under development
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::project_constants::get_mongo_url;
 use mongo_integration::mongo_drop_collection_wrapper_without_tokio_main::mongo_drop_collection_wrapper_without_tokio_main;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 //under development
@@ -62,33 +62,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         }
     }
     //todo write into mongo collection and create flag where to write logs
-    let mongo_cloud_first_handle_url_part = &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
-    let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
-    let mongo_cloud_second_handle_url_part =
-        &CONFIG.mongo_params.mongo_cloud_second_handle_url_part;
-    let mongo_cloud_password = &USER_CREDENTIALS
-        .mongo_cloud_authorization
-        .mongo_cloud_password;
-    let mongo_cloud_third_handle_url_part = &CONFIG.mongo_params.mongo_cloud_third_handle_url_part;
-    let mongo_cloud_cluster_name = &USER_CREDENTIALS
-        .mongo_cloud_authorization
-        .mongo_cloud_cluster_name;
-    let mongo_cloud_fourth_handle_url_part =
-        &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part;
-    let mongo_cloud_cluster_params = &USER_CREDENTIALS
-        .mongo_cloud_authorization
-        .mongo_cloud_cluster_params;
-    let mongo_url = format!(
-        "{}{}{}{}{}{}{}{}",
-        mongo_cloud_first_handle_url_part,
-        mongo_cloud_login,
-        mongo_cloud_second_handle_url_part,
-        mongo_cloud_password,
-        mongo_cloud_third_handle_url_part,
-        mongo_cloud_cluster_name,
-        mongo_cloud_fourth_handle_url_part,
-        mongo_cloud_cluster_params
-    );
     let db_name_handle = "logs";
     let db_collection_name = "arxiv";
     let check_if_collection_empty = false;
@@ -104,6 +77,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     ////////////////////////////////
     //here only one insert. Need many
     ////////////////////////////////
+    let mongo_url = get_mongo_url();
     let db_collection_name = &format!("{}{}", key, db_collection_handle_second_part);
     let future_possible_drop_collection = mongo_drop_collection_wrapper_without_tokio_main(
         &mongo_url,

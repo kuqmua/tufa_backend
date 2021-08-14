@@ -62,36 +62,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     ),
                 );
                 //todo write into mongo collection and create flag where to write logs
-                // let mongo_cloud_first_handle_url_part =
-                //     &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
-                // let mongo_cloud_login =
-                //     &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
-                // let mongo_cloud_second_handle_url_part =
-                //     &CONFIG.mongo_params.mongo_cloud_second_handle_url_part;
-                // let mongo_cloud_password = &USER_CREDENTIALS
-                //     .mongo_cloud_authorization
-                //     .mongo_cloud_password;
-                // let mongo_cloud_third_handle_url_part =
-                //     &CONFIG.mongo_params.mongo_cloud_third_handle_url_part;
-                // let mongo_cloud_cluster_name = &USER_CREDENTIALS
-                //     .mongo_cloud_authorization
-                //     .mongo_cloud_cluster_name;
-                // let mongo_cloud_fourth_handle_url_part =
-                //     &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part;
-                // let mongo_cloud_cluster_params = &USER_CREDENTIALS
-                //     .mongo_cloud_authorization
-                //     .mongo_cloud_cluster_params;
-                // let mongo_url = format!(
-                //     "{}{}{}{}{}{}{}{}",
-                //     mongo_cloud_first_handle_url_part,
-                //     mongo_cloud_login,
-                //     mongo_cloud_second_handle_url_part,
-                //     mongo_cloud_password,
-                //     mongo_cloud_third_handle_url_part,
-                //     mongo_cloud_cluster_name,
-                //     mongo_cloud_fourth_handle_url_part,
-                //     mongo_cloud_cluster_params
-                // );
+                // let mongo_url = get_mongo_url();
                 // let db_name_handle = "logs";
                 // let db_collection_name = "arxiv";
                 // let check_if_collection_empty = false;

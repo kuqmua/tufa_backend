@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
@@ -46,6 +47,28 @@ pub const HABR_FILTER_HANDLE_TO_REMOVE_1: &str = "<channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "         ";
 pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub fn get_mongo_url() -> String {
+    let mongo_url = format!(
+        "{}{}{}{}{}{}{}{}",
+        &CONFIG.mongo_params.mongo_cloud_first_handle_url_part,
+        &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login,
+        &CONFIG.mongo_params.mongo_cloud_second_handle_url_part,
+        &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_password,
+        &CONFIG.mongo_params.mongo_cloud_third_handle_url_part,
+        &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_name,
+        &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part,
+        &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_params
+    );
+    mongo_url
+}
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
