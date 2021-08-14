@@ -219,3 +219,7 @@ check if i have dependency with std::net in code. (vulnerability in std::net), a
 ### -------------------
 find out how to use ngnix
 <br/>
+
+### -------------------
+add to each function return bool if its not returning yet
+<br/>
