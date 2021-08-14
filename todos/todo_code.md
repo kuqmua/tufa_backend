@@ -297,3 +297,7 @@ into ProviderLinks and params.starting_check_link
 //todo write into mongo collection and create flag where to write logs
 rss_write_error_logs_into_file_for_provider(file_name, json_object);
 <br/>
+
+### -------------------
+add bool or option return type to create_dir_if_dont_exists. maybe it would be runtime error if i dont
+<br/>
