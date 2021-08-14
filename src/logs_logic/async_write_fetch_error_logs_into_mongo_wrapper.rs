@@ -2,22 +2,17 @@ use crate::fetch::error_logs_into_json::error_logs_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
-use std::time::Instant;
-
-//under development
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::project_constants::get_mongo_url;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
-//under development
-
-use serde_json::json;
+use std::time::Instant;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     error_posts: Vec<(
@@ -29,7 +24,36 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     )>,
 ) -> bool {
     let time = Instant::now();
-    ////////////////////////////////
+    let mongo_url = get_mongo_url();
+    let key = "key";
+    let db_name_handle = "logs";
+    let db_collection_handle_second_part = "second_part";
+    if true {
+        //CONFIG.params.enable_cleaning_warning_logs_directory
+        let db_collection_name = &format!("{}{}", key, db_collection_handle_second_part);
+        let future_possible_drop_collection =
+            mongo_drop_collection_wrapper(&mongo_url, db_name_handle, db_collection_name, false);
+        match future_possible_drop_collection {
+            Ok(result_flag) => {
+                if result_flag {
+                    println!("drop done!");
+                } else {
+                    println!("drop fail with flag");
+                    return result_flag;
+                }
+            }
+            Err(e) => {
+                println!("drop fail with error {:#?}", e);
+                return false;
+            }
+        }
+    }
+    //todo write into mongo collection and create flag where to write logs
+    let db_collection_document_field_name_handle = "data";
+
+    let vec_of_link_parts: Vec<String> = vec!["f".to_string()];
+    //here only one insert. Need many
+
     let mut vec_of_json = Vec::with_capacity(error_posts.len());
     for (
         link,
@@ -61,52 +85,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             }
         }
     }
-    //todo write into mongo collection and create flag where to write logs
-    let db_name_handle = "logs";
-    let db_collection_name = "arxiv";
-    let check_if_collection_empty = false;
-    let db_collection_document_field_name_handle = "data";
-    let key = "key";
-    let db_collection_handle_second_part = "second_part";
-    let vec_of_link_parts: Vec<String> = vec!["f".to_string()];
-    // let json_object = json!({
-    //                     "link": &value.0,
-    //                     "part_of": format!("{:?}", value.4),
-    //                     "date": Local::now().to_string()
-    //                 });
-    ////////////////////////////////
-    //here only one insert. Need many
-    ////////////////////////////////
-    let mongo_url = get_mongo_url();
-    let db_collection_name = &format!("{}{}", key, db_collection_handle_second_part);
-    let future_possible_drop_collection =
-        mongo_drop_collection_wrapper(&mongo_url, db_name_handle, db_collection_name, false);
-    ////////////////////////////////
-    // .await
-    // .expect("fff");
-    // match future_possible_drop_collection {
-    //     // Some(result_flag) => {
-    //     //     if result_flag {
-    //     //         println!("drop done!");
-    //     //     } else {
-    //     //         println!("drop fail with flag");
-    //     //     }
-    //     // }
-    //     // None => {
-    //     //     println!("drop fail with error")
-    //     // }
-    //     Ok(result_flag) => {
-    //         if result_flag {
-    //             println!("drop done!");
-    //         } else {
-    //             println!("drop fail with flag");
-    //         }
-    //     }
-    //     Err(e) => {
-    //         println!("drop fail with error {:#?}", e);
-    //     }
-    // }
-    //////////////////////////////////////////////////////////////////////////////////////////////
     let future_inserting_docs = mongo_insert_docs_in_empty_collection(
         &mongo_url,
         db_name_handle,
@@ -114,15 +92,11 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         db_collection_document_field_name_handle,
         vec_of_link_parts,
     );
-    let mut result_flag = true;
-    //     thread '<unnamed>' panicked at 'cannot execute `LocalPool` executor from within another executor: EnterError', /home/sergey/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-executor-0.3.14/src/local_pool.rs:78:26
-    // note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
     match future_inserting_docs {
         Ok(_) => {
             println!("SUCCEEES")
         }
         Err(e) => {
-            result_flag = false;
             println!("future_inserting_docs error {:#?}", e);
         }
     }

@@ -13,7 +13,8 @@ use config_lib::get_project_information::get_config::get_lazy_config_information
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
+#[tokio::main]
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     error_posts: Vec<(
         String,
@@ -23,6 +24,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         ProviderKind,
     )>,
 ) {
+    //-> Result<bool, Error>
     let time = Instant::now();
     if CONFIG.params.enable_cleaning_warning_logs_directory {
         rss_clean_logs_directory_wrapper()
