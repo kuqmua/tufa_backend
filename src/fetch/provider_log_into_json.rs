@@ -9,7 +9,7 @@ use serde_json::json;
 use serde_json::Value;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn error_logs_into_json(
+pub fn provider_log_into_json(
     link: &str,
     unhandled_fetch_status_info: &UnhandledFetchStatusInfo,
     handled_fetch_status_info: &HandledFetchStatusInfo,

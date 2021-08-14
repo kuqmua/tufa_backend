@@ -1,8 +1,8 @@
 mod fetch {
     // pub mod create_dir_if_dont_exists;
     pub mod async_write_json_into_file;
-    pub mod error_logs_into_json;
     pub mod parse_github_html;
+    pub mod provider_log_into_json;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_check_available_providers;
     pub mod rss_check_handled_fetch_status_info;

@@ -1,4 +1,4 @@
-use crate::fetch::error_logs_into_json::error_logs_into_json;
+use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -63,7 +63,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         provider_kind,
     ) in error_posts
     {
-        let option_json = error_logs_into_json(
+        let option_json = provider_log_into_json(
             &link.clone(), //todo understand lifetimes to remove it
             &unhandled_fetch_status_info,
             &handled_fetch_status_info,
