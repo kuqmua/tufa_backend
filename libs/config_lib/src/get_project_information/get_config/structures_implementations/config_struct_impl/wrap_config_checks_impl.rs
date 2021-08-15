@@ -5,9 +5,9 @@ impl ConfigStruct {
     pub fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
         let are_providers_links_limits_valid =
             ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle);
-        if config_handle.mongo_params.file_extension.is_empty() {
+        if config_handle.mongo_params.log_file_extension.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle.mongo_params.file_extension is not empty".to_string(),
+                "config_handle.mongo_params.log_file_extension is not empty".to_string(),
             ));
             drop(error);
         }
@@ -26,7 +26,7 @@ impl ConfigStruct {
         }
         if config_handle
             .mongo_params
-            .db_collection_document_field_name_handle
+            .providers_db_collection_document_field_name_handle
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
@@ -39,7 +39,7 @@ impl ConfigStruct {
         }
         if config_handle
             .mongo_params
-            .db_collection_handle_second_part
+            .providers_db_collection_handle_second_part
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
@@ -50,7 +50,11 @@ impl ConfigStruct {
             ));
             drop(error);
         }
-        if config_handle.mongo_params.db_name_handle.is_empty() {
+        if config_handle
+            .mongo_params
+            .providers_db_name_handle
+            .is_empty()
+        {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "config_handle.mongo_params.db_name_handle is empty".to_string(),
             ));

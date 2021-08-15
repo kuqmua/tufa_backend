@@ -70,12 +70,12 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
     }
     // put_data_in_mongo(
     //     &mongo_url,
-    //     &CONFIG.mongo_params.db_name_handle,
-    //     &CONFIG.mongo_params.db_collection_handle_second_part,
-    //     &CONFIG.mongo_params.db_collection_document_field_name_handle,
+    //     &CONFIG.mongo_params.providers_db_name_handle,
+    //     &CONFIG.mongo_params.providers_db_collection_handle_second_part,
+    //     &CONFIG.mongo_params.providers_db_collection_document_field_name_handle,
     //     &CONFIG.mongo_params.path_to_provider_link_parts_folder,
     //     CONFIG.params.vec_of_provider_names.clone(),
-    //     &CONFIG.mongo_params.file_extension,
+    //     &CONFIG.mongo_params.log_file_extension,
     // );
     let mut providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
         HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
@@ -99,14 +99,14 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
     }
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
-        db_name_handle: CONFIG.mongo_params.db_name_handle.to_string(),
+        db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
         db_collection_handle_second_part: CONFIG
             .mongo_params
-            .db_collection_handle_second_part
+            .providers_db_collection_handle_second_part
             .to_string(),
         db_collection_document_field_name_handle: CONFIG
             .mongo_params
-            .db_collection_document_field_name_handle
+            .providers_db_collection_document_field_name_handle
             .to_string(),
         providers_string_into_enum_hashmap,
     })
@@ -129,9 +129,9 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
             vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
             second_part_of_file_name: CONFIG
                 .mongo_params
-                .db_collection_handle_second_part //why that in mongo_params?
+                .providers_db_collection_handle_second_part //why that in mongo_params?
                 .to_string(),
-            file_extension: CONFIG.mongo_params.file_extension.to_string(),
+            file_extension: CONFIG.mongo_params.log_file_extension.to_string(),
         })
         .await;
         if !providers_link_parts_local.is_empty() {
