@@ -14,6 +14,10 @@ use std::time::Instant;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+use std::collections::HashMap;
+
+// use futures::future::join_all;
+
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
@@ -27,32 +31,52 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
 ) -> bool {
     let time = Instant::now();
     let mongo_url = get_mongo_url();
-    let key = "key";
+    let key = "key"; //must be dynamic: arxiv, biorxiv and etc.
+                     //todo: move this to config
     let db_name_handle = "logs";
     let db_collection_handle_second_part = "second_part";
-    if true {
-        //CONFIG.params.enable_cleaning_warning_logs_directory
-        let db_collection_name = &format!("{}{}", key, db_collection_handle_second_part);
-        let future_possible_drop_collection =
-            mongo_drop_collection_wrapper(&mongo_url, db_name_handle, db_collection_name, false);
-        match future_possible_drop_collection {
-            Ok(result_flag) => {
-                if result_flag {
-                    println!("drop done!");
-                } else {
-                    println!("drop fail with flag");
-                    return result_flag;
+    let db_collection_document_field_name_handle = "data";
+    //todo: drop db? or drop collection in loop for unique provider kind
+
+    let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
+    let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
+    for element in &error_posts {
+        if !vec_of_error_provider_kinds.contains(&element.4) {
+            let empty_vec_of_stringified_json: Vec<String> = Vec::new();
+            hashmap_of_provider_vec_of_strings
+                .insert(element.4.clone(), empty_vec_of_stringified_json);
+            vec_of_error_provider_kinds.push(element.4.clone());
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    for element in vec_of_error_provider_kinds {
+        if true {
+            //CONFIG.params.enable_cleaning_warning_logs_directory
+            let db_collection_name = &format!("{:#?}{}", element, db_collection_handle_second_part);
+            let future_possible_drop_collection = mongo_drop_collection_wrapper(
+                &mongo_url,
+                db_name_handle,
+                db_collection_name,
+                false,
+            );
+            match future_possible_drop_collection {
+                Ok(result_flag) => {
+                    if result_flag {
+                        println!("drop done!");
+                    } else {
+                        println!("drop fail with flag");
+                        return result_flag;
+                    }
                 }
-            }
-            Err(e) => {
-                println!("drop fail with error {:#?}", e);
-                return false;
+                Err(e) => {
+                    println!("drop fail with error {:#?}", e);
+                    return false;
+                }
             }
         }
     }
-    let db_collection_document_field_name_handle = "data";
-    let mut vec_of_json = Vec::with_capacity(error_posts.len());
-    let mut vec_of_stringified_json: Vec<String> = Vec::with_capacity(error_posts.len()); //instance here coz use of moved value after for loop
+    //////////////////////////////////////////////////
+    let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
     for (
         link,
         unhandled_fetch_status_info,
@@ -68,68 +92,36 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             &are_there_items,
             &provider_kind,
         );
-        match option_json {
-            Some(json_object) => {
-                vec_of_json.push(json_object);
+        if let Some(json) = option_json {
+            let option_stringified_json = json_to_string(json);
+            if let Some(stringified_json) = option_stringified_json {
+                match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                    Some(vecddd) => vecddd.push(stringified_json),
+                    None => {
+                        print_colorful_message(
+                            None,
+                            PrintType::WarningHigh,
+                            file!().to_string(),
+                            line!().to_string(),
+                            "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
+                                .to_string(),
+                        );
+                    }
+                }
             }
-            None => {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "UnhandledFetchStatusInfo::Success, HandledFetchStatusInfo::Success, AreThereItems::Yep --- its not suppose to happend".to_string(),
-                );
-            }
         }
     }
-    if vec_of_json.is_empty() {
-        print_colorful_message(
-            None,
-            PrintType::WarningLow,
-            file!().to_string(),
-            line!().to_string(),
-            "vec_of_json.is_empty() == true".to_string(),
-        );
-        return false;
+    for element in hashmap_of_provider_vec_of_strings {
+        vec_of_futures.push(mongo_insert_docs_in_empty_collection(
+            &mongo_url,
+            db_name_handle,
+            &format!("{:#?}{}", element.0, db_collection_handle_second_part), //fix naming later
+            db_collection_document_field_name_handle,
+            element.1,
+        ));
     }
-    for json in vec_of_json {
-        let option_stringified_json = json_to_string(json);
-        if let Some(stringified_json) = option_stringified_json {
-            vec_of_stringified_json.push(stringified_json)
-        }
-    }
-    if vec_of_stringified_json.is_empty() {
-        print_colorful_message(
-            None,
-            PrintType::WarningLow,
-            file!().to_string(),
-            line!().to_string(),
-            "vec_of_stringified_json.is_empty() == true".to_string(),
-        );
-        return false;
-    }
-
-    let future_inserting_docs = mongo_insert_docs_in_empty_collection(
-        &mongo_url,
-        db_name_handle,
-        &format!("{}{}", key, db_collection_handle_second_part),
-        db_collection_document_field_name_handle,
-        vec_of_stringified_json,
-    );
-    match future_inserting_docs {
-        Ok(_) => (),
-        Err(e) => {
-            print_colorful_message(
-                None,
-                PrintType::WarningHigh,
-                file!().to_string(),
-                line!().to_string(),
-                format!("future_inserting_docs error {:#?}", e),
-            );
-            return false;
-        }
-    }
+    //todo: why cant join all? find out
+    // let _ = join_all(vec_of_futures).await;
     if CONFIG.params.enable_time_measurement_prints {
         print_colorful_message(
             None,

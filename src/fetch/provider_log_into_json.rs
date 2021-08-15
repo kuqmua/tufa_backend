@@ -5,6 +5,9 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use chrono::Local;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
 use serde_json::json;
 use serde_json::Value;
 
@@ -19,7 +22,17 @@ pub fn provider_log_into_json(
     match unhandled_fetch_status_info {
         UnhandledFetchStatusInfo::Success => match handled_fetch_status_info {
             HandledFetchStatusInfo::Success => match are_there_items {
-                AreThereItems::Yep => (None),
+                AreThereItems::Yep => {
+                    print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    "UnhandledFetchStatusInfo::Success, HandledFetchStatusInfo::Success, AreThereItems::Yep --- its not suppose to happend".to_string(),
+                );
+                    None
+                }
+                //todo: field names into config?
                 AreThereItems::Initialized => Some(json!({
                     "link": link,
                     "part_of": format!("{:?}", provider_kind),
