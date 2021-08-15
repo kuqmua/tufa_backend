@@ -1,3 +1,5 @@
+use crate::helpers::json_to_string::json_to_string;
+
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -48,13 +50,9 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             }
         }
     }
-    //todo write into mongo collection and create flag where to write logs
     let db_collection_document_field_name_handle = "data";
-
-    let vec_of_link_parts: Vec<String> = vec!["f".to_string()];
-    //here only one insert. Need many
-
     let mut vec_of_json = Vec::with_capacity(error_posts.len());
+    let mut vec_of_stringified_json: Vec<String> = Vec::with_capacity(error_posts.len()); //instance here coz use of moved value after for loop
     for (
         link,
         unhandled_fetch_status_info,
@@ -85,26 +83,64 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             }
         }
     }
+    if vec_of_json.is_empty() {
+        print_colorful_message(
+            None,
+            PrintType::WarningLow,
+            file!().to_string(),
+            line!().to_string(),
+            "vec_of_json.is_empty() == true".to_string(),
+        );
+        return false;
+    }
+    for json in vec_of_json {
+        let option_stringified_json = json_to_string(json);
+        if let Some(stringified_json) = option_stringified_json {
+            vec_of_stringified_json.push(stringified_json)
+        }
+    }
+    if vec_of_stringified_json.is_empty() {
+        print_colorful_message(
+            None,
+            PrintType::WarningLow,
+            file!().to_string(),
+            line!().to_string(),
+            "vec_of_stringified_json.is_empty() == true".to_string(),
+        );
+        return false;
+    }
+
     let future_inserting_docs = mongo_insert_docs_in_empty_collection(
         &mongo_url,
         db_name_handle,
         &format!("{}{}", key, db_collection_handle_second_part),
         db_collection_document_field_name_handle,
-        vec_of_link_parts,
+        vec_of_stringified_json,
     );
     match future_inserting_docs {
-        Ok(_) => {
-            println!("SUCCEEES")
-        }
+        Ok(_) => (),
         Err(e) => {
-            println!("future_inserting_docs error {:#?}", e);
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("future_inserting_docs error {:#?}", e),
+            );
+            return false;
         }
     }
     if CONFIG.params.enable_time_measurement_prints {
-        println!(
-            "write fetch error logs into files done in {} seconds {} miliseconds",
-            time.elapsed().as_secs(),
-            time.elapsed().as_millis(),
+        print_colorful_message(
+            None,
+            PrintType::TimeMeasurement,
+            file!().to_string(),
+            line!().to_string(),
+            format!(
+                "write fetch error logs into files done in {} seconds {} miliseconds",
+                time.elapsed().as_secs(),
+                time.elapsed().as_millis()
+            ),
         );
     };
     true
