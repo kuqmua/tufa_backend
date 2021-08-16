@@ -11,6 +11,8 @@ unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhan
 # // pub const ERROR_LOGS_DIRECTORY_NAME: &str = "error_logs";
 enable_providers = true
 enable_cleaning_warning_logs_directory = true
+enable_cleaning_warning_logs_db_in_mongo= true
+enable_cleaning_warning_logs_db_collections_in_mongo= true
 enable_time_measurement = true
 enable_provider_links_limit = true
 enable_common_providers_links_limit = false
@@ -130,6 +132,24 @@ enable_cleaning_warning_logs_directory_for_habr = true
 enable_cleaning_warning_logs_directory_for_medrxiv = true
 enable_cleaning_warning_logs_directory_for_reddit = true
 enable_cleaning_warning_logs_directory_for_twitter = true
+
+[enable_providers_cleaning_warning_logs_db_in_mongo]
+enable_cleaning_warning_logs_db_in_mongo_for_arxiv = true
+enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = true
+enable_cleaning_warning_logs_db_in_mongo_for_github = true
+enable_cleaning_warning_logs_db_in_mongo_for_habr = true
+enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = true
+enable_cleaning_warning_logs_db_in_mongo_for_reddit = true
+enable_cleaning_warning_logs_db_in_mongo_for_twitter = true
+
+[enable_providers_cleaning_warning_logs_db_collections_in_mongo]
+enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_github = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = true
+enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = true
 
 [enable_providers_time_measurement]
 enable_time_measurement_for_arxiv = true

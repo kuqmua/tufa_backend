@@ -15,6 +15,8 @@ use crate::get_project_information::get_config::structures_definitions::env_def:
 use crate::get_project_information::get_config::structures_definitions::params_def::Params;
 use crate::get_project_information::get_config::structures_definitions::print_colors_def::PrintColors;
 use crate::get_project_information::get_config::structures_definitions::providers_links_limits_def::ProvidersLinksLimits;
+use crate::get_project_information::get_config::structures_definitions::enable_providers_cleaning_warning_logs_db_in_mongo::EnableProvidersCleaningWarningLogsDbInMongo;
+use crate::get_project_information::get_config::structures_definitions::enable_providers_cleaning_warning_logs_db_collections_in_mongo::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
 
 #[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
 pub struct ConfigStruct {
@@ -30,6 +32,10 @@ pub struct ConfigStruct {
     pub enable_error_providers_prints: EnableErrorProvidersPrints,
     pub enable_providers_cleaning_warning_logs_directory:
         EnableProvidersCleaningWarningLogsDirectory,
+    pub enable_providers_cleaning_warning_logs_db_in_mongo:
+        EnableProvidersCleaningWarningLogsDbInMongo,
+    pub enable_providers_cleaning_warning_logs_db_collections_in_mongo:
+        EnableProvidersCleaningWarningLogsDbCollectionsInMongo,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
     pub providers_links_limits: ProvidersLinksLimits,
