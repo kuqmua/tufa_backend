@@ -36,7 +36,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     let db_name_handle = "logs";
     let db_collection_handle_second_part = "second_part";
     let db_collection_document_field_name_handle = "data";
-    //todo: drop db? or drop collection in loop for unique provider kind
 
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
@@ -48,10 +47,13 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             vec_of_error_provider_kinds.push(element.4.clone());
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //todo: drop db? or drop collection in loop for unique provider kind
+    //todo: do it in parallel async
     for element in vec_of_error_provider_kinds {
-        if true {
-            //CONFIG.params.enable_cleaning_warning_logs_directory
+        if CONFIG
+            .params
+            .enable_cleaning_warning_logs_db_collections_in_mongo
+        {
             let db_collection_name = &format!("{:#?}{}", element, db_collection_handle_second_part);
             let future_possible_drop_collection = mongo_drop_collection_wrapper(
                 &mongo_url,
