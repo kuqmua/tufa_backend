@@ -1,13 +1,11 @@
 use mongodb::{options::ClientOptions, Client, Database};
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
-pub async fn mongo_drop_db(
-    mongo_url: &str,
-    db_name: &str,
-    db_collection_name: &str,
-    check_if_collection_empty: bool,
-) -> Result<bool, mongodb::error::Error> {
+pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<bool, mongodb::error::Error> {
     let result_flag: bool;
     let client_options_result = ClientOptions::parse(mongo_url).await;
     match client_options_result {
@@ -16,17 +14,42 @@ pub async fn mongo_drop_db(
             match client_result {
                 Ok(client) => {
                     let db = client.database(db_name);
-                    result_flag = true;
+                    let drop_db_result = db.drop(None).await;
+                    match drop_db_result {
+                        Ok(_) => result_flag = true,
+                        Err(e) => {
+                            print_colorful_message(
+                                None,
+                                PrintType::WarningHigh,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("Drop failed {:#?}", e),
+                            );
+                            result_flag = false;
+                        }
+                    }
                 }
                 Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("Client::with_options error {:#?}", e),
+                    );
                     result_flag = false;
-                    println!("client_result error {:#?}", e)
                 }
             }
         }
         Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("ClientOptions::parse error {:#?}", e),
+            );
             result_flag = false;
-            println!("client_options_result error {:#?}", e)
         }
     }
     Ok(result_flag)
