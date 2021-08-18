@@ -20,7 +20,9 @@ use prints_lib::print_type_enum::PrintType;
 
 use std::collections::HashMap;
 
-// use futures::future::join_all;
+use tokio::task;
+
+use futures::future::join_all;
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]
@@ -54,150 +56,52 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     //todo: drop db? or drop collection in loop for unique provider kind
     //todo: do it in parallel async
     //
-    if CONFIG.params.enable_cleaning_warning_logs_db_in_mongo {
-        //         file: libs/mongo_integration/src/mongo_drop_db.rs:25
-        // Drop failed Error {
-        //     kind: CommandError(
-        //         CommandError {
-        //             code: 8000,
-        //             code_name: "AtlasError",
-        //             message: "user is not allowed to do action [dropDatabase] on [logs.]",
-        //             labels: [],
-        //         },
-        //     ),
-        //     labels: [],
-        // }
-        let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
-    }
+    // if CONFIG.params.enable_cleaning_warning_logs_db_in_mongo {
+    //     //         file: libs/mongo_integration/src/mongo_drop_db.rs:25
+    //     // Drop failed Error {
+    //     //     kind: CommandError(
+    //     //         CommandError {
+    //     //             code: 8000,
+    //     //             code_name: "AtlasError",
+    //     //             message: "user is not allowed to do action [dropDatabase] on [logs.]",
+    //     //             labels: [],
+    //     //         },
+    //     //     ),
+    //     //     labels: [],
+    //     // }
+    //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
+    // }
     if CONFIG
         .params
         .enable_cleaning_warning_logs_db_collections_in_mongo
     {
-        let mut result_of_dropping_collection: bool = false;
+        ////////////////////////////////
+        // let mut result_of_dropping_collection: bool = false;
+        let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
+            // let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
             let mongo_url_clone = mongo_url.clone();
-            match provider_kind_handle {
-                ProviderKind::Arxiv => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Biorxiv => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Github => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_github,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Habr => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Medrxiv => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Reddit => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-                ProviderKind::Twitter => {
-                    let result = drop_collection_handle(
-                        CONFIG
-                            .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                            .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter,
-                        provider_kind_handle,
-                        db_collection_handle_second_part,
-                        mongo_url_clone,
-                        db_name_handle,
-                    );
-                    if result {
-                        result_of_dropping_collection = true;
-                    } else {
-                        result_of_dropping_collection = false;
-                        break;
-                    }
-                }
-            }
+            vec_join.push(doff(
+                provider_kind_handle,
+                mongo_url_clone,
+                db_collection_handle_second_part,
+                db_name_handle,
+            ))
         }
+
+        // Await the result of the spawned task.
+        // let result = join.await;
+        let result = join_all(vec_join).await;
+        // match result {
+        //     Ok(_) => println!("good"),
+        //     Err(err) => println!("err {:#?}", err),
+        // }
+
+        ////////////////////////////////
+
+        // for provider_kind_handle in vec_of_error_provider_kinds {
+
+        // }
     }
 
     //////////////////////////////////////////////////
@@ -263,22 +167,154 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     true
 }
 
+pub async fn doff(
+    provider_kind_handle: ProviderKind,
+    mongo_url: String,
+    db_collection_handle_second_part_clone: &str,
+    db_name_handle: &str,
+) {
+    println!("hello world!");
+    let mongo_url_clone = mongo_url.clone();
+    match provider_kind_handle {
+        ProviderKind::Arxiv => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Biorxiv => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Github => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_github,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Habr => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Medrxiv => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Reddit => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+        ProviderKind::Twitter => {
+            let result = drop_collection_handle(
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter,
+                provider_kind_handle,
+                db_collection_handle_second_part_clone.to_string(),
+                mongo_url_clone,
+                db_name_handle.to_string(),
+            );
+            // if result {
+            //     result_of_dropping_collection = true;
+            // } else {
+            //     result_of_dropping_collection = false;
+            //     break;
+            // }
+        }
+    };
+}
+
 pub fn drop_collection_handle(
     enable_cleaning_warning_logs_db_provider_collection: bool,
     provider_kind_handle: ProviderKind,
-    db_collection_handle_second_part: &str,
+    db_collection_handle_second_part: String,
     mongo_url: String,
-    db_name_handle: &str,
+    db_name_handle: String,
 ) -> bool {
+    let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
     let result_flag: bool = true;
     if enable_cleaning_warning_logs_db_provider_collection {
         let db_collection_name = &format!(
             "{:#?}{}",
-            provider_kind_handle, db_collection_handle_second_part
+            provider_kind_handle, db_collection_handle_second_part_clone
         );
         let future_possible_drop_collection = mongo_drop_collection_wrapper(
             &mongo_url,
-            db_name_handle,
+            &db_name_handle,
             db_collection_name,
             false, //todo
         );
