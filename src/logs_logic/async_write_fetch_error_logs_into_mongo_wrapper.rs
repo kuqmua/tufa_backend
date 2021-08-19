@@ -70,13 +70,10 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
     // }
     let mut common_result_of_dropping_collections: bool = false;
-    println!("1111111");
     if CONFIG
         .params
         .enable_cleaning_warning_logs_db_collections_in_mongo
     {
-        ////////////////////////////////
-
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
             let mongo_url_clone = mongo_url.clone();
@@ -88,16 +85,12 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             ))
         }
         let result_vec = join_all(vec_join).await;
-        // println!("result {:#?}", result);
-        let mm: Vec<bool> = result_vec.iter().map(|x| !(x.1)).collect();
+        let mm: Vec<(ProviderKind, bool)> = result_vec.into_iter().filter(|x| !x.1).collect();
         println!("mm {:#?}", mm.len());
         // for boolean_result in result_vec {
 
         // }
     }
-    println!("222222");
-
-    //////////////////////////////////////////////////
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
     for (
         link,
@@ -118,7 +111,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             let option_stringified_json = json_to_string(json);
             if let Some(stringified_json) = option_stringified_json {
                 match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                    Some(vecddd) => vecddd.push(stringified_json),
+                    Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
                     None => {
                         print_colorful_message(
                             None,
