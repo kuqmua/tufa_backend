@@ -69,7 +69,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     //     // }
     //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
     // }
-    let mut common_result_of_dropping_collections: bool = false;
+    let mut vec_of_failed_collections_drops: Vec<(ProviderKind, bool)> =
+        Vec::with_capacity(vec_of_error_provider_kinds.len());
     if CONFIG
         .params
         .enable_cleaning_warning_logs_db_collections_in_mongo
@@ -85,13 +86,13 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             ))
         }
         let result_vec = join_all(vec_join).await;
-        let mm: Vec<(ProviderKind, bool)> = result_vec.into_iter().filter(|x| !x.1).collect();
-        println!("mm {:#?}", mm.len());
-        // for boolean_result in result_vec {
-
-        // }
+        vec_of_failed_collections_drops = result_vec.into_iter().filter(|x| !x.1).collect();
     }
-    let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
+    println!(
+        " vec_of_failed_collections_drops {:#?}",
+        vec_of_failed_collections_drops.len()
+    );
+    //todo: write some logic around vec_of_failed_collections_drops
     for (
         link,
         unhandled_fetch_status_info,
@@ -126,17 +127,27 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             }
         }
     }
-    for element in hashmap_of_provider_vec_of_strings {
+    let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
+    println!("11111111111111");
+    for (index, element) in hashmap_of_provider_vec_of_strings.into_iter().enumerate() {
+        println!("22222222222 --- {}", index);
+        let collection_handle = format!(
+            "{:#?}{}",
+            element.0.clone(),
+            db_collection_handle_second_part
+        );
         vec_of_futures.push(mongo_insert_docs_in_empty_collection(
+            index,
             &mongo_url,
             db_name_handle,
-            &format!("{:#?}{}", element.0, db_collection_handle_second_part), //fix naming later
+            collection_handle, //fix naming later
             db_collection_document_field_name_handle,
             element.1,
         ));
     }
-    //todo: why cant join all? find out
-    // let _ = join_all(vec_of_futures).await;
+    println!("44444444444444444");
+    let _ = join_all(vec_of_futures);
+
     if CONFIG.params.enable_time_measurement_prints {
         print_colorful_message(
             None,
