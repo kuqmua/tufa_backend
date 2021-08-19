@@ -20,8 +20,6 @@ use prints_lib::print_type_enum::PrintType;
 
 use std::collections::HashMap;
 
-use tokio::task;
-
 use futures::future::join_all;
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
@@ -71,39 +69,33 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     //     // }
     //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
     // }
+    let mut common_result_of_dropping_collections: bool = false;
+    println!("1111111");
     if CONFIG
         .params
         .enable_cleaning_warning_logs_db_collections_in_mongo
     {
         ////////////////////////////////
-        // let mut result_of_dropping_collection: bool = false;
+
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
-            // let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
             let mongo_url_clone = mongo_url.clone();
-            vec_join.push(doff(
+            vec_join.push(drop_provider_collection_handle(
                 provider_kind_handle,
                 mongo_url_clone,
                 db_collection_handle_second_part,
                 db_name_handle,
             ))
         }
-
-        // Await the result of the spawned task.
-        // let result = join.await;
-        let result = join_all(vec_join).await;
-        println!("result {:#?}", result);
-        // match result {
-        //     Ok(_) => println!("good"),
-        //     Err(err) => println!("err {:#?}", err),
-        // }
-
-        ////////////////////////////////
-
-        // for provider_kind_handle in vec_of_error_provider_kinds {
+        let result_vec = join_all(vec_join).await;
+        // println!("result {:#?}", result);
+        let mm: Vec<bool> = result_vec.iter().map(|x| !(x.1)).collect();
+        println!("mm {:#?}", mm.len());
+        // for boolean_result in result_vec {
 
         // }
     }
+    println!("222222");
 
     //////////////////////////////////////////////////
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
@@ -168,14 +160,13 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     true
 }
 
-pub async fn doff(
+pub async fn drop_provider_collection_handle(
     provider_kind_handle: ProviderKind,
     mongo_url: String,
     db_collection_handle_second_part_clone: &str,
     db_name_handle: &str,
-) -> bool {
-    println!("hello world!");
-    let result_of_dropping_collection: bool;
+) -> (ProviderKind, bool) {
+    let result_of_dropping_collection: (ProviderKind, bool);
     match provider_kind_handle {
         ProviderKind::Arxiv => {
             let result = drop_collection_handle(
@@ -188,9 +179,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Biorxiv => {
@@ -204,9 +195,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Github => {
@@ -220,9 +211,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Habr => {
@@ -236,9 +227,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Medrxiv => {
@@ -252,9 +243,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Reddit => {
@@ -268,9 +259,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
         ProviderKind::Twitter => {
@@ -284,9 +275,9 @@ pub async fn doff(
                 db_name_handle.to_string(),
             );
             if result {
-                result_of_dropping_collection = true;
+                result_of_dropping_collection = (provider_kind_handle, true);
             } else {
-                result_of_dropping_collection = false;
+                result_of_dropping_collection = (provider_kind_handle, false);
             }
         }
     };
