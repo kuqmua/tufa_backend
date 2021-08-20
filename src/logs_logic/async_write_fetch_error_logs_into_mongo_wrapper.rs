@@ -100,6 +100,9 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         provider_kind,
     ) in error_posts
     {
+        // if () {
+
+        // }
         let option_json = provider_log_into_json(
             &link.clone(), //todo understand lifetimes to remove it
             &unhandled_fetch_status_info,
@@ -266,14 +269,15 @@ pub fn drop_collection_handle(
             false, //todo
         );
         match future_possible_drop_collection {
-            Ok(result_flag) => {
-                if !result_flag {
-                    println!("drop fail with flag");
-                }
-                return (provider_kind_handle, result_flag);
-            }
+            Ok(result_flag) => return (provider_kind_handle, result_flag),
             Err(e) => {
-                println!("drop fail with error {:#?}", e);
+                print_colorful_message(
+                    Some(&provider_kind_handle),
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("drop fail with error {:#?}", e),
+                );
                 return (provider_kind_handle, false);
             }
         }

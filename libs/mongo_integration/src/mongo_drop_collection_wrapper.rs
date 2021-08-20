@@ -1,5 +1,8 @@
 use mongodb::{options::ClientOptions, Client};
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]
 pub async fn mongo_drop_collection_wrapper(
@@ -23,56 +26,79 @@ pub async fn mongo_drop_collection_wrapper(
                             Ok(documents_number) => {
                                 if documents_number > 0 {
                                     result_flag = false;
-                                    println!("collection is not empty");
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::WarningLow,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        "collection is not empty".to_string(),
+                                    );
                                 } else {
                                     let collection_drop_result = collection.drop(None).await;
                                     match collection_drop_result {
-                                        Ok(()) => {
-                                            result_flag = true;
-                                        }
+                                        Ok(()) => result_flag = true,
                                         Err(e) => {
                                             result_flag = false;
-                                            println!("collection_drop_result error {:#?}", e)
+                                            print_colorful_message(
+                                                None,
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!("collection_drop_result error {:#?}", e),
+                                            );
                                         }
                                     }
                                 }
                             }
                             Err(e) => {
-                                println!("documents_number_result error {:#?}", e);
-                                let collection_drop_result = collection.drop(None).await;
-                                match collection_drop_result {
-                                    Ok(()) => {
-                                        result_flag = true;
-                                    }
-                                    Err(e) => {
-                                        result_flag = false;
-                                        println!("collection_drop_result error {:#?}", e)
-                                    }
-                                }
+                                result_flag = false;
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("documents_number_result error {:#?}", e),
+                                );
                             }
                         }
                     } else {
                         let collection_drop_result = collection.drop(None).await;
                         match collection_drop_result {
-                            Ok(()) => {
-                                result_flag = true;
-                            }
+                            Ok(()) => result_flag = true,
                             Err(e) => {
                                 result_flag = false;
-                                println!("collection_drop_result error {:#?}", e)
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("collection_drop_result error {:#?}", e),
+                                );
                             }
                         }
                     }
                 }
                 Err(e) => {
                     result_flag = false;
-                    println!("client_result error {:#?}", e)
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("client_result error {:#?}", e),
+                    );
                 }
             }
         }
         Err(e) => {
             result_flag = false;
-            println!("client_options_result error {:#?}", e)
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("client_options_result error {:#?}", e),
+            );
         }
     }
     Ok(result_flag)
