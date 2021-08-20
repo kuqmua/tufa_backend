@@ -40,7 +40,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     let db_name_handle = "logs";
     let db_collection_handle_second_part = "second_part";
     let db_collection_document_field_name_handle = "data";
-
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
     for element in &error_posts {
@@ -128,16 +127,13 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         }
     }
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
-    println!("11111111111111");
-    for (index, element) in hashmap_of_provider_vec_of_strings.into_iter().enumerate() {
-        println!("22222222222 --- {}", index);
+    for element in hashmap_of_provider_vec_of_strings {
         let collection_handle = format!(
             "{:#?}{}",
             element.0.clone(),
             db_collection_handle_second_part
         );
         vec_of_futures.push(mongo_insert_docs_in_empty_collection(
-            index,
             &mongo_url,
             db_name_handle,
             collection_handle, //fix naming later
@@ -145,9 +141,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             element.1,
         ));
     }
-    println!("44444444444444444");
     let _ = join_all(vec_of_futures);
-
     if CONFIG.params.enable_time_measurement_prints {
         print_colorful_message(
             None,
@@ -173,7 +167,7 @@ pub async fn drop_provider_collection_handle(
     let result_of_dropping_collection: (ProviderKind, bool);
     match provider_kind_handle {
         ProviderKind::Arxiv => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv,
@@ -182,14 +176,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Biorxiv => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv,
@@ -198,14 +187,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Github => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_github,
@@ -214,14 +198,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Habr => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr,
@@ -230,14 +209,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Medrxiv => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv,
@@ -246,14 +220,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Reddit => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit,
@@ -262,14 +231,9 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
         ProviderKind::Twitter => {
-            let result = drop_collection_handle(
+            result_of_dropping_collection = drop_collection_handle(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter,
@@ -278,11 +242,6 @@ pub async fn drop_provider_collection_handle(
                 mongo_url,
                 db_name_handle.to_string(),
             );
-            if result {
-                result_of_dropping_collection = (provider_kind_handle, true);
-            } else {
-                result_of_dropping_collection = (provider_kind_handle, false);
-            }
         }
     };
     result_of_dropping_collection
@@ -294,13 +253,11 @@ pub fn drop_collection_handle(
     db_collection_handle_second_part: String,
     mongo_url: String,
     db_name_handle: String,
-) -> bool {
-    let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
-    let result_flag: bool = true;
+) -> (ProviderKind, bool) {
     if enable_cleaning_warning_logs_db_provider_collection {
         let db_collection_name = &format!(
             "{:#?}{}",
-            provider_kind_handle, db_collection_handle_second_part_clone
+            provider_kind_handle, db_collection_handle_second_part
         );
         let future_possible_drop_collection = mongo_drop_collection_wrapper(
             &mongo_url,
@@ -313,13 +270,13 @@ pub fn drop_collection_handle(
                 if !result_flag {
                     println!("drop fail with flag");
                 }
-                return result_flag;
+                return (provider_kind_handle, result_flag);
             }
             Err(e) => {
                 println!("drop fail with error {:#?}", e);
-                return false;
+                return (provider_kind_handle, false);
             }
         }
     }
-    result_flag
+    (provider_kind_handle, false)
 }

@@ -42,7 +42,6 @@ pub async fn put_data_in_mongo(
     if !vec_of_link_parts_hashmap.is_empty() {
         for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
             let future_inserting_docs = mongo_insert_docs_in_empty_collection(
-                0,
                 mongo_url,
                 db_name_handle,
                 format!("{}{}", key, db_collection_handle_second_part),
@@ -51,15 +50,11 @@ pub async fn put_data_in_mongo(
             )
             .await;
             match future_inserting_docs {
-                // Some(kk) => {
-                //     println!("kk {}", kk)
-                // }
-                // None => result_flag = false,
                 Ok(_) => { //todo
                 }
                 Err(e) => {
                     result_flag = false;
-                    // println!("future_inserting_docs error {:#?}", e);
+                    println!("future_inserting_docs error {:#?}", e);
                 }
             }
         }

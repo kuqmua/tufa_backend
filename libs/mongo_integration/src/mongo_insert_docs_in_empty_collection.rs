@@ -5,17 +5,13 @@ use mongodb::{
 };
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-// #[tokio::main]
 pub async fn mongo_insert_docs_in_empty_collection(
-    f: usize,
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle: String,
     db_collection_document_field_name_handle: &str,
     vec_of_values: Vec<String>,
 ) -> Result<bool, mongodb::error::Error> {
-    println!("333333333 --- {}", f);
-
     let result_flag: bool;
     let client_options = ClientOptions::parse(mongo_url).await;
     match client_options {
@@ -74,5 +70,4 @@ pub async fn mongo_insert_docs_in_empty_collection(
         }
     }
     Ok(result_flag)
-    // result_flag
 }
