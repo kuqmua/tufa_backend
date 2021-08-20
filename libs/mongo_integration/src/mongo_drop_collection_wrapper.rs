@@ -4,7 +4,7 @@ use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[tokio::main]
+// #[tokio::main]
 pub async fn mongo_drop_collection_wrapper(
     mongo_url: &str,
     db_name: &str,

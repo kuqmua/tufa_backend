@@ -178,7 +178,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Biorxiv => {
             result_of_dropping_collection = drop_collection_handle(
@@ -189,7 +190,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Github => {
             result_of_dropping_collection = drop_collection_handle(
@@ -200,7 +202,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Habr => {
             result_of_dropping_collection = drop_collection_handle(
@@ -211,7 +214,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Medrxiv => {
             result_of_dropping_collection = drop_collection_handle(
@@ -222,7 +226,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Reddit => {
             result_of_dropping_collection = drop_collection_handle(
@@ -233,7 +238,8 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
         ProviderKind::Twitter => {
             result_of_dropping_collection = drop_collection_handle(
@@ -244,13 +250,14 @@ pub async fn drop_provider_collection_handle(
                 db_collection_handle_second_part_clone.to_string(),
                 mongo_url,
                 db_name_handle.to_string(),
-            );
+            )
+            .await;
         }
     };
     result_of_dropping_collection
 }
 
-pub fn drop_collection_handle(
+pub async fn drop_collection_handle(
     enable_cleaning_warning_logs_db_provider_collection: bool,
     provider_kind_handle: ProviderKind,
     db_collection_handle_second_part: String,
@@ -267,7 +274,8 @@ pub fn drop_collection_handle(
             &db_name_handle,
             db_collection_name,
             false, //todo
-        );
+        )
+        .await;
         match future_possible_drop_collection {
             Ok(result_flag) => return (provider_kind_handle, result_flag),
             Err(e) => {
