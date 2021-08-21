@@ -7,7 +7,6 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::get_project_information::get_providers_link_parts::Resource;
-// use crate::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
@@ -68,15 +67,6 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
             mongo_own_port
         );
     }
-    // put_data_in_mongo(
-    //     &mongo_url,
-    //     &CONFIG.mongo_params.providers_db_name_handle,
-    //     &CONFIG.mongo_params.providers_db_collection_handle_second_part,
-    //     &CONFIG.mongo_params.providers_db_collection_document_field_name_handle,
-    //     &CONFIG.mongo_params.path_to_provider_link_parts_folder,
-    //     CONFIG.params.vec_of_provider_names.clone(),
-    //     &CONFIG.mongo_params.log_file_extension,
-    // );
     let mut providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
         HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
     let config_provider_string_to_enum_struct_hashmap = get_config_provider_string_to_enum_struct();

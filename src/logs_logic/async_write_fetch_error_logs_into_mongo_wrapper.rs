@@ -133,15 +133,20 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             element.0.clone(),
             db_collection_handle_second_part
         );
-        vec_of_futures.push(mongo_insert_docs_in_empty_collection(
-            &mongo_url,
-            db_name_handle,
-            collection_handle, //fix naming later
-            db_collection_document_field_name_handle,
-            element.1,
-        ));
+        //if push mongo_insert_docs_in_empty_collection then cant do join_all()
+        vec_of_futures.push(
+            mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_version(
+                element.0,
+                &mongo_url,
+                db_name_handle,
+                collection_handle, //fix naming later
+                db_collection_document_field_name_handle,
+                element.1,
+            ),
+        );
     }
-    let _ = join_all(vec_of_futures);
+    //todo write some logic around it
+    let results_vec = join_all(vec_of_futures).await;
     if CONFIG.params.enable_time_measurement_prints {
         print_colorful_message(
             None,
@@ -156,6 +161,51 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         );
     };
     true
+}
+
+//this function was created to have ability do join_all()
+pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_version(
+    provider_kind: ProviderKind,
+    mongo_url: &str,
+    db_name_handle: &str,
+    db_collection_handle: String,
+    db_collection_document_field_name_handle: &str,
+    vec_of_values: Vec<String>,
+) -> bool {
+    let vec_of_values_len = vec_of_values.len();
+    //old tokio runtime
+    let result = mongo_insert_docs_in_empty_collection(
+        &mongo_url,
+        db_name_handle,
+        db_collection_handle, //fix naming later
+        db_collection_document_field_name_handle,
+        vec_of_values,
+    );
+    match result {
+        Ok(boolean_result) => {
+            print_colorful_message(
+                None,
+                PrintType::Success,
+                file!().to_string(),
+                line!().to_string(),
+                format!(
+                    "successfull insertion {} elements into {:#?}",
+                    vec_of_values_len, provider_kind
+                ),
+            );
+            return boolean_result;
+        }
+        Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("mongo_insert_docs_in_empty_collection error {:#?}", e),
+            );
+            return false;
+        }
+    }
 }
 
 pub async fn drop_provider_collection_handle(

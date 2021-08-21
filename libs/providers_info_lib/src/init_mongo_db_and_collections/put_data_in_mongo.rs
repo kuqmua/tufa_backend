@@ -47,8 +47,7 @@ pub async fn put_data_in_mongo(
                 format!("{}{}", key, db_collection_handle_second_part),
                 db_collection_document_field_name_handle,
                 vec_of_link_parts,
-            )
-            .await;
+            );
             match future_inserting_docs {
                 Ok(_) => { //todo
                 }

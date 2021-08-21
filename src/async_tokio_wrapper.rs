@@ -8,15 +8,97 @@ use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_wr
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+////////////////////////////////////////////////////////////////
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
+use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
+////////////////////////////////
+
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
+    //todo: one under flag
+    //check if collection is empty before and add some config flags
+    ////////////////////////////////
+    let mongo_url: String;
+    if CONFIG.mongo_params.is_cloud {
+        let mongo_cloud_first_handle_url_part =
+            &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
+        let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
+        let mongo_cloud_second_handle_url_part =
+            &CONFIG.mongo_params.mongo_cloud_second_handle_url_part;
+        let mongo_cloud_password = &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_password;
+        let mongo_cloud_third_handle_url_part =
+            &CONFIG.mongo_params.mongo_cloud_third_handle_url_part;
+        let mongo_cloud_cluster_name = &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_name;
+        let mongo_cloud_fourth_handle_url_part =
+            &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part;
+        let mongo_cloud_cluster_params = &USER_CREDENTIALS
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_params;
+        mongo_url = format!(
+            "{}{}{}{}{}{}{}{}",
+            mongo_cloud_first_handle_url_part,
+            mongo_cloud_login,
+            mongo_cloud_second_handle_url_part,
+            mongo_cloud_password,
+            mongo_cloud_third_handle_url_part,
+            mongo_cloud_cluster_name,
+            mongo_cloud_fourth_handle_url_part,
+            mongo_cloud_cluster_params
+        );
+    } else {
+        let mongo_own_first_handle_url_part = &CONFIG.mongo_params.mongo_own_first_handle_url_part;
+        let mongo_own_login = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_login;
+        let mongo_own_second_handle_url_part =
+            &CONFIG.mongo_params.mongo_own_second_handle_url_part;
+        let mongo_own_password = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_password;
+        let mongo_own_third_handle_url_part = &CONFIG.mongo_params.mongo_own_third_handle_url_part;
+        let mongo_own_ip = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_ip;
+        let mongo_own_fourth_handle_url_part =
+            &CONFIG.mongo_params.mongo_own_fourth_handle_url_part;
+        let mongo_own_port = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_port;
+        mongo_url = format!(
+            "{}{}{}{}{}{}{}{}",
+            mongo_own_first_handle_url_part,
+            mongo_own_login,
+            mongo_own_second_handle_url_part,
+            mongo_own_password,
+            mongo_own_third_handle_url_part,
+            mongo_own_ip,
+            mongo_own_fourth_handle_url_part,
+            mongo_own_port
+        );
+    }
+    //todo: add flag to config init db
+    //todo: add check of doc already is in collection
+    let _ = put_data_in_mongo(
+        &mongo_url,
+        &CONFIG.mongo_params.providers_db_name_handle,
+        &CONFIG
+            .mongo_params
+            .providers_db_collection_handle_second_part,
+        &CONFIG
+            .mongo_params
+            .providers_db_collection_document_field_name_handle,
+        &CONFIG.mongo_params.path_to_provider_link_parts_folder,
+        CONFIG.params.vec_of_provider_names.clone(),
+        &CONFIG.mongo_params.log_file_extension,
+    )
+    .await;
+    ////////////////////////////////
     let option_tuple = check_new_posts_threads_parts().await;
+
     match option_tuple {
         Some((_posts, error_posts)) => {
             if !error_posts.is_empty() {
                 let wrong_cases_thread = thread::spawn(move || {
                     // println!("error_posts_done_len{:#?}", error_posts);
+                    //todo add flag in config or if its already exists put it here
                     if true {
                         let f = async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
                     } else {
