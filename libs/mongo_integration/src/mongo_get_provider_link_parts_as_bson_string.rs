@@ -12,6 +12,7 @@ use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
 use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
+use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
 use crate::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -140,23 +141,4 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
         }
     }
     Ok(vec_of_strings_to_return)
-}
-
-fn mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
-    cloned_config: ConfigStruct,
-    provider_kind: ProviderKind,
-) -> Option<Document> {
-    let limit = cloned_config.get_links_limit_wrapper_for_provider(&provider_kind);
-    mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-        CONFIG
-            .enable_providers_links_limits
-            .enable_links_limit_for_arxiv,
-        CONFIG
-            .params
-            .enable_randomize_order_for_providers_link_parts_for_mongo,
-        CONFIG
-            .enable_randomize_order_for_providers_link_parts_for_mongo
-            .enable_randomize_order_for_arxiv_link_parts_for_mongo,
-        limit,
-    )
 }
