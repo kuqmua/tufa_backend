@@ -3,7 +3,9 @@ use mongodb::{options::ClientOptions, Client};
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+//it will fail on runtime if remove #[tokio::main]
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[tokio::main] //using different (old) tokio runtime 0.2.25
 pub async fn mongo_drop_collection_wrapper(
     mongo_url: &str,
     db_name: &str,

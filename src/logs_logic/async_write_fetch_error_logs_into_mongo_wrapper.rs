@@ -45,9 +45,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     for element in &error_posts {
         if !vec_of_error_provider_kinds.contains(&element.4) {
             let empty_vec_of_stringified_json: Vec<String> = Vec::new();
-            hashmap_of_provider_vec_of_strings
-                .insert(element.4.clone(), empty_vec_of_stringified_json);
-            vec_of_error_provider_kinds.push(element.4.clone());
+            hashmap_of_provider_vec_of_strings.insert(element.4, empty_vec_of_stringified_json);
+            vec_of_error_provider_kinds.push(element.4);
         }
     }
     //todo: drop db? or drop collection in loop for unique provider kind
@@ -68,7 +67,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     //     // }
     //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
     // }
-    let mut vec_of_failed_collections_drops: Vec<(ProviderKind, bool)> =
+    let mut vec_of_failed_collections_drops: Vec<ProviderKind> =
         Vec::with_capacity(vec_of_error_provider_kinds.len());
     if CONFIG
         .params
@@ -85,13 +84,16 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             ))
         }
         let result_vec = join_all(vec_join).await;
-        vec_of_failed_collections_drops = result_vec.into_iter().filter(|x| !x.1).collect();
+        vec_of_failed_collections_drops = result_vec
+            .into_iter()
+            .filter(|x| !x.1)
+            .map(|x: (ProviderKind, bool)| -> ProviderKind { x.0 })
+            .collect();
     }
     println!(
         " vec_of_failed_collections_drops {:#?}",
         vec_of_failed_collections_drops.len()
     );
-    //todo: write some logic around vec_of_failed_collections_drops
     for (
         link,
         unhandled_fetch_status_info,
@@ -100,23 +102,21 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         provider_kind,
     ) in error_posts
     {
-        // if () {
-
-        // }
-        let option_json = provider_log_into_json(
-            &link.clone(), //todo understand lifetimes to remove it
-            &unhandled_fetch_status_info,
-            &handled_fetch_status_info,
-            &are_there_items,
-            &provider_kind,
-        );
-        if let Some(json) = option_json {
-            let option_stringified_json = json_to_string(json);
-            if let Some(stringified_json) = option_stringified_json {
-                match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                    Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
-                    None => {
-                        print_colorful_message(
+        if !vec_of_failed_collections_drops.contains(&provider_kind) {
+            let option_json = provider_log_into_json(
+                &link.clone(), //todo understand lifetimes to remove it
+                &unhandled_fetch_status_info,
+                &handled_fetch_status_info,
+                &are_there_items,
+                &provider_kind,
+            );
+            if let Some(json) = option_json {
+                let option_stringified_json = json_to_string(json);
+                if let Some(stringified_json) = option_stringified_json {
+                    match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                        Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                        None => {
+                            print_colorful_message(
                             None,
                             PrintType::WarningHigh,
                             file!().to_string(),
@@ -124,6 +124,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                             "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
                                 .to_string(),
                         );
+                        }
                     }
                 }
             }
@@ -269,13 +270,13 @@ pub async fn drop_collection_handle(
             "{:#?}{}",
             provider_kind_handle, db_collection_handle_second_part
         );
+        //using different (old) tokio runtime 0.2.25
         let future_possible_drop_collection = mongo_drop_collection_wrapper(
             &mongo_url,
             &db_name_handle,
             db_collection_name,
             false, //todo
-        )
-        .await;
+        );
         match future_possible_drop_collection {
             Ok(result_flag) => return (provider_kind_handle, result_flag),
             Err(e) => {
