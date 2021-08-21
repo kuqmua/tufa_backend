@@ -23,6 +23,7 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     db_collection_document_field_name_handle: &str,
     provider_kind: ProviderKind,
 ) -> Result<Vec<String>, mongodb::error::Error> {
+    //todo maybe option vec string
     let cloned_config = CONFIG.clone(); //todo maybe later remove clone somehow??
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
@@ -44,7 +45,14 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                     match documents_number_result {
                         Ok(documents_number) => {
                             if documents_number > 0 {
-                                println!("collection.count_documents {}", documents_number);
+                                //rewrite as PrintType::Info or something
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Success,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("collection.count_documents {}", documents_number),
+                                );
                                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
                                 if CONFIG.params.enable_provider_links_limit {
                                     if CONFIG.params.enable_common_providers_links_limit {
@@ -76,38 +84,61 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                     Ok(vec_of_strings) => vec_of_strings_to_return = vec_of_strings,
                                     Err(e) => {
                                         vec_of_strings_to_return = Vec::new();
-                                        println!("let result = do_something( error {:#?}", e)
+                                        print_colorful_message(
+                                            None,
+                                            PrintType::WarningLow,
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            format!("mongo_possibly_get_documents_as_string_vector error {:#?}", e),
+                                        );
                                     }
                                 }
                             } else {
                                 vec_of_strings_to_return = Vec::new();
-                                println!("documents_number is {}", documents_number)
+                                print_colorful_message(
+                                    None,
+                                    PrintType::WarningLow,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("documents_number is {}", documents_number),
+                                );
                             }
                         }
                         Err(e) => {
                             vec_of_strings_to_return = Vec::new();
-                            println!(
-                                "(todo change this print) collection.count_documents, {:#?}",
-                                e
-                            )
+                            print_colorful_message(
+                                None,
+                                PrintType::WarningHigh,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("collection.count_documents error {:#?}", e),
+                            );
                         }
                     }
                 }
                 None => {
                     vec_of_strings_to_return = Vec::new();
-                    println!("(todo change this print) no such collection2");
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningLow,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "needed_db_collection is None".to_string(),
+                    );
                 }
             }
         }
         Err(e) => {
             vec_of_strings_to_return = Vec::new();
-            println!("(todo change this print) no client , {:#?}", e);
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("Client::with_options error {:#?}", e),
+            );
         }
     }
-    // println!(
-    //     "vec_of_strings_to_return.len() {}",
-    //     vec_of_strings_to_return.len()
-    // );
     Ok(vec_of_strings_to_return)
 }
 

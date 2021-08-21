@@ -90,10 +90,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             .map(|x: (ProviderKind, bool)| -> ProviderKind { x.0 })
             .collect();
     }
-    println!(
-        " vec_of_failed_collections_drops {:#?}",
-        vec_of_failed_collections_drops.len()
-    );
     for (
         link,
         unhandled_fetch_status_info,
