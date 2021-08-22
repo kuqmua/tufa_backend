@@ -167,7 +167,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             );
             //if push mongo_insert_docs_in_empty_collection then cant do join_all()
             vec_of_futures.push(
-                mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_version(
+                insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version(
                     element.0,
                     &mongo_url,
                     db_name_handle,
@@ -262,7 +262,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
 }
 
 //this function was created to have ability do join_all()
-pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_version(
+pub async fn insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version(
     provider_kind: ProviderKind,
     mongo_url: &str,
     db_name_handle: &str,
