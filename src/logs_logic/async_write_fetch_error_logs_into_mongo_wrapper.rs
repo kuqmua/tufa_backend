@@ -22,6 +22,16 @@ use std::collections::HashMap;
 
 use futures::future::join_all;
 
+// #[derive(
+//     Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize, PartialEq, Eq, Hash, Copy,
+// )]
+// pub enum WriteLogsResult {
+//     Success,
+//     PartialSuccess, //todo: add values in here
+//     Failure,
+// }
+// let mut function_result: WriteLogsResult = WriteLogsResult::Failure;
+
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
@@ -35,8 +45,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
 ) -> bool {
     let time = Instant::now();
     let mongo_url = get_mongo_url();
-    let key = "key"; //must be dynamic: arxiv, biorxiv and etc.
-                     //todo: move this to config
+    //todo: move this to config
     let db_name_handle = "logs";
     let db_collection_handle_second_part = "second_part";
     let db_collection_document_field_name_handle = "data";
@@ -50,23 +59,41 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         }
     }
     //todo: drop db? or drop collection in loop for unique provider kind
-    //todo: do it in parallel async
-    //
-    // if CONFIG.params.enable_cleaning_warning_logs_db_in_mongo {
-    //     //         file: libs/mongo_integration/src/mongo_drop_db.rs:25
-    //     // Drop failed Error {
-    //     //     kind: CommandError(
-    //     //         CommandError {
-    //     //             code: 8000,
-    //     //             code_name: "AtlasError",
-    //     //             message: "user is not allowed to do action [dropDatabase] on [logs.]",
-    //     //             labels: [],
-    //     //         },
-    //     //     ),
-    //     //     labels: [],
-    //     // }
-    //     let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
-    // }
+    if CONFIG.params.enable_cleaning_warning_logs_db_in_mongo {
+        /////////////////////////////////////////////////////
+        //this error exists only for cloud mongo
+        //file: libs/mongo_integration/src/mongo_drop_db.rs:25
+        // Drop failed Error {
+        //     kind: CommandError(
+        //         CommandError {
+        //             code: 8000,
+        //             code_name: "AtlasError",
+        //             message: "user is not allowed to do action [dropDatabase] on [logs.]",
+        //             labels: [],
+        //         },
+        //     ),
+        //     labels: [],
+        // }
+        /////////////////////////////////////////////////////
+        //old tokio runtime
+        let dropping_db_result = mongo_drop_db(&mongo_url, db_name_handle);
+        match dropping_db_result {
+            Ok(_) => (),
+            Err(e) => {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "mongo_drop_db url: {}, db name: {}, error: {:#?} \n maybe disable mongo dropping db parameter in config?",
+                        &mongo_url, db_name_handle, e
+                    ),
+                );
+                return false;
+            }
+        }
+    }
     let mut vec_of_failed_collections_drops: Vec<ProviderKind> =
         Vec::with_capacity(vec_of_error_provider_kinds.len());
     if CONFIG
@@ -171,7 +198,7 @@ pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_versi
     db_collection_handle: String,
     db_collection_document_field_name_handle: &str,
     vec_of_values: Vec<String>,
-) -> bool {
+) -> (ProviderKind, bool) {
     let vec_of_values_len = vec_of_values.len();
     //old tokio runtime
     let result = mongo_insert_docs_in_empty_collection(
@@ -193,7 +220,7 @@ pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_versi
                     vec_of_values_len, provider_kind
                 ),
             );
-            return boolean_result;
+            return (provider_kind, boolean_result);
         }
         Err(e) => {
             print_colorful_message(
@@ -203,7 +230,7 @@ pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_versi
                 line!().to_string(),
                 format!("mongo_insert_docs_in_empty_collection error {:#?}", e),
             );
-            return false;
+            return (provider_kind, false);
         }
     }
 }
