@@ -227,3 +227,8 @@ add to each function return bool if its not returning yet
 ### -------------------
 how to solve problem with two different versions of tokio runtime? main 1.7.1, for mongo 0.2.25
 <br/>
+
+### -------------------
+find out dofference between diesel vs tokio-postgres
+<br/>
+
