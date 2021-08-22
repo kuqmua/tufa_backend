@@ -106,7 +106,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             let mut vec_join = Vec::new();
             for provider_kind_handle in vec_of_error_provider_kinds {
                 let mongo_url_clone = mongo_url.clone();
-                vec_join.push(drop_provider_collection_handle(
+                vec_join.push(drop_mongo_provider_logs_collection(
                     provider_kind_handle,
                     mongo_url_clone,
                     db_collection_handle_second_part,
@@ -306,7 +306,7 @@ pub async fn mongo_insert_docs_in_empty_collection_wrapper_under_old_tokio_versi
     }
 }
 
-pub async fn drop_provider_collection_handle(
+pub async fn drop_mongo_provider_logs_collection(
     provider_kind_handle: ProviderKind,
     mongo_url: String,
     db_collection_handle_second_part_clone: &str,
