@@ -315,7 +315,7 @@ pub async fn drop_provider_collection_handle(
     let result_of_dropping_collection: (ProviderKind, bool);
     match provider_kind_handle {
         ProviderKind::Arxiv => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv,
@@ -327,7 +327,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Biorxiv => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv,
@@ -339,7 +339,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Github => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_github,
@@ -351,7 +351,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Habr => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr,
@@ -363,7 +363,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Medrxiv => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv,
@@ -375,7 +375,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Reddit => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit,
@@ -387,7 +387,7 @@ pub async fn drop_provider_collection_handle(
             .await;
         }
         ProviderKind::Twitter => {
-            result_of_dropping_collection = drop_provider_collection_if_need(
+            result_of_dropping_collection = drop_mongo_provider_logs_collection_if_need(
                 CONFIG
                     .enable_providers_cleaning_warning_logs_db_collections_in_mongo
                     .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter,
@@ -402,7 +402,7 @@ pub async fn drop_provider_collection_handle(
     result_of_dropping_collection
 }
 
-pub async fn drop_provider_collection_if_need(
+pub async fn drop_mongo_provider_logs_collection_if_need(
     enable_cleaning_warning_logs_db_provider_collection: bool,
     provider_kind_handle: ProviderKind,
     db_collection_handle_second_part: String,
