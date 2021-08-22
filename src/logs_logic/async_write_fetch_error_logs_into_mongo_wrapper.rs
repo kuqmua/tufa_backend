@@ -4,12 +4,12 @@ use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::logs_logic::drop_mongo_provider_logs_collection_if_need::drop_mongo_provider_logs_collection_if_need;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::project_constants::get_mongo_url;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use mongo_integration::mongo_drop_db::mongo_drop_db;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
@@ -400,42 +400,4 @@ pub async fn drop_provider_collection_handle(
         }
     };
     result_of_dropping_collection
-}
-
-pub async fn drop_mongo_provider_logs_collection_if_need(
-    enable_cleaning_warning_logs_db_provider_collection: bool,
-    provider_kind_handle: ProviderKind,
-    db_collection_handle_second_part: String,
-    mongo_url: String,
-    db_name_handle: String,
-) -> (ProviderKind, bool) {
-    if enable_cleaning_warning_logs_db_provider_collection {
-        let db_collection_name = &format!(
-            "{:#?}{}",
-            provider_kind_handle, db_collection_handle_second_part
-        );
-        //using different (old) tokio runtime 0.2.25
-        let future_possible_drop_collection = mongo_drop_collection_wrapper(
-            &mongo_url,
-            &db_name_handle,
-            db_collection_name,
-            false, //todo
-        );
-        match future_possible_drop_collection {
-            Ok(result_flag) => return (provider_kind_handle, result_flag),
-            Err(e) => {
-                print_colorful_message(
-                    Some(&provider_kind_handle),
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("drop fail with error {:#?}", e),
-                );
-                return (provider_kind_handle, false);
-            }
-        }
-    } else {
-        //its true coz if disable do nothing successully
-        (provider_kind_handle, true)
-    }
 }
