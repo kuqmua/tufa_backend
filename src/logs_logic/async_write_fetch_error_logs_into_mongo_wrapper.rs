@@ -46,9 +46,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         let time = Instant::now();
         let mongo_url = get_mongo_url();
         //todo: move this to config
-        let db_providers_logs_name_handle = "logs";
-        let db_providers_logs_collection_handle_second_part = "second_part";
-        let db_providers_logs_collection_document_field_name_handle = "data";
         let mut vec_of_error_provider_kinds: Vec<ProviderKind> =
             Vec::with_capacity(error_posts.len());
         let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> =
@@ -79,7 +76,10 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             // }
             /////////////////////////////////////////////////////
             //old tokio runtime
-            let dropping_db_result = mongo_drop_db(&mongo_url, db_providers_logs_name_handle);
+            let dropping_db_result = mongo_drop_db(
+                &mongo_url,
+                &CONFIG.mongo_params.db_providers_logs_name_handle,
+            );
             match dropping_db_result {
                 Ok(_) => (),
                 Err(e) => {
@@ -90,7 +90,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     line!().to_string(),
                     format!(
                         "mongo_drop_db url: {}, db name: {}, error: {:#?} \n maybe disable mongo dropping db parameter in config?",
-                        &mongo_url, db_providers_logs_name_handle, e
+                        &mongo_url, &CONFIG.mongo_params.db_providers_logs_name_handle, e
                     ),
                 );
                     return WriteLogsResult::Failure;
@@ -109,8 +109,10 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 vec_join.push(drop_mongo_logs_collection_wrapper_for_providers(
                     provider_kind_handle,
                     mongo_url_clone,
-                    db_providers_logs_collection_handle_second_part,
-                    db_providers_logs_name_handle,
+                    &CONFIG
+                        .mongo_params
+                        .db_providers_logs_collection_handle_second_part,
+                    &CONFIG.mongo_params.db_providers_logs_name_handle,
                 ))
             }
             let result_vec = join_all(vec_join).await;
@@ -163,16 +165,20 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             let collection_handle = format!(
                 "{:#?}{}",
                 element.0.clone(),
-                db_providers_logs_collection_handle_second_part
+                &CONFIG
+                    .mongo_params
+                    .db_providers_logs_collection_handle_second_part
             );
             //if push mongo_insert_docs_in_empty_collection then cant do join_all()
             vec_of_futures.push(
                 insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version(
                     element.0,
                     &mongo_url,
-                    db_providers_logs_name_handle,
+                    &CONFIG.mongo_params.db_providers_logs_name_handle,
                     collection_handle, //fix naming later
-                    db_providers_logs_collection_document_field_name_handle,
+                    &CONFIG
+                        .mongo_params
+                        .db_providers_logs_collection_document_field_name_handle,
                     element.1,
                 ),
             );
