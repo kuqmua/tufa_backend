@@ -40,6 +40,7 @@ pub async fn put_data_in_mongo(
     );
     let mut result_flag = true;
     if !vec_of_link_parts_hashmap.is_empty() {
+        //todo: add case add in non empty collection
         for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
             let future_inserting_docs = mongo_insert_docs_in_empty_collection(
                 mongo_url,
