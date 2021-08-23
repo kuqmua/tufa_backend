@@ -232,3 +232,6 @@ how to solve problem with two different versions of tokio runtime? main 1.7.1, f
 find out dofference between diesel vs tokio-postgres
 <br/>
 
+### -------------------
+find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
+<br/>
