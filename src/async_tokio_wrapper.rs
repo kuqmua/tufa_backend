@@ -103,13 +103,12 @@ pub async fn async_tokio_wrapper() {
                     if CONFIG.params.enable_write_error_logs_in_local_folder
                         && CONFIG.params.enable_write_error_logs_in_mongo
                     {
-                        let f =
-                            async_write_fetch_error_logs_into_mongo_wrapper(error_posts.clone());
-                        let f = rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        async_write_fetch_error_logs_into_mongo_wrapper(error_posts.clone());
+                        rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
                     } else if CONFIG.params.enable_write_error_logs_in_local_folder {
-                        let f = async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
+                        async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
                     } else if CONFIG.params.enable_write_error_logs_in_mongo {
-                        let f = rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
                     }
                 });
                 match wrong_cases_thread.join() {
