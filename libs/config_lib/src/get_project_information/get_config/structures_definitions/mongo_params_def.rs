@@ -4,6 +4,11 @@ pub struct MongoParams {
     pub providers_db_name_handle: String,
     pub providers_db_collection_handle_second_part: String,
     pub providers_db_collection_document_field_name_handle: String,
+    //
+    pub db_providers_logs_name_handle: String,
+    pub db_providers_logs_collection_handle_second_part: String,
+    pub db_providers_logs_collection_document_field_name_handle: String,
+    //
     pub path_to_provider_link_parts_folder: String,
     pub log_file_extension: String,
     //

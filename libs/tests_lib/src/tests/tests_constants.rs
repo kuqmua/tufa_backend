@@ -36,12 +36,18 @@ enable_time_measurement_prints_for_all_providers = true
 enable_cleaning_warning_logs_directory_prints_for_all_providers = true
 
 [mongo_params]
-is_cloud = true
+is_cloud = false
 providers_db_name_handle = "provider_links" # rename this into providers_...
 providers_db_collection_handle_second_part = "_link_parts" # rename this into providers_...
 providers_db_collection_document_field_name_handle = "link_part" # rename this into providers_...
+# todo: move this into few diferent mongo objects
 path_to_provider_link_parts_folder = "./providers_link_parts/"
 log_file_extension = ".json" # rename this into log_...
+# todo: move this into few diferent mongo objects
+db_providers_logs_name_handle = "logs"
+db_providers_logs_collection_handle_second_part = "second_part"
+db_providers_logs_collection_document_field_name_handle = "data"
+# todo: move this into few diferent mongo objects
 mongo_own_first_handle_url_part = "mongodb://"
 mongo_own_second_handle_url_part = ":"
 mongo_own_third_handle_url_part = "@"
@@ -179,13 +185,13 @@ enable_randomize_order_for_reddit_link_parts_for_mongo = true
 enable_randomize_order_for_twitter_link_parts_for_mongo = true
 
 [providers_links_limits]
-links_limit_for_arxiv = 100 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_biorxiv = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_github = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_habr = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_medrxiv = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_reddit = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
-links_limit_for_twitter = 3 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_arxiv = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_biorxiv = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_github = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_habr = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_medrxiv = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_reddit = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
+links_limit_for_twitter = 10 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
 
 [print_colors]
 error_red = 255 # u8
