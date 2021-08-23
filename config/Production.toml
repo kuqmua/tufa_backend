@@ -30,6 +30,9 @@ enable_success_prints_for_all_providers = true
 enable_partial_success_prints_for_all_providers = true
 enable_time_measurement_prints_for_all_providers = true
 enable_cleaning_warning_logs_directory_prints_for_all_providers = true
+enable_write_error_logs_in_local_folder = true
+enable_write_error_logs_in_mongo = true
+enable_initialize_mongo_with_providers_link_parts = true
 
 [mongo_params]
 is_cloud = false
