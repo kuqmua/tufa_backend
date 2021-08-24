@@ -229,7 +229,7 @@ how to solve problem with two different versions of tokio runtime? main 1.7.1, f
 <br/>
 
 ### -------------------
-find out dofference between diesel vs tokio-postgres
+find out dofference between diesel vs tokio-postgres vs sqlx
 <br/>
 
 ### -------------------
