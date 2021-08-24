@@ -235,3 +235,9 @@ find out dofference between diesel vs tokio-postgres
 ### -------------------
 find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
 <br/>
+
+
+### -------------------
+Compile on save
+cargo watch -q -c -x run 
+<br/>
