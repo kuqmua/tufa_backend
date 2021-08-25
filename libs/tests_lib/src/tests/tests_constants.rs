@@ -51,10 +51,12 @@ db_providers_logs_name_handle = "logs"
 db_providers_logs_collection_handle_second_part = "second_part"
 db_providers_logs_collection_document_field_name_handle = "data"
 # todo: move this into few diferent mongo objects
+# mongodb://login:password@127.0.0.1:8888
 mongo_own_first_handle_url_part = "mongodb://"
 mongo_own_second_handle_url_part = ":"
 mongo_own_third_handle_url_part = "@"
 mongo_own_fourth_handle_url_part = ":"
+# mongodb+srv://login:password@db-name.some_random_hash.mongodb.net/cluster_params
 mongo_cloud_first_handle_url_part = "mongodb+srv://"
 mongo_cloud_second_handle_url_part = ":"
 mongo_cloud_third_handle_url_part = "@"
