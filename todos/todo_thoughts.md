@@ -241,3 +241,8 @@ find out how tokio runtime works if there is no join all method and will it be a
 Compile on save
 cargo watch -q -c -x run 
 <br/>
+
+### -------------------
+Use environment variables as 
+std::env::var("some variable")
+<br/>
