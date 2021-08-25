@@ -1,5 +1,4 @@
 mod fetch {
-    // pub mod create_dir_if_dont_exists;
     pub mod async_write_json_into_file;
     pub mod parse_github_html;
     pub mod provider_log_into_json;
@@ -60,7 +59,19 @@ mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;
 
+// use postgres_integration::create_post;
+// use postgres_integration::establish_connection;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
     entry::entry();
+    // let posgtres_connection = establish_connection();
+    // match posgtres_connection {
+    //     Some(pg_connection) => {
+    //         create_post(&pg_connection, "post_title", "post_body");
+    //     }
+    //     None => {
+    //         println!("todo")
+    //     }
+    // }
 }
