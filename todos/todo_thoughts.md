@@ -229,9 +229,27 @@ how to solve problem with two different versions of tokio runtime? main 1.7.1, f
 <br/>
 
 ### -------------------
-find out dofference between diesel vs tokio-postgres
+find out dofference between diesel vs tokio-postgres vs sqlx
 <br/>
 
 ### -------------------
 find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
 <br/>
+
+
+### -------------------
+Compile on save
+cargo watch -q -c -x run 
+<br/>
+
+### -------------------
+Use environment variables as 
+std::env::var("some variable")
+<br/>
+
+    
+### -------------------
+add stackoverflow provider
+https://stackoverflow.com/feeds/question/23412033
+<br/>
+    
