@@ -58,6 +58,14 @@ mongo_cloud_second_handle_url_part = ":"
 mongo_cloud_third_handle_url_part = "@"
 mongo_cloud_fourth_handle_url_part = "/"
 
+#postgres://login:password@127.0.0.1/db_name 
+#todo: where is a port?
+[postgres_params]
+postgres_own_first_handle_url_part = "postgres://"
+postgres_own_second_handle_url_part = ":"
+postgres_own_third_handle_url_part = "@"
+postgres_own_fourth_handle_url_part = "/"
+
 [enable_providers]
 enable_arxiv = true
 enable_biorxiv = true
