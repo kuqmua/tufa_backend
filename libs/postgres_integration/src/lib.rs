@@ -10,11 +10,41 @@ use diesel::prelude::*;
 use dotenv::dotenv;
 use std::env;
 
-pub fn establish_connection() -> PgConnection {
-    dotenv().ok();
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
 
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    PgConnection::establish(&database_url).expect(&format!("Error connecting to {}", database_url))
+pub fn establish_connection() -> Option<PgConnection> {
+    let dotenv_result = dotenv();
+    match dotenv_result {
+        Ok(_) => {
+            //todo use config here
+            let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+            let result_establish_connection = PgConnection::establish(&database_url);
+            match result_establish_connection {
+                Ok(pg_connection) => Some(pg_connection),
+                Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("PgConnection::establish {} error: {:#?}", &database_url, e),
+                    );
+                    None
+                }
+            }
+        }
+        Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("dotenv error: {:#?}", e),
+            );
+            None
+        }
+    }
 }
 
 use self::models::{NewPost, Post};
