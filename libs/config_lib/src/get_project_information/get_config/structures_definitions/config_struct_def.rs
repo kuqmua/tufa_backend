@@ -2,6 +2,7 @@ use crate::get_project_information::get_config::structures_definitions::enable_p
 use crate::get_project_information::get_config::structures_definitions::enable_providers_prints_def::EnableProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::links_def::Links;
 use crate::get_project_information::get_config::structures_definitions::mongo_params_def::MongoParams;
+use crate::get_project_information::get_config::structures_definitions::postgres_params_def::PostgresParams;
 use crate::get_project_information::get_config::structures_definitions::enable_error_providers_prints_def::EnableErrorProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::enable_partial_success_providers_prints_def::EnablePartialSuccessProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::enable_providers_cleaning_warning_logs_directory_def::EnableProvidersCleaningWarningLogsDirectory;
@@ -22,6 +23,7 @@ use crate::get_project_information::get_config::structures_definitions::enable_p
 pub struct ConfigStruct {
     pub params: Params,
     pub mongo_params: MongoParams,
+    pub postgres_params: PostgresParams,
     pub enable_providers: EnableProviders,
     pub links: Links,
     pub enable_providers_prints: EnableProvidersPrints,
