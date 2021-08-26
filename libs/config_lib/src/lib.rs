@@ -42,6 +42,7 @@ pub mod get_project_information {
             pub mod github_authorization_def;
             pub mod mongo_cloud_authorization_def;
             pub mod mongo_own_authorization_def;
+            pub mod postgres_own_authorization_def;
             pub mod reddit_authorization_def;
             pub mod user_credentials_struct_def;
         }
