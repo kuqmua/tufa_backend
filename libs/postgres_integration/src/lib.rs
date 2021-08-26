@@ -13,12 +13,10 @@ use std::env;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-pub fn establish_connection() -> Option<PgConnection> {
+pub fn establish_connection(database_url: String) -> Option<PgConnection> {
     let dotenv_result = dotenv();
     match dotenv_result {
         Ok(_) => {
-            //todo use config here
-            let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
             let result_establish_connection = PgConnection::establish(&database_url);
             match result_establish_connection {
                 Ok(pg_connection) => Some(pg_connection),
