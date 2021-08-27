@@ -62,7 +62,7 @@
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use postgres_integration::create_post;
-use postgres_integration::establish_connection;
+use postgres_integration::establish_connection::establish_connection;
 
 // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
