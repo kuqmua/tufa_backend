@@ -74,7 +74,7 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
         match config_provider_string_to_enum_struct_hashmap.get(provider_name) {
             Some(provider_kind_handle) => {
                 providers_string_into_enum_hashmap
-                    .insert(provider_name.to_string(), provider_kind_handle.clone());
+                    .insert(provider_name.to_string(), *provider_kind_handle);
             }
             None => {
                 print_colorful_message(

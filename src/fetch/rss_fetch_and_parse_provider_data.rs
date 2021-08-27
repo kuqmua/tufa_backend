@@ -48,7 +48,7 @@ pub fn rss_fetch_and_parse_provider_data(
     let mut thread_vector = Vec::with_capacity(links.len());
     for (element_index, link) in &mut links.into_iter().enumerate() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
-        let provider_kind_clone = provider_kind.clone();
+        let provider_kind_clone = provider_kind;
         let handle = thread::spawn(move || {
             let fetch_result = rss_fetch_link(&link, time);
             match fetch_result {

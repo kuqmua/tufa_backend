@@ -1,4 +1,4 @@
-use mongodb::{options::ClientOptions, Client, Database};
+use mongodb::{options::ClientOptions, Client};
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;

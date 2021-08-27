@@ -307,6 +307,7 @@ pub fn print_colorful_message(
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[allow(clippy::too_many_arguments)]
 fn handle_provider_prints(
     enable_prints_provider: bool,
     enable_error_prints_for_all_providers: bool,

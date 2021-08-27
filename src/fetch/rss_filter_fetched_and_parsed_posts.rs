@@ -48,7 +48,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             value.2,
                             value.3,
                             AreThereItems::Initialized,
-                            provider_kind.clone(),
+                            provider_kind,
                         ));
                     }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
@@ -58,7 +58,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             value.2,
                             value.3,
                             AreThereItems::NopeButThereIsTag(fetch_result_string),
-                            provider_kind.clone(),
+                            provider_kind,
                         ));
                     }
                     AreThereItems::ConversionFromStrError(fetch_result_string, error) => {
@@ -67,7 +67,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             value.2,
                             value.3,
                             AreThereItems::ConversionFromStrError(fetch_result_string, error),
-                            provider_kind.clone(),
+                            provider_kind,
                         ));
                     }
                     AreThereItems::NopeNoTag(fetch_result_string) => {
@@ -76,7 +76,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             value.2,
                             value.3,
                             AreThereItems::NopeNoTag(fetch_result_string),
-                            provider_kind.clone(),
+                            provider_kind,
                         ));
                     }
                 },
@@ -86,7 +86,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                         value.2,
                         HandledFetchStatusInfo::Initialized,
                         value.4,
-                        provider_kind.clone(),
+                        provider_kind,
                     ));
                 }
                 HandledFetchStatusInfo::ResToTextError(error) => {
@@ -95,7 +95,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                         value.2,
                         HandledFetchStatusInfo::ResToTextError(error),
                         value.4,
-                        provider_kind.clone(),
+                        provider_kind,
                     ));
                 }
                 HandledFetchStatusInfo::ResStatusError(status_code) => {
@@ -104,7 +104,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                         value.2,
                         HandledFetchStatusInfo::ResStatusError(status_code),
                         value.4,
-                        provider_kind.clone(),
+                        provider_kind,
                     ));
                 }
             },
@@ -114,7 +114,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     UnhandledFetchStatusInfo::Initialized,
                     value.3,
                     value.4,
-                    provider_kind.clone(),
+                    provider_kind,
                 ));
             }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
@@ -123,7 +123,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     UnhandledFetchStatusInfo::Failure(box_dyn_error),
                     value.3,
                     value.4,
-                    provider_kind.clone(),
+                    provider_kind,
                 ));
             }
         }

@@ -11,7 +11,7 @@ pub async fn put_data_in_mongo(
     path_to_provider_link_parts_folder: &str,
     vec_of_provider_names: Vec<String>,
     file_extension: &str,
-) {
+) -> bool {
     // for key in vec_of_provider_names.clone() {
     //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
     //         mongo_url,
@@ -65,5 +65,5 @@ pub async fn put_data_in_mongo(
         );
         result_flag = false;
     }
-    // result_flag
+    result_flag
 }

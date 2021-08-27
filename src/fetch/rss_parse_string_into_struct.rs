@@ -257,6 +257,7 @@ pub fn rss_parse_string_into_struct(
                                     );
                                 }
                             }
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -265,6 +266,7 @@ pub fn rss_parse_string_into_struct(
                                 )
                                 .to_string();
                             //todo: replace .replace_all with algorithm what do not reallocate memory
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -272,8 +274,7 @@ pub fn rss_parse_string_into_struct(
                                     TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2,
                                 )
                                 .to_string();
-
-                            // //why its here?
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_3).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -281,10 +282,10 @@ pub fn rss_parse_string_into_struct(
                                     TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3,
                                 )
                                 .to_string();
-                            // //why its here?
                         }
                         ProviderKind::Medrxiv => {
                             fetch_result_string.remove(0);
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(MEDRXIV_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -292,6 +293,7 @@ pub fn rss_parse_string_into_struct(
                                     MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
                                 )
                                 .to_string();
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(MEDRXIV_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -301,6 +303,7 @@ pub fn rss_parse_string_into_struct(
                                 .to_string();
                         }
                         ProviderKind::Biorxiv => {
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(BIORXIV_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -308,6 +311,7 @@ pub fn rss_parse_string_into_struct(
                                     BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
                                 )
                                 .to_string();
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(BIORXIV_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -317,6 +321,7 @@ pub fn rss_parse_string_into_struct(
                                 .to_string();
                         }
                         ProviderKind::Habr => {
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(HABR_FILTER_HANDLE_TO_REMOVE_1).unwrap();
                             fetch_result_string = re
                                 .replace_all(
@@ -324,6 +329,7 @@ pub fn rss_parse_string_into_struct(
                                     HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
                                 )
                                 .to_string();
+                            #[allow(clippy::trivial_regex)]
                             let re = Regex::new(HABR_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
                                 .replace_all(

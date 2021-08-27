@@ -2407,11 +2407,12 @@ fn parse_github_html_second_part_inner_one_element(
                                                 println!("href_handle1 {:#?}", href_handle);
                                                 println!("data_url_handle1 {:#?}", data_url_handle);
                                                 println!("----------------------");
-                                                data_hovercard_type = data_hovercard_type_handle;
-                                                data_hovercard_url = data_hovercard_url_handle;
-                                                data_id = data_id_handle;
-                                                href = href_handle;
-                                                data_url = data_url_handle;
+                                                // todo: value copies
+                                                // data_hovercard_type = data_hovercard_type_handle;
+                                                // data_hovercard_url = data_hovercard_url_handle;
+                                                // data_id = data_id_handle;
+                                                // href = href_handle;
+                                                // data_url = data_url_handle;
                                                 from_text = handle_text_element(
                                                     &node_element_first_first.children[2],
                                                 );

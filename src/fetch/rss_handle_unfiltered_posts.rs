@@ -43,7 +43,7 @@ pub fn rss_handle_unfiltered_posts(
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =
         rss_filter_fetched_and_parsed_posts(
             unfiltered_posts_hashmap_after_fetch_and_parse,
-            provider_kind.clone(),
+            provider_kind,
         );
     if unhandled_success_handled_success_are_there_items_yep_posts.is_empty() {
         print_colorful_message(
