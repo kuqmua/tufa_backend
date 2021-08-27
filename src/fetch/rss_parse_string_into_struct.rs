@@ -995,7 +995,6 @@ pub fn rss_parse_string_into_struct(
                             > = from_str(&fetch_result_string);
                             match rss_struct_from_str_result {
                                 Ok(rss_struct) => {
-                                    println!("conversion ok");
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
                                         CommonRssPostStruct::new();
@@ -1101,7 +1100,6 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
-                                    println!("conversion error");
                                     print_colorful_message(
                                         Some(&provider_kind),
                                         PrintType::Error,
