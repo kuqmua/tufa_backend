@@ -2,10 +2,10 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+
 use config_lib::get_project_information::project_constants::COMMON_PROVIDER_ITEM_HANDLE;
-use config_lib::get_project_information::project_constants::FIRST_TWITTER_FILTER_HANDLE_TO_REMOVE;
+
 use config_lib::get_project_information::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
-use config_lib::get_project_information::project_constants::LAST_TWITTER_FILTER_HANDLE_TO_REMOVE;
 
 use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
 use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
@@ -83,7 +83,7 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
                                     // provider_kind.get_message().unwrap().to_string(),
-                                    provider_kind.clone(),
+                                    provider_kind,
                                     //biorxiv specific
                                     None,
                                     None,
@@ -357,7 +357,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -483,7 +483,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     rss_struct.items[count].date.clone(),
                                                     rss_struct.items[count].identifier.clone(),
@@ -619,7 +619,7 @@ pub fn rss_parse_string_into_struct(
                                                     Some("fff".to_string()), //todo: content is html now, need parsing
                                                     rss_struct.entries[count].author.name.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -745,7 +745,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -871,7 +871,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -989,6 +989,7 @@ pub fn rss_parse_string_into_struct(
                             > = from_str(&fetch_result_string);
                             match rss_struct_from_str_result {
                                 Ok(rss_struct) => {
+                                    println!("conversion ok");
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
                                         CommonRssPostStruct::new();
@@ -1002,7 +1003,7 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
                                                     // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind.clone(),
+                                                    provider_kind,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -1094,6 +1095,7 @@ pub fn rss_parse_string_into_struct(
                                     rss_post_struct_handle = rss_page_struct;
                                 }
                                 Err(e) => {
+                                    println!("conversion error");
                                     print_colorful_message(
                                         Some(&provider_kind),
                                         PrintType::Error,
@@ -1126,7 +1128,5 @@ pub fn rss_parse_string_into_struct(
             }
         }
     }
-    // println!("{:#?}", rss_post_struct_handle);
-
     (rss_post_struct_handle, are_there_items_handle)
 }

@@ -23,15 +23,12 @@ pub const TWITTER_NAME_TO_CHECK: &str = "twitter";
 pub const COMMON_PROVIDER_ITEM_HANDLE: &str = "</item>";
 pub const GITHUB_PROVIDER_ITEM_HANDLE: &str = "</entry>";
 
-pub const FIRST_TWITTER_FILTER_HANDLE_TO_REMOVE: &str = "<channel>";
-pub const LAST_TWITTER_FILTER_HANDLE_TO_REMOVE: &str = "</channel>";
-
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_1: &str = "<dc:creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "bbb<creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_2: &str = "</dc:creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "bbb</creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_3: &str = "<atom:link";
-pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3: &str = "<atom:link";
+pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3: &str = "<atomllink";
 
 pub const MEDRXIV_FILTER_HANDLE_TO_REMOVE_1: &str = "<dc:title>";
 pub const MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "<dccfifle>";
