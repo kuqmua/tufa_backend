@@ -93,7 +93,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_arxiv_hashmap_links(
                                                                 arxiv_link_parts.to_vec(),
@@ -157,7 +157,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_biorxiv_hashmap_links(
                                                                 biorxiv_link_parts.to_vec(),
@@ -221,7 +221,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_github_hashmap_links(
                                                                 github_link_parts.to_vec(),
@@ -284,7 +284,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_habr_hashmap_links(
                                                                 habr_link_parts.to_vec(),
@@ -348,7 +348,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_medrxiv_hashmap_links(
                                                                 medrxiv_link_parts.to_vec(),
@@ -412,7 +412,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
                                                         let vec_of_provider_links =
                                                             generate_reddit_hashmap_links(
                                                                 reddit_link_parts.to_vec(),
@@ -476,7 +476,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         let error_posts_handle =
                                                             Arc::clone(&error_posts);
                                                         let provider_kind_handle_clone =
-                                                            provider_kind_handle.clone();
+                                                            *provider_kind_handle;
 
                                                         let vec_of_provider_links =
                                                             generate_twitter_hashmap_links(

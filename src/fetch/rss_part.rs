@@ -101,7 +101,6 @@ pub fn rss_part(
             format!("i can reach {}", provider_link),
         );
         let links_temp_naming: Vec<String> = vec_of_provider_links;
-        let provider_kind_handle = provider_kind.clone();
         if !links_temp_naming.is_empty() {
             let links_len = links_temp_naming.len();
             let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
@@ -111,7 +110,6 @@ pub fn rss_part(
                 HandledFetchStatusInfo,
                 AreThereItems,
             )>;
-            let provider_kind_clone_for_prints = provider_kind.clone();
             match provider_kind {
                 ProviderKind::Arxiv => {
                     unfiltered_posts_vec_after_fetch_and_parse =
@@ -148,7 +146,7 @@ pub fn rss_part(
                             for element in &mut vec_of_hashmap_parts.into_iter() {
                                 let not_ready_processed_posts_handle =
                                     Arc::clone(&not_ready_processed_posts);
-                                let provider_kind_clone = provider_kind.clone();
+                                let provider_kind_clone = provider_kind;
                                 let thread = thread::spawn(move || {
                                     let unfiltered_posts_vec_after_fetch_and_parse =
                                         rss_fetch_and_parse_provider_data(
@@ -275,17 +273,17 @@ pub fn rss_part(
             if !unfiltered_posts_vec_after_fetch_and_parse.is_empty() {
                 rss_handle_unfiltered_posts(
                     unfiltered_posts_vec_after_fetch_and_parse,
-                    provider_kind_handle,
+                    provider_kind,
                 )
             } else {
                 print_colorful_message(
-                    Some(&provider_kind_clone_for_prints),
+                    Some(&provider_kind),
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
                     format!(
                         "unfiltered_posts_vec_after_fetch_and_parse is empty for{:#?}",
-                        provider_kind_handle
+                        provider_kind
                     ),
                 );
                 (None, None)

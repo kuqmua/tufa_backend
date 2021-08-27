@@ -264,7 +264,7 @@ pub fn rss_parse_string_into_struct(
                                     TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1,
                                 )
                                 .to_string();
-
+                            //todo: replace .replace_all with algorithm what do not reallocate memory
                             let re = Regex::new(TWITTER_FILTER_HANDLE_TO_REMOVE_2).unwrap();
                             fetch_result_string = re
                                 .replace_all(
