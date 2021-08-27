@@ -253,3 +253,7 @@ add stackoverflow provider
 https://stackoverflow.com/feeds/question/23412033
 <br/>
     
+### -------------------
+difference between usage in global scope and local scope
+use lib_or_crate_or_something::something;
+<br/>
