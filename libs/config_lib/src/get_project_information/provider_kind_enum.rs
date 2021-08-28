@@ -10,3 +10,4 @@ pub enum ProviderKind {
     Reddit,
     Twitter,
 }
+//todo: maybe use it like that Arxiv { string_name: "arxiv"} ?
