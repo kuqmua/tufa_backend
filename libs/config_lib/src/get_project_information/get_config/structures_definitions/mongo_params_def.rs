@@ -1,3 +1,4 @@
+use crate::get_project_information::get_config::structures_definitions::enable_initialize_mongo_with_providers_link_parts_def::EnableInitializeMongoWithProvidersLinkParts;
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MongoParams {
     pub is_cloud: bool,
@@ -21,4 +22,6 @@ pub struct MongoParams {
     pub mongo_cloud_second_handle_url_part: String,
     pub mongo_cloud_third_handle_url_part: String,
     pub mongo_cloud_fourth_handle_url_part: String,
+    pub enable_initialize_mongo_with_providers_link_parts:
+        EnableInitializeMongoWithProvidersLinkParts,
 }

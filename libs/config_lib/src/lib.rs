@@ -3,6 +3,7 @@ pub mod get_project_information {
         pub mod structures_definitions {
             pub mod config_struct_def;
             pub mod enable_error_providers_prints_def;
+            pub mod enable_initialize_mongo_with_providers_link_parts_def;
             pub mod enable_partial_success_providers_prints_def;
             pub mod enable_providers_cleaning_warning_logs_db_collections_in_mongo;
             pub mod enable_providers_cleaning_warning_logs_db_in_mongo;

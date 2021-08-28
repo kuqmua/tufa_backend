@@ -15,7 +15,7 @@ enable_cleaning_warning_logs_db_in_mongo= true
 enable_cleaning_warning_logs_db_collections_in_mongo= true
 enable_time_measurement = true
 enable_provider_links_limit = true
-enable_common_providers_links_limit = false
+enable_common_providers_links_limit = true
 common_providers_links_limit = 1 # i64, but cannot be 0 or negative value (disable link limits instead of using 0(zero) for this parameter)
 enable_randomize_order_for_providers_link_parts_for_mongo = true
 enable_prints = true
@@ -34,33 +34,41 @@ enable_success_prints_for_all_providers = true
 enable_partial_success_prints_for_all_providers = true
 enable_time_measurement_prints_for_all_providers = true
 enable_cleaning_warning_logs_directory_prints_for_all_providers = true
-enable_write_error_logs_in_local_folder = true
+enable_write_error_logs_in_local_folder = false
 enable_write_error_logs_in_mongo = true
 enable_initialize_mongo_with_providers_link_parts = true
 
 [mongo_params]
-is_cloud = false
-providers_db_name_handle = "provider_links" # rename this into providers_...
-providers_db_collection_handle_second_part = "_link_parts" # rename this into providers_...
-providers_db_collection_document_field_name_handle = "link_part" # rename this into providers_...
-# todo: move this into few diferent mongo objects
-path_to_provider_link_parts_folder = "./providers_link_parts/"
-log_file_extension = ".json" # rename this into log_...
-# todo: move this into few diferent mongo objects
-db_providers_logs_name_handle = "logs"
-db_providers_logs_collection_handle_second_part = "second_part"
-db_providers_logs_collection_document_field_name_handle = "data"
-# todo: move this into few diferent mongo objects
-# mongodb://login:password@127.0.0.1:8888
-mongo_own_first_handle_url_part = "mongodb://"
-mongo_own_second_handle_url_part = ":"
-mongo_own_third_handle_url_part = "@"
-mongo_own_fourth_handle_url_part = ":"
-# mongodb+srv://login:password@db-name.some_random_hash.mongodb.net/cluster_params
-mongo_cloud_first_handle_url_part = "mongodb+srv://"
-mongo_cloud_second_handle_url_part = ":"
-mongo_cloud_third_handle_url_part = "@"
-mongo_cloud_fourth_handle_url_part = "/"
+  is_cloud = false
+  providers_db_name_handle = "provider_links" # rename this into providers_...
+  providers_db_collection_handle_second_part = "_link_parts" # rename this into providers_...
+  providers_db_collection_document_field_name_handle = "link_part" # rename this into providers_...
+  # todo: move this into few diferent mongo objects
+  path_to_provider_link_parts_folder = "./providers_link_parts/"
+  log_file_extension = ".json" # rename this into log_...
+  # todo: move this into few diferent mongo objects
+  db_providers_logs_name_handle = "logs"
+  db_providers_logs_collection_handle_second_part = "second_part"
+  db_providers_logs_collection_document_field_name_handle = "data"
+  # todo: move this into few diferent mongo objects
+  # mongodb://login:password@127.0.0.1:8888
+  mongo_own_first_handle_url_part = "mongodb://"
+  mongo_own_second_handle_url_part = ":"
+  mongo_own_third_handle_url_part = "@"
+  mongo_own_fourth_handle_url_part = ":"
+  # mongodb+srv://login:password@db-name.some_random_hash.mongodb.net/cluster_params
+  mongo_cloud_first_handle_url_part = "mongodb+srv://"
+  mongo_cloud_second_handle_url_part = ":"
+  mongo_cloud_third_handle_url_part = "@"
+  mongo_cloud_fourth_handle_url_part = "/"
+  [mongo_params.enable_initialize_mongo_with_providers_link_parts]
+    enable_initialize_mongo_with_arxiv_link_parts = true
+    enable_initialize_mongo_with_biorxiv_link_parts = true
+    enable_initialize_mongo_with_github_link_parts = true
+    enable_initialize_mongo_with_habr_link_parts = true
+    enable_initialize_mongo_with_medrxiv_link_parts = true
+    enable_initialize_mongo_with_reddit_link_parts = true
+    enable_initialize_mongo_with_twitter_link_parts = true
 
 #postgres://login:password@127.0.0.1/db_name 
 #todo: where is a port?
@@ -71,12 +79,12 @@ postgres_own_third_handle_url_part = "@"
 postgres_own_fourth_handle_url_part = "/"
 
 [enable_providers]
-enable_arxiv = true
-enable_biorxiv = true
-enable_github = true
-enable_habr = true
-enable_medrxiv = true
-enable_reddit = true
+enable_arxiv = false
+enable_biorxiv = false
+enable_github = false
+enable_habr = false
+enable_medrxiv = false
+enable_reddit = false
 enable_twitter = true
 
 [links]
