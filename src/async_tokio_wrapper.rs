@@ -9,7 +9,7 @@ use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::project_constants::get_mongo_url;
 use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
 #[deny(clippy::indexing_slicing)]
@@ -19,65 +19,10 @@ pub async fn async_tokio_wrapper() {
         .params
         .enable_initialize_mongo_with_providers_link_parts
     {
-        let mongo_url: String;
-        if CONFIG.mongo_params.is_cloud {
-            let mongo_cloud_first_handle_url_part =
-                &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
-            let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
-            let mongo_cloud_second_handle_url_part =
-                &CONFIG.mongo_params.mongo_cloud_second_handle_url_part;
-            let mongo_cloud_password = &USER_CREDENTIALS
-                .mongo_cloud_authorization
-                .mongo_cloud_password;
-            let mongo_cloud_third_handle_url_part =
-                &CONFIG.mongo_params.mongo_cloud_third_handle_url_part;
-            let mongo_cloud_cluster_name = &USER_CREDENTIALS
-                .mongo_cloud_authorization
-                .mongo_cloud_cluster_name;
-            let mongo_cloud_fourth_handle_url_part =
-                &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part;
-            let mongo_cloud_cluster_params = &USER_CREDENTIALS
-                .mongo_cloud_authorization
-                .mongo_cloud_cluster_params;
-            mongo_url = format!(
-                "{}{}{}{}{}{}{}{}",
-                mongo_cloud_first_handle_url_part,
-                mongo_cloud_login,
-                mongo_cloud_second_handle_url_part,
-                mongo_cloud_password,
-                mongo_cloud_third_handle_url_part,
-                mongo_cloud_cluster_name,
-                mongo_cloud_fourth_handle_url_part,
-                mongo_cloud_cluster_params
-            );
-        } else {
-            let mongo_own_first_handle_url_part =
-                &CONFIG.mongo_params.mongo_own_first_handle_url_part;
-            let mongo_own_login = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_login;
-            let mongo_own_second_handle_url_part =
-                &CONFIG.mongo_params.mongo_own_second_handle_url_part;
-            let mongo_own_password = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_password;
-            let mongo_own_third_handle_url_part =
-                &CONFIG.mongo_params.mongo_own_third_handle_url_part;
-            let mongo_own_ip = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_ip;
-            let mongo_own_fourth_handle_url_part =
-                &CONFIG.mongo_params.mongo_own_fourth_handle_url_part;
-            let mongo_own_port = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_port;
-            mongo_url = format!(
-                "{}{}{}{}{}{}{}{}",
-                mongo_own_first_handle_url_part,
-                mongo_own_login,
-                mongo_own_second_handle_url_part,
-                mongo_own_password,
-                mongo_own_third_handle_url_part,
-                mongo_own_ip,
-                mongo_own_fourth_handle_url_part,
-                mongo_own_port
-            );
-        }
         //todo: add check of doc already is in collection or add flag forse
+        //todo add flag for provider
         let _ = put_data_in_mongo(
-            &mongo_url,
+            &get_mongo_url(),
             &CONFIG.mongo_params.providers_db_name_handle,
             &CONFIG
                 .mongo_params
