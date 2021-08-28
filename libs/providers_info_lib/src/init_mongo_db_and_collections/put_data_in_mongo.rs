@@ -47,7 +47,6 @@ pub async fn put_data_in_mongo(
         db_collection_handle_second_part,
         file_extension,
     );
-    let mut vec_of_futures = Vec::new();
     if vec_of_link_parts_hashmap.is_empty() {
         println!(
             "vec_of_link_parts_hashmap.len() {}",
@@ -55,6 +54,7 @@ pub async fn put_data_in_mongo(
         );
         return PutDataInMongoResult::Failure;
     }
+    let mut vec_of_futures = Vec::with_capacity(vec_of_link_parts_hashmap.len());
     //todo: add case add in non empty collection
     for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
         let future_inserting_docs = mongo_insert_docs_in_empty_collection(
