@@ -2,6 +2,15 @@ use crate::get_project_information::get_providers_json_local_data::get_providers
 // use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
+use prints_lib::print_colorful_message::print_colorful_message;
+use prints_lib::print_type_enum::PrintType;
+
+pub enum PutDataInMongoResult {
+    Success,
+    PartialSuccess, //todo: add values in here
+    Failure,
+}
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn put_data_in_mongo(
     mongo_url: &str,
@@ -11,7 +20,7 @@ pub async fn put_data_in_mongo(
     path_to_provider_link_parts_folder: &str,
     vec_of_provider_names: Vec<String>,
     file_extension: &str,
-) -> bool {
+) -> PutDataInMongoResult {
     // for key in vec_of_provider_names.clone() {
     //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
     //         mongo_url,
@@ -38,32 +47,65 @@ pub async fn put_data_in_mongo(
         db_collection_handle_second_part,
         file_extension,
     );
-    let mut result_flag = true;
-    if !vec_of_link_parts_hashmap.is_empty() {
-        //todo: add case add in non empty collection
-        for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
-            let future_inserting_docs = mongo_insert_docs_in_empty_collection(
-                mongo_url,
-                db_name_handle,
-                format!("{}{}", key, db_collection_handle_second_part),
-                db_collection_document_field_name_handle,
-                vec_of_link_parts,
-            );
-            match future_inserting_docs {
-                Ok(_) => { //todo
-                }
-                Err(e) => {
-                    result_flag = false;
-                    println!("future_inserting_docs error {:#?}", e);
-                }
-            }
-        }
-    } else {
+    let mut vec_of_futures = Vec::new();
+    if vec_of_link_parts_hashmap.is_empty() {
         println!(
             "vec_of_link_parts_hashmap.len() {}",
             vec_of_link_parts_hashmap.len()
         );
-        result_flag = false;
+        return PutDataInMongoResult::Failure;
     }
-    result_flag
+    //todo: add case add in non empty collection
+    for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
+        let future_inserting_docs = mongo_insert_docs_in_empty_collection(
+            mongo_url,
+            db_name_handle,
+            format!("{}{}", key, db_collection_handle_second_part),
+            db_collection_document_field_name_handle,
+            vec_of_link_parts,
+        );
+        vec_of_futures.push(future_inserting_docs);
+    }
+    //todo add iteration function which returns Success Partial Success Failure
+    let mut checker_if_all_true = true;
+    for future_result in &vec_of_futures {
+        match future_result {
+            Ok(boolean_result) => {
+                if *boolean_result == false {
+                    checker_if_all_true = *boolean_result;
+                }
+                break;
+            }
+            Err(_) => {
+                checker_if_all_true = false;
+                break;
+            }
+        }
+    }
+    if checker_if_all_true {
+        return PutDataInMongoResult::Success;
+    }
+    let mut checker_if_all_false = true;
+    for future_result in &vec_of_futures {
+        match future_result {
+            Ok(boolean_result) => {
+                if *boolean_result == true {
+                    checker_if_all_false = false
+                }
+            }
+            Err(_) => {}
+        }
+    }
+    if checker_if_all_false {
+        return PutDataInMongoResult::Failure;
+    }
+    //todo write more info about this case
+    print_colorful_message(
+        None,
+        PrintType::WarningLow,
+        file!().to_string(),
+        line!().to_string(),
+        "partial_success coz results_vec not all true".to_string(),
+    );
+    PutDataInMongoResult::PartialSuccess
 }
