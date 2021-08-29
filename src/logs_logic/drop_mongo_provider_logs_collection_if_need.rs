@@ -25,7 +25,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             false, //todo
         );
         match future_possible_drop_collection {
-            Ok(result_flag) => return (provider_kind_handle, result_flag),
+            Ok(result_flag) => (provider_kind_handle, result_flag),
             Err(e) => {
                 print_colorful_message(
                     Some(&provider_kind_handle),
@@ -34,7 +34,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
                     line!().to_string(),
                     format!("drop fail with error {:#?}", e),
                 );
-                return (provider_kind_handle, false);
+                (provider_kind_handle, false)
             }
         }
     } else {

@@ -15,18 +15,8 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[allow(clippy::clippy::too_many_arguments)]
-pub fn rss_handle_unfiltered_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
-        CommonRssPostStruct,
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-    )>,
-    provider_kind: ProviderKind,
-) -> (
+//todo: think about naming
+type UnfilteredSuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
@@ -37,7 +27,19 @@ pub fn rss_handle_unfiltered_posts(
             ProviderKind,
         )>,
     >,
-) {
+);
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub fn rss_handle_unfiltered_posts(
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
+        CommonRssPostStruct,
+        String,
+        UnhandledFetchStatusInfo,
+        HandledFetchStatusInfo,
+        AreThereItems,
+    )>,
+    provider_kind: ProviderKind,
+) -> UnfilteredSuccessErrorTuple {
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =
         unfiltered_posts_hashmap_after_fetch_and_parse.len();
     let (unhandled_success_handled_success_are_there_items_yep_posts, some_error_posts) =

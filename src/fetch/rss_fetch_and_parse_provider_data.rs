@@ -82,7 +82,7 @@ pub fn rss_fetch_and_parse_provider_data(
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
-                        format!("UnhandledFetchStatusInfo::Failure {:#?}", &e.to_string()),
+                        format!("UnhandledFetchStatusInfo::Failure {:#?}", e),
                     );
                 }
             }

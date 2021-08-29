@@ -14,6 +14,18 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
+type ArcMutexErrorPostsHandle = Arc<
+    Mutex<
+        Vec<(
+            String,
+            UnhandledFetchStatusInfo,
+            HandledFetchStatusInfo,
+            AreThereItems,
+            ProviderKind,
+        )>,
+    >,
+>;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
     provider_link: &str,
@@ -21,17 +33,7 @@ pub fn providers_new_posts_check(
     vec_of_provider_links: Vec<String>,
     option_provider_providers: Option<Vec<String>>,
     posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
-    error_posts_handle: Arc<
-        Mutex<
-            Vec<(
-                String,
-                UnhandledFetchStatusInfo,
-                HandledFetchStatusInfo,
-                AreThereItems,
-                ProviderKind,
-            )>,
-        >,
-    >,
+    error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
     let enum_success_unsuccess_option_posts = rss_part(
         provider_link,

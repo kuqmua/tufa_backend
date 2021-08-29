@@ -11,7 +11,6 @@ use std::fs::File;
 use std::io::ErrorKind;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[allow(clippy::clippy::too_many_arguments)]
 pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,
     provider_kind: &ProviderKind,
@@ -19,7 +18,7 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     warning_logs_directory_name: &str,
     link: &str,
 ) {
-    create_dir_if_dont_exists(dir, Some(&provider_kind), &warning_logs_directory_name);
+    create_dir_if_dont_exists(dir, Some(provider_kind), warning_logs_directory_name);
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let path_to_file = format!(
         "logs/{}/{:?}/{}/{:?}-{}.json",

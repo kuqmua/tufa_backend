@@ -24,7 +24,7 @@ pub fn provider_log_into_json(
             HandledFetchStatusInfo::Success => match are_there_items {
                 AreThereItems::Yep => {
                     print_colorful_message(
-                    Some(&provider_kind),
+                    Some(provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),

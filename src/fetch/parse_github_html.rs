@@ -5,6 +5,21 @@ use html_parser::{Dom, Node};
 
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
 
+//todo: think about renaming
+pub type GithubPostInfoVec = Vec<(
+    Option<String>, //avatar_link_handle
+    Option<String>, //relative_commit_link_handle
+    Option<String>, //commit_text_handle
+    Option<String>, //from_text_handle
+    Option<String>, //commits_number_handle
+    Option<String>, //isssue_label_handle//somewhere wrong like "brotzeit/nyxt" or "taiki-e/criterion.rs"
+    Option<String>, //data_hovercard_type,
+    Option<String>, //data_hovercard_url,
+    Option<String>, //data_id,
+    Option<String>, //href,
+    Option<String>, //data_url,
+)>;
+
 pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     let mut avatar_link: Option<String> = None;
     let mut author: Option<String> = None;
@@ -20,19 +35,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     let mut of: Option<String> = None;
     let mut bot_tag: Option<String> = None;
     let mut who_follow: Option<String> = None;
-    let mut vec_of_something: Vec<(
-        Option<String>, //avatar_link_handle
-        Option<String>, //relative_commit_link_handle
-        Option<String>, //commit_text_handle
-        Option<String>, //from_text_handle
-        Option<String>, //commits_number_handle
-        Option<String>, //isssue_label_handle//somewhere wrong like "brotzeit/nyxt" or "taiki-e/criterion.rs"
-        Option<String>, //data_hovercard_type,
-        Option<String>, //data_hovercard_url,
-        Option<String>, //data_id,
-        Option<String>, //href,
-        Option<String>, //data_url,
-    )> = Vec::new();
+    let mut vec_of_something: GithubPostInfoVec = Vec::new();
     match option_content {
         Some(content) => {
             let result_of_dom_parse_content = Dom::parse(&content);

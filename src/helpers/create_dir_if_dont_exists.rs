@@ -18,17 +18,13 @@ pub fn create_dir_if_dont_exists(
         Some(provider_kind) => {
             path_to_log_file = format!(
                 "logs/{}/{:?}/{}",
-                warning_logs_directory_name,
-                provider_kind,
-                underdirectory.to_string()
+                warning_logs_directory_name, provider_kind, underdirectory
             );
         }
         None => {
             path_to_log_file = format!(
                 "logs/{}/{:?}/{}",
-                warning_logs_directory_name,
-                LOGS_COMMON_FOLDER_NAME,
-                underdirectory.to_string()
+                warning_logs_directory_name, LOGS_COMMON_FOLDER_NAME, underdirectory
             );
         }
     }
@@ -38,7 +34,7 @@ pub fn create_dir_if_dont_exists(
             Ok(_) => match provider_kind_option {
                 Some(provider_kind) => {
                     print_colorful_message(
-                        Some(&provider_kind),
+                        Some(provider_kind),
                         PrintType::Success,
                         file!().to_string(),
                         line!().to_string(),
@@ -64,16 +60,13 @@ pub fn create_dir_if_dont_exists(
             Err(e) => match provider_kind_option {
                 Some(provider_kind) => {
                     print_colorful_message(
-                        Some(&provider_kind),
+                        Some(provider_kind),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
                         format!(
-                            "folder creation error logs/{}/{:?}/{} {}",
-                            warning_logs_directory_name,
-                            provider_kind,
-                            underdirectory,
-                            e.to_string()
+                            "folder creation error logs/{}/{:?}/{} {:#?}",
+                            warning_logs_directory_name, provider_kind, underdirectory, e
                         ),
                     );
                 }
@@ -84,11 +77,8 @@ pub fn create_dir_if_dont_exists(
                         file!().to_string(),
                         line!().to_string(),
                         format!(
-                            "folder creation error logs/{}/{:?}/{} {}",
-                            warning_logs_directory_name,
-                            LOGS_COMMON_FOLDER_NAME,
-                            underdirectory,
-                            e.to_string()
+                            "folder creation error logs/{}/{:?}/{} {:#?}",
+                            warning_logs_directory_name, LOGS_COMMON_FOLDER_NAME, underdirectory, e
                         ),
                     );
                 }

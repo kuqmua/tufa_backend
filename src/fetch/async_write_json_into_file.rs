@@ -9,7 +9,6 @@ use serde_json::Value;
 use std::time::Instant;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[allow(clippy::clippy::too_many_arguments)]
 pub async fn async_write_json_into_file(
     json_object: Value,
     provider_kind: ProviderKind,

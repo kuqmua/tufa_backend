@@ -1,3 +1,4 @@
+use crate::fetch::parse_github_html::GithubPostInfoVec;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 #[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,//Default,
 pub struct CommonRssPostStruct {
@@ -107,7 +108,7 @@ pub struct CommonRssPost {
     //twitter specific
 }
 impl CommonRssPost {
-    #[allow(clippy::clippy::too_many_arguments)]
+    #[allow(clippy::too_many_arguments)]
     pub fn initialize_with_params(
         title: Option<String>,
         link: Option<String>,
@@ -311,23 +312,11 @@ pub struct GithubInfoFromHtml {
     pub of: Option<String>,
     pub bot_tag: Option<String>,
     pub who_follow: Option<String>,
-    pub vec_of_something: Vec<(
-        Option<String>, //avatar_link_handle
-        Option<String>, //relative_commit_link_handle
-        Option<String>, //commit_text_handle
-        Option<String>, //from_text_handle
-        Option<String>, //commits_number_handle
-        Option<String>, //isssue_label_handle
-        Option<String>, //data_hovercard_type,
-        Option<String>, //data_hovercard_url,
-        Option<String>, //data_id,
-        Option<String>, //href,
-        Option<String>, //data_url,
-    )>,
+    pub vec_of_something: GithubPostInfoVec,
 }
 
 impl GithubInfoFromHtml {
-    #[allow(clippy::clippy::too_many_arguments)]
+    #[allow(clippy::too_many_arguments)]
     pub fn initialize_with_params(
         avatar_link: Option<String>,
         author: Option<String>,
@@ -343,19 +332,7 @@ impl GithubInfoFromHtml {
         of: Option<String>,
         bot_tag: Option<String>,
         who_follow: Option<String>,
-        vec_of_something: Vec<(
-            Option<String>, //avatar_link_handle
-            Option<String>, //relative_commit_link_handle
-            Option<String>, //commit_text_handle
-            Option<String>, //from_text_handle
-            Option<String>, //commits_number_handle
-            Option<String>, //isssue_label_handle
-            Option<String>, //data_hovercard_type,
-            Option<String>, //data_hovercard_url,
-            Option<String>, //data_id,
-            Option<String>, //href,
-            Option<String>, //data_url,
-        )>,
+        vec_of_something: GithubPostInfoVec,
     ) -> Self {
         GithubInfoFromHtml {
             avatar_link,

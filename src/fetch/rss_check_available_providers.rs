@@ -29,7 +29,7 @@ pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Ve
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
-                        format!("UnhandledFetchStatusInfo::Failure {:#?}", &e.to_string()),
+                        format!("UnhandledFetchStatusInfo::Failure {:#?}", e),
                     );
                 }
             }

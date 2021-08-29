@@ -22,8 +22,6 @@ pub fn check_link(
         Ok(fetch_tuple_result) => {
             if fetch_tuple_result.0 {
                 can_i = true;
-                unhandled_info = UnhandledReachProviderInfo::Success;
-                handled_info = fetch_tuple_result.1;
             } else {
                 if enable_error_prints_handle {
                     match fetch_tuple_result.1 {
@@ -64,9 +62,9 @@ pub fn check_link(
                     }
                 }
                 can_i = false;
-                unhandled_info = UnhandledReachProviderInfo::Success;
-                handled_info = fetch_tuple_result.1;
             }
+            unhandled_info = UnhandledReachProviderInfo::Success;
+            handled_info = fetch_tuple_result.1;
         }
         Err(e) => {
             unhandled_info = UnhandledReachProviderInfo::Failure(e.to_string());

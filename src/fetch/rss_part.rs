@@ -21,15 +21,8 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[allow(clippy::clippy::too_many_arguments)]
-pub fn rss_part(
-    provider_link: &str,
-    provider_kind: ProviderKind,
-    enable_error_prints_handle: bool,
-    vec_of_provider_links: Vec<String>,
-    option_twitter_providers_names: Option<Vec<String>>,
-) -> (
+//todo: think about naming
+type SuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
     Option<
         Vec<(
@@ -40,7 +33,16 @@ pub fn rss_part(
             ProviderKind,
         )>,
     >,
-) {
+);
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub fn rss_part(
+    provider_link: &str,
+    provider_kind: ProviderKind,
+    enable_error_prints_handle: bool,
+    vec_of_provider_links: Vec<String>,
+    option_twitter_providers_names: Option<Vec<String>>,
+) -> SuccessErrorTuple {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {

@@ -17,7 +17,7 @@ pub async fn insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_versi
     let vec_of_values_len = vec_of_values.len();
     //old tokio runtime
     let result = mongo_insert_docs_in_empty_collection(
-        &mongo_url,
+        mongo_url,
         db_name_handle,
         db_collection_handle, //fix naming later
         db_collection_document_field_name_handle,
@@ -35,7 +35,7 @@ pub async fn insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_versi
                     vec_of_values_len, provider_kind
                 ),
             );
-            return (provider_kind, boolean_result);
+            (provider_kind, boolean_result)
         }
         Err(e) => {
             print_colorful_message(
@@ -45,7 +45,7 @@ pub async fn insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_versi
                 line!().to_string(),
                 format!("mongo_insert_docs_in_empty_collection error {:#?}", e),
             );
-            return (provider_kind, false);
+            (provider_kind, false)
         }
     }
 }
