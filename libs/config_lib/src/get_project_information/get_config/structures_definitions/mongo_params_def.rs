@@ -1,4 +1,5 @@
 use crate::get_project_information::get_config::structures_definitions::enable_initialize_mongo_with_providers_link_parts_def::EnableInitializeMongoWithProvidersLinkParts;
+use crate::get_project_information::get_config::structures_definitions::enable_mongo_own_url_parts_def::EnableMongoOwnUrlParts;
 use crate::get_project_information::get_config::structures_definitions::enable_mongo_cloud_url_parts_def::EnableMongoCloudUrlParts;
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MongoParams {
@@ -14,12 +15,8 @@ pub struct MongoParams {
     pub path_to_provider_link_parts_folder: String,
     pub log_file_extension: String,
     //
-    pub mongo_own_first_handle_url_part: String,
-    pub mongo_own_second_handle_url_part: String,
-    pub mongo_own_third_handle_url_part: String,
-    pub mongo_own_fourth_handle_url_part: String,
-    //
     pub enable_initialize_mongo_with_providers_link_parts:
         EnableInitializeMongoWithProvidersLinkParts,
+    pub enable_mongo_own_url_parts: EnableMongoOwnUrlParts,
     pub enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts,
 }
