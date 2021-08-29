@@ -49,21 +49,29 @@ pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 pub fn get_mongo_url() -> String {
     let mongo_url: String;
     if CONFIG.mongo_params.is_cloud {
-        let mongo_cloud_first_handle_url_part =
-            &CONFIG.mongo_params.mongo_cloud_first_handle_url_part;
+        let mongo_cloud_first_handle_url_part = &CONFIG
+            .mongo_params
+            .enable_mongo_cloud_url_parts
+            .mongo_cloud_first_handle_url_part;
         let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
-        let mongo_cloud_second_handle_url_part =
-            &CONFIG.mongo_params.mongo_cloud_second_handle_url_part;
+        let mongo_cloud_second_handle_url_part = &CONFIG
+            .mongo_params
+            .enable_mongo_cloud_url_parts
+            .mongo_cloud_second_handle_url_part;
         let mongo_cloud_password = &USER_CREDENTIALS
             .mongo_cloud_authorization
             .mongo_cloud_password;
-        let mongo_cloud_third_handle_url_part =
-            &CONFIG.mongo_params.mongo_cloud_third_handle_url_part;
+        let mongo_cloud_third_handle_url_part = &CONFIG
+            .mongo_params
+            .enable_mongo_cloud_url_parts
+            .mongo_cloud_third_handle_url_part;
         let mongo_cloud_cluster_name = &USER_CREDENTIALS
             .mongo_cloud_authorization
             .mongo_cloud_cluster_name;
-        let mongo_cloud_fourth_handle_url_part =
-            &CONFIG.mongo_params.mongo_cloud_fourth_handle_url_part;
+        let mongo_cloud_fourth_handle_url_part = &CONFIG
+            .mongo_params
+            .enable_mongo_cloud_url_parts
+            .mongo_cloud_fourth_handle_url_part;
         let mongo_cloud_cluster_params = &USER_CREDENTIALS
             .mongo_cloud_authorization
             .mongo_cloud_cluster_params;

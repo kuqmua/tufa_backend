@@ -57,10 +57,11 @@ enable_initialize_mongo_with_providers_link_parts = true
   mongo_own_third_handle_url_part = "@"
   mongo_own_fourth_handle_url_part = ":"
   # mongodb+srv://login:password@db-name.some_random_hash.mongodb.net/cluster_params
-  mongo_cloud_first_handle_url_part = "mongodb+srv://"
-  mongo_cloud_second_handle_url_part = ":"
-  mongo_cloud_third_handle_url_part = "@"
-  mongo_cloud_fourth_handle_url_part = "/"
+  [mongo_params.enable_mongo_cloud_url_parts]
+    mongo_cloud_first_handle_url_part = "mongodb+srv://"
+    mongo_cloud_second_handle_url_part = ":"
+    mongo_cloud_third_handle_url_part = "@"
+    mongo_cloud_fourth_handle_url_part = "/"
   [mongo_params.enable_initialize_mongo_with_providers_link_parts]
     enable_initialize_mongo_with_arxiv_link_parts = true
     enable_initialize_mongo_with_biorxiv_link_parts = true
