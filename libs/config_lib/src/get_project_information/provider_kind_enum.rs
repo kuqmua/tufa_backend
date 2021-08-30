@@ -1,5 +1,22 @@
+use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+use procedural_macros_lib::EnumVariantCount;
+
 #[derive(
-    Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize, PartialEq, Eq, Hash, Copy,
+    EnumVariantCount,
+    Clone,
+    Debug,
+    serde_derive::Serialize,
+    serde_derive::Deserialize,
+    PartialEq,
+    Eq,
+    Hash,
+    Copy,
 )]
 pub enum ProviderKind {
     Arxiv,
@@ -9,5 +26,20 @@ pub enum ProviderKind {
     Medrxiv,
     Reddit,
     Twitter,
+}
+
+impl ProviderKind {
+    pub fn get_string_name(provider_kind_enum_type: ProviderKind) -> String {
+        println!("lennnn {}", LENGTH);
+        match provider_kind_enum_type {
+            ProviderKind::Arxiv => ARXIV_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Biorxiv => BIORXIV_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Github => GITHUB_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Habr => HABR_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Medrxiv => MEDRXIV_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Reddit => REDDIT_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Twitter => TWITTER_NAME_TO_CHECK.to_owned(),
+        }
+    }
 }
 //todo: maybe use it like that Arxiv { string_name: "arxiv"} ?
