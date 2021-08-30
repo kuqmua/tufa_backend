@@ -29,6 +29,12 @@ cargo run --bin write_post <br/>
 cargo run --bin publish_post 1 <br/>
 cargo run --bin show_posts <br/>
 cargo run --bin delete_post (post name)
+
+### create another rust lib
+cd libs
+cargo new example_lib --lib
+
+
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
