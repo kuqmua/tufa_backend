@@ -30,6 +30,7 @@ providers_info_lib = { path = "./libs/providers_info_lib" }
 prints_lib = { path = "./libs/prints_lib" }
 mongo_integration = { path = "./libs/mongo_integration" }#maybe remove it later into wrapper library
 postgres_integration = { path = "./libs/postgres_integration" }
+helpers_lib = { path = "./libs/helpers_lib" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
