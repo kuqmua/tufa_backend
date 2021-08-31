@@ -1,7 +1,7 @@
 use serde_json::Value;
 
-use crate::helpers::json_to_string::json_to_string;
 use crate::helpers::write_string_into_file::write_string_into_file;
+use helpers_lib::json_to_string::json_to_string;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn write_json_into_file(path_to_file: String, json_object: Value) -> bool {
