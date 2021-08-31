@@ -30,7 +30,6 @@ pub enum ProviderKind {
 
 impl ProviderKind {
     pub fn get_string_name(provider_kind_enum_type: ProviderKind) -> String {
-        println!("lennnn {}", LENGTH);
         match provider_kind_enum_type {
             ProviderKind::Arxiv => ARXIV_NAME_TO_CHECK.to_owned(),
             ProviderKind::Biorxiv => BIORXIV_NAME_TO_CHECK.to_owned(),
@@ -41,5 +40,7 @@ impl ProviderKind {
             ProviderKind::Twitter => TWITTER_NAME_TO_CHECK.to_owned(),
         }
     }
+    pub fn get_length() -> usize {
+        PROVIDER_KIND_ENUM_LENGTH
+    }
 }
-//todo: maybe use it like that Arxiv { string_name: "arxiv"} ?

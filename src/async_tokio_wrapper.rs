@@ -25,10 +25,8 @@ use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_da
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    let s = ProviderKind::Arxiv;
-    config_lib::get_project_information::provider_kind_enum::ProviderKind::get_string_name(
-        ProviderKind::Arxiv,
-    );
+    let g = ProviderKind::get_length();
+    println!("gggg {}", g);
     if CONFIG
         .params
         .enable_initialize_mongo_with_providers_link_parts
