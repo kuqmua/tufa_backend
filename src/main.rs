@@ -47,9 +47,6 @@ mod authorization {
         pub mod reddit_authorization;
     }
 }
-mod helpers {
-    pub mod write_json_into_file;
-}
 
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
