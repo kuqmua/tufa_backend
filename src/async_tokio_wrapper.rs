@@ -17,7 +17,6 @@ use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
-use config_lib::get_project_information::provider_kind_enum::dosmthng;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use config_lib::get_project_information::project_constants::get_mongo_url;
@@ -26,9 +25,10 @@ use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_da
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    dosmthng();
-    let g = ProviderKind::get_length();
-    println!("gggg {}", g);
+    let s = ProviderKind::get_length();
+    let b = ProviderKind::get_provider_kind_vec();
+    println!("gggg {}", s);
+    println!("bbbb {:?}", b);
     if CONFIG
         .params
         .enable_initialize_mongo_with_providers_link_parts
