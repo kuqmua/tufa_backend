@@ -11,4 +11,6 @@ lazy_static = "1.4"
 config = "0.10"
 serde_derive = "1.0"
 serde = "1.0"
+strum = "0.17.1"
+strum_macros = "0.17.1"
 procedural_macros_lib = { path = "../procedural_macros_lib" }
