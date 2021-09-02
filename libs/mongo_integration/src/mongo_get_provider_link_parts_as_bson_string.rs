@@ -23,7 +23,6 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
     provider_kind: ProviderKind,
 ) -> Result<Vec<String>, mongodb::error::Error> {
     //todo maybe option vec string
-    let cloned_config = CONFIG.clone(); //todo maybe later remove clone somehow??
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client_result = Client::with_options(client_options);
     let vec_of_strings_to_return: Vec<String>;
@@ -63,7 +62,6 @@ pub async fn mongo_get_provider_link_parts_as_bson_string(
                                         }
                                     } else {
                                         option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
-                                                    cloned_config,
                                                     provider_kind
                                         );
                                     }

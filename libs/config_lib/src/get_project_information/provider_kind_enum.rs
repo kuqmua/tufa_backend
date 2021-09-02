@@ -1,3 +1,4 @@
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
@@ -53,5 +54,16 @@ impl ProviderKind {
             provider_kind_vec.push(provider_kind);
         }
         provider_kind_vec
+    }
+    pub fn get_links_limit_for_provider(provider_kind: ProviderKind) -> i64 {
+        match provider_kind {
+            ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.providers_links_limits.links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.providers_links_limits.links_limit_for_github,
+            ProviderKind::Habr => CONFIG.providers_links_limits.links_limit_for_habr,
+            ProviderKind::Medrxiv => CONFIG.providers_links_limits.links_limit_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
+            ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
+        }
     }
 }
