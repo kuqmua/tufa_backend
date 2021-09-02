@@ -306,3 +306,8 @@ add bool or option return type to create_dir_if_dont_exists. maybe it would be r
 std::path::PathBuf instead if string in path to file logic
 <br/>
 
+### -------------------
+CONFIG.params.vec_of_provider_names
+check it for unique in config new function
+<br/>
+
