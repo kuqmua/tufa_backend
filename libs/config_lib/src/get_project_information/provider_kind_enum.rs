@@ -34,15 +34,15 @@ pub enum ProviderKind {
 }
 
 impl ProviderKind {
-    pub fn get_string_name(provider_kind_enum_type: ProviderKind) -> String {
+    pub fn get_string_name(provider_kind_enum_type: ProviderKind) -> &'static str {
         match provider_kind_enum_type {
-            ProviderKind::Arxiv => ARXIV_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Biorxiv => BIORXIV_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Github => GITHUB_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Habr => HABR_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Medrxiv => MEDRXIV_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Reddit => REDDIT_NAME_TO_CHECK.to_owned(),
-            ProviderKind::Twitter => TWITTER_NAME_TO_CHECK.to_owned(),
+            ProviderKind::Arxiv => ARXIV_NAME_TO_CHECK,
+            ProviderKind::Biorxiv => BIORXIV_NAME_TO_CHECK,
+            ProviderKind::Github => GITHUB_NAME_TO_CHECK,
+            ProviderKind::Habr => HABR_NAME_TO_CHECK,
+            ProviderKind::Medrxiv => MEDRXIV_NAME_TO_CHECK,
+            ProviderKind::Reddit => REDDIT_NAME_TO_CHECK,
+            ProviderKind::Twitter => TWITTER_NAME_TO_CHECK,
         }
     }
     pub fn get_length() -> usize {
@@ -65,5 +65,14 @@ impl ProviderKind {
             ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
             ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
         }
+    }
+    pub fn is_provider_kind_string_exists(potential_provider_kind_string: &str) -> bool {
+        for provider_kind in ProviderKind::iter() {
+            let provider_kind_string = ProviderKind::get_string_name(provider_kind);
+            if provider_kind_string == potential_provider_kind_string {
+                return true;
+            }
+        }
+        false
     }
 }
