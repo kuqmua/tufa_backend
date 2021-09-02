@@ -312,3 +312,6 @@ check it for unique in config new function
 and zero length
 <br/>
 
+### -------------------
+if cannot connect to db then program do not ending. just waiting. find out why and fix it
+<br/>
