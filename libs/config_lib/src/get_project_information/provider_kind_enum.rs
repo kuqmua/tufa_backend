@@ -75,4 +75,26 @@ impl ProviderKind {
         }
         false
     }
+    pub fn get_provider_kind_array_from_string_vec(
+        providers_vec_of_strings: Vec<String>,
+    ) -> Vec<ProviderKind> {
+        let mut provider_kind_vec: Vec<ProviderKind> =
+            Vec::with_capacity(providers_vec_of_strings.len());
+        for potential_provider_string in providers_vec_of_strings {
+            match potential_provider_string.as_ref() {
+                ARXIV_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Arxiv),
+                BIORXIV_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Biorxiv),
+                GITHUB_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Github),
+                HABR_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Habr),
+                MEDRXIV_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Medrxiv),
+                REDDIT_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Reddit),
+                TWITTER_NAME_TO_CHECK => provider_kind_vec.push(ProviderKind::Twitter),
+                _ => {
+                    //todo: cannot use print_colorful_message coz cyclic package dependency with prints_lib
+                    panic!("potential_provider_string is not defined")
+                }
+            }
+        }
+        provider_kind_vec
+    }
 }

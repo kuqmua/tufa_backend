@@ -29,6 +29,10 @@ pub async fn async_tokio_wrapper() {
     let b = ProviderKind::get_provider_kind_vec();
     println!("gggg {}", s);
     println!("bbbb {:?}", b);
+    let veeeec = ProviderKind::get_provider_kind_array_from_string_vec(
+        CONFIG.params.vec_of_provider_names.clone(),
+    );
+    println!("veeeec {:?}", veeeec);
     if CONFIG
         .params
         .enable_initialize_mongo_with_providers_link_parts
