@@ -309,5 +309,6 @@ std::path::PathBuf instead if string in path to file logic
 ### -------------------
 CONFIG.params.vec_of_provider_names
 check it for unique in config new function
+and zero length
 <br/>
 
