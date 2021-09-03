@@ -29,6 +29,7 @@ pub mod get_project_information {
         pub mod structures_implementations {
             pub mod config_struct_impl {
                 pub mod check_valid_i64_providers_links_limits_for_mongo_impl;
+                mod check_valid_vec_of_provider_names;
                 pub mod new_impl;
                 pub mod wrap_config_checks_impl;
             }
