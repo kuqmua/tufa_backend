@@ -307,11 +307,10 @@ std::path::PathBuf instead if string in path to file logic
 <br/>
 
 ### -------------------
-CONFIG.params.vec_of_provider_names
-check it for unique in config new function
-and zero length
+if cannot connect to db then program do not ending. just waiting. find out why and fix it
 <br/>
 
 ### -------------------
-if cannot connect to db then program do not ending. just waiting. find out why and fix it
+add area of visibility / scope like this for all private functions/methonds
+pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl)
 <br/>
