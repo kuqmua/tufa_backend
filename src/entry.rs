@@ -25,20 +25,20 @@ pub fn entry() {
     println!("ENV: {}", CONFIG.env);
     let enable_common_time_measurement = CONFIG.params.enable_time_measurement; //need to be different variable cuz move happpens
     if check_link(
-        &CONFIG.providers_check_links.starting_check_link,
+        &CONFIG.params.starting_check_link,
         CONFIG.params.enable_error_prints,
     )
     .0
     {
         if CONFIG.params.enable_prints {
             let its_all_good_message =
-                "server can reach ".to_string() + &CONFIG.providers_check_links.starting_check_link;
+                "server can reach ".to_string() + &CONFIG.params.starting_check_link;
             println!("{}", its_all_good_message);
         }
         async_tokio_wrapper();
     } else if CONFIG.params.enable_error_prints {
         let warning_high_message =
-            "server cannot reach ".to_string() + &CONFIG.providers_check_links.starting_check_link;
+            "server cannot reach ".to_string() + &CONFIG.params.starting_check_link;
         print_colorful_message(
             None,
             PrintType::Error,

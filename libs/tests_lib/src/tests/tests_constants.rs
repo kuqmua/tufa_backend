@@ -5,6 +5,7 @@ pub static VECTOR_OF_MODES: &[&str] = &["Development", "Production", "Testing"];
 pub const CONFIG_CONTENT: &str = r#"[params]
 vec_of_provider_names = ["arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter"]
 #it can be only one of them: "arxiv", "biorxiv", "github", "habr", "medrxiv", "reddit", "twitter" - check project_constants.rs
+starting_check_link = "https://www.google.com/"
 user_credentials_dummy_handle = "example"
 warning_logs_directory_name = "warning_logs"
 unhandled_success_handled_success_are_there_items_initialized_posts_dir = "unhandled_success_handled_success_are_there_items_initialized_posts"
@@ -90,7 +91,6 @@ enable_reddit = false
 enable_twitter = true
 
 [providers_check_links]
-starting_check_link = "https://www.google.com/"
 arxiv_link = "https://www.google.com/" # https://arxiv.org/   http://export.arxiv.org/rss/   http://export.arxiv.org/rss/astro-ph.CO
 biorxiv_link = "https://www.google.com/" # http://connect.biorxiv.org/
 github_link = "https://github.com"

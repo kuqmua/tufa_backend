@@ -1,6 +1,7 @@
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Params {
     pub vec_of_provider_names: Vec<String>,
+    pub starting_check_link: String,
     pub user_credentials_dummy_handle: String, //for ci tests
     pub warning_logs_directory_name: String,
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
