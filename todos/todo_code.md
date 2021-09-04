@@ -280,20 +280,6 @@ Make fields private and use get/set. Check strings too
 <br/>
 
 ### -------------------
-pub struct Links {
-    pub starting_check_link: String,
-    pub arxiv_link: String,
-    pub biorxiv_link: String,
-    pub github_link: String,
-    pub habr_link: String,
-    pub medrxiv_link: String,
-    pub reddit_link: String,
-    pub twitter_link: String,
-}
-into ProviderLinks and params.starting_check_link
-<br/>
-
-### -------------------
 //todo write into mongo collection and create flag where to write logs
 rss_write_error_logs_into_file_for_provider(file_name, json_object);
 <br/>
