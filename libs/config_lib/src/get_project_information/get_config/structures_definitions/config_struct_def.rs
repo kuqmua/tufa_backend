@@ -1,6 +1,6 @@
 use crate::get_project_information::get_config::structures_definitions::enable_providers_def::EnableProviders;
 use crate::get_project_information::get_config::structures_definitions::enable_providers_prints_def::EnableProvidersPrints;
-use crate::get_project_information::get_config::structures_definitions::links_def::Links;
+use crate::get_project_information::get_config::structures_definitions::providers_check_links_def::ProvidersCheckLinks;
 use crate::get_project_information::get_config::structures_definitions::mongo_params_def::MongoParams;
 use crate::get_project_information::get_config::structures_definitions::postgres_params_def::PostgresParams;
 use crate::get_project_information::get_config::structures_definitions::enable_error_providers_prints_def::EnableErrorProvidersPrints;
@@ -25,7 +25,7 @@ pub struct ConfigStruct {
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,
     pub enable_providers: EnableProviders,
-    pub links: Links,
+    pub providers_check_links: ProvidersCheckLinks,
     pub enable_providers_prints: EnableProvidersPrints,
     pub enable_warning_high_providers_prints: EnableWarningHighProvidersPrints, //todo maybe rename it into  EnableWarningHighPrintsForProviders
     pub enable_warning_low_providers_prints: EnableWarningLowProvidersPrints,

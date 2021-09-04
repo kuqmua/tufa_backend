@@ -85,7 +85,7 @@ enable_medrxiv = false
 enable_reddit = false
 enable_twitter = true
 
-[links]
+[providers_check_links]
 starting_check_link = "https://www.google.com/"
 arxiv_link = "https://www.google.com/" # https://arxiv.org/   http://export.arxiv.org/rss/   http://export.arxiv.org/rss/astro-ph.CO
 biorxiv_link = "https://www.google.com/" # http://connect.biorxiv.org/
