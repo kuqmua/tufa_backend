@@ -4,6 +4,7 @@ use crate::get_project_information::get_config::get_lazy_config_information::CON
 use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
+pub const MODE_ENV_NAME: &str = "RUN_ENV";
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "сan not load config file";
 pub const PATH_TO_CONFIG: &str = "./config/";

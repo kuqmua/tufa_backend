@@ -1,4 +1,5 @@
 use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
+use crate::get_project_information::project_constants::MODE_ENV_NAME;
 use crate::get_project_information::project_constants::PROJECT_MODE;
 
 use config::{Config, ConfigError, File};
@@ -10,14 +11,14 @@ impl ConfigStruct {
             mode_string = mode.to_string();
         } else {
             //(working only from console like "ENV_NAME=value cargo run")
-            match std::env::var("RUN_ENV") {
+            match std::env::var(MODE_ENV_NAME) {
                 Ok(mode) => {
                     mode_string = mode;
                 }
                 Err(e) => {
                     println!(
-                        "std::env::var(\"RUN_ENV\") failed, using {} instead error: {:#?}",
-                        PROJECT_MODE, e
+                        "std::env::var(\"{}\") failed, using {} instead error: {:#?}",
+                        MODE_ENV_NAME, PROJECT_MODE, e
                     );
                     mode_string = PROJECT_MODE.into();
                 }
