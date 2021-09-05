@@ -5,7 +5,6 @@ use config::{Config, ConfigError, File};
 
 impl ConfigStruct {
     pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
-        println!("test");
         let mode_string: String;
         if let Some(mode) = mode_handler {
             mode_string = mode.to_string();
