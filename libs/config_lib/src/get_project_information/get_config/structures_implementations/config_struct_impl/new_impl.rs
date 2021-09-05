@@ -10,6 +10,7 @@ impl ConfigStruct {
         path_to_config: &str,
     ) -> Result<Self, ConfigError> {
         match mode_handler {
+            //todo: write common function
             Some(mode) => {
                 //for tests - maybe remove and copy code for testing later but its more comfortable for now
                 let mut config = Config::new();
@@ -23,13 +24,43 @@ impl ConfigStruct {
                                     Ok(config_handle) => {
                                         ConfigStruct::wrap_config_checks(&self, config_handle)
                                     }
-                                    Err(e) => Err(e),
+                                    Err(e) => {
+                                        //cannot use print_colorful_message coz circular dependency
+                                        println!(
+                                            "{}{}\nconfig.try_into error: {:#?}",
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            e
+                                        );
+                                        Err(e)
+                                    }
                                 }
                             }
-                            Err(e) => Err(e),
+                            Err(e) => {
+                                //cannot use print_colorful_message coz circular dependency
+                                println!(
+                                    "{}{}\nconfig.merge(File::with_name({}{})) error: {:#?}",
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    path_to_config,
+                                    mode,
+                                    e
+                                );
+                                Err(e)
+                            }
                         }
                     }
-                    Err(e) => Err(e),
+                    Err(e) => {
+                        //cannot use print_colorful_message coz circular dependency
+                        println!(
+                            "{}{}\nconfig.set(\"env\", {}) error: {:#?}",
+                            file!().to_string(),
+                            line!().to_string(),
+                            mode,
+                            e
+                        );
+                        Err(e)
+                    }
                 }
             }
             None => {
@@ -45,13 +76,42 @@ impl ConfigStruct {
                                     Ok(config_handle) => {
                                         ConfigStruct::wrap_config_checks(&self, config_handle)
                                     }
-                                    Err(e) => Err(e),
+                                    Err(e) => {
+                                        //cannot use print_colorful_message coz circular dependency
+                                        println!(
+                                            "{}{}\nconfig.try_into error: {:#?}",
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            e
+                                        );
+                                        Err(e)
+                                    }
                                 }
                             }
-                            Err(e) => Err(e),
+                            Err(e) => {
+                                //cannot use print_colorful_message coz circular dependency
+                                println!(
+                                    "{}{}\nconfig.merge(File::with_name({})) error: {:#?}",
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    path_to_config,
+                                    e
+                                );
+                                Err(e)
+                            }
                         }
                     }
-                    Err(e) => Err(e),
+                    Err(e) => {
+                        //cannot use print_colorful_message coz circular dependency
+                        println!(
+                            "{}{}\nconfig.set(\"env\", {}) error: {:#?}",
+                            file!().to_string(),
+                            line!().to_string(),
+                            env,
+                            e
+                        );
+                        Err(e)
+                    }
                 }
             }
         }
