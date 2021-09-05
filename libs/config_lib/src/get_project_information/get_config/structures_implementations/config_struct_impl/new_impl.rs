@@ -4,7 +4,11 @@ use crate::get_project_information::project_constants::PROJECT_MODE;
 use config::{Config, ConfigError, File};
 
 impl ConfigStruct {
-    pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
+    pub fn new(
+        &self,
+        mode_handler: Option<&str>,
+        path_to_config: &str,
+    ) -> Result<Self, ConfigError> {
         match mode_handler {
             Some(mode) => {
                 //for tests - maybe remove and copy code for testing later but its more comfortable for now
@@ -17,7 +21,7 @@ impl ConfigStruct {
                                 let config_result: Result<Self, ConfigError> = config.try_into();
                                 match config_result {
                                     Ok(config_handle) => {
-                                        ConfigStruct::wrap_config_checks(config_handle)
+                                        ConfigStruct::wrap_config_checks(&self, config_handle)
                                     }
                                     Err(e) => Err(e),
                                 }
@@ -39,7 +43,7 @@ impl ConfigStruct {
                                 let config_result: Result<Self, ConfigError> = config.try_into();
                                 match config_result {
                                     Ok(config_handle) => {
-                                        ConfigStruct::wrap_config_checks(config_handle)
+                                        ConfigStruct::wrap_config_checks(&self, config_handle)
                                     }
                                     Err(e) => Err(e),
                                 }

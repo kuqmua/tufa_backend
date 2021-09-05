@@ -2,7 +2,7 @@ use crate::get_project_information::get_config::structures_definitions::config_s
 use config::ConfigError;
 
 impl ConfigStruct {
-    pub fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+    pub fn wrap_config_checks(&self, config_handle: ConfigStruct) -> Result<Self, ConfigError> {
         if config_handle.mongo_params.log_file_extension.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "config_handle.mongo_params.log_file_extension is not empty".to_string(),
@@ -86,13 +86,12 @@ impl ConfigStruct {
             ));
             drop(error);
         }
-        if !ConfigStruct::check_valid_vec_of_provider_names(&config_handle) {
+        if !self.check_valid_vec_of_provider_names(&config_handle) {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "vec_of_provider_names is not valid".to_string(),
             ));
             drop(error);
         }
-        // CONFIG.params.vec_of_provider_names
         Ok(config_handle)
     }
 }
