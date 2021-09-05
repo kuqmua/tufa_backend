@@ -300,3 +300,7 @@ if cannot connect to db then program do not ending. just waiting. find out why a
 add area of visibility / scope like this for all private functions/methonds
 pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl)
 <br/>
+
+### -------------------
+//todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
+<br/>
