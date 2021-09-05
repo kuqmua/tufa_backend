@@ -9,7 +9,20 @@ impl ConfigStruct {
         if let Some(mode) = mode_handler {
             mode_string = mode.to_string();
         } else {
-            mode_string = std::env::var("RUN_ENV").unwrap_or_else(|_| PROJECT_MODE.into());
+            //(working only from console like "ENV_NAME=value cargo run")
+            match std::env::var("RUN_ENV") {
+                Ok(mode) => {
+                    mode_string = mode;
+                }
+                Err(e) => {
+                    println!(
+                        "std::env::var(\"RUN_ENV\") failed, using {} instead error: {:#?}",
+                        PROJECT_MODE, e
+                    );
+                    mode_string = PROJECT_MODE.into();
+                }
+            }
+            println!("mode: {}", mode_string);
         }
         let mut config = Config::new();
         match config.set("env", mode_string.clone()) {
