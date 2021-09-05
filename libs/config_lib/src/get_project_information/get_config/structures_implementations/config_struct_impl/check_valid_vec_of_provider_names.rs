@@ -13,7 +13,6 @@ use itertools::Itertools;
 impl ConfigStruct {
     //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
     pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl) fn check_valid_vec_of_provider_names(
-        &self,
         config_handle: &ConfigStruct,
     ) -> bool {
         if config_handle.params.vec_of_provider_names.len() == 0 {

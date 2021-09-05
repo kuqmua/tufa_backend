@@ -4,7 +4,6 @@ use config::ConfigError;
 impl ConfigStruct {
     //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
     pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl) fn wrap_config_checks(
-        &self,
         config_handle: ConfigStruct,
     ) -> Result<Self, ConfigError> {
         if config_handle.mongo_params.log_file_extension.is_empty() {
@@ -84,13 +83,13 @@ impl ConfigStruct {
             ));
             drop(error);
         }
-        if !self.check_valid_i64_providers_links_limits_for_mongo(&config_handle) {
+        if !ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle) {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "providers_links_limits are not valid".to_string(),
             ));
             drop(error);
         }
-        if !self.check_valid_vec_of_provider_names(&config_handle) {
+        if !ConfigStruct::check_valid_vec_of_provider_names(&config_handle) {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "vec_of_provider_names is not valid".to_string(),
             ));

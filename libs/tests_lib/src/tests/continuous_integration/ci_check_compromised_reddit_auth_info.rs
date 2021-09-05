@@ -14,9 +14,8 @@ fn ci_check_compromised_reddit_auth_info() {
         UserCredentialsStruct::new(PATH_TO_CONFIG_FOR_TEST)
             .expect(LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE);
     for mode in VECTOR_OF_MODES {
-        let config_for_test: ConfigStruct =
-            ConfigStruct::new(&config_for_test, Some(*mode), PATH_TO_CONFIG_FOR_TEST)
-                .expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
+        let config_for_test: ConfigStruct = ConfigStruct::new(Some(*mode), PATH_TO_CONFIG_FOR_TEST)
+            .expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let reddit_user_agent = &user_credentials_for_test
             .reddit_authorization
             .reddit_user_agent;

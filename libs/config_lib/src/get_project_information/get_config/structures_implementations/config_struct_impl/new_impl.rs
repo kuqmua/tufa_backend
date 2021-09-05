@@ -75,11 +75,7 @@ use crate::get_project_information::project_constants::PROJECT_MODE;
 use config::{Config, ConfigError, File};
 
 impl ConfigStruct {
-    pub fn new(
-        &self,
-        mode_handler: Option<&str>,
-        path_to_config: &str,
-    ) -> Result<Self, ConfigError> {
+    pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
         match mode_handler {
             //todo: write common function
             Some(mode) => {
@@ -93,7 +89,7 @@ impl ConfigStruct {
                                 let config_result: Result<Self, ConfigError> = config.try_into();
                                 match config_result {
                                     Ok(config_handle) => {
-                                        ConfigStruct::wrap_config_checks(&self, config_handle)
+                                        ConfigStruct::wrap_config_checks(config_handle)
                                     }
                                     Err(e) => {
                                         //cannot use print_colorful_message coz circular dependency
@@ -145,7 +141,7 @@ impl ConfigStruct {
                                 let config_result: Result<Self, ConfigError> = config.try_into();
                                 match config_result {
                                     Ok(config_handle) => {
-                                        ConfigStruct::wrap_config_checks(&self, config_handle)
+                                        ConfigStruct::wrap_config_checks(config_handle)
                                     }
                                     Err(e) => {
                                         //cannot use print_colorful_message coz circular dependency

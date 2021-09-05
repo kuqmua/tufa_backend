@@ -3,7 +3,6 @@ use crate::get_project_information::get_config::structures_definitions::config_s
 impl ConfigStruct {
     //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
     pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl) fn check_valid_i64_providers_links_limits_for_mongo(
-        &self,
         config_handle: &ConfigStruct,
     ) -> bool {
         let mut checker = true;
