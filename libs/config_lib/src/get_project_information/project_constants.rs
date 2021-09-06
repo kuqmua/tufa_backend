@@ -45,7 +45,7 @@ pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "         ";
 pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 
-// pub const DEVELOPMENT_MODE_NAME: &str = "Development"; //later as ENV variable only
+pub const PROJECT_MODES: [&str; 3] = ["Development", "Production", "Testing"];
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_mongo_url() -> String {

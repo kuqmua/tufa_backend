@@ -1,6 +1,6 @@
 use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
 use crate::get_project_information::project_constants::MODE_ENV_NAME;
-// use crate::get_project_information::project_constants::PROJECT_MODE;
+use crate::get_project_information::project_constants::PROJECT_MODES;
 
 use config::{Config, ConfigError, File};
 
@@ -18,7 +18,21 @@ impl ConfigStruct {
                     //working from console like "ENV_NAME=value cargo run" and from .env file
                     match std::env::var(MODE_ENV_NAME) {
                         Ok(mode) => {
-                            mode_string = mode;
+                            let mut check: bool = false;
+                            for project_mode in PROJECT_MODES {
+                                if project_mode == &mode {
+                                    check = true;
+                                    break;
+                                }
+                            }
+                            if check {
+                                mode_string = mode;
+                            } else {
+                                return Err(ConfigError::Message(format!(
+                                    "no such project_mode: {}",
+                                    mode
+                                )));
+                            }
                         }
                         Err(e) => {
                             return Err(ConfigError::Message(format!(
@@ -36,7 +50,21 @@ impl ConfigStruct {
                     //working from console like "ENV_NAME=value cargo run" and from .env file
                     match std::env::var(MODE_ENV_NAME) {
                         Ok(mode) => {
-                            mode_string = mode;
+                            let mut check: bool = false;
+                            for project_mode in PROJECT_MODES {
+                                if project_mode == &mode {
+                                    check = true;
+                                    break;
+                                }
+                            }
+                            if check {
+                                mode_string = mode;
+                            } else {
+                                return Err(ConfigError::Message(format!(
+                                    "no such project_mode: {}",
+                                    mode
+                                )));
+                            }
                         }
                         Err(e) => {
                             return Err(ConfigError::Message(format!(
