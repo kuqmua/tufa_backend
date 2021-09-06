@@ -1,8 +1,10 @@
 use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
 use crate::get_project_information::project_constants::MODE_ENV_NAME;
-use crate::get_project_information::project_constants::PROJECT_MODE;
+// use crate::get_project_information::project_constants::PROJECT_MODE;
 
 use config::{Config, ConfigError, File};
+
+use dotenv::dotenv;
 
 impl ConfigStruct {
     pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
@@ -10,21 +12,43 @@ impl ConfigStruct {
         if let Some(mode) = mode_handler {
             mode_string = mode.to_string();
         } else {
-            //(working only from console like "ENV_NAME=value cargo run")
-            match std::env::var(MODE_ENV_NAME) {
-                Ok(mode) => {
-                    mode_string = mode;
+            let dotenv_result = dotenv();
+            match dotenv_result {
+                Ok(_) => {
+                    //working from console like "ENV_NAME=value cargo run" and from .env file
+                    match std::env::var(MODE_ENV_NAME) {
+                        Ok(mode) => {
+                            mode_string = mode;
+                        }
+                        Err(e) => {
+                            return Err(ConfigError::Message(format!(
+                            "std::env::var(\"{}\") failed for console and .env file, error: {:#?}",
+                            MODE_ENV_NAME, e
+                        )))
+                        }
+                    }
                 }
                 Err(e) => {
                     println!(
-                        "std::env::var(\"{}\") failed, using {} instead error: {:#?}",
-                        MODE_ENV_NAME, PROJECT_MODE, e
+                        "dotenv() failed, trying to get MODE_ENV_NAME from console, error: {:#?}",
+                        e
                     );
-                    mode_string = PROJECT_MODE.into();
+                    //working from console like "ENV_NAME=value cargo run" and from .env file
+                    match std::env::var(MODE_ENV_NAME) {
+                        Ok(mode) => {
+                            mode_string = mode;
+                        }
+                        Err(e) => {
+                            return Err(ConfigError::Message(format!(
+                            "std::env::var(\"{}\") failed for console and .env file, error: {:#?}",
+                            MODE_ENV_NAME, e
+                        )))
+                        }
+                    }
                 }
             }
-            println!("mode: {}", mode_string);
         }
+        println!("mode: {}", mode_string);
         let mut config = Config::new();
         match config.set("env", mode_string.clone()) {
             Ok(config_set_env_ok) => {

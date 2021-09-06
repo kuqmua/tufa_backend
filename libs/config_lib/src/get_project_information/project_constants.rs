@@ -4,12 +4,11 @@ use crate::get_project_information::get_config::get_lazy_config_information::CON
 use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-pub const MODE_ENV_NAME: &str = "RUN_ENV";
+pub const MODE_ENV_NAME: &str = "PROJECT_RUN_MODE";
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "сan not load config file";
 pub const PATH_TO_CONFIG: &str = "./config/";
 pub const PATH_TO_CONFIG_FOR_TEST: &str = "../../config/";
-pub const PROJECT_MODE: &str = "Development"; //later as ENV variable only
 pub const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
 pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
@@ -45,6 +44,8 @@ pub const HABR_FILTER_HANDLE_TO_REMOVE_1: &str = "<channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "         ";
 pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
+
+// pub const DEVELOPMENT_MODE_NAME: &str = "Development"; //later as ENV variable only
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_mongo_url() -> String {

@@ -14,4 +14,5 @@ serde = "1.0"
 strum = "0.21"
 strum_macros = "0.21"
 itertools = "0.10.1"
+dotenv = "0.15.0"
 procedural_macros_lib = { path = "../procedural_macros_lib" }
