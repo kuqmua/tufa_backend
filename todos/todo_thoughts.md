@@ -100,10 +100,6 @@ impl UserCredentialsStruct {
 <br/>
 
 ### -------------------
-why hashmap['key'] do not return Result ?????7  maybe switch to stable instead of nightly
-<br/>
-
-### -------------------
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
     Finished dev [unoptimized + debuginfo] target(s) in 0.10s
@@ -150,6 +146,7 @@ wildcard requirements
 
 ### -------------------
 different user_credentials files for project databases and providers
+Move all from user_credentials into .env file
 <br/>
 
 ### -------------------
@@ -177,10 +174,6 @@ AVIF imag format in some cases better than webp, png and jpeg
 <br/>
 
 ### -------------------
-todo files folder
-<br/>
-
-### -------------------
 clippy rust flags (can use deny for them - code would be more safe)
 https://efanzh.org/2021/05/25/rust-lints.html
 <br/>
@@ -192,7 +185,7 @@ https://www.youtube.com/watch?v=D97rnxDqq1I
 
 ### -------------------
 #[deny(clippy::unwrap_used)]
-is it triggers for all async functions? or only for tokio?
+Find out why its triggers for tokio:main functions
 <br/>
 
 ### -------------------
