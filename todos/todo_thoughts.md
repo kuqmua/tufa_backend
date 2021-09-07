@@ -202,11 +202,6 @@ rewrite something with "from" and "into" traits
 ### -------------------
 check rust-analyzer flags to enable
 <br/>
-
-### -------------------
-reorganize config to toml objects(key value)?
-https://parsetoml.readthedocs.io/en/latest/access.html
-<br/>
     
 ### -------------------
 "Rust Doc Viewer" vscode extension
