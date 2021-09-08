@@ -34,3 +34,7 @@ test what check commit name for only eng symbols
 #[should_panic(expected = "99")]
 write some tests with with macro
 <br/>
+
+### -------------------
+Right test what parse repo code and check what each function returns some type or enum
+<br/>
