@@ -304,3 +304,8 @@ pub(in crate::get_project_information::get_config::structures_implementations::c
 ### -------------------
 //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
 <br/>
+
+### -------------------
+https://github.com/rust-cv
+rust image detection libs/crates
+<br/>
