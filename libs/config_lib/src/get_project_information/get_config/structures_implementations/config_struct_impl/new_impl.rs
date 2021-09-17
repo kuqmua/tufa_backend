@@ -1,5 +1,5 @@
 use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
-use crate::get_project_information::project_constants::MODE_ENV_NAME;
+use crate::get_project_information::project_constants::MODE_NAME_ENV_NAME;
 use crate::get_project_information::project_constants::PROJECT_MODES;
 
 use config::{Config, ConfigError, File};
@@ -16,7 +16,7 @@ impl ConfigStruct {
             match dotenv_result {
                 Ok(_) => {
                     //working from console like "ENV_NAME=value cargo run" and from .env file
-                    match std::env::var(MODE_ENV_NAME) {
+                    match std::env::var(MODE_NAME_ENV_NAME) {
                         Ok(mode) => {
                             let mut check: bool = false;
                             for project_mode in PROJECT_MODES {
@@ -37,18 +37,18 @@ impl ConfigStruct {
                         Err(e) => {
                             return Err(ConfigError::Message(format!(
                             "std::env::var(\"{}\") failed for console and .env file, error: {:#?}",
-                            MODE_ENV_NAME, e
+                            MODE_NAME_ENV_NAME, e
                         )))
                         }
                     }
                 }
                 Err(e) => {
                     println!(
-                        "dotenv() failed, trying to get MODE_ENV_NAME from console, error: {:#?}",
+                        "dotenv() failed, trying to get MODE_NAME_ENV_NAME from console, error: {:#?}",
                         e
                     );
                     //working from console like "ENV_NAME=value cargo run" and from .env file
-                    match std::env::var(MODE_ENV_NAME) {
+                    match std::env::var(MODE_NAME_ENV_NAME) {
                         Ok(mode) => {
                             let mut check: bool = false;
                             for project_mode in PROJECT_MODES {
@@ -69,7 +69,7 @@ impl ConfigStruct {
                         Err(e) => {
                             return Err(ConfigError::Message(format!(
                             "std::env::var(\"{}\") failed for console and .env file, error: {:#?}",
-                            MODE_ENV_NAME, e
+                            MODE_NAME_ENV_NAME, e
                         )))
                         }
                     }

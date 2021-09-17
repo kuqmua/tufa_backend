@@ -4,7 +4,32 @@ use crate::get_project_information::get_config::get_lazy_config_information::CON
 use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-pub const MODE_ENV_NAME: &str = "PROJECT_RUN_MODE";
+pub const MODE_NAME_ENV_NAME: &str = "PROJECT_RUN_MODE";
+
+pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
+pub const GITHUB_TOKEN_ENV_NAME: &str = "GITHUB_TOKEN";
+
+pub const REDDIT_USER_AGENT_ENV_NAME: &str = "REDDIT_USER_AGENT";
+pub const REDDIT_CLIENT_ID_ENV_NAME: &str = "REDDIT_CLIENT_ID";
+pub const REDDIT_CLIENT_SECRET_ENV_NAME: &str = "REDDIT_CLIENT_SECRET";
+pub const REDDIT_USERNAME_ENV_NAME: &str = "REDDIT_USERNAME";
+pub const REDDIT_PASSWORD_ENV_NAME: &str = "REDDIT_PASSWORD";
+
+pub const MONGO_OWN_LOGIN_ENV_NAME: &str = "MONGO_OWN_LOGIN";
+pub const MONGO_OWN_PASSWORD_ENV_NAME: &str = "MONGO_OWN_PASSWORD";
+pub const MONGO_OWN_IP_ENV_NAME: &str = "MONGO_OWN_IP";
+pub const MONGO_OWN_PORT_ENV_NAME: &str = "MONGO_OWN_PORT";
+
+pub const MONGO_CLOUD_LOGIN_ENV_NAME: &str = "MONGO_CLOUD_LOGIN";
+pub const MONGO_CLOUD_PASSWORD_ENV_NAME: &str = "MONGO_CLOUD_PASSWORD";
+pub const MONGO_CLOUD_CLUSTER_NAME_ENV_NAME: &str = "MONGO_CLOUD_CLUSTER_NAME";
+pub const MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME: &str = "MONGO_CLOUD_CLUSTER_PARAMS";
+
+pub const POSTGRES_OWN_LOGIN_ENV_NAME: &str = "POSTGRES_OWN_LOGIN";
+pub const POSTGRES_OWN_PASSWORD_ENV_NAME: &str = "POSTGRES_OWN_PASSWORD";
+pub const POSTGRES_OWN_IP_ENV_NAME: &str = "POSTGRES_OWN_IP";
+pub const POSTGRES_OWN_DB_ENV_NAME: &str = "POSTGRES_OWN_DB";
+
 pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "сan not load config file";
 pub const PATH_TO_CONFIG: &str = "./config/";
