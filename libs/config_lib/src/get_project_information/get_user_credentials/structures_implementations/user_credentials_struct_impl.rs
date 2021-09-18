@@ -28,14 +28,6 @@ use crate::get_project_information::get_user_credentials::structures_definitions
 
 use dotenv::dotenv;
 
-pub struct SomethingOne {
-    pub github_authorization: SomethingTwo,
-}
-
-pub struct SomethingTwo {
-    pub github_authorization: String,
-}
-
 impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
         //todo remove configError to just std::error
