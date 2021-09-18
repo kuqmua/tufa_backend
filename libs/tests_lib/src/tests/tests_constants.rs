@@ -27,6 +27,7 @@ enable_success_prints = true
 enable_partial_success_prints = true
 enable_time_measurement_prints = false
 enable_cleaning_warning_logs_directory_prints = true
+enable_info_prints = true
 enable_all_providers_prints = true
 enable_error_prints_for_all_providers = true
 enable_warning_high_prints_for_all_providers = true
@@ -35,12 +36,13 @@ enable_success_prints_for_all_providers = true
 enable_partial_success_prints_for_all_providers = true
 enable_time_measurement_prints_for_all_providers = true
 enable_cleaning_warning_logs_directory_prints_for_all_providers = true
+enable_info_prints_for_all_providers = true
 enable_write_error_logs_in_local_folder = false
 enable_write_error_logs_in_mongo = true
 enable_initialize_mongo_with_providers_link_parts = true
 
 [mongo_params]
-  is_cloud = false
+  is_cloud = true
   providers_db_name_handle = "provider_links" # rename this into providers_...
   providers_db_collection_handle_second_part = "_link_parts" # rename this into providers_...
   providers_db_collection_document_field_name_handle = "link_part" # rename this into providers_...
@@ -189,6 +191,15 @@ enable_time_measurement_for_medrxiv = true
 enable_time_measurement_for_reddit = true
 enable_time_measurement_for_twitter = true
 
+[enable_providers_info]
+enable_info_for_arxiv = true
+enable_info_for_biorxiv = true
+enable_info_for_github = true
+enable_info_for_habr = true
+enable_info_for_medrxiv = true
+enable_info_for_reddit = true
+enable_info_for_twitter = true
+
 [enable_providers_links_limits]
 enable_links_limit_for_arxiv = true
 enable_links_limit_for_biorxiv = true
@@ -237,7 +248,11 @@ cleaning_green = 234 # u8
 cleaning_blue = 255 # u8
 time_measurement_red = 255 # u8
 time_measurement_green = 153 # u8
-time_measurement_blue = 170 # u8"#;
+time_measurement_blue = 170 # u8
+info_red = 240 # u8
+info_green = 240 # u8
+info_blue = 240 # u8"#;
+//todo: rewrite it into env file
 //its important to have EXACT copy without spaces or Line feed character
 pub const USER_CREDENTIALS_CONTENT: &str = r#"[github_authorization]
 github_name = "example"

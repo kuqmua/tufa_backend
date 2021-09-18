@@ -6,4 +6,5 @@ pub enum PrintType {
     PartialSuccess,
     TimeMeasurement,
     CleaningWarningLogsDirectory,
+    Info,
 }

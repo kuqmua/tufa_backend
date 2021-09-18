@@ -21,4 +21,7 @@ pub struct PrintColors {
     pub time_measurement_red: u8,
     pub time_measurement_green: u8,
     pub time_measurement_blue: u8,
+    pub info_red: u8,
+    pub info_green: u8,
+    pub info_blue: u8,
 }

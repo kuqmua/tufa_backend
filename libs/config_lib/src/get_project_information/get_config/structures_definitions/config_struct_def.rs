@@ -8,6 +8,7 @@ use crate::get_project_information::get_config::structures_definitions::enable_p
 use crate::get_project_information::get_config::structures_definitions::enable_providers_cleaning_warning_logs_directory_def::EnableProvidersCleaningWarningLogsDirectory;
 use crate::get_project_information::get_config::structures_definitions::enable_providers_links_limit_def::EnableProvidersLinksLimit;
 use crate::get_project_information::get_config::structures_definitions::enable_providers_time_measurement_def::EnableProvidersTimeMeasurement;
+use crate::get_project_information::get_config::structures_definitions::enable_providers_info_def::EnableProvidersInfo;
 use crate::get_project_information::get_config::structures_definitions::enable_randomize_order_for_providers_link_parts_for_mongo_def::EnableRandomizeOrderForProvidersLinkPartsForMongo;
 use crate::get_project_information::get_config::structures_definitions::enable_success_providers_prints_def::EnableSuccessProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::enable_warning_high_providers_prints_def::EnableWarningHighProvidersPrints;
@@ -38,6 +39,7 @@ pub struct ConfigStruct {
     pub enable_providers_cleaning_warning_logs_db_collections_in_mongo:
         EnableProvidersCleaningWarningLogsDbCollectionsInMongo,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
+    pub enable_providers_info: EnableProvidersInfo,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
     pub providers_links_limits: ProvidersLinksLimits,
     pub enable_randomize_order_for_providers_link_parts_for_mongo:
