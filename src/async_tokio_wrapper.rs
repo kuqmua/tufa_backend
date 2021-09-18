@@ -41,53 +41,41 @@ pub async fn async_tokio_wrapper() {
             Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
         //todo rewrite it with type system check help. right now its a bad way to check
         for provider_name in &CONFIG.params.vec_of_provider_names {
-            if provider_name == ARXIV_NAME_TO_CHECK
+            if (provider_name == ARXIV_NAME_TO_CHECK
                 && CONFIG
                     .mongo_params
                     .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_arxiv_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == BIORXIV_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_biorxiv_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == GITHUB_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_github_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == HABR_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_habr_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == MEDRXIV_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_medrxiv_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == REDDIT_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_reddit_link_parts
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            } else if provider_name == TWITTER_NAME_TO_CHECK
-                && CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_twitter_link_parts
+                    .enable_initialize_mongo_with_arxiv_link_parts)
+                || (provider_name == BIORXIV_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_biorxiv_link_parts)
+                || (provider_name == GITHUB_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_github_link_parts)
+                || (provider_name == HABR_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_habr_link_parts)
+                || (provider_name == MEDRXIV_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_medrxiv_link_parts)
+                || (provider_name == REDDIT_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_reddit_link_parts)
+                || (provider_name == TWITTER_NAME_TO_CHECK
+                    && CONFIG
+                        .mongo_params
+                        .enable_initialize_mongo_with_providers_link_parts
+                        .enable_initialize_mongo_with_twitter_link_parts)
             {
                 vec_of_filtered_provider_names.push(provider_name.to_string());
             }
