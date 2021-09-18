@@ -22,7 +22,6 @@ pub fn entry() {
             println!("We are on a single core system");
         }
     }
-    println!("ENV: {}", CONFIG.env);
     let enable_common_time_measurement = CONFIG.params.enable_time_measurement; //need to be different variable cuz move happpens
     if check_link(
         &CONFIG.params.starting_check_link,

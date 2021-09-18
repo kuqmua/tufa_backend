@@ -18,7 +18,6 @@ pub mod get_project_information {
             pub mod enable_success_providers_prints_def;
             pub mod enable_warning_high_providers_prints_def;
             pub mod enable_warning_low_providers_prints_def;
-            pub mod env_def;
             pub mod mongo_params_def;
             pub mod params_def;
             pub mod postgres_params_def;
@@ -32,10 +31,6 @@ pub mod get_project_information {
                 mod check_valid_vec_of_provider_names;
                 pub mod new_impl;
                 pub mod wrap_config_checks_impl;
-            }
-            pub mod env_impl {
-                pub mod display_impl;
-                pub mod from_str_impl;
             }
         }
         pub mod get_lazy_config_information;

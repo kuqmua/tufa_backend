@@ -12,7 +12,6 @@ use crate::get_project_information::get_config::structures_definitions::enable_r
 use crate::get_project_information::get_config::structures_definitions::enable_success_providers_prints_def::EnableSuccessProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::enable_warning_high_providers_prints_def::EnableWarningHighProvidersPrints;
 use crate::get_project_information::get_config::structures_definitions::enable_warning_low_providers_prints_def::EnableWarningLowProvidersPrints;
-use crate::get_project_information::get_config::structures_definitions::env_def::Env;
 use crate::get_project_information::get_config::structures_definitions::params_def::Params;
 use crate::get_project_information::get_config::structures_definitions::print_colors_def::PrintColors;
 use crate::get_project_information::get_config::structures_definitions::providers_links_limits_def::ProvidersLinksLimits;
@@ -44,5 +43,4 @@ pub struct ConfigStruct {
     pub enable_randomize_order_for_providers_link_parts_for_mongo:
         EnableRandomizeOrderForProvidersLinkPartsForMongo,
     pub print_colors: PrintColors,
-    pub env: Env,
 }
