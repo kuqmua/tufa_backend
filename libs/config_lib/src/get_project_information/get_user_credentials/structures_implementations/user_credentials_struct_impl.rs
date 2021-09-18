@@ -73,14 +73,12 @@ impl UserCredentialsStruct {
                         mongo_cloud_cluster_params: "".to_string(),
                     },
                 };
-                //todo: add errors
                 match std::env::var(GITHUB_NAME_ENV_NAME) {
                     Ok(handle) => {
                         handle_user_credentials.github_authorization.github_name = handle;
                     }
                     Err(e) => {
-
-                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_NAME_ENV_NAME({})) failed for console and .env file, error", GITHUB_NAME_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_NAME_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(GITHUB_TOKEN_ENV_NAME) {
@@ -88,7 +86,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.github_authorization.github_token = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_TOKEN_ENV_NAME({})) failed for console and .env file, error", GITHUB_TOKEN_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_TOKEN_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_TOKEN_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(REDDIT_USER_AGENT_ENV_NAME) {
@@ -96,7 +94,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.reddit_authorization.reddit_user_agent = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USER_AGENT_ENV_NAME({})) failed for console and .env file, error", REDDIT_USER_AGENT_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USER_AGENT_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USER_AGENT_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
@@ -104,7 +102,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.reddit_authorization.reddit_client_id = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_ID_ENV_NAME({})) failed for console and .env file, error", REDDIT_CLIENT_ID_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_ID_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_ID_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
@@ -112,7 +110,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.reddit_authorization.reddit_client_secret = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME({})) failed for console and .env file, error", REDDIT_CLIENT_SECRET_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_SECRET_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(REDDIT_USERNAME_ENV_NAME) {
@@ -120,7 +118,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.reddit_authorization.reddit_username = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USERNAME_ENV_NAME({})) failed for console and .env file, error", REDDIT_USERNAME_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USERNAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USERNAME_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
@@ -128,7 +126,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.reddit_authorization.reddit_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_PASSWORD_ENV_NAME({})) failed for console and .env file, error", REDDIT_PASSWORD_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_PASSWORD_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_OWN_LOGIN_ENV_NAME) {
@@ -136,7 +134,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_own_authorization.mongo_own_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error", MONGO_OWN_LOGIN_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_LOGIN_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_OWN_PASSWORD_ENV_NAME) {
@@ -144,7 +142,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_own_authorization.mongo_own_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error", MONGO_OWN_PASSWORD_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PASSWORD_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_OWN_IP_ENV_NAME) {
@@ -152,7 +150,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_own_authorization.mongo_own_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_IP_ENV_NAME({})) failed for console and .env file, error", MONGO_OWN_IP_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_IP_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_OWN_PORT_ENV_NAME) {
@@ -160,7 +158,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_own_authorization.mongo_own_port = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PORT_ENV_NAME({})) failed for console and .env file, error", MONGO_OWN_PORT_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PORT_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME) {
@@ -168,7 +166,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_cloud_authorization.mongo_cloud_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME({})) failed for console and .env file, error", MONGO_CLOUD_LOGIN_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_LOGIN_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME) {
@@ -176,7 +174,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_cloud_authorization.mongo_cloud_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME({})) failed for console and .env file, error", MONGO_CLOUD_PASSWORD_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_PASSWORD_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME) {
@@ -184,7 +182,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_cloud_authorization.mongo_cloud_cluster_name = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME({})) failed for console and .env file, error", MONGO_CLOUD_CLUSTER_NAME_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_NAME_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME) {
@@ -192,7 +190,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.mongo_cloud_authorization.mongo_cloud_cluster_params = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME) {
@@ -200,7 +198,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.postgres_own_authorization.postgres_own_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error", POSTGRES_OWN_LOGIN_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_LOGIN_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME) {
@@ -208,7 +206,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.postgres_own_authorization.postgres_own_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error", POSTGRES_OWN_PASSWORD_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_PASSWORD_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(POSTGRES_OWN_IP_ENV_NAME) {
@@ -216,7 +214,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.postgres_own_authorization.postgres_own_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_IP_ENV_NAME({})) failed for console and .env file, error", POSTGRES_OWN_IP_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_IP_ENV_NAME, e)))
                     }
                 }
                 match std::env::var(POSTGRES_OWN_DB_ENV_NAME) {
@@ -224,7 +222,7 @@ impl UserCredentialsStruct {
                         handle_user_credentials.postgres_own_authorization.postgres_own_db = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_DB_ENV_NAME({})) failed for console and .env file, error", POSTGRES_OWN_DB_ENV_NAME)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_DB_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_DB_ENV_NAME, e)))
                     }
                 }
                 match UserCredentialsStruct::wrap_custom_config_checks(handle_user_credentials) {
@@ -241,7 +239,7 @@ impl UserCredentialsStruct {
             }
             Err(e) => {
                 //todo: console
-                return Err(ConfigError::Message("dotenv error".to_string()));
+                return Err(ConfigError::Message(format!("dotenv error: {:#?}", e)));
             }
         }
     }
@@ -268,7 +266,6 @@ impl UserCredentialsStruct {
             ));
             drop(error);
         }
-        //
         if !user_credentials_handle
             .reddit_authorization
             .reddit_user_agent
@@ -319,7 +316,6 @@ impl UserCredentialsStruct {
             ));
             drop(error);
         }
-        /////////
         if !user_credentials_handle
             .mongo_own_authorization
             .mongo_own_login
@@ -360,7 +356,6 @@ impl UserCredentialsStruct {
             ));
             drop(error);
         }
-        /////////
         if !user_credentials_handle
             .mongo_cloud_authorization
             .mongo_cloud_login
