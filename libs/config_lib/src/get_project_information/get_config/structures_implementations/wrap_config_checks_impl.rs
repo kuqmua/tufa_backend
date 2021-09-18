@@ -3,7 +3,7 @@ use config::ConfigError;
 
 impl ConfigStruct {
     //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
-    pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl) fn wrap_config_checks(
+    pub(in crate::get_project_information::get_config::structures_implementations) fn wrap_config_checks(
         config_handle: ConfigStruct,
     ) -> Result<Self, ConfigError> {
         if config_handle.mongo_params.log_file_extension.is_empty() {
