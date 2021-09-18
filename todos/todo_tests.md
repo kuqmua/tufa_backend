@@ -38,3 +38,7 @@ write some tests with with macro
 ### -------------------
 Right test what parse repo code and check what each function returns some type or enum
 <br/>
+
+### -------------------
+rewrite user credentials tests into .env file instead of toml
+<br/>

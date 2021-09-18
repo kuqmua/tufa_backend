@@ -254,31 +254,33 @@ info_green = 240 # u8
 info_blue = 240 # u8"#;
 //todo: rewrite it into env file
 //its important to have EXACT copy without spaces or Line feed character
-pub const USER_CREDENTIALS_CONTENT: &str = r#"[github_authorization]
-github_name = "example"
-github_token = "example"
+pub const USER_CREDENTIALS_CONTENT: &str = r#"PROJECT_RUN_MODE="example" # its only Development Production or Testing
 
-[reddit_authorization]
-reddit_user_agent = "example"
-reddit_client_id = "example"
-reddit_client_secret = "example"
-reddit_username = "example"
-reddit_password = "example"
+# github authorization
+GITHUB_NAME = "example"
+GITHUB_TOKEN = "example"
 
-[mongo_own_authorization]
-mongo_own_login = "example"
-mongo_own_password = "example"
-mongo_own_ip = "example"
-mongo_own_port = "example"
+# reddit authorization 
+REDDIT_USER_AGENT = "example"
+REDDIT_CLIENT_ID = "example"
+REDDIT_CLIENT_SECRET = "example"
+REDDIT_USERNAME = "example"
+REDDIT_PASSWORD = "example"
 
-[mongo_cloud_authorization]
-mongo_cloud_login = "example"
-mongo_cloud_password = "example"
-mongo_cloud_cluster_name = "example" # or is it more than cluster name?
-mongo_cloud_cluster_params = "example"
+# mongo_own_authorization
+MONGO_OWN_LOGIN = "example"
+MONGO_OWN_PASSWORD = "example"
+MONGO_OWN_IP = "example"
+MONGO_OWN_PORT = "example"
 
-[postgres_own_authorization]
-postgres_own_login = "example"
-postgres_own_password = "example"
-postgres_own_ip = "example"
-postgres_own_db = "example" # or maybe db should be in config?"#;
+# mongo_cloud_authorization
+MONGO_CLOUD_LOGIN = "example"
+MONGO_CLOUD_PASSWORD = "example"
+MONGO_CLOUD_CLUSTER_NAME = "example" # or is it more than cluster name?
+MONGO_CLOUD_CLUSTER_PARAMS = "example"
+
+# postgres_own_authorization
+POSTGRES_OWN_LOGIN = "example"
+POSTGRES_OWN_PASSWORD = "example"
+POSTGRES_OWN_IP = "example"
+POSTGRES_OWN_DB = "example" # or maybe db should be in config?"#;
