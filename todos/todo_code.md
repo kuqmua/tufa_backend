@@ -309,3 +309,9 @@ pub(in crate::get_project_information::get_config::structures_implementations::c
 https://github.com/rust-cv
 rust image detection libs/crates
 <br/>
+
+### -------------------
+maybe add this to code
+#[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
+<br/>
+
