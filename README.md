@@ -11,12 +11,33 @@ Status of last deployment: <br/>
 ### start docker daemon
 sudo dockerd
 
+### build docker container
+(maybe?) rustup install nightly
+(maybe?) cargo +nightly build --release
+docker build -t tufa_backend-image .
+
+# run docker container
+docker run --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
+
+# stop docker container
+sudo docker stop tufa_backend-container
+
+# remove docker container
+sudo docker rm tufa_backend-container
+
+# run containers with docker-compose
+sudo docker-compose up -d
+
+# stop containers with docker-compose
+sudo docker-compose down
+
 ### pull and run mongodb docker container
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mongodb-volumes/tufa-dev-volume -d mongo:latest
 
 ### start mongodb docker container
 with docker: sudo docker start mongo-tufa-wsl2 <br/>
 with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d 
+
 ### install diesel cli for postgres(diesel dependency)
 sudo apt install libpq-dev <br/>
 cargo install diesel_cli --no-default-features --features postgres
@@ -33,7 +54,6 @@ cargo run --bin delete_post (post name)
 ### create another rust lib
 cd libs
 cargo new example_lib --lib
-
 
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
