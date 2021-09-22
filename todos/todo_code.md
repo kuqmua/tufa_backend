@@ -317,6 +317,7 @@ maybe add this to code
 
 ### -------------------
 docker build failed with this
+Maybe try it from ubuntu 20 ? 
 
 
    Compiling rand_isaac v0.1.1
