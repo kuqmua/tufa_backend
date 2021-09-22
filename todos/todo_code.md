@@ -315,3 +315,40 @@ maybe add this to code
 #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
 <br/>
 
+### -------------------
+docker build failed with this
+
+
+   Compiling rand_isaac v0.1.1
+   Compiling rand_hc v0.1.0
+   Compiling rand_xorshift v0.1.1
+   Compiling unicode-normalization v0.1.17
+error: failed to run custom build command for `ring v0.16.20`
+
+Caused by:
+  process didn't exit successfully: `/usr/src/tufa_backend/target/release/build/ring-5b7f71ea8e59b96b/build-script-build` (exit status: 101)
+  --- stdout
+  OPT_LEVEL = Some("3")
+  TARGET = Some("x86_64-unknown-linux-musl")
+  HOST = Some("x86_64-unknown-linux-gnu")
+  CC_x86_64-unknown-linux-musl = None
+  CC_x86_64_unknown_linux_musl = None
+  TARGET_CC = None
+  CC = None
+  CROSS_COMPILE = None
+  CFLAGS_x86_64-unknown-linux-musl = None
+  CFLAGS_x86_64_unknown_linux_musl = None
+  TARGET_CFLAGS = None
+  CFLAGS = None
+  CRATE_CC_NO_DEFAULTS = None
+  DEBUG = Some("false")
+  CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+
+  --- stderr
+  running "musl-gcc" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "-I" "include" "-Wall" "-Wextra" "-pedantic" "-pedantic-errors" "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wconversion" "-Wenum-compare" "-Wfloat-equal" "-Wformat=2" "-Winline" "-Winvalid-pch" "-Wmissing-field-initializers" "-Wmissing-include-dirs" "-Wredundant-decls" "-Wshadow" "-Wsign-compare" "-Wsign-conversion" "-Wundef" "-Wuninitialized" "-Wwrite-strings" "-fno-strict-aliasing" "-fvisibility=hidden" "-fstack-protector" "-g3" "-U_FORTIFY_SOURCE" "-DNDEBUG" "-c" "-o/usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/build/ring-d61025ec34e3ca35/out/aesni-x86_64-elf.o" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/pregenerated/aesni-x86_64-elf.S"
+  thread 'main' panicked at 'failed to execute ["musl-gcc" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "-I" "include" "-Wall" "-Wextra" "-pedantic" "-pedantic-errors" "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wconversion" "-Wenum-compare" "-Wfloat-equal" "-Wformat=2" "-Winline" "-Winvalid-pch" "-Wmissing-field-initializers" "-Wmissing-include-dirs" "-Wredundant-decls" "-Wshadow" "-Wsign-compare" "-Wsign-conversion" "-Wundef" "-Wuninitialized" "-Wwrite-strings" "-fno-strict-aliasing" "-fvisibility=hidden" "-fstack-protector" "-g3" "-U_FORTIFY_SOURCE" "-DNDEBUG" "-c" "-o/usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/build/ring-d61025ec34e3ca35/out/aesni-x86_64-elf.o" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/pregenerated/aesni-x86_64-elf.S"]: No such file or directory (os error 2)', /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/build.rs:653:9
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+warning: build failed, waiting for other jobs to finish...
+error: build failed
+The command '/bin/sh -c cargo +nightly build --target=x86_64-unknown-linux-musl --release' returned a non-zero code: 101
+<br/>
