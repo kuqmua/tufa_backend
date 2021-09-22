@@ -17,19 +17,19 @@ sudo dockerd
 (maybe?) cargo +nightly build --release
 docker build -t tufa_backend-image .
 
-# run docker container
+### run docker container
 docker run --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
 
-# stop docker container
+### stop docker container
 sudo docker stop tufa_backend-container
 
-# remove docker container
+### remove docker container
 sudo docker rm tufa_backend-container
 
-# run containers with docker-compose
+### run containers with docker-compose
 sudo docker-compose up -d
 
-# stop containers with docker-compose
+### stop containers with docker-compose
 sudo docker-compose down
 
 ### pull and run mongodb docker container
