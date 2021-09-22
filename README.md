@@ -13,6 +13,7 @@ sudo dockerd
 
 ### build docker container
 (maybe?) rustup install nightly
+(maybe?) rustup target add x86_64-unknown-linux-musl
 (maybe?) cargo +nightly build --release
 docker build -t tufa_backend-image .
 
