@@ -23,12 +23,35 @@ services:
       - 27017:27017
     volumes:
       - ./mongodb_volume:/data/db
-  # rust-backend:
-  #   image: "rust:1.47"
-  #   volumes:
-  #     - ./tufa_backend:/tufa_backend
-  #   environment: 
-  #     - USER=sergey
+  tufa_backend_service:
+    container_name: tufa_backend-container
+    image: tufa_backend-image
+    restart: always
+    ports:
+      - 8000:8000
+    environment: 
+      PROJECT_RUN_MODE: ${PROJECT_RUN_MODE}
+      GITHUB_NAME: ${GITHUB_NAME}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      REDDIT_USER_AGENT: ${REDDIT_USER_AGENT}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET}
+      REDDIT_USERNAME: ${REDDIT_USERNAME}
+      REDDIT_PASSWORD: ${REDDIT_PASSWORD}
+      MONGO_OWN_LOGIN: ${MONGO_OWN_LOGIN}
+      MONGO_OWN_PASSWORD: ${MONGO_OWN_PASSWORD}
+      MONGO_OWN_IP: ${MONGO_OWN_IP}
+      MONGO_OWN_PORT: ${MONGO_OWN_PORT}
+      MONGO_CLOUD_LOGIN: ${MONGO_CLOUD_LOGIN}
+      MONGO_CLOUD_PASSWORD: ${MONGO_CLOUD_PASSWORD}
+      MONGO_CLOUD_CLUSTER_NAME: ${MONGO_CLOUD_CLUSTER_NAME}
+      MONGO_CLOUD_CLUSTER_PARAMS: ${MONGO_CLOUD_CLUSTER_PARAMS}
+      POSTGRES_OWN_LOGIN: ${POSTGRES_OWN_LOGIN}
+      POSTGRES_OWN_PASSWORD: ${POSTGRES_OWN_PASSWORD}
+      POSTGRES_OWN_IP: ${POSTGRES_OWN_IP}
+      POSTGRES_OWN_DB: ${POSTGRES_OWN_DB}
+    # volumes:
+    #   - ./tufa_backend:/tufa_backend
 volumes:
   postgresql_volume:
   mongodb_volume:
