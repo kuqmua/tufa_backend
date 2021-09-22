@@ -40,5 +40,5 @@ Right test what parse repo code and check what each function returns some type o
 <br/>
 
 ### -------------------
-rewrite user credentials tests into .env file instead of toml
+add test what checks env variable in .env file and docker-compose.yml file
 <br/>
