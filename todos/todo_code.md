@@ -318,6 +318,11 @@ maybe add this to code
 ### -------------------
 docker build failed with this
 Maybe try it from ubuntu 20 ? 
+Try this: 
+See if you have musl-gcc on the build host.
+$ musl-gcc
+Command 'musl-gcc' not found, but can be installed with:
+sudo apt install musl-tools
 
 
    Compiling rand_isaac v0.1.1
