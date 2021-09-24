@@ -244,13 +244,3 @@ use lib_or_crate_or_something::something;
 https://github.com/tangramdotdev/tangram
 train, deploy, and monitor machine learning models
 <br/>
-
-### -------------------
-deal with docker alphine
-sync code on FROM rust:latest works fine.
-sync code on FROM alpine:latest works fine.
-async code on FROM rust:latest works fine. 
-async code on FROM alpine:latest works fine. 
-#[tokio::main] on FROM rust:latest works fine
-#[tokio::main] on FROM alpine:latest not working fine
-<br/>

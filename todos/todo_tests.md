@@ -41,4 +41,7 @@ Right test what parse repo code and check what each function returns some type o
 
 ### -------------------
 add test what checks env variable in .env file and docker-compose.yml file
+or maybe its not important coz 
+env_file:  
+  - ./.env
 <br/>

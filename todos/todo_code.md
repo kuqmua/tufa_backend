@@ -318,43 +318,61 @@ maybe add this to code
 ### -------------------
 docker build failed with this
 Maybe try it from ubuntu 20 ? 
-Try this: 
-See if you have musl-gcc on the build host.
-$ musl-gcc
-Command 'musl-gcc' not found, but can be installed with:
-sudo apt install musl-tools
 
-
-   Compiling rand_isaac v0.1.1
-   Compiling rand_hc v0.1.0
-   Compiling rand_xorshift v0.1.1
-   Compiling unicode-normalization v0.1.17
-error: failed to run custom build command for `ring v0.16.20`
+error: failed to run custom build command for `openssl-sys v0.9.63`
 
 Caused by:
-  process didn't exit successfully: `/usr/src/tufa_backend/target/release/build/ring-5b7f71ea8e59b96b/build-script-build` (exit status: 101)
+  process didn't exit successfully: `/usr/src/tufa_backend/target/release/build/openssl-sys-3e1e95302a746622/build-script-main` (exit status: 101)
   --- stdout
-  OPT_LEVEL = Some("3")
-  TARGET = Some("x86_64-unknown-linux-musl")
-  HOST = Some("x86_64-unknown-linux-gnu")
-  CC_x86_64-unknown-linux-musl = None
-  CC_x86_64_unknown_linux_musl = None
-  TARGET_CC = None
-  CC = None
-  CROSS_COMPILE = None
-  CFLAGS_x86_64-unknown-linux-musl = None
-  CFLAGS_x86_64_unknown_linux_musl = None
-  TARGET_CFLAGS = None
-  CFLAGS = None
-  CRATE_CC_NO_DEFAULTS = None
-  DEBUG = Some("false")
-  CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+  cargo:rustc-cfg=const_fn
+  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_LIB_DIR
+  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_LIB_DIR unset
+  cargo:rerun-if-env-changed=OPENSSL_LIB_DIR
+  OPENSSL_LIB_DIR unset
+  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_INCLUDE_DIR
+  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_INCLUDE_DIR unset
+  cargo:rerun-if-env-changed=OPENSSL_INCLUDE_DIR
+  OPENSSL_INCLUDE_DIR unset
+  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_DIR
+  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_DIR unset
+  cargo:rerun-if-env-changed=OPENSSL_DIR
+  OPENSSL_DIR unset
+  cargo:rerun-if-env-changed=OPENSSL_NO_PKG_CONFIG
+  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS_x86_64-unknown-linux-musl
+  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS_x86_64_unknown_linux_musl
+  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG_ALLOW_CROSS
+  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS
+  cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-musl
+  cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_musl
+  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG
+  cargo:rerun-if-env-changed=PKG_CONFIG
+  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-musl
+  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_musl
+  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG_SYSROOT_DIR
+  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+  run pkg_config fail: "pkg-config has not been configured to support cross-compilation.\n\n                Install a sysroot for the target platform and configure it via\n                PKG_CONFIG_SYSROOT_DIR and PKG_CONFIG_PATH, or install a\n                cross-compiling wrapper for pkg-config and set it via\n                PKG_CONFIG environment variable."
 
   --- stderr
-  running "musl-gcc" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "-I" "include" "-Wall" "-Wextra" "-pedantic" "-pedantic-errors" "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wconversion" "-Wenum-compare" "-Wfloat-equal" "-Wformat=2" "-Winline" "-Winvalid-pch" "-Wmissing-field-initializers" "-Wmissing-include-dirs" "-Wredundant-decls" "-Wshadow" "-Wsign-compare" "-Wsign-conversion" "-Wundef" "-Wuninitialized" "-Wwrite-strings" "-fno-strict-aliasing" "-fvisibility=hidden" "-fstack-protector" "-g3" "-U_FORTIFY_SOURCE" "-DNDEBUG" "-c" "-o/usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/build/ring-d61025ec34e3ca35/out/aesni-x86_64-elf.o" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/pregenerated/aesni-x86_64-elf.S"
-  thread 'main' panicked at 'failed to execute ["musl-gcc" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "-I" "include" "-Wall" "-Wextra" "-pedantic" "-pedantic-errors" "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wconversion" "-Wenum-compare" "-Wfloat-equal" "-Wformat=2" "-Winline" "-Winvalid-pch" "-Wmissing-field-initializers" "-Wmissing-include-dirs" "-Wredundant-decls" "-Wshadow" "-Wsign-compare" "-Wsign-conversion" "-Wundef" "-Wuninitialized" "-Wwrite-strings" "-fno-strict-aliasing" "-fvisibility=hidden" "-fstack-protector" "-g3" "-U_FORTIFY_SOURCE" "-DNDEBUG" "-c" "-o/usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/build/ring-d61025ec34e3ca35/out/aesni-x86_64-elf.o" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/pregenerated/aesni-x86_64-elf.S"]: No such file or directory (os error 2)', /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/ring-0.16.20/build.rs:653:9
+  thread 'main' panicked at '
+
+  Could not find directory of OpenSSL installation, and this `-sys` crate cannot
+  proceed without this knowledge. If OpenSSL is installed and this crate had
+  trouble finding it,  you can set the `OPENSSL_DIR` environment variable for the
+  compilation process.
+
+  Make sure you also have the development packages of openssl installed.
+  For example, `libssl-dev` on Ubuntu or `openssl-devel` on Fedora.
+
+  If you're in a situation where you think the directory *should* be found
+  automatically, please open a bug at https://github.com/sfackler/rust-openssl
+  and include information about your system as well as this message.
+
+  $HOST = x86_64-unknown-linux-gnu
+  $TARGET = x86_64-unknown-linux-musl
+  openssl-sys = 0.9.63
+
+  ', /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.63/build/find_normal.rs:174:5
   note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 warning: build failed, waiting for other jobs to finish...
 error: build failed
-The command '/bin/sh -c cargo +nightly build --target=x86_64-unknown-linux-musl --release' returned a non-zero code: 101
 <br/>
