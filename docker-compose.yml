@@ -29,6 +29,8 @@ services:
     restart: always
     ports:
       - 8000:8000
+    # env_file:
+    #     - ./.env
     environment: 
       PROJECT_RUN_MODE: ${PROJECT_RUN_MODE}
       GITHUB_NAME: ${GITHUB_NAME}
