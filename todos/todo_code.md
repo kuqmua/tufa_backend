@@ -125,19 +125,15 @@ todo: add medium
 <br/>
 
 ### -------------------
-cannot do cargo build while docker build with this library = { path = "./library" }
-<br/>
-
-### -------------------
 handle all todos in parse_github_html
 <br/>
 
-### -------------------
 ### pull and run postgres docker container
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
 
 how to change default volume folder for this command?
 and mongo
+and in dcoker-compose too
 <br/>
 
 ### -------------------
@@ -313,66 +309,4 @@ rust image detection libs/crates
 ### -------------------
 maybe add this to code
 #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
-<br/>
-
-### -------------------
-docker build failed with this
-Maybe try it from ubuntu 20 ? 
-
-error: failed to run custom build command for `openssl-sys v0.9.63`
-
-Caused by:
-  process didn't exit successfully: `/usr/src/tufa_backend/target/release/build/openssl-sys-3e1e95302a746622/build-script-main` (exit status: 101)
-  --- stdout
-  cargo:rustc-cfg=const_fn
-  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_LIB_DIR
-  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_LIB_DIR unset
-  cargo:rerun-if-env-changed=OPENSSL_LIB_DIR
-  OPENSSL_LIB_DIR unset
-  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_INCLUDE_DIR
-  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_INCLUDE_DIR unset
-  cargo:rerun-if-env-changed=OPENSSL_INCLUDE_DIR
-  OPENSSL_INCLUDE_DIR unset
-  cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_DIR
-  X86_64_UNKNOWN_LINUX_MUSL_OPENSSL_DIR unset
-  cargo:rerun-if-env-changed=OPENSSL_DIR
-  OPENSSL_DIR unset
-  cargo:rerun-if-env-changed=OPENSSL_NO_PKG_CONFIG
-  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS_x86_64-unknown-linux-musl
-  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS_x86_64_unknown_linux_musl
-  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG_ALLOW_CROSS
-  cargo:rerun-if-env-changed=PKG_CONFIG_ALLOW_CROSS
-  cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-musl
-  cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_musl
-  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG
-  cargo:rerun-if-env-changed=PKG_CONFIG
-  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-musl
-  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_musl
-  cargo:rerun-if-env-changed=TARGET_PKG_CONFIG_SYSROOT_DIR
-  cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
-  run pkg_config fail: "pkg-config has not been configured to support cross-compilation.\n\n                Install a sysroot for the target platform and configure it via\n                PKG_CONFIG_SYSROOT_DIR and PKG_CONFIG_PATH, or install a\n                cross-compiling wrapper for pkg-config and set it via\n                PKG_CONFIG environment variable."
-
-  --- stderr
-  thread 'main' panicked at '
-
-  Could not find directory of OpenSSL installation, and this `-sys` crate cannot
-  proceed without this knowledge. If OpenSSL is installed and this crate had
-  trouble finding it,  you can set the `OPENSSL_DIR` environment variable for the
-  compilation process.
-
-  Make sure you also have the development packages of openssl installed.
-  For example, `libssl-dev` on Ubuntu or `openssl-devel` on Fedora.
-
-  If you're in a situation where you think the directory *should* be found
-  automatically, please open a bug at https://github.com/sfackler/rust-openssl
-  and include information about your system as well as this message.
-
-  $HOST = x86_64-unknown-linux-gnu
-  $TARGET = x86_64-unknown-linux-musl
-  openssl-sys = 0.9.63
-
-  ', /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.63/build/find_normal.rs:174:5
-  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-warning: build failed, waiting for other jobs to finish...
-error: build failed
 <br/>
