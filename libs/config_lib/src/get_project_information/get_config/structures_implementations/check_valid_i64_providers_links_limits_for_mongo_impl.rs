@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
+use crate::get_project_information::get_config::config_struct_struct::ConfigStruct;
 
 impl ConfigStruct {
     //todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl

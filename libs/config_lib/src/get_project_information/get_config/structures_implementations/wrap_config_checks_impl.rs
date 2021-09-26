@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::structures_definitions::config_struct_def::ConfigStruct;
+use crate::get_project_information::get_config::config_struct_struct::ConfigStruct;
 use config::ConfigError;
 
 impl ConfigStruct {

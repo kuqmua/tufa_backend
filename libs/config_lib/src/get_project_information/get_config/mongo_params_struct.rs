@@ -1,6 +1,6 @@
-use crate::get_project_information::get_config::structures_definitions::enable_initialize_mongo_with_providers_link_parts_def::EnableInitializeMongoWithProvidersLinkParts;
-use crate::get_project_information::get_config::structures_definitions::enable_mongo_own_url_parts_def::EnableMongoOwnUrlParts;
-use crate::get_project_information::get_config::structures_definitions::enable_mongo_cloud_url_parts_def::EnableMongoCloudUrlParts;
+use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
+use crate::get_project_information::get_config::enable_mongo_own_url_parts_struct::EnableMongoOwnUrlParts;
+use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
 #[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MongoParams {
     pub is_cloud: bool,
