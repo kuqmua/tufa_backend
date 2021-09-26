@@ -26,6 +26,9 @@ sudo docker stop tufa_backend-container
 ### remove docker container
 sudo docker rm tufa_backend-container
 
+### remove all unused right now docker containers and images
+sudo docker system prune -f 
+
 ### run containers with docker-compose
 sudo docker-compose up -d
 
