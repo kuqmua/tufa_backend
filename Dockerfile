@@ -29,6 +29,7 @@ WORKDIR /home/rust_rest/bin/
 COPY --from=rust-latest-base-image /usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/tufa_backend . 
 COPY config config
 COPY .env .env
+# maybe later add default ENV instead of COPY .env .env
 COPY providers_link_parts providers_link_parts
 # remove providers_link_parts later coz cannot create file without sudo and creating files in docker is not a good idea
 RUN chown tufa_backend:tufa_backend tufa_backend
