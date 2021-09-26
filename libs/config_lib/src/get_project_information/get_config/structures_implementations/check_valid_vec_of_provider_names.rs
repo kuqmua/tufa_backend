@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::config_struct_struct::ConfigStruct;
+use crate::get_project_information::get_config::config_struct::ConfigStruct;
 
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
