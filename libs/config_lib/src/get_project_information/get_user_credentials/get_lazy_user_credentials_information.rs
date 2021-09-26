@@ -1,4 +1,4 @@
-use crate::get_project_information::get_user_credentials::structures_definitions::user_credentials_struct_def::UserCredentialsStruct;
+use crate::get_project_information::get_user_credentials::user_credentials_struct::UserCredentialsStruct;
 use crate::get_project_information::project_constants::LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE;
 
 lazy_static! {

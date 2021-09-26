@@ -35,14 +35,12 @@ pub mod get_project_information {
         pub mod get_lazy_config_information;
     }
     pub mod get_user_credentials {
-        pub mod structures_definitions {
-            pub mod github_authorization_def;
-            pub mod mongo_cloud_authorization_def;
-            pub mod mongo_own_authorization_def;
-            pub mod postgres_own_authorization_def;
-            pub mod reddit_authorization_def;
-            pub mod user_credentials_struct_def;
-        }
+        pub mod github_authorization_struct;
+        pub mod mongo_cloud_authorization_struct;
+        pub mod mongo_own_authorization_struct;
+        pub mod postgres_own_authorization_struct;
+        pub mod reddit_authorization_struct;
+        pub mod user_credentials_struct;
         pub mod structures_implementations {
             pub mod user_credentials_struct_impl;
         }
