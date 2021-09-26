@@ -310,3 +310,11 @@ rust image detection libs/crates
 maybe add this to code
 #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
 <br/>
+
+### -------------------
+match config_set_env_ok.merge(File::with_name(&format!(
+
+remove opening file
+remove config_lib(from crates.io)
+<br/>
+
