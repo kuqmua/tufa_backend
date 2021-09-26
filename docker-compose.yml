@@ -29,31 +29,29 @@ services:
     restart: always
     ports:
       - 8000:8000
-    # env_file:
-    #     - ./.env
-    environment: 
-      PROJECT_RUN_MODE: ${PROJECT_RUN_MODE}
-      GITHUB_NAME: ${GITHUB_NAME}
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
-      REDDIT_USER_AGENT: ${REDDIT_USER_AGENT}
-      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID}
-      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET}
-      REDDIT_USERNAME: ${REDDIT_USERNAME}
-      REDDIT_PASSWORD: ${REDDIT_PASSWORD}
-      MONGO_OWN_LOGIN: ${MONGO_OWN_LOGIN}
-      MONGO_OWN_PASSWORD: ${MONGO_OWN_PASSWORD}
-      MONGO_OWN_IP: ${MONGO_OWN_IP}
-      MONGO_OWN_PORT: ${MONGO_OWN_PORT}
-      MONGO_CLOUD_LOGIN: ${MONGO_CLOUD_LOGIN}
-      MONGO_CLOUD_PASSWORD: ${MONGO_CLOUD_PASSWORD}
-      MONGO_CLOUD_CLUSTER_NAME: ${MONGO_CLOUD_CLUSTER_NAME}
-      MONGO_CLOUD_CLUSTER_PARAMS: ${MONGO_CLOUD_CLUSTER_PARAMS}
-      POSTGRES_OWN_LOGIN: ${POSTGRES_OWN_LOGIN}
-      POSTGRES_OWN_PASSWORD: ${POSTGRES_OWN_PASSWORD}
-      POSTGRES_OWN_IP: ${POSTGRES_OWN_IP}
-      POSTGRES_OWN_DB: ${POSTGRES_OWN_DB}
-    # volumes:
-    #   - ./tufa_backend:/tufa_backend
+    env_file:
+      - ./.env
+    # environment: 
+    #   PROJECT_RUN_MODE: "example" # Development, Production or Testing
+    #   GITHUB_NAME: "example"
+    #   GITHUB_TOKEN: "example"
+    #   REDDIT_USER_AGENT: "example"
+    #   REDDIT_CLIENT_ID: "example"
+    #   REDDIT_CLIENT_SECRET: "example"
+    #   REDDIT_USERNAME: "example"
+    #   REDDIT_PASSWORD: "example"
+    #   MONGO_OWN_LOGIN: "example"
+    #   MONGO_OWN_PASSWORD: "example"
+    #   MONGO_OWN_IP: "example"
+    #   MONGO_OWN_PORT: "example"
+    #   MONGO_CLOUD_LOGIN: "example"
+    #   MONGO_CLOUD_PASSWORD: "example"
+    #   MONGO_CLOUD_CLUSTER_NAME: "example"
+    #   MONGO_CLOUD_CLUSTER_PARAMS: "example"
+    #   POSTGRES_OWN_LOGIN: "example"
+    #   POSTGRES_OWN_PASSWORD: "example"
+    #   POSTGRES_OWN_IP: "example"
+    #   POSTGRES_OWN_DB: "example"
 volumes:
   postgresql_volume:
   mongodb_volume:
