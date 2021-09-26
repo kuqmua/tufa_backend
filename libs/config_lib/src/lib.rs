@@ -18,19 +18,13 @@ pub mod get_project_information {
         pub mod enable_success_providers_prints_struct;
         pub mod enable_warning_high_providers_prints_struct;
         pub mod enable_warning_low_providers_prints_struct;
+        pub mod get_lazy_config_information;
         pub mod mongo_params_struct;
         pub mod params_struct;
         pub mod postgres_params_struct;
         pub mod print_colors_struct;
         pub mod providers_check_links_struct;
         pub mod providers_links_limits_struct;
-        pub mod structures_implementations {
-            pub mod check_valid_i64_providers_links_limits_for_mongo_impl;
-            mod check_valid_vec_of_provider_names;
-            pub mod new_impl;
-            pub mod wrap_config_checks_impl;
-        }
-        pub mod get_lazy_config_information;
     }
     pub mod get_user_credentials {
         pub mod get_lazy_user_credentials_information;
