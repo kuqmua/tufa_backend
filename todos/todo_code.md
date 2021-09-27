@@ -318,3 +318,6 @@ remove opening file
 remove config_lib(from crates.io)
 <br/>
 
+### -------------------
+make default value for all environment variables
+<br/>
