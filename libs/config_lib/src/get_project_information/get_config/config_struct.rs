@@ -65,6 +65,256 @@ pub struct ConfigStruct {
 
 impl ConfigStruct {
     pub fn new(mode_handler: Option<&str>, path_to_config: &str) -> Result<Self, ConfigError> {
+        /////////////////////////////////////////
+        // match std::env::var(GITHUB_NAME_ENV_NAME) {
+        //             Ok(handle) => {
+        //                 handle_user_credentials.github_authorization.github_name = handle;
+        //             }
+        //             Err(e) => {
+        //                 return Err(ConfigError::Message(format!("std::env::var(GITHUB_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_NAME_ENV_NAME, e)))
+        //             }
+        //         }
+        //     let mut handle_config: ConfigStruct = ConfigStruct {
+        //         params: Params {
+        //                 vec_of_provider_names = ,
+        // starting_check_link = ,
+        // user_credentials_dummy_handle = ,
+        // warning_logs_directory_name = ,
+        // unhandled_success_handled_success_are_there_items_initialized_posts_dir = ,
+        // enable_providers = ,
+        // enable_cleaning_warning_logs_directory = ,
+        // enable_cleaning_warning_logs_db_in_mongo = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo = ,
+        // enable_time_measurement = ,
+        // enable_provider_links_limit = ,
+        // enable_common_providers_links_limit = ,
+        // common_providers_links_limit = ,
+        // enable_randomize_order_for_providers_link_parts_for_mongo = ,
+        // //
+        // enable_prints = ,
+        // enable_error_prints = ,
+        // enable_warning_high_prints = ,
+        // enable_warning_low_prints = ,
+        // enable_success_prints = ,
+        // enable_partial_success_prints = ,
+        // enable_time_measurement_prints = ,
+        // enable_cleaning_warning_logs_directory_prints = ,
+        // enable_info_prints = ,
+        // //
+        // enable_all_providers_prints = ,
+        // enable_error_prints_for_all_providers = ,
+        // enable_warning_high_prints_for_all_providers = ,
+        // enable_warning_low_prints_for_all_providers = ,
+        // enable_success_prints_for_all_providers = ,
+        // enable_partial_success_prints_for_all_providers = ,
+        // enable_time_measurement_prints_for_all_providers = ,
+        // enable_cleaning_warning_logs_directory_prints_for_all_providers = ,
+        // enable_info_prints_for_all_providers = ,
+        // //
+        // enable_write_error_logs_in_local_folder = ,
+        // enable_write_error_logs_in_mongo = ,
+        // enable_initialize_mongo_with_providers_link_parts = ,
+        //         },
+        // mongo_params: MongoParams {
+        //     is_cloud = ,
+        // providers_db_name_handle = ,
+        // providers_db_collection_handle_second_part = ,
+        // providers_db_collection_document_field_name_handle = ,
+        // //
+        // db_providers_logs_name_handle = ,
+        // db_providers_logs_collection_handle_second_part = ,
+        // db_providers_logs_collection_document_field_name_handle = ,
+        // //
+        // path_to_provider_link_parts_folder = ,
+        // log_file_extension = ,
+        // //
+        // enable_initialize_mongo_with_providers_link_parts:
+        //     EnableInitializeMongoWithProvidersLinkParts,
+        // enable_mongo_own_url_parts: EnableMongoOwnUrlParts,
+        // enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts,
+        // },
+        // postgres_params: PostgresParams {
+        //     postgres_own_first_handle_url_part = ,
+        // postgres_own_second_handle_url_part = ,
+        // postgres_own_third_handle_url_part = ,
+        // postgres_own_fourth_handle_url_part = ,
+        // },
+        // enable_providers: EnableProviders {
+        //      enable_arxiv = ,
+        // enable_biorxiv = ,
+        // enable_github = ,
+        // enable_habr = ,
+        // enable_medrxiv = ,
+        // enable_reddit = ,
+        // enable_twitter = ,
+        // },
+        // providers_check_links: ProvidersCheckLinks {
+        //      arxiv_link = ,
+        // biorxiv_link = ,
+        // github_link = ,
+        // habr_link = ,
+        // medrxiv_link = ,
+        // reddit_link = ,
+        // twitter_link = ,
+        // },
+        // enable_providers_prints: EnableProvidersPrints {
+        //       enable_prints_arxiv = ,
+        // enable_prints_biorxiv = ,
+        // enable_prints_github = ,
+        // enable_prints_habr = ,
+        // enable_prints_medrxiv = ,
+        // enable_prints_reddit = ,
+        // enable_prints_twitter = ,
+        // },
+        // enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
+        //         enable_warning_high_prints_for_arxiv = ,
+        // enable_warning_high_prints_for_biorxiv = ,
+        // enable_warning_high_prints_for_github = ,
+        // enable_warning_high_prints_for_habr = ,
+        // enable_warning_high_prints_for_medrxiv = ,
+        // enable_warning_high_prints_for_reddit = ,
+        // enable_warning_high_prints_for_twitter = ,
+        // }, //todo maybe rename it into  EnableWarningHighPrintsForProviders
+        // enable_warning_low_providers_prints: EnableWarningLowProvidersPrints {
+        //      enable_warning_low_prints_for_arxiv = ,
+        // enable_warning_low_prints_for_biorxiv = ,
+        // enable_warning_low_prints_for_github = ,
+        // enable_warning_low_prints_for_habr = ,
+        // enable_warning_low_prints_for_medrxiv = ,
+        // enable_warning_low_prints_for_reddit = ,
+        // enable_warning_low_prints_for_twitter = ,
+        // },
+        // enable_success_providers_prints: EnableSuccessProvidersPrints {
+        //      enable_success_prints_for_arxiv = ,
+        // enable_success_prints_for_biorxiv = ,
+        // enable_success_prints_for_github = ,
+        // enable_success_prints_for_habr = ,
+        // enable_success_prints_for_medrxiv = ,
+        // enable_success_prints_for_reddit = ,
+        // enable_success_prints_for_twitter = ,
+        // },
+        // enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
+        //      enable_partial_success_prints_for_arxiv = ,
+        // enable_partial_success_prints_for_biorxiv = ,
+        // enable_partial_success_prints_for_github = ,
+        // enable_partial_success_prints_for_habr = ,
+        // enable_partial_success_prints_for_medrxiv = ,
+        // enable_partial_success_prints_for_reddit = ,
+        // enable_partial_success_prints_for_twitter = ,
+        // },
+        // enable_error_providers_prints: EnableErrorProvidersPrints {
+        //     enable_error_prints_for_arxiv = ,
+        // enable_error_prints_for_biorxiv = ,
+        // enable_error_prints_for_github = ,
+        // enable_error_prints_for_habr = ,
+        // enable_error_prints_for_medrxiv = ,
+        // enable_error_prints_for_reddit = ,
+        // enable_error_prints_for_twitter = ,
+        // },
+        // enable_providers_cleaning_warning_logs_directory:
+        //     EnableProvidersCleaningWarningLogsDirectory {
+        //          enable_cleaning_warning_logs_directory_for_arxiv = ,
+        // enable_cleaning_warning_logs_directory_for_biorxiv = ,
+        // enable_cleaning_warning_logs_directory_for_github = ,
+        // enable_cleaning_warning_logs_directory_for_habr = ,
+        // enable_cleaning_warning_logs_directory_for_medrxiv = ,
+        // enable_cleaning_warning_logs_directory_for_reddit = ,
+        // enable_cleaning_warning_logs_directory_for_twitter = ,
+        //     },
+        // enable_providers_cleaning_warning_logs_db_in_mongo:
+        //     EnableProvidersCleaningWarningLogsDbInMongo {
+        //          enable_cleaning_warning_logs_db_in_mongo_for_arxiv = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_github = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_habr = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_reddit = ,
+        // enable_cleaning_warning_logs_db_in_mongo_for_twitter = ,
+        //     },
+        // enable_providers_cleaning_warning_logs_db_collections_in_mongo:
+        //     EnableProvidersCleaningWarningLogsDbCollectionsInMongo {
+        //          enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_github = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = ,
+        // enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = ,
+        //     },
+        // enable_providers_time_measurement: EnableProvidersTimeMeasurement {
+        //      enable_time_measurement_for_arxiv = ,
+        // enable_time_measurement_for_biorxiv = ,
+        // enable_time_measurement_for_github = ,
+        // enable_time_measurement_for_habr = ,
+        // enable_time_measurement_for_medrxiv = ,
+        // enable_time_measurement_for_reddit = ,
+        // enable_time_measurement_for_twitter = ,
+        // },
+        // enable_providers_info: EnableProvidersInfo {
+        //      enable_info_for_arxiv = ,
+        // enable_info_for_biorxiv = ,
+        // enable_info_for_github = ,
+        // enable_info_for_habr = ,
+        // enable_info_for_medrxiv = ,
+        // enable_info_for_reddit = ,
+        // enable_info_for_twitter = ,
+        // },
+        // enable_providers_links_limits: EnableProvidersLinksLimit {
+        //      enable_links_limit_for_arxiv = ,
+        // enable_links_limit_for_biorxiv = ,
+        // enable_links_limit_for_github = ,
+        // enable_links_limit_for_habr = ,
+        // enable_links_limit_for_medrxiv = ,
+        // enable_links_limit_for_reddit = ,
+        // enable_links_limit_for_twitter = ,
+        // },
+        // providers_links_limits: ProvidersLinksLimits {
+        //       links_limit_for_arxiv = ,
+        // links_limit_for_biorxiv = ,
+        // links_limit_for_github = ,
+        // links_limit_for_habr = ,
+        // links_limit_for_medrxiv = ,
+        // links_limit_for_reddit = ,
+        // links_limit_for_twitter = ,
+        // },
+        // enable_randomize_order_for_providers_link_parts_for_mongo:
+        //     EnableRandomizeOrderForProvidersLinkPartsForMongo {
+        //         enable_randomize_order_for_arxiv_link_parts_for_mongo = ,
+        // enable_randomize_order_for_biorxiv_link_parts_for_mongo = ,
+        // enable_randomize_order_for_github_link_parts_for_mongo = ,
+        // enable_randomize_order_for_habr_link_parts_for_mongo = ,
+        // enable_randomize_order_for_medrxiv_link_parts_for_mongo = ,
+        // enable_randomize_order_for_reddit_link_parts_for_mongo = ,
+        // enable_randomize_order_for_twitter_link_parts_for_mongo = ,
+        //     },
+        // print_colors: PrintColors {
+        //     error_red = ,
+        // error_green = ,
+        // error_blue = ,
+        // warning_high_red = ,
+        // warning_high_green = ,
+        // warning_high_blue = ,
+        // warning_low_red = ,
+        // warning_low_green = ,
+        // warning_low_blue = ,
+        // success_red = ,
+        // success_green = ,
+        // success_blue = ,
+        // partial_success_red = ,
+        // partial_success_green = ,
+        // partial_success_blue = ,
+        // cleaning_red = ,
+        // cleaning_green = ,
+        // cleaning_blue = ,
+        // time_measurement_red = ,
+        // time_measurement_green = ,
+        // time_measurement_blue = ,
+        // info_red = ,
+        // info_green = ,
+        // info_blue = ,
+        // },
+        //     }
+        /////////////////////////////////////////
         let mode_string: String;
         if let Some(mode) = mode_handler {
             mode_string = mode.to_string();
