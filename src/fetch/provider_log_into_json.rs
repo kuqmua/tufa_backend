@@ -54,12 +54,6 @@ pub fn provider_log_into_json(
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 })),
-                AreThereItems::NopeNoTag(fetch_result_string) => Some(json!({
-                    "link": link,
-                    "page_content": fetch_result_string,
-                    "part_of": format!("{:?}", provider_kind),
-                    "date": Local::now().to_string()
-                })),
             },
             HandledFetchStatusInfo::Initialized => Some(json!({
                 "link": link,

@@ -17,5 +17,4 @@ pub enum AreThereItems {
     Initialized,
     NopeButThereIsTag(String),
     ConversionFromStrError(String, String),
-    NopeNoTag(String),
 }

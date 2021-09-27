@@ -71,15 +71,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             provider_kind,
                         ));
                     }
-                    AreThereItems::NopeNoTag(fetch_result_string) => {
-                        some_error_posts.push((
-                            value.1,
-                            value.2,
-                            value.3,
-                            AreThereItems::NopeNoTag(fetch_result_string),
-                            provider_kind,
-                        ));
-                    }
                 },
                 HandledFetchStatusInfo::Initialized => {
                     some_error_posts.push((
