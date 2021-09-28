@@ -251,3 +251,7 @@ what parse few rust files, dockerfile, docker-compose and .env
 And add new env variable and logic around it in all that files
 Then run tests and cargo check
 <br/>
+    
+### -------------------
+pull requests instead of commits (+ github actions) - do not add changes if test fail
+<br/>
