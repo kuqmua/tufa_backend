@@ -244,3 +244,10 @@ use lib_or_crate_or_something::something;
 https://github.com/tangramdotdev/tangram
 train, deploy, and monitor machine learning models
 <br/>
+
+### -------------------
+Add different project in inner folder of tufa backend 
+what parse few rust files, dockerfile, docker-compose and .env 
+And add new env variable and logic around it in all that files
+Then run tests and cargo check
+<br/>
