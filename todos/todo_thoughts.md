@@ -255,3 +255,7 @@ Then run tests and cargo check
 ### -------------------
 pull requests instead of commits (+ github actions) - do not add changes if test fail
 <br/>
+    
+### -------------------
+move from ubuntu to alphine linux on wsl2
+<br/>
