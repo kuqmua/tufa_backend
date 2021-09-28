@@ -321,3 +321,7 @@ remove config_lib(from crates.io)
 ### -------------------
 make default value for all environment variables
 <br/>
+            
+### -------------------
+dockerfile with ARM support
+<br/>
