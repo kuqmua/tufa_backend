@@ -1369,834 +1369,892 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-        // // ----------------------------------------------------------------
-
-        // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-
-        // match std::env::var(ARXIV_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(BIORXIV_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(GITHUB_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(HABR_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(MEDRXIV_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(REDDIT_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(TWITTER_LINK_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
         // match std::env::var(ENABLE_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers.enable_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ENABLE_PRINTS_ARXIV_ENV_NAME) {
+        // //
+        // match std::env::var(ARXIV_LINK_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.providers_check_links.arxiv_link = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ARXIV_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(BIORXIV_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.biorxiv_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             BIORXIV_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(GITHUB_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.github_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             GITHUB_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(HABR_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.habr_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             HABR_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(MEDRXIV_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.medrxiv_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             MEDRXIV_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(REDDIT_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.reddit_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             REDDIT_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(TWITTER_LINK_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.providers_check_links.twitter_link = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             TWITTER_LINK_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // //
+        // match std::env::var(ENABLE_PRINTS_ARXIV_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.enable_providers_prints.enable_prints_arxiv = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_PRINTS_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_prints.enable_prints_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PRINTS_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
+        // //
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_high_providers_prints
+        //             .enable_warning_high_prints_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             vec_of_provider_names_env_name, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_warning_low_providers_prints
+        //             .enable_warning_low_prints_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
+        // //
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_success_providers_prints
+        //             .enable_success_prints_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
+        // //
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_partial_success_providers_prints
+        //             .enable_partial_success_prints_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME) {
+        // //
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_biorxiv = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_github = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_habr = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_medrxiv = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_medrxiv = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_error_providers_prints
+        //             .enable_error_prints_for_twitter = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // //
+        // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_arxiv = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_directory
+        //             .enable_cleaning_warning_logs_directory_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_in_mongo
+        //             .enable_cleaning_warning_logs_db_in_mongo_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME)
         // {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
@@ -2204,12 +2262,14 @@ impl ConfigStruct {
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
         // ) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
@@ -2217,24 +2277,28 @@ impl ConfigStruct {
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME,
         // ) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME)
         // {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
@@ -2242,12 +2306,14 @@ impl ConfigStruct {
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
         // ) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
@@ -2255,12 +2321,14 @@ impl ConfigStruct {
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME,
         // ) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
@@ -2268,672 +2336,716 @@ impl ConfigStruct {
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
         // ) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
+        // //
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_time_measurement
+        //             .enable_time_measurement_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
+        // //
         // match std::env::var(ENABLE_INFO_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config.enable_providers_info.enable_info_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_INFO_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
+        // //
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_providers_links_limits
+        //             .enable_links_limit_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
+        // //
         // match std::env::var(LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_arxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_BIORXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_biorxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_GITHUB_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_github = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_HABR_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_habr = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_HABR_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_medrxiv = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_REDDIT_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_reddit = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(LINKS_LIMIT_FOR_TWITTER_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.providers_links_limits.links_limit_for_twitter = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ERROR_BLUE_ENV_NAME) {
+        // //
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_arxiv_link_parts_for_mongo = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(ERROR_GREEN_ENV_NAME) {
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_biorxiv_link_parts_for_mongo = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_github_link_parts_for_mongo = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_habr_link_parts_for_mongo = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_medrxiv_link_parts_for_mongo = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_reddit_link_parts_for_mongo = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config
+        //             .enable_randomize_order_for_providers_link_parts_for_mongo
+        //             .enable_randomize_order_for_twitter_link_parts_for_mongo = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ERROR_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.error_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ERROR_RED_ENV_NAME, e
         //         )))
         //     }
         // }
-
-        // match std::env::var(WARNING_HIGH_BLUE_ENV_NAME) {
+        // match std::env::var(ERROR_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.error_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ERROR_GREEN_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(WARNING_HIGH_GREEN_ENV_NAME) {
+        // match std::env::var(ERROR_BLUE_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.error_blue = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             ERROR_BLUE_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(WARNING_HIGH_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.warning_high_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             WARNING_HIGH_RED_ENV_NAME, e
         //         )))
         //     }
         // }
-
-        // match std::env::var(WARNING_LOW_BLUE_ENV_NAME) {
+        // match std::env::var(WARNING_HIGH_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.warning_high_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             WARNING_HIGH_GREEN_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(WARNING_LOW_GREEN_ENV_NAME) {
+        // match std::env::var(WARNING_HIGH_BLUE_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.warning_high_blue = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             WARNING_HIGH_BLUE_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(WARNING_LOW_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.warning_low_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             WARNING_LOW_RED_ENV_NAME, e
         //         )))
         //     }
         // }
-
-        // match std::env::var(SUCCESS_BLUE_ENV_NAME) {
+        // match std::env::var(WARNING_LOW_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.warning_low_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             WARNING_LOW_GREEN_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(WARNING_LOW_BLUE_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.warning_low_blue = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             WARNING_LOW_BLUE_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // //
+        // match std::env::var(SUCCESS_RED_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.success_red = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             SUCCESS_RED_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(SUCCESS_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.success_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             SUCCESS_GREEN_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(SUCCESS_RED_ENV_NAME) {
+        // match std::env::var(SUCCESS_BLUE_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.success_blue = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             SUCCESS_BLUE_ENV_NAME, e
         //         )))
         //     }
         // }
-
-        // match std::env::var(PARTIAL_SUCCESS_BLUE_ENV_NAME) {
+        // //
+        // match std::env::var(PARTIAL_SUCCESS_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.partial_success_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             PARTIAL_SUCCESS_RED_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(PARTIAL_SUCCESS_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.partial_success_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             PARTIAL_SUCCESS_GREEN_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(PARTIAL_SUCCESS_RED_ENV_NAME) {
+        // match std::env::var(PARTIAL_SUCCESS_BLUE_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.partial_success_blue = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-
-        // match std::env::var(CLEANING_BLUE_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(CLEANING_GREEN_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             PARTIAL_SUCCESS_BLUE_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(CLEANING_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.cleaning_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             CLEANING_RED_ENV_NAME, e
         //         )))
         //     }
         // }
-
-        // match std::env::var(TIME_MEASUREMENT_BLUE_ENV_NAME) {
+        // match std::env::var(CLEANING_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.cleaning_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             CLEANING_GREEN_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(CLEANING_BLUE_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.cleaning_blue = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             CLEANING_BLUE_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // //
+        // match std::env::var(TIME_MEASUREMENT_RED_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.time_measurement_red = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             TIME_MEASUREMENT_RED_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(TIME_MEASUREMENT_GREEN_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.time_measurement_green = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             TIME_MEASUREMENT_GREEN_ENV_NAME, e
         //         )))
         //     }
         // }
-        // match std::env::var(TIME_MEASUREMENT_RED_ENV_NAME) {
+        // match std::env::var(TIME_MEASUREMENT_BLUE_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.time_measurement_blue = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-
-        // match std::env::var(INFO_BLUE_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-        // match std::env::var(INFO_GREEN_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             TIME_MEASUREMENT_BLUE_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(INFO_RED_ENV_NAME) {
         //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
+        //         handle_config.print_colors.info_red = handle;
         //     }
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //             INFO_RED_ENV_NAME, e
         //         )))
         //     }
         // }
-
+        // match std::env::var(INFO_GREEN_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.info_green = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             INFO_GREEN_ENV_NAME, e
+        //         )))
+        //     }
+        // }
+        // match std::env::var(INFO_BLUE_ENV_NAME) {
+        //     Ok(handle) => {
+        //         handle_config.print_colors.info_blue = handle;
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             INFO_BLUE_ENV_NAME, e
+        //         )))
+        //     }
+        // }
         // /////////////////////////////////////////
         // match std::env::var(GITHUB_NAME_ENV_NAME) {
         //     Ok(handle) => {
