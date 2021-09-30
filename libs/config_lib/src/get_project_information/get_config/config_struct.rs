@@ -585,7 +585,6 @@ impl ConfigStruct {
                 info_blue: 0,
             },
         };
-        // //let t: bool = "true".parse().unwrap();
         // match std::env::var(VEC_OF_PROVIDER_NAMES_ENV_NAME) {
         //     Ok(handle) => {
         //         handle_config.params.vec_of_provider_names = handle;
@@ -647,9 +646,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -658,9 +665,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_cleaning_warning_logs_directory = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_cleaning_warning_logs_directory = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -669,11 +684,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_cleaning_warning_logs_db_in_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_cleaning_warning_logs_db_in_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -682,11 +705,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -695,9 +726,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_time_measurement = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_time_measurement = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -706,9 +745,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_provider_links_limit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_provider_links_limit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -717,9 +764,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_common_providers_links_limit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_common_providers_links_limit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -728,9 +783,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.common_providers_links_limit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.common_providers_links_limit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -739,11 +802,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -752,9 +823,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -763,9 +842,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_error_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_error_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -774,9 +861,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_warning_high_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_warning_high_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -785,9 +880,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_warning_low_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_warning_low_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -796,9 +899,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_success_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_success_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -807,9 +918,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_partial_success_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_partial_success_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -818,9 +937,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_time_measurement_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_time_measurement_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -829,11 +956,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_cleaning_warning_logs_directory_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_cleaning_warning_logs_directory_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -842,9 +977,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_info_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_info_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -853,9 +996,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_all_providers_prints = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_all_providers_prints = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -864,9 +1015,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_error_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_error_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -875,11 +1034,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_warning_high_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_warning_high_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -888,11 +1055,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_warning_low_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -901,9 +1076,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_success_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_success_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -912,11 +1095,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_partial_success_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_partial_success_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -925,11 +1116,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_time_measurement_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_time_measurement_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -940,11 +1139,19 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_cleaning_warning_logs_directory_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_cleaning_warning_logs_directory_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -953,9 +1160,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_info_prints_for_all_providers = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_info_prints_for_all_providers = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -964,9 +1179,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_write_error_logs_in_local_folder = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_write_error_logs_in_local_folder = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -975,9 +1198,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.params.enable_write_error_logs_in_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.params.enable_write_error_logs_in_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -986,11 +1217,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .params
-        //             .enable_initialize_mongo_with_providers_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .params
+        //                 .enable_initialize_mongo_with_providers_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -999,9 +1238,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(IS_CLOUD_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.mongo_params.is_cloud = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.mongo_params.is_cloud = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 IS_CLOUD_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1108,12 +1355,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_arxiv_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_arxiv_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1122,12 +1377,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_biorxiv_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_biorxiv_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1136,12 +1399,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_github_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_github_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1150,12 +1421,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_habr_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_habr_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1164,12 +1443,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_medrxiv_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_medrxiv_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 , e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1178,12 +1465,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_reddit_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_reddit_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1192,12 +1487,20 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .mongo_params
-        //             .enable_initialize_mongo_with_providers_link_parts
-        //             .enable_initialize_mongo_with_twitter_link_parts = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .mongo_params
+        //                 .enable_initialize_mongo_with_providers_link_parts
+        //                 .enable_initialize_mongo_with_twitter_link_parts = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1370,9 +1673,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1381,9 +1692,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1392,9 +1711,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1403,9 +1730,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1414,9 +1749,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1425,9 +1768,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1436,9 +1787,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers.enable_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers.enable_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1526,9 +1885,17 @@ impl ConfigStruct {
         // }
         // //
         // match std::env::var(ENABLE_PRINTS_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1537,9 +1904,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1548,9 +1923,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1559,9 +1942,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1570,9 +1961,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1581,9 +1980,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1592,9 +1999,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PRINTS_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_prints.enable_prints_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_prints.enable_prints_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PRINTS_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1604,11 +2019,19 @@ impl ConfigStruct {
         // }
         // //
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1617,11 +2040,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1630,11 +2061,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1643,11 +2082,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1656,11 +2103,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1669,11 +2124,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1682,11 +2145,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_high_providers_prints
-        //             .enable_warning_high_prints_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_high_providers_prints
+        //                 .enable_warning_high_prints_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1695,24 +2166,40 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             vec_of_provider_names_env_name, e
+        //             ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, e
         //         )))
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1721,11 +2208,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1734,11 +2229,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1747,11 +2250,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1760,11 +2271,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1773,11 +2292,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_warning_low_providers_prints
-        //             .enable_warning_low_prints_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_warning_low_providers_prints
+        //                 .enable_warning_low_prints_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1787,11 +2314,19 @@ impl ConfigStruct {
         // }
         // //
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1800,11 +2335,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1813,11 +2356,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1826,11 +2377,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1839,11 +2398,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1852,11 +2419,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1865,11 +2440,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_success_providers_prints
-        //             .enable_success_prints_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_success_providers_prints
+        //                 .enable_success_prints_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1879,11 +2462,19 @@ impl ConfigStruct {
         // }
         // //
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1892,11 +2483,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1905,11 +2504,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1918,11 +2525,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1931,11 +2546,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1944,11 +2567,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1957,11 +2588,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_partial_success_providers_prints
-        //             .enable_partial_success_prints_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_partial_success_providers_prints
+        //                 .enable_partial_success_prints_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1984,11 +2623,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -1997,11 +2644,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2010,11 +2665,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2023,11 +2686,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2036,11 +2707,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2049,11 +2728,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_error_providers_prints
-        //             .enable_error_prints_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_error_providers_prints
+        //                 .enable_error_prints_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2061,13 +2748,20 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // //
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2076,11 +2770,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2089,11 +2791,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2102,11 +2812,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2115,11 +2833,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2128,11 +2854,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2141,11 +2875,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_directory
-        //             .enable_cleaning_warning_logs_directory_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_directory
+        //                 .enable_cleaning_warning_logs_directory_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2154,11 +2896,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2167,11 +2917,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2180,11 +2938,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2193,11 +2959,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2206,11 +2980,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2219,11 +3001,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2232,11 +3022,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_in_mongo
-        //             .enable_cleaning_warning_logs_db_in_mongo_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_in_mongo
+        //                 .enable_cleaning_warning_logs_db_in_mongo_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2246,11 +3044,19 @@ impl ConfigStruct {
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME)
         // {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2261,11 +3067,20 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
+        //                 e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2276,11 +3091,19 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2290,11 +3113,19 @@ impl ConfigStruct {
         // }
         // match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME)
         // {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2305,11 +3136,20 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
+        //                 e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2320,11 +3160,19 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2335,11 +3183,20 @@ impl ConfigStruct {
         // match std::env::var(
         //     ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
         // ) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-        //             .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+        //                 .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
+        //                 e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2347,13 +3204,20 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // //
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2362,11 +3226,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2375,11 +3247,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2388,11 +3268,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2401,11 +3289,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2414,11 +3310,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2427,11 +3331,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_time_measurement
-        //             .enable_time_measurement_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_time_measurement
+        //                 .enable_time_measurement_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2439,11 +3351,18 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // //
         // match std::env::var(ENABLE_INFO_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2452,9 +3371,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2463,9 +3390,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2474,9 +3409,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2485,9 +3428,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2496,9 +3447,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2507,9 +3466,17 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_INFO_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config.enable_providers_info.enable_info_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config.enable_providers_info.enable_info_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_INFO_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2519,11 +3486,19 @@ impl ConfigStruct {
         // }
         // //
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_arxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_arxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2532,11 +3507,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_biorxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_biorxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2545,11 +3528,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_github = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_github = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2558,11 +3549,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_habr = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_habr = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2571,11 +3570,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_medrxiv = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_medrxiv = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2584,11 +3591,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_reddit = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_reddit = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2597,11 +3612,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_providers_links_limits
-        //             .enable_links_limit_for_twitter = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_providers_links_limits
+        //                 .enable_links_limit_for_twitter = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2609,7 +3632,6 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // //
         // match std::env::var(LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
         //     Ok(handle) => {
         //         handle_config.providers_links_limits.links_limit_for_arxiv = handle;
@@ -2687,13 +3709,20 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // //
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_arxiv_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_arxiv_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2702,11 +3731,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_biorxiv_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_biorxiv_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2715,11 +3752,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_github_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_github_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2728,11 +3773,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_habr_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_habr_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2754,11 +3807,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_reddit_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_reddit_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -2767,11 +3828,19 @@ impl ConfigStruct {
         //     }
         // }
         // match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_config
-        //             .enable_randomize_order_for_providers_link_parts_for_mongo
-        //             .enable_randomize_order_for_twitter_link_parts_for_mongo = handle;
-        //     }
+        //     Ok(handle) => match handle.parse::<bool>() {
+        //         Ok(handle) => {
+        //             handle_config
+        //                 .enable_randomize_order_for_providers_link_parts_for_mongo
+        //                 .enable_randomize_order_for_twitter_link_parts_for_mongo = handle;
+        //         }
+        //         Err(e) => {
+        //             return Err(ConfigError::Message(format!(
+        //                 "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+        //                 ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, e
+        //             )))
+        //         }
+        //     },
         //     Err(e) => {
         //         return Err(ConfigError::Message(format!(
         //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
@@ -3046,20 +4115,6 @@ impl ConfigStruct {
         //         )))
         //     }
         // }
-        // /////////////////////////////////////////
-        // match std::env::var(GITHUB_NAME_ENV_NAME) {
-        //     Ok(handle) => {
-        //         handle_user_credentials.github_authorization.github_name = handle;
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
-
-        /////////////////////////////////////////
         let mode_string: String;
         if let Some(mode) = mode_handler {
             mode_string = mode.to_string();
