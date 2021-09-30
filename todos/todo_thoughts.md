@@ -259,3 +259,9 @@ pull requests instead of commits (+ github actions) - do not add changes if test
 ### -------------------
 move from ubuntu to alphine linux on wsl2
 <br/>
+    
+### -------------------
+if i go into docker container and modify config file, will changes be saved after container restart?
+if yes then maybe write some send logs logic around it?
+like check last logs send date and time then decide send or not send
+<br/>
