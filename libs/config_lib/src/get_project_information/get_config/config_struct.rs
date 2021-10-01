@@ -591,30 +591,29 @@ impl ConfigStruct {
                 info_blue: 0,
             },
         };
-        match std::env::var(VEC_OF_PROVIDER_NAMES_ENV_NAME) {
-            Ok(handle) => {
-                let list_of_strings: Result<Parent, serde_json::Error> =
-                    serde_json::from_str(&handle);
-                match list_of_strings {
-                    Ok(handle) => {
-                        handle_config.params.vec_of_provider_names = handle.strings;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!(
-                            "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                            VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-                        )))
-                    }
-                }
-            }
-
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-                )))
-            }
-        }
+        // match std::env::var(VEC_OF_PROVIDER_NAMES_ENV_NAME) {
+        //     Ok(handle) => {
+        //         let list_of_strings: Result<Parent, serde_json::Error> =
+        //             serde_json::from_str(&handle);
+        //         match list_of_strings {
+        //             Ok(handle) => {
+        //                 handle_config.params.vec_of_provider_names = handle.strings;
+        //             }
+        //             Err(e) => {
+        //                 return Err(ConfigError::Message(format!(
+        //                     "serde_json::from_str {}_ENV_NAME failed, error: {:#?}",
+        //                     VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //                 )))
+        //             }
+        //         }
+        //     }
+        //     Err(e) => {
+        //         return Err(ConfigError::Message(format!(
+        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
+        //         )))
+        //     }
+        // }
         match std::env::var(STARTING_CHECK_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config.params.starting_check_link = handle;
