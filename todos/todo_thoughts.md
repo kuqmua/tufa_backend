@@ -265,3 +265,7 @@ if i go into docker container and modify config file, will changes be saved afte
 if yes then maybe write some send logs logic around it?
 like check last logs send date and time then decide send or not send
 <br/>
+
+### -------------------
+add to dockerfile or before docker build test what check valid config data fields
+<br/>
