@@ -4,6 +4,8 @@ use crate::get_project_information::get_config::get_lazy_config_information::CON
 use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
+pub const ENABLE_OVERRIDING_ENV_FILE_ENV_NAME: &str = "ENABLE_OVERRIDING_ENV_FILE";
+
 pub const PROJECT_RUN_MODE_ENV_NAME: &str = "PROJECT_RUN_MODE";
 
 pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
