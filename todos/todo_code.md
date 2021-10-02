@@ -325,3 +325,13 @@ make default value for all environment variables
 ### -------------------
 dockerfile with ARM support
 <br/>
+
+### -------------------
+get_mongo_url
+ClientOptions::parse error , Error {
+    kind: ArgumentError {
+        message: "illegal character in database name",
+    },
+    labels: [],
+}
+<br/>
