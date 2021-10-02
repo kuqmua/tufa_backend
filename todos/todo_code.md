@@ -335,3 +335,17 @@ ClientOptions::parse error , Error {
     labels: [],
 }
 <br/>
+
+### -------------------
+add logic around variable existing. if not exists do not return error for overriding. 
+its sad coz i cannot have loop for check coz its struct and not enum.
+maybe rewrite config into enum?
+match std::env::var() {
+            Ok(handle) => {
+                handle_config.... = handle;
+            }
+            Err(e) => {
+                return Err(ConfigError::Message("something"))
+            }
+        }
+<br/>
