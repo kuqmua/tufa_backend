@@ -18,7 +18,7 @@ sudo dockerd
 docker build -t tufa_backend-image .
 
 ### run docker container
-docker run --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
+docker run --env-file .env --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
 
 ### stop docker container
 sudo docker stop tufa_backend-container
