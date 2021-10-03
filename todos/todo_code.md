@@ -353,3 +353,9 @@ match std::env::var() {
 ### -------------------
 remove file::open and add fs::read_to_string instead
 <br/>
+
+### -------------------
+remove toml configs coz it's annoying to work with them
+with docker container
+use .env instead
+<br/>
