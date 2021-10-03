@@ -6,8 +6,6 @@ use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 pub const ENABLE_OVERRIDING_ENV_FILE_ENV_NAME: &str = "ENABLE_OVERRIDING_ENV_FILE";
 
-pub const PROJECT_RUN_MODE_ENV_NAME: &str = "PROJECT_RUN_MODE";
-
 pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
 pub const GITHUB_TOKEN_ENV_NAME: &str = "GITHUB_TOKEN";
 
@@ -399,8 +397,6 @@ pub const HABR_FILTER_HANDLE_TO_REMOVE_1: &str = "<channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "         ";
 pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
-
-pub const PROJECT_MODES: [&str; 3] = ["Development", "Production", "Testing"];
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_mongo_url() -> String {
