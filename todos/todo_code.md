@@ -349,3 +349,7 @@ match std::env::var() {
             }
         }
 <br/>
+
+### -------------------
+remove file::open and add fs::read_to_string instead
+<br/>
