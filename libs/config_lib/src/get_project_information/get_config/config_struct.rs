@@ -343,68 +343,7 @@ pub struct ConfigStruct {
 //todo: create custom error type
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        let is_env_file_exists: bool;
-        let env_file_message_handle: &str;
-        match dotenv() {
-            Ok(_) => {
-                env_file_message_handle = ".env file";
-                is_env_file_exists = true
-            }
-            Err(e) => {
-                //todo: add this message to error message or enum type
-                env_file_message_handle = "(cannot load .env file)";
-                is_env_file_exists = false
-            }
-        }
-        let enable_override_config_as_string: String;
-        match std::env::var(ENABLE_OVERRIDING_ENV_FILE_ENV_NAME) {
-            Ok(handle) => enable_override_config_as_string = handle,
-            Err(e) => {
-                return {
-                    Err(ConfigError::Message(format!(
-                    "std::env::var(\"{}_ENV_NAME\") failed for console, docker-compose, {}, error: {:#?}",
-                    ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, env_file_message_handle, e
-                )))
-                }
-            }
-        }
-        let enable_override_config: bool;
-        match enable_override_config_as_string.parse::<bool>() {
-            Ok(handle) => enable_override_config = handle,
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                    ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
-                )))
-            }
-        }
-        let mode_string_unchecked: String;
-        match std::env::var(PROJECT_RUN_MODE_ENV_NAME) {
-            Ok(mode_unchecked_is_valid) => {
-                mode_string_unchecked = mode_unchecked_is_valid
-            }
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var(\"{}_ENV_NAME\") failed for console, docker-compose, {}, error: {:#?}",
-                    PROJECT_RUN_MODE_ENV_NAME, env_file_message_handle, e
-                )))
-            }
-        }
-        let mut is_mode_valid: bool = false;
-        for project_mode in PROJECT_MODES {
-            if project_mode == &mode_string_unchecked {
-                is_mode_valid = true;
-                break;
-            }
-        }
-        if !is_mode_valid {
-            return Err(ConfigError::Message(format!(
-                "no such project_mode: {}",
-                mode_string_unchecked
-            )));
-        }
-        let valid_project_mode: String = mode_string_unchecked;
-        ///
+        
         let mode_string: String;
         let enable_override_config: bool;
 
