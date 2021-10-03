@@ -1,12 +1,18 @@
+use std::fs;
+
+extern crate serde;
+
+extern crate serde_json;
+
+extern crate toml;
+
 use config::{Config, ConfigError, File};
 
 use dotenv::dotenv;
 
 use itertools::Itertools;
 
-extern crate serde;
-
-extern crate serde_json;
+use toml::Value;
 
 use crate::get_project_information::get_config::enable_providers_struct::EnableProviders;
 use crate::get_project_information::get_config::enable_providers_prints_struct::EnableProvidersPrints;
@@ -334,12 +340,75 @@ pub struct ConfigStruct {
     pub print_colors: PrintColors,
 }
 
+//todo: create custom error type
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        let mode_string: String;
-        let dotenv_result = dotenv();
+        let is_env_file_exists: bool;
+        let env_file_message_handle: &str;
+        match dotenv() {
+            Ok(_) => {
+                env_file_message_handle = ".env file";
+                is_env_file_exists = true
+            }
+            Err(e) => {
+                //todo: add this message to error message or enum type
+                env_file_message_handle = "(cannot load .env file)";
+                is_env_file_exists = false
+            }
+        }
+        let enable_override_config_as_string: String;
+        match std::env::var(ENABLE_OVERRIDING_ENV_FILE_ENV_NAME) {
+            Ok(handle) => enable_override_config_as_string = handle,
+            Err(e) => {
+                return {
+                    Err(ConfigError::Message(format!(
+                    "std::env::var(\"{}_ENV_NAME\") failed for console, docker-compose, {}, error: {:#?}",
+                    ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, env_file_message_handle, e
+                )))
+                }
+            }
+        }
         let enable_override_config: bool;
-        match dotenv_result {
+        match enable_override_config_as_string.parse::<bool>() {
+            Ok(handle) => enable_override_config = handle,
+            Err(e) => {
+                return Err(ConfigError::Message(format!(
+                    "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                    ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
+                )))
+            }
+        }
+        let mode_string_unchecked: String;
+        match std::env::var(PROJECT_RUN_MODE_ENV_NAME) {
+            Ok(mode_unchecked_is_valid) => {
+                mode_string_unchecked = mode_unchecked_is_valid
+            }
+            Err(e) => {
+                return Err(ConfigError::Message(format!(
+                    "std::env::var(\"{}_ENV_NAME\") failed for console, docker-compose, {}, error: {:#?}",
+                    PROJECT_RUN_MODE_ENV_NAME, env_file_message_handle, e
+                )))
+            }
+        }
+        let mut is_mode_valid: bool = false;
+        for project_mode in PROJECT_MODES {
+            if project_mode == &mode_string_unchecked {
+                is_mode_valid = true;
+                break;
+            }
+        }
+        if !is_mode_valid {
+            return Err(ConfigError::Message(format!(
+                "no such project_mode: {}",
+                mode_string_unchecked
+            )));
+        }
+        let valid_project_mode: String = mode_string_unchecked;
+        ///
+        let mode_string: String;
+        let enable_override_config: bool;
+
+        match dotenv() {
             Ok(_) => {
                 match std::env::var(ENABLE_OVERRIDING_ENV_FILE_ENV_NAME) {
                     Ok(handle) => match handle.parse::<bool>() {
@@ -442,52 +511,57 @@ impl ConfigStruct {
             }
         }
         println!("mode: {}", mode_string);
-        let mut config = Config::new();
-        match config.set("env", mode_string.clone()) {
-            Ok(config_set_env_ok) => {
-                match config_set_env_ok.merge(File::with_name(&format!(
-                    "{}{}",
-                    PATH_TO_CONFIG, mode_string
-                ))) {
-                    Ok(_) => match config.try_into() {
-                        Ok(config_handle_from_file) => {
-                            if enable_override_config {
-                                match ConfigStruct::override_config_not_from_env_file(
-                                    config_handle_from_file,
-                                ) {
-                                    Ok(overrided_config) => {
-                                        return ConfigStruct::wrap_config_checks(overrided_config)
-                                    }
-                                    Err(e) => return Err(e),
-                                }
-                            }
-                            return ConfigStruct::wrap_config_checks(config_handle_from_file);
-                        }
-                        Err(e) => {
-                            return Err(ConfigError::Message(format!(
-                                "config.try_into failed, error: {:#?}",
-                                e
-                            )))
-                        }
-                    },
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!(
-                            "{}{}\nconfig.merge(File::with_name({}{})) error: {:#?}",
-                            file!().to_string(),
-                            line!().to_string(),
-                            PATH_TO_CONFIG,
-                            mode_string,
-                            e
-                        )));
-                    }
-                }
+
+        let mmm = "./config/Development.toml";
+        // println!("mmm {}", mmm);
+        let result_of_opening_file = fs::read_to_string(mmm);
+        match result_of_opening_file {
+            Ok(stringified_file) => {
+                let value = stringified_file.parse::<Value>().unwrap();
+                // match
+                // matc
+                let m: ConfigStruct = value.try_into().unwrap();
+                // println!("m {:#?}", m)
             }
+            Err(err) => {
+                println!("errorr {:#?}", err);
+            }
+        }
+        let mut config = Config::new();
+        match config.merge(File::with_name(&format!(
+            "{}{}",
+            PATH_TO_CONFIG, mode_string
+        ))) {
+            Ok(_) => match config.try_into() {
+                Ok(config_handle_from_file) => {
+                    if enable_override_config {
+                        //not going to thought error
+                        match ConfigStruct::override_config_not_from_env_file(
+                            config_handle_from_file,
+                        ) {
+                            Ok(overrided_config) => {
+                                return ConfigStruct::wrap_config_checks(overrided_config)
+                            }
+                            Err(e) => return Err(e),
+                        }
+                    }
+                    return ConfigStruct::wrap_config_checks(config_handle_from_file);
+                }
+                Err(e) => {
+                    // through error
+                    return Err(ConfigError::Message(format!(
+                        "config.try_into failed, error: {:#?}",
+                        e
+                    )));
+                }
+            },
             Err(e) => {
-                //cannot use print_colorful_message coz circular dependency
+                // through error
                 return Err(ConfigError::Message(format!(
-                    "{}{}\nconfig.set(\"env\", {}) error: {:#?}",
+                    "{}{}\nconfig.merge(File::with_name({}{})) error: {:#?}",
                     file!().to_string(),
                     line!().to_string(),
+                    PATH_TO_CONFIG,
                     mode_string,
                     e
                 )));
@@ -497,6 +571,7 @@ impl ConfigStruct {
 
     fn override_config_not_from_env_file(
         mut handle_config: ConfigStruct,
+        // is_env_file_exists: bool,
     ) -> Result<ConfigStruct, ConfigError> {
         // match std::env::var(VEC_OF_PROVIDER_NAMES_ENV_NAME) {
         //     Ok(handle) => {
@@ -526,10 +601,12 @@ impl ConfigStruct {
                 handle_config.params.starting_check_link = handle;
             }
             Err(e) => {
+                // if !is_env_file_exists {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
                     STARTING_CHECK_LINK_ENV_NAME, e
-                )))
+                )));
+                // }
             }
         }
         match std::env::var(USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME) {
