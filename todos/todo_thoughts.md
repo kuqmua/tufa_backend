@@ -269,3 +269,7 @@ like check last logs send date and time then decide send or not send
 ### -------------------
 add to dockerfile or before docker build test what check valid config data fields
 <br/>
+
+### -------------------
+pm2 instead of docker?
+<br/>
