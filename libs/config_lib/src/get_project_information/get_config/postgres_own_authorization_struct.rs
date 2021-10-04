@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct PostgresOwnAuthorization {
     pub postgres_own_login: String,
     pub postgres_own_password: String,

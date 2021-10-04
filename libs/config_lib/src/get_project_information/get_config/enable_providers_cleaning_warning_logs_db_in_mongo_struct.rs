@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)] //, serde_derive::Serialize, serde_derive::Deserialize
 pub struct EnableProvidersCleaningWarningLogsDbInMongo {
     pub enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool,
     pub enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool,

@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)] //, serde_derive::Serialize, serde_derive::Deserialize
 pub struct EnablePartialSuccessProvidersPrints {
     pub enable_partial_success_prints_for_arxiv: bool,
     pub enable_partial_success_prints_for_biorxiv: bool,

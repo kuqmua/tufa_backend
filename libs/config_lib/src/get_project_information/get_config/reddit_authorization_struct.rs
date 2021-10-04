@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct RedditAuthorization {
     pub reddit_user_agent: String,
     pub reddit_client_id: String,

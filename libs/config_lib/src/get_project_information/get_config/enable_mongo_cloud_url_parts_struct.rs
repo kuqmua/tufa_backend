@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)] //, serde_derive::Serialize, serde_derive::Deserialize
 pub struct EnableMongoCloudUrlParts {
     pub mongo_cloud_first_handle_url_part: String,
     pub mongo_cloud_second_handle_url_part: String,

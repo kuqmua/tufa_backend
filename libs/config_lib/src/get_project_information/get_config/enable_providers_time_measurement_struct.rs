@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableProvidersTimeMeasurement {
     pub enable_time_measurement_for_arxiv: bool,
     pub enable_time_measurement_for_biorxiv: bool,

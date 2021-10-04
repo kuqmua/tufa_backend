@@ -1,18 +1,8 @@
-use std::fs;
-
-extern crate serde;
-
-extern crate serde_json;
-
 extern crate toml;
 
-use config::{Config, ConfigError, File};
-
-use dotenv::dotenv;
+use config::ConfigError;
 
 use itertools::Itertools;
-
-use toml::Value;
 
 use crate::get_project_information::get_config::enable_providers_struct::EnableProviders;
 use crate::get_project_information::get_config::enable_providers_prints_struct::EnableProvidersPrints;
@@ -34,15 +24,9 @@ use crate::get_project_information::get_config::print_colors_struct::PrintColors
 use crate::get_project_information::get_config::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
-// use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-// use crate::get_project_information::get_config::enable_mongo_own_url_parts_struct::EnableMongoOwnUrlParts;
-// use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
-
-use crate::get_project_information::project_constants::PATH_TO_CONFIG;
-
-use crate::get_project_information::project_constants::ENABLE_OVERRIDING_ENV_FILE_ENV_NAME;
-
-use crate::get_project_information::project_constants::PROJECT_MODES;
+use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
+use crate::get_project_information::get_config::enable_mongo_own_url_parts_struct::EnableMongoOwnUrlParts;
+use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
 
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -51,8 +35,6 @@ use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
-
-use crate::get_project_information::project_constants::PROJECT_RUN_MODE_ENV_NAME;
 
 // [params]
 use crate::get_project_information::project_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
@@ -87,7 +69,6 @@ use crate::get_project_information::project_constants::ENABLE_WRITE_ERROR_LOGS_I
 use crate::get_project_information::project_constants::STARTING_CHECK_LINK_ENV_NAME;
 use crate::get_project_information::project_constants::UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR_ENV_NAME;
 use crate::get_project_information::project_constants::USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME;
-use crate::get_project_information::project_constants::VEC_OF_PROVIDER_NAMES_ENV_NAME;
 use crate::get_project_information::project_constants::WARNING_LOGS_DIRECTORY_NAME_ENV_NAME;
 
 // [mongo_params]
@@ -306,14 +287,47 @@ use crate::get_project_information::project_constants::INFO_BLUE_ENV_NAME;
 use crate::get_project_information::project_constants::INFO_GREEN_ENV_NAME;
 use crate::get_project_information::project_constants::INFO_RED_ENV_NAME;
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct Parent {
-    // #[serde(deserialize_with = "string_or_seq_string")]
-    pub strings: Vec<String>,
-}
+//
+use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
+use crate::get_project_information::get_config::mongo_cloud_authorization_struct::MongoCloudAuthorization;
+use crate::get_project_information::get_config::mongo_own_authorization_struct::MongoOwnAuthorization;
+use crate::get_project_information::get_config::postgres_own_authorization_struct::PostgresOwnAuthorization;
+use crate::get_project_information::get_config::reddit_authorization_struct::RedditAuthorization;
 
-#[derive(Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)] //Default,
+use crate::get_project_information::project_constants::GITHUB_NAME_ENV_NAME;
+use crate::get_project_information::project_constants::GITHUB_TOKEN_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_CLOUD_CLUSTER_NAME_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_CLOUD_LOGIN_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_CLOUD_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_OWN_IP_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_OWN_LOGIN_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_OWN_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_OWN_PORT_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_OWN_DB_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_OWN_IP_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_OWN_LOGIN_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_OWN_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::REDDIT_CLIENT_ID_ENV_NAME;
+use crate::get_project_information::project_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
+use crate::get_project_information::project_constants::REDDIT_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::REDDIT_USERNAME_ENV_NAME;
+use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAME;
+
+// #[derive(Deserialize, Debug, Clone)]
+// pub struct Parent {
+//     // #[serde(deserialize_with = "string_or_seq_string")]
+//     pub strings: Vec<String>,
+// }
+
+#[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
+    pub github_authorization: GithubAuthorization,
+    pub reddit_authorization: RedditAuthorization,
+    pub mongo_own_authorization: MongoOwnAuthorization,
+    pub postgres_own_authorization: PostgresOwnAuthorization,
+    pub mongo_cloud_authorization: MongoCloudAuthorization,
+    //
     pub params: Params,
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,
@@ -343,209 +357,460 @@ pub struct ConfigStruct {
 //todo: create custom error type
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        
-        let mode_string: String;
-        let enable_override_config: bool;
-
-        match dotenv() {
-            Ok(_) => {
-                match std::env::var(ENABLE_OVERRIDING_ENV_FILE_ENV_NAME) {
-                    Ok(handle) => match handle.parse::<bool>() {
-                        Ok(handle) => {
-                            match std::env::var(PROJECT_RUN_MODE_ENV_NAME) {
-                                Ok(mode) => {
-                                    let mut check: bool = false;
-                                    for project_mode in PROJECT_MODES {
-                                        if project_mode == &mode {
-                                            check = true;
-                                            break;
-                                        }
-                                    }
-                                    if !check {
-                                         return Err(ConfigError::Message(format!(
-                                            "no such project_mode: {}",
-                                            mode
-                                        )));
-                                    }
-                                    enable_override_config = handle;
-                                    mode_string = mode;
-                                }
-                                Err(e) => {
-                                    return Err(ConfigError::Message(format!(
-                                        "std::env::var(\"{}_ENV_NAME\") failed for console and .env file, error: {:#?}",
-                                        PROJECT_RUN_MODE_ENV_NAME, e
-                                    )))
-                                }
-                            }
-                        }
-                        Err(e) => {
-                            return Err(ConfigError::Message(format!(
-                                "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                                ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
-                            )))
-                        }
-                    },
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!(
-                        "std::env::var(\"{}_ENV_NAME\") failed for console and docker-compose, error: {:#?}",
-                        ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
-                    )))
-                    }
-                }
-            }
-            Err(e) => {
-                println!(
-                    "dotenv() failed, trying without using .env file, error: {:#?}",
-                    e
-                );
-                match std::env::var(ENABLE_OVERRIDING_ENV_FILE_ENV_NAME) {
-                    Ok(handle) => match handle.parse::<bool>() {
-                        Ok(handle) => {
-                            if !handle {
-                                return Err(ConfigError::Message(format!(
-                                    "{} is false, returning...",
-                                    ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME
-                                )));
-                            }
-                            match std::env::var(PROJECT_RUN_MODE_ENV_NAME) {
-                                Ok(mode) => {
-                                    let mut check: bool = false;
-                                    for project_mode in PROJECT_MODES {
-                                        if project_mode == &mode {
-                                            check = true;
-                                            break;
-                                        }
-                                    }
-                                    if !check {
-                                         return Err(ConfigError::Message(format!(
-                                            "no such project_mode: {}",
-                                            mode
-                                        )));
-                                    }
-                                    enable_override_config = handle;
-                                    mode_string = mode;
-                                }
-                                Err(e) => {
-                                    return Err(ConfigError::Message(format!(
-                                        "std::env::var(\"{}_ENV_NAME\") failed for console and docker-compose, error: {:#?}",
-                                        PROJECT_RUN_MODE_ENV_NAME, e
-                                    )))
-                                }
-                            }
-                        }
-                        Err(e) => {
-                            return Err(ConfigError::Message(format!(
-                                "parse::<bool> {}_ENV_NAME failed for console and docker-compose, error: {:#?}",
-                                ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
-                            )))
-                        }
-                    },
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!(
-                        "std::env::var(\"{}_ENV_NAME\") failed for console and docker-compose, error: {:#?}",
-                        ENABLE_OVERRIDING_ENV_FILE_ENV_NAME, e
-                    )))
-                    }
-                }
-            }
-        }
-        println!("mode: {}", mode_string);
-
-        let mmm = "./config/Development.toml";
-        // println!("mmm {}", mmm);
-        let result_of_opening_file = fs::read_to_string(mmm);
-        match result_of_opening_file {
-            Ok(stringified_file) => {
-                let value = stringified_file.parse::<Value>().unwrap();
-                // match
-                // matc
-                let m: ConfigStruct = value.try_into().unwrap();
-                // println!("m {:#?}", m)
-            }
-            Err(err) => {
-                println!("errorr {:#?}", err);
-            }
-        }
-        let mut config = Config::new();
-        match config.merge(File::with_name(&format!(
-            "{}{}",
-            PATH_TO_CONFIG, mode_string
-        ))) {
-            Ok(_) => match config.try_into() {
-                Ok(config_handle_from_file) => {
-                    if enable_override_config {
-                        //not going to thought error
-                        match ConfigStruct::override_config_not_from_env_file(
-                            config_handle_from_file,
-                        ) {
-                            Ok(overrided_config) => {
-                                return ConfigStruct::wrap_config_checks(overrided_config)
-                            }
-                            Err(e) => return Err(e),
-                        }
-                    }
-                    return ConfigStruct::wrap_config_checks(config_handle_from_file);
-                }
-                Err(e) => {
-                    // through error
-                    return Err(ConfigError::Message(format!(
-                        "config.try_into failed, error: {:#?}",
-                        e
-                    )));
-                }
+        //todo: remove dotenv for docker container
+        ////////
+        let mut handle_config: ConfigStruct = ConfigStruct {
+            github_authorization: GithubAuthorization {
+                github_name: "".to_string(),
+                github_token: "".to_string(),
             },
-            Err(e) => {
-                // through error
-                return Err(ConfigError::Message(format!(
-                    "{}{}\nconfig.merge(File::with_name({}{})) error: {:#?}",
-                    file!().to_string(),
-                    line!().to_string(),
-                    PATH_TO_CONFIG,
-                    mode_string,
-                    e
-                )));
-            }
-        }
-    }
-
-    fn override_config_not_from_env_file(
-        mut handle_config: ConfigStruct,
-        // is_env_file_exists: bool,
-    ) -> Result<ConfigStruct, ConfigError> {
-        // match std::env::var(VEC_OF_PROVIDER_NAMES_ENV_NAME) {
-        //     Ok(handle) => {
-        //         let list_of_strings: Result<Parent, serde_json::Error> =
-        //             serde_json::from_str(&handle);
-        //         match list_of_strings {
-        //             Ok(handle) => {
-        //                 handle_config.params.vec_of_provider_names = handle.strings;
-        //             }
-        //             Err(e) => {
-        //                 return Err(ConfigError::Message(format!(
-        //                     "serde_json::from_str {}_ENV_NAME failed, error: {:#?}",
-        //                     VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //                 )))
-        //             }
-        //         }
-        //     }
-        //     Err(e) => {
-        //         return Err(ConfigError::Message(format!(
-        //             "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-        //             VEC_OF_PROVIDER_NAMES_ENV_NAME, e
-        //         )))
-        //     }
-        // }
+            reddit_authorization: RedditAuthorization {
+                reddit_user_agent: "".to_string(),
+                reddit_client_id: "".to_string(),
+                reddit_client_secret: "".to_string(),
+                reddit_username: "".to_string(),
+                reddit_password: "".to_string(),
+            },
+            mongo_own_authorization: MongoOwnAuthorization {
+                mongo_own_login: "".to_string(),
+                mongo_own_password: "".to_string(),
+                mongo_own_ip: "".to_string(),
+                mongo_own_port: "".to_string(),
+            },
+            postgres_own_authorization: PostgresOwnAuthorization {
+                postgres_own_login: "".to_string(),
+                postgres_own_password: "".to_string(),
+                postgres_own_ip: "".to_string(),
+                postgres_own_db: "".to_string(),
+            },
+            mongo_cloud_authorization: MongoCloudAuthorization {
+                mongo_cloud_login: "".to_string(),
+                mongo_cloud_password: "".to_string(),
+                mongo_cloud_cluster_name: "".to_string(),
+                mongo_cloud_cluster_params: "".to_string(),
+            },
+            //
+            params: Params {
+                vec_of_provider_names: Vec::<String>::new(),
+                starting_check_link: "".to_string(),
+                user_credentials_dummy_handle: "".to_string(),
+                warning_logs_directory_name: "".to_string(),
+                unhandled_success_handled_success_are_there_items_initialized_posts_dir: ""
+                    .to_string(),
+                enable_providers: false,
+                enable_cleaning_warning_logs_directory: false,
+                enable_cleaning_warning_logs_db_in_mongo: false,
+                enable_cleaning_warning_logs_db_collections_in_mongo: false,
+                enable_time_measurement: false,
+                enable_provider_links_limit: false,
+                enable_common_providers_links_limit: false,
+                common_providers_links_limit: 0,
+                enable_randomize_order_for_providers_link_parts_for_mongo: false,
+                //
+                enable_prints: false,
+                enable_error_prints: false,
+                enable_warning_high_prints: false,
+                enable_warning_low_prints: false,
+                enable_success_prints: false,
+                enable_partial_success_prints: false,
+                enable_time_measurement_prints: false,
+                enable_cleaning_warning_logs_directory_prints: false,
+                enable_info_prints: false,
+                //
+                enable_all_providers_prints: false,
+                enable_error_prints_for_all_providers: false,
+                enable_warning_high_prints_for_all_providers: false,
+                enable_warning_low_prints_for_all_providers: false,
+                enable_success_prints_for_all_providers: false,
+                enable_partial_success_prints_for_all_providers: false,
+                enable_time_measurement_prints_for_all_providers: false,
+                enable_cleaning_warning_logs_directory_prints_for_all_providers: false,
+                enable_info_prints_for_all_providers: false,
+                //
+                enable_write_error_logs_in_local_folder: false,
+                enable_write_error_logs_in_mongo: false,
+                enable_initialize_mongo_with_providers_link_parts: false,
+            },
+            mongo_params: MongoParams {
+                is_cloud: false,
+                providers_db_name_handle: "".to_string(),
+                providers_db_collection_handle_second_part: "".to_string(),
+                providers_db_collection_document_field_name_handle: "".to_string(),
+                //
+                db_providers_logs_name_handle: "".to_string(),
+                db_providers_logs_collection_handle_second_part: "".to_string(),
+                db_providers_logs_collection_document_field_name_handle: "".to_string(),
+                //
+                path_to_provider_link_parts_folder: "".to_string(),
+                log_file_extension: "".to_string(),
+                //
+                enable_initialize_mongo_with_providers_link_parts:
+                    EnableInitializeMongoWithProvidersLinkParts {
+                        enable_initialize_mongo_with_arxiv_link_parts: false,
+                        enable_initialize_mongo_with_biorxiv_link_parts: false,
+                        enable_initialize_mongo_with_github_link_parts: false,
+                        enable_initialize_mongo_with_habr_link_parts: false,
+                        enable_initialize_mongo_with_medrxiv_link_parts: false,
+                        enable_initialize_mongo_with_reddit_link_parts: false,
+                        enable_initialize_mongo_with_twitter_link_parts: false,
+                    },
+                enable_mongo_own_url_parts: EnableMongoOwnUrlParts {
+                    mongo_own_first_handle_url_part: "".to_string(),
+                    mongo_own_second_handle_url_part: "".to_string(),
+                    mongo_own_third_handle_url_part: "".to_string(),
+                    mongo_own_fourth_handle_url_part: "".to_string(),
+                },
+                enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts {
+                    mongo_cloud_first_handle_url_part: "".to_string(),
+                    mongo_cloud_second_handle_url_part: "".to_string(),
+                    mongo_cloud_third_handle_url_part: "".to_string(),
+                    mongo_cloud_fourth_handle_url_part: "".to_string(),
+                },
+            },
+            postgres_params: PostgresParams {
+                postgres_own_first_handle_url_part: "".to_string(),
+                postgres_own_second_handle_url_part: "".to_string(),
+                postgres_own_third_handle_url_part: "".to_string(),
+                postgres_own_fourth_handle_url_part: "".to_string(),
+            },
+            enable_providers: EnableProviders {
+                enable_arxiv: false,
+                enable_biorxiv: false,
+                enable_github: false,
+                enable_habr: false,
+                enable_medrxiv: false,
+                enable_reddit: false,
+                enable_twitter: false,
+            },
+            providers_check_links: ProvidersCheckLinks {
+                arxiv_link: "".to_string(),
+                biorxiv_link: "".to_string(),
+                github_link: "".to_string(),
+                habr_link: "".to_string(),
+                medrxiv_link: "".to_string(),
+                reddit_link: "".to_string(),
+                twitter_link: "".to_string(),
+            },
+            enable_providers_prints: EnableProvidersPrints {
+                enable_prints_arxiv: false,
+                enable_prints_biorxiv: false,
+                enable_prints_github: false,
+                enable_prints_habr: false,
+                enable_prints_medrxiv: false,
+                enable_prints_reddit: false,
+                enable_prints_twitter: false,
+            },
+            enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
+                enable_warning_high_prints_for_arxiv: false,
+                enable_warning_high_prints_for_biorxiv: false,
+                enable_warning_high_prints_for_github: false,
+                enable_warning_high_prints_for_habr: false,
+                enable_warning_high_prints_for_medrxiv: false,
+                enable_warning_high_prints_for_reddit: false,
+                enable_warning_high_prints_for_twitter: false,
+            },
+            enable_warning_low_providers_prints: EnableWarningLowProvidersPrints {
+                enable_warning_low_prints_for_arxiv: false,
+                enable_warning_low_prints_for_biorxiv: false,
+                enable_warning_low_prints_for_github: false,
+                enable_warning_low_prints_for_habr: false,
+                enable_warning_low_prints_for_medrxiv: false,
+                enable_warning_low_prints_for_reddit: false,
+                enable_warning_low_prints_for_twitter: false,
+            },
+            enable_success_providers_prints: EnableSuccessProvidersPrints {
+                enable_success_prints_for_arxiv: false,
+                enable_success_prints_for_biorxiv: false,
+                enable_success_prints_for_github: false,
+                enable_success_prints_for_habr: false,
+                enable_success_prints_for_medrxiv: false,
+                enable_success_prints_for_reddit: false,
+                enable_success_prints_for_twitter: false,
+            },
+            enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
+                enable_partial_success_prints_for_arxiv: false,
+                enable_partial_success_prints_for_biorxiv: false,
+                enable_partial_success_prints_for_github: false,
+                enable_partial_success_prints_for_habr: false,
+                enable_partial_success_prints_for_medrxiv: false,
+                enable_partial_success_prints_for_reddit: false,
+                enable_partial_success_prints_for_twitter: false,
+            },
+            enable_error_providers_prints: EnableErrorProvidersPrints {
+                enable_error_prints_for_arxiv: false,
+                enable_error_prints_for_biorxiv: false,
+                enable_error_prints_for_github: false,
+                enable_error_prints_for_habr: false,
+                enable_error_prints_for_medrxiv: false,
+                enable_error_prints_for_reddit: false,
+                enable_error_prints_for_twitter: false,
+            },
+            enable_providers_cleaning_warning_logs_directory:
+                EnableProvidersCleaningWarningLogsDirectory {
+                    enable_cleaning_warning_logs_directory_for_arxiv: false,
+                    enable_cleaning_warning_logs_directory_for_biorxiv: false,
+                    enable_cleaning_warning_logs_directory_for_github: false,
+                    enable_cleaning_warning_logs_directory_for_habr: false,
+                    enable_cleaning_warning_logs_directory_for_medrxiv: false,
+                    enable_cleaning_warning_logs_directory_for_reddit: false,
+                    enable_cleaning_warning_logs_directory_for_twitter: false,
+                },
+            enable_providers_cleaning_warning_logs_db_in_mongo:
+                EnableProvidersCleaningWarningLogsDbInMongo {
+                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_github: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_habr: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: false,
+                },
+            enable_providers_cleaning_warning_logs_db_collections_in_mongo:
+                EnableProvidersCleaningWarningLogsDbCollectionsInMongo {
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_github: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: false,
+                },
+            enable_providers_time_measurement: EnableProvidersTimeMeasurement {
+                enable_time_measurement_for_arxiv: false,
+                enable_time_measurement_for_biorxiv: false,
+                enable_time_measurement_for_github: false,
+                enable_time_measurement_for_habr: false,
+                enable_time_measurement_for_medrxiv: false,
+                enable_time_measurement_for_reddit: false,
+                enable_time_measurement_for_twitter: false,
+            },
+            enable_providers_info: EnableProvidersInfo {
+                enable_info_for_arxiv: false,
+                enable_info_for_biorxiv: false,
+                enable_info_for_github: false,
+                enable_info_for_habr: false,
+                enable_info_for_medrxiv: false,
+                enable_info_for_reddit: false,
+                enable_info_for_twitter: false,
+            },
+            enable_providers_links_limits: EnableProvidersLinksLimit {
+                enable_links_limit_for_arxiv: false,
+                enable_links_limit_for_biorxiv: false,
+                enable_links_limit_for_github: false,
+                enable_links_limit_for_habr: false,
+                enable_links_limit_for_medrxiv: false,
+                enable_links_limit_for_reddit: false,
+                enable_links_limit_for_twitter: false,
+            },
+            providers_links_limits: ProvidersLinksLimits {
+                links_limit_for_arxiv: 0,
+                links_limit_for_biorxiv: 0,
+                links_limit_for_github: 0,
+                links_limit_for_habr: 0,
+                links_limit_for_medrxiv: 0,
+                links_limit_for_reddit: 0,
+                links_limit_for_twitter: 0,
+            },
+            enable_randomize_order_for_providers_link_parts_for_mongo:
+                EnableRandomizeOrderForProvidersLinkPartsForMongo {
+                    enable_randomize_order_for_arxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_biorxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_github_link_parts_for_mongo: false,
+                    enable_randomize_order_for_habr_link_parts_for_mongo: false,
+                    enable_randomize_order_for_medrxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_reddit_link_parts_for_mongo: false,
+                    enable_randomize_order_for_twitter_link_parts_for_mongo: false,
+                },
+            print_colors: PrintColors {
+                error_red: 0,
+                error_green: 0,
+                error_blue: 0,
+                warning_high_red: 0,
+                warning_high_green: 0,
+                warning_high_blue: 0,
+                warning_low_red: 0,
+                warning_low_green: 0,
+                warning_low_blue: 0,
+                success_red: 0,
+                success_green: 0,
+                success_blue: 0,
+                partial_success_red: 0,
+                partial_success_green: 0,
+                partial_success_blue: 0,
+                cleaning_red: 0,
+                cleaning_green: 0,
+                cleaning_blue: 0,
+                time_measurement_red: 0,
+                time_measurement_green: 0,
+                time_measurement_blue: 0,
+                info_red: 0,
+                info_green: 0,
+                info_blue: 0,
+            },
+        };
+        //
+        match std::env::var(GITHUB_NAME_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.github_authorization.github_name = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_NAME_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(GITHUB_TOKEN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.github_authorization.github_token = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_TOKEN_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_TOKEN_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(REDDIT_USER_AGENT_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.reddit_authorization.reddit_user_agent = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USER_AGENT_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USER_AGENT_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.reddit_authorization.reddit_client_id = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_ID_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_ID_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.reddit_authorization.reddit_client_secret = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_SECRET_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(REDDIT_USERNAME_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.reddit_authorization.reddit_username = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_USERNAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USERNAME_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.reddit_authorization.reddit_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(REDDIT_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_PASSWORD_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_OWN_LOGIN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_own_authorization.mongo_own_login = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_LOGIN_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_OWN_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_own_authorization.mongo_own_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PASSWORD_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_OWN_IP_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_own_authorization.mongo_own_ip = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_IP_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_OWN_PORT_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_own_authorization.mongo_own_port = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PORT_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_cloud_authorization.mongo_cloud_login = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_LOGIN_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_cloud_authorization.mongo_cloud_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_PASSWORD_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_cloud_authorization.mongo_cloud_cluster_name = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_NAME_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.mongo_cloud_authorization.mongo_cloud_cluster_params = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.postgres_own_authorization.postgres_own_login = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_LOGIN_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.postgres_own_authorization.postgres_own_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_PASSWORD_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(POSTGRES_OWN_IP_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.postgres_own_authorization.postgres_own_ip = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_IP_ENV_NAME, e)))
+                    }
+                }
+        match std::env::var(POSTGRES_OWN_DB_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config.postgres_own_authorization.postgres_own_db = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_DB_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_DB_ENV_NAME, e)))
+                    }
+                }
+        //
         match std::env::var(STARTING_CHECK_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config.params.starting_check_link = handle;
             }
             Err(e) => {
-                // if !is_env_file_exists {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
                     STARTING_CHECK_LINK_ENV_NAME, e
                 )));
-                // }
             }
         }
         match std::env::var(USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME) {
@@ -4340,10 +4605,152 @@ impl ConfigStruct {
                 )))
             }
         }
-        Ok(handle_config)
+        return ConfigStruct::wrap_config_checks(handle_config);
     }
 
     fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+        if !config_handle.github_authorization.github_name.is_empty() {
+            let error: Result<ConfigStruct, ConfigError> =
+                Err(ConfigError::Message("github_name is not valid".to_string()));
+            drop(error);
+        }
+        if !config_handle.github_authorization.github_token.is_empty() {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "github_token is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .reddit_authorization
+            .reddit_user_agent
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "reddit_user_agent is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .reddit_authorization
+            .reddit_client_id
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "reddit_client_id is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .reddit_authorization
+            .reddit_client_secret
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "reddit_client_secret is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .reddit_authorization
+            .reddit_username
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "reddit_username is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .reddit_authorization
+            .reddit_password
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "reddit_password is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_own_authorization
+            .mongo_own_login
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_own_login is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_own_authorization
+            .mongo_own_password
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_own_password is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_own_authorization
+            .mongo_own_ip
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_own_ip is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_own_authorization
+            .mongo_own_port
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_own_port is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_cloud_authorization
+            .mongo_cloud_login
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_cloud_login is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_cloud_authorization
+            .mongo_cloud_password
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_cloud_password is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_name
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_cloud_cluster_name is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        if !config_handle
+            .mongo_cloud_authorization
+            .mongo_cloud_cluster_params
+            .is_empty()
+        {
+            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
+                "mongo_cloud_cluster_params is not valid".to_string(),
+            ));
+            drop(error);
+        }
+        //
         if config_handle.mongo_params.log_file_extension.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
                 "config_handle.mongo_params.log_file_extension is not empty".to_string(),

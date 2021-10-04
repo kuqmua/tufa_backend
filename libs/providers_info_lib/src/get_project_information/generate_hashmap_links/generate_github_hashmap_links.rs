@@ -1,4 +1,4 @@
-use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn generate_github_hashmap_links(github_names: Vec<String>) -> Vec<String> {
     //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG
@@ -8,7 +8,7 @@ pub fn generate_github_hashmap_links(github_names: Vec<String>) -> Vec<String> {
     for github_name in github_names {
         let github_link = format!(
             "{}{}{}{}",
-            start, github_name, middle, USER_CREDENTIALS.github_authorization.github_token
+            start, github_name, middle, CONFIG.github_authorization.github_token
         );
         github_links.push(github_link);
     }

@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableProvidersCleaningWarningLogsDirectory {
     pub enable_cleaning_warning_logs_directory_for_arxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_biorxiv: bool,

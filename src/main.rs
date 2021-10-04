@@ -54,7 +54,6 @@ mod entry;
 mod providers_new_posts_check;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use postgres_integration::create_post;
 use postgres_integration::establish_connection::establish_connection;
 
@@ -65,17 +64,13 @@ fn main() {
     let postgres_url = format!(
         "{}{}{}{}{}{}{}{}",
         CONFIG.postgres_params.postgres_own_first_handle_url_part,
-        USER_CREDENTIALS
-            .postgres_own_authorization
-            .postgres_own_login,
+        CONFIG.postgres_own_authorization.postgres_own_login,
         CONFIG.postgres_params.postgres_own_second_handle_url_part,
-        USER_CREDENTIALS
-            .postgres_own_authorization
-            .postgres_own_password,
+        CONFIG.postgres_own_authorization.postgres_own_password,
         CONFIG.postgres_params.postgres_own_third_handle_url_part,
-        USER_CREDENTIALS.postgres_own_authorization.postgres_own_ip,
+        CONFIG.postgres_own_authorization.postgres_own_ip,
         CONFIG.postgres_params.postgres_own_fourth_handle_url_part,
-        USER_CREDENTIALS.postgres_own_authorization.postgres_own_db
+        CONFIG.postgres_own_authorization.postgres_own_db
     );
     let posgtres_connection = establish_connection(postgres_url);
     match posgtres_connection {

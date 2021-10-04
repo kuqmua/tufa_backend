@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct PostgresParams {
     pub postgres_own_first_handle_url_part: String,
     pub postgres_own_second_handle_url_part: String,

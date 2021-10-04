@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)] //, serde_derive::Serialize, serde_derive::Deserialize
 pub struct EnableErrorProvidersPrints {
     pub enable_error_prints_for_arxiv: bool,
     pub enable_error_prints_for_biorxiv: bool,

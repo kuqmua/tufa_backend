@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableProvidersInfo {
     pub enable_info_for_arxiv: bool,
     pub enable_info_for_biorxiv: bool,

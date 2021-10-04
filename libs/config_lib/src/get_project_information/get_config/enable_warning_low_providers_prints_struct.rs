@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableWarningLowProvidersPrints {
     pub enable_warning_low_prints_for_arxiv: bool,
     pub enable_warning_low_prints_for_biorxiv: bool,

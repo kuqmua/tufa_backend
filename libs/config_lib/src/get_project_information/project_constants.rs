@@ -1,10 +1,9 @@
 use std::collections::HashMap;
 
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use crate::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-pub const ENABLE_OVERRIDING_ENV_FILE_ENV_NAME: &str = "ENABLE_OVERRIDING_ENV_FILE";
+pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
 pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
 pub const GITHUB_TOKEN_ENV_NAME: &str = "GITHUB_TOKEN";
@@ -31,7 +30,6 @@ pub const POSTGRES_OWN_IP_ENV_NAME: &str = "POSTGRES_OWN_IP";
 pub const POSTGRES_OWN_DB_ENV_NAME: &str = "POSTGRES_OWN_DB";
 
 //[params]
-pub const VEC_OF_PROVIDER_NAMES_ENV_NAME: &str = "VEC_OF_PROVIDER_NAMES";
 pub const STARTING_CHECK_LINK_ENV_NAME: &str = "STARTING_CHECK_LINK";
 pub const USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME: &str = "USER_CREDENTIALS_DUMMY_HANDLE";
 pub const WARNING_LOGS_DIRECTORY_NAME_ENV_NAME: &str = "WARNING_LOGS_DIRECTORY_NAME";
@@ -358,11 +356,6 @@ pub const INFO_BLUE_ENV_NAME: &str = "INFO_BLUE";
 
 ///////////////////////////////////
 
-pub const LOAD_USER_CREDENTIALS_FILE_ERROR_MESSAGE: &str = "сan not load user_credentials file";
-pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "сan not load config file";
-pub const PATH_TO_CONFIG: &str = "./config/";
-pub const PATH_TO_CONFIG_FOR_TEST: &str = "../../config/";
-pub const USER_CREDENTIALS_FILE_NAME: &str = "User_credentials";
 pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
 pub const ARXIV_NAME_TO_CHECK: &str = "arxiv";
@@ -406,28 +399,23 @@ pub fn get_mongo_url() -> String {
             .mongo_params
             .enable_mongo_cloud_url_parts
             .mongo_cloud_first_handle_url_part;
-        let mongo_cloud_login = &USER_CREDENTIALS.mongo_cloud_authorization.mongo_cloud_login;
+        let mongo_cloud_login = &CONFIG.mongo_cloud_authorization.mongo_cloud_login;
         let mongo_cloud_second_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_cloud_url_parts
             .mongo_cloud_second_handle_url_part;
-        let mongo_cloud_password = &USER_CREDENTIALS
-            .mongo_cloud_authorization
-            .mongo_cloud_password;
+        let mongo_cloud_password = &CONFIG.mongo_cloud_authorization.mongo_cloud_password;
         let mongo_cloud_third_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_cloud_url_parts
             .mongo_cloud_third_handle_url_part;
-        let mongo_cloud_cluster_name = &USER_CREDENTIALS
-            .mongo_cloud_authorization
-            .mongo_cloud_cluster_name;
+        let mongo_cloud_cluster_name = &CONFIG.mongo_cloud_authorization.mongo_cloud_cluster_name;
         let mongo_cloud_fourth_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_cloud_url_parts
             .mongo_cloud_fourth_handle_url_part;
-        let mongo_cloud_cluster_params = &USER_CREDENTIALS
-            .mongo_cloud_authorization
-            .mongo_cloud_cluster_params;
+        let mongo_cloud_cluster_params =
+            &CONFIG.mongo_cloud_authorization.mongo_cloud_cluster_params;
         mongo_url = format!(
             "{}{}{}{}{}{}{}{}",
             mongo_cloud_first_handle_url_part,
@@ -444,22 +432,22 @@ pub fn get_mongo_url() -> String {
             .mongo_params
             .enable_mongo_own_url_parts
             .mongo_own_first_handle_url_part;
-        let mongo_own_login = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_login;
+        let mongo_own_login = &CONFIG.mongo_own_authorization.mongo_own_login;
         let mongo_own_second_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_own_url_parts
             .mongo_own_second_handle_url_part;
-        let mongo_own_password = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_password;
+        let mongo_own_password = &CONFIG.mongo_own_authorization.mongo_own_password;
         let mongo_own_third_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_own_url_parts
             .mongo_own_third_handle_url_part;
-        let mongo_own_ip = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_ip;
+        let mongo_own_ip = &CONFIG.mongo_own_authorization.mongo_own_ip;
         let mongo_own_fourth_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_own_url_parts
             .mongo_own_fourth_handle_url_part;
-        let mongo_own_port = &USER_CREDENTIALS.mongo_own_authorization.mongo_own_port;
+        let mongo_own_port = &CONFIG.mongo_own_authorization.mongo_own_port;
         mongo_url = format!(
             "{}{}{}{}{}{}{}{}",
             mongo_own_first_handle_url_part,

@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableRandomizeOrderForProvidersLinkPartsForMongo {
     pub enable_randomize_order_for_arxiv_link_parts_for_mongo: bool,
     pub enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool,

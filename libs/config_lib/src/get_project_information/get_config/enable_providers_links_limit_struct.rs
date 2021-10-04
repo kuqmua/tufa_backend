@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableProvidersLinksLimit {
     pub enable_links_limit_for_arxiv: bool,
     pub enable_links_limit_for_biorxiv: bool,

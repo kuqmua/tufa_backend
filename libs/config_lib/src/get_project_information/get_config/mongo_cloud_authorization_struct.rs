@@ -1,4 +1,4 @@
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct MongoCloudAuthorization {
     pub mongo_cloud_login: String,
     pub mongo_cloud_password: String,

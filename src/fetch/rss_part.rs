@@ -19,7 +19,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use config_lib::get_project_information::get_user_credentials::get_lazy_user_credentials_information::USER_CREDENTIALS;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 //todo: think about naming
 type SuccessErrorTuple = (
@@ -240,11 +240,11 @@ pub fn rss_part(
                 ProviderKind::Reddit => {
                     //what should i do with authorization?
                     let is_reddit_authorized = reddit_authorization::reddit_authorization(
-                        &USER_CREDENTIALS.reddit_authorization.reddit_user_agent,
-                        &USER_CREDENTIALS.reddit_authorization.reddit_client_id,
-                        &USER_CREDENTIALS.reddit_authorization.reddit_client_secret,
-                        &USER_CREDENTIALS.reddit_authorization.reddit_username,
-                        &USER_CREDENTIALS.reddit_authorization.reddit_password,
+                        &CONFIG.reddit_authorization.reddit_user_agent,
+                        &CONFIG.reddit_authorization.reddit_client_id,
+                        &CONFIG.reddit_authorization.reddit_client_secret,
+                        &CONFIG.reddit_authorization.reddit_username,
+                        &CONFIG.reddit_authorization.reddit_password,
                     );
                     if is_reddit_authorized {
                         print_colorful_message(
