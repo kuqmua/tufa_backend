@@ -352,6 +352,20 @@ match std::env::var() {
 
 ### -------------------
 remove file::open and add fs::read_to_string instead
+// use std::fs;
+        // use toml::Value;
+        // let mmm = "./config/Development.toml";
+        // let result_of_opening_file = fs::read_to_string(mmm);
+        // match result_of_opening_file {
+        //     Ok(stringified_file) => {
+        //         let value = stringified_file.parse::<Value>().unwrap();
+        //         let m: ConfigStruct = value.try_into().unwrap();
+        //         // println!("m {:#?}", m)
+        //     }
+        //     Err(err) => {
+        //         println!("errorr {:#?}", err);
+        //     }
+        // }
 <br/>
 
 ### -------------------
