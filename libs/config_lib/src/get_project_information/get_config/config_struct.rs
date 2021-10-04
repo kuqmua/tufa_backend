@@ -359,295 +359,224 @@ impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
         //todo: remove dotenv for docker container
         ////////
-        let mut handle_config: ConfigStruct = ConfigStruct {
-            github_authorization: GithubAuthorization {
-                github_name: "".to_string(),
-                github_token: "".to_string(),
-            },
-            reddit_authorization: RedditAuthorization {
-                reddit_user_agent: "".to_string(),
-                reddit_client_id: "".to_string(),
-                reddit_client_secret: "".to_string(),
-                reddit_username: "".to_string(),
-                reddit_password: "".to_string(),
-            },
-            mongo_own_authorization: MongoOwnAuthorization {
-                mongo_own_login: "".to_string(),
-                mongo_own_password: "".to_string(),
-                mongo_own_ip: "".to_string(),
-                mongo_own_port: "".to_string(),
-            },
-            postgres_own_authorization: PostgresOwnAuthorization {
-                postgres_own_login: "".to_string(),
-                postgres_own_password: "".to_string(),
-                postgres_own_ip: "".to_string(),
-                postgres_own_db: "".to_string(),
-            },
-            mongo_cloud_authorization: MongoCloudAuthorization {
-                mongo_cloud_login: "".to_string(),
-                mongo_cloud_password: "".to_string(),
-                mongo_cloud_cluster_name: "".to_string(),
-                mongo_cloud_cluster_params: "".to_string(),
-            },
-            //
-            params: Params {
-                vec_of_provider_names: Vec::<String>::new(),
-                starting_check_link: "".to_string(),
-                user_credentials_dummy_handle: "".to_string(),
-                warning_logs_directory_name: "".to_string(),
-                unhandled_success_handled_success_are_there_items_initialized_posts_dir: ""
-                    .to_string(),
-                enable_providers: false,
-                enable_cleaning_warning_logs_directory: false,
-                enable_cleaning_warning_logs_db_in_mongo: false,
-                enable_cleaning_warning_logs_db_collections_in_mongo: false,
-                enable_time_measurement: false,
-                enable_provider_links_limit: false,
-                enable_common_providers_links_limit: false,
-                common_providers_links_limit: 0,
-                enable_randomize_order_for_providers_link_parts_for_mongo: false,
-                //
-                enable_prints: false,
-                enable_error_prints: false,
-                enable_warning_high_prints: false,
-                enable_warning_low_prints: false,
-                enable_success_prints: false,
-                enable_partial_success_prints: false,
-                enable_time_measurement_prints: false,
-                enable_cleaning_warning_logs_directory_prints: false,
-                enable_info_prints: false,
-                //
-                enable_all_providers_prints: false,
-                enable_error_prints_for_all_providers: false,
-                enable_warning_high_prints_for_all_providers: false,
-                enable_warning_low_prints_for_all_providers: false,
-                enable_success_prints_for_all_providers: false,
-                enable_partial_success_prints_for_all_providers: false,
-                enable_time_measurement_prints_for_all_providers: false,
-                enable_cleaning_warning_logs_directory_prints_for_all_providers: false,
-                enable_info_prints_for_all_providers: false,
-                //
-                enable_write_error_logs_in_local_folder: false,
-                enable_write_error_logs_in_mongo: false,
-                enable_initialize_mongo_with_providers_link_parts: false,
-            },
-            mongo_params: MongoParams {
-                is_cloud: false,
-                providers_db_name_handle: "".to_string(),
-                providers_db_collection_handle_second_part: "".to_string(),
-                providers_db_collection_document_field_name_handle: "".to_string(),
-                //
-                db_providers_logs_name_handle: "".to_string(),
-                db_providers_logs_collection_handle_second_part: "".to_string(),
-                db_providers_logs_collection_document_field_name_handle: "".to_string(),
-                //
-                path_to_provider_link_parts_folder: "".to_string(),
-                log_file_extension: "".to_string(),
-                //
-                enable_initialize_mongo_with_providers_link_parts:
-                    EnableInitializeMongoWithProvidersLinkParts {
-                        enable_initialize_mongo_with_arxiv_link_parts: false,
-                        enable_initialize_mongo_with_biorxiv_link_parts: false,
-                        enable_initialize_mongo_with_github_link_parts: false,
-                        enable_initialize_mongo_with_habr_link_parts: false,
-                        enable_initialize_mongo_with_medrxiv_link_parts: false,
-                        enable_initialize_mongo_with_reddit_link_parts: false,
-                        enable_initialize_mongo_with_twitter_link_parts: false,
-                    },
-                enable_mongo_own_url_parts: EnableMongoOwnUrlParts {
-                    mongo_own_first_handle_url_part: "".to_string(),
-                    mongo_own_second_handle_url_part: "".to_string(),
-                    mongo_own_third_handle_url_part: "".to_string(),
-                    mongo_own_fourth_handle_url_part: "".to_string(),
-                },
-                enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts {
-                    mongo_cloud_first_handle_url_part: "".to_string(),
-                    mongo_cloud_second_handle_url_part: "".to_string(),
-                    mongo_cloud_third_handle_url_part: "".to_string(),
-                    mongo_cloud_fourth_handle_url_part: "".to_string(),
-                },
-            },
-            postgres_params: PostgresParams {
-                postgres_own_first_handle_url_part: "".to_string(),
-                postgres_own_second_handle_url_part: "".to_string(),
-                postgres_own_third_handle_url_part: "".to_string(),
-                postgres_own_fourth_handle_url_part: "".to_string(),
-            },
-            enable_providers: EnableProviders {
-                enable_arxiv: false,
-                enable_biorxiv: false,
-                enable_github: false,
-                enable_habr: false,
-                enable_medrxiv: false,
-                enable_reddit: false,
-                enable_twitter: false,
-            },
-            providers_check_links: ProvidersCheckLinks {
-                arxiv_link: "".to_string(),
-                biorxiv_link: "".to_string(),
-                github_link: "".to_string(),
-                habr_link: "".to_string(),
-                medrxiv_link: "".to_string(),
-                reddit_link: "".to_string(),
-                twitter_link: "".to_string(),
-            },
-            enable_providers_prints: EnableProvidersPrints {
-                enable_prints_arxiv: false,
-                enable_prints_biorxiv: false,
-                enable_prints_github: false,
-                enable_prints_habr: false,
-                enable_prints_medrxiv: false,
-                enable_prints_reddit: false,
-                enable_prints_twitter: false,
-            },
-            enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
-                enable_warning_high_prints_for_arxiv: false,
-                enable_warning_high_prints_for_biorxiv: false,
-                enable_warning_high_prints_for_github: false,
-                enable_warning_high_prints_for_habr: false,
-                enable_warning_high_prints_for_medrxiv: false,
-                enable_warning_high_prints_for_reddit: false,
-                enable_warning_high_prints_for_twitter: false,
-            },
-            enable_warning_low_providers_prints: EnableWarningLowProvidersPrints {
-                enable_warning_low_prints_for_arxiv: false,
-                enable_warning_low_prints_for_biorxiv: false,
-                enable_warning_low_prints_for_github: false,
-                enable_warning_low_prints_for_habr: false,
-                enable_warning_low_prints_for_medrxiv: false,
-                enable_warning_low_prints_for_reddit: false,
-                enable_warning_low_prints_for_twitter: false,
-            },
-            enable_success_providers_prints: EnableSuccessProvidersPrints {
-                enable_success_prints_for_arxiv: false,
-                enable_success_prints_for_biorxiv: false,
-                enable_success_prints_for_github: false,
-                enable_success_prints_for_habr: false,
-                enable_success_prints_for_medrxiv: false,
-                enable_success_prints_for_reddit: false,
-                enable_success_prints_for_twitter: false,
-            },
-            enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
-                enable_partial_success_prints_for_arxiv: false,
-                enable_partial_success_prints_for_biorxiv: false,
-                enable_partial_success_prints_for_github: false,
-                enable_partial_success_prints_for_habr: false,
-                enable_partial_success_prints_for_medrxiv: false,
-                enable_partial_success_prints_for_reddit: false,
-                enable_partial_success_prints_for_twitter: false,
-            },
-            enable_error_providers_prints: EnableErrorProvidersPrints {
-                enable_error_prints_for_arxiv: false,
-                enable_error_prints_for_biorxiv: false,
-                enable_error_prints_for_github: false,
-                enable_error_prints_for_habr: false,
-                enable_error_prints_for_medrxiv: false,
-                enable_error_prints_for_reddit: false,
-                enable_error_prints_for_twitter: false,
-            },
-            enable_providers_cleaning_warning_logs_directory:
-                EnableProvidersCleaningWarningLogsDirectory {
-                    enable_cleaning_warning_logs_directory_for_arxiv: false,
-                    enable_cleaning_warning_logs_directory_for_biorxiv: false,
-                    enable_cleaning_warning_logs_directory_for_github: false,
-                    enable_cleaning_warning_logs_directory_for_habr: false,
-                    enable_cleaning_warning_logs_directory_for_medrxiv: false,
-                    enable_cleaning_warning_logs_directory_for_reddit: false,
-                    enable_cleaning_warning_logs_directory_for_twitter: false,
-                },
-            enable_providers_cleaning_warning_logs_db_in_mongo:
-                EnableProvidersCleaningWarningLogsDbInMongo {
-                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_github: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_habr: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: false,
-                },
-            enable_providers_cleaning_warning_logs_db_collections_in_mongo:
-                EnableProvidersCleaningWarningLogsDbCollectionsInMongo {
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_github: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: false,
-                },
-            enable_providers_time_measurement: EnableProvidersTimeMeasurement {
-                enable_time_measurement_for_arxiv: false,
-                enable_time_measurement_for_biorxiv: false,
-                enable_time_measurement_for_github: false,
-                enable_time_measurement_for_habr: false,
-                enable_time_measurement_for_medrxiv: false,
-                enable_time_measurement_for_reddit: false,
-                enable_time_measurement_for_twitter: false,
-            },
-            enable_providers_info: EnableProvidersInfo {
-                enable_info_for_arxiv: false,
-                enable_info_for_biorxiv: false,
-                enable_info_for_github: false,
-                enable_info_for_habr: false,
-                enable_info_for_medrxiv: false,
-                enable_info_for_reddit: false,
-                enable_info_for_twitter: false,
-            },
-            enable_providers_links_limits: EnableProvidersLinksLimit {
-                enable_links_limit_for_arxiv: false,
-                enable_links_limit_for_biorxiv: false,
-                enable_links_limit_for_github: false,
-                enable_links_limit_for_habr: false,
-                enable_links_limit_for_medrxiv: false,
-                enable_links_limit_for_reddit: false,
-                enable_links_limit_for_twitter: false,
-            },
-            providers_links_limits: ProvidersLinksLimits {
-                links_limit_for_arxiv: 0,
-                links_limit_for_biorxiv: 0,
-                links_limit_for_github: 0,
-                links_limit_for_habr: 0,
-                links_limit_for_medrxiv: 0,
-                links_limit_for_reddit: 0,
-                links_limit_for_twitter: 0,
-            },
-            enable_randomize_order_for_providers_link_parts_for_mongo:
-                EnableRandomizeOrderForProvidersLinkPartsForMongo {
-                    enable_randomize_order_for_arxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_biorxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_github_link_parts_for_mongo: false,
-                    enable_randomize_order_for_habr_link_parts_for_mongo: false,
-                    enable_randomize_order_for_medrxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_reddit_link_parts_for_mongo: false,
-                    enable_randomize_order_for_twitter_link_parts_for_mongo: false,
-                },
-            print_colors: PrintColors {
-                error_red: 0,
-                error_green: 0,
-                error_blue: 0,
-                warning_high_red: 0,
-                warning_high_green: 0,
-                warning_high_blue: 0,
-                warning_low_red: 0,
-                warning_low_green: 0,
-                warning_low_blue: 0,
-                success_red: 0,
-                success_green: 0,
-                success_blue: 0,
-                partial_success_red: 0,
-                partial_success_green: 0,
-                partial_success_blue: 0,
-                cleaning_red: 0,
-                cleaning_green: 0,
-                cleaning_blue: 0,
-                time_measurement_red: 0,
-                time_measurement_green: 0,
-                time_measurement_blue: 0,
-                info_red: 0,
-                info_green: 0,
-                info_blue: 0,
-            },
-        };
+        let handle_config_github_authorization_github_name: String;
+        let handle_config_github_authorization_github_token: String;
+        let handle_config_reddit_authorization_reddit_user_agent: String;
+        let handle_config_reddit_authorization_reddit_client_id: String;
+        let handle_config_reddit_authorization_reddit_client_secret: String;
+        let handle_config_reddit_authorization_reddit_username: String;
+        let handle_config_reddit_authorization_reddit_password: String;
+        let handle_config_mongo_own_authorization_mongo_own_login: String;
+        let handle_config_mongo_own_authorization_mongo_own_password: String;
+        let handle_config_mongo_own_authorization_mongo_own_ip: String;
+        let handle_config_mongo_own_authorization_mongo_own_port: String;
+        let handle_config_postgres_own_authorization_postgres_own_login: String;
+        let handle_config_postgres_own_authorization_postgres_own_password: String;
+        let handle_config_postgres_own_authorization_postgres_own_ip: String;
+        let handle_config_postgres_own_authorization_postgres_own_db: String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_login: String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_password: String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name: String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params: String;
+        let handle_config_params_starting_check_link: String;
+        let handle_config_params_user_credentials_dummy_handle: String;
+        let handle_config_params_warning_logs_directory_name: String;
+        let handle_config_params_unhandled_success_handled_success_are_there_items_initialized_posts_dir: String;
+        let handle_config_params_enable_providers: String;
+        let handle_config_params_enable_cleaning_warning_logs_directory: String;
+        let handle_config_params_enable_cleaning_warning_logs_db_in_mongo: String;
+        let handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo: String;
+        let handle_config_params_enable_time_measurement: String;
+        let handle_config_params_enable_provider_links_limit: String;
+        let handle_config_params_enable_common_providers_links_limit: String;
+        let handle_config_params_common_providers_links_limit: String;
+        let handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo: String;
+        let handle_config_params_enable_prints: String;
+        let handle_config_params_enable_error_prints: String;
+        let handle_config_params_enable_warning_high_prints: String;
+        let handle_config_params_enable_warning_low_prints: String;
+        let handle_config_params_enable_success_prints: String;
+        let handle_config_params_enable_partial_success_prints: String;
+        let handle_config_params_enable_time_measurement_prints: String;
+        let handle_config_params_enable_cleaning_warning_logs_directory_prints: String;
+        let handle_config_params_enable_info_prints: String;
+        let handle_config_params_enable_all_providers_prints: String;
+        let handle_config_params_enable_error_prints_for_all_providers: String;
+        let handle_config_params_enable_warning_high_prints_for_all_providers: String;
+        let handle_config_params_enable_warning_low_prints_for_all_providers: String;
+        let handle_config_params_enable_success_prints_for_all_providers: String;
+        let handle_config_params_enable_partial_success_prints_for_all_providers: String;
+        let handle_config_params_enable_time_measurement_prints_for_all_providers: String;
+        let handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers: String;
+        let handle_config_params_enable_info_prints_for_all_providers: String;
+        let handle_config_params_enable_write_error_logs_in_local_folder: String;
+        let handle_config_params_enable_write_error_logs_in_mongo: String;
+        let handle_config_params_enable_initialize_mongo_with_providers_link_parts: String;
+        let handle_config_mongo_params_is_cloud: String;
+        let handle_config_mongo_params_providers_db_name_handle: String;
+        let handle_config_mongo_params_providers_db_collection_handle_second_part: String;
+        let handle_config_mongo_params_providers_db_collection_document_field_name_handle: String;
+        let handle_config_mongo_params_db_providers_logs_name_handle: String;
+        let handle_config_mongo_params_db_providers_logs_collection_handle_second_part: String;
+        let handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle: String;
+        let handle_config_mongo_params_path_to_provider_link_parts_folder: String;
+        let handle_config_mongo_params_log_file_extension: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_arxiv_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts: String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts: String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part: String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part: String;
+        let handle_config_postgres_params_postgres_own_first_handle_url_part: String;
+        let handle_config_postgres_params_postgres_own_second_handle_url_part: String;
+        let handle_config_postgres_params_postgres_own_third_handle_url_part: String;
+        let handle_config_postgres_params_postgres_own_fourth_handle_url_part: String;
+        let handle_config_enable_providers_enable_arxiv: String;
+        let handle_config_enable_providers_enable_biorxiv: String;
+        let handle_config_enable_providers_enable_github: String;
+        let handle_config_enable_providers_enable_habr: String;
+        let handle_config_enable_providers_enable_medrxiv: String;
+        let handle_config_enable_providers_enable_reddit: String;
+        let handle_config_enable_providers_enable_twitter: String;
+        let handle_config_providers_check_links_arxiv_link: String;
+        let handle_config_providers_check_links_biorxiv_link: String;
+        let handle_config_providers_check_links_github_link: String;
+        let handle_config_providers_check_links_habr_link: String;
+        let handle_config_providers_check_links_medrxiv_link: String;
+        let handle_config_providers_check_links_reddit_link: String;
+        let handle_config_providers_check_links_twitter_link: String;
+        let handle_config_enable_providers_prints_enable_prints_arxiv: String;
+        let handle_config_enable_providers_prints_enable_prints_biorxiv: String;
+        let handle_config_enable_providers_prints_enable_prints_github: String;
+        let handle_config_enable_providers_prints_enable_prints_habr: String;
+        let handle_config_enable_providers_prints_enable_prints_medrxiv: String;
+        let handle_config_enable_providers_prints_enable_prints_reddit: String;
+        let handle_config_enable_providers_prints_enable_prints_twitter: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit: String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit: String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_github: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_habr: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_reddit: String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_twitter: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit: String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_github: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_habr: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_reddit: String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_twitter: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit: String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_github: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit: String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter: String;
+        let handle_config_enable_providers_info_enable_info_for_arxiv: String;
+        let handle_config_enable_providers_info_enable_info_for_biorxiv: String;
+        let handle_config_enable_providers_info_enable_info_for_github: String;
+        let handle_config_enable_providers_info_enable_info_for_habr: String;
+        let handle_config_enable_providers_info_enable_info_for_medrxiv: String;
+        let handle_config_enable_providers_info_enable_info_for_reddit: String;
+        let handle_config_enable_providers_info_enable_info_for_twitter: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_github: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_habr: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_reddit: String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_twitter: String;
+        let handle_config_providers_links_limits_links_limit_for_arxiv: String;
+        let handle_config_providers_links_limits_links_limit_for_biorxiv: String;
+        let handle_config_providers_links_limits_links_limit_for_github: String;
+        let handle_config_providers_links_limits_links_limit_for_habr: String;
+        let handle_config_providers_links_limits_links_limit_for_medrxiv: String;
+        let handle_config_providers_links_limits_links_limit_for_reddit: String;
+        let handle_config_providers_links_limits_links_limit_for_twitter: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo: String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo: String;
+        let handle_config_print_colors_error_red: String;
+        let handle_config_print_colors_error_green: String;
+        let handle_config_print_colors_error_blue: String;
+        let handle_config_print_colors_warning_high_red: String;
+        let handle_config_print_colors_warning_high_green: String;
+        let handle_config_print_colors_warning_high_blue: String;
+        let handle_config_print_colors_warning_low_red: String;
+        let handle_config_print_colors_warning_low_green: String;
+        let handle_config_print_colors_warning_low_blue: String;
+        let handle_config_print_colors_success_red: String;
+        let handle_config_print_colors_success_green: String;
+        let handle_config_print_colors_success_blue: String;
+        let handle_config_print_colors_partial_success_red: String;
+        let handle_config_print_colors_partial_success_green: String;
+        let handle_config_print_colors_partial_success_blue: String;
+        let handle_config_print_colors_cleaning_red: String;
+        let handle_config_print_colors_cleaning_green: String;
+        let handle_config_print_colors_cleaning_blue: String;
+        let handle_config_print_colors_time_measurement_red: String;
+        let handle_config_print_colors_time_measurement_green: String;
+        let handle_config_print_colors_time_measurement_blue: String;
+        let handle_config_print_colors_info_red: String;
+        let handle_config_print_colors_info_green: String;
+        let handle_config_print_colors_info_blue: String;
+
         //
         match std::env::var(GITHUB_NAME_ENV_NAME) {
                     Ok(handle) => {
@@ -4605,6 +4534,296 @@ impl ConfigStruct {
                 )))
             }
         }
+        //
+        let mut handle_config: ConfigStruct = ConfigStruct {
+            github_authorization: GithubAuthorization {
+                github_name: "".to_string(),
+                github_token: "".to_string(),
+            },
+            reddit_authorization: RedditAuthorization {
+                reddit_user_agent: "".to_string(),
+                reddit_client_id: "".to_string(),
+                reddit_client_secret: "".to_string(),
+                reddit_username: "".to_string(),
+                reddit_password: "".to_string(),
+            },
+            mongo_own_authorization: MongoOwnAuthorization {
+                mongo_own_login: "".to_string(),
+                mongo_own_password: "".to_string(),
+                mongo_own_ip: "".to_string(),
+                mongo_own_port: "".to_string(),
+            },
+            postgres_own_authorization: PostgresOwnAuthorization {
+                postgres_own_login: "".to_string(),
+                postgres_own_password: "".to_string(),
+                postgres_own_ip: "".to_string(),
+                postgres_own_db: "".to_string(),
+            },
+            mongo_cloud_authorization: MongoCloudAuthorization {
+                mongo_cloud_login: "".to_string(),
+                mongo_cloud_password: "".to_string(),
+                mongo_cloud_cluster_name: "".to_string(),
+                mongo_cloud_cluster_params: "".to_string(),
+            },
+            //
+            params: Params {
+                vec_of_provider_names: Vec::<String>::new(),
+                starting_check_link: "".to_string(),
+                user_credentials_dummy_handle: "".to_string(),
+                warning_logs_directory_name: "".to_string(),
+                unhandled_success_handled_success_are_there_items_initialized_posts_dir: ""
+                    .to_string(),
+                enable_providers: false,
+                enable_cleaning_warning_logs_directory: false,
+                enable_cleaning_warning_logs_db_in_mongo: false,
+                enable_cleaning_warning_logs_db_collections_in_mongo: false,
+                enable_time_measurement: false,
+                enable_provider_links_limit: false,
+                enable_common_providers_links_limit: false,
+                common_providers_links_limit: 0,
+                enable_randomize_order_for_providers_link_parts_for_mongo: false,
+                //
+                enable_prints: false,
+                enable_error_prints: false,
+                enable_warning_high_prints: false,
+                enable_warning_low_prints: false,
+                enable_success_prints: false,
+                enable_partial_success_prints: false,
+                enable_time_measurement_prints: false,
+                enable_cleaning_warning_logs_directory_prints: false,
+                enable_info_prints: false,
+                //
+                enable_all_providers_prints: false,
+                enable_error_prints_for_all_providers: false,
+                enable_warning_high_prints_for_all_providers: false,
+                enable_warning_low_prints_for_all_providers: false,
+                enable_success_prints_for_all_providers: false,
+                enable_partial_success_prints_for_all_providers: false,
+                enable_time_measurement_prints_for_all_providers: false,
+                enable_cleaning_warning_logs_directory_prints_for_all_providers: false,
+                enable_info_prints_for_all_providers: false,
+                //
+                enable_write_error_logs_in_local_folder: false,
+                enable_write_error_logs_in_mongo: false,
+                enable_initialize_mongo_with_providers_link_parts: false,
+            },
+            mongo_params: MongoParams {
+                is_cloud: false,
+                providers_db_name_handle: "".to_string(),
+                providers_db_collection_handle_second_part: "".to_string(),
+                providers_db_collection_document_field_name_handle: "".to_string(),
+                //
+                db_providers_logs_name_handle: "".to_string(),
+                db_providers_logs_collection_handle_second_part: "".to_string(),
+                db_providers_logs_collection_document_field_name_handle: "".to_string(),
+                //
+                path_to_provider_link_parts_folder: "".to_string(),
+                log_file_extension: "".to_string(),
+                //
+                enable_initialize_mongo_with_providers_link_parts:
+                    EnableInitializeMongoWithProvidersLinkParts {
+                        enable_initialize_mongo_with_arxiv_link_parts: false,
+                        enable_initialize_mongo_with_biorxiv_link_parts: false,
+                        enable_initialize_mongo_with_github_link_parts: false,
+                        enable_initialize_mongo_with_habr_link_parts: false,
+                        enable_initialize_mongo_with_medrxiv_link_parts: false,
+                        enable_initialize_mongo_with_reddit_link_parts: false,
+                        enable_initialize_mongo_with_twitter_link_parts: false,
+                    },
+                enable_mongo_own_url_parts: EnableMongoOwnUrlParts {
+                    mongo_own_first_handle_url_part: "".to_string(),
+                    mongo_own_second_handle_url_part: "".to_string(),
+                    mongo_own_third_handle_url_part: "".to_string(),
+                    mongo_own_fourth_handle_url_part: "".to_string(),
+                },
+                enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts {
+                    mongo_cloud_first_handle_url_part: "".to_string(),
+                    mongo_cloud_second_handle_url_part: "".to_string(),
+                    mongo_cloud_third_handle_url_part: "".to_string(),
+                    mongo_cloud_fourth_handle_url_part: "".to_string(),
+                },
+            },
+            postgres_params: PostgresParams {
+                postgres_own_first_handle_url_part: "".to_string(),
+                postgres_own_second_handle_url_part: "".to_string(),
+                postgres_own_third_handle_url_part: "".to_string(),
+                postgres_own_fourth_handle_url_part: "".to_string(),
+            },
+            enable_providers: EnableProviders {
+                enable_arxiv: false,
+                enable_biorxiv: false,
+                enable_github: false,
+                enable_habr: false,
+                enable_medrxiv: false,
+                enable_reddit: false,
+                enable_twitter: false,
+            },
+            providers_check_links: ProvidersCheckLinks {
+                arxiv_link: "".to_string(),
+                biorxiv_link: "".to_string(),
+                github_link: "".to_string(),
+                habr_link: "".to_string(),
+                medrxiv_link: "".to_string(),
+                reddit_link: "".to_string(),
+                twitter_link: "".to_string(),
+            },
+            enable_providers_prints: EnableProvidersPrints {
+                enable_prints_arxiv: false,
+                enable_prints_biorxiv: false,
+                enable_prints_github: false,
+                enable_prints_habr: false,
+                enable_prints_medrxiv: false,
+                enable_prints_reddit: false,
+                enable_prints_twitter: false,
+            },
+            enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
+                enable_warning_high_prints_for_arxiv: false,
+                enable_warning_high_prints_for_biorxiv: false,
+                enable_warning_high_prints_for_github: false,
+                enable_warning_high_prints_for_habr: false,
+                enable_warning_high_prints_for_medrxiv: false,
+                enable_warning_high_prints_for_reddit: false,
+                enable_warning_high_prints_for_twitter: false,
+            },
+            enable_warning_low_providers_prints: EnableWarningLowProvidersPrints {
+                enable_warning_low_prints_for_arxiv: false,
+                enable_warning_low_prints_for_biorxiv: false,
+                enable_warning_low_prints_for_github: false,
+                enable_warning_low_prints_for_habr: false,
+                enable_warning_low_prints_for_medrxiv: false,
+                enable_warning_low_prints_for_reddit: false,
+                enable_warning_low_prints_for_twitter: false,
+            },
+            enable_success_providers_prints: EnableSuccessProvidersPrints {
+                enable_success_prints_for_arxiv: false,
+                enable_success_prints_for_biorxiv: false,
+                enable_success_prints_for_github: false,
+                enable_success_prints_for_habr: false,
+                enable_success_prints_for_medrxiv: false,
+                enable_success_prints_for_reddit: false,
+                enable_success_prints_for_twitter: false,
+            },
+            enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
+                enable_partial_success_prints_for_arxiv: false,
+                enable_partial_success_prints_for_biorxiv: false,
+                enable_partial_success_prints_for_github: false,
+                enable_partial_success_prints_for_habr: false,
+                enable_partial_success_prints_for_medrxiv: false,
+                enable_partial_success_prints_for_reddit: false,
+                enable_partial_success_prints_for_twitter: false,
+            },
+            enable_error_providers_prints: EnableErrorProvidersPrints {
+                enable_error_prints_for_arxiv: false,
+                enable_error_prints_for_biorxiv: false,
+                enable_error_prints_for_github: false,
+                enable_error_prints_for_habr: false,
+                enable_error_prints_for_medrxiv: false,
+                enable_error_prints_for_reddit: false,
+                enable_error_prints_for_twitter: false,
+            },
+            enable_providers_cleaning_warning_logs_directory:
+                EnableProvidersCleaningWarningLogsDirectory {
+                    enable_cleaning_warning_logs_directory_for_arxiv: false,
+                    enable_cleaning_warning_logs_directory_for_biorxiv: false,
+                    enable_cleaning_warning_logs_directory_for_github: false,
+                    enable_cleaning_warning_logs_directory_for_habr: false,
+                    enable_cleaning_warning_logs_directory_for_medrxiv: false,
+                    enable_cleaning_warning_logs_directory_for_reddit: false,
+                    enable_cleaning_warning_logs_directory_for_twitter: false,
+                },
+            enable_providers_cleaning_warning_logs_db_in_mongo:
+                EnableProvidersCleaningWarningLogsDbInMongo {
+                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_github: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_habr: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: false,
+                },
+            enable_providers_cleaning_warning_logs_db_collections_in_mongo:
+                EnableProvidersCleaningWarningLogsDbCollectionsInMongo {
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_github: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: false,
+                },
+            enable_providers_time_measurement: EnableProvidersTimeMeasurement {
+                enable_time_measurement_for_arxiv: false,
+                enable_time_measurement_for_biorxiv: false,
+                enable_time_measurement_for_github: false,
+                enable_time_measurement_for_habr: false,
+                enable_time_measurement_for_medrxiv: false,
+                enable_time_measurement_for_reddit: false,
+                enable_time_measurement_for_twitter: false,
+            },
+            enable_providers_info: EnableProvidersInfo {
+                enable_info_for_arxiv: false,
+                enable_info_for_biorxiv: false,
+                enable_info_for_github: false,
+                enable_info_for_habr: false,
+                enable_info_for_medrxiv: false,
+                enable_info_for_reddit: false,
+                enable_info_for_twitter: false,
+            },
+            enable_providers_links_limits: EnableProvidersLinksLimit {
+                enable_links_limit_for_arxiv: false,
+                enable_links_limit_for_biorxiv: false,
+                enable_links_limit_for_github: false,
+                enable_links_limit_for_habr: false,
+                enable_links_limit_for_medrxiv: false,
+                enable_links_limit_for_reddit: false,
+                enable_links_limit_for_twitter: false,
+            },
+            providers_links_limits: ProvidersLinksLimits {
+                links_limit_for_arxiv: 0,
+                links_limit_for_biorxiv: 0,
+                links_limit_for_github: 0,
+                links_limit_for_habr: 0,
+                links_limit_for_medrxiv: 0,
+                links_limit_for_reddit: 0,
+                links_limit_for_twitter: 0,
+            },
+            enable_randomize_order_for_providers_link_parts_for_mongo:
+                EnableRandomizeOrderForProvidersLinkPartsForMongo {
+                    enable_randomize_order_for_arxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_biorxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_github_link_parts_for_mongo: false,
+                    enable_randomize_order_for_habr_link_parts_for_mongo: false,
+                    enable_randomize_order_for_medrxiv_link_parts_for_mongo: false,
+                    enable_randomize_order_for_reddit_link_parts_for_mongo: false,
+                    enable_randomize_order_for_twitter_link_parts_for_mongo: false,
+                },
+            print_colors: PrintColors {
+                error_red: 0,
+                error_green: 0,
+                error_blue: 0,
+                warning_high_red: 0,
+                warning_high_green: 0,
+                warning_high_blue: 0,
+                warning_low_red: 0,
+                warning_low_green: 0,
+                warning_low_blue: 0,
+                success_red: 0,
+                success_green: 0,
+                success_blue: 0,
+                partial_success_red: 0,
+                partial_success_green: 0,
+                partial_success_blue: 0,
+                cleaning_red: 0,
+                cleaning_green: 0,
+                cleaning_blue: 0,
+                time_measurement_red: 0,
+                time_measurement_green: 0,
+                time_measurement_blue: 0,
+                info_red: 0,
+                info_green: 0,
+                info_blue: 0,
+            },
+        };
         return ConfigStruct::wrap_config_checks(handle_config);
     }
 
