@@ -1,5 +1,6 @@
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct Params {
+    pub vec_of_provider_names: Vec<String>,
     pub starting_check_link: String,
     pub user_credentials_dummy_handle: String, //for ci tests
     pub warning_logs_directory_name: String,

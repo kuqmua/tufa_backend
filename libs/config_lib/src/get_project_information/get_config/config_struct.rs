@@ -385,7 +385,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_USER_AGENT_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USER_AGENT_ENV_NAME, e)))
                     }
                 }
-                let : String;
+        let handle_config_reddit_authorization_reddit_client_id: String;
         match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_reddit_authorization_reddit_client_id = handle;
@@ -394,7 +394,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_ID_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_ID_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_reddit_authorization_reddit_client_secret: String;
         match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_reddit_authorization_reddit_client_secret = handle;
@@ -403,7 +403,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_CLIENT_SECRET_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_reddit_authorization_reddit_username: String;
         match std::env::var(REDDIT_USERNAME_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_reddit_authorization_reddit_username = handle;
@@ -412,7 +412,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_USERNAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_USERNAME_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_reddit_authorization_reddit_password: String;
         match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_reddit_authorization_reddit_password = handle;
@@ -421,7 +421,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_PASSWORD_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_own_authorization_mongo_own_login: String;
         match std::env::var(MONGO_OWN_LOGIN_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_own_authorization_mongo_own_login = handle;
@@ -430,7 +430,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_LOGIN_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_own_authorization_mongo_own_password: String;
         match std::env::var(MONGO_OWN_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_own_authorization_mongo_own_password = handle;
@@ -439,7 +439,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PASSWORD_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_own_authorization_mongo_own_ip: String;
         match std::env::var(MONGO_OWN_IP_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_own_authorization_mongo_own_ip = handle;
@@ -448,7 +448,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_IP_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_own_authorization_mongo_own_port: String;
         match std::env::var(MONGO_OWN_PORT_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_own_authorization_mongo_own_port = handle;
@@ -457,7 +457,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PORT_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_login: String;
         match std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_cloud_authorization_mongo_cloud_login = handle;
@@ -466,7 +466,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_LOGIN_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_password: String;
         match std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_cloud_authorization_mongo_cloud_password = handle;
@@ -475,7 +475,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_PASSWORD_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name: String;
         match std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name = handle;
@@ -484,7 +484,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_NAME_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params: String;
         match std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params = handle;
@@ -493,7 +493,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_postgres_own_authorization_postgres_own_login: String;
         match std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_postgres_own_authorization_postgres_own_login = handle;
@@ -502,7 +502,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_LOGIN_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_postgres_own_authorization_postgres_own_password: String;
         match std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_postgres_own_authorization_postgres_own_password = handle;
@@ -511,7 +511,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_PASSWORD_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_postgres_own_authorization_postgres_own_ip: String;
         match std::env::var(POSTGRES_OWN_IP_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_postgres_own_authorization_postgres_own_ip = handle;
@@ -520,7 +520,7 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_IP_ENV_NAME, e)))
                     }
                 }
-         let : String;
+        let handle_config_postgres_own_authorization_postgres_own_db: String;
         match std::env::var(POSTGRES_OWN_DB_ENV_NAME) {
                     Ok(handle) => {
                         handle_config_postgres_own_authorization_postgres_own_db = handle;
@@ -530,7 +530,7 @@ impl ConfigStruct {
                     }
                 }
         //
-         let : String;
+        let handle_config_params_starting_check_link: String;
         match std::env::var(STARTING_CHECK_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_params_starting_check_link = handle;
@@ -542,7 +542,7 @@ impl ConfigStruct {
                 )));
             }
         }
-         let : String;
+        let handle_config_params_user_credentials_dummy_handle: String;
         match std::env::var(USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME) {
             Ok(handle) => {
                 handle_config_params_user_credentials_dummy_handle = handle;
@@ -554,7 +554,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_warning_logs_directory_name: String;
         match std::env::var(WARNING_LOGS_DIRECTORY_NAME_ENV_NAME) {
             Ok(handle) => {
                 handle_config_params_warning_logs_directory_name = handle;
@@ -566,7 +566,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_unhandled_success_handled_success_are_there_items_initialized_posts_dir: String;
         match std::env::var(
             UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR_ENV_NAME,
         ) {
@@ -581,7 +581,7 @@ impl ConfigStruct {
             )))
             }
         }
-         let : String;
+        let handle_config_params_enable_providers: bool;
         match std::env::var(ENABLE_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -601,7 +601,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_cleaning_warning_logs_directory: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -621,7 +621,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_cleaning_warning_logs_db_in_mongo: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -641,11 +641,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo = handle;
+                    handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -661,7 +662,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_time_measurement: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -681,7 +682,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_provider_links_limit: bool;
         match std::env::var(ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -701,7 +702,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_common_providers_links_limit: bool;
         match std::env::var(ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -721,7 +722,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_common_providers_links_limit: i64;
         match std::env::var(COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -741,7 +742,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -761,7 +762,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_prints: bool;
         match std::env::var(ENABLE_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -781,7 +782,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_error_prints: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -801,7 +802,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_warning_high_prints: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -821,7 +822,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_warning_low_prints: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -841,7 +842,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_success_prints: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -861,7 +862,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_partial_success_prints: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -881,7 +882,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_time_measurement_prints: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -901,7 +902,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_cleaning_warning_logs_directory_prints: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -921,7 +922,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_info_prints: bool;
         match std::env::var(ENABLE_INFO_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -941,7 +942,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_all_providers_prints: bool;
         match std::env::var(ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -961,7 +962,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_error_prints_for_all_providers: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -981,7 +982,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_warning_high_prints_for_all_providers: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1001,7 +1002,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_warning_low_prints_for_all_providers: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1021,7 +1022,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_success_prints_for_all_providers: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1041,7 +1042,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_partial_success_prints_for_all_providers: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1061,7 +1062,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_time_measurement_prints_for_all_providers: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1081,7 +1082,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
         ) {
@@ -1103,7 +1104,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_info_prints_for_all_providers: bool;
         match std::env::var(ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1123,7 +1124,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_write_error_logs_in_local_folder: bool;
         match std::env::var(ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1143,7 +1144,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_write_error_logs_in_mongo: bool;
         match std::env::var(ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1163,7 +1164,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_params_enable_initialize_mongo_with_providers_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1183,7 +1184,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_is_cloud: bool;
         match std::env::var(IS_CLOUD_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1203,7 +1204,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_providers_db_name_handle: String;
         match std::env::var(PROVIDERS_DB_NAME_HANDLE_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_providers_db_name_handle = handle;
@@ -1215,7 +1216,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_providers_db_collection_handle_second_part: String;
         match std::env::var(PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_providers_db_collection_handle_second_part = handle;
@@ -1227,10 +1228,11 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_providers_db_collection_document_field_name_handle: String;
         match std::env::var(PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_providers_db_collection_document_field_name_handle = handle;
+                handle_config_mongo_params_providers_db_collection_document_field_name_handle =
+                    handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
@@ -1239,7 +1241,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_db_providers_logs_name_handle: String;
         match std::env::var(DB_PROVIDERS_LOGS_NAME_HANDLE_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_db_providers_logs_name_handle = handle;
@@ -1251,7 +1253,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_db_providers_logs_collection_handle_second_part: String;
         match std::env::var(DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_db_providers_logs_collection_handle_second_part = handle;
@@ -1263,7 +1265,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle: String;
         match std::env::var(DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle = handle;
@@ -1275,7 +1277,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_path_to_provider_link_parts_folder: String;
         match std::env::var(PATH_TO_PROVIDER_LINK_PARTS_FOLDER_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_path_to_provider_link_parts_folder = handle;
@@ -1287,7 +1289,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_log_file_extension: String;
         match std::env::var(LOG_FILE_EXTENSION_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_log_file_extension = handle;
@@ -1299,7 +1301,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_arxiv_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1319,7 +1321,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1339,7 +1341,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1359,7 +1361,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1379,7 +1381,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1399,7 +1401,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let  handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1419,7 +1421,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts: bool;
         match std::env::var(ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1439,7 +1441,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part: String;
         match std::env::var(MONGO_OWN_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part = handle;
@@ -1451,7 +1453,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part: String;
         match std::env::var(MONGO_OWN_SECOND_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part = handle;
@@ -1463,7 +1465,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part: String;
         match std::env::var(MONGO_OWN_THIRD_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part = handle;
@@ -1475,7 +1477,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let  handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part: String;
         match std::env::var(MONGO_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part = handle;
@@ -1487,7 +1489,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part: String;
         match std::env::var(MONGO_CLOUD_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part = handle;
@@ -1499,7 +1501,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part: String;
         match std::env::var(MONGO_CLOUD_SECOND_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part = handle;
@@ -1511,7 +1513,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part: String;
         match std::env::var(MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part = handle;
@@ -1523,10 +1525,10 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part: String;
         match std::env::var(MONGO_CLOUD_FOURTH_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part = handle;
+                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
@@ -1535,7 +1537,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_postgres_params_postgres_own_first_handle_url_part: String;
         match std::env::var(POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_postgres_params_postgres_own_first_handle_url_part = handle;
@@ -1547,7 +1549,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_postgres_params_postgres_own_second_handle_url_part: String;
         match std::env::var(POSTGRES_OWN_SECOND_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_postgres_params_postgres_own_second_handle_url_part = handle;
@@ -1559,7 +1561,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_postgres_params_postgres_own_third_handle_url_part: String;
         match std::env::var(POSTGRES_OWN_THIRD_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_postgres_params_postgres_own_third_handle_url_part = handle;
@@ -1571,7 +1573,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_postgres_params_postgres_own_fourth_handle_url_part: String;
         match std::env::var(POSTGRES_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
                 handle_config_postgres_params_postgres_own_fourth_handle_url_part = handle;
@@ -1583,7 +1585,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_arxiv: bool;
         match std::env::var(ENABLE_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1603,7 +1605,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_biorxiv: bool;
         match std::env::var(ENABLE_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1623,7 +1625,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_github: bool;
         match std::env::var(ENABLE_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1643,7 +1645,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_habr: bool;
         match std::env::var(ENABLE_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1663,7 +1665,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_medrxiv: bool;
         match std::env::var(ENABLE_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1683,7 +1685,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_reddit: bool;
         match std::env::var(ENABLE_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1703,7 +1705,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_enable_twitter: bool;
         match std::env::var(ENABLE_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1724,7 +1726,7 @@ impl ConfigStruct {
             }
         }
         //
-         let : String;
+        let handle_config_providers_check_links_arxiv_link: String;
         match std::env::var(ARXIV_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_arxiv_link = handle;
@@ -1736,7 +1738,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_biorxiv_link: String;
         match std::env::var(BIORXIV_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_biorxiv_link = handle;
@@ -1748,7 +1750,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_github_link: String;
         match std::env::var(GITHUB_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_github_link = handle;
@@ -1760,7 +1762,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_habr_link: String;
         match std::env::var(HABR_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_habr_link = handle;
@@ -1772,7 +1774,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_medrxiv_link: String;
         match std::env::var(MEDRXIV_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_medrxiv_link = handle;
@@ -1784,7 +1786,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_reddit_link: String;
         match std::env::var(REDDIT_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_reddit_link = handle;
@@ -1796,7 +1798,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_check_links_twitter_link: String;
         match std::env::var(TWITTER_LINK_ENV_NAME) {
             Ok(handle) => {
                 handle_config_providers_check_links_twitter_link = handle;
@@ -1808,8 +1810,7 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_arxiv: bool;
         match std::env::var(ENABLE_PRINTS_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1829,7 +1830,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_biorxiv: bool;
         match std::env::var(ENABLE_PRINTS_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1849,7 +1850,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_github: bool;
         match std::env::var(ENABLE_PRINTS_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1869,7 +1870,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_habr: bool;
         match std::env::var(ENABLE_PRINTS_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1889,7 +1890,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_medrxiv: bool;
         match std::env::var(ENABLE_PRINTS_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1909,7 +1910,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_reddit: bool;
         match std::env::var(ENABLE_PRINTS_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1929,7 +1930,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_prints_enable_prints_twitter: bool;
         match std::env::var(ENABLE_PRINTS_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1950,7 +1951,7 @@ impl ConfigStruct {
             }
         }
         //
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1970,7 +1971,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -1990,7 +1991,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2010,7 +2011,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2030,7 +2031,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2050,7 +2051,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2070,7 +2071,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter: bool;
         match std::env::var(ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2090,7 +2091,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2110,7 +2111,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2130,7 +2131,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2150,7 +2151,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2170,7 +2171,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2190,7 +2191,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2210,7 +2211,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter: bool;
         match std::env::var(ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2230,12 +2231,12 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv = handle;
+                    handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2251,7 +2252,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2271,7 +2272,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_github: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2291,11 +2292,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_habr: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_success_providers_prints_enable_success_prints_for_habr = handle;
+                    handle_config_enable_success_providers_prints_enable_success_prints_for_habr =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2311,7 +2313,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2331,7 +2333,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_reddit: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2351,7 +2353,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_success_providers_prints_enable_success_prints_for_twitter: bool;
         match std::env::var(ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2372,7 +2374,7 @@ impl ConfigStruct {
             }
         }
         //
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2392,7 +2394,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2412,7 +2414,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2432,7 +2434,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2452,7 +2454,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2472,7 +2474,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2492,7 +2494,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter: bool;
         match std::env::var(ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2512,12 +2514,12 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2533,11 +2535,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2553,11 +2556,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_github: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_github = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_github =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2573,11 +2577,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_habr: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_habr = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_habr =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2593,11 +2598,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2613,11 +2619,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_reddit: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_reddit = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_reddit =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2633,31 +2640,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
-        match std::env::var(ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME) {
-            Ok(handle) => match handle.parse::<bool>() {
-                Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv = handle;
-                }
-                Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
-                }
-            },
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                )))
-            }
-        }
-         let : String;
+        let handle_config_enable_error_providers_prints_enable_error_prints_for_twitter: bool;
         match std::env::var(ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_error_providers_prints_enable_error_prints_for_twitter = handle;
+                    handle_config_enable_error_providers_prints_enable_error_prints_for_twitter =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -2673,7 +2661,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2693,7 +2681,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2713,7 +2701,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2733,7 +2721,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2753,7 +2741,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2773,7 +2761,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2793,7 +2781,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2813,7 +2801,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2833,7 +2821,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2853,7 +2841,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2873,7 +2861,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2893,7 +2881,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2913,7 +2901,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2933,7 +2921,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -2953,7 +2941,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME)
         {
             Ok(handle) => match handle.parse::<bool>() {
@@ -2974,7 +2962,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
         ) {
@@ -2997,7 +2985,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME,
         ) {
@@ -3019,7 +3007,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: bool;
         match std::env::var(ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME)
         {
             Ok(handle) => match handle.parse::<bool>() {
@@ -3040,7 +3028,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
         ) {
@@ -3063,7 +3051,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME,
         ) {
@@ -3085,7 +3073,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: bool;
         match std::env::var(
             ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
         ) {
@@ -3108,7 +3096,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3128,7 +3116,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3148,7 +3136,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_github: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3168,7 +3156,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3188,7 +3176,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3208,7 +3196,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3228,7 +3216,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter: bool;
         match std::env::var(ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3248,7 +3236,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_arxiv: bool;
         match std::env::var(ENABLE_INFO_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3268,7 +3256,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_biorxiv: bool;
         match std::env::var(ENABLE_INFO_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3288,7 +3276,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_github: bool;
         match std::env::var(ENABLE_INFO_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3308,7 +3296,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_habr: bool;
         match std::env::var(ENABLE_INFO_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3328,7 +3316,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_medrxiv: bool;
         match std::env::var(ENABLE_INFO_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3348,7 +3336,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_reddit: bool;
         match std::env::var(ENABLE_INFO_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3368,7 +3356,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_info_enable_info_for_twitter: bool;
         match std::env::var(ENABLE_INFO_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3388,12 +3376,12 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3409,11 +3397,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3429,11 +3418,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_github: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_github = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_github =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3449,11 +3439,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_habr: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_habr = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_habr =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3469,11 +3460,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3489,11 +3481,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_reddit: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_reddit = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_reddit =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3509,11 +3502,12 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_providers_links_limits_enable_links_limit_for_twitter: bool;
         match std::env::var(ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
-                    handle_config_enable_providers_links_limits_enable_links_limit_for_twitter = handle;
+                    handle_config_enable_providers_links_limits_enable_links_limit_for_twitter =
+                        handle;
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
@@ -3529,7 +3523,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_arxiv: i64;
         match std::env::var(LINKS_LIMIT_FOR_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3537,7 +3531,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
                     )))
                 }
@@ -3549,7 +3543,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_biorxiv: i64;
         match std::env::var(LINKS_LIMIT_FOR_BIORXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3557,7 +3551,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
                     )))
                 }
@@ -3569,7 +3563,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_github: i64;
         match std::env::var(LINKS_LIMIT_FOR_GITHUB_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3577,7 +3571,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
                     )))
                 }
@@ -3589,7 +3583,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_habr: i64;
         match std::env::var(LINKS_LIMIT_FOR_HABR_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3597,7 +3591,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_HABR_ENV_NAME, e
                     )))
                 }
@@ -3609,7 +3603,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_medrxiv: i64;
         match std::env::var(LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3617,7 +3611,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
                     )))
                 }
@@ -3629,7 +3623,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_reddit: i64;
         match std::env::var(LINKS_LIMIT_FOR_REDDIT_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3637,7 +3631,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
                     )))
                 }
@@ -3649,7 +3643,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_providers_links_limits_links_limit_for_twitter: i64;
         match std::env::var(LINKS_LIMIT_FOR_TWITTER_ENV_NAME) {
             Ok(handle) => match handle.parse::<i64>() {
                 Ok(handle) => {
@@ -3657,7 +3651,7 @@ impl ConfigStruct {
                 }
                 Err(e) => {
                     return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
+                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
                         LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
                     )))
                 }
@@ -3669,7 +3663,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3689,7 +3683,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3709,7 +3703,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3729,7 +3723,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3749,7 +3743,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3769,7 +3763,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3789,7 +3783,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo: bool;
         match std::env::var(ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
                 Ok(handle) => {
@@ -3809,7 +3803,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_error_red: u8;
         match std::env::var(ERROR_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3829,7 +3823,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_error_green: u8;
         match std::env::var(ERROR_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3849,7 +3843,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_error_blue: u8;
         match std::env::var(ERROR_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3869,7 +3863,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_high_red: u8;
         match std::env::var(WARNING_HIGH_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3889,7 +3883,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_high_green: u8;
         match std::env::var(WARNING_HIGH_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3909,7 +3903,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_high_blue: u8;
         match std::env::var(WARNING_HIGH_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3929,7 +3923,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_low_red: u8;
         match std::env::var(WARNING_LOW_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3949,7 +3943,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_low_green: u8;
         match std::env::var(WARNING_LOW_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3969,7 +3963,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_warning_low_blue: u8;
         match std::env::var(WARNING_LOW_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -3990,7 +3984,7 @@ impl ConfigStruct {
             }
         }
         //
-         let : String;
+        let handle_config_print_colors_success_red: u8;
         match std::env::var(SUCCESS_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4010,7 +4004,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_success_green: u8;
         match std::env::var(SUCCESS_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4030,7 +4024,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_success_blue: u8;
         match std::env::var(SUCCESS_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4050,7 +4044,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_partial_success_red: u8;
         match std::env::var(PARTIAL_SUCCESS_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4070,7 +4064,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_partial_success_green: u8;
         match std::env::var(PARTIAL_SUCCESS_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4090,7 +4084,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_partial_success_blue: u8;
         match std::env::var(PARTIAL_SUCCESS_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4110,7 +4104,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_cleaning_red: u8;
         match std::env::var(CLEANING_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4130,7 +4124,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_cleaning_green: u8;
         match std::env::var(CLEANING_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4150,7 +4144,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_cleaning_blue: u8;
         match std::env::var(CLEANING_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4170,8 +4164,7 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-         let : String;
+        let handle_config_print_colors_time_measurement_red: u8;
         match std::env::var(TIME_MEASUREMENT_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4191,7 +4184,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_time_measurement_green: u8;
         match std::env::var(TIME_MEASUREMENT_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4211,7 +4204,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_time_measurement_blue: u8;
         match std::env::var(TIME_MEASUREMENT_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4231,7 +4224,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_info_red: u8;
         match std::env::var(INFO_RED_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4251,7 +4244,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_info_green: u8;
         match std::env::var(INFO_GREEN_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4271,7 +4264,7 @@ impl ConfigStruct {
                 )))
             }
         }
-         let : String;
+        let handle_config_print_colors_info_blue: u8;
         match std::env::var(INFO_BLUE_ENV_NAME) {
             Ok(handle) => match handle.parse::<u8>() {
                 Ok(handle) => {
@@ -4291,294 +4284,297 @@ impl ConfigStruct {
                 )))
             }
         }
-        //
-        let mut handle_config: ConfigStruct = ConfigStruct {
+        let handle_config: ConfigStruct = ConfigStruct {
             github_authorization: GithubAuthorization {
-                github_name: "".to_string(),
-                github_token: "".to_string(),
+                github_name: handle_config_github_authorization_github_name,
+                github_token: handle_config_github_authorization_github_token,
             },
             reddit_authorization: RedditAuthorization {
-                reddit_user_agent: "".to_string(),
-                reddit_client_id: "".to_string(),
-                reddit_client_secret: "".to_string(),
-                reddit_username: "".to_string(),
-                reddit_password: "".to_string(),
+                reddit_user_agent: handle_config_reddit_authorization_reddit_user_agent,
+                reddit_client_id: handle_config_reddit_authorization_reddit_client_id,
+                reddit_client_secret: handle_config_reddit_authorization_reddit_client_secret,
+                reddit_username: handle_config_reddit_authorization_reddit_username,
+                reddit_password: handle_config_reddit_authorization_reddit_password,
             },
             mongo_own_authorization: MongoOwnAuthorization {
-                mongo_own_login: "".to_string(),
-                mongo_own_password: "".to_string(),
-                mongo_own_ip: "".to_string(),
-                mongo_own_port: "".to_string(),
+                mongo_own_login: handle_config_mongo_own_authorization_mongo_own_login,
+                mongo_own_password: handle_config_mongo_own_authorization_mongo_own_password,
+                mongo_own_ip: handle_config_mongo_own_authorization_mongo_own_ip,
+                mongo_own_port: handle_config_mongo_own_authorization_mongo_own_port,
             },
             postgres_own_authorization: PostgresOwnAuthorization {
-                postgres_own_login: "".to_string(),
-                postgres_own_password: "".to_string(),
-                postgres_own_ip: "".to_string(),
-                postgres_own_db: "".to_string(),
+                postgres_own_login: handle_config_postgres_own_authorization_postgres_own_login,
+                postgres_own_password:
+                    handle_config_postgres_own_authorization_postgres_own_password,
+                postgres_own_ip: handle_config_postgres_own_authorization_postgres_own_ip,
+                postgres_own_db: handle_config_postgres_own_authorization_postgres_own_db,
             },
             mongo_cloud_authorization: MongoCloudAuthorization {
-                mongo_cloud_login: "".to_string(),
-                mongo_cloud_password: "".to_string(),
-                mongo_cloud_cluster_name: "".to_string(),
-                mongo_cloud_cluster_params: "".to_string(),
+                mongo_cloud_login: handle_config_mongo_cloud_authorization_mongo_cloud_login,
+                mongo_cloud_password: handle_config_mongo_cloud_authorization_mongo_cloud_password,
+                mongo_cloud_cluster_name:
+                    handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name,
+                mongo_cloud_cluster_params:
+                    handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params,
             },
-            //
             params: Params {
-                vec_of_provider_names: Vec::<String>::new(),
-                starting_check_link: "".to_string(),
-                user_credentials_dummy_handle: "".to_string(),
-                warning_logs_directory_name: "".to_string(),
-                unhandled_success_handled_success_are_there_items_initialized_posts_dir: ""
-                    .to_string(),
-                enable_providers: false,
-                enable_cleaning_warning_logs_directory: false,
-                enable_cleaning_warning_logs_db_in_mongo: false,
-                enable_cleaning_warning_logs_db_collections_in_mongo: false,
-                enable_time_measurement: false,
-                enable_provider_links_limit: false,
-                enable_common_providers_links_limit: false,
-                common_providers_links_limit: 0,
-                enable_randomize_order_for_providers_link_parts_for_mongo: false,
-                //
-                enable_prints: false,
-                enable_error_prints: false,
-                enable_warning_high_prints: false,
-                enable_warning_low_prints: false,
-                enable_success_prints: false,
-                enable_partial_success_prints: false,
-                enable_time_measurement_prints: false,
-                enable_cleaning_warning_logs_directory_prints: false,
-                enable_info_prints: false,
-                //
-                enable_all_providers_prints: false,
-                enable_error_prints_for_all_providers: false,
-                enable_warning_high_prints_for_all_providers: false,
-                enable_warning_low_prints_for_all_providers: false,
-                enable_success_prints_for_all_providers: false,
-                enable_partial_success_prints_for_all_providers: false,
-                enable_time_measurement_prints_for_all_providers: false,
-                enable_cleaning_warning_logs_directory_prints_for_all_providers: false,
-                enable_info_prints_for_all_providers: false,
-                //
-                enable_write_error_logs_in_local_folder: false,
-                enable_write_error_logs_in_mongo: false,
-                enable_initialize_mongo_with_providers_link_parts: false,
+                //todo
+                vec_of_provider_names: vec![
+                    "arxiv".to_string(),
+                    "biorxiv".to_string(),
+                    "github".to_string(),
+                    "habr".to_string(),
+                    "medrxiv".to_string(),
+                    "reddit".to_string(),
+                    "twitter".to_string(),
+                ],
+                starting_check_link: handle_config_params_starting_check_link,
+                user_credentials_dummy_handle: handle_config_params_user_credentials_dummy_handle,
+                warning_logs_directory_name: handle_config_params_warning_logs_directory_name,
+                unhandled_success_handled_success_are_there_items_initialized_posts_dir: handle_config_params_unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                enable_providers: handle_config_params_enable_providers,
+                enable_cleaning_warning_logs_directory: handle_config_params_enable_cleaning_warning_logs_directory,
+                enable_cleaning_warning_logs_db_in_mongo: handle_config_params_enable_cleaning_warning_logs_db_in_mongo,
+                enable_cleaning_warning_logs_db_collections_in_mongo: handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo,
+                enable_time_measurement: handle_config_params_enable_time_measurement,
+                enable_provider_links_limit: handle_config_params_enable_provider_links_limit,
+                enable_common_providers_links_limit: handle_config_params_enable_common_providers_links_limit,
+                common_providers_links_limit: handle_config_params_common_providers_links_limit,
+                enable_randomize_order_for_providers_link_parts_for_mongo: handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo,
+                enable_prints: handle_config_params_enable_prints,
+                enable_error_prints: handle_config_params_enable_error_prints,
+                enable_warning_high_prints: handle_config_params_enable_warning_high_prints,
+                enable_warning_low_prints: handle_config_params_enable_warning_low_prints,
+                enable_success_prints: handle_config_params_enable_success_prints,
+                enable_partial_success_prints: handle_config_params_enable_partial_success_prints,
+                enable_time_measurement_prints: handle_config_params_enable_time_measurement_prints,
+                enable_cleaning_warning_logs_directory_prints: handle_config_params_enable_cleaning_warning_logs_directory_prints,
+                enable_info_prints: handle_config_params_enable_info_prints,
+                enable_all_providers_prints: handle_config_params_enable_all_providers_prints,
+                enable_error_prints_for_all_providers: handle_config_params_enable_error_prints_for_all_providers,
+                enable_warning_high_prints_for_all_providers: handle_config_params_enable_warning_high_prints_for_all_providers,
+                enable_warning_low_prints_for_all_providers: handle_config_params_enable_warning_low_prints_for_all_providers,
+                enable_success_prints_for_all_providers: handle_config_params_enable_success_prints_for_all_providers,
+                enable_partial_success_prints_for_all_providers: handle_config_params_enable_partial_success_prints_for_all_providers,
+                enable_time_measurement_prints_for_all_providers: handle_config_params_enable_time_measurement_prints_for_all_providers,
+                enable_cleaning_warning_logs_directory_prints_for_all_providers: handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers,
+                enable_info_prints_for_all_providers: handle_config_params_enable_info_prints_for_all_providers,
+                enable_write_error_logs_in_local_folder: handle_config_params_enable_write_error_logs_in_local_folder,
+                enable_write_error_logs_in_mongo: handle_config_params_enable_write_error_logs_in_mongo,
+                enable_initialize_mongo_with_providers_link_parts: handle_config_params_enable_initialize_mongo_with_providers_link_parts,
             },
             mongo_params: MongoParams {
-                is_cloud: false,
-                providers_db_name_handle: "".to_string(),
-                providers_db_collection_handle_second_part: "".to_string(),
-                providers_db_collection_document_field_name_handle: "".to_string(),
-                //
-                db_providers_logs_name_handle: "".to_string(),
-                db_providers_logs_collection_handle_second_part: "".to_string(),
-                db_providers_logs_collection_document_field_name_handle: "".to_string(),
-                //
-                path_to_provider_link_parts_folder: "".to_string(),
-                log_file_extension: "".to_string(),
-                //
+                is_cloud: handle_config_mongo_params_is_cloud,
+                providers_db_name_handle: handle_config_mongo_params_providers_db_name_handle,
+                providers_db_collection_handle_second_part: handle_config_mongo_params_providers_db_collection_handle_second_part,
+                providers_db_collection_document_field_name_handle: handle_config_mongo_params_providers_db_collection_document_field_name_handle,
+                db_providers_logs_name_handle: handle_config_mongo_params_db_providers_logs_name_handle,
+                db_providers_logs_collection_handle_second_part: handle_config_mongo_params_db_providers_logs_collection_handle_second_part,
+                db_providers_logs_collection_document_field_name_handle: handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle,
+                path_to_provider_link_parts_folder: handle_config_mongo_params_path_to_provider_link_parts_folder,
+                log_file_extension: handle_config_mongo_params_log_file_extension,
                 enable_initialize_mongo_with_providers_link_parts:
                     EnableInitializeMongoWithProvidersLinkParts {
-                        enable_initialize_mongo_with_arxiv_link_parts: false,
-                        enable_initialize_mongo_with_biorxiv_link_parts: false,
-                        enable_initialize_mongo_with_github_link_parts: false,
-                        enable_initialize_mongo_with_habr_link_parts: false,
-                        enable_initialize_mongo_with_medrxiv_link_parts: false,
-                        enable_initialize_mongo_with_reddit_link_parts: false,
-                        enable_initialize_mongo_with_twitter_link_parts: false,
+                        enable_initialize_mongo_with_arxiv_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_arxiv_link_parts,
+                        enable_initialize_mongo_with_biorxiv_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts,
+                        enable_initialize_mongo_with_github_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts,
+                        enable_initialize_mongo_with_habr_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts,
+                        enable_initialize_mongo_with_medrxiv_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts,
+                        enable_initialize_mongo_with_reddit_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts,
+                        enable_initialize_mongo_with_twitter_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts,
                     },
                 enable_mongo_own_url_parts: EnableMongoOwnUrlParts {
-                    mongo_own_first_handle_url_part: "".to_string(),
-                    mongo_own_second_handle_url_part: "".to_string(),
-                    mongo_own_third_handle_url_part: "".to_string(),
-                    mongo_own_fourth_handle_url_part: "".to_string(),
+                    mongo_own_first_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part,
+                    mongo_own_second_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part,
+                    mongo_own_third_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part,
+                    mongo_own_fourth_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part,
                 },
                 enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts {
-                    mongo_cloud_first_handle_url_part: "".to_string(),
-                    mongo_cloud_second_handle_url_part: "".to_string(),
-                    mongo_cloud_third_handle_url_part: "".to_string(),
-                    mongo_cloud_fourth_handle_url_part: "".to_string(),
+                    mongo_cloud_first_handle_url_part:  handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part,
+                    mongo_cloud_second_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part,
+                    mongo_cloud_third_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part,
+                    mongo_cloud_fourth_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part,
                 },
             },
             postgres_params: PostgresParams {
-                postgres_own_first_handle_url_part: "".to_string(),
-                postgres_own_second_handle_url_part: "".to_string(),
-                postgres_own_third_handle_url_part: "".to_string(),
-                postgres_own_fourth_handle_url_part: "".to_string(),
+                postgres_own_first_handle_url_part: handle_config_postgres_params_postgres_own_first_handle_url_part,
+                postgres_own_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
+                postgres_own_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
+                postgres_own_fourth_handle_url_part: handle_config_postgres_params_postgres_own_fourth_handle_url_part,
             },
             enable_providers: EnableProviders {
-                enable_arxiv: false,
-                enable_biorxiv: false,
-                enable_github: false,
-                enable_habr: false,
-                enable_medrxiv: false,
-                enable_reddit: false,
-                enable_twitter: false,
+                enable_arxiv: handle_config_enable_providers_enable_arxiv,
+                enable_biorxiv: handle_config_enable_providers_enable_biorxiv,
+                enable_github: handle_config_enable_providers_enable_github,
+                enable_habr: handle_config_enable_providers_enable_habr,
+                enable_medrxiv: handle_config_enable_providers_enable_medrxiv,
+                enable_reddit: handle_config_enable_providers_enable_reddit,
+                enable_twitter: handle_config_enable_providers_enable_twitter,
             },
             providers_check_links: ProvidersCheckLinks {
-                arxiv_link: "".to_string(),
-                biorxiv_link: "".to_string(),
-                github_link: "".to_string(),
-                habr_link: "".to_string(),
-                medrxiv_link: "".to_string(),
-                reddit_link: "".to_string(),
-                twitter_link: "".to_string(),
+                arxiv_link: handle_config_providers_check_links_arxiv_link,
+                biorxiv_link: handle_config_providers_check_links_biorxiv_link,
+                github_link: handle_config_providers_check_links_github_link,
+                habr_link: handle_config_providers_check_links_habr_link,
+                medrxiv_link: handle_config_providers_check_links_medrxiv_link,
+                reddit_link: handle_config_providers_check_links_reddit_link,
+                twitter_link: handle_config_providers_check_links_twitter_link,
             },
             enable_providers_prints: EnableProvidersPrints {
-                enable_prints_arxiv: false,
-                enable_prints_biorxiv: false,
-                enable_prints_github: false,
-                enable_prints_habr: false,
-                enable_prints_medrxiv: false,
-                enable_prints_reddit: false,
-                enable_prints_twitter: false,
+                enable_prints_arxiv: handle_config_enable_providers_prints_enable_prints_arxiv,
+                enable_prints_biorxiv: handle_config_enable_providers_prints_enable_prints_biorxiv,
+                enable_prints_github: handle_config_enable_providers_prints_enable_prints_github,
+                enable_prints_habr: handle_config_enable_providers_prints_enable_prints_habr,
+                enable_prints_medrxiv: handle_config_enable_providers_prints_enable_prints_medrxiv,
+                enable_prints_reddit: handle_config_enable_providers_prints_enable_prints_reddit,
+                enable_prints_twitter: handle_config_enable_providers_prints_enable_prints_twitter,
             },
             enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
-                enable_warning_high_prints_for_arxiv: false,
-                enable_warning_high_prints_for_biorxiv: false,
-                enable_warning_high_prints_for_github: false,
-                enable_warning_high_prints_for_habr: false,
-                enable_warning_high_prints_for_medrxiv: false,
-                enable_warning_high_prints_for_reddit: false,
-                enable_warning_high_prints_for_twitter: false,
+                enable_warning_high_prints_for_arxiv: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv,
+                enable_warning_high_prints_for_biorxiv: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv,
+                enable_warning_high_prints_for_github: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github,
+                enable_warning_high_prints_for_habr: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr,
+                enable_warning_high_prints_for_medrxiv: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv,
+                enable_warning_high_prints_for_reddit: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit,
+                enable_warning_high_prints_for_twitter: handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter,
             },
             enable_warning_low_providers_prints: EnableWarningLowProvidersPrints {
-                enable_warning_low_prints_for_arxiv: false,
-                enable_warning_low_prints_for_biorxiv: false,
-                enable_warning_low_prints_for_github: false,
-                enable_warning_low_prints_for_habr: false,
-                enable_warning_low_prints_for_medrxiv: false,
-                enable_warning_low_prints_for_reddit: false,
-                enable_warning_low_prints_for_twitter: false,
+                enable_warning_low_prints_for_arxiv: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv,
+                enable_warning_low_prints_for_biorxiv: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv,
+                enable_warning_low_prints_for_github: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github,
+                enable_warning_low_prints_for_habr: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr,
+                enable_warning_low_prints_for_medrxiv: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv,
+                enable_warning_low_prints_for_reddit: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit,
+                enable_warning_low_prints_for_twitter: handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter,
             },
             enable_success_providers_prints: EnableSuccessProvidersPrints {
-                enable_success_prints_for_arxiv: false,
-                enable_success_prints_for_biorxiv: false,
-                enable_success_prints_for_github: false,
-                enable_success_prints_for_habr: false,
-                enable_success_prints_for_medrxiv: false,
-                enable_success_prints_for_reddit: false,
-                enable_success_prints_for_twitter: false,
+                enable_success_prints_for_arxiv: handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv,
+                enable_success_prints_for_biorxiv: handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv,
+                enable_success_prints_for_github: handle_config_enable_success_providers_prints_enable_success_prints_for_github,
+                enable_success_prints_for_habr: handle_config_enable_success_providers_prints_enable_success_prints_for_habr,
+                enable_success_prints_for_medrxiv: handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv,
+                enable_success_prints_for_reddit: handle_config_enable_success_providers_prints_enable_success_prints_for_reddit,
+                enable_success_prints_for_twitter: handle_config_enable_success_providers_prints_enable_success_prints_for_twitter,
             },
             enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
-                enable_partial_success_prints_for_arxiv: false,
-                enable_partial_success_prints_for_biorxiv: false,
-                enable_partial_success_prints_for_github: false,
-                enable_partial_success_prints_for_habr: false,
-                enable_partial_success_prints_for_medrxiv: false,
-                enable_partial_success_prints_for_reddit: false,
-                enable_partial_success_prints_for_twitter: false,
+                enable_partial_success_prints_for_arxiv: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv,
+                enable_partial_success_prints_for_biorxiv: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv,
+                enable_partial_success_prints_for_github: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github,
+                enable_partial_success_prints_for_habr: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr,
+                enable_partial_success_prints_for_medrxiv: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv,
+                enable_partial_success_prints_for_reddit: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit,
+                enable_partial_success_prints_for_twitter: handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter,
             },
             enable_error_providers_prints: EnableErrorProvidersPrints {
-                enable_error_prints_for_arxiv: false,
-                enable_error_prints_for_biorxiv: false,
-                enable_error_prints_for_github: false,
-                enable_error_prints_for_habr: false,
-                enable_error_prints_for_medrxiv: false,
-                enable_error_prints_for_reddit: false,
-                enable_error_prints_for_twitter: false,
+                enable_error_prints_for_arxiv: handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv,
+                enable_error_prints_for_biorxiv: handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv,
+                enable_error_prints_for_github: handle_config_enable_error_providers_prints_enable_error_prints_for_github,
+                enable_error_prints_for_habr: handle_config_enable_error_providers_prints_enable_error_prints_for_habr,
+                enable_error_prints_for_medrxiv: handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv,
+                enable_error_prints_for_reddit: handle_config_enable_error_providers_prints_enable_error_prints_for_reddit,
+                enable_error_prints_for_twitter: handle_config_enable_error_providers_prints_enable_error_prints_for_twitter,
             },
             enable_providers_cleaning_warning_logs_directory:
                 EnableProvidersCleaningWarningLogsDirectory {
-                    enable_cleaning_warning_logs_directory_for_arxiv: false,
-                    enable_cleaning_warning_logs_directory_for_biorxiv: false,
-                    enable_cleaning_warning_logs_directory_for_github: false,
-                    enable_cleaning_warning_logs_directory_for_habr: false,
-                    enable_cleaning_warning_logs_directory_for_medrxiv: false,
-                    enable_cleaning_warning_logs_directory_for_reddit: false,
-                    enable_cleaning_warning_logs_directory_for_twitter: false,
+                    enable_cleaning_warning_logs_directory_for_arxiv: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv,
+                    enable_cleaning_warning_logs_directory_for_biorxiv: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv,
+                    enable_cleaning_warning_logs_directory_for_github: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github,
+                    enable_cleaning_warning_logs_directory_for_habr: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr,
+                    enable_cleaning_warning_logs_directory_for_medrxiv: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv,
+                    enable_cleaning_warning_logs_directory_for_reddit: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit,
+                    enable_cleaning_warning_logs_directory_for_twitter: handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter,
                 },
             enable_providers_cleaning_warning_logs_db_in_mongo:
                 EnableProvidersCleaningWarningLogsDbInMongo {
-                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_github: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_habr: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: false,
-                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: false,
+                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv,
+                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv,
+                    enable_cleaning_warning_logs_db_in_mongo_for_github: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github,
+                    enable_cleaning_warning_logs_db_in_mongo_for_habr: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr,
+                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv,
+                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit,
+                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter,
                 },
             enable_providers_cleaning_warning_logs_db_collections_in_mongo:
                 EnableProvidersCleaningWarningLogsDbCollectionsInMongo {
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_github: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: false,
-                    enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: false,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_github: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit,
+                    enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter,
                 },
             enable_providers_time_measurement: EnableProvidersTimeMeasurement {
-                enable_time_measurement_for_arxiv: false,
-                enable_time_measurement_for_biorxiv: false,
-                enable_time_measurement_for_github: false,
-                enable_time_measurement_for_habr: false,
-                enable_time_measurement_for_medrxiv: false,
-                enable_time_measurement_for_reddit: false,
-                enable_time_measurement_for_twitter: false,
+                enable_time_measurement_for_arxiv: handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv,
+                enable_time_measurement_for_biorxiv: handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv,
+                enable_time_measurement_for_github: handle_config_enable_providers_time_measurement_enable_time_measurement_for_github,
+                enable_time_measurement_for_habr: handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr,
+                enable_time_measurement_for_medrxiv: handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv,
+                enable_time_measurement_for_reddit: handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit,
+                enable_time_measurement_for_twitter: handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter,
             },
             enable_providers_info: EnableProvidersInfo {
-                enable_info_for_arxiv: false,
-                enable_info_for_biorxiv: false,
-                enable_info_for_github: false,
-                enable_info_for_habr: false,
-                enable_info_for_medrxiv: false,
-                enable_info_for_reddit: false,
-                enable_info_for_twitter: false,
+                enable_info_for_arxiv: handle_config_enable_providers_info_enable_info_for_arxiv,
+                enable_info_for_biorxiv: handle_config_enable_providers_info_enable_info_for_biorxiv,
+                enable_info_for_github: handle_config_enable_providers_info_enable_info_for_github,
+                enable_info_for_habr: handle_config_enable_providers_info_enable_info_for_habr,
+                enable_info_for_medrxiv: handle_config_enable_providers_info_enable_info_for_medrxiv,
+                enable_info_for_reddit: handle_config_enable_providers_info_enable_info_for_reddit,
+                enable_info_for_twitter: handle_config_enable_providers_info_enable_info_for_twitter,
             },
             enable_providers_links_limits: EnableProvidersLinksLimit {
-                enable_links_limit_for_arxiv: false,
-                enable_links_limit_for_biorxiv: false,
-                enable_links_limit_for_github: false,
-                enable_links_limit_for_habr: false,
-                enable_links_limit_for_medrxiv: false,
-                enable_links_limit_for_reddit: false,
-                enable_links_limit_for_twitter: false,
+                enable_links_limit_for_arxiv: handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv,
+                enable_links_limit_for_biorxiv: handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv,
+                enable_links_limit_for_github: handle_config_enable_providers_links_limits_enable_links_limit_for_github,
+                enable_links_limit_for_habr: handle_config_enable_providers_links_limits_enable_links_limit_for_habr,
+                enable_links_limit_for_medrxiv: handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv,
+                enable_links_limit_for_reddit: handle_config_enable_providers_links_limits_enable_links_limit_for_reddit,
+                enable_links_limit_for_twitter: handle_config_enable_providers_links_limits_enable_links_limit_for_twitter,
             },
             providers_links_limits: ProvidersLinksLimits {
-                links_limit_for_arxiv: 0,
-                links_limit_for_biorxiv: 0,
-                links_limit_for_github: 0,
-                links_limit_for_habr: 0,
-                links_limit_for_medrxiv: 0,
-                links_limit_for_reddit: 0,
-                links_limit_for_twitter: 0,
+                links_limit_for_arxiv: handle_config_providers_links_limits_links_limit_for_arxiv,
+                links_limit_for_biorxiv: handle_config_providers_links_limits_links_limit_for_biorxiv,
+                links_limit_for_github: handle_config_providers_links_limits_links_limit_for_github,
+                links_limit_for_habr: handle_config_providers_links_limits_links_limit_for_habr,
+                links_limit_for_medrxiv: handle_config_providers_links_limits_links_limit_for_medrxiv,
+                links_limit_for_reddit: handle_config_providers_links_limits_links_limit_for_reddit,
+                links_limit_for_twitter: handle_config_providers_links_limits_links_limit_for_twitter,
             },
             enable_randomize_order_for_providers_link_parts_for_mongo:
                 EnableRandomizeOrderForProvidersLinkPartsForMongo {
-                    enable_randomize_order_for_arxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_biorxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_github_link_parts_for_mongo: false,
-                    enable_randomize_order_for_habr_link_parts_for_mongo: false,
-                    enable_randomize_order_for_medrxiv_link_parts_for_mongo: false,
-                    enable_randomize_order_for_reddit_link_parts_for_mongo: false,
-                    enable_randomize_order_for_twitter_link_parts_for_mongo: false,
+                    enable_randomize_order_for_arxiv_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo,
+                    enable_randomize_order_for_biorxiv_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo,
+                    enable_randomize_order_for_github_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo,
+                    enable_randomize_order_for_habr_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo,
+                    enable_randomize_order_for_medrxiv_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo,
+                    enable_randomize_order_for_reddit_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo,
+                    enable_randomize_order_for_twitter_link_parts_for_mongo: handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo,
                 },
             print_colors: PrintColors {
-                error_red: 0,
-                error_green: 0,
-                error_blue: 0,
-                warning_high_red: 0,
-                warning_high_green: 0,
-                warning_high_blue: 0,
-                warning_low_red: 0,
-                warning_low_green: 0,
-                warning_low_blue: 0,
-                success_red: 0,
-                success_green: 0,
-                success_blue: 0,
-                partial_success_red: 0,
-                partial_success_green: 0,
-                partial_success_blue: 0,
-                cleaning_red: 0,
-                cleaning_green: 0,
-                cleaning_blue: 0,
-                time_measurement_red: 0,
-                time_measurement_green: 0,
-                time_measurement_blue: 0,
-                info_red: 0,
-                info_green: 0,
-                info_blue: 0,
+                error_red: handle_config_print_colors_error_red,
+                error_green: handle_config_print_colors_error_green,
+                error_blue: handle_config_print_colors_error_blue,
+                warning_high_red: handle_config_print_colors_warning_high_red,
+                warning_high_green: handle_config_print_colors_warning_high_green,
+                warning_high_blue: handle_config_print_colors_warning_high_blue,
+                warning_low_red: handle_config_print_colors_warning_low_red,
+                warning_low_green: handle_config_print_colors_warning_low_green,
+                warning_low_blue: handle_config_print_colors_warning_low_blue,
+                success_red: handle_config_print_colors_success_red,
+                success_green: handle_config_print_colors_success_green,
+                success_blue: handle_config_print_colors_success_blue,
+                partial_success_red: handle_config_print_colors_partial_success_red,
+                partial_success_green: handle_config_print_colors_partial_success_green,
+                partial_success_blue: handle_config_print_colors_partial_success_blue,
+                cleaning_red: handle_config_print_colors_cleaning_red,
+                cleaning_green: handle_config_print_colors_cleaning_green,
+                cleaning_blue: handle_config_print_colors_cleaning_blue,
+                time_measurement_red: handle_config_print_colors_time_measurement_red,
+                time_measurement_green: handle_config_print_colors_time_measurement_green,
+                time_measurement_blue: handle_config_print_colors_time_measurement_blue,
+                info_red: handle_config_print_colors_info_red,
+                info_green: handle_config_print_colors_info_green,
+                info_blue: handle_config_print_colors_info_blue,
             },
         };
         return ConfigStruct::wrap_config_checks(handle_config);
