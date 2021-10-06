@@ -99,6 +99,11 @@ sudo apt-get install pkg-config libssl-dev <br/>
 rustup default nightly <br/>
 rustup update //update every week cause nightly <br/>
 
+### how to install wsl in windows 11
+open cmd with administator rights
+wsl --install
+(default will be ubuntu)
+
 ### how to install rust in windows 10
 https://estada.ch/2020/4/19/installing-rust-on-windows-10-native/ 
 
