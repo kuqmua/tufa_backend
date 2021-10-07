@@ -3,7 +3,7 @@ Status of last deployment: <br/>
 <img src="https://github.com/kuqmua/tufa_backend/workflows/CI/badge.svg?branch=master"><br/>
 
 ### change project config
-./config <br/>
+./env
 
 ### change tests constants
 .libs/config_lib/src/get_project_information/project_constans.rs <br/>

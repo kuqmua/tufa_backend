@@ -27,7 +27,6 @@ RUN addgroup -g 1000 tufa_backend
 RUN adduser -D -s /bin/sh -u 1000 -G tufa_backend tufa_backend
 WORKDIR /home/rust_rest/bin/
 COPY --from=rust-latest-base-image /usr/src/tufa_backend/target/x86_64-unknown-linux-musl/release/tufa_backend . 
-COPY config config
 COPY .env .env
 # maybe later add default ENV instead of COPY .env .env
 COPY providers_link_parts providers_link_parts

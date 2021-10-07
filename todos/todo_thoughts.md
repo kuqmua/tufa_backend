@@ -154,11 +154,6 @@ config as dynamic library maybe?
 <br/>
 
 ### -------------------
-Restructure config for providers like this
-arxiv_params = { name: "arxiv", enable_arxiv: true, something else...}
-<br/>
-
-### -------------------
 Faster docker build 
 Cargo chef
 https://github.com/LukeMathWalker/cargo-chef
@@ -261,13 +256,13 @@ move from ubuntu to alphine linux on wsl2
 <br/>
     
 ### -------------------
-if i go into docker container and modify config file, will changes be saved after container restart?
+if i go into docker container and modify file, will changes be saved after container restart?
 if yes then maybe write some send logs logic around it?
 like check last logs send date and time then decide send or not send
 <br/>
 
 ### -------------------
-add to dockerfile or before docker build test what check valid config data fields
+add to dockerfile or before docker build test what check valid env data fields
 <br/>
 
 ### -------------------
