@@ -273,3 +273,8 @@ add to dockerfile or before docker build test what check valid config data field
 ### -------------------
 pm2 instead of docker?
 <br/>
+    
+### -------------------
+commit message and hash in file inside docker container
+for more information about code inside container
+<br/>
