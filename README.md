@@ -101,6 +101,12 @@ rustup update //update every week cause nightly <br/>
 source $HOME/.cargo/env <br/>
 source ~/.profile <br/>
 
+### how to add ssh key on wsl2
+cd ~/.ssh
+ls
+ssh-keygen -o
+cat ~/.ssh/id_rsa.pub
+
 ### how to install wsl in windows 11
 open cmd with administator rights
 wsl --install
