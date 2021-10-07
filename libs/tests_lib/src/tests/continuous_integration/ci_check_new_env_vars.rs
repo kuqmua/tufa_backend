@@ -1,17 +1,16 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-use crate::tests::tests_constants::CONFIG_FILE_EXTENSION;
-use crate::tests::tests_constants::USER_CREDENTIALS_CONTENT;
-use config_lib::get_project_information::project_constants::PATH_TO_CONFIG_FOR_TEST;
-use config_lib::get_project_information::project_constants::USER_CREDENTIALS_FILE_NAME;
+use crate::tests::tests_constants::ENV_FILE_CONTENT;
+use crate::tests::tests_constants::ENV_FILE_NAME;
+use crate::tests::tests_constants::PATH_TO_ENV_FILE;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
-pub fn ci_check_new_user_credentials_fields() {
+pub fn ci_check_new_env_vars() {
     let result_of_opening_file = File::open(format!(
-        "{}{}{}",
-        PATH_TO_CONFIG_FOR_TEST, USER_CREDENTIALS_FILE_NAME, CONFIG_FILE_EXTENSION
+        "{}{}",
+        PATH_TO_ENV_FILE, ENV_FILE_NAME
     ));
     match result_of_opening_file {
         Ok(mut file) => {
@@ -19,12 +18,12 @@ pub fn ci_check_new_user_credentials_fields() {
             let result_of_reading_to_string = file.read_to_string(&mut contents);
             match result_of_reading_to_string {
                 Ok(_) => {
-                    assert_eq!(contents, USER_CREDENTIALS_CONTENT);
+                    assert_eq!(contents, ENV_FILE_CONTENT);
                 }
                 Err(e) => {
                     panic!(
                         "cannot read_to_string from file {}{}, reason: {}",
-                        USER_CREDENTIALS_FILE_NAME, CONFIG_FILE_EXTENSION, e
+                        PATH_TO_ENV_FILE, ENV_FILE_NAME, e
                     )
                 }
             }
@@ -32,7 +31,7 @@ pub fn ci_check_new_user_credentials_fields() {
         Err(e) => {
             panic!(
                 "cannot open {}{}, reason: {}",
-                USER_CREDENTIALS_FILE_NAME, CONFIG_FILE_EXTENSION, e
+                PATH_TO_ENV_FILE, ENV_FILE_NAME, e
             )
         }
     }
