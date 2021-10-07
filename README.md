@@ -98,6 +98,8 @@ sudo apt install pkg-config //optionally <br/>
 sudo apt-get install pkg-config libssl-dev <br/>
 rustup default nightly <br/>
 rustup update //update every week cause nightly <br/>
+source $HOME/.cargo/env <br/>
+source ~/.profile <br/>
 
 ### how to install wsl in windows 11
 open cmd with administator rights
