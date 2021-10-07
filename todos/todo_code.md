@@ -351,3 +351,7 @@ remove toml configs coz it's annoying to work with them
 with docker container
 use .env instead
 <br/>
+
+### -------------------
+move USER_CREDENTIALS_DUMMY_HANDLE from .env to project constants
+<br/>
