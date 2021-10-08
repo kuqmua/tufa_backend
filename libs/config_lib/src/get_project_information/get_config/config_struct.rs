@@ -6,6 +6,8 @@ use itertools::Itertools;
 
 use dotenv::dotenv;
 
+use crate::get_project_information::provider_kind_enum::ProviderKind;
+
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 use crate::get_project_information::get_config::enable_providers_struct::EnableProviders;
@@ -4294,6 +4296,29 @@ impl ConfigStruct {
                 )))
             }
         }
+        //todo: rewrite it with type system enum ProviderKind
+        let mut vec_of_provider_names_handle = Vec::<String>::with_capacity(ProviderKind::get_length());
+        if handle_config_enable_providers_enable_arxiv {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Arxiv).to_owned());
+        }
+        if handle_config_enable_providers_enable_biorxiv {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Biorxiv).to_owned())
+        }
+        if handle_config_enable_providers_enable_github {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Github).to_owned());
+        }
+        if handle_config_enable_providers_enable_habr {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Habr).to_owned())
+        }
+        if handle_config_enable_providers_enable_medrxiv {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Medrxiv).to_owned())
+        }
+        if handle_config_enable_providers_enable_reddit {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Reddit).to_owned())
+        }
+        if handle_config_enable_providers_enable_twitter {
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Twitter).to_owned())
+        } 
         let handle_config: ConfigStruct = ConfigStruct {
             github_authorization: GithubAuthorization {
                 github_name: handle_config_github_authorization_github_name,
@@ -4329,15 +4354,7 @@ impl ConfigStruct {
             },
             params: Params {
                 //todo
-                vec_of_provider_names: vec![
-                    "arxiv".to_string(),
-                    "biorxiv".to_string(),
-                    "github".to_string(),
-                    "habr".to_string(),
-                    "medrxiv".to_string(),
-                    "reddit".to_string(),
-                    "twitter".to_string(),
-                ],
+                vec_of_provider_names: vec_of_provider_names_handle,
                 starting_check_link: handle_config_params_starting_check_link,
                 user_credentials_dummy_handle: handle_config_params_user_credentials_dummy_handle,
                 warning_logs_directory_name: handle_config_params_warning_logs_directory_name,
@@ -4589,7 +4606,6 @@ impl ConfigStruct {
         };
         return ConfigStruct::wrap_config_checks(handle_config);
     }
-
     fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
         if !config_handle.github_authorization.github_name.is_empty() {
             let error: Result<ConfigStruct, ConfigError> =
