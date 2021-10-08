@@ -1,3 +1,9 @@
+
+use std::sync::{Arc, Mutex};
+use std::collections::HashMap;
+
+use futures::future::join_all;
+
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -6,17 +12,12 @@ use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
 use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
-
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
-
-use futures::future::join_all;
-use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
-use std::collections::HashMap;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-use std::sync::{Arc, Mutex};
+use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 
 pub async fn get_providers_link_parts_from_mongo(
     mongo_url: String,
