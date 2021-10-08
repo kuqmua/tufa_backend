@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -55,6 +57,23 @@ impl ProviderKind {
         }
         provider_kind_vec
     }
+    pub fn into_provider_string_name_provider_kind_tuple_vec() -> Vec<(&'static str, ProviderKind)> {
+        let mut provider_kind_vec = Vec::with_capacity(PROVIDER_KIND_ENUM_LENGTH);
+        for provider_kind in ProviderKind::iter() {
+            provider_kind_vec.push((ProviderKind::get_string_name(provider_kind),   provider_kind));
+        }
+        provider_kind_vec
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn into_provider_string_name_provider_kind_hashmap() -> HashMap<String, ProviderKind> {
+        //its String coz legacy
+        let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
+        HashMap::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter() {
+            config_provider_string_to_enum_struct_hasmap.insert(ProviderKind::get_string_name(provider_kind).to_owned(),   provider_kind);
+        }
+        config_provider_string_to_enum_struct_hasmap
+}
     pub fn get_links_limit_for_provider(provider_kind: ProviderKind) -> i64 {
         match provider_kind {
             ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,

@@ -1,7 +1,4 @@
-use std::collections::HashMap;
-
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 pub const ENV_FILE_NAME: &str = ".env";
 
@@ -465,26 +462,6 @@ pub fn get_mongo_url() -> String {
     mongo_url
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn get_config_provider_string_to_enum_struct() -> HashMap<String, ProviderKind> {
-    let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
-        HashMap::with_capacity(CONFIG.params.vec_of_provider_names.len());
-    config_provider_string_to_enum_struct_hasmap
-        .insert(ARXIV_NAME_TO_CHECK.to_string(), ProviderKind::Arxiv);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(BIORXIV_NAME_TO_CHECK.to_string(), ProviderKind::Biorxiv);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(GITHUB_NAME_TO_CHECK.to_string(), ProviderKind::Github);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(HABR_NAME_TO_CHECK.to_string(), ProviderKind::Habr);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(MEDRXIV_NAME_TO_CHECK.to_string(), ProviderKind::Medrxiv);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(REDDIT_NAME_TO_CHECK.to_string(), ProviderKind::Reddit);
-    config_provider_string_to_enum_struct_hasmap
-        .insert(TWITTER_NAME_TO_CHECK.to_string(), ProviderKind::Twitter);
-    config_provider_string_to_enum_struct_hasmap
-}
 
 //     config_provider_string_to_enum_struct_hasmap
 

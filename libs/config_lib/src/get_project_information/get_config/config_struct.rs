@@ -361,6 +361,7 @@ pub struct ConfigStruct {
 //todo: create custom error type
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
+        //todo: build without it
         match dotenv() {
             Ok(_) => {},
             Err(e) => {
