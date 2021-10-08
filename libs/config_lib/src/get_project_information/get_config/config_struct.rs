@@ -4,6 +4,10 @@ use config::ConfigError;
 
 use itertools::Itertools;
 
+use dotenv::dotenv;
+
+use crate::get_project_information::project_constants::ENV_FILE_NAME;
+
 use crate::get_project_information::get_config::enable_providers_struct::EnableProviders;
 use crate::get_project_information::get_config::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::get_project_information::get_config::providers_check_links_struct::ProvidersCheckLinks;
@@ -357,7 +361,12 @@ pub struct ConfigStruct {
 //todo: create custom error type
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        //todo: remove dotenv for docker container
+        match dotenv() {
+            Ok(_) => {},
+            Err(e) => {
+                println!("dotenv() failed, trying without {} error: {:?}", ENV_FILE_NAME, e);
+            }
+        }
         let handle_config_github_authorization_github_name: String;
         match std::env::var(GITHUB_NAME_ENV_NAME) {
                     Ok(handle) => {

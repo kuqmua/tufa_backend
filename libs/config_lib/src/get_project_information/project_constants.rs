@@ -3,6 +3,8 @@ use std::collections::HashMap;
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
+pub const ENV_FILE_NAME: &str = ".env";
+
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
 pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";

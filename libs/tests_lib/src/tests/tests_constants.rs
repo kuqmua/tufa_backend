@@ -1,4 +1,3 @@
-pub const ENV_FILE_NAME: &str = ".env";
 pub const PATH_TO_ENV_FILE: &str = "./../../";
 //its important to have EXACT copy without spaces or Line feed character
 //todo 

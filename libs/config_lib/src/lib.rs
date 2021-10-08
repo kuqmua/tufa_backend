@@ -37,3 +37,5 @@ pub mod get_project_information {
 
 #[macro_use]
 extern crate lazy_static;
+
+extern crate dotenv;
