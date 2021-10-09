@@ -35,3 +35,8 @@ RUN chown tufa_backend:tufa_backend tufa_backend
 USER tufa_backend
 EXPOSE 8080
 CMD [ "./tufa_backend" ]
+
+# maybe add install diesel cli for postgres(diesel dependency)
+# coz maybe would be linking error
+# sudo apt install libpq-dev <br/>
+# cargo install diesel_cli --no-default-features --features postgres
