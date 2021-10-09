@@ -53,32 +53,32 @@ mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;
 
-// use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-// use postgres_integration::create_post;
-// use postgres_integration::establish_connection::establish_connection;
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use postgres_integration::create_post;
+use postgres_integration::establish_connection::establish_connection;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
     entry::entry();
     /////////////////////////////////////////////////////
-    // let postgres_url = format!(
-    //     "{}{}{}{}{}{}{}{}",
-    //     CONFIG.postgres_params.postgres_own_first_handle_url_part,
-    //     CONFIG.postgres_own_authorization.postgres_own_login,
-    //     CONFIG.postgres_params.postgres_own_second_handle_url_part,
-    //     CONFIG.postgres_own_authorization.postgres_own_password,
-    //     CONFIG.postgres_params.postgres_own_third_handle_url_part,
-    //     CONFIG.postgres_own_authorization.postgres_own_ip,
-    //     CONFIG.postgres_params.postgres_own_fourth_handle_url_part,
-    //     CONFIG.postgres_own_authorization.postgres_own_db
-    // );
-    // let posgtres_connection = establish_connection(postgres_url);
-    // match posgtres_connection {
-    //     Some(pg_connection) => {
-    //         create_post(&pg_connection, "post_title", "post_body");
-    //     }
-    //     None => {
-    //         println!("todo")
-    //     }
-    // }
+    let postgres_url = format!(
+        "{}{}{}{}{}{}{}{}",
+        CONFIG.postgres_params.postgres_own_first_handle_url_part,
+        CONFIG.postgres_own_authorization.postgres_own_login,
+        CONFIG.postgres_params.postgres_own_second_handle_url_part,
+        CONFIG.postgres_own_authorization.postgres_own_password,
+        CONFIG.postgres_params.postgres_own_third_handle_url_part,
+        CONFIG.postgres_own_authorization.postgres_own_ip,
+        CONFIG.postgres_params.postgres_own_fourth_handle_url_part,
+        CONFIG.postgres_own_authorization.postgres_own_db
+    );
+    let posgtres_connection = establish_connection(postgres_url);
+    match posgtres_connection {
+        Some(pg_connection) => {
+            create_post(&pg_connection, "post_title", "post_body");
+        }
+        None => {
+            println!("todo")
+        }
+    }
 }
