@@ -93,17 +93,11 @@ pub const DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART_ENV_NAME: &str =
 pub const DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME: &str =
     "DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE";
 
-//[mongo_params.enable_mongo_own_url_parts]
-pub const MONGO_OWN_FIRST_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_OWN_FIRST_HANDLE_URL_PART";
-pub const MONGO_OWN_SECOND_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_OWN_SECOND_HANDLE_URL_PART";
-pub const MONGO_OWN_THIRD_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_OWN_THIRD_HANDLE_URL_PART";
-pub const MONGO_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_OWN_FOURTH_HANDLE_URL_PART";
-
-//[mongo_params.enable_mongo_cloud_url_parts]
-pub const MONGO_CLOUD_FIRST_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_CLOUD_FIRST_HANDLE_URL_PART";
-pub const MONGO_CLOUD_SECOND_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_CLOUD_SECOND_HANDLE_URL_PART";
-pub const MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_CLOUD_THIRD_HANDLE_URL_PART";
-pub const MONGO_CLOUD_FOURTH_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_CLOUD_FOURTH_HANDLE_URL_PART";
+//[mongo_params.mongo_url_parts]
+pub const MONGO_FIRST_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_FIRST_HANDLE_URL_PART";
+pub const MONGO_SECOND_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_SECOND_HANDLE_URL_PART";
+pub const MONGO_THIRD_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_THIRD_HANDLE_URL_PART";
+pub const MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME: &str = "MONGO_FOURTH_HANDLE_URL_PART";
 
 //[mongo_params.enable_initialize_mongo_with_providers_link_parts]
 pub const ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME: &str =
@@ -424,68 +418,68 @@ pub fn get_mongo_url() -> String {
         //     mongo_cloud_fourth_handle_url_part,
         //     mongo_cloud_cluster_params
         // );
-        let mongo_own_first_handle_url_part = &CONFIG
+        let mongo_first_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_first_handle_url_part;
-        let mongo_own_login = &CONFIG.mongo_authorization.mongo_login;
-        let mongo_own_second_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_first_handle_url_part;
+        let mongo_login = &CONFIG.mongo_authorization.mongo_login;
+        let mongo_second_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_second_handle_url_part;
-        let mongo_own_password = &CONFIG.mongo_authorization.mongo_password;
-        let mongo_own_third_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_second_handle_url_part;
+        let mongo_password = &CONFIG.mongo_authorization.mongo_password;
+        let mongo_third_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_third_handle_url_part;
-        let mongo_own_ip = &CONFIG.mongo_authorization.mongo_ip;
-        let mongo_own_fourth_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_third_handle_url_part;
+        let mongo_ip = &CONFIG.mongo_authorization.mongo_ip;
+        let mongo_fourth_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_fourth_handle_url_part;
-        let mongo_own_port = &CONFIG.mongo_authorization.mongo_port;
+            .mongo_url_parts
+            .mongo_fourth_handle_url_part;
+        let mongo_port = &CONFIG.mongo_authorization.mongo_port;
         mongo_url = format!(
             "{}{}{}{}{}{}{}{}",
-            mongo_own_first_handle_url_part,
-            mongo_own_login,
-            mongo_own_second_handle_url_part,
-            mongo_own_password,
-            mongo_own_third_handle_url_part,
-            mongo_own_ip,
-            mongo_own_fourth_handle_url_part,
-            mongo_own_port
+            mongo_first_handle_url_part,
+            mongo_login,
+            mongo_second_handle_url_part,
+            mongo_password,
+            mongo_third_handle_url_part,
+            mongo_ip,
+            mongo_fourth_handle_url_part,
+            mongo_port
         );
     } else {
-        let mongo_own_first_handle_url_part = &CONFIG
+        let mongo_first_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_first_handle_url_part;
-        let mongo_own_login = &CONFIG.mongo_authorization.mongo_login;
-        let mongo_own_second_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_first_handle_url_part;
+        let mongo_login = &CONFIG.mongo_authorization.mongo_login;
+        let mongo_second_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_second_handle_url_part;
-        let mongo_own_password = &CONFIG.mongo_authorization.mongo_password;
-        let mongo_own_third_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_second_handle_url_part;
+        let mongo_password = &CONFIG.mongo_authorization.mongo_password;
+        let mongo_third_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_third_handle_url_part;
-        let mongo_own_ip = &CONFIG.mongo_authorization.mongo_ip;
-        let mongo_own_fourth_handle_url_part = &CONFIG
+            .mongo_url_parts
+            .mongo_third_handle_url_part;
+        let mongo_ip = &CONFIG.mongo_authorization.mongo_ip;
+        let mongo_fourth_handle_url_part = &CONFIG
             .mongo_params
-            .enable_mongo_own_url_parts
-            .mongo_own_fourth_handle_url_part;
-        let mongo_own_port = &CONFIG.mongo_authorization.mongo_port;
+            .mongo_url_parts
+            .mongo_fourth_handle_url_part;
+        let mongo_port = &CONFIG.mongo_authorization.mongo_port;
         mongo_url = format!(
             "{}{}{}{}{}{}{}{}",
-            mongo_own_first_handle_url_part,
-            mongo_own_login,
-            mongo_own_second_handle_url_part,
-            mongo_own_password,
-            mongo_own_third_handle_url_part,
-            mongo_own_ip,
-            mongo_own_fourth_handle_url_part,
-            mongo_own_port
+            mongo_first_handle_url_part,
+            mongo_login,
+            mongo_second_handle_url_part,
+            mongo_password,
+            mongo_third_handle_url_part,
+            mongo_ip,
+            mongo_fourth_handle_url_part,
+            mongo_port
         );
     }
     mongo_url

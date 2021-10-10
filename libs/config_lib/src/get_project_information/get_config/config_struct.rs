@@ -31,8 +31,7 @@ use crate::get_project_information::get_config::providers_links_limits_struct::P
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
 use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::get_project_information::get_config::enable_mongo_own_url_parts_struct::EnableMongoOwnUrlParts;
-use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
+use crate::get_project_information::get_config::mongo_url_parts_struct::MongoUrlParts;
 
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -89,17 +88,11 @@ use crate::get_project_information::project_constants::PROVIDERS_DB_COLLECTION_D
 use crate::get_project_information::project_constants::PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART_ENV_NAME;
 use crate::get_project_information::project_constants::PROVIDERS_DB_NAME_HANDLE_ENV_NAME;
 
-// [mongo_params.enable_mongo_own_url_parts]
-use crate::get_project_information::project_constants::MONGO_OWN_FIRST_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_SECOND_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_THIRD_HANDLE_URL_PART_ENV_NAME;
-
-// [mongo_params.enable_mongo_cloud_url_parts]
-use crate::get_project_information::project_constants::MONGO_CLOUD_FIRST_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_FOURTH_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_SECOND_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME;
+// [mongo_params.mongo_url_parts]
+use crate::get_project_information::project_constants::MONGO_FIRST_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_SECOND_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_THIRD_HANDLE_URL_PART_ENV_NAME;
 
 // [mongo_params.enable_initialize_mongo_with_providers_link_parts]
 use crate::get_project_information::project_constants::ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME;
@@ -1436,99 +1429,51 @@ impl ConfigStruct {
                 )))
             }
         }
-        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part: String;
-        match std::env::var(MONGO_OWN_FIRST_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part: String;
+        match std::env::var(MONGO_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part = handle;
+                handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_OWN_FIRST_HANDLE_URL_PART_ENV_NAME, e
+                    MONGO_FIRST_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part: String;
-        match std::env::var(MONGO_OWN_SECOND_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part: String;
+        match std::env::var(MONGO_SECOND_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part = handle;
+                handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_OWN_SECOND_HANDLE_URL_PART_ENV_NAME, e
+                    MONGO_SECOND_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part: String;
-        match std::env::var(MONGO_OWN_THIRD_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part: String;
+        match std::env::var(MONGO_THIRD_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part = handle;
+                handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_OWN_THIRD_HANDLE_URL_PART_ENV_NAME, e
+                    MONGO_THIRD_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let  handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part: String;
-        match std::env::var(MONGO_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME) {
+        let  handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part: String;
+        match std::env::var(MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part = handle;
+                handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME, e
-                )))
-            }
-        }
-        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part: String;
-        match std::env::var(MONGO_CLOUD_FIRST_HANDLE_URL_PART_ENV_NAME) {
-            Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part = handle;
-            }
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_CLOUD_FIRST_HANDLE_URL_PART_ENV_NAME, e
-                )))
-            }
-        }
-        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part: String;
-        match std::env::var(MONGO_CLOUD_SECOND_HANDLE_URL_PART_ENV_NAME) {
-            Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part = handle;
-            }
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_CLOUD_SECOND_HANDLE_URL_PART_ENV_NAME, e
-                )))
-            }
-        }
-        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part: String;
-        match std::env::var(MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME) {
-            Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part = handle;
-            }
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME, e
-                )))
-            }
-        }
-        let handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part: String;
-        match std::env::var(MONGO_CLOUD_FOURTH_HANDLE_URL_PART_ENV_NAME) {
-            Ok(handle) => {
-                handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part = handle;
-            }
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_CLOUD_THIRD_HANDLE_URL_PART_ENV_NAME, e
+                    MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
@@ -4399,17 +4344,11 @@ impl ConfigStruct {
                         enable_initialize_mongo_with_reddit_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts,
                         enable_initialize_mongo_with_twitter_link_parts: handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts,
                     },
-                enable_mongo_own_url_parts: EnableMongoOwnUrlParts {
-                    mongo_own_first_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_first_handle_url_part,
-                    mongo_own_second_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_second_handle_url_part,
-                    mongo_own_third_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_third_handle_url_part,
-                    mongo_own_fourth_handle_url_part: handle_config_mongo_params_enable_mongo_own_url_parts_mongo_own_fourth_handle_url_part,
-                },
-                enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts {
-                    mongo_cloud_first_handle_url_part:  handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_first_handle_url_part,
-                    mongo_cloud_second_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_second_handle_url_part,
-                    mongo_cloud_third_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_third_handle_url_part,
-                    mongo_cloud_fourth_handle_url_part: handle_config_mongo_params_enable_mongo_cloud_url_parts_mongo_cloud_fourth_handle_url_part,
+                mongo_url_parts: MongoUrlParts {
+                    mongo_first_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part,
+                    mongo_second_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part,
+                    mongo_third_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part,
+                    mongo_fourth_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part,
                 },
             },
             postgres_params: PostgresParams {

@@ -1,6 +1,6 @@
 use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::get_project_information::get_config::enable_mongo_own_url_parts_struct::EnableMongoOwnUrlParts;
-use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
+use crate::get_project_information::get_config::mongo_url_parts_struct::MongoUrlParts;
+
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct MongoParams {
     pub mongo_is_cloud: bool,
@@ -17,6 +17,5 @@ pub struct MongoParams {
     //
     pub enable_initialize_mongo_with_providers_link_parts:
         EnableInitializeMongoWithProvidersLinkParts,
-    pub enable_mongo_own_url_parts: EnableMongoOwnUrlParts,
-    pub enable_mongo_cloud_url_parts: EnableMongoCloudUrlParts,
+    pub mongo_url_parts: MongoUrlParts,
 }
