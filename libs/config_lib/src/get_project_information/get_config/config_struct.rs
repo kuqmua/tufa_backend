@@ -1550,6 +1550,18 @@ impl ConfigStruct {
                 )))
             }
         }
+        let handle_config_postgres_params_postgres_is_cloud: String;
+        match std::env::var(POSTGRES_IS_CLOUD_ENV_NAME) {
+            Ok(handle) => {
+                handle_config_postgres_params_postgres_is_cloud = handle;
+            }
+            Err(e) => {
+                return Err(ConfigError::Message(format!(
+                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+                    POSTGRES_IS_CLOUD_ENV_NAME, e
+                )))
+            }
+        }
         let handle_config_postgres_params_postgres_own_first_handle_url_part: String;
         match std::env::var(POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
@@ -4425,6 +4437,7 @@ impl ConfigStruct {
                 },
             },
             postgres_params: PostgresParams {
+                postgres_is_cloud: handle_config_postgres_params_postgres_is_cloud,
                 postgres_own_first_handle_url_part: handle_config_postgres_params_postgres_own_first_handle_url_part,
                 postgres_own_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
                 postgres_own_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
