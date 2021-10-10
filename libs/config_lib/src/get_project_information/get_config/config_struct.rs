@@ -325,7 +325,6 @@ use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAM
 pub struct ConfigStruct {
     pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
-    pub postgres_authorization: PostgresAuthorization,
     //
     pub params: Params,
     pub mongo_params: MongoParams,
@@ -4270,14 +4269,6 @@ impl ConfigStruct {
                 reddit_username: handle_config_reddit_authorization_reddit_username,
                 reddit_password: handle_config_reddit_authorization_reddit_password,
             },
-            postgres_authorization: PostgresAuthorization {
-                postgres_login: handle_config_postgres_authorization_postgres_login,
-                postgres_password:
-                    handle_config_postgres_authorization_postgres_password,
-                postgres_ip: handle_config_postgres_authorization_postgres_ip,
-                postgres_port: handle_config_postgres_authorization_postgres_port,
-                postgres_db: handle_config_postgres_authorization_postgres_db,
-            },
             params: Params {
                 //todo
                 vec_of_provider_names: vec_of_provider_names_handle,
@@ -4356,6 +4347,14 @@ impl ConfigStruct {
                 postgres_own_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
                 postgres_own_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
                 postgres_own_fourth_handle_url_part: handle_config_postgres_params_postgres_own_fourth_handle_url_part,
+                postgres_authorization: PostgresAuthorization {
+                    postgres_login: handle_config_postgres_authorization_postgres_login,
+                    postgres_password:
+                        handle_config_postgres_authorization_postgres_password,
+                    postgres_ip: handle_config_postgres_authorization_postgres_ip,
+                    postgres_port: handle_config_postgres_authorization_postgres_port,
+                    postgres_db: handle_config_postgres_authorization_postgres_db,
+                },
             },
             enable_providers: EnableProviders {
                 enable_arxiv: handle_config_enable_providers_enable_arxiv,
