@@ -106,10 +106,10 @@ use crate::get_project_information::project_constants::ENABLE_INITIALIZE_MONGO_W
 
 // [postgres_params]
 use crate::get_project_information::project_constants::POSTGRES_IS_CLOUD_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_SECOND_HANDLE_URL_PART_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_THIRD_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_FIRST_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_FOURTH_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_SECOND_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_THIRD_HANDLE_URL_PART_ENV_NAME;
 
 // [enable_providers]
 use crate::get_project_information::project_constants::ARXIV_LINK_ENV_NAME;
@@ -1488,51 +1488,51 @@ impl ConfigStruct {
                 )))
             }
         }
-        let handle_config_postgres_params_postgres_own_first_handle_url_part: String;
-        match std::env::var(POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part: String;
+        match std::env::var(POSTGRES_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_postgres_params_postgres_own_first_handle_url_part = handle;
+                handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME, e
+                    POSTGRES_FIRST_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let handle_config_postgres_params_postgres_own_second_handle_url_part: String;
-        match std::env::var(POSTGRES_OWN_SECOND_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_postgres_params_postgres_url_parts_postgres_second_handle_url_part: String;
+        match std::env::var(POSTGRES_SECOND_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_postgres_params_postgres_own_second_handle_url_part = handle;
+                handle_config_postgres_params_postgres_url_parts_postgres_second_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    POSTGRES_OWN_SECOND_HANDLE_URL_PART_ENV_NAME, e
+                    POSTGRES_SECOND_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let handle_config_postgres_params_postgres_own_third_handle_url_part: String;
-        match std::env::var(POSTGRES_OWN_THIRD_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_postgres_params_postgres_url_parts_postgres_third_handle_url_part: String;
+        match std::env::var(POSTGRES_THIRD_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_postgres_params_postgres_own_third_handle_url_part = handle;
+                handle_config_postgres_params_postgres_url_parts_postgres_third_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    POSTGRES_OWN_THIRD_HANDLE_URL_PART_ENV_NAME, e
+                    POSTGRES_THIRD_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
-        let handle_config_postgres_params_postgres_own_fourth_handle_url_part: String;
-        match std::env::var(POSTGRES_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME) {
+        let handle_config_postgres_params_postgres_url_parts_postgres_fourth_handle_url_part: String;
+        match std::env::var(POSTGRES_FOURTH_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
-                handle_config_postgres_params_postgres_own_fourth_handle_url_part = handle;
+                handle_config_postgres_params_postgres_url_parts_postgres_fourth_handle_url_part = handle;
             }
             Err(e) => {
                 return Err(ConfigError::Message(format!(
                     "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    POSTGRES_OWN_FOURTH_HANDLE_URL_PART_ENV_NAME, e
+                    POSTGRES_FOURTH_HANDLE_URL_PART_ENV_NAME, e
                 )))
             }
         }
@@ -4345,10 +4345,10 @@ impl ConfigStruct {
             postgres_params: PostgresParams {
                 postgres_is_cloud: handle_config_postgres_params_postgres_is_cloud,
                 postgres_url_parts: PostgresUrlParts {
-                    postgres_first_handle_url_part: handle_config_postgres_params_postgres_own_first_handle_url_part,
-                postgres_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
-                postgres_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
-                postgres_fourth_handle_url_part: handle_config_postgres_params_postgres_own_fourth_handle_url_part,
+                    postgres_first_handle_url_part: handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part,
+                postgres_second_handle_url_part: handle_config_postgres_params_postgres_url_parts_postgres_second_handle_url_part,
+                postgres_third_handle_url_part: handle_config_postgres_params_postgres_url_parts_postgres_third_handle_url_part,
+                postgres_fourth_handle_url_part: handle_config_postgres_params_postgres_url_parts_postgres_fourth_handle_url_part,
                 },
                 postgres_authorization: PostgresAuthorization {
                     postgres_login: handle_config_postgres_authorization_postgres_login,
