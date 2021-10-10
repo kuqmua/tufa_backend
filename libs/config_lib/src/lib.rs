@@ -24,7 +24,7 @@ pub mod get_project_information {
         pub mod mongo_own_authorization_struct;
         pub mod mongo_params_struct;
         pub mod params_struct;
-        pub mod postgres_own_authorization_struct;
+        pub mod postgres_authorization_struct;
         pub mod postgres_params_struct;
         pub mod print_colors_struct;
         pub mod providers_check_links_struct;

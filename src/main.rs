@@ -64,13 +64,13 @@ fn main() {
     let postgres_url = format!(
         "{}{}{}{}{}{}{}{}",
         CONFIG.postgres_params.postgres_own_first_handle_url_part,
-        CONFIG.postgres_own_authorization.postgres_own_login,
+        CONFIG.postgres_authorization.postgres_login,
         CONFIG.postgres_params.postgres_own_second_handle_url_part,
-        CONFIG.postgres_own_authorization.postgres_own_password,
+        CONFIG.postgres_authorization.postgres_password,
         CONFIG.postgres_params.postgres_own_third_handle_url_part,
-        CONFIG.postgres_own_authorization.postgres_own_ip,
+        CONFIG.postgres_authorization.postgres_ip,
         CONFIG.postgres_params.postgres_own_fourth_handle_url_part,
-        CONFIG.postgres_own_authorization.postgres_own_db
+        CONFIG.postgres_authorization.postgres_db
     );
     let posgtres_connection = establish_connection(postgres_url);
     match posgtres_connection {

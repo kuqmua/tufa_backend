@@ -298,7 +298,7 @@ use crate::get_project_information::project_constants::INFO_RED_ENV_NAME;
 use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
 use crate::get_project_information::get_config::mongo_cloud_authorization_struct::MongoCloudAuthorization;
 use crate::get_project_information::get_config::mongo_own_authorization_struct::MongoOwnAuthorization;
-use crate::get_project_information::get_config::postgres_own_authorization_struct::PostgresOwnAuthorization;
+use crate::get_project_information::get_config::postgres_authorization_struct::PostgresAuthorization;
 use crate::get_project_information::get_config::reddit_authorization_struct::RedditAuthorization;
 
 use crate::get_project_information::project_constants::GITHUB_NAME_ENV_NAME;
@@ -311,10 +311,13 @@ use crate::get_project_information::project_constants::MONGO_OWN_IP_ENV_NAME;
 use crate::get_project_information::project_constants::MONGO_OWN_LOGIN_ENV_NAME;
 use crate::get_project_information::project_constants::MONGO_OWN_PASSWORD_ENV_NAME;
 use crate::get_project_information::project_constants::MONGO_OWN_PORT_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_DB_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_IP_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_LOGIN_ENV_NAME;
-use crate::get_project_information::project_constants::POSTGRES_OWN_PASSWORD_ENV_NAME;
+
+use crate::get_project_information::project_constants::POSTGRES_LOGIN_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_IP_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_PORT_ENV_NAME;
+use crate::get_project_information::project_constants::POSTGRES_DB_ENV_NAME;
+
 use crate::get_project_information::project_constants::REDDIT_CLIENT_ID_ENV_NAME;
 use crate::get_project_information::project_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
 use crate::get_project_information::project_constants::REDDIT_PASSWORD_ENV_NAME;
@@ -332,7 +335,7 @@ pub struct ConfigStruct {
     pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
     pub mongo_own_authorization: MongoOwnAuthorization,
-    pub postgres_own_authorization: PostgresOwnAuthorization,
+    pub postgres_authorization: PostgresAuthorization,
     pub mongo_cloud_authorization: MongoCloudAuthorization,
     //
     pub params: Params,
@@ -506,40 +509,50 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME, e)))
                     }
                 }
-        let handle_config_postgres_own_authorization_postgres_own_login: String;
-        match std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME) {
+        //
+        let handle_config_postgres_authorization_postgres_login: String;
+        match std::env::var(POSTGRES_LOGIN_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_postgres_own_authorization_postgres_own_login = handle;
+                        handle_config_postgres_authorization_postgres_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_LOGIN_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_LOGIN_ENV_NAME, e)))
                     }
                 }
-        let handle_config_postgres_own_authorization_postgres_own_password: String;
-        match std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME) {
+        let handle_config_postgres_authorization_postgres_password: String;
+        match std::env::var(POSTGRES_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_postgres_own_authorization_postgres_own_password = handle;
+                        handle_config_postgres_authorization_postgres_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_PASSWORD_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_PASSWORD_ENV_NAME, e)))
                     }
                 }
-        let handle_config_postgres_own_authorization_postgres_own_ip: String;
-        match std::env::var(POSTGRES_OWN_IP_ENV_NAME) {
+        let handle_config_postgres_authorization_postgres_ip: String;
+        match std::env::var(POSTGRES_IP_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_postgres_own_authorization_postgres_own_ip = handle;
+                        handle_config_postgres_authorization_postgres_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_IP_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_IP_ENV_NAME, e)))
                     }
                 }
-        let handle_config_postgres_own_authorization_postgres_own_db: String;
-        match std::env::var(POSTGRES_OWN_DB_ENV_NAME) {
+                let handle_config_postgres_authorization_postgres_port: String;
+        match std::env::var(POSTGRES_PORT_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_postgres_own_authorization_postgres_own_db = handle;
+                        handle_config_postgres_authorization_postgres_port = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_OWN_DB_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_OWN_DB_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_PORT_ENV_NAME, e)))
+                    }
+                }
+        let handle_config_postgres_authorization_postgres_db: String;
+        match std::env::var(POSTGRES_DB_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_db = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::Message(format!("std::env::var(POSTGRES_DB_ENV_NAME({})) failed for console and .env file, error: {:#?}", POSTGRES_DB_ENV_NAME, e)))
                     }
                 }
         //
@@ -4350,12 +4363,13 @@ impl ConfigStruct {
                 mongo_own_ip: handle_config_mongo_own_authorization_mongo_own_ip,
                 mongo_own_port: handle_config_mongo_own_authorization_mongo_own_port,
             },
-            postgres_own_authorization: PostgresOwnAuthorization {
-                postgres_own_login: handle_config_postgres_own_authorization_postgres_own_login,
-                postgres_own_password:
-                    handle_config_postgres_own_authorization_postgres_own_password,
-                postgres_own_ip: handle_config_postgres_own_authorization_postgres_own_ip,
-                postgres_own_db: handle_config_postgres_own_authorization_postgres_own_db,
+            postgres_authorization: PostgresAuthorization {
+                postgres_login: handle_config_postgres_authorization_postgres_login,
+                postgres_password:
+                    handle_config_postgres_authorization_postgres_password,
+                postgres_ip: handle_config_postgres_authorization_postgres_ip,
+                postgres_port: handle_config_postgres_authorization_postgres_port,
+                postgres_db: handle_config_postgres_authorization_postgres_db,
             },
             mongo_cloud_authorization: MongoCloudAuthorization {
                 mongo_cloud_login: handle_config_mongo_cloud_authorization_mongo_cloud_login,
