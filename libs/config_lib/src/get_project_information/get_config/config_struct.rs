@@ -15,6 +15,7 @@ use crate::get_project_information::get_config::enable_providers_prints_struct::
 use crate::get_project_information::get_config::providers_check_links_struct::ProvidersCheckLinks;
 use crate::get_project_information::get_config::mongo_params_struct::MongoParams;
 use crate::get_project_information::get_config::postgres_params_struct::PostgresParams;
+use crate::get_project_information::get_config::postgres_url_parts_struct::PostgresUrlParts;
 use crate::get_project_information::get_config::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::get_project_information::get_config::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
@@ -4343,10 +4344,12 @@ impl ConfigStruct {
             },
             postgres_params: PostgresParams {
                 postgres_is_cloud: handle_config_postgres_params_postgres_is_cloud,
-                postgres_own_first_handle_url_part: handle_config_postgres_params_postgres_own_first_handle_url_part,
-                postgres_own_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
-                postgres_own_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
-                postgres_own_fourth_handle_url_part: handle_config_postgres_params_postgres_own_fourth_handle_url_part,
+                postgres_url_parts: PostgresUrlParts {
+                    postgres_first_handle_url_part: handle_config_postgres_params_postgres_own_first_handle_url_part,
+                postgres_second_handle_url_part: handle_config_postgres_params_postgres_own_second_handle_url_part,
+                postgres_third_handle_url_part: handle_config_postgres_params_postgres_own_third_handle_url_part,
+                postgres_fourth_handle_url_part: handle_config_postgres_params_postgres_own_fourth_handle_url_part,
+                },
                 postgres_authorization: PostgresAuthorization {
                     postgres_login: handle_config_postgres_authorization_postgres_login,
                     postgres_password:
