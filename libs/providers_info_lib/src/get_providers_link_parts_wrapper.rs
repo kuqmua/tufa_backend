@@ -12,7 +12,7 @@ use prints_lib::print_type_enum::PrintType;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url: String;
-    if CONFIG.mongo_params.is_cloud {
+    if CONFIG.mongo_params.mongo_is_cloud {
         let mongo_cloud_first_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_cloud_url_parts

@@ -3,7 +3,7 @@ use crate::get_project_information::get_config::enable_mongo_own_url_parts_struc
 use crate::get_project_information::get_config::enable_mongo_cloud_url_parts_struct::EnableMongoCloudUrlParts;
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct MongoParams {
-    pub is_cloud: bool,
+    pub mongo_is_cloud: bool,
     pub providers_db_name_handle: String,
     pub providers_db_collection_handle_second_part: String,
     pub providers_db_collection_document_field_name_handle: String,

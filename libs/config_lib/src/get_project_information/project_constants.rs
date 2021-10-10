@@ -82,7 +82,7 @@ pub const ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME: &str =
     "ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS";
 
 //[mongo_params]
-pub const IS_CLOUD_ENV_NAME: &str = "IS_CLOUD";
+pub const MONGO_IS_CLOUD_ENV_NAME: &str = "MONGO_IS_CLOUD";
 pub const PROVIDERS_DB_NAME_HANDLE_ENV_NAME: &str = "PROVIDERS_DB_NAME_HANDLE";
 pub const PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART_ENV_NAME: &str =
     "PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART";
@@ -125,6 +125,7 @@ pub const ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME: &str =
     "ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS";
 
 //[postgres_params]
+pub const POSTGRES_IS_CLOUD_ENV_NAME: &str = "POSTGRES_IS_CLOUD";
 pub const POSTGRES_OWN_FIRST_HANDLE_URL_PART_ENV_NAME: &str = "POSTGRES_OWN_FIRST_HANDLE_URL_PART";
 pub const POSTGRES_OWN_SECOND_HANDLE_URL_PART_ENV_NAME: &str =
     "POSTGRES_OWN_SECOND_HANDLE_URL_PART";
@@ -393,7 +394,7 @@ pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_mongo_url() -> String {
     let mongo_url: String;
-    if CONFIG.mongo_params.is_cloud {
+    if CONFIG.mongo_params.mongo_is_cloud {
         let mongo_cloud_first_handle_url_part = &CONFIG
             .mongo_params
             .enable_mongo_cloud_url_parts
