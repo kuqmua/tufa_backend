@@ -296,21 +296,19 @@ use crate::get_project_information::project_constants::INFO_RED_ENV_NAME;
 
 //
 use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
-use crate::get_project_information::get_config::mongo_cloud_authorization_struct::MongoCloudAuthorization;
-use crate::get_project_information::get_config::mongo_own_authorization_struct::MongoOwnAuthorization;
+use crate::get_project_information::get_config::mongo_authorization_struct::MongoAuthorization;
 use crate::get_project_information::get_config::postgres_authorization_struct::PostgresAuthorization;
 use crate::get_project_information::get_config::reddit_authorization_struct::RedditAuthorization;
 
 use crate::get_project_information::project_constants::GITHUB_NAME_ENV_NAME;
 use crate::get_project_information::project_constants::GITHUB_TOKEN_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_CLUSTER_NAME_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_LOGIN_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_CLOUD_PASSWORD_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_IP_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_LOGIN_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_PASSWORD_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_OWN_PORT_ENV_NAME;
+
+use crate::get_project_information::project_constants::MONGO_IP_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_LOGIN_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_PASSWORD_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_PORT_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_PARAMS_ENV_NAME;
+
 
 use crate::get_project_information::project_constants::POSTGRES_LOGIN_ENV_NAME;
 use crate::get_project_information::project_constants::POSTGRES_PASSWORD_ENV_NAME;
@@ -334,9 +332,8 @@ use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAM
 pub struct ConfigStruct {
     pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
-    pub mongo_own_authorization: MongoOwnAuthorization,
+    pub mongo_authorization: MongoAuthorization,
     pub postgres_authorization: PostgresAuthorization,
-    pub mongo_cloud_authorization: MongoCloudAuthorization,
     //
     pub params: Params,
     pub mongo_params: MongoParams,
@@ -437,79 +434,51 @@ impl ConfigStruct {
                         return Err(ConfigError::Message(format!("std::env::var(REDDIT_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", REDDIT_PASSWORD_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_own_authorization_mongo_own_login: String;
-        match std::env::var(MONGO_OWN_LOGIN_ENV_NAME) {
+        let handle_config_mongo_authorization_mongo_login: String;
+        match std::env::var(MONGO_LOGIN_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_mongo_own_authorization_mongo_own_login = handle;
+                        handle_config_mongo_authorization_mongo_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_LOGIN_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_LOGIN_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_own_authorization_mongo_own_password: String;
-        match std::env::var(MONGO_OWN_PASSWORD_ENV_NAME) {
+        let handle_config_mongo_authorization_mongo_password: String;
+        match std::env::var(MONGO_PASSWORD_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_mongo_own_authorization_mongo_own_password = handle;
+                        handle_config_mongo_authorization_mongo_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PASSWORD_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_PASSWORD_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_own_authorization_mongo_own_ip: String;
-        match std::env::var(MONGO_OWN_IP_ENV_NAME) {
+        let handle_config_mongo_authorization_mongo_ip: String;
+        match std::env::var(MONGO_IP_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_mongo_own_authorization_mongo_own_ip = handle;
+                        handle_config_mongo_authorization_mongo_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_IP_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_IP_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_IP_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_own_authorization_mongo_own_port: String;
-        match std::env::var(MONGO_OWN_PORT_ENV_NAME) {
+        let handle_config_mongo_authorization_mongo_port: String;
+        match std::env::var(MONGO_PORT_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_mongo_own_authorization_mongo_own_port = handle;
+                        handle_config_mongo_authorization_mongo_port = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_OWN_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_OWN_PORT_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_PORT_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_PORT_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_cloud_authorization_mongo_cloud_login: String;
-        match std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME) {
+        let handle_config_mongo_authorization_mongo_params: String;
+        match std::env::var(MONGO_PARAMS_ENV_NAME) {
                     Ok(handle) => {
-                        handle_config_mongo_cloud_authorization_mongo_cloud_login = handle;
+                        handle_config_mongo_authorization_mongo_params = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_LOGIN_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_LOGIN_ENV_NAME, e)))
+                        return Err(ConfigError::Message(format!("std::env::var(MONGO_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_PARAMS_ENV_NAME, e)))
                     }
                 }
-        let handle_config_mongo_cloud_authorization_mongo_cloud_password: String;
-        match std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_cloud_authorization_mongo_cloud_password = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_PASSWORD_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_PASSWORD_ENV_NAME, e)))
-                    }
-                }
-        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name: String;
-        match std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_NAME_ENV_NAME, e)))
-                    }
-                }
-        let handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params: String;
-        match std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME({})) failed for console and .env file, error: {:#?}", MONGO_CLOUD_CLUSTER_PARAMS_ENV_NAME, e)))
-                    }
-                }
-        //
         let handle_config_postgres_authorization_postgres_login: String;
         match std::env::var(POSTGRES_LOGIN_ENV_NAME) {
                     Ok(handle) => {
@@ -4357,11 +4326,12 @@ impl ConfigStruct {
                 reddit_username: handle_config_reddit_authorization_reddit_username,
                 reddit_password: handle_config_reddit_authorization_reddit_password,
             },
-            mongo_own_authorization: MongoOwnAuthorization {
-                mongo_own_login: handle_config_mongo_own_authorization_mongo_own_login,
-                mongo_own_password: handle_config_mongo_own_authorization_mongo_own_password,
-                mongo_own_ip: handle_config_mongo_own_authorization_mongo_own_ip,
-                mongo_own_port: handle_config_mongo_own_authorization_mongo_own_port,
+            mongo_authorization: MongoAuthorization {
+                mongo_login: handle_config_mongo_authorization_mongo_login,
+                mongo_password: handle_config_mongo_authorization_mongo_password,
+                mongo_ip: handle_config_mongo_authorization_mongo_ip,
+                mongo_port: handle_config_mongo_authorization_mongo_port,
+                mongo_params: handle_config_mongo_authorization_mongo_params,
             },
             postgres_authorization: PostgresAuthorization {
                 postgres_login: handle_config_postgres_authorization_postgres_login,
@@ -4370,14 +4340,6 @@ impl ConfigStruct {
                 postgres_ip: handle_config_postgres_authorization_postgres_ip,
                 postgres_port: handle_config_postgres_authorization_postgres_port,
                 postgres_db: handle_config_postgres_authorization_postgres_db,
-            },
-            mongo_cloud_authorization: MongoCloudAuthorization {
-                mongo_cloud_login: handle_config_mongo_cloud_authorization_mongo_cloud_login,
-                mongo_cloud_password: handle_config_mongo_cloud_authorization_mongo_cloud_password,
-                mongo_cloud_cluster_name:
-                    handle_config_mongo_cloud_authorization_mongo_cloud_cluster_name,
-                mongo_cloud_cluster_params:
-                    handle_config_mongo_cloud_authorization_mongo_cloud_cluster_params,
             },
             params: Params {
                 //todo
@@ -4697,82 +4659,52 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
-            .mongo_own_authorization
-            .mongo_own_login
+            .mongo_authorization
+            .mongo_login
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_own_login is not valid".to_string(),
+                "mongo_login is not valid".to_string(),
             ));
             drop(error);
         }
         if !config_handle
-            .mongo_own_authorization
-            .mongo_own_password
+            .mongo_authorization
+            .mongo_password
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_own_password is not valid".to_string(),
+                "mongo_password is not valid".to_string(),
             ));
             drop(error);
         }
         if !config_handle
-            .mongo_own_authorization
-            .mongo_own_ip
+            .mongo_authorization
+            .mongo_ip
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_own_ip is not valid".to_string(),
+                "mongo_ip is not valid".to_string(),
             ));
             drop(error);
         }
         if !config_handle
-            .mongo_own_authorization
-            .mongo_own_port
+            .mongo_authorization
+            .mongo_port
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_own_port is not valid".to_string(),
+                "mongo_port is not valid".to_string(),
             ));
             drop(error);
         }
         if !config_handle
-            .mongo_cloud_authorization
-            .mongo_cloud_login
+            .mongo_authorization
+            .mongo_params
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_cloud_login is not valid".to_string(),
-            ));
-            drop(error);
-        }
-        if !config_handle
-            .mongo_cloud_authorization
-            .mongo_cloud_password
-            .is_empty()
-        {
-            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_cloud_password is not valid".to_string(),
-            ));
-            drop(error);
-        }
-        if !config_handle
-            .mongo_cloud_authorization
-            .mongo_cloud_cluster_name
-            .is_empty()
-        {
-            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_cloud_cluster_name is not valid".to_string(),
-            ));
-            drop(error);
-        }
-        if !config_handle
-            .mongo_cloud_authorization
-            .mongo_cloud_cluster_params
-            .is_empty()
-        {
-            let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "mongo_cloud_cluster_params is not valid".to_string(),
+                "mongo_params is not valid".to_string(),
             ));
             drop(error);
         }

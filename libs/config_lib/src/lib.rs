@@ -20,8 +20,7 @@ pub mod get_project_information {
         pub mod enable_warning_low_providers_prints_struct;
         pub mod get_lazy_config_information;
         pub mod github_authorization_struct;
-        pub mod mongo_cloud_authorization_struct;
-        pub mod mongo_own_authorization_struct;
+        pub mod mongo_authorization_struct;
         pub mod mongo_params_struct;
         pub mod params_struct;
         pub mod postgres_authorization_struct;
