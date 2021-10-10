@@ -325,7 +325,6 @@ use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAM
 pub struct ConfigStruct {
     pub github_authorization: GithubAuthorization,
     pub reddit_authorization: RedditAuthorization,
-    pub mongo_authorization: MongoAuthorization,
     pub postgres_authorization: PostgresAuthorization,
     //
     pub params: Params,
@@ -4271,13 +4270,6 @@ impl ConfigStruct {
                 reddit_username: handle_config_reddit_authorization_reddit_username,
                 reddit_password: handle_config_reddit_authorization_reddit_password,
             },
-            mongo_authorization: MongoAuthorization {
-                mongo_login: handle_config_mongo_authorization_mongo_login,
-                mongo_password: handle_config_mongo_authorization_mongo_password,
-                mongo_ip: handle_config_mongo_authorization_mongo_ip,
-                mongo_port: handle_config_mongo_authorization_mongo_port,
-                mongo_params: handle_config_mongo_authorization_mongo_params,
-            },
             postgres_authorization: PostgresAuthorization {
                 postgres_login: handle_config_postgres_authorization_postgres_login,
                 postgres_password:
@@ -4349,6 +4341,13 @@ impl ConfigStruct {
                     mongo_second_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part,
                     mongo_third_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part,
                     mongo_fourth_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part,
+                },
+                mongo_authorization: MongoAuthorization {
+                    mongo_login: handle_config_mongo_authorization_mongo_login,
+                    mongo_password: handle_config_mongo_authorization_mongo_password,
+                    mongo_ip: handle_config_mongo_authorization_mongo_ip,
+                    mongo_port: handle_config_mongo_authorization_mongo_port,
+                    mongo_params: handle_config_mongo_authorization_mongo_params,
                 },
             },
             postgres_params: PostgresParams {
@@ -4598,7 +4597,7 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
-            .mongo_authorization
+            .mongo_params.mongo_authorization
             .mongo_login
             .is_empty()
         {
@@ -4608,6 +4607,7 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
+        .mongo_params
             .mongo_authorization
             .mongo_password
             .is_empty()
@@ -4618,6 +4618,7 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
+        .mongo_params
             .mongo_authorization
             .mongo_ip
             .is_empty()
@@ -4628,6 +4629,7 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
+        .mongo_params
             .mongo_authorization
             .mongo_port
             .is_empty()
@@ -4638,6 +4640,7 @@ impl ConfigStruct {
             drop(error);
         }
         if !config_handle
+        .mongo_params
             .mongo_authorization
             .mongo_params
             .is_empty()
