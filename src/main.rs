@@ -62,7 +62,7 @@ fn main() {
     entry::entry();
     /////////////////////////////////////////////////////
     let postgres_url = format!(
-        "{}{}{}{}{}{}{}{}",
+        "{}{}{}{}{}{}{}{}{}{}",
         CONFIG.postgres_params.postgres_url_parts.postgres_first_handle_url_part,
         CONFIG.postgres_params.postgres_authorization.postgres_login,
         CONFIG.postgres_params.postgres_url_parts.postgres_second_handle_url_part,
@@ -70,6 +70,8 @@ fn main() {
         CONFIG.postgres_params.postgres_url_parts.postgres_third_handle_url_part,
         CONFIG.postgres_params.postgres_authorization.postgres_ip,
         CONFIG.postgres_params.postgres_url_parts.postgres_fourth_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_port,
+        CONFIG.postgres_params.postgres_url_parts.postgres_fifth_handle_url_part,
         CONFIG.postgres_params.postgres_authorization.postgres_db
     );
     let posgtres_connection = establish_connection(postgres_url);
