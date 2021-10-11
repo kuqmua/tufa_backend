@@ -82,7 +82,6 @@ use crate::get_project_information::project_constants::DB_PROVIDERS_LOGS_COLLECT
 use crate::get_project_information::project_constants::DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART_ENV_NAME;
 use crate::get_project_information::project_constants::DB_PROVIDERS_LOGS_NAME_HANDLE_ENV_NAME;
 use crate::get_project_information::project_constants::ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::project_constants::MONGO_IS_CLOUD_ENV_NAME;
 use crate::get_project_information::project_constants::LOG_FILE_EXTENSION_ENV_NAME;
 use crate::get_project_information::project_constants::PATH_TO_PROVIDER_LINK_PARTS_FOLDER_ENV_NAME;
 use crate::get_project_information::project_constants::PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME;
@@ -94,6 +93,7 @@ use crate::get_project_information::project_constants::MONGO_FIRST_HANDLE_URL_PA
 use crate::get_project_information::project_constants::MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME;
 use crate::get_project_information::project_constants::MONGO_SECOND_HANDLE_URL_PART_ENV_NAME;
 use crate::get_project_information::project_constants::MONGO_THIRD_HANDLE_URL_PART_ENV_NAME;
+use crate::get_project_information::project_constants::MONGO_FIFTH_HANDLE_URL_PART_ENV_NAME;
 
 // [mongo_params.enable_initialize_mongo_with_providers_link_parts]
 use crate::get_project_information::project_constants::ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME;
@@ -1171,26 +1171,6 @@ impl ConfigStruct {
                 )))
             }
         }
-        let handle_config_mongo_params_mongo_is_cloud: bool;
-        match std::env::var(MONGO_IS_CLOUD_ENV_NAME) {
-            Ok(handle) => match handle.parse::<bool>() {
-                Ok(handle) => {
-                    handle_config_mongo_params_mongo_is_cloud = handle;
-                }
-                Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        MONGO_IS_CLOUD_ENV_NAME, e
-                    )))
-                }
-            },
-            Err(e) => {
-                return Err(ConfigError::Message(format!(
-                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
-                    MONGO_IS_CLOUD_ENV_NAME, e
-                )))
-            }
-        }
         let handle_config_mongo_params_providers_db_name_handle: String;
         match std::env::var(PROVIDERS_DB_NAME_HANDLE_ENV_NAME) {
             Ok(handle) => {
@@ -1476,6 +1456,20 @@ impl ConfigStruct {
                 )))
             }
         }
+        ///////
+        let  handle_config_mongo_params_mongo_url_parts_mongo_fifth_handle_url_part: String;
+        match std::env::var(MONGO_FIFTH_HANDLE_URL_PART_ENV_NAME) {
+            Ok(handle) => {
+                handle_config_mongo_params_mongo_url_parts_mongo_fifth_handle_url_part = handle;
+            }
+            Err(e) => {
+                return Err(ConfigError::Message(format!(
+                    "std::env::var({}_ENV_NAME) failed for console and .env file, error: {:#?}",
+                    MONGO_FIFTH_HANDLE_URL_PART_ENV_NAME, e
+                )))
+            }
+        }
+        ///////
         let handle_config_postgres_params_postgres_is_cloud: String;
         match std::env::var(POSTGRES_IS_CLOUD_ENV_NAME) {
             Ok(handle) => {
@@ -4309,7 +4303,6 @@ impl ConfigStruct {
                 enable_initialize_mongo_with_providers_link_parts: handle_config_params_enable_initialize_mongo_with_providers_link_parts,
             },
             mongo_params: MongoParams {
-                mongo_is_cloud: handle_config_mongo_params_mongo_is_cloud,
                 providers_db_name_handle: handle_config_mongo_params_providers_db_name_handle,
                 providers_db_collection_handle_second_part: handle_config_mongo_params_providers_db_collection_handle_second_part,
                 providers_db_collection_document_field_name_handle: handle_config_mongo_params_providers_db_collection_document_field_name_handle,
@@ -4333,6 +4326,7 @@ impl ConfigStruct {
                     mongo_second_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part,
                     mongo_third_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part,
                     mongo_fourth_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part,
+                    mongo_fifth_handle_url_part: handle_config_mongo_params_mongo_url_parts_mongo_fifth_handle_url_part,
                 },
                 mongo_authorization: MongoAuthorization {
                     mongo_login: handle_config_mongo_authorization_mongo_login,

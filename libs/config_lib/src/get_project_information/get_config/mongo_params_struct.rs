@@ -4,7 +4,6 @@ use crate::get_project_information::get_config::mongo_authorization_struct::Mong
 
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct MongoParams {
-    pub mongo_is_cloud: bool,
     pub providers_db_name_handle: String,
     pub providers_db_collection_handle_second_part: String,
     pub providers_db_collection_document_field_name_handle: String,
