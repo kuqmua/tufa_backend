@@ -273,3 +273,7 @@ pm2 instead of docker?
 commit message and hash in file inside docker container
 for more information about code inside container
 <br/>
+    
+### -------------------
+red hat / openshift / reg.ru postgres cloud cluster
+<br/>
