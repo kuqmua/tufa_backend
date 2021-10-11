@@ -36,7 +36,11 @@ sudo docker-compose up -d
 sudo docker-compose down
 
 ### pull and run mongodb docker container
-sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/mongo:/db-volumes/mongodb-volumes/tufa-dev-volume -d mongo:latest
+(need to write path to your project directory)
+sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_backend/mongodb_volume:/data/db -d mongo:latest
+
+### How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)
+https://www.youtube.com/watch?v=t_X7qFMmWhI
 
 ### start mongodb docker container
 with docker: sudo docker start mongo-tufa-wsl2 <br/>
