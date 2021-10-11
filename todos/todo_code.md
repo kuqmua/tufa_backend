@@ -355,3 +355,7 @@ use .env instead
 ### -------------------
 move USER_CREDENTIALS_DUMMY_HANDLE from .env to project constants
 <br/>
+
+### -------------------
+rename MONGO_FOURTH_HANDLE_URL_PART and others into something more meaningfull 
+<br/>
