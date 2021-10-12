@@ -85,6 +85,9 @@ sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postg
 with docker: sudo docker start postgres-tufa-wsl2 <br/>
 with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d <br/>
 
+### postgres create table
+https://www.youtube.com/watch?v=h5wgbJiSy7Q
+
 ### shutdown wsl(if db clients cannot connect to db in wsl2)
 windows console: wsl --shutdown <br/>
 then reopen wsl
