@@ -290,60 +290,11 @@ maybe add this to code
 <br/>
 
 ### -------------------
-match config_set_env_ok.merge(File::with_name(&format!(
-
-remove opening file
-remove config_lib(from crates.io)
-<br/>
-
-### -------------------
 make default value for all environment variables
 <br/>
             
 ### -------------------
 dockerfile with ARM support
-<br/>
-
-### -------------------
-get_mongo_url
-ClientOptions::parse error , Error {
-    kind: ArgumentError {
-        message: "illegal character in database name",
-    },
-    labels: [],
-}
-<br/>
-
-### -------------------
-add logic around variable existing. if not exists do not return error for overriding. 
-its sad coz i cannot have loop for check coz its struct and not enum.
-maybe rewrite config into enum?
-match std::env::var() {
-            Ok(handle) => {
-                handle_config.... = handle;
-            }
-            Err(e) => {
-                return Err(ConfigError::Message("something"))
-            }
-        }
-<br/>
-
-### -------------------
-remove file::open and add fs::read_to_string instead
-// use std::fs;
-        // use toml::Value;
-        // let mmm = "./config/Development.toml";
-        // let result_of_opening_file = fs::read_to_string(mmm);
-        // match result_of_opening_file {
-        //     Ok(stringified_file) => {
-        //         let value = stringified_file.parse::<Value>().unwrap();
-        //         let m: ConfigStruct = value.try_into().unwrap();
-        //         // println!("m {:#?}", m)
-        //     }
-        //     Err(err) => {
-        //         println!("errorr {:#?}", err);
-        //     }
-        // }
 <br/>
 
 ### -------------------

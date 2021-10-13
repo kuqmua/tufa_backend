@@ -1,7 +1,5 @@
 extern crate toml;
 
-use config::ConfigError;
-
 use itertools::Itertools;
 
 use dotenv::dotenv;
@@ -316,11 +314,7 @@ use crate::get_project_information::project_constants::REDDIT_PASSWORD_ENV_NAME;
 use crate::get_project_information::project_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAME;
 
-// #[derive(Deserialize, Debug, Clone)]
-// pub struct Parent {
-//     // #[serde(deserialize_with = "string_or_seq_string")]
-//     pub strings: Vec<String>,
-// }
+use crate::get_project_information::get_config::config_error::ConfigError;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {

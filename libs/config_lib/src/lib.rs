@@ -1,6 +1,7 @@
 pub mod get_project_information {
     pub mod get_config {
         pub mod config_struct;
+        pub mod config_error;
         pub mod enable_error_providers_prints_struct;
         pub mod enable_initialize_mongo_with_providers_link_parts_struct;
         pub mod mongo_url_parts_struct;
