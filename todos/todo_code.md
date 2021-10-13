@@ -347,15 +347,22 @@ remove file::open and add fs::read_to_string instead
 <br/>
 
 ### -------------------
-remove toml configs coz it's annoying to work with them
-with docker container
-use .env instead
-<br/>
-
-### -------------------
 move USER_CREDENTIALS_DUMMY_HANDLE from .env to project constants
 <br/>
 
 ### -------------------
 rename MONGO_FOURTH_HANDLE_URL_PART and others into something more meaningfull 
+<br/>
+
+### -------------------
+vec_of_values are not filtered in
+mongo_insert_docs_in_empty_collection(
+        mongo_url,
+        db_name_handle,
+        db_collection_handle, //fix naming later
+        db_collection_document_field_name_handle,
+        vec_of_values,
+    )
+all 2200+ twitter subs inserted
+fix this by adding filter from env
 <br/>
