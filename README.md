@@ -15,7 +15,7 @@ sudo dockerd
 (maybe?) rustup install nightly
 (maybe?) rustup target add x86_64-unknown-linux-musl
 (maybe?) cargo +nightly build --release
-docker build -t tufa_backend-image .
+sudo docker build -t tufa_backend-image .
 
 ### run docker container
 docker run --env-file .env --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
