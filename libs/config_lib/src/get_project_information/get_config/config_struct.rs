@@ -385,7 +385,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_user_agent = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_USER_AGENT_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_client_id: String;
@@ -394,7 +394,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_client_id = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_CLIENT_ID_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_client_secret: String;
@@ -403,7 +403,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_client_secret = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_CLIENT_SECRET_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_username: String;
@@ -412,7 +412,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_username = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_USERNAME_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_password: String;
@@ -421,7 +421,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_PASSWORD_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_mongo_authorization_mongo_login: String;
@@ -430,7 +430,7 @@ impl ConfigStruct {
                         handle_config_mongo_authorization_mongo_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_LOGIN_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_mongo_authorization_mongo_password: String;
@@ -439,7 +439,7 @@ impl ConfigStruct {
                         handle_config_mongo_authorization_mongo_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PASSWORD_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_mongo_authorization_mongo_ip: String;
@@ -448,7 +448,7 @@ impl ConfigStruct {
                         handle_config_mongo_authorization_mongo_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_IP_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_mongo_authorization_mongo_port: String;
@@ -457,7 +457,7 @@ impl ConfigStruct {
                         handle_config_mongo_authorization_mongo_port = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PORT_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_mongo_authorization_mongo_params: String;
@@ -466,7 +466,7 @@ impl ConfigStruct {
                         handle_config_mongo_authorization_mongo_params = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PARAMS_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_postgres_authorization_postgres_login: String;
@@ -475,7 +475,7 @@ impl ConfigStruct {
                         handle_config_postgres_authorization_postgres_login = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_LOGIN_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_postgres_authorization_postgres_password: String;
@@ -484,7 +484,7 @@ impl ConfigStruct {
                         handle_config_postgres_authorization_postgres_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PASSWORD_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_postgres_authorization_postgres_ip: String;
@@ -493,7 +493,7 @@ impl ConfigStruct {
                         handle_config_postgres_authorization_postgres_ip = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_IP_ENV_NAME, env_error: e });
                     }
                 }
                 let handle_config_postgres_authorization_postgres_port: String;
@@ -502,7 +502,7 @@ impl ConfigStruct {
                         handle_config_postgres_authorization_postgres_port = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PORT_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_postgres_authorization_postgres_db: String;
@@ -511,7 +511,7 @@ impl ConfigStruct {
                         handle_config_postgres_authorization_postgres_db = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_DB_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_params_starting_check_link: String;
@@ -520,7 +520,7 @@ impl ConfigStruct {
                 handle_config_params_starting_check_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: STARTING_CHECK_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_user_credentials_dummy_handle: String;
@@ -529,7 +529,7 @@ impl ConfigStruct {
                 handle_config_params_user_credentials_dummy_handle = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_warning_logs_directory_name: String;
@@ -538,7 +538,7 @@ impl ConfigStruct {
                 handle_config_params_warning_logs_directory_name = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_LOGS_DIRECTORY_NAME_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_unhandled_success_handled_success_are_there_items_initialized_posts_dir: String;
@@ -550,7 +550,7 @@ impl ConfigStruct {
                     handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_providers: bool;
@@ -567,7 +567,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory: bool;
@@ -584,7 +584,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_in_mongo: bool;
@@ -601,7 +601,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo: bool;
@@ -619,7 +619,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_time_measurement: bool;
@@ -636,7 +636,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_provider_links_limit: bool;
@@ -653,7 +653,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_common_providers_links_limit: bool;
@@ -670,7 +670,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_common_providers_links_limit: i64;
@@ -687,7 +687,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo: bool;
@@ -704,7 +704,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_prints: bool;
@@ -721,7 +721,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_error_prints: bool;
@@ -738,7 +738,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_warning_high_prints: bool;
@@ -755,7 +755,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_warning_low_prints: bool;
@@ -772,7 +772,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_success_prints: bool;
@@ -789,7 +789,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_partial_success_prints: bool;
@@ -806,7 +806,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_time_measurement_prints: bool;
@@ -823,7 +823,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory_prints: bool;
@@ -840,7 +840,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_info_prints: bool;
@@ -857,7 +857,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_all_providers_prints: bool;
@@ -874,7 +874,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_error_prints_for_all_providers: bool;
@@ -891,7 +891,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_warning_high_prints_for_all_providers: bool;
@@ -908,7 +908,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_warning_low_prints_for_all_providers: bool;
@@ -925,7 +925,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_success_prints_for_all_providers: bool;
@@ -942,7 +942,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_partial_success_prints_for_all_providers: bool;
@@ -959,7 +959,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_time_measurement_prints_for_all_providers: bool;
@@ -976,7 +976,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers: bool;
@@ -995,7 +995,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_info_prints_for_all_providers: bool;
@@ -1012,7 +1012,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_write_error_logs_in_local_folder: bool;
@@ -1029,7 +1029,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_write_error_logs_in_mongo: bool;
@@ -1046,7 +1046,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_initialize_mongo_with_providers_link_parts: bool;
@@ -1063,7 +1063,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_providers_db_name_handle: String;
@@ -1072,7 +1072,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_providers_db_name_handle = handle;
             }
             Err(e) => {
-              
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PROVIDERS_DB_NAME_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_providers_db_collection_handle_second_part: String;
@@ -1081,7 +1081,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_providers_db_collection_handle_second_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_providers_db_collection_document_field_name_handle: String;
@@ -1091,7 +1091,7 @@ impl ConfigStruct {
                     handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_db_providers_logs_name_handle: String;
@@ -1100,7 +1100,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_db_providers_logs_name_handle = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: DB_PROVIDERS_LOGS_NAME_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_db_providers_logs_collection_handle_second_part: String;
@@ -1109,7 +1109,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_db_providers_logs_collection_handle_second_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle: String;
@@ -1118,7 +1118,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_db_providers_logs_collection_document_field_name_handle = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_path_to_provider_link_parts_folder: String;
@@ -1127,7 +1127,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_path_to_provider_link_parts_folder = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PATH_TO_PROVIDER_LINK_PARTS_FOLDER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_log_file_extension: String;
@@ -1136,7 +1136,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_log_file_extension = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LOG_FILE_EXTENSION_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_arxiv_link_parts: bool;
@@ -1153,7 +1153,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts: bool;
@@ -1170,7 +1170,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts: bool;
@@ -1187,7 +1187,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts: bool;
@@ -1204,7 +1204,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts: bool;
@@ -1221,7 +1221,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let  handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts: bool;
@@ -1238,7 +1238,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts: bool;
@@ -1255,7 +1255,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part: String;
@@ -1264,7 +1264,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_FIRST_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part: String;
@@ -1273,7 +1273,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_mongo_url_parts_mongo_second_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_SECOND_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part: String;
@@ -1282,7 +1282,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_mongo_url_parts_mongo_third_handle_url_part = handle;
             }
             Err(e) => {
-            
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_THIRD_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let  handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part: String;
@@ -1291,7 +1291,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_mongo_url_parts_mongo_fourth_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_FOURTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let  handle_config_mongo_params_mongo_url_parts_mongo_fifth_handle_url_part: String;
@@ -1300,7 +1300,7 @@ impl ConfigStruct {
                 handle_config_mongo_params_mongo_url_parts_mongo_fifth_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_FIFTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part: String;
@@ -1309,7 +1309,7 @@ impl ConfigStruct {
                 handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_FIRST_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_postgres_params_postgres_url_parts_postgres_second_handle_url_part: String;
@@ -1318,7 +1318,7 @@ impl ConfigStruct {
                 handle_config_postgres_params_postgres_url_parts_postgres_second_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_SECOND_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_postgres_params_postgres_url_parts_postgres_third_handle_url_part: String;
@@ -1327,7 +1327,7 @@ impl ConfigStruct {
                 handle_config_postgres_params_postgres_url_parts_postgres_third_handle_url_part = handle;
             }
             Err(e) => {
-           
+                return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_THIRD_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_postgres_params_postgres_url_parts_postgres_fourth_handle_url_part: String;
@@ -1336,7 +1336,7 @@ impl ConfigStruct {
                 handle_config_postgres_params_postgres_url_parts_postgres_fourth_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_FOURTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_postgres_params_postgres_url_parts_postgres_fifth_handle_url_part: String;
@@ -1345,7 +1345,7 @@ impl ConfigStruct {
                 handle_config_postgres_params_postgres_url_parts_postgres_fifth_handle_url_part = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_FIFTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_arxiv: bool;
@@ -1362,7 +1362,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_biorxiv: bool;
@@ -1379,7 +1379,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_github: bool;
@@ -1396,7 +1396,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_habr: bool;
@@ -1413,7 +1413,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_medrxiv: bool;
@@ -1430,7 +1430,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_reddit: bool;
@@ -1447,7 +1447,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_enable_twitter: bool;
@@ -1464,7 +1464,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_arxiv_link: String;
@@ -1473,7 +1473,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_arxiv_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ARXIV_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_biorxiv_link: String;
@@ -1482,7 +1482,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_biorxiv_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: BIORXIV_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_github_link: String;
@@ -1491,7 +1491,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_github_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: GITHUB_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_habr_link: String;
@@ -1500,7 +1500,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_habr_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: HABR_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_medrxiv_link: String;
@@ -1509,7 +1509,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_medrxiv_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: MEDRXIV_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_reddit_link: String;
@@ -1518,7 +1518,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_reddit_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_check_links_twitter_link: String;
@@ -1527,7 +1527,7 @@ impl ConfigStruct {
                 handle_config_providers_check_links_twitter_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: TWITTER_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_arxiv: bool;
@@ -1544,7 +1544,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_biorxiv: bool;
@@ -1561,7 +1561,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_github: bool;
@@ -1578,7 +1578,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_habr: bool;
@@ -1595,7 +1595,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_medrxiv: bool;
@@ -1612,7 +1612,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_reddit: bool;
@@ -1629,7 +1629,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_twitter: bool;
@@ -1646,7 +1646,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PRINTS_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv: bool;
@@ -1663,7 +1663,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv: bool;
@@ -1680,7 +1680,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github: bool;
@@ -1697,7 +1697,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr: bool;
@@ -1714,7 +1714,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv: bool;
@@ -1731,7 +1731,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit: bool;
@@ -1748,7 +1748,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter: bool;
@@ -1765,7 +1765,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv: bool;
@@ -1782,7 +1782,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv: bool;
@@ -1799,7 +1799,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github: bool;
@@ -1816,7 +1816,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr: bool;
@@ -1833,7 +1833,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv: bool;
@@ -1850,7 +1850,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit: bool;
@@ -1867,7 +1867,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter: bool;
@@ -1884,7 +1884,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv: bool;
@@ -1902,7 +1902,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv: bool;
@@ -1919,7 +1919,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_github: bool;
@@ -1936,7 +1936,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_habr: bool;
@@ -1954,7 +1954,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv: bool;
@@ -1971,7 +1971,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_reddit: bool;
@@ -1988,7 +1988,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_twitter: bool;
@@ -2005,7 +2005,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv: bool;
@@ -2022,7 +2022,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv: bool;
@@ -2039,7 +2039,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github: bool;
@@ -2056,7 +2056,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr: bool;
@@ -2073,7 +2073,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv: bool;
@@ -2090,7 +2090,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit: bool;
@@ -2107,7 +2107,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter: bool;
@@ -2124,7 +2124,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv: bool;
@@ -2142,7 +2142,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv: bool;
@@ -2160,7 +2160,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_github: bool;
@@ -2178,7 +2178,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_habr: bool;
@@ -2196,7 +2196,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv: bool;
@@ -2214,7 +2214,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_reddit: bool;
@@ -2232,7 +2232,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_twitter: bool;
@@ -2250,7 +2250,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv: bool;
@@ -2267,7 +2267,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv: bool;
@@ -2284,7 +2284,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github: bool;
@@ -2301,7 +2301,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr: bool;
@@ -2318,7 +2318,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv: bool;
@@ -2335,7 +2335,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit: bool;
@@ -2352,7 +2352,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter: bool;
@@ -2369,7 +2369,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool;
@@ -2386,7 +2386,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool;
@@ -2403,7 +2403,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github: bool;
@@ -2420,7 +2420,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr: bool;
@@ -2437,7 +2437,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool;
@@ -2454,7 +2454,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool;
@@ -2471,7 +2471,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool;
@@ -2488,7 +2488,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool;
@@ -2506,7 +2506,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: bool;
@@ -2526,7 +2526,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github: bool;
@@ -2545,7 +2545,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: bool;
@@ -2563,7 +2563,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: bool;
@@ -2583,7 +2583,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: bool;
@@ -2602,7 +2602,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: bool;
@@ -2622,7 +2622,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv: bool;
@@ -2639,7 +2639,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv: bool;
@@ -2656,7 +2656,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_github: bool;
@@ -2673,7 +2673,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr: bool;
@@ -2690,7 +2690,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv: bool;
@@ -2707,7 +2707,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit: bool;
@@ -2724,7 +2724,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter: bool;
@@ -2741,7 +2741,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_arxiv: bool;
@@ -2758,7 +2758,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_biorxiv: bool;
@@ -2775,7 +2775,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_github: bool;
@@ -2792,7 +2792,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_habr: bool;
@@ -2809,7 +2809,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_medrxiv: bool;
@@ -2826,7 +2826,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_reddit: bool;
@@ -2843,7 +2843,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_twitter: bool;
@@ -2860,7 +2860,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_INFO_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv: bool;
@@ -2878,7 +2878,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv: bool;
@@ -2896,7 +2896,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_github: bool;
@@ -2914,7 +2914,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_habr: bool;
@@ -2932,7 +2932,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv: bool;
@@ -2950,7 +2950,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_reddit: bool;
@@ -2968,7 +2968,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_twitter: bool;
@@ -2986,7 +2986,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_arxiv: i64;
@@ -3003,7 +3003,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_biorxiv: i64;
@@ -3020,7 +3020,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_github: i64;
@@ -3037,7 +3037,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_habr: i64;
@@ -3054,7 +3054,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_medrxiv: i64;
@@ -3071,7 +3071,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_reddit: i64;
@@ -3088,7 +3088,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: e });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_twitter: i64;
@@ -3105,7 +3105,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo: bool;
@@ -3122,7 +3122,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool;
@@ -3139,7 +3139,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo: bool;
@@ -3156,7 +3156,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo: bool;
@@ -3173,7 +3173,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo: bool;
@@ -3190,7 +3190,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo: bool;
@@ -3207,7 +3207,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo: bool;
@@ -3224,7 +3224,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_error_red: u8;
@@ -3241,7 +3241,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ERROR_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_error_green: u8;
@@ -3258,7 +3258,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ERROR_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_error_blue: u8;
@@ -3275,7 +3275,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: ERROR_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_high_red: u8;
@@ -3292,7 +3292,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_HIGH_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_high_green: u8;
@@ -3309,7 +3309,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_HIGH_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_high_blue: u8;
@@ -3326,7 +3326,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_HIGH_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_low_red: u8;
@@ -3343,7 +3343,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_LOW_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_low_green: u8;
@@ -3360,7 +3360,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_LOW_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_warning_low_blue: u8;
@@ -3377,7 +3377,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_LOW_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_success_red: u8;
@@ -3394,7 +3394,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: SUCCESS_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_success_green: u8;
@@ -3411,7 +3411,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: SUCCESS_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_success_blue: u8;
@@ -3428,7 +3428,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: SUCCESS_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_partial_success_red: u8;
@@ -3445,7 +3445,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PARTIAL_SUCCESS_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_partial_success_green: u8;
@@ -3462,7 +3462,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PARTIAL_SUCCESS_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_partial_success_blue: u8;
@@ -3479,7 +3479,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: PARTIAL_SUCCESS_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_cleaning_red: u8;
@@ -3496,7 +3496,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: CLEANING_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_cleaning_green: u8;
@@ -3513,7 +3513,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: CLEANING_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_cleaning_blue: u8;
@@ -3530,7 +3530,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: CLEANING_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_time_measurement_red: u8;
@@ -3547,7 +3547,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: TIME_MEASUREMENT_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_time_measurement_green: u8;
@@ -3564,7 +3564,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: TIME_MEASUREMENT_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_time_measurement_blue: u8;
@@ -3581,7 +3581,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: TIME_MEASUREMENT_BLUE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_info_red: u8;
@@ -3598,7 +3598,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: INFO_RED_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_info_green: u8;
@@ -3615,7 +3615,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: INFO_GREEN_ENV_NAME, env_error: e });
             }
         }
         let handle_config_print_colors_info_blue: u8;
@@ -3632,7 +3632,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: , env_error: e });
+                return Err(ConfigError:: { was_dotenv_enable, env_name: INFO_BLUE_ENV_NAME, env_error: e });
             }
         }
         //todo: rewrite it with type system enum ProviderKind
