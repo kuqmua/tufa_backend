@@ -349,11 +349,15 @@ pub struct ConfigStruct {
 
 //todo: create custom error type
 impl ConfigStruct {
-    pub fn new() -> Result<Self, ConfigError> {
+    pub fn new() -> Result<Self, ConfigError<'static>> {
         //todo: build without it
+        let was_dotenv_enable: bool;
         match dotenv() {
-            Ok(_) => {},
+            Ok(_) => {
+                was_dotenv_enable = true;
+            },
             Err(e) => {
+                was_dotenv_enable = true;
                 println!("dotenv() failed, trying without {} error: {:?}", ENV_FILE_NAME, e);
             }
         }
@@ -363,7 +367,7 @@ impl ConfigStruct {
                         handle_config_github_authorization_github_name = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError::Message(format!("std::env::var(GITHUB_NAME_ENV_NAME({})) failed for console and .env file, error: {:#?}", GITHUB_NAME_ENV_NAME, e)))
+                        return Err(ConfigError::ConfigGithubAuthorizationGithubNameError { was_dotenv_enable, env_name: GITHUB_NAME_ENV_NAME, env_error: e })
                     }
                 }
         let handle_config_github_authorization_github_token: String;
@@ -4522,7 +4526,7 @@ impl ConfigStruct {
         };
         return ConfigStruct::wrap_config_checks(handle_config);
     }
-    fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+    fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError<'static>> {
         if !config_handle.github_authorization.github_name.is_empty() {
             let error: Result<ConfigStruct, ConfigError> =
                 Err(ConfigError::Message("github_name is not valid".to_string()));
