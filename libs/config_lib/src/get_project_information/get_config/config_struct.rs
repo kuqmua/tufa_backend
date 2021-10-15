@@ -385,7 +385,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_user_agent = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_USER_AGENT_ENV_NAME, env_error: e });
+                        return Err(ConfigError::ConfigRedditAuthorizationRedditUserAgentError { was_dotenv_enable, env_name: REDDIT_USER_AGENT_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_client_id: String;
@@ -394,7 +394,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_client_id = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_CLIENT_ID_ENV_NAME, env_error: e });
+                        return Err(ConfigError::ConfigRedditAuthorizationRedditClientIdError { was_dotenv_enable, env_name: REDDIT_CLIENT_ID_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_client_secret: String;
@@ -403,7 +403,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_client_secret = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_CLIENT_SECRET_ENV_NAME, env_error: e });
+                        return Err(ConfigError::RedditAuthorizationRedditClientSecretError { was_dotenv_enable, env_name: REDDIT_CLIENT_SECRET_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_username: String;
@@ -412,7 +412,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_username = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_USERNAME_ENV_NAME, env_error: e });
+                        return Err(ConfigError::RedditAuthorizationRedditUsernameError { was_dotenv_enable, env_name: REDDIT_USERNAME_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_reddit_authorization_reddit_password: String;
@@ -421,97 +421,7 @@ impl ConfigStruct {
                         handle_config_reddit_authorization_reddit_password = handle;
                     }
                     Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: REDDIT_PASSWORD_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_mongo_authorization_mongo_login: String;
-        match std::env::var(MONGO_LOGIN_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_authorization_mongo_login = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_LOGIN_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_mongo_authorization_mongo_password: String;
-        match std::env::var(MONGO_PASSWORD_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_authorization_mongo_password = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PASSWORD_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_mongo_authorization_mongo_ip: String;
-        match std::env::var(MONGO_IP_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_authorization_mongo_ip = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_IP_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_mongo_authorization_mongo_port: String;
-        match std::env::var(MONGO_PORT_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_authorization_mongo_port = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PORT_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_mongo_authorization_mongo_params: String;
-        match std::env::var(MONGO_PARAMS_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_mongo_authorization_mongo_params = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PARAMS_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_postgres_authorization_postgres_login: String;
-        match std::env::var(POSTGRES_LOGIN_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_postgres_authorization_postgres_login = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_LOGIN_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_postgres_authorization_postgres_password: String;
-        match std::env::var(POSTGRES_PASSWORD_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_postgres_authorization_postgres_password = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PASSWORD_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_postgres_authorization_postgres_ip: String;
-        match std::env::var(POSTGRES_IP_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_postgres_authorization_postgres_ip = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_IP_ENV_NAME, env_error: e });
-                    }
-                }
-                let handle_config_postgres_authorization_postgres_port: String;
-        match std::env::var(POSTGRES_PORT_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_postgres_authorization_postgres_port = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PORT_ENV_NAME, env_error: e });
-                    }
-                }
-        let handle_config_postgres_authorization_postgres_db: String;
-        match std::env::var(POSTGRES_DB_ENV_NAME) {
-                    Ok(handle) => {
-                        handle_config_postgres_authorization_postgres_db = handle;
-                    }
-                    Err(e) => {
-                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_DB_ENV_NAME, env_error: e });
+                        return Err(ConfigError::RedditAuthorizationRedditPasswordError { was_dotenv_enable, env_name: REDDIT_PASSWORD_ENV_NAME, env_error: e });
                     }
                 }
         let handle_config_params_starting_check_link: String;
@@ -520,7 +430,7 @@ impl ConfigStruct {
                 handle_config_params_starting_check_link = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: STARTING_CHECK_LINK_ENV_NAME, env_error: e });
+                return Err(ConfigError::ParamsStartingCheckLinkError { was_dotenv_enable, env_name: STARTING_CHECK_LINK_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_user_credentials_dummy_handle: String;
@@ -529,7 +439,7 @@ impl ConfigStruct {
                 handle_config_params_user_credentials_dummy_handle = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME, env_error: e });
+                return Err(ConfigError::ConfigParamsUserCredentialsDummyHandleError { was_dotenv_enable, env_name: USER_CREDENTIALS_DUMMY_HANDLE_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_warning_logs_directory_name: String;
@@ -538,7 +448,7 @@ impl ConfigStruct {
                 handle_config_params_warning_logs_directory_name = handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: WARNING_LOGS_DIRECTORY_NAME_ENV_NAME, env_error: e });
+                return Err(ConfigError::ParamsWarningLogsDirectoryNameError { was_dotenv_enable, env_name: WARNING_LOGS_DIRECTORY_NAME_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_unhandled_success_handled_success_are_there_items_initialized_posts_dir: String;
@@ -550,7 +460,7 @@ impl ConfigStruct {
                     handle;
             }
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR_ENV_NAME, env_error: e });
+                return Err(ConfigError::ParamsUnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDirError { was_dotenv_enable, env_name: UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_providers: bool;
@@ -567,7 +477,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::ParamsEnableProvidersError { was_dotenv_enable, env_name: ENABLE_PROVIDERS_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory: bool;
@@ -584,7 +494,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, env_error: e });
+                return Err(ConfigError::ParamsEnableCleaningWarningLogsDirectoryError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_in_mongo: bool;
@@ -601,7 +511,7 @@ impl ConfigStruct {
                 }
             },
             Err(e) => {
-                return Err(ConfigError:: { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::ConfigParamsEnableCleaningWarningLogsDbInMongoError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, env_error: e });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo: bool;
@@ -1303,6 +1213,51 @@ impl ConfigStruct {
                 return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_FIFTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
+        let handle_config_mongo_authorization_mongo_login: String;
+        match std::env::var(MONGO_LOGIN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_mongo_authorization_mongo_login = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError::ParamsStartingCheckLinkError { was_dotenv_enable, env_name: MONGO_LOGIN_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_mongo_authorization_mongo_password: String;
+        match std::env::var(MONGO_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_mongo_authorization_mongo_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PASSWORD_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_mongo_authorization_mongo_ip: String;
+        match std::env::var(MONGO_IP_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_mongo_authorization_mongo_ip = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_IP_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_mongo_authorization_mongo_port: String;
+        match std::env::var(MONGO_PORT_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_mongo_authorization_mongo_port = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PORT_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_mongo_authorization_mongo_params: String;
+        match std::env::var(MONGO_PARAMS_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_mongo_authorization_mongo_params = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: MONGO_PARAMS_ENV_NAME, env_error: e });
+                    }
+                }
         let handle_config_postgres_params_postgres_url_parts_postgres_first_handle_url_part: String;
         match std::env::var(POSTGRES_FIRST_HANDLE_URL_PART_ENV_NAME) {
             Ok(handle) => {
@@ -1348,6 +1303,52 @@ impl ConfigStruct {
                 return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_FIFTH_HANDLE_URL_PART_ENV_NAME, env_error: e });
             }
         }
+        
+        let handle_config_postgres_authorization_postgres_login: String;
+        match std::env::var(POSTGRES_LOGIN_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_login = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_LOGIN_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_postgres_authorization_postgres_password: String;
+        match std::env::var(POSTGRES_PASSWORD_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_password = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PASSWORD_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_postgres_authorization_postgres_ip: String;
+        match std::env::var(POSTGRES_IP_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_ip = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_IP_ENV_NAME, env_error: e });
+                    }
+                }
+                let handle_config_postgres_authorization_postgres_port: String;
+        match std::env::var(POSTGRES_PORT_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_port = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_PORT_ENV_NAME, env_error: e });
+                    }
+                }
+        let handle_config_postgres_authorization_postgres_db: String;
+        match std::env::var(POSTGRES_DB_ENV_NAME) {
+                    Ok(handle) => {
+                        handle_config_postgres_authorization_postgres_db = handle;
+                    }
+                    Err(e) => {
+                        return Err(ConfigError:: { was_dotenv_enable, env_name: POSTGRES_DB_ENV_NAME, env_error: e });
+                    }
+                }
         let handle_config_enable_providers_enable_arxiv: bool;
         match std::env::var(ENABLE_ARXIV_ENV_NAME) {
             Ok(handle) => match handle.parse::<bool>() {
