@@ -50,1062 +50,1062 @@ impl <'a> ser::Error for ConfigError <'a> {
 pub enum ConfigError <'a> {
     Frozen,
     Message(String),
-    ConfigGithubAuthorizationGithubNameError {
+    GithubNameError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigGithubAuthorizationGithubTokenError {
+    GithubTokenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigRedditAuthorizationRedditUserAgentError {
+    RedditUserAgentError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigRedditAuthorizationRedditClientIdError {
+    RedditClientIdError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    RedditAuthorizationRedditClientSecretError {
+    RedditClientSecretError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    RedditAuthorizationRedditUsernameError {
+    RedditUsernameError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    RedditAuthorizationRedditPasswordError {
+    RedditPasswordError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ParamsStartingCheckLinkError {
+    StartingCheckLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsUserCredentialsDummyHandleError {
+    UserCredentialsDummyHandleError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ParamsWarningLogsDirectoryNameError {
+    WarningLogsDirectoryNameError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ParamsUnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDirError {
+    UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDirError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ParamsEnableProvidersError {
+    EnableProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ParamsEnableCleaningWarningLogsDirectoryError {
+    EnableCleaningWarningLogsDirectoryError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableCleaningWarningLogsDbInMongoError {
+    EnableCleaningWarningLogsDbInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableCleaningWarningLogsDbCollectionsInMongoError {
+    EnableCleaningWarningLogsDbCollectionsInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableTimeMeasurementError {
+    EnableTimeMeasurementError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableProviderLinksLimitError {
+    EnableProviderLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableCommonProvidersLinksLimitError {
+    EnableCommonProvidersLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsCommonProvidersLinksLimitError {
+    CommonProvidersLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableRandomizeOrderForProvidersLinkPartsForMongoError {
+    EnableRandomizeOrderForProvidersLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnablePrintsError {
+    EnablePrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableErrorPrintsError {
+    EnableErrorPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWarningHighPrintsError {
+    EnableWarningHighPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWarningLowPrintsError {
+    EnableWarningLowPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableSuccessPrintsError {
+    EnableSuccessPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnablePartialSuccessPrintsError {
+    EnablePartialSuccessPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableTimeMeasurementPrintsError {
+    EnableTimeMeasurementPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableCleaningWarningLogsDirectoryPrintsError {
+    EnableCleaningWarningLogsDirectoryPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableInfoPrintsError {
+    EnableInfoPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableAllProvidersPrintsError {
+    EnableAllProvidersPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableErrorPrintsForAllProvidersError {
+    EnableErrorPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWarningHighPrintsForAllProvidersError {
+    EnableWarningHighPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWarningLowPrintsForAllProvidersError {
+    EnableWarningLowPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableSuccessPrintsForAllProvidersError {
+    EnableSuccessPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnablePartialSuccessPrintsForAllProvidersError {
+    EnablePartialSuccessPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableTimeMeasurementPrintsForAllProvidersError {
+    EnableTimeMeasurementPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableCleaningWarningLogsDirectoryPrintsForAllProvidersError {
+    EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableInfoPrintsForAllProvidersError {
+    EnableInfoPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWriteErrorLogsInLocalFolderError {
+    EnableWriteErrorLogsInLocalFolderError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableWriteErrorLogsInMongoError {
+    EnableWriteErrorLogsInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigParamsEnableInitializeMongoWithProvidersLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsProvidersDbNameHandleError {
+    ProvidersDbNameHandleError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsProvidersDbCollectionHandleSecondPartError {
+    ProvidersDbCollectionHandleSecondPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsProvidersDbCollectionDocumentFieldNameHandleError {
+    ProvidersDbCollectionDocumentFieldNameHandleError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsDbProvidersLogsNameHandleError {
+    DbProvidersLogsNameHandleError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsDbProvidersLogsCollectionHandleSecondPartError {
+    DbProvidersLogsCollectionHandleSecondPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsDbProvidersLogsCollectionDocumentFieldNameHandleError {
+    DbProvidersLogsCollectionDocumentFieldNameHandleError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsPathToProviderLinkPartsFolderError {
+    PathToProviderLinkPartsFolderError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsLogFileExtensionError {
+    LogFileExtensionError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithArxivLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithArxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithBiorxivLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithBiorxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithGithubLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithGithubLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithHabrLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithHabrLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithMedrxivLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithMedrxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithRedditLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithRedditLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsEnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithTwitterLinkPartsError {
+    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithTwitterLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsMongoUrlPartsMongoFirstHandleUrlPartError {
+    MongoFirstHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsMongoUrlPartsMongoSecondHandleUrlPartError {
+    MongoSecondHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsMongoUrlPartsMongoThirdHandleUrlPartError {
+    MongoThirdHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsMongoUrlPartsMongoFourthHandleUrlPartError {
+    MongoFourthHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoParamsMongoUrlPartsMongoFifthHandleUrlPartError {
+    MongoFifthHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoAuthorizationMongoLoginError {
+    MongoLoginError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoAuthorizationMongoPasswordError {
+    MongoPasswordError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoAuthorizationMongoIpError {
+    MongoIpError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoAuthorizationMongoPortError {
+    MongoPortError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigMongoAuthorizationMongoParamsError {
+    MongoParamsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresParamsPostgresUrlPartsPostgresFirstHandleUrlPartError {
+    PostgresFirstHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresParamsPostgresUrlPartsPostgresSecondHandleUrlPartError {
+    PostgresSecondHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresParamsPostgresUrlPartsPostgresThirdHandleUrlPartError {
+    PostgresThirdHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresParamsPostgresUrlPartsPostgresFourthHandleUrlPartError {
+    PostgresFourthHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresParamsPostgresUrlPartsPostgresFifthHandleUrlPartError {
+    PostgresFifthHandleUrlPartError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresAuthorizationPostgresLoginError {
+    PostgresLoginError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresAuthorizationPostgresPasswordError {
+    PostgresPasswordError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresAuthorizationPostgresIpError {
+    PostgresIpError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresAuthorizationPostgresPortError {
+    PostgresPortError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPostgresAuthorizationPostgresDbError {
+    PostgresDbError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableArxivError {
+    EnableArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableBiorxivError {
+    EnableBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableGithubError {
+    EnableGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableHabrError {
+    EnableHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableMedrxivError {
+    EnableMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableRedditError {
+    EnableRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersEnableTwitterError {
+    EnableTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksArxivLinkError {
+    ArxivLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksBiorxivLinkError {
+    BiorxivLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksGithubLinkError {
+    GithubLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksHabrLinkError {
+    HabrLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksMedrxivLinkError {
+    MedrxivLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksRedditLinkError {
+    RedditLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersCheckLinksTwitterLinkError {
+    TwitterLinkError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsArxivError {
+    EnablePrintsArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsBiorxivError {
+    EnablePrintsBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsGithubError {
+    EnablePrintsGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsHabrError {
+    EnablePrintsHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsMedrxivError {
+    EnablePrintsMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsRedditError {
+    EnablePrintsRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersPrintsEnablePrintsTwitterError {
+    EnablePrintsTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForArxivError {
+    EnableWarningHighPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForBiorxivError {
+    EnableWarningHighPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForGithubError {
+    EnableWarningHighPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForHabrError {
+    EnableWarningHighPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForMedrxivError {
+    EnableWarningHighPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForRedditError {
+    EnableWarningHighPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningHighProvidersPrintsEnableWarningHighPrintsForTwitterError {
+    EnableWarningHighPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForArxivError {
+    EnableWarningLowPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForBiorxivError {
+    EnableWarningLowPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForGithubError {
+    EnableWarningLowPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForHabrError {
+    EnableWarningLowPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForMedrxivError {
+    EnableWarningLowPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForRedditError {
+    EnableWarningLowPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableWarningLowProvidersPrintsEnableWarningLowPrintsForTwitterError {
+    EnableWarningLowPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForArxivError {
+    EnableErrorPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForBiorxivError {
+    EnableErrorPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForGithubError {
+    EnableErrorPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForHabrError {
+    EnableErrorPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForMedrxivError {
+    EnableErrorPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForRedditError {
+    EnableErrorPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableSuccessProvidersPrintsEnableSuccessPrintsForTwitterError {
+    EnableErrorPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForArxivError {
+    EnableSuccessPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForBiorxivError {
+    EnableSuccessPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForGithubError {
+    EnableSuccessPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForHabrError {
+    EnableSuccessPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForMedrxivError {
+    EnableSuccessPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForRedditError {
+    EnableSuccessPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnablePartialSuccessProvidersPrintsEnablePartialSuccessPrintsForTwitterError {
+    EnableSuccessPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForArxivError {
+    EnablePartialSuccessPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForBiorxivError {
+    EnablePartialSuccessPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForGithubError {
+    EnablePartialSuccessPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForHabrError {
+    EnablePartialSuccessPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForMedrxivError {
+    EnablePartialSuccessPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForRedditError {
+    EnablePartialSuccessPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableErrorProvidersPrintsEnableErrorPrintsForTwitterError {
+    EnablePartialSuccessPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForArxivError {
+    EnableCleaningWarningLogsDirectoryForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForBiorxivError {
+    EnableCleaningWarningLogsDirectoryForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForGithubError {
+    EnableCleaningWarningLogsDirectoryForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForHabrError {
+    EnableCleaningWarningLogsDirectoryForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForMedrxivError {
+    EnableCleaningWarningLogsDirectoryForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForRedditError {
+    EnableCleaningWarningLogsDirectoryForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDirectoryEnableCleaningWarningLogsDirectoryForTwitterError {
+    EnableCleaningWarningLogsDirectoryForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForArxivError {
+    EnableCleaningWarningLogsDbInMongoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForBiorxivError {
+    EnableCleaningWarningLogsDbInMongoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForGithubError {
+    EnableCleaningWarningLogsDbInMongoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForHabrError {
+    EnableCleaningWarningLogsDbInMongoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForMedrxivError {
+    EnableCleaningWarningLogsDbInMongoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForRedditError {
+    EnableCleaningWarningLogsDbInMongoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbInMongoEnableCleaningWarningLogsDbInMongoForTwitterError {
+    EnableCleaningWarningLogsDbInMongoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForArxivError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForGithubError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForHabrError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForRedditError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersCleaningWarningLogsDbCollectionsInMongoEnableCleaningWarningLogsDbCollectionsInMongoForTwitterError {
+    EnableCleaningWarningLogsDbCollectionsInMongoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForArxivError {
+    EnableTimeMeasurementForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForBiorxivError {
+    EnableTimeMeasurementForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForGithubError {
+    EnableTimeMeasurementForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForHabrError {
+    EnableTimeMeasurementForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForMedrxivError {
+    EnableTimeMeasurementForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForRedditError {
+    EnableTimeMeasurementForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersTimeMeasurementEnableTimeMeasurementForTwitterError {
+    EnableTimeMeasurementForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForArxivError {
+    EnableInfoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForBiorxivError {
+    EnableInfoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForGithubError {
+    EnableInfoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForHabrError {
+    EnableInfoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForMedrxivError {
+    EnableInfoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForRedditError {
+    EnableInfoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersInfoEnableInfoForTwitterError {
+    EnableInfoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForArxivError {
+    EnableLinksLimitForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForBiorxivError {
+    EnableLinksLimitForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForGithubError {
+    EnableLinksLimitForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForHabrError {
+    EnableLinksLimitForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForMedrxivError {
+    EnableLinksLimitForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForRedditError {
+    EnableLinksLimitForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableProvidersLinksLimitsEnableLinksLimitForTwitterError {
+    EnableLinksLimitForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForArxivError {
+    LinksLimitForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForBiorxivError {
+    LinksLimitForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForGithubError {
+    LinksLimitForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForHabrError {
+    LinksLimitForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForMedrxivError {
+    LinksLimitForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForRedditError {
+    LinksLimitForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigProvidersLinksLimitsLinksLimitForTwitterError {
+    LinksLimitForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForArxivLinkPartsForMongoError {
+    EnableRandomizeOrderForArxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForBiorxivLinkPartsForMongoError {
+    EnableRandomizeOrderForBiorxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForGithubLinkPartsForMongoError {
+    EnableRandomizeOrderForGithubLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForHabrLinkPartsForMongoError {
+    EnableRandomizeOrderForHabrLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForMedrxivLinkPartsForMongoError {
+    EnableRandomizeOrderForMedrxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForRedditLinkPartsForMongoError {
+    EnableRandomizeOrderForRedditLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigEnableRandomizeOrderForProvidersLinkPartsForMongoEnableRandomizeOrderForTwitterLinkPartsForMongoError {
+    EnableRandomizeOrderForTwitterLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsErrorRedError {
+    ErrorRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsErrorGreenError {
+    ErrorGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsErrorBlueError {
+    ErrorBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningHighRedError {
+    WarningHighRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningHighGreenError {
+    WarningHighGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningHighBlueError {
+    WarningHighBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningLowRedError {
+    WarningLowRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningLowGreenError {
+    WarningLowGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsWarningLowBlueError {
+    WarningLowBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsSuccessRedError {
+    SuccessRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsSuccessGreenError {
+    SuccessGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsSuccessBlueError {
+    SuccessBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsPartialSuccessRedError {
+    PartialSuccessRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsPartialSuccessGreenError {
+    PartialSuccessGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsPartialSuccessBlueError {
+    PartialSuccessBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsCleaningRedError {
+    CleaningRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsCleaningGreenError {
+    CleaningGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsCleaningBlueError {
+    CleaningBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsTimeMeasurementRedError {
+    TimeMeasurementRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsTimeMeasurementGreenError {
+    TimeMeasurementGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsTimeMeasurementBlueError {
+    TimeMeasurementBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsInfoRedError {
+    InfoRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsInfoGreenError {
+    InfoGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
     },
-    ConfigPrintColorsInfoBlueError {
+    InfoBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
         env_error: VarError,
