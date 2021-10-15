@@ -277,3 +277,8 @@ for more information about code inside container
 ### -------------------
 red hat / openshift / reg.ru postgres cloud cluster
 <br/>
+
+### -------------------
+rename ERROR_RED="255" # u8 into ERROR_PRINT_COLOR_RED and others
+<br/>
+
