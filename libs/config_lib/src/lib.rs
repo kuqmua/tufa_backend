@@ -32,6 +32,7 @@ pub mod get_project_information {
         pub mod reddit_authorization_struct;
     }
     pub mod project_constants;
+    pub mod env_var_names_constants;
     pub mod provider_kind_enum;
 }
 
