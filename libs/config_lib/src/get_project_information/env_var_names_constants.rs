@@ -240,7 +240,24 @@ pub enum EnvVarsEnum {
     InfoGreenEnvName (u8),
     InfoBlueEnvName (u8),
 }
+//     config_provider_string_to_enum_struct_hasmap
 
+// pub struct ConfigProviderStringToEnumTypeStruct {
+//     pub config_name_value: &'static str,
+//     pub provider_kind_enum_type: ProviderKind,
+// }
+
+// impl ConfigProviderStringToEnumTypeStruct {
+//     pub const fn new(
+//         config_name_value: &'static str,
+//         provider_kind_enum_type: ProviderKind,
+//     ) -> Self {
+//         ConfigProviderStringToEnumTypeStruct {
+//             config_name_value,
+//             provider_kind_enum_type,
+//         }
+//     }
+// }
 
 pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
 pub const GITHUB_TOKEN_ENV_NAME: &str = "GITHUB_TOKEN";

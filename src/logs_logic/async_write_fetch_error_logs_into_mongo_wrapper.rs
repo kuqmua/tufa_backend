@@ -8,7 +8,7 @@ use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mo
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::project_constants::get_mongo_url;
+use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use mongo_integration::mongo_drop_db::mongo_drop_db;

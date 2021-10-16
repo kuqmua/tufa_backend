@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
-use config_lib::get_project_information::project_constants::get_mongo_url;
+use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 
 use crate::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::get_project_information::get_providers_link_parts::Resource;
