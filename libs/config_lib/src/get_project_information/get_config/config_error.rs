@@ -1,9 +1,23 @@
 
-use serde::de;
-use serde::ser;
+// use serde::de;
+// use serde::ser;
 use std::error::Error;
 use std::fmt;
 use std::env::VarError;
+use core::str::ParseBoolError;
+use core::num::ParseIntError;
+
+#[derive(Debug)] 
+pub enum VarOrBoolParseError {
+    Var(VarError),
+    Bool(ParseBoolError)
+}
+
+#[derive(Debug)] 
+pub enum VarOrIntParseError {
+    Var(VarError),
+    Int(ParseIntError)
+}
 
 impl <'a> fmt::Display for ConfigError <'a>{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -34,21 +48,20 @@ impl <'a> Error for ConfigError <'a>{
     // }
 }
 
-impl<'a> de::Error for ConfigError <'a> {
-    fn custom<T: fmt::Display>(msg: T) -> Self {
-        ConfigError::Message(msg.to_string())
-    }
-}
+// impl<'a> de::Error for ConfigError <'a> {
+//     fn custom<T: fmt::Display>(msg: T) -> Self {
+//         ConfigError::Message(msg.to_string())
+//     }
+// }
 
-impl <'a> ser::Error for ConfigError <'a> {
-    fn custom<T: fmt::Display>(msg: T) -> Self {
-        ConfigError::Message(msg.to_string())
-    }
-}
-
+// impl <'a> ser::Error for ConfigError <'a> {
+//     fn custom<T: fmt::Display>(msg: T) -> Self {
+//         ConfigError::Message(msg.to_string())
+//     }
+// }
+#[must_use]
 #[derive(Debug)] 
 pub enum ConfigError <'a> {
-    Frozen,
     Message(String),
     GithubNameError {
         was_dotenv_enable: bool,
@@ -108,152 +121,152 @@ pub enum ConfigError <'a> {
     EnableProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError,
     },
     EnableCleaningWarningLogsDirectoryError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError,
     },
     EnableCleaningWarningLogsDbInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableProviderLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCommonProvidersLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     CommonProvidersLinksLimitError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     EnableRandomizeOrderForProvidersLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableAllProvidersPrintsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWriteErrorLogsInLocalFolderError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWriteErrorLogsInMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInitializeMongoWithProvidersLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     ProvidersDbNameHandleError {
         was_dotenv_enable: bool,
@@ -295,40 +308,40 @@ pub enum ConfigError <'a> {
         env_name: & 'a str,
         env_error: VarError,
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithArxivLinkPartsError {
+    EnableInitializeMongoWithArxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithBiorxivLinkPartsError {
+    EnableInitializeMongoWithBiorxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithGithubLinkPartsError {
+    EnableInitializeMongoWithGithubLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithHabrLinkPartsError {
+    EnableInitializeMongoWithHabrLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithMedrxivLinkPartsError {
+    EnableInitializeMongoWithMedrxivLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithRedditLinkPartsError {
+    EnableInitializeMongoWithRedditLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
-    EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithTwitterLinkPartsError {
+    EnableInitializeMongoWithTwitterLinkPartsError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     MongoFirstHandleUrlPartError {
         was_dotenv_enable: bool,
@@ -433,37 +446,37 @@ pub enum ConfigError <'a> {
     EnableArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     ArxivLinkError {
         was_dotenv_enable: bool,
@@ -503,612 +516,612 @@ pub enum ConfigError <'a> {
     EnablePrintsArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePrintsTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningHighPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableWarningLowPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableErrorPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableSuccessPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnablePartialSuccessPrintsForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDirectoryForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbInMongoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableCleaningWarningLogsDbCollectionsInMongoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableTimeMeasurementForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableInfoForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableLinksLimitForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     LinksLimitForArxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForBiorxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForGithubError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForHabrError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForMedrxivError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForRedditError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     LinksLimitForTwitterError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     EnableRandomizeOrderForArxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForBiorxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForGithubLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForHabrLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForMedrxivLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForRedditLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     EnableRandomizeOrderForTwitterLinkPartsForMongoError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrBoolParseError
     },
     ErrorRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     ErrorGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     ErrorBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningHighRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningHighGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningHighBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningLowRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningLowGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     WarningLowBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     SuccessRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     SuccessGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     SuccessBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     PartialSuccessRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     PartialSuccessGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     PartialSuccessBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     CleaningRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     CleaningGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     CleaningBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     TimeMeasurementRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     TimeMeasurementGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     TimeMeasurementBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     InfoRedError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     InfoGreenError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
     InfoBlueError {
         was_dotenv_enable: bool,
         env_name: & 'a str,
-        env_error: VarError,
+        env_error: VarOrIntParseError,
     },
 }
     

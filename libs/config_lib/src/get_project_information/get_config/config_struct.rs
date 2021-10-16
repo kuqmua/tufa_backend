@@ -286,7 +286,6 @@ use crate::get_project_information::project_constants::INFO_BLUE_ENV_NAME;
 use crate::get_project_information::project_constants::INFO_GREEN_ENV_NAME;
 use crate::get_project_information::project_constants::INFO_RED_ENV_NAME;
 
-//
 use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
 use crate::get_project_information::get_config::mongo_authorization_struct::MongoAuthorization;
 use crate::get_project_information::get_config::postgres_authorization_struct::PostgresAuthorization;
@@ -315,6 +314,8 @@ use crate::get_project_information::project_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::project_constants::REDDIT_USER_AGENT_ENV_NAME;
 
 use crate::get_project_information::get_config::config_error::ConfigError;
+use crate::get_project_information::get_config::config_error::VarOrBoolParseError;
+use crate::get_project_information::get_config::config_error::VarOrIntParseError;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
@@ -470,14 +471,19 @@ impl ConfigStruct {
                     handle_config_params_enable_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableProvidersError { was_dotenv_enable, env_name: ENABLE_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableProvidersError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_PROVIDERS_ENV_NAME, 
+                    env_error: VarOrBoolParseError::Var(e), 
+                });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory: bool;
@@ -487,14 +493,19 @@ impl ConfigStruct {
                     handle_config_params_enable_cleaning_warning_logs_directory = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME, 
+                    env_error: VarOrBoolParseError::Var(e), 
+                });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_in_mongo: bool;
@@ -504,14 +515,19 @@ impl ConfigStruct {
                     handle_config_params_enable_cleaning_warning_logs_db_in_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME, 
+                    env_error: VarOrBoolParseError::Var(e), 
+                 });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_db_collections_in_mongo: bool;
@@ -522,14 +538,19 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME, 
+                    env_error: VarOrBoolParseError::Var(e), 
+                });
             }
         }
         let handle_config_params_enable_time_measurement: bool;
@@ -539,14 +560,15 @@ impl ConfigStruct {
                     handle_config_params_enable_time_measurement = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_ENV_NAME, env_error: VarOrBoolParseError::Var(e),  });
             }
         }
         let handle_config_params_enable_provider_links_limit: bool;
@@ -556,14 +578,19 @@ impl ConfigStruct {
                     handle_config_params_enable_provider_links_limit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableProviderLinksLimitError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableProviderLinksLimitError { was_dotenv_enable, env_name: ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableProviderLinksLimitError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME, 
+                    env_error: VarOrBoolParseError::Var(e), 
+                });
             }
         }
         let handle_config_params_enable_common_providers_links_limit: bool;
@@ -573,14 +600,17 @@ impl ConfigStruct {
                     handle_config_params_enable_common_providers_links_limit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCommonProvidersLinksLimitError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCommonProvidersLinksLimitError { was_dotenv_enable, env_name: ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCommonProvidersLinksLimitError { 
+                    was_dotenv_enable, 
+                    env_name: ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e),  });
             }
         }
         let handle_config_params_common_providers_links_limit: i64;
@@ -590,14 +620,15 @@ impl ConfigStruct {
                     handle_config_params_common_providers_links_limit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::CommonProvidersLinksLimitError {
+                        was_dotenv_enable,
+                        env_name: COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::CommonProvidersLinksLimitError { was_dotenv_enable, env_name: COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::CommonProvidersLinksLimitError { was_dotenv_enable, env_name: COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME, env_error: VarOrIntParseError::Var(e),  });
             }
         }
         let handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo: bool;
@@ -607,14 +638,15 @@ impl ConfigStruct {
                     handle_config_params_enable_randomize_order_for_providers_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForProvidersLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForProvidersLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForProvidersLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_prints: bool;
@@ -624,14 +656,15 @@ impl ConfigStruct {
                     handle_config_params_enable_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsError { was_dotenv_enable, env_name: ENABLE_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsError { was_dotenv_enable, env_name: ENABLE_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_error_prints: bool;
@@ -641,14 +674,15 @@ impl ConfigStruct {
                     handle_config_params_enable_error_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_warning_high_prints: bool;
@@ -658,14 +692,15 @@ impl ConfigStruct {
                     handle_config_params_enable_warning_high_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_warning_low_prints: bool;
@@ -675,14 +710,15 @@ impl ConfigStruct {
                     handle_config_params_enable_warning_low_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_success_prints: bool;
@@ -692,14 +728,15 @@ impl ConfigStruct {
                     handle_config_params_enable_success_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_partial_success_prints: bool;
@@ -709,14 +746,15 @@ impl ConfigStruct {
                     handle_config_params_enable_partial_success_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_time_measurement_prints: bool;
@@ -726,14 +764,15 @@ impl ConfigStruct {
                     handle_config_params_enable_time_measurement_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementPrintsError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementPrintsError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory_prints: bool;
@@ -743,14 +782,15 @@ impl ConfigStruct {
                     handle_config_params_enable_cleaning_warning_logs_directory_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_info_prints: bool;
@@ -760,14 +800,15 @@ impl ConfigStruct {
                     handle_config_params_enable_info_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoPrintsError { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoPrintsError { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_all_providers_prints: bool;
@@ -777,14 +818,15 @@ impl ConfigStruct {
                     handle_config_params_enable_all_providers_prints = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableAllProvidersPrintsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableAllProvidersPrintsError { was_dotenv_enable, env_name: ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableAllProvidersPrintsError { was_dotenv_enable, env_name: ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_error_prints_for_all_providers: bool;
@@ -794,14 +836,15 @@ impl ConfigStruct {
                     handle_config_params_enable_error_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_warning_high_prints_for_all_providers: bool;
@@ -811,14 +854,15 @@ impl ConfigStruct {
                     handle_config_params_enable_warning_high_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_warning_low_prints_for_all_providers: bool;
@@ -828,14 +872,15 @@ impl ConfigStruct {
                     handle_config_params_enable_warning_low_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_success_prints_for_all_providers: bool;
@@ -845,14 +890,15 @@ impl ConfigStruct {
                     handle_config_params_enable_success_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_partial_success_prints_for_all_providers: bool;
@@ -862,14 +908,15 @@ impl ConfigStruct {
                     handle_config_params_enable_partial_success_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_time_measurement_prints_for_all_providers: bool;
@@ -879,14 +926,15 @@ impl ConfigStruct {
                     handle_config_params_enable_time_measurement_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers: bool;
@@ -898,14 +946,15 @@ impl ConfigStruct {
                     handle_config_params_enable_cleaning_warning_logs_directory_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_info_prints_for_all_providers: bool;
@@ -915,14 +964,15 @@ impl ConfigStruct {
                     handle_config_params_enable_info_prints_for_all_providers = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoPrintsForAllProvidersError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoPrintsForAllProvidersError { was_dotenv_enable, env_name: ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_write_error_logs_in_local_folder: bool;
@@ -932,14 +982,15 @@ impl ConfigStruct {
                     handle_config_params_enable_write_error_logs_in_local_folder = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWriteErrorLogsInLocalFolderError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWriteErrorLogsInLocalFolderError { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWriteErrorLogsInLocalFolderError { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_write_error_logs_in_mongo: bool;
@@ -949,14 +1000,15 @@ impl ConfigStruct {
                     handle_config_params_enable_write_error_logs_in_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWriteErrorLogsInMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWriteErrorLogsInMongoError { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWriteErrorLogsInMongoError { was_dotenv_enable, env_name: ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_params_enable_initialize_mongo_with_providers_link_parts: bool;
@@ -966,14 +1018,15 @@ impl ConfigStruct {
                     handle_config_params_enable_initialize_mongo_with_providers_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_providers_db_name_handle: String;
@@ -1056,14 +1109,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_arxiv_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithArxivLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithArxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithArxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts: bool;
@@ -1073,14 +1127,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_biorxiv_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithBiorxivLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithBiorxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithBiorxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts: bool;
@@ -1090,14 +1145,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_github_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithGithubLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithGithubLinkPartsError  { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithGithubLinkPartsError  { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts: bool;
@@ -1107,14 +1163,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_habr_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithHabrLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithHabrLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithHabrLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts: bool;
@@ -1124,14 +1181,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_medrxiv_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithMedrxivLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithMedrxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithMedrxivLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let  handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts: bool;
@@ -1141,14 +1199,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_reddit_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithRedditLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithRedditLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithRedditLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts: bool;
@@ -1158,14 +1217,15 @@ impl ConfigStruct {
                     handle_config_mongo_params_enable_initialize_mongo_with_providers_link_parts_enable_initialize_mongo_with_twitter_link_parts = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInitializeMongoWithTwitterLinkPartsError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInitializeMongoWithProvidersLinkPartsEnableInitializeMongoWithTwitterLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInitializeMongoWithTwitterLinkPartsError { was_dotenv_enable, env_name: ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_mongo_params_mongo_url_parts_mongo_first_handle_url_part: String;
@@ -1356,14 +1416,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableArxivError { was_dotenv_enable, env_name: ENABLE_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableArxivError { was_dotenv_enable, env_name: ENABLE_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_biorxiv: bool;
@@ -1373,14 +1434,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableBiorxivError { was_dotenv_enable, env_name: ENABLE_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableBiorxivError { was_dotenv_enable, env_name: ENABLE_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_github: bool;
@@ -1390,14 +1452,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableGithubError { was_dotenv_enable, env_name: ENABLE_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableGithubError { was_dotenv_enable, env_name: ENABLE_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_habr: bool;
@@ -1407,14 +1470,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableHabrError { was_dotenv_enable, env_name: ENABLE_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableHabrError { was_dotenv_enable, env_name: ENABLE_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_medrxiv: bool;
@@ -1424,14 +1488,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableMedrxivError { was_dotenv_enable, env_name: ENABLE_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableMedrxivError { was_dotenv_enable, env_name: ENABLE_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_reddit: bool;
@@ -1441,14 +1506,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRedditError { was_dotenv_enable, env_name: ENABLE_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRedditError { was_dotenv_enable, env_name: ENABLE_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_enable_twitter: bool;
@@ -1458,14 +1524,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_enable_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTwitterError  {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTwitterError { was_dotenv_enable, env_name: ENABLE_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTwitterError { was_dotenv_enable, env_name: ENABLE_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_providers_check_links_arxiv_link: String;
@@ -1538,14 +1605,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsArxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsArxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_biorxiv: bool;
@@ -1555,14 +1623,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsBiorxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsBiorxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_github: bool;
@@ -1572,14 +1641,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsGithubError { was_dotenv_enable, env_name: ENABLE_PRINTS_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsGithubError { was_dotenv_enable, env_name: ENABLE_PRINTS_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_habr: bool;
@@ -1589,14 +1659,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsHabrError { was_dotenv_enable, env_name: ENABLE_PRINTS_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsHabrError { was_dotenv_enable, env_name: ENABLE_PRINTS_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_medrxiv: bool;
@@ -1606,14 +1677,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsMedrxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsMedrxivError { was_dotenv_enable, env_name: ENABLE_PRINTS_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_reddit: bool;
@@ -1623,14 +1695,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsRedditError { was_dotenv_enable, env_name: ENABLE_PRINTS_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsRedditError { was_dotenv_enable, env_name: ENABLE_PRINTS_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_prints_enable_prints_twitter: bool;
@@ -1640,14 +1713,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_prints_enable_prints_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PRINTS_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePrintsTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PRINTS_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePrintsTwitterError { was_dotenv_enable, env_name: ENABLE_PRINTS_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePrintsTwitterError { was_dotenv_enable, env_name: ENABLE_PRINTS_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv: bool;
@@ -1657,14 +1731,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv: bool;
@@ -1674,14 +1749,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github: bool;
@@ -1691,14 +1767,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr: bool;
@@ -1708,14 +1785,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv: bool;
@@ -1725,14 +1803,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit: bool;
@@ -1742,14 +1821,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter: bool;
@@ -1759,14 +1839,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_high_providers_prints_enable_warning_high_prints_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningHighPrintsForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningHighPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningHighPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv: bool;
@@ -1776,14 +1857,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv: bool;
@@ -1793,14 +1875,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github: bool;
@@ -1810,14 +1893,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr: bool;
@@ -1827,14 +1911,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv: bool;
@@ -1844,14 +1929,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit: bool;
@@ -1861,14 +1947,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter: bool;
@@ -1878,14 +1965,15 @@ impl ConfigStruct {
                     handle_config_enable_warning_low_providers_prints_enable_warning_low_prints_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableWarningLowPrintsForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableWarningLowPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableWarningLowPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_arxiv: bool;
@@ -1896,14 +1984,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv: bool;
@@ -1913,14 +2002,15 @@ impl ConfigStruct {
                     handle_config_enable_success_providers_prints_enable_success_prints_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_github: bool;
@@ -1930,14 +2020,15 @@ impl ConfigStruct {
                     handle_config_enable_success_providers_prints_enable_success_prints_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_habr: bool;
@@ -1948,14 +2039,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv: bool;
@@ -1965,14 +2057,15 @@ impl ConfigStruct {
                     handle_config_enable_success_providers_prints_enable_success_prints_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_reddit: bool;
@@ -1982,14 +2075,15 @@ impl ConfigStruct {
                     handle_config_enable_success_providers_prints_enable_success_prints_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_success_providers_prints_enable_success_prints_for_twitter: bool;
@@ -1999,14 +2093,15 @@ impl ConfigStruct {
                     handle_config_enable_success_providers_prints_enable_success_prints_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableErrorPrintsForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableErrorPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableErrorPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv: bool;
@@ -2016,14 +2111,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv: bool;
@@ -2033,14 +2129,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github: bool;
@@ -2050,14 +2147,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr: bool;
@@ -2067,14 +2165,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv: bool;
@@ -2084,14 +2183,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit: bool;
@@ -2101,14 +2201,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter: bool;
@@ -2118,14 +2219,15 @@ impl ConfigStruct {
                     handle_config_enable_partial_success_providers_prints_enable_partial_success_prints_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableSuccessPrintsForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableSuccessPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableSuccessPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_arxiv: bool;
@@ -2136,14 +2238,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForArxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_biorxiv: bool;
@@ -2154,14 +2257,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForBiorxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_github: bool;
@@ -2172,14 +2276,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForGithubError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_habr: bool;
@@ -2190,14 +2295,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForHabrError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_medrxiv: bool;
@@ -2208,14 +2314,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForMedrxivError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_reddit: bool;
@@ -2226,14 +2333,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForRedditError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_error_providers_prints_enable_error_prints_for_twitter: bool;
@@ -2244,14 +2352,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnablePartialSuccessPrintsForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnablePartialSuccessPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnablePartialSuccessPrintsForTwitterError { was_dotenv_enable, env_name: ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv: bool;
@@ -2261,14 +2370,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv: bool;
@@ -2278,14 +2388,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github: bool;
@@ -2295,14 +2406,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr: bool;
@@ -2312,14 +2424,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv: bool;
@@ -2329,14 +2442,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit: bool;
@@ -2346,14 +2460,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter: bool;
@@ -2363,14 +2478,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_directory_enable_cleaning_warning_logs_directory_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDirectoryForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDirectoryForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool;
@@ -2380,14 +2496,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool;
@@ -2397,14 +2514,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github: bool;
@@ -2414,14 +2532,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr: bool;
@@ -2431,14 +2550,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool;
@@ -2448,14 +2568,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool;
@@ -2465,14 +2586,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool;
@@ -2482,14 +2604,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_in_mongo_enable_cleaning_warning_logs_db_in_mongo_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbInMongoForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool;
@@ -2500,14 +2623,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForArxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: bool;
@@ -2519,15 +2643,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
-                        e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github: bool;
@@ -2539,14 +2663,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForGithubError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: bool;
@@ -2557,14 +2682,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForHabrError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: bool;
@@ -2576,15 +2702,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
-                        e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxivError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: bool;
@@ -2596,14 +2722,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForRedditError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: bool;
@@ -2615,15 +2742,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_cleaning_warning_logs_db_collections_in_mongo_enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
-                        e
-                    )))
+                    return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableCleaningWarningLogsDbCollectionsInMongoForTwitterError { was_dotenv_enable, env_name: ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv: bool;
@@ -2633,14 +2760,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForArxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForArxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv: bool;
@@ -2650,14 +2778,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForBiorxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForBiorxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_github: bool;
@@ -2667,14 +2796,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForGithubError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForGithubError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr: bool;
@@ -2684,14 +2814,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForHabrError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForHabrError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv: bool;
@@ -2701,14 +2832,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForMedrxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForMedrxivError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit: bool;
@@ -2718,14 +2850,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForRedditError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForRedditError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter: bool;
@@ -2735,14 +2868,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_time_measurement_enable_time_measurement_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableTimeMeasurementForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableTimeMeasurementForTwitterError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableTimeMeasurementForTwitterError { was_dotenv_enable, env_name: ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_arxiv: bool;
@@ -2752,14 +2886,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForArxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForArxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_biorxiv: bool;
@@ -2769,14 +2904,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForBiorxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForBiorxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_github: bool;
@@ -2786,14 +2922,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForGithubError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForGithubError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_habr: bool;
@@ -2803,14 +2940,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForHabrError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForHabrError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_medrxiv: bool;
@@ -2820,14 +2958,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForMedrxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForMedrxivError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_reddit: bool;
@@ -2837,14 +2976,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForRedditError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForRedditError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_info_enable_info_for_twitter: bool;
@@ -2854,14 +2994,15 @@ impl ConfigStruct {
                     handle_config_enable_providers_info_enable_info_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_INFO_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableInfoForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_INFO_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableInfoForTwitterError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableInfoForTwitterError { was_dotenv_enable, env_name: ENABLE_INFO_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_arxiv: bool;
@@ -2872,14 +3013,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForArxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForArxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForArxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_biorxiv: bool;
@@ -2890,14 +3032,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForBiorxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForBiorxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_github: bool;
@@ -2908,14 +3051,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForGithubError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForGithubError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForGithubError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_habr: bool;
@@ -2926,14 +3070,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForHabrError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForHabrError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForHabrError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_medrxiv: bool;
@@ -2944,14 +3089,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForMedrxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForMedrxivError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_reddit: bool;
@@ -2962,14 +3108,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForRedditError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForRedditError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForRedditError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_providers_links_limits_enable_links_limit_for_twitter: bool;
@@ -2980,14 +3127,15 @@ impl ConfigStruct {
                         handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableLinksLimitForTwitterError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableLinksLimitForTwitterError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableLinksLimitForTwitterError { was_dotenv_enable, env_name: ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_arxiv: i64;
@@ -2997,14 +3145,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_arxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_ARXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForArxivError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_ARXIV_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForArxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForArxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_ARXIV_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_biorxiv: i64;
@@ -3014,14 +3163,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_biorxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForBiorxivError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_BIORXIV_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForBiorxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForBiorxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_BIORXIV_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_github: i64;
@@ -3031,14 +3181,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_github = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_GITHUB_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForGithubError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_GITHUB_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForGithubError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForGithubError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_GITHUB_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_habr: i64;
@@ -3048,14 +3199,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_habr = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_HABR_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForHabrError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_HABR_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForHabrError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForHabrError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_HABR_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_medrxiv: i64;
@@ -3065,14 +3217,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_medrxiv = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForMedrxivError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForMedrxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForMedrxivError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_reddit: i64;
@@ -3082,14 +3235,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_reddit = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_REDDIT_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForRedditError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_REDDIT_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForRedditError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForRedditError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_REDDIT_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_providers_links_limits_links_limit_for_twitter: i64;
@@ -3099,14 +3253,15 @@ impl ConfigStruct {
                     handle_config_providers_links_limits_links_limit_for_twitter = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<i64> {}_ENV_NAME failed, error: {:#?}",
-                        LINKS_LIMIT_FOR_TWITTER_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::LinksLimitForTwitterError {
+                        was_dotenv_enable,
+                        env_name: LINKS_LIMIT_FOR_TWITTER_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::LinksLimitForTwitterError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: e });
+                return Err(ConfigError::LinksLimitForTwitterError { was_dotenv_enable, env_name: LINKS_LIMIT_FOR_TWITTER_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo: bool;
@@ -3116,14 +3271,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_arxiv_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForArxivLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForArxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForArxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool;
@@ -3133,14 +3289,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_biorxiv_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForBiorxivLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForBiorxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForBiorxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo: bool;
@@ -3150,14 +3307,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_github_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForGithubLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForGithubLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForGithubLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo: bool;
@@ -3167,14 +3325,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_habr_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForHabrLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForHabrLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForHabrLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo: bool;
@@ -3184,14 +3343,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_medrxiv_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForMedrxivLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForMedrxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForMedrxivLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo: bool;
@@ -3201,14 +3361,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_reddit_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForRedditLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForRedditLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForRedditLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo: bool;
@@ -3218,14 +3379,15 @@ impl ConfigStruct {
                     handle_config_enable_randomize_order_for_providers_link_parts_for_mongo_enable_randomize_order_for_twitter_link_parts_for_mongo = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::EnableRandomizeOrderForTwitterLinkPartsForMongoError {
+                        was_dotenv_enable,
+                        env_name: ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME,
+                        env_error: VarOrBoolParseError::Bool(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::EnableRandomizeOrderForTwitterLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: e });
+                return Err(ConfigError::EnableRandomizeOrderForTwitterLinkPartsForMongoError { was_dotenv_enable, env_name: ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME, env_error: VarOrBoolParseError::Var(e), });
             }
         }
         let handle_config_print_colors_error_red: u8;
@@ -3235,14 +3397,15 @@ impl ConfigStruct {
                     handle_config_print_colors_error_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ERROR_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::ErrorRedError {
+                        was_dotenv_enable,
+                        env_name: ERROR_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::ErrorRedError { was_dotenv_enable, env_name: ERROR_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::ErrorRedError { was_dotenv_enable, env_name: ERROR_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_error_green: u8;
@@ -3252,14 +3415,15 @@ impl ConfigStruct {
                     handle_config_print_colors_error_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ERROR_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::ErrorGreenError {
+                        was_dotenv_enable,
+                        env_name: ERROR_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::ErrorGreenError { was_dotenv_enable, env_name: ERROR_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::ErrorGreenError { was_dotenv_enable, env_name: ERROR_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_error_blue: u8;
@@ -3269,14 +3433,15 @@ impl ConfigStruct {
                     handle_config_print_colors_error_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        ERROR_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::ErrorBlueError {
+                        was_dotenv_enable,
+                        env_name: ERROR_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::ErrorBlueError { was_dotenv_enable, env_name: ERROR_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::ErrorBlueError { was_dotenv_enable, env_name: ERROR_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_high_red: u8;
@@ -3286,14 +3451,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_high_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_HIGH_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningHighRedError {
+                        was_dotenv_enable,
+                        env_name: WARNING_HIGH_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningHighRedError { was_dotenv_enable, env_name: WARNING_HIGH_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningHighRedError { was_dotenv_enable, env_name: WARNING_HIGH_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_high_green: u8;
@@ -3303,14 +3469,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_high_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_HIGH_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningHighGreenError {
+                        was_dotenv_enable,
+                        env_name: WARNING_HIGH_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningHighGreenError { was_dotenv_enable, env_name: WARNING_HIGH_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningHighGreenError { was_dotenv_enable, env_name: WARNING_HIGH_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_high_blue: u8;
@@ -3320,14 +3487,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_high_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_HIGH_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningHighBlueError {
+                        was_dotenv_enable,
+                        env_name: WARNING_HIGH_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningHighBlueError { was_dotenv_enable, env_name: WARNING_HIGH_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningHighBlueError { was_dotenv_enable, env_name: WARNING_HIGH_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_low_red: u8;
@@ -3337,14 +3505,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_low_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_LOW_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningLowRedError {
+                        was_dotenv_enable,
+                        env_name: WARNING_LOW_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningLowRedError { was_dotenv_enable, env_name: WARNING_LOW_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningLowRedError { was_dotenv_enable, env_name: WARNING_LOW_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_low_green: u8;
@@ -3354,14 +3523,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_low_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_LOW_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningLowGreenError {
+                        was_dotenv_enable,
+                        env_name: WARNING_LOW_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningLowGreenError { was_dotenv_enable, env_name: WARNING_LOW_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningLowGreenError { was_dotenv_enable, env_name: WARNING_LOW_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_warning_low_blue: u8;
@@ -3371,14 +3541,15 @@ impl ConfigStruct {
                     handle_config_print_colors_warning_low_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        WARNING_LOW_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::WarningLowBlueError {
+                        was_dotenv_enable,
+                        env_name: WARNING_LOW_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::WarningLowBlueError { was_dotenv_enable, env_name: WARNING_LOW_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::WarningLowBlueError { was_dotenv_enable, env_name: WARNING_LOW_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_success_red: u8;
@@ -3388,14 +3559,15 @@ impl ConfigStruct {
                     handle_config_print_colors_success_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        SUCCESS_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::SuccessRedError {
+                        was_dotenv_enable,
+                        env_name: SUCCESS_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::SuccessRedError { was_dotenv_enable, env_name: SUCCESS_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::SuccessRedError { was_dotenv_enable, env_name: SUCCESS_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_success_green: u8;
@@ -3405,14 +3577,15 @@ impl ConfigStruct {
                     handle_config_print_colors_success_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        SUCCESS_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::SuccessGreenError {
+                        was_dotenv_enable,
+                        env_name: SUCCESS_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::SuccessGreenError { was_dotenv_enable, env_name: SUCCESS_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::SuccessGreenError { was_dotenv_enable, env_name: SUCCESS_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_success_blue: u8;
@@ -3422,14 +3595,15 @@ impl ConfigStruct {
                     handle_config_print_colors_success_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        SUCCESS_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::SuccessBlueError {
+                        was_dotenv_enable,
+                        env_name: SUCCESS_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::SuccessBlueError { was_dotenv_enable, env_name: SUCCESS_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::SuccessBlueError { was_dotenv_enable, env_name: SUCCESS_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_partial_success_red: u8;
@@ -3439,14 +3613,15 @@ impl ConfigStruct {
                     handle_config_print_colors_partial_success_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        PARTIAL_SUCCESS_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::PartialSuccessRedError {
+                        was_dotenv_enable,
+                        env_name: PARTIAL_SUCCESS_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::PartialSuccessRedError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::PartialSuccessRedError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_partial_success_green: u8;
@@ -3456,14 +3631,15 @@ impl ConfigStruct {
                     handle_config_print_colors_partial_success_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        PARTIAL_SUCCESS_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::PartialSuccessGreenError {
+                        was_dotenv_enable,
+                        env_name: PARTIAL_SUCCESS_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::PartialSuccessGreenError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::PartialSuccessGreenError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_partial_success_blue: u8;
@@ -3473,14 +3649,15 @@ impl ConfigStruct {
                     handle_config_print_colors_partial_success_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        PARTIAL_SUCCESS_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::PartialSuccessBlueError {
+                        was_dotenv_enable,
+                        env_name: PARTIAL_SUCCESS_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::PartialSuccessBlueError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::PartialSuccessBlueError { was_dotenv_enable, env_name: PARTIAL_SUCCESS_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_cleaning_red: u8;
@@ -3490,14 +3667,15 @@ impl ConfigStruct {
                     handle_config_print_colors_cleaning_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        CLEANING_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::CleaningRedError {
+                        was_dotenv_enable,
+                        env_name: CLEANING_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::CleaningRedError { was_dotenv_enable, env_name: CLEANING_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::CleaningRedError { was_dotenv_enable, env_name: CLEANING_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_cleaning_green: u8;
@@ -3507,14 +3685,15 @@ impl ConfigStruct {
                     handle_config_print_colors_cleaning_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        CLEANING_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::CleaningGreenError {
+                        was_dotenv_enable,
+                        env_name: CLEANING_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::CleaningGreenError { was_dotenv_enable, env_name: CLEANING_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::CleaningGreenError { was_dotenv_enable, env_name: CLEANING_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_cleaning_blue: u8;
@@ -3524,14 +3703,15 @@ impl ConfigStruct {
                     handle_config_print_colors_cleaning_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        CLEANING_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::CleaningBlueError {
+                        was_dotenv_enable,
+                        env_name: CLEANING_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::CleaningBlueError { was_dotenv_enable, env_name: CLEANING_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::CleaningBlueError { was_dotenv_enable, env_name: CLEANING_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_time_measurement_red: u8;
@@ -3541,14 +3721,15 @@ impl ConfigStruct {
                     handle_config_print_colors_time_measurement_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        TIME_MEASUREMENT_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::TimeMeasurementRedError {
+                        was_dotenv_enable,
+                        env_name: TIME_MEASUREMENT_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::TimeMeasurementRedError { was_dotenv_enable, env_name: TIME_MEASUREMENT_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::TimeMeasurementRedError { was_dotenv_enable, env_name: TIME_MEASUREMENT_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_time_measurement_green: u8;
@@ -3558,14 +3739,15 @@ impl ConfigStruct {
                     handle_config_print_colors_time_measurement_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        TIME_MEASUREMENT_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::TimeMeasurementGreenError {
+                        was_dotenv_enable,
+                        env_name: TIME_MEASUREMENT_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::TimeMeasurementGreenError { was_dotenv_enable, env_name: TIME_MEASUREMENT_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::TimeMeasurementGreenError { was_dotenv_enable, env_name: TIME_MEASUREMENT_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_time_measurement_blue: u8;
@@ -3575,14 +3757,15 @@ impl ConfigStruct {
                     handle_config_print_colors_time_measurement_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        TIME_MEASUREMENT_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::TimeMeasurementBlueError {
+                        was_dotenv_enable,
+                        env_name: TIME_MEASUREMENT_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::TimeMeasurementBlueError { was_dotenv_enable, env_name: TIME_MEASUREMENT_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::TimeMeasurementBlueError { was_dotenv_enable, env_name: TIME_MEASUREMENT_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_info_red: u8;
@@ -3592,14 +3775,15 @@ impl ConfigStruct {
                     handle_config_print_colors_info_red = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        INFO_RED_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::InfoRedError {
+                        was_dotenv_enable,
+                        env_name: INFO_RED_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::InfoRedError { was_dotenv_enable, env_name: INFO_RED_ENV_NAME, env_error: e });
+                return Err(ConfigError::InfoRedError { was_dotenv_enable, env_name: INFO_RED_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_info_green: u8;
@@ -3609,14 +3793,15 @@ impl ConfigStruct {
                     handle_config_print_colors_info_green = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        INFO_GREEN_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::InfoGreenError {
+                        was_dotenv_enable,
+                        env_name: INFO_GREEN_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::InfoGreenError { was_dotenv_enable, env_name: INFO_GREEN_ENV_NAME, env_error: e });
+                return Err(ConfigError::InfoGreenError { was_dotenv_enable, env_name: INFO_GREEN_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         let handle_config_print_colors_info_blue: u8;
@@ -3626,14 +3811,15 @@ impl ConfigStruct {
                     handle_config_print_colors_info_blue = handle;
                 }
                 Err(e) => {
-                    return Err(ConfigError::Message(format!(
-                        "parse::<bool> {}_ENV_NAME failed, error: {:#?}",
-                        INFO_BLUE_ENV_NAME, e
-                    )))
+                    return Err(ConfigError::InfoBlueError {
+                        was_dotenv_enable,
+                        env_name: INFO_BLUE_ENV_NAME,
+                        env_error: VarOrIntParseError::Int(e),
+                    });
                 }
             },
             Err(e) => {
-                return Err(ConfigError::InfoBlueError { was_dotenv_enable, env_name: INFO_BLUE_ENV_NAME, env_error: e });
+                return Err(ConfigError::InfoBlueError { was_dotenv_enable, env_name: INFO_BLUE_ENV_NAME, env_error: VarOrIntParseError::Var(e) });
             }
         }
         //todo: rewrite it with type system enum ProviderKind
