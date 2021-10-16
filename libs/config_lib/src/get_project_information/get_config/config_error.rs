@@ -1,8 +1,3 @@
-
-// use serde::de;
-// use serde::ser;
-use std::error::Error;
-use std::fmt;
 use std::env::VarError;
 use core::str::ParseBoolError;
 use core::num::ParseIntError;
@@ -19,46 +14,6 @@ pub enum VarOrIntParseError {
     Int(ParseIntError)
 }
 
-impl <'a> fmt::Display for ConfigError <'a>{
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match *self {
-            ConfigError::Message(ref s) => write!(f, "{}", s),
-            _ => write!(f, "dfhdfhdfh{}", self.to_string()),
-        }
-    }
-}
-
-impl <'a> Error for ConfigError <'a>{
-    // is it deprecated?
-    // fn description(&self) -> &str {
-    //     match *self {
-    //         ConfigError::Frozen => "configuration is frozen",
-    //         _ => "configuration error",
-    //     }
-    // }
-    //dont know about it yet
-    // fn cause(&self) -> Option<&Error> {
-    //     match *self {
-    //         ConfigError::Foreign(ref cause) | ConfigError::FileParse { ref cause, .. } => {
-    //             Some(cause.as_ref())
-    //         }
-    //         ConfigError::Frozen => "configuration is frozen",
-    //         _ => None,
-    //     }
-    // }
-}
-
-// impl<'a> de::Error for ConfigError <'a> {
-//     fn custom<T: fmt::Display>(msg: T) -> Self {
-//         ConfigError::Message(msg.to_string())
-//     }
-// }
-
-// impl <'a> ser::Error for ConfigError <'a> {
-//     fn custom<T: fmt::Display>(msg: T) -> Self {
-//         ConfigError::Message(msg.to_string())
-//     }
-// }
 #[must_use]
 #[derive(Debug)] 
 pub enum ConfigError <'a> {

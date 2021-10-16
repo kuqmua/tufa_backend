@@ -4242,7 +4242,7 @@ impl ConfigStruct {
         //
         if config_handle.mongo_params.log_file_extension.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle.mongo_params.log_file_extension is not empty".to_string(),
+                "log_file_extension is not empty".to_string(),
             ));
             drop(error);
         }
@@ -4252,9 +4252,7 @@ impl ConfigStruct {
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle
-            .mongo_params
-            .path_to_provider_link_parts_folder is empty"
+                "path_to_provider_link_parts_folder is empty"
                     .to_string(),
             ));
             drop(error);
@@ -4265,9 +4263,7 @@ impl ConfigStruct {
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle
-            .mongo_params
-            .db_collection_document_field_name_handle is empty"
+                "db_collection_document_field_name_handle is empty"
                     .to_string(),
             ));
             drop(error);
@@ -4278,9 +4274,7 @@ impl ConfigStruct {
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle
-            .mongo_params
-            .db_collection_handle_second_part is empty"
+                "db_collection_handle_second_part is empty"
                     .to_string(),
             ));
             drop(error);
@@ -4291,7 +4285,7 @@ impl ConfigStruct {
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle.mongo_params.db_name_handle is empty".to_string(),
+                "db_name_handle is empty".to_string(),
             ));
             drop(error);
         }
@@ -4301,19 +4295,19 @@ impl ConfigStruct {
             .is_empty()
         {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                    "config_handle.params.unhandled_success_handled_success_are_there_items_initialized_posts_dir is empty".to_string(),
+                    "unhandled_success_handled_success_are_there_items_initialized_posts_dir is empty".to_string(),
                 ));
             drop(error);
         }
         if config_handle.params.warning_logs_directory_name.is_empty() {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle.params.warning_logs_directory_name is empty".to_string(),
+                "warning_logs_directory_name is empty".to_string(),
             ));
             drop(error);
         }
         if config_handle.params.common_providers_links_limit > 0 {
             let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-                "config_handle.params.common_providers_links_limit <= 0".to_string(),
+                "common_providers_links_limit <= 0".to_string(),
             ));
             drop(error);
         }
@@ -4363,28 +4357,27 @@ impl ConfigStruct {
     }
 
     fn check_valid_i64_providers_links_limits_for_mongo(config_handle: &ConfigStruct) -> bool {
-        let mut checker = true;
         if config_handle.providers_links_limits.links_limit_for_arxiv <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_biorxiv <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_github <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_habr <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_medrxiv <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_reddit <= 0 {
-            checker = false;
+            return false
         }
         if config_handle.providers_links_limits.links_limit_for_twitter <= 0 {
-            checker = false;
+            return false
         }
-        checker
+        true
     }
 }
