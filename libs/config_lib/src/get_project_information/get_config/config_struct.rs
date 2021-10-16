@@ -8,6 +8,7 @@ use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
+use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
 use crate::get_project_information::get_config::enable_providers_struct::EnableProviders;
 use crate::get_project_information::get_config::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::get_project_information::get_config::providers_check_links_struct::ProvidersCheckLinks;
@@ -31,6 +32,13 @@ use crate::get_project_information::get_config::enable_providers_cleaning_warnin
 use crate::get_project_information::get_config::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
 use crate::get_project_information::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
 use crate::get_project_information::get_config::mongo_url_parts_struct::MongoUrlParts;
+use crate::get_project_information::get_config::mongo_authorization_struct::MongoAuthorization;
+use crate::get_project_information::get_config::postgres_authorization_struct::PostgresAuthorization;
+use crate::get_project_information::get_config::reddit_authorization_struct::RedditAuthorization;
+
+use crate::get_project_information::get_config::config_error::ConfigError;
+use crate::get_project_information::get_config::config_error::VarOrBoolParseError;
+use crate::get_project_information::get_config::config_error::VarOrIntParseError;
 
 use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -286,11 +294,6 @@ use crate::get_project_information::env_var_names_constants::INFO_BLUE_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::INFO_GREEN_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::INFO_RED_ENV_NAME;
 
-use crate::get_project_information::get_config::github_authorization_struct::GithubAuthorization;
-use crate::get_project_information::get_config::mongo_authorization_struct::MongoAuthorization;
-use crate::get_project_information::get_config::postgres_authorization_struct::PostgresAuthorization;
-use crate::get_project_information::get_config::reddit_authorization_struct::RedditAuthorization;
-
 use crate::get_project_information::env_var_names_constants::GITHUB_NAME_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::GITHUB_TOKEN_ENV_NAME;
 
@@ -312,10 +315,6 @@ use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_SECRE
 use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
-
-use crate::get_project_information::get_config::config_error::ConfigError;
-use crate::get_project_information::get_config::config_error::VarOrBoolParseError;
-use crate::get_project_information::get_config::config_error::VarOrIntParseError;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
