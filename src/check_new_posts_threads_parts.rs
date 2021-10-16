@@ -59,7 +59,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                             ProviderKind,
                         )>::new()));
                         let config_provider_string_to_enum_struct_hashmap =
-                        ProviderKind::into_provider_string_name_provider_kind_hashmap();
+                        ProviderKind::into_string_name_and_kind_hashmap();
                         //check if provider_names are unique
                         for provider_name in &CONFIG.params.vec_of_provider_names {
                             match config_provider_string_to_enum_struct_hashmap.get(provider_name) {

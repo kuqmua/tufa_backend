@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum::IntoEnumIterator;
+
 use strum_macros::EnumIter;
 
 use crate::get_project_information::env_var_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
@@ -281,7 +282,7 @@ use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_E
     PartialEq,
     Eq,
     Hash,
-    // Copy,
+    Copy,
 )]
 pub enum EnvVarNameKind {
     GithubNameEnvName,
@@ -770,6 +771,32 @@ impl EnvVarNameKind {
             EnvVarNameKind::InfoGreenEnvName => INFO_GREEN_ENV_NAME,
             EnvVarNameKind::InfoBlueEnvName => INFO_BLUE_ENV_NAME, 
         }
+    }
+    pub fn get_length() -> usize {
+        ENUM_LENGTH
+    }
+    pub fn into_vec() -> Vec<EnvVarNameKind> {
+        let mut env_var_name_kind_vec = Vec::with_capacity(EnvVarNameKind::get_length());
+        for env_var_name_kind in EnvVarNameKind::iter() {
+            env_var_name_kind_vec.push(env_var_name_kind);
+        }
+        env_var_name_kind_vec
+    }
+    pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, EnvVarNameKind)> {
+        let mut env_var_name_kind_vec = Vec::with_capacity(EnvVarNameKind::get_length());
+        for env_var_name_kind in EnvVarNameKind::iter() {
+            env_var_name_kind_vec.push((EnvVarNameKind::get_string_name(env_var_name_kind),   env_var_name_kind));
+        }
+        env_var_name_kind_vec
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, EnvVarNameKind> {
+        let mut config_env_var_name_kind_string_to_enum_struct_hasmap: HashMap<&'static str, EnvVarNameKind> =
+        HashMap::with_capacity(EnvVarNameKind::get_length());
+        for env_var_name_kind_kind in EnvVarNameKind::iter() {
+            config_env_var_name_kind_string_to_enum_struct_hasmap.insert(EnvVarNameKind::get_string_name(env_var_name_kind_kind),   env_var_name_kind_kind);
+        }
+        config_env_var_name_kind_string_to_enum_struct_hasmap
     }
 }
 

@@ -48,24 +48,24 @@ impl ProviderKind {
         }
     }
     pub fn get_length() -> usize {
-        PROVIDER_KIND_ENUM_LENGTH
+        ENUM_LENGTH
     }
-    pub fn get_provider_kind_vec() -> Vec<ProviderKind> {
-        let mut provider_kind_vec = Vec::with_capacity(PROVIDER_KIND_ENUM_LENGTH);
+    pub fn into_vec() -> Vec<ProviderKind> {
+        let mut provider_kind_vec = Vec::with_capacity(ENUM_LENGTH);
         for provider_kind in ProviderKind::iter() {
             provider_kind_vec.push(provider_kind);
         }
         provider_kind_vec
     }
-    pub fn into_provider_string_name_provider_kind_tuple_vec() -> Vec<(&'static str, ProviderKind)> {
-        let mut provider_kind_vec = Vec::with_capacity(PROVIDER_KIND_ENUM_LENGTH);
+    pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, ProviderKind)> {
+        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
             provider_kind_vec.push((ProviderKind::get_string_name(provider_kind),   provider_kind));
         }
         provider_kind_vec
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn into_provider_string_name_provider_kind_hashmap() -> HashMap<String, ProviderKind> {
+    pub fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
         //its String coz legacy
         let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
         HashMap::with_capacity(ProviderKind::get_length());
@@ -73,7 +73,7 @@ impl ProviderKind {
             config_provider_string_to_enum_struct_hasmap.insert(ProviderKind::get_string_name(provider_kind).to_owned(),   provider_kind);
         }
         config_provider_string_to_enum_struct_hasmap
-}
+    }
     pub fn get_links_limit_for_provider(provider_kind: ProviderKind) -> i64 {
         match provider_kind {
             ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,

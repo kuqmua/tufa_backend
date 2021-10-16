@@ -26,7 +26,7 @@ use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_da
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
     let s = ProviderKind::get_length();
-    let b = ProviderKind::get_provider_kind_vec();
+    let b = ProviderKind::into_vec();
     println!("gggg {}", s);
     println!("bbbb {:?}", b);
     let veeeec = ProviderKind::get_provider_kind_array_from_string_vec(

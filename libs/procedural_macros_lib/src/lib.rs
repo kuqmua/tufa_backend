@@ -10,7 +10,7 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
         _ => panic!("EnumVariantCount only works on Enums"),
     };
     let expanded = quote! {
-    const PROVIDER_KIND_ENUM_LENGTH: usize = #len;
+    const ENUM_LENGTH: usize = #len;
         };
     expanded.into()
 }

@@ -13,7 +13,7 @@ use prints_lib::print_type_enum::PrintType;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url = get_mongo_url();
-    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> = ProviderKind::into_provider_string_name_provider_kind_hashmap();
+    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> = ProviderKind::into_string_name_and_kind_hashmap();
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
