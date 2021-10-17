@@ -32,6 +32,7 @@ pub mod get_project_information {
         pub mod reddit_authorization_struct;
     }
     pub mod env_var_name_kind_enum;
+    pub mod config_error_test;
     pub mod get_mongo_url;
     pub mod project_constants;
     pub mod env_var_names_constants;

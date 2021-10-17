@@ -6,6 +6,8 @@ use strum::IntoEnumIterator;
 
 use strum_macros::EnumIter;
 
+use dotenv::dotenv;
+
 use crate::get_project_information::env_var_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME;
@@ -272,7 +274,10 @@ use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV
 use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
 
-use crate::get_project_information::get_config::config_error::ConfigError;
+use crate::get_project_information::config_error_test::ConfigErrorInnerType;
+
+use super::config_error_test::VarOrBoolParseError;
+use super::config_error_test::VarOrIntParseError;
 
 #[derive(
     EnumVariantCount,
@@ -501,9 +506,7 @@ pub enum EnvVarNameKind {
     InfoBlueEnvName,
 }
 
-// pub enum ALL ENV VARS NAMES
-// HABR_NAME_TO_CHECKand Hashtable
-
+#[derive(Debug)]
 pub enum EnvVarTypeHandle {
     BoolTypeHandle,
     StrTypeHandle, 
@@ -511,17 +514,22 @@ pub enum EnvVarTypeHandle {
     I64TypeHandle,
 }
 
-pub enum EnvVarTypeValueHandle<'a> {
-    BoolValue (bool),
-    StrTypeHandle (&'a str), 
-    U8TypeHandle (u8),
-    I64TypeHandle (i64),
+#[derive(Debug)]
+pub enum EnvVarTypeValueHandle {
+    BoolTypeValue (bool),
+    StringTypeValue (String), 
+    U8TypeValue (u8),
+    I64TypeValue (i64),
 }
+#[derive(Debug)] 
+pub struct ConfigTestError<'a> {
+    env_var_name_kind: EnvVarNameKind,
+    was_dotenv_enable: bool,
+    env_name: &'a str, 
+    env_error: ConfigErrorInnerType
+} 
 
 impl EnvVarNameKind {
-    // pub fn new() -> Self {
-
-    // }
     pub fn get_string_name(env_var_name_kind: EnvVarNameKind) -> &'static str {
         match env_var_name_kind {
             EnvVarNameKind::GithubNameEnvName => GITHUB_NAME_ENV_NAME,
@@ -1006,26 +1014,36 @@ impl EnvVarNameKind {
         }
     }
     // let type_handle = EnvVarNameKind::get_type_handle_for_provider(env_var_name_kind);
-    pub fn try_test(env_var_name_kind: EnvVarNameKind, was_dotenv_enable: bool) -> Result<String, ConfigError<'static>>{
+    pub fn get_string_from_env_var(env_var_name_kind: EnvVarNameKind, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
         let string_name = EnvVarNameKind::get_string_name(env_var_name_kind);
+        println!("---- {}", string_name);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigError::GithubNameError { was_dotenv_enable, env_name: GITHUB_NAME_ENV_NAME, env_error: e })
-            }
+                return Err(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+            }   
         }
     }
-    pub fn test_something() -> Result<HashMap::<EnvVarNameKind,String>, ConfigError<'static>> {
+    pub fn test_something() -> Result<HashMap::<EnvVarNameKind, EnvVarTypeValueHandle>, ConfigTestError<'static>> {
         //declare array or hashtable 
-        let was_dotenv_enable = true;
-        let mut hmap: HashMap::<EnvVarNameKind,String> = HashMap::new();
-        let mut error_option: Option<ConfigError> = None;
+        let was_dotenv_enable: bool;
+        match dotenv() {
+            Ok(_) => {
+                was_dotenv_enable = true;
+            },
+            Err(e) => {
+                was_dotenv_enable = true;
+                // println!("dotenv() failed, trying without {} error: {:?}", ENV_FILE_NAME, e);
+            }
+        }
+        let mut hmap: HashMap::<EnvVarNameKind,(String, &str)> = HashMap::new();
+        let mut error_option: Option<ConfigTestError> = None;
         for env_var_name_kind in EnvVarNameKind::iter() {
-            match EnvVarNameKind::try_test(env_var_name_kind, was_dotenv_enable) {
-                Ok(handle) => {
-                    hmap.insert(env_var_name_kind, handle);
+            match EnvVarNameKind::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
+                Ok(env_var_string) => {
+                    hmap.insert(env_var_name_kind, (env_var_string, EnvVarNameKind::get_string_name(env_var_name_kind)));
                 }
                 Err(e) => {
                     error_option = Some(e);
@@ -1036,71 +1054,51 @@ impl EnvVarNameKind {
         if let Some(error) = error_option {
             return Err(error)
         }
-        // for (env_var_name_kind, handle) in hmap {
-        //     match EnvVarNameKind::get_type_handle_for_provider(env_var_name_kind) {
-        //         EnvVarTypeHandle::BoolTypeHandle => {
-        //             match handle.parse::<bool>() {
-        //                 Ok(handle) => {
-
-        //                 },
-        //                 Err(e) => {
-                            
-        //                 }
-        //             }
-        //         },
-        //         EnvVarTypeHandle::StrTypeHandle => {
-                    
-        //         },
-        //         EnvVarTypeHandle::U8TypeHandle => {
-        //             match handle.parse::<u8>() {
-        //                 Ok(handle) => {
-
-        //                 },
-        //                 Err(e) => {
-                            
-        //                 }
-        //             }
-        //         },
-        //         EnvVarTypeHandle::I64TypeHandle => {
-        //             match handle.parse::<i64>() {
-        //                 Ok(handle) => {
-
-        //                 },
-        //                 Err(e) => {
-
-        //                 }
-        //             }
-        //         },
-        //     }
-        // }
-        Ok(hmap)
+        //vec 
+        let mut hmap_to_return: HashMap::<EnvVarNameKind, EnvVarTypeValueHandle> = HashMap::new();
+        let mut error_option_second: Option<ConfigTestError> = None;
+        for (env_var_name_kind, (env_var_string, string_env_name)) in hmap {
+            match EnvVarNameKind::get_type_handle_for_provider(env_var_name_kind) {
+                EnvVarTypeHandle::BoolTypeHandle => {
+                    match env_var_string.parse::<bool>() {
+                        Ok(handle) => {
+                            hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::BoolTypeValue(handle));
+                        },
+                        Err(e) => {
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) })
+                        }
+                    }
+                },
+                EnvVarTypeHandle::StrTypeHandle => {
+                    hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::StringTypeValue(env_var_string));
+                },
+                EnvVarTypeHandle::U8TypeHandle => {
+                    match env_var_string.parse::<u8>() {
+                        Ok(handle) => {
+                            hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::U8TypeValue(handle));
+                        },
+                        Err(e) => {
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) })
+                        }
+                    }
+                },
+                EnvVarTypeHandle::I64TypeHandle => {
+                    match env_var_string.parse::<i64>() {
+                        Ok(handle) => {
+                            hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::I64TypeValue(handle));
+                        },
+                        Err(e) => {
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) })
+                        }
+                    }
+                },
+            }
+        }
+        if let Some(error) = error_option_second {
+            return Err(error)
+        }
+        Ok(hmap_to_return)
         //check type if not string
     }
 }
 
-// #[derive(Debug)] 
-// pub enum SomethingResult {
-//     Var(VarError),
-//     Bool(ParseBoolError)
-// }
-
-
-
-//     config_provider_string_to_enum_struct_hasmap
-
-// pub struct ConfigProviderStringToEnumTypeStruct {
-//     pub config_name_value: &'static str,
-//     pub provider_kind_enum_type: ProviderKind,
-// }
-
-// impl ConfigProviderStringToEnumTypeStruct {
-//     pub const fn new(
-//         config_name_value: &'static str,
-//         provider_kind_enum_type: ProviderKind,
-//     ) -> Self {
-//         ConfigProviderStringToEnumTypeStruct {
-//             config_name_value,
-//             provider_kind_enum_type,
-//         }
-//     }
-// }
