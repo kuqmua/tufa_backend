@@ -1065,7 +1065,8 @@ impl EnvVarNameKind {
                             hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::BoolTypeValue(handle));
                         },
                         Err(e) => {
-                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) })
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) });
+                            break;
                         }
                     }
                 },
@@ -1078,7 +1079,8 @@ impl EnvVarNameKind {
                             hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::U8TypeValue(handle));
                         },
                         Err(e) => {
-                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) })
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
+                            break;
                         }
                     }
                 },
@@ -1088,7 +1090,8 @@ impl EnvVarNameKind {
                             hmap_to_return.insert(env_var_name_kind, EnvVarTypeValueHandle::I64TypeValue(handle));
                         },
                         Err(e) => {
-                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) })
+                            error_option_second = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_env_name, env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
+                            break;
                         }
                     }
                 },
