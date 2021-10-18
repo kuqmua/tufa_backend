@@ -32,6 +32,7 @@ pub mod get_project_information {
         pub mod reddit_authorization_struct;
     }
     pub mod env_var_enum;
+    pub mod env_var_string_enum;
     pub mod env_var_i64_enum;
     pub mod env_var_u8_enum;
     pub mod env_var_bool_enum;
