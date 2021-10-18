@@ -8,9 +8,9 @@ lazy_static! {
 
 
 use std::collections::HashMap;
-use crate::get_project_information::env_var_name_kind_enum::EnvVarNameKind;
-use crate::get_project_information::env_var_name_kind_enum::EnvVarTypeValueHandle;
+use crate::get_project_information::env_var_kind_enum::EnvVarKind;
+use crate::get_project_information::env_var_kind_enum::EnvVarTypeValueHandle;
 lazy_static! {
-    pub static ref TEST: HashMap::<EnvVarNameKind, EnvVarTypeValueHandle> =
-    EnvVarNameKind::test_something().expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
+    pub static ref TEST: HashMap::<EnvVarKind, EnvVarTypeValueHandle> =
+    EnvVarKind::test_something().expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
 }
