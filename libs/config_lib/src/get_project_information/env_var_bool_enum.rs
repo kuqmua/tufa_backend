@@ -347,22 +347,6 @@ pub enum EnvBoolVar {
     EnableRandomizeOrderForRedditLinkPartsForMongo,
     EnableRandomizeOrderForTwitterLinkPartsForMongo,
 }
-
-#[derive(Debug)]
-pub enum EnvBoolVarTypeHandle {
-    BoolTypeHandle,
-    StrTypeHandle, 
-    U8TypeHandle,
-    I64TypeHandle,
-}
-
-#[derive(Debug)]
-pub enum EnvBoolVarTypeValueHandle {
-    BoolTypeValue (bool),
-    StringTypeValue (String), 
-    U8TypeValue (u8),
-    I64TypeValue (i64),
-}
 #[derive(Debug)] 
 pub struct ConfigTestError<'a> {
     env_var_name_kind: EnvBoolVar,
