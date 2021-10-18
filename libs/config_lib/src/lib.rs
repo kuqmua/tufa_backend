@@ -31,9 +31,13 @@ pub mod get_project_information {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
-    pub mod env_var_kind_enum;
+    pub mod env_var_enum;
     pub mod get_mongo_url;
     pub mod project_constants;
+    pub mod env_var_string_names_constants;
+    pub mod env_var_bool_names_constants;
+    pub mod env_var_i64_names_constants;
+    pub mod env_var_u8_names_constants;
     pub mod env_var_names_constants;
     pub mod provider_kind_enum;
 }
