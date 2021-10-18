@@ -317,3 +317,13 @@ mongo_insert_docs_in_empty_collection(
 all 2200+ twitter subs inserted
 fix this by adding filter from env
 <br/>
+
+### -------------------
+early return refactoring with ok_or and ?
+example
+fn bar1(x: Option<u64>) -> Result<u64, MyErrors> {
+    let x = x.ok_or(MyErrors::SomeError)?;
+    // A lot of stuff going on.
+    Ok(x * 2)
+}
+<br/>
