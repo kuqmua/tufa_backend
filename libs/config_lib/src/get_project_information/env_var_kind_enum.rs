@@ -273,11 +273,31 @@ use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_SECRE
 use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
+use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
-use crate::get_project_information::config_error_test::ConfigErrorInnerType;
+use std::env::VarError;
 
-use super::config_error_test::VarOrBoolParseError;
-use super::config_error_test::VarOrIntParseError;
+#[derive(Debug)]
+pub enum ConfigErrorInnerType {
+    VarErrorHandle(VarError),
+    VarOrBoolParseErrorHandle(VarOrBoolParseError),
+    VarOrIntParseErrorErrorHandle(VarOrIntParseError)
+}
+
+use core::str::ParseBoolError;
+use core::num::ParseIntError;
+
+#[derive(Debug)] 
+pub enum VarOrBoolParseError {
+    Var(VarError),
+    Bool(ParseBoolError)
+}
+
+#[derive(Debug)] 
+pub enum VarOrIntParseError {
+    Var(VarError),
+    Int(ParseIntError)
+}
 
 #[derive(
     EnumVariantCount,
@@ -1013,10 +1033,8 @@ impl EnvVarKind {
             EnvVarKind::InfoBlue => EnvVarTypeHandle::U8TypeHandle,
         }
     }
-    // let type_handle = EnvVarKind::get_type_handle_for_provider(env_var_name_kind);
     pub fn get_string_from_env_var(env_var_name_kind: EnvVarKind, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
         let string_name = EnvVarKind::get_env_name(env_var_name_kind);
-        println!("---- {}", string_name);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
@@ -1027,15 +1045,14 @@ impl EnvVarKind {
         }
     }
     pub fn test_something() -> Result<HashMap::<EnvVarKind, EnvVarTypeValueHandle>, ConfigTestError<'static>> {
-        //declare array or hashtable 
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {
                 was_dotenv_enable = true;
             },
             Err(e) => {
-                was_dotenv_enable = true;
-                // println!("dotenv() failed, trying without {} error: {:?}", ENV_FILE_NAME, e);
+                was_dotenv_enable = false;
+                println!("dotenv() failed, trying without {} error: {:?}", ENV_FILE_NAME, e);
             }
         }
         let mut hmap: HashMap::<EnvVarKind,(String, &str)> = HashMap::new();
@@ -1054,7 +1071,6 @@ impl EnvVarKind {
         if let Some(error) = error_option {
             return Err(error)
         }
-        //vec 
         let mut hmap_to_return: HashMap::<EnvVarKind, EnvVarTypeValueHandle> = HashMap::new();
         let mut error_option_second: Option<ConfigTestError> = None;
         for (env_var_name_kind, (env_var_string, string_env_name)) in hmap {
@@ -1101,7 +1117,6 @@ impl EnvVarKind {
             return Err(error)
         }
         Ok(hmap_to_return)
-        //check type if not string
     }
 }
 
