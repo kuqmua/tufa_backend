@@ -68,6 +68,7 @@ use crate::get_project_information::env_var_string_names_constants::REDDIT_USERN
 use crate::get_project_information::env_var_string_names_constants::REDDIT_USER_AGENT_ENV_NAME;
 
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::get_project_information::config_error::ConfigError;
 
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
@@ -133,13 +134,6 @@ pub enum EnvStringVar {
     RedditLink,
     TwitterLink,
 }
-#[derive(Debug)] 
-pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvVarTypes,
-    was_dotenv_enable: bool,
-    env_name: &'a str, 
-    env_error: ConfigErrorInnerType
-} 
 
 impl EnvStringVar {
     pub fn get_env_name(env_var_name_kind: EnvStringVar) -> &'static str {
@@ -226,18 +220,18 @@ impl EnvStringVar {
         }
         config_env_var_name_kind_string_to_enum_struct_hasmap
     }
-    pub fn get_string_from_env_var(env_var_name_kind: EnvStringVar, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
+    pub fn get_string_from_env_var(env_var_name_kind: EnvStringVar, was_dotenv_enable: bool) -> Result<String, ConfigError<'static>>{
         let string_name = EnvStringVar::get_env_name(env_var_name_kind);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::String(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigError {env_var_name_kind: EnvVarTypes::String(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
-    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvStringVar, String>, ConfigTestError<'static>> {
+    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvStringVar, String>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {
@@ -249,7 +243,7 @@ impl EnvStringVar {
             }
         }
         let mut hmap: HashMap::<EnvStringVar, String> = HashMap::new();
-        let mut error_option: Option<ConfigTestError> = None;
+        let mut error_option: Option<ConfigError> = None;
         for env_var_name_kind in EnvStringVar::iter() {
             match EnvStringVar::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
                 Ok(env_var_string) => {

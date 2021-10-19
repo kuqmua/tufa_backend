@@ -19,6 +19,7 @@ use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR
 
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::get_project_information::config_error::ConfigError;
 
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
@@ -46,13 +47,6 @@ pub enum EnvI64Var {
     LinksLimitForReddit,
     LinksLimitForTwitter,
 }
-#[derive(Debug)] 
-pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvVarTypes,
-    was_dotenv_enable: bool,
-    env_name: &'a str, 
-    env_error: ConfigErrorInnerType
-} 
 
 impl EnvI64Var {
     pub fn get_env_name(env_var_name_kind: EnvI64Var) -> &'static str {
@@ -93,18 +87,18 @@ impl EnvI64Var {
         }
         config_env_var_name_kind_string_to_enum_struct_hasmap
     }
-    pub fn get_string_from_env_var(env_var_name_kind: EnvI64Var, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
+    pub fn get_string_from_env_var(env_var_name_kind: EnvI64Var, was_dotenv_enable: bool) -> Result<String, ConfigError<'static>>{
         let string_name = EnvI64Var::get_env_name(env_var_name_kind);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
-    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvI64Var, i64>, ConfigTestError<'static>> {
+    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvI64Var, i64>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {
@@ -116,7 +110,7 @@ impl EnvI64Var {
             }
         }
         let mut hmap: HashMap::<EnvI64Var, i64> = HashMap::new();
-        let mut error_option: Option<ConfigTestError> = None;
+        let mut error_option: Option<ConfigError> = None;
         for env_var_name_kind in EnvI64Var::iter() {
             match EnvI64Var::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
                 Ok(env_var_string) => {
@@ -125,7 +119,7 @@ impl EnvI64Var {
                             hmap.insert(env_var_name_kind, handle);
                         },
                         Err(e) => {
-                            error_option = Some(ConfigTestError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: EnvI64Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
+                            error_option = Some(ConfigError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: EnvI64Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
                             break;
                         }
                     }

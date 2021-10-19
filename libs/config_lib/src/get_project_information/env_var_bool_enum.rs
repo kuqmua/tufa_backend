@@ -175,6 +175,7 @@ use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMI
 
 use crate::get_project_information::var_or_bool_parse_error_enum::VarOrBoolParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::get_project_information::config_error::ConfigError;
 
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
@@ -329,13 +330,6 @@ pub enum EnvBoolVar {
     EnableRandomizeOrderForRedditLinkPartsForMongo,
     EnableRandomizeOrderForTwitterLinkPartsForMongo,
 }
-#[derive(Debug)] 
-pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvVarTypes,
-    was_dotenv_enable: bool,
-    env_name: &'a str, 
-    env_error: ConfigErrorInnerType
-} 
 
 impl EnvBoolVar {
     pub fn get_env_name(env_var_name_kind: EnvBoolVar) -> &'static str {
@@ -517,18 +511,18 @@ impl EnvBoolVar {
         }
         config_env_var_name_kind_string_to_enum_struct_hasmap
     }
-    pub fn get_string_from_env_var(env_var_name_kind: EnvBoolVar, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
+    pub fn get_string_from_env_var(env_var_name_kind: EnvBoolVar, was_dotenv_enable: bool) -> Result<String, ConfigError<'static>>{
         let string_name = EnvBoolVar::get_env_name(env_var_name_kind);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
-    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvBoolVar, bool>, ConfigTestError<'static>> {
+    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvBoolVar, bool>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {
@@ -540,7 +534,7 @@ impl EnvBoolVar {
             }
         }
         let mut hmap: HashMap::<EnvBoolVar,bool> = HashMap::new();
-        let mut error_option: Option<ConfigTestError> = None;
+        let mut error_option: Option<ConfigError> = None;
         for env_var_name_kind in EnvBoolVar::iter() {
             match EnvBoolVar::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
                 Ok(env_var_string) => {
@@ -549,7 +543,7 @@ impl EnvBoolVar {
                             hmap.insert(env_var_name_kind, handle);
                         },
                         Err(e) => {
-                            error_option = Some(ConfigTestError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: EnvBoolVar::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) });
+                            error_option = Some(ConfigError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: EnvBoolVar::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) });
                             break;
                         }
                     }

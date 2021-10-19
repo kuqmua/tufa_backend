@@ -42,6 +42,7 @@ use crate::get_project_information::env_var_u8_names_constants::INFO_RED_ENV_NAM
 
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::get_project_information::config_error::ConfigError;
 
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
@@ -86,13 +87,6 @@ pub enum EnvU8Var {
     InfoGreen,
     InfoBlue,
 }
-#[derive(Debug)] 
-pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvVarTypes,
-    was_dotenv_enable: bool,
-    env_name: &'a str, 
-    env_error: ConfigErrorInnerType
-} 
 
 impl EnvU8Var {
     pub fn get_env_name(env_var_name_kind: EnvU8Var) -> &'static str {
@@ -149,18 +143,18 @@ impl EnvU8Var {
         }
         config_env_var_name_kind_string_to_enum_struct_hasmap
     }
-    pub fn get_string_from_env_var(env_var_name_kind: EnvU8Var, was_dotenv_enable: bool) -> Result<String, ConfigTestError<'static>>{
+    pub fn get_string_from_env_var(env_var_name_kind: EnvU8Var, was_dotenv_enable: bool) -> Result<String, ConfigError<'static>>{
         let string_name = EnvU8Var::get_env_name(env_var_name_kind);
         match std::env::var(string_name) {
             Ok(handle) => {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigError {env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
-    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvU8Var, u8>, ConfigTestError<'static>> {
+    pub fn get_env_values_hashmap() -> Result<HashMap::<EnvU8Var, u8>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {
@@ -172,7 +166,7 @@ impl EnvU8Var {
             }
         }
         let mut hmap: HashMap::<EnvU8Var, u8> = HashMap::new();
-        let mut error_option: Option<ConfigTestError> = None;
+        let mut error_option: Option<ConfigError> = None;
         for env_var_name_kind in EnvU8Var::iter() {
             match EnvU8Var::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
                 Ok(env_var_string) => {
@@ -181,7 +175,7 @@ impl EnvU8Var {
                             hmap.insert(env_var_name_kind, handle);
                         },
                         Err(e) => {
-                            error_option = Some(ConfigTestError {env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),  was_dotenv_enable, env_name: EnvU8Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
+                            error_option = Some(ConfigError {env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),  was_dotenv_enable, env_name: EnvU8Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
                             break;
                         }
                     }
