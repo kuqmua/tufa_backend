@@ -8,37 +8,37 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::env_var_names_constants::ERROR_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::ERROR_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::ERROR_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::ERROR_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::ERROR_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::ERROR_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::WARNING_HIGH_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::WARNING_HIGH_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::WARNING_HIGH_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::WARNING_LOW_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::WARNING_LOW_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::WARNING_LOW_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::SUCCESS_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::SUCCESS_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::SUCCESS_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::SUCCESS_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::SUCCESS_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::SUCCESS_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::PARTIAL_SUCCESS_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::PARTIAL_SUCCESS_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::PARTIAL_SUCCESS_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::CLEANING_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::CLEANING_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::CLEANING_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::CLEANING_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::CLEANING_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::CLEANING_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::TIME_MEASUREMENT_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::TIME_MEASUREMENT_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::TIME_MEASUREMENT_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_RED_ENV_NAME;
 
-use crate::get_project_information::env_var_names_constants::INFO_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::INFO_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::INFO_RED_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::INFO_BLUE_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::INFO_GREEN_ENV_NAME;
+use crate::get_project_information::env_var_u8_names_constants::INFO_RED_ENV_NAME;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 

@@ -8,14 +8,14 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::env_var_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::LINKS_LIMIT_FOR_TWITTER_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_ARXIV_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_BIORXIV_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_GITHUB_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_HABR_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_REDDIT_ENV_NAME;
+use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_TWITTER_ENV_NAME;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
