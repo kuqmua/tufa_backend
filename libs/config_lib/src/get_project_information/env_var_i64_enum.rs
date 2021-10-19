@@ -17,31 +17,10 @@ use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR
 use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_REDDIT_ENV_NAME;
 use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_TWITTER_ENV_NAME;
 
+use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
+use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
+
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
-
-use std::env::VarError;
-
-#[derive(Debug)]
-pub enum ConfigErrorInnerType {
-    VarErrorHandle(VarError),
-    VarOrBoolParseErrorHandle(VarOrBoolParseError),
-    VarOrIntParseErrorErrorHandle(VarOrIntParseError)
-}
-
-use core::str::ParseBoolError;
-use core::num::ParseIntError;
-
-#[derive(Debug)] 
-pub enum VarOrBoolParseError {
-    Var(VarError),
-    Bool(ParseBoolError)
-}
-
-#[derive(Debug)] 
-pub enum VarOrIntParseError {
-    Var(VarError),
-    Int(ParseIntError)
-}
 
 #[derive(
     EnumVariantCount,

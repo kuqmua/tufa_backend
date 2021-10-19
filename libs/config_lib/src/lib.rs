@@ -31,6 +31,9 @@ pub mod get_project_information {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
+    pub mod config_error_inner_type_enum;
+    pub mod var_or_bool_parse_error_enum;
+    pub mod var_or_int_parse_error_enum;
     pub mod env_var_enum;
     pub mod env_var_string_enum;
     pub mod env_var_i64_enum;
