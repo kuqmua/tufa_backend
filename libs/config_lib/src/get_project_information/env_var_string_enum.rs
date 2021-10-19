@@ -69,6 +69,8 @@ use crate::get_project_information::env_var_string_names_constants::REDDIT_USER_
 
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 
+use crate::get_project_information::env_var_types_enum::EnvVarTypes;
+
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 #[derive(
@@ -133,7 +135,7 @@ pub enum EnvStringVar {
 }
 #[derive(Debug)] 
 pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvStringVar,
+    env_var_name_kind: EnvVarTypes,
     was_dotenv_enable: bool,
     env_name: &'a str, 
     env_error: ConfigErrorInnerType
@@ -231,7 +233,7 @@ impl EnvStringVar {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::String(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }

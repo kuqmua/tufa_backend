@@ -176,6 +176,8 @@ use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMI
 use crate::get_project_information::var_or_bool_parse_error_enum::VarOrBoolParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 
+use crate::get_project_information::env_var_types_enum::EnvVarTypes;
+
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 
@@ -329,7 +331,7 @@ pub enum EnvBoolVar {
 }
 #[derive(Debug)] 
 pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvBoolVar,
+    env_var_name_kind: EnvVarTypes,
     was_dotenv_enable: bool,
     env_name: &'a str, 
     env_error: ConfigErrorInnerType
@@ -522,7 +524,7 @@ impl EnvBoolVar {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
@@ -547,7 +549,7 @@ impl EnvBoolVar {
                             hmap.insert(env_var_name_kind, handle);
                         },
                         Err(e) => {
-                            error_option = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: EnvBoolVar::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) });
+                            error_option = Some(ConfigTestError {env_var_name_kind: EnvVarTypes::Bool(env_var_name_kind),  was_dotenv_enable, env_name: EnvBoolVar::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(VarOrBoolParseError::Bool(e)) });
                             break;
                         }
                     }

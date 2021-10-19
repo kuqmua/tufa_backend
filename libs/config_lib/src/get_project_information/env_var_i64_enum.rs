@@ -20,6 +20,8 @@ use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 
+use crate::get_project_information::env_var_types_enum::EnvVarTypes;
+
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 #[derive(
@@ -46,7 +48,7 @@ pub enum EnvI64Var {
 }
 #[derive(Debug)] 
 pub struct ConfigTestError<'a> {
-    env_var_name_kind: EnvI64Var,
+    env_var_name_kind: EnvVarTypes,
     was_dotenv_enable: bool,
     env_name: &'a str, 
     env_error: ConfigErrorInnerType
@@ -98,7 +100,7 @@ impl EnvI64Var {
                 Ok(handle)
             }
             Err(e) => {
-                return Err(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
+                return Err(ConfigTestError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: string_name, env_error: ConfigErrorInnerType::VarErrorHandle(e) })
             }   
         }
     }
@@ -123,7 +125,7 @@ impl EnvI64Var {
                             hmap.insert(env_var_name_kind, handle);
                         },
                         Err(e) => {
-                            error_option = Some(ConfigTestError {env_var_name_kind,  was_dotenv_enable, env_name: EnvI64Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
+                            error_option = Some(ConfigTestError {env_var_name_kind: EnvVarTypes::I64(env_var_name_kind),  was_dotenv_enable, env_name: EnvI64Var::get_env_name(env_var_name_kind), env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(VarOrIntParseError::Int(e)) });
                             break;
                         }
                     }
