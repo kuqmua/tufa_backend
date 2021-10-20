@@ -282,3 +282,9 @@ red hat / openshift / reg.ru postgres cloud cluster
 rename ERROR_RED="255" # u8 into ERROR_PRINT_COLOR_RED and others
 <br/>
 
+### -------------------
+rust language detection library
+https://github.com/pemistahl/lingua-rs
+<br/>
+    
+
