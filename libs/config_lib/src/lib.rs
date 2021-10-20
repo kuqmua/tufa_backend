@@ -43,10 +43,6 @@ pub mod get_project_information {
     pub mod env_var_bool_enum;
     pub mod get_mongo_url;
     pub mod project_constants;
-    pub mod env_var_string_names_constants;
-    pub mod env_var_bool_names_constants;
-    pub mod env_var_i64_names_constants;
-    pub mod env_var_u8_names_constants;
     pub mod env_var_names_constants;
     pub mod provider_kind_enum;
 }
