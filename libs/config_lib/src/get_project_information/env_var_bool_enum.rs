@@ -8,171 +8,6 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME;
-
-// [mongo_params.enable_initialize_mongo_with_providers_link_parts]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME;
-
-// [providers_check_links]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TWITTER_ENV_NAME;
-
-// [enable_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PRINTS_TWITTER_ENV_NAME;
-
-// [enable_warning_high_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME;
-
-// [enable_warning_low_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME;
-
-// [enable_error_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME;
-
-// [enable_success_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME;
-
-// [enable_partial_success_providers_prints]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME;
-
-// [enable_providers_cleaning_warning_logs_directory]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME;
-
-// [enable_providers_cleaning_warning_logs_db_in_mongo]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME;
-
-// [enable_providers_cleaning_warning_logs_db_collections_in_mongo]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME;
-
-// [enable_providers_time_measurement]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME;
-
-// [enable_providers_info]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_INFO_FOR_TWITTER_ENV_NAME;
-
-//[providers_links_limits]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME;
-
-// [enable_randomize_order_for_providers_link_parts_for_mongo]
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME;
-use crate::get_project_information::env_var_bool_names_constants::ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME;
-
 use crate::get_project_information::var_or_bool_parse_error_enum::VarOrBoolParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::get_project_information::config_error::ConfigError;
@@ -180,6 +15,8 @@ use crate::get_project_information::config_error::ConfigError;
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
+
+use crate::get_project_information::env_var_enum::EnvVar;
 
 
 #[derive(
@@ -334,155 +171,155 @@ pub enum EnvBoolVar {
 impl EnvBoolVar {
     pub fn get_env_name(env_var_name_kind: EnvBoolVar) -> &'static str {
         match env_var_name_kind {
-            EnvBoolVar::EnableProviders => ENABLE_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectory => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongo => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurement => ENABLE_TIME_MEASUREMENT_ENV_NAME,
-            EnvBoolVar::EnableProviderLinksLimit => ENABLE_PROVIDER_LINKS_LIMIT_ENV_NAME,
-            EnvBoolVar::EnableCommonProvidersLinksLimit => ENABLE_COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnablePrints => ENABLE_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableErrorPrints => ENABLE_ERROR_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrints => ENABLE_WARNING_HIGH_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrints => ENABLE_WARNING_LOW_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrints => ENABLE_SUCCESS_PRINTS_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrints => ENABLE_PARTIAL_SUCCESS_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementPrints => ENABLE_TIME_MEASUREMENT_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryPrints => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableInfoPrints => ENABLE_INFO_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableAllProvidersPrints => ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForAllProviders => ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForAllProviders => ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForAllProviders => ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForAllProviders => ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForAllProviders => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementPrintsForAllProviders => ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableInfoPrintsForAllProviders => ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS_ENV_NAME,
-            EnvBoolVar::EnableWriteErrorLogsInLocalFolder => ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_ENV_NAME,
-            EnvBoolVar::EnableWriteErrorLogsInMongo => ENABLE_WRITE_ERROR_LOGS_IN_MONGO_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts => ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS_ENV_NAME,
+            EnvBoolVar::EnableProviders => EnvVar::get_env_name(EnvVar::EnableProviders),
+            EnvBoolVar::EnableCleaningWarningLogsDirectory => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectory),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongo => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongo),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo),
+            EnvBoolVar::EnableTimeMeasurement => EnvVar::get_env_name(EnvVar::EnableTimeMeasurement),
+            EnvBoolVar::EnableProviderLinksLimit => EnvVar::get_env_name(EnvVar::EnableProviderLinksLimit),
+            EnvBoolVar::EnableCommonProvidersLinksLimit => EnvVar::get_env_name(EnvVar::EnableCommonProvidersLinksLimit),
+            EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo),
+            EnvBoolVar::EnablePrints => EnvVar::get_env_name(EnvVar::EnablePrints),
+            EnvBoolVar::EnableErrorPrints => EnvVar::get_env_name(EnvVar::EnableErrorPrints),
+            EnvBoolVar::EnableWarningHighPrints => EnvVar::get_env_name(EnvVar::EnableWarningHighPrints),
+            EnvBoolVar::EnableWarningLowPrints => EnvVar::get_env_name(EnvVar::EnableWarningLowPrints),
+            EnvBoolVar::EnableSuccessPrints => EnvVar::get_env_name(EnvVar::EnableSuccessPrints),
+            EnvBoolVar::EnablePartialSuccessPrints => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrints),
+            EnvBoolVar::EnableTimeMeasurementPrints => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementPrints),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryPrints => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryPrints),
+            EnvBoolVar::EnableInfoPrints => EnvVar::get_env_name(EnvVar::EnableInfoPrints),
+            EnvBoolVar::EnableAllProvidersPrints => EnvVar::get_env_name(EnvVar::EnableAllProvidersPrints),
+            EnvBoolVar::EnableErrorPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForAllProviders),
+            EnvBoolVar::EnableWarningHighPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForAllProviders),
+            EnvBoolVar::EnableWarningLowPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForAllProviders),
+            EnvBoolVar::EnableSuccessPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForAllProviders),
+            EnvBoolVar::EnablePartialSuccessPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForAllProviders),
+            EnvBoolVar::EnableTimeMeasurementPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementPrintsForAllProviders),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders),
+            EnvBoolVar::EnableInfoPrintsForAllProviders => EnvVar::get_env_name(EnvVar::EnableInfoPrintsForAllProviders),
+            EnvBoolVar::EnableWriteErrorLogsInLocalFolder => EnvVar::get_env_name(EnvVar::EnableWriteErrorLogsInLocalFolder),
+            EnvBoolVar::EnableWriteErrorLogsInMongo => EnvVar::get_env_name(EnvVar::EnableWriteErrorLogsInMongo),
+            EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithProvidersLinkParts),
 
-            EnvBoolVar::EnableInitializeMongoWithArxivLinkParts => ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts => ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithGithubLinkParts => ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithHabrLinkParts => ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts => ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithRedditLinkParts => ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS_ENV_NAME,
-            EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts => ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS_ENV_NAME,
+            EnvBoolVar::EnableInitializeMongoWithArxivLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithArxivLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithBiorxivLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithGithubLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithGithubLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithHabrLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithHabrLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithMedrxivLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithRedditLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithRedditLinkParts),
+            EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts => EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithTwitterLinkParts),
 
-            EnvBoolVar::EnableArxiv => ENABLE_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableBiorxiv => ENABLE_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableGithub => ENABLE_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableHabr => ENABLE_HABR_ENV_NAME,
-            EnvBoolVar::EnableMedrxiv => ENABLE_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableReddit => ENABLE_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableTwitter => ENABLE_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableArxiv => EnvVar::get_env_name(EnvVar::EnableArxiv),
+            EnvBoolVar::EnableBiorxiv => EnvVar::get_env_name(EnvVar::EnableBiorxiv),
+            EnvBoolVar::EnableGithub => EnvVar::get_env_name(EnvVar::EnableGithub),
+            EnvBoolVar::EnableHabr => EnvVar::get_env_name(EnvVar::EnableHabr),
+            EnvBoolVar::EnableMedrxiv => EnvVar::get_env_name(EnvVar::EnableMedrxiv),
+            EnvBoolVar::EnableReddit => EnvVar::get_env_name(EnvVar::EnableReddit),
+            EnvBoolVar::EnableTwitter =>EnvVar::get_env_name(EnvVar::EnableTwitter),
 
-            EnvBoolVar::EnablePrintsArxiv => ENABLE_PRINTS_ARXIV_ENV_NAME,
-            EnvBoolVar::EnablePrintsBiorxiv => ENABLE_PRINTS_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnablePrintsGithub => ENABLE_PRINTS_GITHUB_ENV_NAME,
-            EnvBoolVar::EnablePrintsHabr => ENABLE_PRINTS_HABR_ENV_NAME,
-            EnvBoolVar::EnablePrintsMedrxiv => ENABLE_PRINTS_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnablePrintsReddit => ENABLE_PRINTS_REDDIT_ENV_NAME,
-            EnvBoolVar::EnablePrintsTwitter => ENABLE_PRINTS_TWITTER_ENV_NAME,
+            EnvBoolVar::EnablePrintsArxiv => EnvVar::get_env_name(EnvVar::EnablePrintsArxiv),
+            EnvBoolVar::EnablePrintsBiorxiv => EnvVar::get_env_name(EnvVar::EnablePrintsBiorxiv),
+            EnvBoolVar::EnablePrintsGithub => EnvVar::get_env_name(EnvVar::EnablePrintsGithub),
+            EnvBoolVar::EnablePrintsHabr => EnvVar::get_env_name(EnvVar::EnablePrintsHabr),
+            EnvBoolVar::EnablePrintsMedrxiv => EnvVar::get_env_name(EnvVar::EnablePrintsMedrxiv),
+            EnvBoolVar::EnablePrintsReddit => EnvVar::get_env_name(EnvVar::EnablePrintsReddit),
+            EnvBoolVar::EnablePrintsTwitter => EnvVar::get_env_name(EnvVar::EnablePrintsTwitter),
 
-            EnvBoolVar::EnableWarningHighPrintsForArxiv => ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForBiorxiv => ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForGithub => ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForHabr => ENABLE_WARNING_HIGH_PRINTS_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForMedrxiv => ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForReddit => ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableWarningHighPrintsForTwitter => ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableWarningHighPrintsForArxiv => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForArxiv),
+            EnvBoolVar::EnableWarningHighPrintsForBiorxiv => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForBiorxiv),
+            EnvBoolVar::EnableWarningHighPrintsForGithub => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForGithub),
+            EnvBoolVar::EnableWarningHighPrintsForHabr => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForHabr),
+            EnvBoolVar::EnableWarningHighPrintsForMedrxiv => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForMedrxiv),
+            EnvBoolVar::EnableWarningHighPrintsForReddit => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForReddit),
+            EnvBoolVar::EnableWarningHighPrintsForTwitter => EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForTwitter),
 
-            EnvBoolVar::EnableWarningLowPrintsForArxiv => ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForBiorxiv => ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForGithub => ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForHabr => ENABLE_WARNING_LOW_PRINTS_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForMedrxiv => ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForReddit => ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableWarningLowPrintsForTwitter => ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableWarningLowPrintsForArxiv => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForArxiv),
+            EnvBoolVar::EnableWarningLowPrintsForBiorxiv => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForBiorxiv),
+            EnvBoolVar::EnableWarningLowPrintsForGithub => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForGithub),
+            EnvBoolVar::EnableWarningLowPrintsForHabr => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForHabr),
+            EnvBoolVar::EnableWarningLowPrintsForMedrxiv => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForMedrxiv),
+            EnvBoolVar::EnableWarningLowPrintsForReddit => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForReddit),
+            EnvBoolVar::EnableWarningLowPrintsForTwitter => EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForTwitter),
 
-            EnvBoolVar::EnableErrorPrintsForArxiv => ENABLE_ERROR_PRINTS_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForBiorxiv => ENABLE_ERROR_PRINTS_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForGithub => ENABLE_ERROR_PRINTS_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForHabr => ENABLE_ERROR_PRINTS_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForMedrxiv => ENABLE_ERROR_PRINTS_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForReddit => ENABLE_ERROR_PRINTS_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableErrorPrintsForTwitter => ENABLE_ERROR_PRINTS_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableErrorPrintsForArxiv => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForArxiv),
+            EnvBoolVar::EnableErrorPrintsForBiorxiv => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForBiorxiv),
+            EnvBoolVar::EnableErrorPrintsForGithub => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForGithub),
+            EnvBoolVar::EnableErrorPrintsForHabr => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForHabr),
+            EnvBoolVar::EnableErrorPrintsForMedrxiv => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForMedrxiv),
+            EnvBoolVar::EnableErrorPrintsForReddit => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForReddit),
+            EnvBoolVar::EnableErrorPrintsForTwitter => EnvVar::get_env_name(EnvVar::EnableErrorPrintsForTwitter),
 
-            EnvBoolVar::EnableSuccessPrintsForArxiv => ENABLE_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForBiorxiv => ENABLE_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForGithub => ENABLE_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForHabr => ENABLE_SUCCESS_PRINTS_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForMedrxiv => ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForReddit => ENABLE_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableSuccessPrintsForTwitter => ENABLE_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableSuccessPrintsForArxiv => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForArxiv),
+            EnvBoolVar::EnableSuccessPrintsForBiorxiv => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForBiorxiv),
+            EnvBoolVar::EnableSuccessPrintsForGithub => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForGithub),
+            EnvBoolVar::EnableSuccessPrintsForHabr => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForHabr),
+            EnvBoolVar::EnableSuccessPrintsForMedrxiv => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForMedrxiv),
+            EnvBoolVar::EnableSuccessPrintsForReddit => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForReddit),
+            EnvBoolVar::EnableSuccessPrintsForTwitter => EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForTwitter),
 
-            EnvBoolVar::EnablePartialSuccessPrintsForArxiv => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForGithub => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForHabr => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForReddit => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnablePartialSuccessPrintsForTwitter => ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnablePartialSuccessPrintsForArxiv => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForArxiv),
+            EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForBiorxiv),
+            EnvBoolVar::EnablePartialSuccessPrintsForGithub => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForGithub),
+            EnvBoolVar::EnablePartialSuccessPrintsForHabr => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForHabr),
+            EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForMedrxiv),
+            EnvBoolVar::EnablePartialSuccessPrintsForReddit => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForReddit),
+            EnvBoolVar::EnablePartialSuccessPrintsForTwitter => EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForTwitter),
 
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter => ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForArxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForGithub),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForHabr),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForReddit),
+            EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForTwitter),
 
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForGithub => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForHabr => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForReddit => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForTwitter => ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForGithub => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForGithub),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForHabr => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForHabr),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForReddit => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForReddit),
+            EnvBoolVar::EnableCleaningWarningLogsDbInMongoForTwitter => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter),
 
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit),
+            EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter),
 
-            EnvBoolVar::EnableTimeMeasurementForArxiv => ENABLE_TIME_MEASUREMENT_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForBiorxiv => ENABLE_TIME_MEASUREMENT_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForGithub => ENABLE_TIME_MEASUREMENT_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForHabr => ENABLE_TIME_MEASUREMENT_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForMedrxiv => ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForReddit => ENABLE_TIME_MEASUREMENT_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableTimeMeasurementForTwitter => ENABLE_TIME_MEASUREMENT_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableTimeMeasurementForArxiv => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForArxiv),
+            EnvBoolVar::EnableTimeMeasurementForBiorxiv => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForBiorxiv),
+            EnvBoolVar::EnableTimeMeasurementForGithub => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForGithub),
+            EnvBoolVar::EnableTimeMeasurementForHabr => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForHabr),
+            EnvBoolVar::EnableTimeMeasurementForMedrxiv => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForMedrxiv),
+            EnvBoolVar::EnableTimeMeasurementForReddit => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForReddit),
+            EnvBoolVar::EnableTimeMeasurementForTwitter => EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForTwitter),
 
-            EnvBoolVar::EnableInfoForArxiv => ENABLE_INFO_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableInfoForBiorxiv => ENABLE_INFO_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableInfoForGithub => ENABLE_INFO_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableInfoForHabr => ENABLE_INFO_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableInfoForMedrxiv => ENABLE_INFO_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableInfoForReddit => ENABLE_INFO_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableInfoForTwitter => ENABLE_INFO_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableInfoForArxiv => EnvVar::get_env_name(EnvVar::EnableInfoForArxiv),
+            EnvBoolVar::EnableInfoForBiorxiv => EnvVar::get_env_name(EnvVar::EnableInfoForBiorxiv),
+            EnvBoolVar::EnableInfoForGithub => EnvVar::get_env_name(EnvVar::EnableInfoForGithub),
+            EnvBoolVar::EnableInfoForHabr => EnvVar::get_env_name(EnvVar::EnableInfoForHabr),
+            EnvBoolVar::EnableInfoForMedrxiv => EnvVar::get_env_name(EnvVar::EnableInfoForMedrxiv),
+            EnvBoolVar::EnableInfoForReddit => EnvVar::get_env_name(EnvVar::EnableInfoForReddit),
+            EnvBoolVar::EnableInfoForTwitter => EnvVar::get_env_name(EnvVar::EnableInfoForTwitter),
 
-            EnvBoolVar::EnableLinksLimitForArxiv => ENABLE_LINKS_LIMIT_FOR_ARXIV_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForBiorxiv => ENABLE_LINKS_LIMIT_FOR_BIORXIV_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForGithub => ENABLE_LINKS_LIMIT_FOR_GITHUB_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForHabr => ENABLE_LINKS_LIMIT_FOR_HABR_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForMedrxiv => ENABLE_LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForReddit => ENABLE_LINKS_LIMIT_FOR_REDDIT_ENV_NAME,
-            EnvBoolVar::EnableLinksLimitForTwitter => ENABLE_LINKS_LIMIT_FOR_TWITTER_ENV_NAME,
+            EnvBoolVar::EnableLinksLimitForArxiv => EnvVar::get_env_name(EnvVar::EnableLinksLimitForArxiv),
+            EnvBoolVar::EnableLinksLimitForBiorxiv => EnvVar::get_env_name(EnvVar::EnableLinksLimitForBiorxiv),
+            EnvBoolVar::EnableLinksLimitForGithub => EnvVar::get_env_name(EnvVar::EnableLinksLimitForGithub),
+            EnvBoolVar::EnableLinksLimitForHabr => EnvVar::get_env_name(EnvVar::EnableLinksLimitForHabr),
+            EnvBoolVar::EnableLinksLimitForMedrxiv => EnvVar::get_env_name(EnvVar::EnableLinksLimitForMedrxiv),
+            EnvBoolVar::EnableLinksLimitForReddit => EnvVar::get_env_name(EnvVar::EnableLinksLimitForReddit),
+            EnvBoolVar::EnableLinksLimitForTwitter => EnvVar::get_env_name(EnvVar::EnableLinksLimitForTwitter),
 
-            EnvBoolVar::EnableRandomizeOrderForArxivLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForGithubLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForHabrLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForRedditLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO_ENV_NAME,
-            EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO_ENV_NAME,
+            EnvBoolVar::EnableRandomizeOrderForArxivLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForGithubLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForHabrLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForRedditLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo),
+            EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo),
         }
     }
     pub fn get_length() -> usize {
