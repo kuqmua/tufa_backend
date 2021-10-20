@@ -129,7 +129,6 @@ impl ConfigStruct {
                 user_credentials_dummy_handle: string_vars[&EnvStringVar::UserCredentialsDummyHandle].clone(),
                 warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName].clone(),
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars[&EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir].clone(),
-                enable_providers: bool_vars[&EnvBoolVar::EnableProviders],
                 enable_cleaning_warning_logs_directory: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory],
                 enable_cleaning_warning_logs_db_in_mongo: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongo],
                 enable_cleaning_warning_logs_db_collections_in_mongo: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
@@ -211,13 +210,13 @@ impl ConfigStruct {
                 },
             },
             enable_providers: EnableProviders {
-                enable_arxiv: bool_vars[&EnvBoolVar::EnableArxiv],
-                enable_biorxiv: bool_vars[&EnvBoolVar::EnableBiorxiv],
-                enable_github: bool_vars[&EnvBoolVar::EnableGithub],
-                enable_habr: bool_vars[&EnvBoolVar::EnableHabr],
-                enable_medrxiv: bool_vars[&EnvBoolVar::EnableMedrxiv],
-                enable_reddit: bool_vars[&EnvBoolVar::EnableReddit], 
-                enable_twitter: bool_vars[&EnvBoolVar::EnableTwitter],
+                enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableArxiv],
+                enable_biorxiv: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableBiorxiv],
+                enable_github: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableGithub],
+                enable_habr: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableHabr],
+                enable_medrxiv: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableMedrxiv],
+                enable_reddit: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableReddit], 
+                enable_twitter: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableTwitter],
             },
             providers_check_links: ProvidersCheckLinks {
                 arxiv_link: string_vars[&EnvStringVar::ArxivLink].clone(),
@@ -591,58 +590,58 @@ impl ConfigStruct {
     //     Ok(config_handle)
     // }
 
-    fn check_valid_vec_of_provider_names(config_handle: &ConfigStruct) -> bool {
-        if config_handle.params.vec_of_provider_names.len() == 0 {
-            return true;
-        }
-        for potential_provider_name in &config_handle.params.vec_of_provider_names {
-            if !(potential_provider_name == ARXIV_NAME_TO_CHECK
-                || potential_provider_name == BIORXIV_NAME_TO_CHECK
-                || potential_provider_name == GITHUB_NAME_TO_CHECK
-                || potential_provider_name == HABR_NAME_TO_CHECK
-                || potential_provider_name == MEDRXIV_NAME_TO_CHECK
-                || potential_provider_name == REDDIT_NAME_TO_CHECK
-                || potential_provider_name == TWITTER_NAME_TO_CHECK)
-            {
-                return false;
-            }
-        }
-        let unique_vec_of_provider_names: Vec<String> = config_handle
-            .params
-            .vec_of_provider_names
-            .clone()
-            .into_iter()
-            .unique()
-            .collect();
-        if config_handle.params.vec_of_provider_names == unique_vec_of_provider_names {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // fn check_valid_vec_of_provider_names(config_handle: &ConfigStruct) -> bool {
+    //     if config_handle.params.vec_of_provider_names.len() == 0 {
+    //         return true;
+    //     }
+    //     for potential_provider_name in &config_handle.params.vec_of_provider_names {
+    //         if !(potential_provider_name == ARXIV_NAME_TO_CHECK
+    //             || potential_provider_name == BIORXIV_NAME_TO_CHECK
+    //             || potential_provider_name == GITHUB_NAME_TO_CHECK
+    //             || potential_provider_name == HABR_NAME_TO_CHECK
+    //             || potential_provider_name == MEDRXIV_NAME_TO_CHECK
+    //             || potential_provider_name == REDDIT_NAME_TO_CHECK
+    //             || potential_provider_name == TWITTER_NAME_TO_CHECK)
+    //         {
+    //             return false;
+    //         }
+    //     }
+    //     let unique_vec_of_provider_names: Vec<String> = config_handle
+    //         .params
+    //         .vec_of_provider_names
+    //         .clone()
+    //         .into_iter()
+    //         .unique()
+    //         .collect();
+    //     if config_handle.params.vec_of_provider_names == unique_vec_of_provider_names {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    fn check_valid_i64_providers_links_limits_for_mongo(config_handle: &ConfigStruct) -> bool {
-        if config_handle.providers_links_limits.links_limit_for_arxiv <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_biorxiv <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_github <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_habr <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_medrxiv <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_reddit <= 0 {
-            return false
-        }
-        if config_handle.providers_links_limits.links_limit_for_twitter <= 0 {
-            return false
-        }
-        true
-    }
+    // fn check_valid_i64_providers_links_limits_for_mongo(config_handle: &ConfigStruct) -> bool {
+    //     if config_handle.providers_links_limits.links_limit_for_arxiv <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_biorxiv <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_github <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_habr <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_medrxiv <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_reddit <= 0 {
+    //         return false
+    //     }
+    //     if config_handle.providers_links_limits.links_limit_for_twitter <= 0 {
+    //         return false
+    //     }
+    //     true
+    // }
 }

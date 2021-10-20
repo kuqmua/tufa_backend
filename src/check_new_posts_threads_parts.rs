@@ -40,7 +40,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         ProviderKind,
     )>,
 )> {
-    if CONFIG.params.enable_providers {
         if !CONFIG.params.vec_of_provider_names.is_empty() {
             let option_providers_link_parts = get_providers_link_parts_wrapper().await;
             match option_providers_link_parts {
@@ -652,14 +651,4 @@ pub async fn check_new_posts_threads_parts() -> Option<(
             );
             None
         }
-    } else {
-        print_colorful_message(
-            None,
-            PrintType::WarningLow,
-            file!().to_string(),
-            line!().to_string(),
-            "CONFIG.params.enable_all_providers is false".to_string(),
-        );
-        None
-    }
 }

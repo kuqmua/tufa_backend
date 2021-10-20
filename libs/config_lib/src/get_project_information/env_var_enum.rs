@@ -6,8 +6,6 @@ use strum::IntoEnumIterator;
 
 use strum_macros::EnumIter;
 
-use dotenv::dotenv;
-
 use crate::get_project_information::env_var_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::ENABLE_ALL_PROVIDERS_PRINTS_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_ENV_NAME;
@@ -273,7 +271,6 @@ use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_SECRE
 use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
 use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
-use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 
 #[derive(
     EnumVariantCount,
