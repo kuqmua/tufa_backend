@@ -332,3 +332,8 @@ fn bar1(x: Option<u64>) -> Result<u64, MyErrors> {
 optimize for loop for std::env::var to std::env::vars
 but will it be safe?
 <br/>
+
+### -------------------
+add check on enable_providers_prints for enable_prints_arxiv and others(for example) in config initialization logic
+not in the program logic
+<br/>
