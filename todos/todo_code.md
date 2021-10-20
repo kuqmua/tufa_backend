@@ -336,4 +336,6 @@ but will it be safe?
 ### -------------------
 add check on enable_providers_prints for enable_prints_arxiv and others(for example) in config initialization logic
 not in the program logic
+and make it private (enable_providers_prints)
+or not available in config
 <br/>
