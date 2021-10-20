@@ -8,38 +8,6 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::env_var_u8_names_constants::ERROR_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::ERROR_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::ERROR_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::WARNING_HIGH_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::WARNING_LOW_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::SUCCESS_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::SUCCESS_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::SUCCESS_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::PARTIAL_SUCCESS_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::CLEANING_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::CLEANING_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::CLEANING_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::TIME_MEASUREMENT_RED_ENV_NAME;
-
-use crate::get_project_information::env_var_u8_names_constants::INFO_BLUE_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::INFO_GREEN_ENV_NAME;
-use crate::get_project_information::env_var_u8_names_constants::INFO_RED_ENV_NAME;
-
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::get_project_information::config_error::ConfigError;
@@ -47,6 +15,8 @@ use crate::get_project_information::config_error::ConfigError;
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
+
+use crate::get_project_information::env_var_enum::EnvVar;
 
 
 #[derive(
@@ -91,30 +61,30 @@ pub enum EnvU8Var {
 impl EnvU8Var {
     pub fn get_env_name(env_var_name_kind: EnvU8Var) -> &'static str {
         match env_var_name_kind {
-            EnvU8Var::ErrorRed => ERROR_RED_ENV_NAME,
-            EnvU8Var::ErrorGreen => ERROR_GREEN_ENV_NAME,
-            EnvU8Var::ErrorBlue => ERROR_BLUE_ENV_NAME,
-            EnvU8Var::WarningHighRed => WARNING_HIGH_RED_ENV_NAME,
-            EnvU8Var::WarningHighGreen => WARNING_HIGH_GREEN_ENV_NAME,
-            EnvU8Var::WarningHighBlue => WARNING_HIGH_BLUE_ENV_NAME,
-            EnvU8Var::WarningLowRed => WARNING_LOW_RED_ENV_NAME,
-            EnvU8Var::WarningLowGreen => WARNING_LOW_GREEN_ENV_NAME,
-            EnvU8Var::WarningLowBlue => WARNING_LOW_BLUE_ENV_NAME,
-            EnvU8Var::SuccessRed => SUCCESS_RED_ENV_NAME,
-            EnvU8Var::SuccessGreen => SUCCESS_GREEN_ENV_NAME,
-            EnvU8Var::SuccessBlue => SUCCESS_BLUE_ENV_NAME,
-            EnvU8Var::PartialSuccessRed => PARTIAL_SUCCESS_RED_ENV_NAME,
-            EnvU8Var::PartialSuccessGreen => PARTIAL_SUCCESS_GREEN_ENV_NAME,
-            EnvU8Var::PartialSuccessBlue => PARTIAL_SUCCESS_BLUE_ENV_NAME,
-            EnvU8Var::CleaningRed => CLEANING_RED_ENV_NAME,
-            EnvU8Var::CleaningGreen => CLEANING_GREEN_ENV_NAME,
-            EnvU8Var::CleaningBlue => CLEANING_BLUE_ENV_NAME,
-            EnvU8Var::TimeMeasurementRed => TIME_MEASUREMENT_RED_ENV_NAME,
-            EnvU8Var::TimeMeasurementGreen => TIME_MEASUREMENT_GREEN_ENV_NAME,
-            EnvU8Var::TimeMeasurementBlue => TIME_MEASUREMENT_BLUE_ENV_NAME,
-            EnvU8Var::InfoRed => INFO_RED_ENV_NAME,
-            EnvU8Var::InfoGreen => INFO_GREEN_ENV_NAME,
-            EnvU8Var::InfoBlue => INFO_BLUE_ENV_NAME, 
+            EnvU8Var::ErrorRed => EnvVar::get_env_name(EnvVar::ErrorRed),
+            EnvU8Var::ErrorGreen => EnvVar::get_env_name(EnvVar::ErrorGreen),
+            EnvU8Var::ErrorBlue => EnvVar::get_env_name(EnvVar::ErrorBlue),
+            EnvU8Var::WarningHighRed => EnvVar::get_env_name(EnvVar::WarningHighRed),
+            EnvU8Var::WarningHighGreen => EnvVar::get_env_name(EnvVar::WarningHighGreen),
+            EnvU8Var::WarningHighBlue => EnvVar::get_env_name(EnvVar::WarningHighBlue),
+            EnvU8Var::WarningLowRed => EnvVar::get_env_name(EnvVar::WarningLowRed),
+            EnvU8Var::WarningLowGreen => EnvVar::get_env_name(EnvVar::WarningLowGreen),
+            EnvU8Var::WarningLowBlue => EnvVar::get_env_name(EnvVar::WarningLowBlue),
+            EnvU8Var::SuccessRed => EnvVar::get_env_name(EnvVar::SuccessRed),
+            EnvU8Var::SuccessGreen => EnvVar::get_env_name(EnvVar::SuccessGreen),
+            EnvU8Var::SuccessBlue => EnvVar::get_env_name(EnvVar::SuccessBlue),
+            EnvU8Var::PartialSuccessRed => EnvVar::get_env_name(EnvVar::PartialSuccessRed),
+            EnvU8Var::PartialSuccessGreen => EnvVar::get_env_name(EnvVar::PartialSuccessGreen),
+            EnvU8Var::PartialSuccessBlue => EnvVar::get_env_name(EnvVar::PartialSuccessBlue),
+            EnvU8Var::CleaningRed => EnvVar::get_env_name(EnvVar::CleaningRed),
+            EnvU8Var::CleaningGreen => EnvVar::get_env_name(EnvVar::CleaningGreen),
+            EnvU8Var::CleaningBlue => EnvVar::get_env_name(EnvVar::CleaningBlue),
+            EnvU8Var::TimeMeasurementRed => EnvVar::get_env_name(EnvVar::TimeMeasurementRed),
+            EnvU8Var::TimeMeasurementGreen => EnvVar::get_env_name(EnvVar::TimeMeasurementGreen),
+            EnvU8Var::TimeMeasurementBlue => EnvVar::get_env_name(EnvVar::TimeMeasurementBlue),
+            EnvU8Var::InfoRed => EnvVar::get_env_name(EnvVar::InfoRed),
+            EnvU8Var::InfoGreen => EnvVar::get_env_name(EnvVar::InfoGreen),
+            EnvU8Var::InfoBlue => EnvVar::get_env_name(EnvVar::InfoBlue), 
         }
     }
     pub fn get_length() -> usize {
