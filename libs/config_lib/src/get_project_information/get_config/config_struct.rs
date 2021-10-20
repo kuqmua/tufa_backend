@@ -35,13 +35,13 @@ use crate::get_project_information::get_config::reddit_authorization_struct::Red
 // use crate::get_project_information::get_config::config_error::ConfigError;
 use crate::get_project_information::config_error::ConfigError;
 
-use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
+// use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
 
 use crate::get_project_information::env_var_string_enum::EnvStringVar;
 use crate::get_project_information::env_var_bool_enum::EnvBoolVar;
@@ -129,7 +129,6 @@ impl ConfigStruct {
                 user_credentials_dummy_handle: string_vars[&EnvStringVar::UserCredentialsDummyHandle].clone(),
                 warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName].clone(),
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars[&EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir].clone(),
-                enable_cleaning_warning_logs_directory: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory],
                 enable_cleaning_warning_logs_db_in_mongo: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongo],
                 enable_cleaning_warning_logs_db_collections_in_mongo: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
                 enable_time_measurement: bool_vars[&EnvBoolVar::EnableTimeMeasurement],
@@ -283,13 +282,13 @@ impl ConfigStruct {
             },
             enable_providers_cleaning_warning_logs_directory:
                 EnableProvidersCleaningWarningLogsDirectory {
-                    enable_cleaning_warning_logs_directory_for_arxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
-                    enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
-                    enable_cleaning_warning_logs_directory_for_github: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
-                    enable_cleaning_warning_logs_directory_for_habr: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
-                    enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
-                    enable_cleaning_warning_logs_directory_for_reddit: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
-                    enable_cleaning_warning_logs_directory_for_twitter: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
+                    enable_cleaning_warning_logs_directory_for_arxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
+                    enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
+                    enable_cleaning_warning_logs_directory_for_github: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
+                    enable_cleaning_warning_logs_directory_for_habr: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
+                    enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
+                    enable_cleaning_warning_logs_directory_for_reddit: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
+                    enable_cleaning_warning_logs_directory_for_twitter: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectory] && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
                 },
             enable_providers_cleaning_warning_logs_db_in_mongo:
                 EnableProvidersCleaningWarningLogsDbInMongo {

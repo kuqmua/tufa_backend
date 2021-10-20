@@ -25,10 +25,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     )>,
 ) {
     let time = Instant::now();
-    if CONFIG.params.enable_cleaning_warning_logs_directory {
-        rss_clean_logs_directory_wrapper()
-    }
-
+    rss_clean_logs_directory_wrapper();
     let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
     for (
         link,
