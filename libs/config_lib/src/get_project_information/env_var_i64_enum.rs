@@ -8,15 +8,6 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::env_var_i64_names_constants::COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_ARXIV_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_BIORXIV_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_GITHUB_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_HABR_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_REDDIT_ENV_NAME;
-use crate::get_project_information::env_var_i64_names_constants::LINKS_LIMIT_FOR_TWITTER_ENV_NAME;
-
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::get_project_information::config_error::ConfigError;
@@ -24,6 +15,8 @@ use crate::get_project_information::config_error::ConfigError;
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
 use crate::get_project_information::project_constants::ENV_FILE_NAME;
+
+use crate::get_project_information::env_var_enum::EnvVar;
 
 #[derive(
     EnumVariantCount,
@@ -51,14 +44,14 @@ pub enum EnvI64Var {
 impl EnvI64Var {
     pub fn get_env_name(env_var_name_kind: EnvI64Var) -> &'static str {
         match env_var_name_kind {
-            EnvI64Var::CommonProvidersLinksLimit => COMMON_PROVIDERS_LINKS_LIMIT_ENV_NAME,
-            EnvI64Var::LinksLimitForArxiv => LINKS_LIMIT_FOR_ARXIV_ENV_NAME,
-            EnvI64Var::LinksLimitForBiorxiv => LINKS_LIMIT_FOR_BIORXIV_ENV_NAME,
-            EnvI64Var::LinksLimitForGithub => LINKS_LIMIT_FOR_GITHUB_ENV_NAME,
-            EnvI64Var::LinksLimitForHabr => LINKS_LIMIT_FOR_HABR_ENV_NAME,
-            EnvI64Var::LinksLimitForMedrxiv => LINKS_LIMIT_FOR_MEDRXIV_ENV_NAME,
-            EnvI64Var::LinksLimitForReddit => LINKS_LIMIT_FOR_REDDIT_ENV_NAME,
-            EnvI64Var::LinksLimitForTwitter => LINKS_LIMIT_FOR_TWITTER_ENV_NAME,
+            EnvI64Var::CommonProvidersLinksLimit => EnvVar::get_env_name(EnvVar::CommonProvidersLinksLimit),
+            EnvI64Var::LinksLimitForArxiv => EnvVar::get_env_name(EnvVar::LinksLimitForArxiv),
+            EnvI64Var::LinksLimitForBiorxiv => EnvVar::get_env_name(EnvVar::LinksLimitForBiorxiv),
+            EnvI64Var::LinksLimitForGithub => EnvVar::get_env_name(EnvVar::LinksLimitForGithub),
+            EnvI64Var::LinksLimitForHabr => EnvVar::get_env_name(EnvVar::LinksLimitForHabr),
+            EnvI64Var::LinksLimitForMedrxiv => EnvVar::get_env_name(EnvVar::LinksLimitForMedrxiv),
+            EnvI64Var::LinksLimitForReddit => EnvVar::get_env_name(EnvVar::LinksLimitForReddit),
+            EnvI64Var::LinksLimitForTwitter => EnvVar::get_env_name(EnvVar::LinksLimitForTwitter),
         }
     }
     pub fn get_length() -> usize {

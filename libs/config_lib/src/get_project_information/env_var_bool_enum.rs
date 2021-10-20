@@ -18,7 +18,6 @@ use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 use crate::get_project_information::env_var_enum::EnvVar;
 
-
 #[derive(
     EnumVariantCount,
     EnumIter,
