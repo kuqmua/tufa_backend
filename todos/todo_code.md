@@ -327,3 +327,8 @@ fn bar1(x: Option<u64>) -> Result<u64, MyErrors> {
     Ok(x * 2)
 }
 <br/>
+            
+### -------------------
+optimize for loop for std::env::var to std::env::vars
+but will it be safe?
+<br/>
