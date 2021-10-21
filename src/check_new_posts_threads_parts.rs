@@ -76,8 +76,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             "arxiv_link_parts.is_empty".to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_arxiv
                                                         {
@@ -142,8 +141,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                                 .to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_biorxiv
                                                         {
@@ -208,8 +206,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                                 .to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_github
                                                         {
@@ -273,8 +270,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                             "habr_link_parts.is_empty".to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_habr
                                                         {
@@ -339,8 +335,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                                 .to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_medrxiv
                                                         {
@@ -405,8 +400,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                                 .to_string(),
                                                         );
                                                     } else {
-                                                        if CONFIG.params.enable_all_providers_prints
-                                                            && CONFIG
+                                                        if CONFIG
                                                                 .enable_providers_prints
                                                                 .enable_prints_reddit
                                                         {
