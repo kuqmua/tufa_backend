@@ -33,10 +33,6 @@ pub async fn async_tokio_wrapper() {
         CONFIG.params.vec_of_provider_names.clone(),
     );
     println!("veeeec {:?}", veeeec);
-    if CONFIG
-        .params
-        .enable_initialize_mongo_with_providers_link_parts
-    {
         let mut vec_of_filtered_provider_names: Vec<String> =
             Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
         //todo rewrite it with type system check help. right now its a bad way to check
@@ -97,7 +93,6 @@ pub async fn async_tokio_wrapper() {
             &CONFIG.mongo_params.log_file_extension,
         )
         .await;
-    }
     let option_tuple = check_new_posts_threads_parts().await;
 
     match option_tuple {

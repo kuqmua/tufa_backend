@@ -35,5 +35,4 @@ pub struct Params {
     //
     pub enable_write_error_logs_in_local_folder: bool,
     pub enable_write_error_logs_in_mongo: bool,
-    pub enable_initialize_mongo_with_providers_link_parts: bool,
 }

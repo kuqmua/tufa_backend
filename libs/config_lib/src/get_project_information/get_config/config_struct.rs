@@ -156,7 +156,6 @@ impl ConfigStruct {
                 enable_info_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders],
                 enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
                 enable_write_error_logs_in_mongo: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInMongo],
-                enable_initialize_mongo_with_providers_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts],
             },
             mongo_params: MongoParams {
                 providers_db_name_handle: string_vars[&EnvStringVar::ProvidersDbNameHandle].clone(),
@@ -169,13 +168,13 @@ impl ConfigStruct {
                 log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
                 enable_initialize_mongo_with_providers_link_parts:
                     EnableInitializeMongoWithProvidersLinkParts {
-                        enable_initialize_mongo_with_arxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
-                        enable_initialize_mongo_with_biorxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
-                        enable_initialize_mongo_with_github_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
-                        enable_initialize_mongo_with_habr_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
-                        enable_initialize_mongo_with_medrxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
-                        enable_initialize_mongo_with_reddit_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
-                        enable_initialize_mongo_with_twitter_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
+                        enable_initialize_mongo_with_arxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
+                        enable_initialize_mongo_with_biorxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
+                        enable_initialize_mongo_with_github_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
+                        enable_initialize_mongo_with_habr_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
+                        enable_initialize_mongo_with_medrxiv_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
+                        enable_initialize_mongo_with_reddit_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
+                        enable_initialize_mongo_with_twitter_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts] && bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
                     },
                 mongo_url_parts: MongoUrlParts {
                     mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart].clone(),
