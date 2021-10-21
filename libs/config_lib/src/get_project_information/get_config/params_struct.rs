@@ -25,7 +25,6 @@ pub struct Params {
     //
     pub enable_all_providers_prints: bool,
     pub enable_error_prints_for_all_providers: bool,
-    pub enable_warning_high_prints_for_all_providers: bool,
     //
     pub enable_write_error_logs_in_local_folder: bool,
     pub enable_write_error_logs_in_mongo: bool,
