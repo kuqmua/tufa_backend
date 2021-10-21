@@ -29,7 +29,6 @@ pub struct Params {
     pub enable_warning_low_prints_for_all_providers: bool,
     pub enable_success_prints_for_all_providers: bool,
     pub enable_partial_success_prints_for_all_providers: bool,
-    pub enable_time_measurement_prints_for_all_providers: bool,
     //
     pub enable_write_error_logs_in_local_folder: bool,
     pub enable_write_error_logs_in_mongo: bool,

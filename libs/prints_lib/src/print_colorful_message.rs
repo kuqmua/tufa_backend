@@ -25,7 +25,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_arxiv,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_arxiv,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_arxiv,
@@ -48,7 +47,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_biorxiv,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_biorxiv,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_biorxiv,
@@ -71,7 +69,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_github,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_github,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_github,
@@ -94,7 +91,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_habr,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_habr,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_habr,
@@ -117,7 +113,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_medrxiv,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_medrxiv,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_medrxiv,
@@ -140,7 +135,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_reddit,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_reddit,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_reddit,
@@ -163,7 +157,6 @@ pub fn print_colorful_message(
                                 CONFIG.params.enable_warning_low_prints_for_all_providers,
                                 CONFIG.params.enable_success_prints_for_all_providers,
                                 CONFIG.params.enable_partial_success_prints_for_all_providers,
-                                CONFIG.params.enable_time_measurement_prints_for_all_providers,
                                 CONFIG.enable_error_providers_prints.enable_error_prints_for_twitter,
                                 CONFIG.enable_warning_high_providers_prints.enable_warning_high_prints_for_twitter,
                                 CONFIG.enable_warning_low_providers_prints.enable_warning_low_prints_for_twitter,
@@ -332,7 +325,6 @@ fn handle_provider_prints(
     enable_warning_low_prints_for_all_providers: bool,
     enable_success_prints_for_all_providers: bool,
     enable_partial_success_prints_for_all_providers: bool,
-    enable_time_measurement_prints_for_all_providers: bool,
     enable_error_prints_for_provider: bool,
     enable_warning_high_prints_for_provider: bool,
     enable_warning_low_prints_for_provider: bool,
@@ -450,7 +442,6 @@ fn handle_provider_prints(
             }
             PrintType::TimeMeasurement => {
                 if CONFIG.params.enable_time_measurement_prints
-                    && enable_time_measurement_prints_for_all_providers
                     && enable_provider_time_measurement
                 {
                     let rgb_color: ansi_term::Colour = RGB(
