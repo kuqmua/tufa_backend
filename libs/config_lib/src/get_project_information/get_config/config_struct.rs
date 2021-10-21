@@ -152,7 +152,6 @@ impl ConfigStruct {
                 enable_success_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableSuccessPrintsForAllProviders],
                 enable_partial_success_prints_for_all_providers: bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders],
                 enable_time_measurement_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForAllProviders],
-                enable_cleaning_warning_logs_directory_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders],
                 enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
                 enable_write_error_logs_in_mongo: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInMongo],
             },
