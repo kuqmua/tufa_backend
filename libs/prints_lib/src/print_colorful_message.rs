@@ -15,7 +15,6 @@ pub fn print_colorful_message(
     if CONFIG.params.enable_prints {
         match provider_kind {
             Some(provider_kind) => {
-                if CONFIG.params.enable_all_providers_prints {
                     match provider_kind {
                         ProviderKind::Arxiv => {
                             handle_provider_prints(
@@ -137,7 +136,6 @@ pub fn print_colorful_message(
                             );
                         }
                     }
-                }
             }
             None => match print_type {
                 PrintType::Error => {

@@ -23,8 +23,6 @@ pub struct Params {
     pub enable_cleaning_warning_logs_directory_prints: bool,
     pub enable_info_prints: bool,
     //
-    pub enable_all_providers_prints: bool,
-    //
     pub enable_write_error_logs_in_local_folder: bool,
     pub enable_write_error_logs_in_mongo: bool,
 }
