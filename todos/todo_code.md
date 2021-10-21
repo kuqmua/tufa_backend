@@ -351,6 +351,11 @@ Relational
 Schema first
 MySQL / Postgres / SQLite
 <br/>
+
+
+### -------------------
+restructure config with prints Structure fields (together some inner structs)
+<br/>
             
             
             
