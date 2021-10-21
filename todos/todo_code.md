@@ -339,3 +339,18 @@ not in the program logic
 and make it private (enable_providers_prints)
 or not available in config
 <br/>
+
+### -------------------
+seaORM instead of diesel?
+https://www.sea-ql.org/SeaORM/
+Diesel	SeaORM
+Sync	Async
+Static	Dynamic
+Native Driver	Pure Rust
+Relational
+Schema first
+MySQL / Postgres / SQLite
+<br/>
+            
+            
+            
