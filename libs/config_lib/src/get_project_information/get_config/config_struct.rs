@@ -1,6 +1,6 @@
 extern crate toml;
 
-use itertools::Itertools;
+// use itertools::Itertools;
 
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
@@ -153,7 +153,6 @@ impl ConfigStruct {
                 enable_partial_success_prints_for_all_providers: bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders],
                 enable_time_measurement_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForAllProviders],
                 enable_cleaning_warning_logs_directory_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders],
-                enable_info_prints_for_all_providers: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders],
                 enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
                 enable_write_error_logs_in_mongo: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInMongo],
             },
@@ -319,13 +318,13 @@ impl ConfigStruct {
                 enable_time_measurement_for_twitter: bool_vars[&EnvBoolVar::EnableTimeMeasurement] && bool_vars[&EnvBoolVar::EnableTimeMeasurementForTwitter],
             },
             enable_providers_info: EnableProvidersInfo {
-                enable_info_for_arxiv: bool_vars[&EnvBoolVar::EnableInfoForArxiv],
-                enable_info_for_biorxiv: bool_vars[&EnvBoolVar::EnableInfoForBiorxiv],
-                enable_info_for_github: bool_vars[&EnvBoolVar::EnableInfoForGithub],
-                enable_info_for_habr: bool_vars[&EnvBoolVar::EnableInfoForHabr],
-                enable_info_for_medrxiv: bool_vars[&EnvBoolVar::EnableInfoForReddit],
-                enable_info_for_reddit: bool_vars[&EnvBoolVar::EnableInfoForReddit],
-                enable_info_for_twitter: bool_vars[&EnvBoolVar::EnableInfoForTwitter],
+                enable_info_for_arxiv: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForArxiv],
+                enable_info_for_biorxiv: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForBiorxiv],
+                enable_info_for_github: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForGithub],
+                enable_info_for_habr: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForHabr],
+                enable_info_for_medrxiv: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForReddit],
+                enable_info_for_reddit: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForReddit],
+                enable_info_for_twitter: bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders] && bool_vars[&EnvBoolVar::EnableInfoForTwitter],
             },
             enable_providers_links_limits: EnableProvidersLinksLimit {
                 enable_links_limit_for_arxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit] && bool_vars[&EnvBoolVar::EnableLinksLimitForArxiv],
