@@ -22,18 +22,9 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 use providers_info_lib::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
 
-use crate::postgres_sea_orm::do_smth;
-use futures::executor::block_on;
-
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    let n = do_smth();
-    let b = block_on(n);
-    match b {
-        Ok(b) => println!("yep"),
-        Err(e) => println!("nope"),
-    }
     /////
     let s = ProviderKind::get_length();
     let b = ProviderKind::into_vec();
