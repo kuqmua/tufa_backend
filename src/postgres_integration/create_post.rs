@@ -1,20 +1,12 @@
-pub mod establish_connection;
-pub mod models;
-pub mod schema;
-
-#[macro_use]
-extern crate diesel;
-extern crate dotenv;
-
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-use schema::posts;
+use crate::postgres_integration::schema::posts;
 
-use self::models::{NewPost, Post};
+use crate::postgres_integration::models::{NewPost, Post};
 
 pub fn create_post<'a>(conn: &PgConnection, title: &'a str, body: &'a str) -> Option<Post> {
     let new_post = NewPost { title, body };

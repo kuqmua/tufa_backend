@@ -71,14 +71,25 @@ mod providers_info {
     pub mod get_providers_link_parts_wrapper;
 }
 
+pub mod postgres_integration {
+    pub mod establish_connection;
+    pub mod models;
+    pub mod schema;
+    pub mod create_post;
+}
+
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;
 
-// use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-// use postgres_integration::create_post;
-// use postgres_integration::establish_connection::establish_connection;
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
+
+use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::postgres_integration::create_post::create_post;
+use crate::postgres_integration::establish_connection::establish_connection;
 
 // use config_lib::get_project_information::get_config::get_lazy_config_information::TEST;
 // use config_lib::get_project_information::get_config::get_lazy_config_information::TESTTWO;
@@ -92,26 +103,26 @@ fn main() {
     // let f = TESTTWO[&EnvBoolVar::EnableInfoForArxiv];
     entry::entry();
     /////////////////////////////////////////////////////
-    // let postgres_url = format!(
-    //     "{}{}{}{}{}{}{}{}{}{}",
-    //     CONFIG.postgres_params.postgres_url_parts.postgres_first_handle_url_part,
-    //     CONFIG.postgres_params.postgres_authorization.postgres_login,
-    //     CONFIG.postgres_params.postgres_url_parts.postgres_second_handle_url_part,
-    //     CONFIG.postgres_params.postgres_authorization.postgres_password,
-    //     CONFIG.postgres_params.postgres_url_parts.postgres_third_handle_url_part,
-    //     CONFIG.postgres_params.postgres_authorization.postgres_ip,
-    //     CONFIG.postgres_params.postgres_url_parts.postgres_fourth_handle_url_part,
-    //     CONFIG.postgres_params.postgres_authorization.postgres_port,
-    //     CONFIG.postgres_params.postgres_url_parts.postgres_fifth_handle_url_part,
-    //     CONFIG.postgres_params.postgres_authorization.postgres_db
-    // );
-    // let posgtres_connection = establish_connection(postgres_url);
-    // match posgtres_connection {
-    //     Some(pg_connection) => {
-    //         create_post(&pg_connection, "post_title", "post_body");
-    //     }
-    //     None => {
-    //         println!("todo")
-    //     }
-    // }
+    let postgres_url = format!(
+        "{}{}{}{}{}{}{}{}{}{}",
+        CONFIG.postgres_params.postgres_url_parts.postgres_first_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_login,
+        CONFIG.postgres_params.postgres_url_parts.postgres_second_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_password,
+        CONFIG.postgres_params.postgres_url_parts.postgres_third_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_ip,
+        CONFIG.postgres_params.postgres_url_parts.postgres_fourth_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_port,
+        CONFIG.postgres_params.postgres_url_parts.postgres_fifth_handle_url_part,
+        CONFIG.postgres_params.postgres_authorization.postgres_db
+    );
+    let posgtres_connection = establish_connection(postgres_url);
+    match posgtres_connection {
+        Some(pg_connection) => {
+            create_post(&pg_connection, "post_title", "post_body");
+        }
+        None => {
+            println!("todo")
+        }
+    }
 }
