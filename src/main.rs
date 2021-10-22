@@ -51,8 +51,8 @@ mod authorization {
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
-mod providers_new_posts_check;
 mod postgres_sea_orm;
+mod providers_new_posts_check;
 
 // use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 // use postgres_integration::create_post;

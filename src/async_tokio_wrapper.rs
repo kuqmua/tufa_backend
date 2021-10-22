@@ -29,10 +29,10 @@ use futures::executor::block_on;
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
     let n = do_smth();
-    let b=  block_on(n);
+    let b = block_on(n);
     match b {
         Ok(b) => println!("yep"),
-        Err(e) => println!("nope")
+        Err(e) => println!("nope"),
     }
     /////
     let s = ProviderKind::get_length();
@@ -43,66 +43,66 @@ pub async fn async_tokio_wrapper() {
         CONFIG.params.vec_of_provider_names.clone(),
     );
     println!("veeeec {:?}", veeeec);
-        let mut vec_of_filtered_provider_names: Vec<String> =
-            Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
-        //todo rewrite it with type system check help. right now its a bad way to check
-        for provider_name in &CONFIG.params.vec_of_provider_names {
-            if (provider_name == ARXIV_NAME_TO_CHECK
+    let mut vec_of_filtered_provider_names: Vec<String> =
+        Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
+    //todo rewrite it with type system check help. right now its a bad way to check
+    for provider_name in &CONFIG.params.vec_of_provider_names {
+        if (provider_name == ARXIV_NAME_TO_CHECK
+            && CONFIG
+                .mongo_params
+                .enable_initialize_mongo_with_providers_link_parts
+                .enable_initialize_mongo_with_arxiv_link_parts)
+            || (provider_name == BIORXIV_NAME_TO_CHECK
                 && CONFIG
                     .mongo_params
                     .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_arxiv_link_parts)
-                || (provider_name == BIORXIV_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_biorxiv_link_parts)
-                || (provider_name == GITHUB_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_github_link_parts)
-                || (provider_name == HABR_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_habr_link_parts)
-                || (provider_name == MEDRXIV_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_medrxiv_link_parts)
-                || (provider_name == REDDIT_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_reddit_link_parts)
-                || (provider_name == TWITTER_NAME_TO_CHECK
-                    && CONFIG
-                        .mongo_params
-                        .enable_initialize_mongo_with_providers_link_parts
-                        .enable_initialize_mongo_with_twitter_link_parts)
-            {
-                vec_of_filtered_provider_names.push(provider_name.to_string());
-            }
+                    .enable_initialize_mongo_with_biorxiv_link_parts)
+            || (provider_name == GITHUB_NAME_TO_CHECK
+                && CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_github_link_parts)
+            || (provider_name == HABR_NAME_TO_CHECK
+                && CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_habr_link_parts)
+            || (provider_name == MEDRXIV_NAME_TO_CHECK
+                && CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_medrxiv_link_parts)
+            || (provider_name == REDDIT_NAME_TO_CHECK
+                && CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_reddit_link_parts)
+            || (provider_name == TWITTER_NAME_TO_CHECK
+                && CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_twitter_link_parts)
+        {
+            vec_of_filtered_provider_names.push(provider_name.to_string());
         }
-        //todo: add check of doc already is in collection or add flag forse
-        //todo add flag for provider
-        let _ = put_data_in_mongo(
-            &get_mongo_url(),
-            &CONFIG.mongo_params.providers_db_name_handle,
-            &CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part,
-            &CONFIG
-                .mongo_params
-                .providers_db_collection_document_field_name_handle,
-            &CONFIG.mongo_params.path_to_provider_link_parts_folder,
-            // CONFIG.params.vec_of_provider_names.clone(),
-            vec_of_filtered_provider_names,
-            &CONFIG.mongo_params.log_file_extension,
-        )
-        .await;
+    }
+    //todo: add check of doc already is in collection or add flag forse
+    //todo add flag for provider
+    let _ = put_data_in_mongo(
+        &get_mongo_url(),
+        &CONFIG.mongo_params.providers_db_name_handle,
+        &CONFIG
+            .mongo_params
+            .providers_db_collection_handle_second_part,
+        &CONFIG
+            .mongo_params
+            .providers_db_collection_document_field_name_handle,
+        &CONFIG.mongo_params.path_to_provider_link_parts_folder,
+        // CONFIG.params.vec_of_provider_names.clone(),
+        vec_of_filtered_provider_names,
+        &CONFIG.mongo_params.log_file_extension,
+    )
+    .await;
     let option_tuple = check_new_posts_threads_parts().await;
 
     match option_tuple {
