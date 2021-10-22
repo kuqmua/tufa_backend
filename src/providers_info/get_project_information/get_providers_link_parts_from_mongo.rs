@@ -1,6 +1,5 @@
-
-use std::sync::{Arc, Mutex};
 use std::collections::HashMap;
+use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 

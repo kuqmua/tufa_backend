@@ -19,8 +19,8 @@ use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK
 use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 use crate::providers_info::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
+use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]

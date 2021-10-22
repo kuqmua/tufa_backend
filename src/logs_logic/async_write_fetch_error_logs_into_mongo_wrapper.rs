@@ -1,4 +1,4 @@
-use helpers_lib::json_to_string::json_to_string;
+use crate::helpers::json_to_string::json_to_string;
 
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;

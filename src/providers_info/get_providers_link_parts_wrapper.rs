@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use config_lib::get_project_information::get_mongo_url::get_mongo_url;
+use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::providers_info::get_project_information::get_providers_link_parts::Resource;
@@ -13,7 +13,8 @@ use prints_lib::print_type_enum::PrintType;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
     let mongo_url = get_mongo_url();
-    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> = ProviderKind::into_string_name_and_kind_hashmap();
+    let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
+        ProviderKind::into_string_name_and_kind_hashmap();
     let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
