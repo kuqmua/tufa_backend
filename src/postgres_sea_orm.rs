@@ -6,6 +6,11 @@ use sea_orm::DatabaseConnection;
 use sea_orm::DbErr;
 
 pub async fn do_smth() -> Result<DatabaseConnection, DbErr> {
+    env_logger::builder()
+        .filter_level(log::LevelFilter::Debug)
+        .is_test(true)
+        .init();
+        
     let mut opt = ConnectOptions::new("url".to_owned());
     opt.max_connections(100)
         .min_connections(1)
