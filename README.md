@@ -74,6 +74,9 @@ cargo run --bin publish_post 1 <br/>
 cargo run --bin show_posts <br/>
 cargo run --bin delete_post (post name)
 
+### run project with sea_orm logs
+RUST_LOG=debug cargo run 2>&1 | grep sea_orm
+
 ### create another rust lib
 cd libs
 cargo new example_lib --lib
