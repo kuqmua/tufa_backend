@@ -350,6 +350,8 @@ Native Driver	Pure Rust
 Relational
 Schema first
 MySQL / Postgres / SQLite
+
+NOPE, NOT STABLE YET
 <br/>
 
 ### -------------------
@@ -364,5 +366,10 @@ except maybe loops or early return cases
 ### -------------------
 config get bool string u8 i64 vars number 
 <br/>
-            
+
+### -------------------
+remove Config::new from tests lib. 
+find out how to remove CONFIG for mongo_integration_lib.
+maybe Config as function parameter or part of config
+<br/>
             
