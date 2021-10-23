@@ -29,7 +29,7 @@ lazy_static = "1.4"
 strum = "0.21"
 strum_macros = "0.21"
 itertools = "0.10.1"
-procedural_macros_lib = { path = "./libs/procedural_macros_lib" }
+procedural_macros_lib = { path = "./procedural_macros_lib" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
@@ -50,4 +50,3 @@ procedural_macros_lib = { path = "./libs/procedural_macros_lib" }
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 
 [dev-dependencies]
-# tests_lib = { path = "./libs/tests_lib" }
