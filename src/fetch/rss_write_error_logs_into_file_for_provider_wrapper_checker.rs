@@ -1,8 +1,8 @@
 use serde_json::Value;
 
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 use crate::helpers::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use crate::helpers::write_json_into_file::write_json_into_file;
-use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

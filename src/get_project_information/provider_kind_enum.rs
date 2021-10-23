@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -8,6 +7,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum::IntoEnumIterator;
@@ -60,7 +60,7 @@ impl ProviderKind {
     pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, ProviderKind)> {
         let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
-            provider_kind_vec.push((ProviderKind::get_string_name(provider_kind),   provider_kind));
+            provider_kind_vec.push((ProviderKind::get_string_name(provider_kind), provider_kind));
         }
         provider_kind_vec
     }
@@ -68,9 +68,12 @@ impl ProviderKind {
     pub fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
         //its String coz legacy
         let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
-        HashMap::with_capacity(ProviderKind::get_length());
+            HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
-            config_provider_string_to_enum_struct_hasmap.insert(ProviderKind::get_string_name(provider_kind).to_owned(),   provider_kind);
+            config_provider_string_to_enum_struct_hasmap.insert(
+                ProviderKind::get_string_name(provider_kind).to_owned(),
+                provider_kind,
+            );
         }
         config_provider_string_to_enum_struct_hasmap
     }

@@ -6,5 +6,5 @@ use std::env::VarError;
 pub enum ConfigErrorInnerType {
     VarErrorHandle(VarError),
     VarOrBoolParseErrorHandle(VarOrBoolParseError),
-    VarOrIntParseErrorErrorHandle(VarOrIntParseError)
+    VarOrIntParseErrorErrorHandle(VarOrIntParseError),
 }

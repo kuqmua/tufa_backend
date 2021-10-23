@@ -86,7 +86,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         let dropping_db_result = mongo_drop_db(
             &mongo_url,
             &CONFIG.mongo_params.db_providers_logs_name_handle,
-        ).await;
+        )
+        .await;
         match dropping_db_result {
             Ok(_) => (),
             Err(e) => {

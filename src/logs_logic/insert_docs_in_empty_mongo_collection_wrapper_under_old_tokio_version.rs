@@ -22,7 +22,8 @@ pub async fn insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_versi
         db_collection_handle, //fix naming later
         db_collection_document_field_name_handle,
         vec_of_values,
-    ).await;
+    )
+    .await;
     match result {
         Ok(boolean_result) => {
             print_colorful_message(

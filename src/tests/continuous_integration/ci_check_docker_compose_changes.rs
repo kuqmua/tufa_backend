@@ -1,7 +1,7 @@
 use std::fs;
 
-use crate::constants::tests_constants::_DOCKER_COMPOSE_FILE_NAME;
 use crate::constants::tests_constants::_DOCKER_COMPOSE_CONTENT;
+use crate::constants::tests_constants::_DOCKER_COMPOSE_FILE_NAME;
 use crate::constants::tests_constants::_PATH_TO_ENV_FILE;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

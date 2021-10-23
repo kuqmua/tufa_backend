@@ -3,7 +3,6 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -11,6 +10,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -155,7 +155,8 @@ async fn get_provider_link_parts_from_mongo(
         ),
         &db_collection_document_field_name_handle_clone,
         provider_tuple_1,
-    ).await;
+    )
+    .await;
     match result_getting_provider_link_parts {
         Ok(provider_link_parts) => {
             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =

@@ -43,10 +43,10 @@ use crate::get_project_information::config_error::ConfigError;
 // use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 // use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 
-use crate::get_project_information::env_var_string_enum::EnvStringVar;
 use crate::get_project_information::env_var_bool_enum::EnvBoolVar;
-use crate::get_project_information::env_var_u8_enum::EnvU8Var;
 use crate::get_project_information::env_var_i64_enum::EnvI64Var;
+use crate::get_project_information::env_var_string_enum::EnvStringVar;
+use crate::get_project_information::env_var_u8_enum::EnvU8Var;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
@@ -87,32 +87,40 @@ impl ConfigStruct {
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
         //todo: rewrite it with type system enum ProviderKind
-        let mut vec_of_provider_names_handle = Vec::<String>::with_capacity(ProviderKind::get_length());
+        let mut vec_of_provider_names_handle =
+            Vec::<String>::with_capacity(ProviderKind::get_length());
         if bool_vars[&EnvBoolVar::EnableArxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Arxiv).to_owned());
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Arxiv).to_owned());
         }
         if bool_vars[&EnvBoolVar::EnableBiorxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Biorxiv).to_owned())
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Biorxiv).to_owned())
         }
         if bool_vars[&EnvBoolVar::EnableGithub] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Github).to_owned());
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Github).to_owned());
         }
         if bool_vars[&EnvBoolVar::EnableHabr] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Habr).to_owned())
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Habr).to_owned())
         }
         if bool_vars[&EnvBoolVar::EnableMedrxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Medrxiv).to_owned())
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Medrxiv).to_owned())
         }
         if bool_vars[&EnvBoolVar::EnableReddit] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Reddit).to_owned())
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Reddit).to_owned())
         }
         if bool_vars[&EnvBoolVar::EnableTwitter] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Twitter).to_owned())
-        } 
-        
+            vec_of_provider_names_handle
+                .push(ProviderKind::get_string_name(ProviderKind::Twitter).to_owned())
+        }
+
         let handle_config: ConfigStruct = ConfigStruct {
             github_authorization: GithubAuthorization {
-                github_name: string_vars[&EnvStringVar::GithubName].clone(), 
+                github_name: string_vars[&EnvStringVar::GithubName].clone(),
                 github_token: string_vars[&EnvStringVar::GithubToken].clone(),
             },
             reddit_authorization: RedditAuthorization {
@@ -126,7 +134,6 @@ impl ConfigStruct {
                 //todo
                 vec_of_provider_names: vec_of_provider_names_handle,
                 starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
-                user_credentials_dummy_handle: string_vars[&EnvStringVar::UserCredentialsDummyHandle].clone(),
                 warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName].clone(),
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars[&EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir].clone(),
                 enable_time_measurement: bool_vars[&EnvBoolVar::EnableTimeMeasurement],//used in code not for providers logic
@@ -204,7 +211,7 @@ impl ConfigStruct {
                 enable_github: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableGithub],
                 enable_habr: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableHabr],
                 enable_medrxiv: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableMedrxiv],
-                enable_reddit: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableReddit], 
+                enable_reddit: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableReddit],
                 enable_twitter: bool_vars[&EnvBoolVar::EnableProviders] && bool_vars[&EnvBoolVar::EnableTwitter],
             },
             providers_check_links: ProvidersCheckLinks {
@@ -330,7 +337,7 @@ impl ConfigStruct {
             providers_links_limits: ProvidersLinksLimits {
                 links_limit_for_arxiv: i64_vars[&EnvI64Var::LinksLimitForArxiv],
                 links_limit_for_biorxiv: i64_vars[&EnvI64Var::LinksLimitForBiorxiv],
-                links_limit_for_github: i64_vars[&EnvI64Var::LinksLimitForGithub], 
+                links_limit_for_github: i64_vars[&EnvI64Var::LinksLimitForGithub],
                 links_limit_for_habr: i64_vars[&EnvI64Var::LinksLimitForHabr],
                 links_limit_for_medrxiv: i64_vars[&EnvI64Var::LinksLimitForMedrxiv],
                 links_limit_for_reddit: i64_vars[&EnvI64Var::LinksLimitForReddit],

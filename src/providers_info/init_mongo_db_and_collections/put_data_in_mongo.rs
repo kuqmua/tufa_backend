@@ -63,7 +63,8 @@ pub async fn put_data_in_mongo(
             format!("{}{}", key, db_collection_handle_second_part),
             db_collection_document_field_name_handle,
             vec_of_link_parts,
-        ).await;
+        )
+        .await;
         vec_of_futures.push(future_inserting_docs);
     }
     //todo add iteration function which returns Success Partial Success Failure
