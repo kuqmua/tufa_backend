@@ -2,7 +2,7 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::config_mods::provider_kind_enum::ProviderKind;
+use crate::providers_info::provider_kind_enum::ProviderKind;
 
 type FilterParsedSuccessErrorTuple = (
     Vec<CommonRssPostStruct>,

@@ -2,7 +2,7 @@ extern crate toml;
 
 // use itertools::Itertools;
 
-use crate::config_mods::provider_kind_enum::ProviderKind;
+use crate::providers_info::provider_kind_enum::ProviderKind;
 
 use crate::config_mods::config_structs::github_authorization_struct::GithubAuthorization;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;

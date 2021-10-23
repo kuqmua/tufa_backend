@@ -93,7 +93,6 @@ pub mod config_mods {
     }
     pub mod config;
     pub mod env_var_enum;
-    pub mod provider_kind_enum;
 }
 pub mod helpers {
     pub mod create_dir_if_dont_exists;
@@ -148,6 +147,7 @@ mod providers_info {
         pub mod put_data_in_mongo;
     }
     pub mod get_providers_link_parts_wrapper;
+    pub mod provider_kind_enum;
 }
 #[cfg(test)]
 mod tests {

@@ -9,7 +9,7 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::config_mods::config::CONFIG;
 
-use crate::config_mods::provider_kind_enum::ProviderKind;
+use crate::providers_info::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

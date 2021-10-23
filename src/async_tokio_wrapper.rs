@@ -17,7 +17,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::config_mods::provider_kind_enum::ProviderKind;
+use crate::providers_info::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::providers_info::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;

@@ -29,7 +29,7 @@ use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
 use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
 use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 
-use crate::config_mods::provider_kind_enum::ProviderKind;
+use crate::providers_info::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
