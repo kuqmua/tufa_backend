@@ -1,5 +1,5 @@
-use crate::get_project_information::env_var_names_constants::GITHUB_NAME_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::GITHUB_TOKEN_ENV_NAME;
+use crate::constants::env_var_names_constants::GITHUB_NAME_ENV_NAME;
+use crate::constants::env_var_names_constants::GITHUB_TOKEN_ENV_NAME;
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

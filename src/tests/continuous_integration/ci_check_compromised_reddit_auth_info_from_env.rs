@@ -1,8 +1,8 @@
-use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_ID_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
-use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
+use crate::constants::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
+use crate::constants::env_var_names_constants::REDDIT_CLIENT_ID_ENV_NAME;
+use crate::constants::env_var_names_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
+use crate::constants::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
+use crate::constants::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
 
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
