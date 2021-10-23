@@ -8,6 +8,9 @@ mod check_net {
     pub mod check_link_metainfo_structures;
     pub mod fetch_link;
 }
+mod constants {
+    pub mod tests_constants;
+}
 mod fetch {
     pub mod async_write_json_into_file;
     pub mod parse_github_html;
@@ -152,7 +155,6 @@ mod tests {
         pub mod ci_check_env_file_exists;
         pub mod ci_check_new_env_vars;
     }
-    mod tests_constants;
 }
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
