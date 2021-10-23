@@ -53,7 +53,7 @@ pub mod config_mods {
         pub mod env_var_u8_enum;
         pub mod env_var_string_enum;
     }
-    pub mod get_config {
+    pub mod config_structs {
         pub mod config_error;
         pub mod config_struct;
         pub mod enable_error_providers_prints_struct;
@@ -175,8 +175,8 @@ use crate::config_mods::config::CONFIG;
 use crate::postgres_integration::create_post::create_post;
 use crate::postgres_integration::establish_connection::establish_connection;
 
-// use crate::config_mods::get_config::get_lazy_config_information::TEST;
-// use crate::config_mods::get_config::get_lazy_config_information::TESTTWO;
+// use crate::config_mods::config_structs::get_lazy_config_information::TEST;
+// use crate::config_mods::config_structs::get_lazy_config_information::TESTTWO;
 // use crate::config_mods::env_var_enum::EnvVar;
 // use crate::config_mods::env_var_bool_enum::EnvBoolVar;
 

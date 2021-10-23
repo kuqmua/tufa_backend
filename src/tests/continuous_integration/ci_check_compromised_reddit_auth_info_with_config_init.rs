@@ -1,4 +1,4 @@
-use crate::config_mods::get_config::config_struct::ConfigStruct;
+use crate::config_mods::config_structs::config_struct::ConfigStruct;
 
 use crate::constants::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
 
