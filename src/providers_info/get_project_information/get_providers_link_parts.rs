@@ -1,7 +1,7 @@
 use crate::providers_info::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
 use crate::providers_info::get_project_information::get_providers_link_parts_from_mongo::get_providers_link_parts_from_mongo;
 
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 use std::collections::HashMap;
 

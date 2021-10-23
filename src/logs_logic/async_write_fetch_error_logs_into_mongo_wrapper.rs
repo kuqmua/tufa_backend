@@ -7,8 +7,8 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
-use crate::config::config::CONFIG;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::mongo_integration::mongo_drop_db::mongo_drop_db;

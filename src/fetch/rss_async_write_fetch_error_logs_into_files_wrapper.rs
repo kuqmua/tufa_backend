@@ -4,11 +4,11 @@ use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wra
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
-use crate::config::config::CONFIG;
+use crate::config_mods::config::CONFIG;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

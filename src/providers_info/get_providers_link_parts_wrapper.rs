@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use crate::config::config::CONFIG;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::providers_info::get_project_information::get_providers_link_parts::Resource;

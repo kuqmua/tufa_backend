@@ -1,5 +1,5 @@
-use crate::config::config::CONFIG;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 use ansi_term::Colour::RGB;
 
 use crate::prints::print_type_enum::PrintType;

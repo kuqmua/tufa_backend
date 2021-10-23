@@ -1,7 +1,7 @@
 use mongodb::bson::Document;
 
-use crate::config::config::CONFIG;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
 

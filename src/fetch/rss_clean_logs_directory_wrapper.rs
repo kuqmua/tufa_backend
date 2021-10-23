@@ -1,6 +1,6 @@
 use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
-use crate::config::config::CONFIG;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_clean_logs_directory_wrapper() {

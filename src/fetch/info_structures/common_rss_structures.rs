@@ -1,5 +1,5 @@
 use crate::fetch::parse_github_html::GithubPostInfoVec;
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 #[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize)] // PartialEq,//Default,
 pub struct CommonRssPostStruct {
     #[serde(rename = "item", default)]

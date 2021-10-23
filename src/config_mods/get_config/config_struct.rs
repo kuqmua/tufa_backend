@@ -2,38 +2,38 @@ extern crate toml;
 
 // use itertools::Itertools;
 
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
-use crate::config::get_config::github_authorization_struct::GithubAuthorization;
-use crate::config::get_config::enable_providers_struct::EnableProviders;
-use crate::config::get_config::enable_providers_prints_struct::EnableProvidersPrints;
-use crate::config::get_config::providers_check_links_struct::ProvidersCheckLinks;
-use crate::config::get_config::mongo_params_struct::MongoParams;
-use crate::config::get_config::postgres_params_struct::PostgresParams;
-use crate::config::get_config::postgres_url_parts_struct::PostgresUrlParts;
-use crate::config::get_config::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
-use crate::config::get_config::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
-use crate::config::get_config::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
-use crate::config::get_config::enable_providers_links_limit_struct::EnableProvidersLinksLimit;
-use crate::config::get_config::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
-use crate::config::get_config::enable_providers_info_struct::EnableProvidersInfo;
-use crate::config::get_config::enable_randomize_order_for_providers_link_parts_for_mongo_struct::EnableRandomizeOrderForProvidersLinkPartsForMongo;
-use crate::config::get_config::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
-use crate::config::get_config::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
-use crate::config::get_config::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config::get_config::params_struct::Params;
-use crate::config::get_config::print_colors_struct::PrintColors;
-use crate::config::get_config::providers_links_limits_struct::ProvidersLinksLimits;
-use crate::config::get_config::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
-use crate::config::get_config::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
-use crate::config::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::config::get_config::mongo_url_parts_struct::MongoUrlParts;
-use crate::config::get_config::mongo_authorization_struct::MongoAuthorization;
-use crate::config::get_config::postgres_authorization_struct::PostgresAuthorization;
-use crate::config::get_config::reddit_authorization_struct::RedditAuthorization;
+use crate::config_mods::get_config::github_authorization_struct::GithubAuthorization;
+use crate::config_mods::get_config::enable_providers_struct::EnableProviders;
+use crate::config_mods::get_config::enable_providers_prints_struct::EnableProvidersPrints;
+use crate::config_mods::get_config::providers_check_links_struct::ProvidersCheckLinks;
+use crate::config_mods::get_config::mongo_params_struct::MongoParams;
+use crate::config_mods::get_config::postgres_params_struct::PostgresParams;
+use crate::config_mods::get_config::postgres_url_parts_struct::PostgresUrlParts;
+use crate::config_mods::get_config::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
+use crate::config_mods::get_config::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
+use crate::config_mods::get_config::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
+use crate::config_mods::get_config::enable_providers_links_limit_struct::EnableProvidersLinksLimit;
+use crate::config_mods::get_config::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
+use crate::config_mods::get_config::enable_providers_info_struct::EnableProvidersInfo;
+use crate::config_mods::get_config::enable_randomize_order_for_providers_link_parts_for_mongo_struct::EnableRandomizeOrderForProvidersLinkPartsForMongo;
+use crate::config_mods::get_config::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
+use crate::config_mods::get_config::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
+use crate::config_mods::get_config::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
+use crate::config_mods::get_config::params_struct::Params;
+use crate::config_mods::get_config::print_colors_struct::PrintColors;
+use crate::config_mods::get_config::providers_links_limits_struct::ProvidersLinksLimits;
+use crate::config_mods::get_config::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
+use crate::config_mods::get_config::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
+use crate::config_mods::get_config::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
+use crate::config_mods::get_config::mongo_url_parts_struct::MongoUrlParts;
+use crate::config_mods::get_config::mongo_authorization_struct::MongoAuthorization;
+use crate::config_mods::get_config::postgres_authorization_struct::PostgresAuthorization;
+use crate::config_mods::get_config::reddit_authorization_struct::RedditAuthorization;
 
-// use crate::config::get_config::config_error::ConfigError;
-use crate::config::config_error::ConfigError;
+// use crate::config_mods::get_config::config_error::ConfigError;
+use crate::config_mods::config_error::ConfigError;
 
 // use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 // use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -43,10 +43,10 @@ use crate::config::config_error::ConfigError;
 // use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 // use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 
-use crate::config::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
-use crate::config::config_values_types_enums::env_var_i64_enum::EnvI64Var;
-use crate::config::config_values_types_enums::env_var_string_enum::EnvStringVar;
-use crate::config::config_values_types_enums::env_var_u8_enum::EnvU8Var;
+use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
+use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStringVar;
+use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {

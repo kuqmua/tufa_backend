@@ -46,7 +46,7 @@ mod fetch {
         pub mod common_rss_structures;
     }
 }
-pub mod config {
+pub mod config_mods {
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum;
@@ -171,14 +171,14 @@ extern crate dotenv;
 #[macro_use]
 extern crate lazy_static;
 
-use crate::config::config::CONFIG;
+use crate::config_mods::config::CONFIG;
 use crate::postgres_integration::create_post::create_post;
 use crate::postgres_integration::establish_connection::establish_connection;
 
-// use crate::config::get_config::get_lazy_config_information::TEST;
-// use crate::config::get_config::get_lazy_config_information::TESTTWO;
-// use crate::config::env_var_enum::EnvVar;
-// use crate::config::env_var_bool_enum::EnvBoolVar;
+// use crate::config_mods::get_config::get_lazy_config_information::TEST;
+// use crate::config_mods::get_config::get_lazy_config_information::TESTTWO;
+// use crate::config_mods::env_var_enum::EnvVar;
+// use crate::config_mods::env_var_bool_enum::EnvBoolVar;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {

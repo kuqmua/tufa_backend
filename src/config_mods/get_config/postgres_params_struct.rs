@@ -1,5 +1,5 @@
-use crate::config::get_config::postgres_authorization_struct::PostgresAuthorization;
-use crate::config::get_config::postgres_url_parts_struct::PostgresUrlParts;
+use crate::config_mods::get_config::postgres_authorization_struct::PostgresAuthorization;
+use crate::config_mods::get_config::postgres_url_parts_struct::PostgresUrlParts;
 
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct PostgresParams {

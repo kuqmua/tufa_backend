@@ -1,9 +1,9 @@
-use crate::config::provider_kind_enum::ProviderKind;
+use crate::config_mods::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config::config::CONFIG;
+use crate::config_mods::config::CONFIG;
 use std::fs;
 use std::path::Path;
 
