@@ -154,6 +154,7 @@ mod tests {
         pub mod ci_check_compromised_reddit_auth_info_from_env;
         pub mod ci_check_env_file_exists;
         pub mod ci_check_new_env_vars;
+        pub mod ci_check_docker_compose_changes;
     }
 }
 mod async_tokio_wrapper;

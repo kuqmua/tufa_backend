@@ -1,7 +1,9 @@
-pub const PATH_TO_ENV_FILE: &str = "./";
+pub const _PATH_TO_ENV_FILE: &str = "./";
+pub const _DOCKER_COMPOSE_FILE_NAME: &str = "docker-compose.yml";
+pub const _USER_CREDENTIALS_DUMMY_HANDLE: &str = "example";
 //its important to have EXACT copy without spaces or Line feed character
 //todo 
-pub const ENV_FILE_CONTENT: &str = r#"# for mongo local docker container
+pub const _ENV_FILE_CONTENT: &str = r#"# for mongo local docker container
 MONGO_LOCAL_DOCKER_USERNAME="example"
 MONGO_LOCAL_DOCKER_PASSWORD="example"
 
@@ -331,7 +333,7 @@ INFO_BLUE="240" # u8"#;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //todo 
 //its important to have EXACT copy without spaces or Line feed character
-pub const DOCKER_COMPOSE_CONTENT: &str = r#"version: '3.8'
+pub const _DOCKER_COMPOSE_CONTENT: &str = r#"version: '3.8'
 services:
   postgres_service:
     container_name: postgres_container
