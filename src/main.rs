@@ -70,21 +70,18 @@ mod providers_info {
 
     pub mod get_providers_link_parts_wrapper;
 }
-
 pub mod postgres_integration {
     pub mod create_post;
     pub mod establish_connection;
     pub mod models;
     pub mod schema;
 }
-
 pub mod helpers {
     pub mod create_dir_if_dont_exists;
     pub mod json_to_string;
     pub mod write_json_into_file;
     pub mod write_string_into_file;
 }
-
 pub mod mongo_integration {
     pub mod mongo_check_collection_is_empty;
     pub mod mongo_drop_collection_wrapper;
@@ -95,7 +92,16 @@ pub mod mongo_integration {
     pub mod mongo_insert_docs_in_empty_collection;
     pub mod mongo_possibly_get_documents_as_string_vector;
 }
-
+#[cfg(test)]
+mod tests {
+    pub mod continuous_integration {
+        pub mod ci_check_compromised_github_auth_info;//todo rewrite it into .env file
+        pub mod ci_check_compromised_reddit_auth_info;//todo rewrite it into .env file
+        pub mod ci_check_env_file_exists;
+        pub mod ci_check_new_env_vars;
+    }
+    mod tests_constants;
+}
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
