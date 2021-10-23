@@ -1,5 +1,5 @@
-use crate::config_mods::config_error_inner_type_enum::ConfigErrorInnerType;
-use crate::config_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
+use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 
 #[derive(Debug)]
 pub struct ConfigError<'a> {

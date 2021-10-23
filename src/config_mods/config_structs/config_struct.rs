@@ -33,7 +33,7 @@ use crate::config_mods::config_structs::postgres_authorization_struct::PostgresA
 use crate::config_mods::config_structs::reddit_authorization_struct::RedditAuthorization;
 
 // use crate::config_mods::config_structs::config_error::ConfigError;
-use crate::config_mods::config_error::ConfigError;
+use crate::config_mods::config_error_mods::config_error::ConfigError;
 
 // use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 // use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;

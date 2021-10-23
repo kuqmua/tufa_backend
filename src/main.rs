@@ -47,6 +47,14 @@ mod fetch {
     }
 }
 pub mod config_mods {
+    pub mod config_error_mods {
+        pub mod config_error_enum;
+        pub mod config_env_var_error_type_enum;
+        pub mod config_error_inner_type_enum;
+        pub mod var_or_bool_parse_error_enum;
+        pub mod var_or_int_parse_error_enum;
+        pub mod config_error;
+    }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum;
@@ -54,7 +62,6 @@ pub mod config_mods {
         pub mod env_var_string_enum;
     }
     pub mod config_structs {
-        pub mod config_error;
         pub mod config_struct;
         pub mod enable_error_providers_prints_struct;
         pub mod enable_initialize_mongo_with_providers_link_parts_struct;
@@ -84,14 +91,9 @@ pub mod config_mods {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
-    pub mod config_error;
     pub mod config;
-    pub mod config_error_inner_type_enum;
     pub mod env_var_enum;
-    pub mod config_env_var_error_type_enum;
     pub mod provider_kind_enum;
-    pub mod var_or_bool_parse_error_enum;
-    pub mod var_or_int_parse_error_enum;
 }
 pub mod helpers {
     pub mod create_dir_if_dont_exists;
