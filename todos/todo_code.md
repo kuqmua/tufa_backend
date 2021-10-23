@@ -372,4 +372,13 @@ remove Config::new from tests lib.
 find out how to remove CONFIG for mongo_integration_lib.
 maybe Config as function parameter or part of config
 <br/>
-            
+
+### -------------------
+warning: variant is never constructed: `PostgreSql`
+  --> src/providers_info/get_project_information/get_providers_link_parts.rs:62:5
+   |
+62 |     PostgreSql,
+   |     ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+<br/>
