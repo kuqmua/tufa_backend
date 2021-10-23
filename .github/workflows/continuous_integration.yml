@@ -44,5 +44,5 @@ jobs:
         with:
           command: build
 
-      - name: cd tests_lib && cargo test ci -- --show-output
-        run: cd tests_lib && cargo test ci -- --show-output
+      - name: cargo test ci -- --show-output
+        run: cargo test ci -- --show-output

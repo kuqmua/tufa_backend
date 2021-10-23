@@ -4,7 +4,7 @@ use crate::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_ME
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
-fn ci_check_compromised_github_auth_info() {
+fn ci_check_compromised_github_auth_info_with_config_init() {
             let config_handle: ConfigStruct = ConfigStruct::new()
             .expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
         let github_name = &config_handle.github_authorization.github_name;

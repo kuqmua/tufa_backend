@@ -1,17 +1,16 @@
-use crate::tests::tests_constants::USER_CREDENTIALS_DUMMY_HANDLE;
-use crate::tests::tests_constants::GITHUB_NAME_ENV_NAME;
-use crate::tests::tests_constants::GITHUB_TOKEN_ENV_NAME;
-
+use crate::get_project_information::env_var_names_constants::GITHUB_NAME_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::GITHUB_TOKEN_ENV_NAME;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 fn ci_check_compromised_github_auth_info() {
     match std::env::var(GITHUB_NAME_ENV_NAME) {
         Ok(github_name) => {
-            if github_name != USER_CREDENTIALS_DUMMY_HANDLE {
+            if github_name != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", GITHUB_NAME_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     github_name
                 );
             }
@@ -22,10 +21,10 @@ fn ci_check_compromised_github_auth_info() {
     }
     match std::env::var(GITHUB_TOKEN_ENV_NAME) {
         Ok(github_token) => {
-            if github_token != USER_CREDENTIALS_DUMMY_HANDLE {
+            if github_token != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", GITHUB_TOKEN_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     github_token
                 );
             }

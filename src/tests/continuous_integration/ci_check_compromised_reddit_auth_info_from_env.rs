@@ -1,19 +1,20 @@
-use crate::tests::tests_constants::USER_CREDENTIALS_DUMMY_HANDLE;
-use crate::tests::tests_constants::REDDIT_USER_AGENT_ENV_NAME;
-use crate::tests::tests_constants::REDDIT_CLIENT_ID_ENV_NAME;
-use crate::tests::tests_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
-use crate::tests::tests_constants::REDDIT_USERNAME_ENV_NAME;
-use crate::tests::tests_constants::REDDIT_PASSWORD_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_ID_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
+use crate::get_project_information::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
+
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
     match std::env::var(REDDIT_USER_AGENT_ENV_NAME) {
         Ok(reddit_user_agent) => {
-            if reddit_user_agent != USER_CREDENTIALS_DUMMY_HANDLE {
+            if reddit_user_agent != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", REDDIT_USER_AGENT_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     reddit_user_agent
                 );
             }
@@ -24,10 +25,10 @@ fn ci_check_compromised_reddit_auth_info() {
     }
     match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
         Ok(reddit_client_id) => {
-            if reddit_client_id != USER_CREDENTIALS_DUMMY_HANDLE {
+            if reddit_client_id != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", REDDIT_CLIENT_ID_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     reddit_client_id
                 );
             }
@@ -38,10 +39,10 @@ fn ci_check_compromised_reddit_auth_info() {
     }
     match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
         Ok(rediit_client_secret) => {
-            if rediit_client_secret != USER_CREDENTIALS_DUMMY_HANDLE {
+            if rediit_client_secret != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", REDDIT_CLIENT_SECRET_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     rediit_client_secret
                 );
             }
@@ -52,10 +53,10 @@ fn ci_check_compromised_reddit_auth_info() {
     }
     match std::env::var(REDDIT_USERNAME_ENV_NAME) {
         Ok(reddit_username) => {
-            if reddit_username != USER_CREDENTIALS_DUMMY_HANDLE {
+            if reddit_username != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", REDDIT_USERNAME_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     reddit_username
                 );
             }
@@ -66,10 +67,10 @@ fn ci_check_compromised_reddit_auth_info() {
     }
     match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
         Ok(reddit_password) => {
-            if reddit_password != USER_CREDENTIALS_DUMMY_HANDLE {
+            if reddit_password != CONFIG.params.user_credentials_dummy_handle {
                 panic!(
                     "{} != {}, found {}", REDDIT_PASSWORD_ENV_NAME,
-                    USER_CREDENTIALS_DUMMY_HANDLE,
+                    CONFIG.params.user_credentials_dummy_handle,
                     reddit_password
                 );
             }

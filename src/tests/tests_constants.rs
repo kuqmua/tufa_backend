@@ -1,4 +1,4 @@
-pub const PATH_TO_ENV_FILE: &str = "./../../";
+pub const PATH_TO_ENV_FILE: &str = "./";
 //its important to have EXACT copy without spaces or Line feed character
 //todo 
 pub const ENV_FILE_CONTENT: &str = r#"# for mongo local docker container
