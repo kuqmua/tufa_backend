@@ -1,3 +1,13 @@
+mod authorization {
+    pub mod reddit {
+        pub mod reddit_authorization;
+    }
+}
+mod check_net {
+    pub mod check_link;
+    pub mod check_link_metainfo_structures;
+    pub mod fetch_link;
+}
 mod fetch {
     pub mod async_write_json_into_file;
     pub mod parse_github_html;
@@ -30,71 +40,6 @@ mod fetch {
         }
         pub mod common_rss_structures;
     }
-}
-mod logs_logic {
-    pub mod async_write_fetch_error_logs_into_mongo_wrapper;
-    pub mod drop_mongo_logs_collection_wrapper_for_providers;
-    pub mod drop_mongo_provider_logs_collection_if_need;
-    pub mod insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
-}
-mod check_net {
-    pub mod check_link;
-    pub mod check_link_metainfo_structures;
-    pub mod fetch_link;
-}
-mod authorization {
-    pub mod reddit {
-        pub mod reddit_authorization;
-    }
-}
-mod providers_info {
-    pub mod get_project_information {
-        pub mod generate_hashmap_links {
-            pub mod generate_arxiv_hashmap_links;
-            pub mod generate_biorxiv_hashmap_links;
-            pub mod generate_github_hashmap_links;
-            pub mod generate_habr_hashmap_links;
-            pub mod generate_medrxiv_hashmap_links;
-            pub mod generate_reddit_hashmap_links;
-            pub mod generate_twitter_hashmap_links;
-        }
-        pub mod get_providers_json_local_data;
-        pub mod get_providers_link_parts;
-        pub mod get_providers_link_parts_from_mongo;
-        pub mod get_twitter_providers_names;
-    }
-
-    pub mod init_mongo_db_and_collections {
-        pub mod put_data_in_mongo;
-    }
-
-    pub mod get_providers_link_parts_wrapper;
-}
-pub mod postgres_integration {
-    pub mod create_post;
-    pub mod establish_connection;
-    pub mod models;
-    pub mod schema;
-}
-pub mod helpers {
-    pub mod create_dir_if_dont_exists;
-    pub mod json_to_string;
-    pub mod write_json_into_file;
-    pub mod write_string_into_file;
-}
-pub mod mongo_integration {
-    pub mod mongo_check_collection_is_empty;
-    pub mod mongo_drop_collection_wrapper;
-    pub mod mongo_drop_db;
-    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider;
-    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
-    pub mod mongo_get_provider_link_parts_as_bson_string;
-    pub mod mongo_insert_docs_in_empty_collection;
-    pub mod mongo_possibly_get_documents_as_string_vector;
-}
-pub mod prints {
-    pub mod print_colorful_message;
-    pub mod print_type_enum;
 }
 pub mod get_project_information {
     pub mod get_config {
@@ -144,11 +89,59 @@ pub mod get_project_information {
     pub mod env_var_names_constants;
     pub mod provider_kind_enum;
 }
-mod async_tokio_wrapper;
-mod check_new_posts_threads_parts;
-mod entry;
-mod providers_new_posts_check;
-
+pub mod helpers {
+    pub mod create_dir_if_dont_exists;
+    pub mod json_to_string;
+    pub mod write_json_into_file;
+    pub mod write_string_into_file;
+}
+mod logs_logic {
+    pub mod async_write_fetch_error_logs_into_mongo_wrapper;
+    pub mod drop_mongo_logs_collection_wrapper_for_providers;
+    pub mod drop_mongo_provider_logs_collection_if_need;
+    pub mod insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
+}
+pub mod mongo_integration {
+    pub mod mongo_check_collection_is_empty;
+    pub mod mongo_drop_collection_wrapper;
+    pub mod mongo_drop_db;
+    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider;
+    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
+    pub mod mongo_get_provider_link_parts_as_bson_string;
+    pub mod mongo_insert_docs_in_empty_collection;
+    pub mod mongo_possibly_get_documents_as_string_vector;
+}
+pub mod postgres_integration {
+    pub mod create_post;
+    pub mod establish_connection;
+    pub mod models;
+    pub mod schema;
+}
+pub mod prints {
+    pub mod print_colorful_message;
+    pub mod print_type_enum;
+}
+mod providers_info {
+    pub mod get_project_information {
+        pub mod generate_hashmap_links {
+            pub mod generate_arxiv_hashmap_links;
+            pub mod generate_biorxiv_hashmap_links;
+            pub mod generate_github_hashmap_links;
+            pub mod generate_habr_hashmap_links;
+            pub mod generate_medrxiv_hashmap_links;
+            pub mod generate_reddit_hashmap_links;
+            pub mod generate_twitter_hashmap_links;
+        }
+        pub mod get_providers_json_local_data;
+        pub mod get_providers_link_parts;
+        pub mod get_providers_link_parts_from_mongo;
+        pub mod get_twitter_providers_names;
+    }
+    pub mod init_mongo_db_and_collections {
+        pub mod put_data_in_mongo;
+    }
+    pub mod get_providers_link_parts_wrapper;
+}
 #[cfg(test)]
 mod tests {
     pub mod continuous_integration {
@@ -159,6 +152,10 @@ mod tests {
     }
     mod tests_constants;
 }
+mod async_tokio_wrapper;
+mod check_new_posts_threads_parts;
+mod entry;
+mod providers_new_posts_check;
 
 #[macro_use]
 extern crate diesel;
