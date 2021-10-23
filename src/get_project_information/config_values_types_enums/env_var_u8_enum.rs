@@ -12,7 +12,7 @@ use crate::get_project_information::config_error::ConfigError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::get_project_information::var_or_int_parse_error_enum::VarOrIntParseError;
 
-use crate::get_project_information::env_var_types_enum::EnvVarTypes;
+use crate::get_project_information::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
@@ -127,7 +127,7 @@ impl EnvU8Var {
             Ok(handle) => Ok(handle),
             Err(e) => {
                 return Err(ConfigError {
-                    env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),
+                    env_var_name_kind: ConfigEnvVarErrorType::U8(env_var_name_kind),
                     was_dotenv_enable,
                     env_name: string_name,
                     env_error: ConfigErrorInnerType::VarErrorHandle(e),
@@ -159,7 +159,7 @@ impl EnvU8Var {
                     }
                     Err(e) => {
                         error_option = Some(ConfigError {
-                            env_var_name_kind: EnvVarTypes::U8(env_var_name_kind),
+                            env_var_name_kind: ConfigEnvVarErrorType::U8(env_var_name_kind),
                             was_dotenv_enable,
                             env_name: EnvU8Var::get_env_name(env_var_name_kind),
                             env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(

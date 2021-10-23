@@ -4,7 +4,7 @@ use crate::get_project_information::config_values_types_enums::env_var_string_en
 use crate::get_project_information::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 #[derive(Debug)]
-pub enum EnvVarTypes {
+pub enum ConfigEnvVarErrorType {
     Bool(EnvBoolVar),
     String(EnvStringVar),
     U8(EnvU8Var),

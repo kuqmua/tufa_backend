@@ -11,7 +11,7 @@ use dotenv::dotenv;
 use crate::get_project_information::config_error::ConfigError;
 use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
 
-use crate::get_project_information::env_var_types_enum::EnvVarTypes;
+use crate::get_project_information::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
@@ -218,7 +218,7 @@ impl EnvStringVar {
             Ok(handle) => Ok(handle),
             Err(e) => {
                 return Err(ConfigError {
-                    env_var_name_kind: EnvVarTypes::String(env_var_name_kind),
+                    env_var_name_kind: ConfigEnvVarErrorType::String(env_var_name_kind),
                     was_dotenv_enable,
                     env_name: string_name,
                     env_error: ConfigErrorInnerType::VarErrorHandle(e),

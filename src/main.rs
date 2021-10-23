@@ -88,7 +88,7 @@ pub mod get_project_information {
     pub mod config_error;
     pub mod config_error_inner_type_enum;
     pub mod env_var_enum;
-    pub mod env_var_types_enum;
+    pub mod config_env_var_error_type_enum;
     pub mod provider_kind_enum;
     pub mod var_or_bool_parse_error_enum;
     pub mod var_or_int_parse_error_enum;
