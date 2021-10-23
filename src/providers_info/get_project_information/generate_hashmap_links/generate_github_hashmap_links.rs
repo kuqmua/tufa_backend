@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn generate_github_hashmap_links(github_names: Vec<String>) -> Vec<String> {
     //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG

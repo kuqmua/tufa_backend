@@ -65,7 +65,7 @@ pub mod get_project_information {
         pub mod enable_success_providers_prints_struct;
         pub mod enable_warning_high_providers_prints_struct;
         pub mod enable_warning_low_providers_prints_struct;
-        pub mod get_lazy_config_information;
+        pub mod config;
         pub mod github_authorization_struct;
         pub mod mongo_authorization_struct;
         pub mod mongo_params_struct;
@@ -169,7 +169,7 @@ extern crate dotenv;
 #[macro_use]
 extern crate lazy_static;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 use crate::postgres_integration::create_post::create_post;
 use crate::postgres_integration::establish_connection::establish_connection;
 

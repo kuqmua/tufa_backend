@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 use crate::get_project_information::get_mongo_url::get_mongo_url;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 

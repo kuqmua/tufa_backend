@@ -7,7 +7,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 

@@ -3,7 +3,7 @@ use crate::get_project_information::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 use std::fs;
 use std::path::Path;
 

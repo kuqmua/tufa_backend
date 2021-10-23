@@ -1,4 +1,4 @@
-use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_mongo_url() -> String {
