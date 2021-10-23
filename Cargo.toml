@@ -8,9 +8,8 @@ version = "0.1.0"
 
 [dependencies]
 futures = "0.3.5"
-futures-async-stream = "0.2.2"
 reqwest = {version = "0.11.0", features = ["json","blocking"]}
-roux = "0.4.0"
+roux = "0.4.0" #reddit
 serde = "1.0"
 serde-xml-rs = "0.4.0"
 serde_derive = "1.0"
