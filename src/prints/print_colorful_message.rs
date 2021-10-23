@@ -1,4 +1,4 @@
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 use crate::config::provider_kind_enum::ProviderKind;
 use ansi_term::Colour::RGB;
 

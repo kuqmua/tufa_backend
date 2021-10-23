@@ -1,5 +1,5 @@
 use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 use crate::config::provider_kind_enum::ProviderKind;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

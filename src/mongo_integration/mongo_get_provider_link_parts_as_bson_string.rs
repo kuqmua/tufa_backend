@@ -4,7 +4,7 @@ use mongodb::{
     Client,
 };
 
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 use crate::config::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;

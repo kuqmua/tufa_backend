@@ -7,7 +7,7 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 
 use crate::config::provider_kind_enum::ProviderKind;
 

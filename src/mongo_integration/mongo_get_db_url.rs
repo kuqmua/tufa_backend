@@ -1,4 +1,4 @@
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn mongo_get_db_url() -> String {

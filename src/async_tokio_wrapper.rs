@@ -8,7 +8,7 @@ use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_wr
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;

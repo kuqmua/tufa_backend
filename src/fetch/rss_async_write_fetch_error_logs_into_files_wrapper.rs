@@ -8,7 +8,7 @@ use crate::config::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

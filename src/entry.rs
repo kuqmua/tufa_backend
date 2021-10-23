@@ -6,7 +6,7 @@ use crate::check_net::check_link::check_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 
 extern crate num_cpus;
 

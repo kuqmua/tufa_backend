@@ -7,7 +7,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::config::get_config::config::CONFIG;
+use crate::config::config::CONFIG;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum::IntoEnumIterator;
