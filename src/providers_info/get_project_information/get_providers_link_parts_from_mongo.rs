@@ -16,7 +16,7 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-use mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
+use crate::mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 
 pub async fn get_providers_link_parts_from_mongo(
     mongo_url: String,

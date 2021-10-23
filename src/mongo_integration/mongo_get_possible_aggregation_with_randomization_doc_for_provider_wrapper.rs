@@ -3,7 +3,7 @@ use mongodb::bson::Document;
 use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
+use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
 
 pub fn mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
     provider_kind: ProviderKind,

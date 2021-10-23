@@ -10,8 +10,8 @@ use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
 
-use crate::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
-use crate::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
+use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
+use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main]

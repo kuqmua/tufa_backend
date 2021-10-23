@@ -11,7 +11,7 @@ use config_lib::get_project_information::get_config::get_lazy_config_information
 use config_lib::get_project_information::get_mongo_url::get_mongo_url;
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use mongo_integration::mongo_drop_db::mongo_drop_db;
+use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 
 use std::time::Instant;
 

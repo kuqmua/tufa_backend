@@ -85,6 +85,17 @@ pub mod helpers {
     pub mod write_string_into_file;
 }
 
+pub mod mongo_integration {
+    pub mod mongo_check_collection_is_empty;
+    pub mod mongo_drop_collection_wrapper;
+    pub mod mongo_drop_db;
+    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider;
+    pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
+    pub mod mongo_get_provider_link_parts_as_bson_string;
+    pub mod mongo_insert_docs_in_empty_collection;
+    pub mod mongo_possibly_get_documents_as_string_vector;
+}
+
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;

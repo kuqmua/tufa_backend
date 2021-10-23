@@ -1,6 +1,6 @@
 use config_lib::get_project_information::provider_kind_enum::ProviderKind;
 
-use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
+use crate::mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
