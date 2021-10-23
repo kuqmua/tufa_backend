@@ -43,10 +43,10 @@ use crate::get_project_information::config_error::ConfigError;
 // use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 // use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 
-use crate::get_project_information::env_var_bool_enum::EnvBoolVar;
-use crate::get_project_information::env_var_i64_enum::EnvI64Var;
-use crate::get_project_information::env_var_string_enum::EnvStringVar;
-use crate::get_project_information::env_var_u8_enum::EnvU8Var;
+use crate::get_project_information::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+use crate::get_project_information::config_values_types_enums::env_var_i64_enum::EnvI64Var;
+use crate::get_project_information::config_values_types_enums::env_var_string_enum::EnvStringVar;
+use crate::get_project_information::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
