@@ -23,7 +23,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             &db_name_handle,
             db_collection_name,
             false, //todo
-        );
+        ).await;
         match future_possible_drop_collection {
             Ok(result_flag) => (provider_kind_handle, result_flag),
             Err(e) => {

@@ -1,3 +1,4 @@
+use mongodb::bson::Document;
 use mongodb::{options::ClientOptions, Client};
 use prints_lib::print_colorful_message::print_colorful_message;
 use prints_lib::print_type_enum::PrintType;
@@ -23,7 +24,7 @@ pub async fn mongo_check_collection_is_empty(
             }
             match needed_db_collection {
                 Some(collection_name) => {
-                    let collection = db.collection(&collection_name);
+                    let collection = db.collection::<Document>(&collection_name);
                     let documents_number_result = collection.count_documents(None, None).await;
                     match documents_number_result {
                         Ok(documents_number) => {

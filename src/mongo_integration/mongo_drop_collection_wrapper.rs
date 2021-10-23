@@ -1,3 +1,4 @@
+use mongodb::bson::Document;
 use mongodb::{options::ClientOptions, Client};
 
 use prints_lib::print_colorful_message::print_colorful_message;
@@ -5,7 +6,6 @@ use prints_lib::print_type_enum::PrintType;
 
 //it will fail on runtime if remove #[tokio::main]
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[tokio::main] //using different (old) tokio runtime 0.2.25
 pub async fn mongo_drop_collection_wrapper(
     mongo_url: &str,
     db_name: &str,
@@ -20,7 +20,7 @@ pub async fn mongo_drop_collection_wrapper(
             match client_result {
                 Ok(client) => {
                     let db = client.database(db_name);
-                    let collection = db.collection(db_collection_name);
+                    let collection = db.collection::<Document>(db_collection_name);
                     if check_if_collection_empty {
                         let documents_number_result = collection.count_documents(None, None).await;
                         match documents_number_result {

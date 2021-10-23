@@ -14,7 +14,6 @@ use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_
 use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-#[tokio::main]
 pub async fn mongo_get_provider_link_parts_as_bson_string(
     mongo_url: &str,
     db_name_handle: &str,
