@@ -13,7 +13,7 @@ use crate::get_project_information::config_error::ConfigError;
 
 use crate::get_project_information::env_var_types_enum::EnvVarTypes;
 
-use crate::get_project_information::project_constants::ENV_FILE_NAME;
+use crate::constants::project_constants::ENV_FILE_NAME;
 
 use crate::get_project_information::env_var_enum::EnvVar;
 

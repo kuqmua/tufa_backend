@@ -10,13 +10,13 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
-use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
-use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
+use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
+use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
+use crate::constants::project_constants::HABR_NAME_TO_CHECK;
+use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
+use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
+use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;

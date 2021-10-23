@@ -11,6 +11,7 @@ mod check_net {
 mod constants {
     pub mod tests_constants;
     pub mod env_var_names_constants;
+    pub mod project_constants;
 }
 mod fetch {
     pub mod async_write_json_into_file;
@@ -89,7 +90,6 @@ pub mod get_project_information {
     pub mod env_var_u8_enum;
     pub mod env_var_bool_enum;
     pub mod get_mongo_url;
-    pub mod project_constants;
     pub mod provider_kind_enum;
 }
 pub mod helpers {

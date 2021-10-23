@@ -35,13 +35,13 @@ use crate::get_project_information::get_config::reddit_authorization_struct::Red
 // use crate::get_project_information::get_config::config_error::ConfigError;
 use crate::get_project_information::config_error::ConfigError;
 
-// use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
-// use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+// use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
+// use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
+// use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
+// use crate::constants::project_constants::HABR_NAME_TO_CHECK;
+// use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
+// use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
+// use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 
 use crate::get_project_information::env_var_string_enum::EnvStringVar;
 use crate::get_project_information::env_var_bool_enum::EnvBoolVar;
