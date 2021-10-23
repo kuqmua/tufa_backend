@@ -1,6 +1,18 @@
-pub const PATH_TO_ENV_FILE: &str = "./../../";
+pub const GITHUB_NAME_ENV_NAME: &str = "GITHUB_NAME";
+pub const GITHUB_TOKEN_ENV_NAME: &str = "GITHUB_TOKEN";
+
+pub const REDDIT_USER_AGENT_ENV_NAME: &str = "REDDIT_USER_AGENT";
+pub const REDDIT_CLIENT_ID_ENV_NAME: &str = "REDDIT_CLIENT_ID";
+pub const REDDIT_CLIENT_SECRET_ENV_NAME: &str = "REDDIT_CLIENT_SECRET";
+pub const REDDIT_USERNAME_ENV_NAME: &str = "REDDIT_USERNAME";
+pub const REDDIT_PASSWORD_ENV_NAME: &str = "REDDIT_PASSWORD";
+
+pub const ENV_FILE_NAME: &str = ".env";
+
+pub const PATH_TO_ENV_FILE: &str = "./../";
+pub const USER_CREDENTIALS_DUMMY_HANDLE: &str ="example";
 //its important to have EXACT copy without spaces or Line feed character
-//todo 
+//todo
 pub const ENV_FILE_CONTENT: &str = r#"# for mongo local docker container
 MONGO_LOCAL_DOCKER_USERNAME="example"
 MONGO_LOCAL_DOCKER_PASSWORD="example"
@@ -329,7 +341,7 @@ INFO_BLUE="240" # u8"#;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//todo 
+//todo
 //its important to have EXACT copy without spaces or Line feed character
 pub const DOCKER_COMPOSE_CONTENT: &str = r#"version: '3.8'
 services:

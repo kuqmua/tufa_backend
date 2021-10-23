@@ -6,3 +6,4 @@ Cargo.lock
 /libs/*/target
 /mongodb_volume
 /postgresql_volume
+/tests_lib/target

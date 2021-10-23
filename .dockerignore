@@ -14,6 +14,7 @@ libs/tests_lib/target
 /parsing_file_examples
 /postgresql_volume
 /target
+/tests_lib
 /todos
 .gitignore
 docker-compose.yml
