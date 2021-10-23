@@ -1,8 +1,8 @@
 use std::thread;
 use std::thread::JoinHandle;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use std::sync::{Arc, Mutex};
@@ -13,9 +13,9 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::providers_info::get_project_information::get_twitter_providers_names::get_twitter_providers_names;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 

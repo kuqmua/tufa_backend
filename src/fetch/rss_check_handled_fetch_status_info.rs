@@ -4,10 +4,10 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_check_handled_fetch_status_info(

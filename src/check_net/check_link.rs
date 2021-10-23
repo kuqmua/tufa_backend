@@ -2,8 +2,8 @@ use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatus
 use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
 use crate::check_net::fetch_link::fetch_link;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_link(

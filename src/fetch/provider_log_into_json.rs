@@ -3,10 +3,10 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use chrono::Local;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use serde_json::json;
 use serde_json::Value;

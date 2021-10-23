@@ -9,17 +9,17 @@ use crate::fetch::rss_check_available_providers::rss_check_available_providers;
 use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
 //todo: think about naming
 type SuccessErrorTuple = (

@@ -4,14 +4,14 @@ use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wra
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]

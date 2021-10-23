@@ -7,16 +7,16 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::get_mongo_url::get_mongo_url;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_mongo_url::get_mongo_url;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 
 use std::time::Instant;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use std::collections::HashMap;
 

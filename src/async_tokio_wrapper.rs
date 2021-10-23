@@ -5,22 +5,22 @@ use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
 use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_write_fetch_error_logs_into_mongo_wrapper;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
 
-use config_lib::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::HABR_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
-use config_lib::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::project_constants::ARXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::BIORXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::GITHUB_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::HABR_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::MEDRXIV_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::REDDIT_NAME_TO_CHECK;
+use crate::get_project_information::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;
-use config_lib::get_project_information::get_mongo_url::get_mongo_url;
+use crate::get_project_information::get_mongo_url::get_mongo_url;
 
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]

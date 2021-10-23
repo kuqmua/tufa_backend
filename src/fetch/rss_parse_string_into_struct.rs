@@ -3,36 +3,36 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 
-use config_lib::get_project_information::project_constants::COMMON_PROVIDER_ITEM_HANDLE;
+use crate::get_project_information::project_constants::COMMON_PROVIDER_ITEM_HANDLE;
 
-use config_lib::get_project_information::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
+use crate::get_project_information::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
 
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
-use config_lib::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::get_project_information::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
 
-use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_1;
-use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_2;
-use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use config_lib::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_1;
+use crate::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_2;
+use crate::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::get_project_information::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 
-use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
-use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
-use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use config_lib::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
+use crate::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
+use crate::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::get_project_information::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 
-use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_1;
-use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
-use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use config_lib::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_1;
+use crate::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
+use crate::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::get_project_information::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::structs_for_parsing::arxiv_struct_for_parsing::ArxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::biorxiv_struct_for_parsing::BiorxivStructForParsing;

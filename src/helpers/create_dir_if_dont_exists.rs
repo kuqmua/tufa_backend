@@ -1,8 +1,8 @@
-use config_lib::get_project_information::project_constants::LOGS_COMMON_FOLDER_NAME;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::project_constants::LOGS_COMMON_FOLDER_NAME;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use std::fs;
 use std::path::Path;

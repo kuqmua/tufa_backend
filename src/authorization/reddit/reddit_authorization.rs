@@ -1,9 +1,9 @@
 use roux::util::error::RouxError;
 use roux::Reddit;
 
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn reddit_authorization(

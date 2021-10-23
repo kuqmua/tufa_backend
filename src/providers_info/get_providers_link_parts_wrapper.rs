@@ -1,14 +1,14 @@
 use std::collections::HashMap;
 
-use config_lib::get_project_information::get_config::get_lazy_config_information::CONFIG;
-use config_lib::get_project_information::get_mongo_url::get_mongo_url;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::get_config::get_lazy_config_information::CONFIG;
+use crate::get_project_information::get_mongo_url::get_mongo_url;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
 use crate::providers_info::get_project_information::get_providers_link_parts::get_providers_link_parts;
 use crate::providers_info::get_project_information::get_providers_link_parts::Resource;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {

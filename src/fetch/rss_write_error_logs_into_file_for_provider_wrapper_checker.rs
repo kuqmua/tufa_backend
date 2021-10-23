@@ -2,10 +2,10 @@ use serde_json::Value;
 
 use crate::helpers::create_dir_if_dont_exists::create_dir_if_dont_exists;
 use crate::helpers::write_json_into_file::write_json_into_file;
-use config_lib::get_project_information::provider_kind_enum::ProviderKind;
+use crate::get_project_information::provider_kind_enum::ProviderKind;
 
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 use std::fs::File;
 use std::io::ErrorKind;

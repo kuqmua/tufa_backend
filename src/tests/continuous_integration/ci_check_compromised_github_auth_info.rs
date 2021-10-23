@@ -1,6 +1,6 @@
-use config_lib::get_project_information::get_config::config_struct::ConfigStruct;
+use crate::get_project_information::get_config::config_struct::ConfigStruct;
 
-use config_lib::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
+use crate::get_project_information::project_constants::LOAD_CONFIG_FILE_ERROR_MESSAGE;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]

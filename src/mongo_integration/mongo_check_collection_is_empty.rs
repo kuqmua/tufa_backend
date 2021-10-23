@@ -1,7 +1,7 @@
 use mongodb::bson::Document;
 use mongodb::{options::ClientOptions, Client};
-use prints_lib::print_colorful_message::print_colorful_message;
-use prints_lib::print_type_enum::PrintType;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_check_collection_is_empty(

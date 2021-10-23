@@ -1,6 +1,6 @@
 use std::fs::File;
 
-use config_lib::get_project_information::project_constants::ENV_FILE_NAME;
+use crate::get_project_information::project_constants::ENV_FILE_NAME;
 
 use crate::tests::tests_constants::PATH_TO_ENV_FILE;
 
