@@ -8,15 +8,15 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
-use crate::get_project_information::config_error::ConfigError;
-use crate::get_project_information::config_error_inner_type_enum::ConfigErrorInnerType;
-use crate::get_project_information::var_or_bool_parse_error_enum::VarOrBoolParseError;
+use crate::config::config_error::ConfigError;
+use crate::config::config_error_inner_type_enum::ConfigErrorInnerType;
+use crate::config::var_or_bool_parse_error_enum::VarOrBoolParseError;
 
-use crate::get_project_information::config_env_var_error_type_enum::ConfigEnvVarErrorType;
+use crate::config::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
-use crate::get_project_information::env_var_enum::EnvVar;
+use crate::config::env_var_enum::EnvVar;
 
 #[derive(
     EnumVariantCount,

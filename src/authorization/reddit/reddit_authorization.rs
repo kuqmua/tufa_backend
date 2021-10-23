@@ -1,7 +1,7 @@
 use roux::util::error::RouxError;
 use roux::Reddit;
 
-use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::config::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 

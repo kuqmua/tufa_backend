@@ -10,8 +10,8 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::get_project_information::get_config::config::CONFIG;
-use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::config::get_config::config::CONFIG;
+use crate::config::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

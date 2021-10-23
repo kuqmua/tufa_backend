@@ -8,7 +8,7 @@ use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_wr
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::get_project_information::get_config::config::CONFIG;
+use crate::config::get_config::config::CONFIG;
 
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -17,7 +17,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::config::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::providers_info::init_mongo_db_and_collections::put_data_in_mongo::put_data_in_mongo;

@@ -1,5 +1,5 @@
 use crate::constants::project_constants::LOGS_COMMON_FOLDER_NAME;
-use crate::get_project_information::provider_kind_enum::ProviderKind;
+use crate::config::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
