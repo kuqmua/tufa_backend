@@ -87,7 +87,6 @@ pub mod get_project_information {
     pub mod env_var_string_enum;
     pub mod env_var_types_enum;
     pub mod env_var_u8_enum;
-    pub mod get_mongo_url;
     pub mod provider_kind_enum;
     pub mod var_or_bool_parse_error_enum;
     pub mod var_or_int_parse_error_enum;
@@ -113,6 +112,7 @@ pub mod mongo_integration {
     pub mod mongo_get_provider_link_parts_as_bson_string;
     pub mod mongo_insert_docs_in_empty_collection;
     pub mod mongo_possibly_get_documents_as_string_vector;
+    pub mod mongo_get_db_url;
 }
 pub mod postgres_integration {
     pub mod create_post;

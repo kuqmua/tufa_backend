@@ -1,7 +1,7 @@
 use crate::get_project_information::get_config::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn get_mongo_url() -> String {
+pub fn mongo_get_db_url() -> String {
     let mongo_first_handle_url_part = &CONFIG
         .mongo_params
         .mongo_url_parts

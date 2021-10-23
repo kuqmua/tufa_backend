@@ -8,9 +8,9 @@ use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mo
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
 use crate::get_project_information::get_config::config::CONFIG;
-use crate::get_project_information::get_mongo_url::get_mongo_url;
 use crate::get_project_information::provider_kind_enum::ProviderKind;
 
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 
 use std::time::Instant;
@@ -53,7 +53,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         return WriteLogsResult::Success;
     }
     let time = Instant::now();
-    let mongo_url = get_mongo_url();
+    let mongo_url = mongo_get_db_url();
     //todo: move this to config
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
