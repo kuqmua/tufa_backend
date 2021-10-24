@@ -116,7 +116,7 @@ pub mod mongo_integration {
     pub mod mongo_insert_docs_in_empty_collection;
     pub mod mongo_possibly_get_documents_as_string_vector;
     pub mod mongo_get_db_url;
-    pub mod put_data_in_mongo;
+    pub mod mongo_insert_data;
 }
 pub mod postgres_integration {
     pub mod create_post;

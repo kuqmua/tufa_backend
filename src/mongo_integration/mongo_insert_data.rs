@@ -12,7 +12,7 @@ pub enum PutDataInMongoResult {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn put_data_in_mongo(
+pub async fn mongo_insert_data(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle_second_part: &str,

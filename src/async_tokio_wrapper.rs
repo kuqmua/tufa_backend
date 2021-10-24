@@ -20,7 +20,7 @@ use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-use crate::mongo_integration::put_data_in_mongo::put_data_in_mongo;
+use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
@@ -79,7 +79,7 @@ pub async fn async_tokio_wrapper() {
     }
     //todo: add check of doc already is in collection or add flag forse
     //todo add flag for provider
-    let _ = put_data_in_mongo(
+    let _ = mongo_insert_data(
         &mongo_get_db_url(),
         &CONFIG.mongo_params.providers_db_name_handle,
         &CONFIG
