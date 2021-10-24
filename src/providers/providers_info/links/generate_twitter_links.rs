@@ -1,4 +1,4 @@
-pub fn generate_twitter_hashmap_links(
+pub fn generate_twitter_links(
     twitter_provider_names: Vec<String>,
     twitter_subs_names: Vec<String>,
 ) -> Vec<String> {

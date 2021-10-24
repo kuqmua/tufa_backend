@@ -11,21 +11,19 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::providers::providers_info::get_twitter_providers_names::get_twitter_providers_names;
-
 use crate::config_mods::config::CONFIG;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-
+use crate::providers::providers_info::get_twitter_providers_names::get_twitter_providers_names;
 use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 
-use crate::providers::providers_info::links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
-use crate::providers::providers_info::links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
-use crate::providers::providers_info::links::generate_github_hashmap_links::generate_github_hashmap_links;
-use crate::providers::providers_info::links::generate_habr_hashmap_links::generate_habr_hashmap_links;
-use crate::providers::providers_info::links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
-use crate::providers::providers_info::links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
-use crate::providers::providers_info::links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
+use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
+use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
+use crate::providers::providers_info::links::generate_github_links::generate_github_links;
+use crate::providers::providers_info::links::generate_habr_links::generate_habr_links;
+use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
+use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
+use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
@@ -92,7 +90,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_arxiv_hashmap_links(
+                                                        generate_arxiv_links(
                                                             arxiv_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -154,7 +152,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_biorxiv_hashmap_links(
+                                                        generate_biorxiv_links(
                                                             biorxiv_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -216,7 +214,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_github_hashmap_links(
+                                                        generate_github_links(
                                                             github_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -278,7 +276,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_habr_hashmap_links(
+                                                        generate_habr_links(
                                                             habr_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -338,7 +336,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_medrxiv_hashmap_links(
+                                                        generate_medrxiv_links(
                                                             medrxiv_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -400,7 +398,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
                                                     let vec_of_provider_links =
-                                                        generate_reddit_hashmap_links(
+                                                        generate_reddit_links(
                                                             reddit_link_parts.to_vec(),
                                                         );
                                                     threads_vec_checker.push(true);
@@ -463,7 +461,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         *provider_kind_handle;
 
                                                     let vec_of_provider_links =
-                                                        generate_twitter_hashmap_links(
+                                                        generate_twitter_links(
                                                             twitter_providers.clone(),
                                                             twitter_link_parts.to_vec(),
                                                         );

@@ -131,13 +131,13 @@ pub mod prints {
 mod providers {
     pub mod providers_info {
         pub mod links {
-            pub mod generate_arxiv_hashmap_links;
-            pub mod generate_biorxiv_hashmap_links;
-            pub mod generate_github_hashmap_links;
-            pub mod generate_habr_hashmap_links;
-            pub mod generate_medrxiv_hashmap_links;
-            pub mod generate_reddit_hashmap_links;
-            pub mod generate_twitter_hashmap_links;
+            pub mod generate_arxiv_links;
+            pub mod generate_biorxiv_links;
+            pub mod generate_github_links;
+            pub mod generate_habr_links;
+            pub mod generate_medrxiv_links;
+            pub mod generate_reddit_links;
+            pub mod generate_twitter_links;
         }
         pub mod get_providers_json_local_data;
         pub mod get_providers_link_parts;
