@@ -291,4 +291,7 @@ https://github.com/pemistahl/lingua-rs
 https://doc.rust-lang.org/std/macro.stringify.html
 <br/>
 
+### -------------------
+find some "try to remove .clone() from rust code" exercises
+<br/>
 
