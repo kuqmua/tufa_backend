@@ -130,7 +130,7 @@ pub mod prints {
 }
 mod providers {
     pub mod providers_info {
-        pub mod generate_hashmap_links {
+        pub mod links {
             pub mod generate_arxiv_hashmap_links;
             pub mod generate_biorxiv_hashmap_links;
             pub mod generate_github_hashmap_links;

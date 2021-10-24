@@ -19,13 +19,13 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 
-use crate::providers::providers_info::generate_hashmap_links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_github_hashmap_links::generate_github_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_habr_hashmap_links::generate_habr_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
-use crate::providers::providers_info::generate_hashmap_links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
+use crate::providers::providers_info::links::generate_arxiv_hashmap_links::generate_arxiv_hashmap_links;
+use crate::providers::providers_info::links::generate_biorxiv_hashmap_links::generate_biorxiv_hashmap_links;
+use crate::providers::providers_info::links::generate_github_hashmap_links::generate_github_hashmap_links;
+use crate::providers::providers_info::links::generate_habr_hashmap_links::generate_habr_hashmap_links;
+use crate::providers::providers_info::links::generate_medrxiv_hashmap_links::generate_medrxiv_hashmap_links;
+use crate::providers::providers_info::links::generate_reddit_hashmap_links::generate_reddit_hashmap_links;
+use crate::providers::providers_info::links::generate_twitter_hashmap_links::generate_twitter_hashmap_links;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
