@@ -286,5 +286,9 @@ rename ERROR_RED="255" # u8 into ERROR_PRINT_COLOR_RED and others
 rust language detection library
 https://github.com/pemistahl/lingua-rs
 <br/>
-    
+
+### -------------------
+https://doc.rust-lang.org/std/macro.stringify.html
+<br/>
+
 
