@@ -1,5 +1,5 @@
-use crate::providers::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
-use crate::providers::get_project_information::get_providers_link_parts_from_mongo::get_providers_link_parts_from_mongo;
+use crate::providers::providers_info::get_providers_json_local_data::get_providers_json_local_data;
+use crate::providers::providers_info::get_providers_link_parts_from_mongo::get_providers_link_parts_from_mongo;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

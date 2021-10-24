@@ -129,7 +129,7 @@ pub mod prints {
     pub mod print_type_enum;
 }
 mod providers {
-    pub mod get_project_information {
+    pub mod providers_info {
         pub mod generate_hashmap_links {
             pub mod generate_arxiv_hashmap_links;
             pub mod generate_biorxiv_hashmap_links;
