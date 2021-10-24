@@ -116,6 +116,7 @@ pub mod mongo_integration {
     pub mod mongo_insert_docs_in_empty_collection;
     pub mod mongo_possibly_get_documents_as_string_vector;
     pub mod mongo_get_db_url;
+    pub mod put_data_in_mongo;
 }
 pub mod postgres_integration {
     pub mod create_post;
@@ -142,9 +143,6 @@ mod providers {
         pub mod get_providers_link_parts;
         pub mod get_providers_link_parts_from_mongo;
         pub mod get_twitter_providers_names;
-    }
-    pub mod init_mongo_db_and_collections {
-        pub mod put_data_in_mongo;
     }
     pub mod get_providers_link_parts_wrapper;
     pub mod provider_kind_enum;
