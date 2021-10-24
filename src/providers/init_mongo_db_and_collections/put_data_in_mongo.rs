@@ -1,4 +1,4 @@
-use crate::providers_info::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
+use crate::providers::get_project_information::get_providers_json_local_data::get_providers_json_local_data;
 // use mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 

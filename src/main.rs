@@ -127,7 +127,7 @@ pub mod prints {
     pub mod print_colorful_message;
     pub mod print_type_enum;
 }
-mod providers_info {
+mod providers {
     pub mod get_project_information {
         pub mod generate_hashmap_links {
             pub mod generate_arxiv_hashmap_links;

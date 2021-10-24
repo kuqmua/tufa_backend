@@ -1,7 +1,7 @@
 use crate::logs_logic::drop_mongo_provider_logs_collection_if_need::drop_mongo_provider_logs_collection_if_need;
 
 use crate::config_mods::config::CONFIG;
-use crate::providers_info::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::ProviderKind;
 
 pub async fn drop_mongo_logs_collection_wrapper_for_providers(
     provider_kind_handle: ProviderKind,

@@ -3,7 +3,7 @@ extern crate serde;
 extern crate serde_xml_rs;
 
 use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_parsed_posts;
-use crate::providers_info::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

@@ -1,4 +1,4 @@
-use crate::providers_info::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
