@@ -10,7 +10,6 @@ pub enum Resource {
         file_extension: String,
     },
     Mongodb {
-        mongo_url: String,
         db_name_handle: String,
         db_collection_document_field_name_handle: String,
         providers_string_into_enum_hashmap: HashMap<String, ProviderKind>,

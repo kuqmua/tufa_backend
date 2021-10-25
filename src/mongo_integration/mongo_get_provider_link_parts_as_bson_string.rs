@@ -12,17 +12,17 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
 use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_get_provider_link_parts_as_bson_string(
-    mongo_url: &str,
     db_name_handle: &str,
     db_collection_name_handle: String,
     db_collection_document_field_name_handle: &str,
     provider_kind: ProviderKind,
 ) -> Result<Vec<String>, mongodb::error::Error> {
     //todo maybe option vec string
-    let client_options = ClientOptions::parse(mongo_url).await?;
+    let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
     let client_result = Client::with_options(client_options);
     let vec_of_strings_to_return: Vec<String>;
     match client_result {
