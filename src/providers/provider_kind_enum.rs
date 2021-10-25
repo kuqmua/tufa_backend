@@ -58,7 +58,13 @@ impl ProviderKind {
     }
     pub fn get_mongo_collection_name(provider_kind: ProviderKind) -> String {
         let name = ProviderKind::get_string_name(provider_kind);
-        format!("{}{}", name, CONFIG.mongo_params.providers_db_collection_handle_second_part)
+        format!(
+            "{}{}",
+            name,
+            CONFIG
+                .mongo_params
+                .providers_db_collection_handle_second_part
+        )
     }
     pub fn get_length() -> usize {
         ENUM_LENGTH

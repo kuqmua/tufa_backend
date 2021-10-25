@@ -21,7 +21,6 @@ use crate::mongo_integration::mongo_get_provider_link_parts_as_bson_string::mong
 pub async fn get_providers_link_parts_from_mongo(
     mongo_url: String,
     db_name_handle: String,
-    db_collection_handle_second_part: String,
     db_collection_document_field_name_handle: String,
     providers_string_into_enum_hashmap: HashMap<String, ProviderKind>,
 ) -> HashMap<String, Vec<String>> {
@@ -31,7 +30,6 @@ pub async fn get_providers_link_parts_from_mongo(
     for provider_tuple in providers_string_into_enum_hashmap {
         let mongo_url_clone = mongo_url.clone();
         let db_name_handle_clone = db_name_handle.clone();
-        let db_collection_handle_second_part_clone = db_collection_handle_second_part.clone();
         let db_collection_document_field_name_handle_clone =
             db_collection_document_field_name_handle.clone();
         let vec_of_link_parts_hashmap_under_arc_handle =
@@ -43,7 +41,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -55,7 +52,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -67,7 +63,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -79,7 +74,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -91,7 +85,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -103,7 +96,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -115,7 +107,6 @@ pub async fn get_providers_link_parts_from_mongo(
                     db_name_handle_clone,
                     provider_tuple.0,
                     provider_tuple.1,
-                    db_collection_handle_second_part_clone,
                     db_collection_document_field_name_handle_clone,
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
@@ -142,7 +133,6 @@ async fn get_provider_link_parts_from_mongo(
     db_name_handle_clone: String,
     provider_tuple_0: String,
     provider_tuple_1: ProviderKind,
-    db_collection_handle_second_part_clone: String,
     db_collection_document_field_name_handle_clone: String,
     vec_of_link_parts_hashmap_under_arc_handle: Arc<Mutex<HashMap<String, Vec<String>>>>,
 ) {

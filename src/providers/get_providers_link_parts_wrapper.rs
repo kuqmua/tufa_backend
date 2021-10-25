@@ -20,10 +20,6 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
     let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
-        db_collection_handle_second_part: CONFIG
-            .mongo_params
-            .providers_db_collection_handle_second_part
-            .to_string(),
         db_collection_document_field_name_handle: CONFIG
             .mongo_params
             .providers_db_collection_document_field_name_handle
