@@ -99,6 +99,7 @@ pub mod helpers {
     pub mod json_to_string;
     pub mod write_json_into_file;
     pub mod write_string_into_file;
+    pub mod resource;
 }
 mod logs_logic {
     pub mod async_write_fetch_error_logs_into_mongo_wrapper;

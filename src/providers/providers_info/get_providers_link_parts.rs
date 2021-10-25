@@ -1,9 +1,9 @@
 use crate::providers::providers_info::get_providers_json_local_data::get_providers_json_local_data;
 use crate::providers::providers_info::get_providers_link_parts_from_mongo::get_providers_link_parts_from_mongo;
 
-use crate::providers::provider_kind_enum::ProviderKind;
-
 use std::collections::HashMap;
+
+use crate::helpers::resource::Resource;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Vec<String>> {
@@ -43,21 +43,4 @@ pub async fn get_providers_link_parts(resource: &Resource) -> HashMap<String, Ve
         }
     }
     vec_of_link_parts_hashmap
-}
-// #[derive(Clone, Debug, serde_derive::Deserialize, PartialEq, serde_derive::Serialize)]
-pub enum Resource {
-    Local {
-        path_to_provider_link_parts_folder: String,
-        vec_of_provider_names: Vec<String>,
-        second_part_of_file_name: String,
-        file_extension: String,
-    },
-    Mongodb {
-        mongo_url: String,
-        db_name_handle: String,
-        db_collection_handle_second_part: String,
-        db_collection_document_field_name_handle: String,
-        providers_string_into_enum_hashmap: HashMap<String, ProviderKind>,
-    },
-    PostgreSql,
 }

@@ -4,7 +4,7 @@ use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
-use crate::providers::providers_info::get_providers_link_parts::Resource;
+use crate::helpers::resource::Resource;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
