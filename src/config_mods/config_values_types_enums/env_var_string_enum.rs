@@ -8,9 +8,9 @@ use strum_macros::EnumIter;
 
 use dotenv::dotenv;
 
+use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
-use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::env_var_enum::EnvVar;
 
 use crate::constants::project_constants::ENV_FILE_NAME;

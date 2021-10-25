@@ -18,7 +18,9 @@ fn ci_check_compromised_reddit_auth_info() {
                     if reddit_user_agent != _USER_CREDENTIALS_DUMMY_HANDLE {
                         panic!(
                             "{} != {}, found {}",
-                            REDDIT_USER_AGENT_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, reddit_user_agent
+                            REDDIT_USER_AGENT_ENV_NAME,
+                            _USER_CREDENTIALS_DUMMY_HANDLE,
+                            reddit_user_agent
                         );
                     }
                 }
@@ -34,7 +36,9 @@ fn ci_check_compromised_reddit_auth_info() {
                     if reddit_client_id != _USER_CREDENTIALS_DUMMY_HANDLE {
                         panic!(
                             "{} != {}, found {}",
-                            REDDIT_CLIENT_ID_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, reddit_client_id
+                            REDDIT_CLIENT_ID_ENV_NAME,
+                            _USER_CREDENTIALS_DUMMY_HANDLE,
+                            reddit_client_id
                         );
                     }
                 }
@@ -68,7 +72,9 @@ fn ci_check_compromised_reddit_auth_info() {
                     if reddit_username != _USER_CREDENTIALS_DUMMY_HANDLE {
                         panic!(
                             "{} != {}, found {}",
-                            REDDIT_USERNAME_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, reddit_username
+                            REDDIT_USERNAME_ENV_NAME,
+                            _USER_CREDENTIALS_DUMMY_HANDLE,
+                            reddit_username
                         );
                     }
                 }
@@ -84,7 +90,9 @@ fn ci_check_compromised_reddit_auth_info() {
                     if reddit_password != _USER_CREDENTIALS_DUMMY_HANDLE {
                         panic!(
                             "{} != {}, found {}",
-                            REDDIT_PASSWORD_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, reddit_password
+                            REDDIT_PASSWORD_ENV_NAME,
+                            _USER_CREDENTIALS_DUMMY_HANDLE,
+                            reddit_password
                         );
                     }
                 }

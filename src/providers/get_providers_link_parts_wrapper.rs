@@ -3,7 +3,8 @@ use std::collections::HashMap;
 use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
+use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
+
 use crate::helpers::resource::Resource;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -16,7 +17,7 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
     let mongo_url = mongo_get_db_url();
     let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
         ProviderKind::into_string_name_and_kind_hashmap();
-    let providers_link_parts = get_providers_link_parts(&Resource::Mongodb {
+    let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {
         mongo_url,
         db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
         db_collection_handle_second_part: CONFIG
@@ -40,7 +41,7 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<St
             line!().to_string(),
             "providers_link_parts .is_empty".to_string(),
         );
-        let providers_link_parts_local = get_providers_link_parts(&Resource::Local {
+        let providers_link_parts_local = get_providers_link_parts_as_hashmap(&Resource::Local {
             path_to_provider_link_parts_folder: CONFIG
                 .mongo_params
                 .path_to_provider_link_parts_folder

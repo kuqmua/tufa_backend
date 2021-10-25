@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
+use crate::config_mods::config::CONFIG;
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -10,7 +11,6 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -149,10 +149,7 @@ async fn get_provider_link_parts_from_mongo(
     let result_getting_provider_link_parts = mongo_get_provider_link_parts_as_bson_string(
         &mongo_url_clone,
         &db_name_handle_clone,
-        format!(
-            "{}{}",
-            provider_tuple_0, db_collection_handle_second_part_clone
-        ),
+        ProviderKind::get_mongo_collection_name(provider_tuple_1),
         &db_collection_document_field_name_handle_clone,
         provider_tuple_1,
     )

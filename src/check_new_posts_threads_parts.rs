@@ -13,9 +13,9 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::config_mods::config::CONFIG;
 
+use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_twitter_providers_names::get_twitter_providers_names;
-use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
@@ -275,10 +275,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                         Arc::clone(&error_posts);
                                                     let provider_kind_handle_clone =
                                                         *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_habr_links(
-                                                            habr_link_parts.to_vec(),
-                                                        );
+                                                    let vec_of_provider_links = generate_habr_links(
+                                                        habr_link_parts.to_vec(),
+                                                    );
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(

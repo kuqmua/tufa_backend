@@ -1,6 +1,7 @@
-use std::collections::HashMap;
 use crate::providers::provider_kind_enum::ProviderKind;
+use std::collections::HashMap;
 
+#[derive(Debug)]
 pub enum Resource {
     Local {
         path_to_provider_link_parts_folder: String,

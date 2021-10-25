@@ -10,8 +10,8 @@ use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_t
 use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
 use std::time::Instant;
 
