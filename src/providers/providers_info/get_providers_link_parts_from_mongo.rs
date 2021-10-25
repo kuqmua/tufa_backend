@@ -3,18 +3,7 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-use crate::config_mods::config::CONFIG;
-use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
-use crate::constants::project_constants::HABR_NAME_TO_CHECK;
-use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
-use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 use crate::providers::provider_kind_enum::ProviderKind;
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 
 use crate::mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
 
@@ -34,8 +23,8 @@ pub async fn get_providers_link_parts_from_mongo(
             db_collection_document_field_name_handle.clone();
         let vec_of_link_parts_hashmap_under_arc_handle =
             Arc::clone(&vec_of_link_parts_hashmap_under_arc);
-        if provider_tuple.0 == ARXIV_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_arxiv {
+        if ProviderKind::get_string_name(provider_tuple.1) == provider_tuple.0{
+            if ProviderKind::is_enabled(provider_tuple.1) {
                 vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
                     mongo_url_clone,
                     db_name_handle_clone,
@@ -45,80 +34,9 @@ pub async fn get_providers_link_parts_from_mongo(
                     vec_of_link_parts_hashmap_under_arc_handle,
                 )));
             }
-        } else if provider_tuple.0 == BIORXIV_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_biorxiv {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else if provider_tuple.0 == GITHUB_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_github {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else if provider_tuple.0 == HABR_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_habr {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else if provider_tuple.0 == MEDRXIV_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_medrxiv {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else if provider_tuple.0 == REDDIT_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_reddit {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else if provider_tuple.0 == TWITTER_NAME_TO_CHECK {
-            if CONFIG.enable_providers.enable_twitter {
-                vec_of_tasks.push(tokio::task::spawn(get_provider_link_parts_from_mongo(
-                    mongo_url_clone,
-                    db_name_handle_clone,
-                    provider_tuple.0,
-                    provider_tuple.1,
-                    db_collection_document_field_name_handle_clone,
-                    vec_of_link_parts_hashmap_under_arc_handle,
-                )));
-            }
-        } else {
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                format!("some different provider {}", provider_tuple.0),
-            );
+        }
+        else {
+            println!("different provider kinf string name (remove after migrating into enums)")
         }
     }
     let _ = join_all(vec_of_tasks).await;
