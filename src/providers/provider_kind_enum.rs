@@ -77,8 +77,75 @@ impl ProviderKind {
             ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
         }
     }
+    pub fn is_mongo_initialization_enabled(provider_kind: ProviderKind) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_arxiv_link_parts
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_biorxiv_link_parts
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_github_link_parts
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_habr_link_parts
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_medrxiv_link_parts
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_reddit_link_parts
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_twitter_link_parts
+            }
+        }
+    }
+    pub fn stringify(provider_kind: ProviderKind) -> &'static str {
+        match provider_kind {
+            ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Biorxiv => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Github => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Habr => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Medrxiv => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Reddit => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Twitter => stringify!(ProviderKind::Arxiv),
+        }
+    }
     pub fn get_length() -> usize {
         ENUM_LENGTH
+    }
+    pub fn get_mongo_initialization_vec() -> Vec<&'static str> {
+        let mut vec_of_filtered_provider_names: Vec<&'static str> =
+            Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in
+            ProviderKind::iter().filter(|element| ProviderKind::is_mongo_initialization_enabled(*element))
+        {
+            vec_of_filtered_provider_names.push(ProviderKind::get_string_name(provider_kind))
+        }
+        vec_of_filtered_provider_names
     }
     pub fn into_vec() -> Vec<ProviderKind> {
         let mut provider_kind_vec = Vec::with_capacity(ENUM_LENGTH);
@@ -95,13 +162,13 @@ impl ProviderKind {
         provider_kind_vec
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
+    pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, ProviderKind> {
         //its String coz legacy
-        let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
+        let mut config_provider_string_to_enum_struct_hasmap: HashMap<&'static str, ProviderKind> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
             config_provider_string_to_enum_struct_hasmap.insert(
-                ProviderKind::get_string_name(provider_kind).to_owned(),
+                ProviderKind::get_string_name(provider_kind),
                 provider_kind,
             );
         }

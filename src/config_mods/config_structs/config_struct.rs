@@ -88,34 +88,34 @@ impl ConfigStruct {
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
         //todo: rewrite it with type system enum ProviderKind
         let mut vec_of_provider_names_handle =
-            Vec::<String>::with_capacity(ProviderKind::get_length());
+            Vec::<&'static str>::with_capacity(ProviderKind::get_length());
         if bool_vars[&EnvBoolVar::EnableArxiv] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Arxiv).to_owned());
+                .push(ProviderKind::get_string_name(ProviderKind::Arxiv));
         }
         if bool_vars[&EnvBoolVar::EnableBiorxiv] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Biorxiv).to_owned())
+                .push(ProviderKind::get_string_name(ProviderKind::Biorxiv))
         }
         if bool_vars[&EnvBoolVar::EnableGithub] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Github).to_owned());
+                .push(ProviderKind::get_string_name(ProviderKind::Github));
         }
         if bool_vars[&EnvBoolVar::EnableHabr] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Habr).to_owned())
+                .push(ProviderKind::get_string_name(ProviderKind::Habr))
         }
         if bool_vars[&EnvBoolVar::EnableMedrxiv] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Medrxiv).to_owned())
+                .push(ProviderKind::get_string_name(ProviderKind::Medrxiv))
         }
         if bool_vars[&EnvBoolVar::EnableReddit] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Reddit).to_owned())
+                .push(ProviderKind::get_string_name(ProviderKind::Reddit))
         }
         if bool_vars[&EnvBoolVar::EnableTwitter] {
             vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Twitter).to_owned())
+                .push(ProviderKind::get_string_name(ProviderKind::Twitter))
         }
 
         let handle_config: ConfigStruct = ConfigStruct {

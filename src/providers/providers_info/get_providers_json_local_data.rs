@@ -4,11 +4,11 @@ use std::fs;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_json_local_data(
     path: &str,
-    vec_of_provider_names: std::vec::Vec<String>,
+    vec_of_provider_names: std::vec::Vec<&'static str>,
     second_part_of_file_name: &str,
     file_extension: &str,
-) -> HashMap<String, Vec<String>> {
-    let mut vec_of_link_parts_hashmap: HashMap<String, Vec<String>> = HashMap::new();
+) -> HashMap<&'static str, Vec<String>> {
+    let mut vec_of_link_parts_hashmap: HashMap<&'static str, Vec<String>> = HashMap::new();
     //todo: do it async in parallel
     for provider_name in vec_of_provider_names {
         let result_of_reading_to_string = fs::read_to_string(&format!(

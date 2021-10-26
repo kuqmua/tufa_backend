@@ -8,8 +8,8 @@ use crate::helpers::resource::Resource;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_as_hashmap(
     resource: &Resource,
-) -> HashMap<String, Vec<String>> {
-    let vec_of_link_parts_hashmap: HashMap<String, Vec<String>>;
+) -> HashMap<&'static str, Vec<String>> {
+    let vec_of_link_parts_hashmap: HashMap<&'static str, Vec<String>>;
     match resource {
         Resource::Local {
             path_to_provider_link_parts_folder,
