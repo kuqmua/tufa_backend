@@ -62,7 +62,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         match config_provider_string_to_enum_struct_hashmap.get(provider_name) {
                             Some(provider_kind_handle) => match provider_kind_handle {
                                 ProviderKind::Arxiv => {
-                                    if CONFIG.enable_providers.enable_arxiv {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(arxiv_link_parts) => {
                                                 if arxiv_link_parts.is_empty() {
@@ -124,7 +124,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Biorxiv => {
-                                    if CONFIG.enable_providers.enable_biorxiv {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(biorxiv_link_parts) => {
                                                 if biorxiv_link_parts.is_empty() {
@@ -186,7 +186,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Github => {
-                                    if CONFIG.enable_providers.enable_github {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(github_link_parts) => {
                                                 if github_link_parts.is_empty() {
@@ -248,7 +248,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Habr => {
-                                    if CONFIG.enable_providers.enable_habr {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(habr_link_parts) => {
                                                 if habr_link_parts.is_empty() {
@@ -307,7 +307,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Medrxiv => {
-                                    if CONFIG.enable_providers.enable_medrxiv {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(medrxiv_link_parts) => {
                                                 if medrxiv_link_parts.is_empty() {
@@ -369,7 +369,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Reddit => {
-                                    if CONFIG.enable_providers.enable_reddit {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(reddit_link_parts) => {
                                                 if reddit_link_parts.is_empty() {
@@ -431,7 +431,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     }
                                 }
                                 ProviderKind::Twitter => {
-                                    if CONFIG.enable_providers.enable_twitter {
+                                    if ProviderKind::is_enabled(*provider_kind_handle) {
                                         match providers_link_parts.get(provider_name) {
                                             Some(twitter_link_parts) => {
                                                 let twitter_providers =
