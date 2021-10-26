@@ -382,3 +382,11 @@ warning: variant is never constructed: `PostgreSql`
    |
    = note: `#[warn(dead_code)]` on by default
 <br/>
+
+### -------------------
+Result instead of option in all code possible coz return Option loosing information about error 
+<br/>
+
+### -------------------
+big enum of enums(recursive) of all errors in project
+<br/>
