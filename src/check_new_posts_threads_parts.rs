@@ -38,15 +38,15 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         ProviderKind,
     )>,
 )> {
-    if !CONFIG.params.vec_of_provider_names.is_empty() {
+    if !ProviderKind::get_enabled_string_name_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
         match option_providers_link_parts {
             Some(providers_link_parts) => {
                 if !providers_link_parts.is_empty() {
                     let mut threads_vec: Vec<JoinHandle<()>> =
-                        Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
+                        Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
                     let mut threads_vec_checker =
-                        Vec::<bool>::with_capacity(CONFIG.params.vec_of_provider_names.len());
+                        Vec::<bool>::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
                     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
                     let error_posts = Arc::new(Mutex::new(Vec::<(
                         String,
@@ -58,7 +58,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                     let config_provider_string_to_enum_struct_hashmap =
                         ProviderKind::into_string_name_and_kind_hashmap();
                     //check if provider_names are unique
-                    for provider_name in &CONFIG.params.vec_of_provider_names {
+                    for provider_name in &ProviderKind::get_enabled_string_name_vec() {
                         match config_provider_string_to_enum_struct_hashmap.get(provider_name) {
                             Some(provider_kind_handle) => match provider_kind_handle {
                                 ProviderKind::Arxiv => {

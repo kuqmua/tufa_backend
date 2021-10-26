@@ -31,7 +31,6 @@ pub async fn async_tokio_wrapper() {
             .mongo_params
             .providers_db_collection_document_field_name_handle,
         &CONFIG.mongo_params.path_to_provider_link_parts_folder,
-        // CONFIG.params.vec_of_provider_names.clone(),
         vec_of_filtered_provider_names,
         &CONFIG.mongo_params.log_file_extension,
     )

@@ -131,8 +131,6 @@ impl ConfigStruct {
                 reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
             },
             params: Params {
-                //todo
-                vec_of_provider_names: vec_of_provider_names_handle,
                 starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
                 warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName].clone(),
                 unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars[&EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir].clone(),

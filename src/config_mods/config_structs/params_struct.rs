@@ -1,6 +1,5 @@
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct Params {
-    pub vec_of_provider_names: Vec<&'static str>,
     pub starting_check_link: String,
     pub warning_logs_directory_name: String,
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
