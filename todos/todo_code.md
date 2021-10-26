@@ -390,3 +390,7 @@ Result instead of option in all code possible coz return Option loosing informat
 ### -------------------
 big enum of enums(recursive) of all errors in project
 <br/>
+
+### -------------------
+move providers link parts (specific urls) to project constants
+<br/>
