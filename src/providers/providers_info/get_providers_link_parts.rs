@@ -25,13 +25,9 @@ pub async fn get_providers_link_parts_as_hashmap(
             );
         }
         Resource::Mongodb {
-            db_name_handle,
-            db_collection_document_field_name_handle,
             providers_string_into_enum_hashmap,
         } => {
             vec_of_link_parts_hashmap = get_providers_link_parts_from_mongo(
-                db_name_handle.to_string(),
-                db_collection_document_field_name_handle.to_string(),
                 providers_string_into_enum_hashmap.clone(),
             )
             .await;

@@ -15,11 +15,6 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<&'static str, 
     let providers_string_into_enum_hashmap: HashMap<&'static str, ProviderKind> =
         ProviderKind::into_string_name_and_kind_hashmap();
     let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {
-        db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
-        db_collection_document_field_name_handle: CONFIG
-            .mongo_params
-            .providers_db_collection_document_field_name_handle
-            .to_string(),
         providers_string_into_enum_hashmap,
     })
     .await;
