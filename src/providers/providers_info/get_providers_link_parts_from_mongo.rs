@@ -5,8 +5,6 @@ use futures::future::join_all;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::mongo_integration::mongo_get_provider_link_parts_as_bson_string::mongo_get_provider_link_parts_as_bson_string;
-
 pub async fn get_providers_link_parts_from_mongo(
     db_name_handle: String,
     db_collection_document_field_name_handle: String,
