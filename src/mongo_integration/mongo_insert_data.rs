@@ -18,7 +18,6 @@ pub async fn mongo_insert_data(
     db_collection_handle_second_part: &str,
     db_collection_document_field_name_handle: &str,
     path_to_provider_link_parts_folder: &str,
-    vec_of_provider_names: Vec<&'static str>,
     file_extension: &str,
 ) -> PutDataInMongoResult {
     // for key in vec_of_provider_names.clone() {
@@ -43,7 +42,6 @@ pub async fn mongo_insert_data(
     // }
     let vec_of_link_parts_hashmap = get_providers_json_local_data(
         path_to_provider_link_parts_folder,
-        vec_of_provider_names,
         db_collection_handle_second_part,
         file_extension,
     );
