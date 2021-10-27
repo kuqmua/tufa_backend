@@ -45,8 +45,9 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                 if !providers_link_parts.is_empty() {
                     let mut threads_vec: Vec<JoinHandle<()>> =
                         Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
-                    let mut threads_vec_checker =
-                        Vec::<bool>::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
+                    let mut threads_vec_checker = Vec::<bool>::with_capacity(
+                        ProviderKind::get_enabled_string_name_vec().len(),
+                    );
                     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
                     let error_posts = Arc::new(Mutex::new(Vec::<(
                         String,

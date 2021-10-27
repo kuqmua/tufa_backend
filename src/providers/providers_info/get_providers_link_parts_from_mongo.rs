@@ -49,13 +49,7 @@ async fn get_provider_link_parts_from_mongo(
     db_collection_document_field_name_handle_clone: String,
     vec_of_link_parts_hashmap_under_arc_handle: Arc<Mutex<HashMap<&'static str, Vec<String>>>>,
 ) {
-    let result_getting_provider_link_parts = mongo_get_provider_link_parts_as_bson_string(
-        &db_name_handle_clone,
-        ProviderKind::get_mongo_collection_name(provider_tuple_1),
-        &db_collection_document_field_name_handle_clone,
-        provider_tuple_1,
-    )
-    .await;
+    let result_getting_provider_link_parts = ProviderKind::mongo_get_provider_link_parts_as_bson_string(provider_tuple_1).await;
     match result_getting_provider_link_parts {
         Ok(provider_link_parts) => {
             let mut vec_of_link_parts_hashmap_under_arc_handle_locked =

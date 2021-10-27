@@ -22,6 +22,19 @@ use strum_macros::EnumIter;
 // use crate::prints::print_colorful_message::print_colorful_message;
 // use crate::prints::print_type_enum::PrintType;
 
+use mongodb::{
+    bson::{doc, Document},
+    options::ClientOptions,
+    Client,
+};
+
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
+
+use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper::mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;
+use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+
 #[derive(
     EnumVariantCount,
     EnumIter,
@@ -138,9 +151,10 @@ impl ProviderKind {
         ENUM_LENGTH
     }
     pub fn get_enabled_string_name_vec() -> Vec<&'static str> {
-        let mut string_name_vec: Vec<&'static str> =
-        Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter().filter(|element| ProviderKind::is_enabled(*element)) {
+        let mut string_name_vec: Vec<&'static str> = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in
+            ProviderKind::iter().filter(|element| ProviderKind::is_enabled(*element))
+        {
             string_name_vec.push(ProviderKind::get_string_name(provider_kind));
         }
         string_name_vec
@@ -148,8 +162,8 @@ impl ProviderKind {
     pub fn get_mongo_initialization_vec() -> Vec<&'static str> {
         let mut vec_of_filtered_provider_names: Vec<&'static str> =
             Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in
-            ProviderKind::iter().filter(|element| ProviderKind::is_mongo_initialization_enabled(*element))
+        for provider_kind in ProviderKind::iter()
+            .filter(|element| ProviderKind::is_mongo_initialization_enabled(*element))
         {
             vec_of_filtered_provider_names.push(ProviderKind::get_string_name(provider_kind))
         }
@@ -175,10 +189,8 @@ impl ProviderKind {
         let mut config_provider_string_to_enum_struct_hasmap: HashMap<&'static str, ProviderKind> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
-            config_provider_string_to_enum_struct_hasmap.insert(
-                ProviderKind::get_string_name(provider_kind),
-                provider_kind,
-            );
+            config_provider_string_to_enum_struct_hasmap
+                .insert(ProviderKind::get_string_name(provider_kind), provider_kind);
         }
         config_provider_string_to_enum_struct_hasmap
     }
@@ -224,99 +236,127 @@ impl ProviderKind {
         }
         provider_kind_vec
     }
-    // ////////
-    // pub async fn get_link_parts(resource: &Resource, provider_kind: ProviderKind) -> Option<Vec<String>> {
-    //     let providers_link_parts = get_providers_link_parts_as_hashmap(resource).await;
-    //     if !providers_link_parts.is_empty() {
-    //         Some(providers_link_parts)
-    //     } else {
-    //         print_colorful_message(
-    //             None,
-    //             PrintType::WarningLow,
-    //             file!().to_string(),
-    //             line!().to_string(),
-    //             "providers_link_parts .is_empty".to_string(),
-    //         );
-    //         let providers_link_parts_local = get_providers_link_parts_as_hashmap(&Resource::Local {
-    //             path_to_provider_link_parts_folder: CONFIG
-    //                 .mongo_params
-    //                 .path_to_provider_link_parts_folder
-    //                 .to_string(),
-    //             vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
-    //             second_part_of_file_name: CONFIG
-    //                 .mongo_params
-    //                 .providers_db_collection_handle_second_part //why that in mongo_params?
-    //                 .to_string(),
-    //             file_extension: CONFIG.mongo_params.log_file_extension.to_string(),
-    //         })
-    //         .await;
-    //         if !providers_link_parts_local.is_empty() {
-    //             Some(providers_link_parts_local)
-    //         } else {
-    //             print_colorful_message(
-    //                 None,
-    //                 PrintType::Error,
-    //                 file!().to_string(),
-    //                 line!().to_string(),
-    //                 "providers_link_parts_local.is_empty too".to_string(),
-    //             );
-    //             None
-    //         }
-    //     }
-    // }
-    // pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<String, Vec<String>>> {
-    //     let mongo_url = mongo_get_db_url();
-    //     let providers_string_into_enum_hashmap: HashMap<String, ProviderKind> =
-    //         ProviderKind::into_string_name_and_kind_hashmap();
-    //     let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {
-    //         mongo_url,
-    //         db_name_handle: CONFIG.mongo_params.providers_db_name_handle.to_string(),
-    //         db_collection_handle_second_part: CONFIG
-    //             .mongo_params
-    //             .providers_db_collection_handle_second_part
-    //             .to_string(),
-    //         db_collection_document_field_name_handle: CONFIG
-    //             .mongo_params
-    //             .providers_db_collection_document_field_name_handle
-    //             .to_string(),
-    //         providers_string_into_enum_hashmap,
-    //     })
-    //     .await;
-    //     if !providers_link_parts.is_empty() {
-    //         Some(providers_link_parts)
-    //     } else {
-    //         print_colorful_message(
-    //             None,
-    //             PrintType::WarningLow,
-    //             file!().to_string(),
-    //             line!().to_string(),
-    //             "providers_link_parts .is_empty".to_string(),
-    //         );
-    //         let providers_link_parts_local = get_providers_link_parts_as_hashmap(&Resource::Local {
-    //             path_to_provider_link_parts_folder: CONFIG
-    //                 .mongo_params
-    //                 .path_to_provider_link_parts_folder
-    //                 .to_string(),
-    //             vec_of_provider_names: CONFIG.params.vec_of_provider_names.clone(),
-    //             second_part_of_file_name: CONFIG
-    //                 .mongo_params
-    //                 .providers_db_collection_handle_second_part //why that in mongo_params?
-    //                 .to_string(),
-    //             file_extension: CONFIG.mongo_params.log_file_extension.to_string(),
-    //         })
-    //         .await;
-    //         if !providers_link_parts_local.is_empty() {
-    //             Some(providers_link_parts_local)
-    //         } else {
-    //             print_colorful_message(
-    //                 None,
-    //                 PrintType::Error,
-    //                 file!().to_string(),
-    //                 line!().to_string(),
-    //                 "providers_link_parts_local.is_empty too".to_string(),
-    //             );
-    //             None
-    //         }
-    //     }
-    // }
+    ////////////////////
+    
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub async fn mongo_get_provider_link_parts_as_bson_string(
+        provider_kind: ProviderKind,
+    ) -> Result<Vec<String>, mongodb::error::Error> {
+        //todo maybe option vec string
+        let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
+        let client_result = Client::with_options(client_options);
+        let vec_of_strings_to_return: Vec<String>;
+        match client_result {
+            Ok(client) => {
+                //declare db name. there is no create db method in mongo
+                let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
+                let mut needed_db_collection: Option<String> = None;
+                for collection_name in db.list_collection_names(None).await? {
+                    if collection_name == *ProviderKind::get_mongo_collection_name(provider_kind) {
+                        needed_db_collection = Some(collection_name);
+                    }
+                }
+                match needed_db_collection {
+                    Some(collection_name) => {
+                        let collection = db.collection(&collection_name);
+                        let documents_number_result = collection.count_documents(None, None).await;
+                        match documents_number_result {
+                            Ok(documents_number) => {
+                                if documents_number > 0 {
+                                    //rewrite as PrintType::Info or something
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::Success,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("collection.count_documents {}", documents_number),
+                                    );
+                                    let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
+                                    if CONFIG.params.enable_provider_links_limit {
+                                        if CONFIG.params.enable_common_providers_links_limit {
+                                            if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo {
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }});
+                                            }
+                                            else {
+                                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
+                                            }
+                                        } else {
+                                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper(
+                                                        provider_kind
+                                            );
+                                        }
+                                    } else {
+                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
+                                    }
+                                    // let aggregation_stage_1_get_docs_in_random_order_with_limit =
+                                    //     doc! { "$sample" : {"size": 5 }};
+                                    // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
+                                    let result = mongo_possibly_get_documents_as_string_vector(
+                                        collection,
+                                        &CONFIG.mongo_params.providers_db_collection_document_field_name_handle,
+                                        option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+                                    )
+                                    .await;
+                                    match result {
+                                        Ok(vec_of_strings) => vec_of_strings_to_return = vec_of_strings,
+                                        Err(e) => {
+                                            vec_of_strings_to_return = Vec::new();
+                                            print_colorful_message(
+                                                None,
+                                                PrintType::WarningLow,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!("mongo_possibly_get_documents_as_string_vector error {:#?}", e),
+                                            );
+                                        }
+                                    }
+                                } else {
+                                    vec_of_strings_to_return = Vec::new();
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::WarningLow,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("documents_number is {}", documents_number),
+                                    );
+                                }
+                            }
+                            Err(e) => {
+                                vec_of_strings_to_return = Vec::new();
+                                print_colorful_message(
+                                    None,
+                                    PrintType::WarningHigh,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("collection.count_documents error {:#?}", e),
+                                );
+                            }
+                        }
+                    }
+                    None => {
+                        vec_of_strings_to_return = Vec::new();
+                        print_colorful_message(
+                            None,
+                            PrintType::WarningLow,
+                            file!().to_string(),
+                            line!().to_string(),
+                            "needed_db_collection is None".to_string(),
+                        );
+                    }
+                }
+            }
+            Err(e) => {
+                vec_of_strings_to_return = Vec::new();
+                print_colorful_message(
+                    None,
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("Client::with_options error {:#?}", e),
+                );
+            }
+        }
+        Ok(vec_of_strings_to_return)
+    }
+    
 }

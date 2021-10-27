@@ -90,32 +90,25 @@ impl ConfigStruct {
         let mut vec_of_provider_names_handle =
             Vec::<&'static str>::with_capacity(ProviderKind::get_length());
         if bool_vars[&EnvBoolVar::EnableArxiv] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Arxiv));
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Arxiv));
         }
         if bool_vars[&EnvBoolVar::EnableBiorxiv] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Biorxiv))
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Biorxiv))
         }
         if bool_vars[&EnvBoolVar::EnableGithub] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Github));
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Github));
         }
         if bool_vars[&EnvBoolVar::EnableHabr] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Habr))
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Habr))
         }
         if bool_vars[&EnvBoolVar::EnableMedrxiv] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Medrxiv))
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Medrxiv))
         }
         if bool_vars[&EnvBoolVar::EnableReddit] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Reddit))
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Reddit))
         }
         if bool_vars[&EnvBoolVar::EnableTwitter] {
-            vec_of_provider_names_handle
-                .push(ProviderKind::get_string_name(ProviderKind::Twitter))
+            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Twitter))
         }
 
         let handle_config: ConfigStruct = ConfigStruct {
