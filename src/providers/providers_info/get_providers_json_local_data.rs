@@ -2,19 +2,19 @@ use std::collections::HashMap;
 use std::fs;
 
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::config_mods::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_json_local_data(
     path: &str,
-    second_part_of_file_name: &str,
-    file_extension: &str,
+    second_part_of_file_name: &str
 ) -> HashMap<&'static str, Vec<String>> {
     let mut vec_of_link_parts_hashmap: HashMap<&'static str, Vec<String>> = HashMap::new();
     //todo: do it async in parallel
     for provider_name in ProviderKind::get_enabled_string_name_vec() {
         let result_of_reading_to_string = fs::read_to_string(&format!(
             "{}{}{}{}",
-            path, provider_name, second_part_of_file_name, file_extension
+            path, provider_name, second_part_of_file_name, CONFIG.mongo_params.log_file_extension
         ));
         match result_of_reading_to_string {
             Ok(file_content) => {
@@ -37,7 +37,7 @@ pub fn get_providers_json_local_data(
             Err(e) => {
                 println!(
                     "cannot read_to_string from file {}{}{}{}, reason: {}",
-                    path, provider_name, second_part_of_file_name, file_extension, e
+                    path, provider_name, second_part_of_file_name, CONFIG.mongo_params.log_file_extension, e
                 )
             }
         }
