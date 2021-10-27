@@ -13,8 +13,7 @@ pub async fn get_providers_link_parts_as_hashmap(
     match resource {
         Resource::Local {
             path_to_provider_link_parts_folder,
-            second_part_of_file_name,
-            file_extension,
+            second_part_of_file_name
         } => {
             vec_of_link_parts_hashmap = get_providers_json_local_data(
                 path_to_provider_link_parts_folder,

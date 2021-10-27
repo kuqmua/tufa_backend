@@ -36,8 +36,7 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<&'static str, 
             second_part_of_file_name: CONFIG
                 .mongo_params
                 .providers_db_collection_handle_second_part //why that in mongo_params?
-                .to_string(),
-            file_extension: CONFIG.mongo_params.log_file_extension.to_string(),
+                .to_string()
         })
         .await;
         if !providers_link_parts_local.is_empty() {
