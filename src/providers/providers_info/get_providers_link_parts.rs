@@ -13,11 +13,9 @@ pub async fn get_providers_link_parts_as_hashmap(
     match resource {
         Resource::Local {
             path_to_provider_link_parts_folder,
-            second_part_of_file_name
         } => {
             vec_of_link_parts_hashmap = get_providers_json_local_data(
-                path_to_provider_link_parts_folder,
-                second_part_of_file_name
+                path_to_provider_link_parts_folder
             );
         }
         Resource::Mongodb {
@@ -32,6 +30,5 @@ pub async fn get_providers_link_parts_as_hashmap(
             todo!()
         }
     }
-    println!("oooo {:#?}", vec_of_link_parts_hashmap);
     vec_of_link_parts_hashmap
 }

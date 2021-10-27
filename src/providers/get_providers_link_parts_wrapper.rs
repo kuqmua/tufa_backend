@@ -32,10 +32,6 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<&'static str, 
             path_to_provider_link_parts_folder: CONFIG
                 .mongo_params
                 .path_to_provider_link_parts_folder
-                .to_string(),
-            second_part_of_file_name: CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part //why that in mongo_params?
                 .to_string()
         })
         .await;

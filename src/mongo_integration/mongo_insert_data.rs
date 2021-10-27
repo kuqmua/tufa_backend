@@ -5,6 +5,8 @@ use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_inser
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+use crate::config_mods::config::CONFIG;
+
 pub enum PutDataInMongoResult {
     Success,
     PartialSuccess, //todo: add values in here
@@ -15,7 +17,6 @@ pub enum PutDataInMongoResult {
 pub async fn mongo_insert_data(
     mongo_url: &str,
     db_name_handle: &str,
-    db_collection_handle_second_part: &str,
     db_collection_document_field_name_handle: &str,
     path_to_provider_link_parts_folder: &str
 ) -> PutDataInMongoResult {
@@ -40,8 +41,7 @@ pub async fn mongo_insert_data(
     //     }
     // }
     let vec_of_link_parts_hashmap = get_providers_json_local_data(
-        path_to_provider_link_parts_folder,
-        db_collection_handle_second_part
+        path_to_provider_link_parts_folder
     );
     if vec_of_link_parts_hashmap.is_empty() {
         println!(
@@ -56,7 +56,9 @@ pub async fn mongo_insert_data(
         let future_inserting_docs = mongo_insert_docs_in_empty_collection(
             mongo_url,
             db_name_handle,
-            format!("{}{}", key, db_collection_handle_second_part),
+            format!("{}{}", key, CONFIG
+            .mongo_params
+            .providers_db_collection_handle_second_part),
             db_collection_document_field_name_handle,
             vec_of_link_parts,
         )
