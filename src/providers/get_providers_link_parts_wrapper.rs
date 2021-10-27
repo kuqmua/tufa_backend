@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
@@ -28,12 +27,7 @@ pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<&'static str, 
             line!().to_string(),
             "providers_link_parts .is_empty".to_string(),
         );
-        let providers_link_parts_local = get_providers_link_parts_as_hashmap(&Resource::Local {
-            path_to_provider_link_parts_folder: CONFIG
-                .mongo_params
-                .path_to_provider_link_parts_folder
-                .to_string()
-        })
+        let providers_link_parts_local = get_providers_link_parts_as_hashmap(&Resource::Local )
         .await;
         if !providers_link_parts_local.is_empty() {
             Some(providers_link_parts_local)

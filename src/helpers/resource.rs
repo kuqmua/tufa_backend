@@ -3,9 +3,7 @@ use std::collections::HashMap;
 
 #[derive(Debug)]
 pub enum Resource {
-    Local {
-        path_to_provider_link_parts_folder: String
-    },
+    Local,
     Mongodb {
         providers_string_into_enum_hashmap: HashMap<&'static str, ProviderKind>,
     },

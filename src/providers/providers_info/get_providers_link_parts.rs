@@ -11,12 +11,8 @@ pub async fn get_providers_link_parts_as_hashmap(
 ) -> HashMap<&'static str, Vec<String>> {
     let vec_of_link_parts_hashmap: HashMap<&'static str, Vec<String>>;
     match resource {
-        Resource::Local {
-            path_to_provider_link_parts_folder,
-        } => {
-            vec_of_link_parts_hashmap = get_providers_json_local_data(
-                path_to_provider_link_parts_folder
-            );
+        Resource::Local => {
+            vec_of_link_parts_hashmap = get_providers_json_local_data();
         }
         Resource::Mongodb {
             providers_string_into_enum_hashmap,

@@ -5,15 +5,15 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::config_mods::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn get_providers_json_local_data(
-    path: &str
-) -> HashMap<&'static str, Vec<String>> {
+pub fn get_providers_json_local_data() -> HashMap<&'static str, Vec<String>> {
     let mut vec_of_link_parts_hashmap: HashMap<&'static str, Vec<String>> = HashMap::new();
     //todo: do it async in parallel
     for provider_name in ProviderKind::get_enabled_string_name_vec() {
         let result_of_reading_to_string = fs::read_to_string(&format!(
             "{}{}{}{}",
-            path, provider_name, CONFIG
+            CONFIG
+                .mongo_params
+                .path_to_provider_link_parts_folder, provider_name, CONFIG
             .mongo_params
             .providers_db_collection_handle_second_part, CONFIG.mongo_params.log_file_extension
         ));
@@ -38,7 +38,9 @@ pub fn get_providers_json_local_data(
             Err(e) => {
                 println!(
                     "cannot read_to_string from file {}{}{}{}, reason: {}",
-                    path, provider_name, CONFIG
+                    CONFIG
+                .mongo_params
+                .path_to_provider_link_parts_folder, provider_name, CONFIG
                     .mongo_params
                     .providers_db_collection_handle_second_part, CONFIG.mongo_params.log_file_extension, e
                 )

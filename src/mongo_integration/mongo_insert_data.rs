@@ -17,8 +17,7 @@ pub enum PutDataInMongoResult {
 pub async fn mongo_insert_data(
     mongo_url: &str,
     db_name_handle: &str,
-    db_collection_document_field_name_handle: &str,
-    path_to_provider_link_parts_folder: &str
+    db_collection_document_field_name_handle: &str
 ) -> PutDataInMongoResult {
     // for key in vec_of_provider_names.clone() {
     //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
@@ -40,9 +39,7 @@ pub async fn mongo_insert_data(
     //         }
     //     }
     // }
-    let vec_of_link_parts_hashmap = get_providers_json_local_data(
-        path_to_provider_link_parts_folder
-    );
+    let vec_of_link_parts_hashmap = get_providers_json_local_data();
     if vec_of_link_parts_hashmap.is_empty() {
         println!(
             "vec_of_link_parts_hashmap.len() {}",

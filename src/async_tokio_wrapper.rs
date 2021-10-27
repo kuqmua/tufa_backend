@@ -23,8 +23,7 @@ pub async fn async_tokio_wrapper() {
         &CONFIG.mongo_params.providers_db_name_handle,
         &CONFIG
             .mongo_params
-            .providers_db_collection_document_field_name_handle,
-        &CONFIG.mongo_params.path_to_provider_link_parts_folder
+            .providers_db_collection_document_field_name_handle
     )
     .await;
     let option_tuple = check_new_posts_threads_parts().await;
