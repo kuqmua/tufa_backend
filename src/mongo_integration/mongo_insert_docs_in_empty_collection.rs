@@ -4,12 +4,13 @@ use mongodb::{
     Client,
 };
 
+use crate::config_mods::config::CONFIG;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_insert_docs_in_empty_collection(
     mongo_url: &str,
     db_name_handle: &str,
     db_collection_handle: String,
-    db_collection_document_field_name_handle: &str,
     vec_of_values: Vec<String>,
 ) -> Result<bool, mongodb::error::Error> {
     let result_flag: bool;
@@ -32,7 +33,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                     Vec::with_capacity(vec_of_values.len());
                                 for value in &vec_of_values {
                                     docs.push(
-                                        doc! { db_collection_document_field_name_handle: value },
+                                        doc! { &CONFIG
+                                            .mongo_params
+                                            .providers_db_collection_document_field_name_handle: value },
                                     );
                                 }
                                 let insert_many_result = collection.insert_many(docs, None).await;

@@ -20,10 +20,7 @@ pub async fn async_tokio_wrapper() {
     //todo add flag for provider
     let _ = mongo_insert_data(
         &mongo_get_db_url(),
-        &CONFIG.mongo_params.providers_db_name_handle,
-        &CONFIG
-            .mongo_params
-            .providers_db_collection_document_field_name_handle
+        &CONFIG.mongo_params.providers_db_name_handle
     )
     .await;
     let option_tuple = check_new_posts_threads_parts().await;

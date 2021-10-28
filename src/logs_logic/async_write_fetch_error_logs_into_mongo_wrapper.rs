@@ -182,9 +182,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 &mongo_url,
                 &CONFIG.mongo_params.db_providers_logs_name_handle,
                 collection_handle, //fix naming later
-                &CONFIG
-                    .mongo_params
-                    .db_providers_logs_collection_document_field_name_handle,
                 element.1,
             ),
         );

@@ -17,7 +17,6 @@ pub enum PutDataInMongoResult {
 pub async fn mongo_insert_data(
     mongo_url: &str,
     db_name_handle: &str,
-    db_collection_document_field_name_handle: &str
 ) -> PutDataInMongoResult {
     // for key in vec_of_provider_names.clone() {
     //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
@@ -56,7 +55,6 @@ pub async fn mongo_insert_data(
             format!("{}{}", key, CONFIG
             .mongo_params
             .providers_db_collection_handle_second_part),
-            db_collection_document_field_name_handle,
             vec_of_link_parts,
         )
         .await;
