@@ -238,10 +238,6 @@ rewrite it without extra allocation. like let f = fetch_result_string[1..]
 ### -------------------
 rewrite ProviderKind input params as function params in get_providers_link_parts_from_mongo
 <br/>
-            
-### -------------------
-get links_limit in random order not first 10
-<br/>
 
 ### -------------------
 check config values on non negative, overflow, more than capacity, not zero
@@ -267,7 +263,7 @@ std::path::PathBuf instead if string in path to file logic
 <br/>
 
 ### -------------------
-if cannot connect to db then program do not ending. just waiting. find out why and fix it
+if cannot connect to db then program not ending. just waiting. find out why and fix it
 <br/>
 
 ### -------------------
@@ -291,14 +287,11 @@ maybe add this to code
 
 ### -------------------
 make default value for all environment variables
+I DONT THINK ITS A GOOD IDEA
 <br/>
             
 ### -------------------
 dockerfile with ARM support
-<br/>
-
-### -------------------
-move USER_CREDENTIALS_DUMMY_HANDLE from .env to project constants
 <br/>
 
 ### -------------------
@@ -334,10 +327,7 @@ but will it be safe?
 <br/>
 
 ### -------------------
-add check on enable_providers_prints for enable_prints_arxiv and others(for example) in config initialization logic
-not in the program logic
-and make it private (enable_providers_prints)
-or not available in config
+env vars names - make it private
 <br/>
 
 ### -------------------
@@ -352,6 +342,7 @@ Schema first
 MySQL / Postgres / SQLite
 
 NOPE, NOT STABLE YET
+check it in the middle of 2022
 <br/>
 
 ### -------------------
@@ -365,12 +356,6 @@ except maybe loops or early return cases
 
 ### -------------------
 config get bool string u8 i64 vars number 
-<br/>
-
-### -------------------
-remove Config::new from tests lib. 
-find out how to remove CONFIG for mongo_integration_lib.
-maybe Config as function parameter or part of config
 <br/>
 
 ### -------------------
