@@ -299,3 +299,7 @@ find some "try to remove .clone() from rust code" exercises
 This week in rust check 
 <br/>
 
+### -------------------
+Hazard pointer https://youtu.be/2Iu2BnO9iHg
+<br/>
+
