@@ -295,3 +295,11 @@ https://doc.rust-lang.org/std/macro.stringify.html
 find some "try to remove .clone() from rust code" exercises
 <br/>
 
+### -------------------
+This week in rust check 
+<br/>
+
+### -------------------
+Hazard pointer https://youtu.be/2Iu2BnO9iHg
+<br/>
+
