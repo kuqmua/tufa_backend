@@ -17,10 +17,9 @@ pub async fn get_providers_link_parts_as_hashmap(
         Resource::Mongodb {
             providers_string_into_enum_hashmap,
         } => {
-            vec_of_link_parts_hashmap = get_providers_link_parts_from_mongo(
-                providers_string_into_enum_hashmap.clone(),
-            )
-            .await;
+            vec_of_link_parts_hashmap =
+                get_providers_link_parts_from_mongo(providers_string_into_enum_hashmap.clone())
+                    .await;
         }
         Resource::PostgreSql => {
             todo!()

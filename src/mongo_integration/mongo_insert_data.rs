@@ -14,9 +14,7 @@ pub enum PutDataInMongoResult {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn mongo_insert_data(
-    db_name_handle: &str,
-) -> PutDataInMongoResult {
+pub async fn mongo_insert_data(db_name_handle: &str) -> PutDataInMongoResult {
     let vec_of_link_parts_hashmap = get_providers_json_local_data();
     if vec_of_link_parts_hashmap.is_empty() {
         println!(
@@ -30,9 +28,13 @@ pub async fn mongo_insert_data(
     for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
         let future_inserting_docs = mongo_insert_docs_in_empty_collection(
             db_name_handle,
-            format!("{}{}", key, CONFIG
-            .mongo_params
-            .providers_db_collection_handle_second_part),
+            format!(
+                "{}{}",
+                key,
+                CONFIG
+                    .mongo_params
+                    .providers_db_collection_handle_second_part
+            ),
             vec_of_link_parts,
         )
         .await;

@@ -237,7 +237,7 @@ impl ProviderKind {
         provider_kind_vec
     }
     ////////////////////
-    
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_provider_link_parts_as_bson_string(
         provider_kind: ProviderKind,
@@ -298,7 +298,9 @@ impl ProviderKind {
                                     )
                                     .await;
                                     match result {
-                                        Ok(vec_of_strings) => vec_of_strings_to_return = vec_of_strings,
+                                        Ok(vec_of_strings) => {
+                                            vec_of_strings_to_return = vec_of_strings
+                                        }
                                         Err(e) => {
                                             vec_of_strings_to_return = Vec::new();
                                             print_colorful_message(
@@ -358,5 +360,4 @@ impl ProviderKind {
         }
         Ok(vec_of_strings_to_return)
     }
-    
 }
