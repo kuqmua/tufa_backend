@@ -179,7 +179,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         vec_of_futures.push(
             insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version(
                 element.0,
-                &mongo_url,
                 &CONFIG.mongo_params.db_providers_logs_name_handle,
                 collection_handle, //fix naming later
                 element.1,

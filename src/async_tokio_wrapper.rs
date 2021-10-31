@@ -10,8 +10,28 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::config::CONFIG;
 
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
+
+// for key in vec_of_provider_names.clone() {
+    //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
+    //         mongo_url,
+    //         db_name_handle,
+    //         &format!("{}{}", key, db_collection_handle_second_part),
+    //         false,
+    //     );
+    //     match future_possible_drop_collection {
+    //         Ok(result_flag) => {
+    //             if result_flag {
+    //                 println!("drop done!");
+    //             } else {
+    //                 println!("drop fail with flag");
+    //             }
+    //         }
+    //         Err(e) => {
+    //             println!("drop fail with error {:#?}", e);
+    //         }
+    //     }
+    // }
 
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
@@ -19,7 +39,6 @@ pub async fn async_tokio_wrapper() {
     //todo: add check of doc already is in collection or add flag forse
     //todo add flag for provider
     let _ = mongo_insert_data(
-        &mongo_get_db_url(),
         &CONFIG.mongo_params.providers_db_name_handle
     )
     .await;

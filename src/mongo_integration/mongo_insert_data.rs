@@ -15,29 +15,8 @@ pub enum PutDataInMongoResult {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_insert_data(
-    mongo_url: &str,
     db_name_handle: &str,
 ) -> PutDataInMongoResult {
-    // for key in vec_of_provider_names.clone() {
-    //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
-    //         mongo_url,
-    //         db_name_handle,
-    //         &format!("{}{}", key, db_collection_handle_second_part),
-    //         false,
-    //     );
-    //     match future_possible_drop_collection {
-    //         Ok(result_flag) => {
-    //             if result_flag {
-    //                 println!("drop done!");
-    //             } else {
-    //                 println!("drop fail with flag");
-    //             }
-    //         }
-    //         Err(e) => {
-    //             println!("drop fail with error {:#?}", e);
-    //         }
-    //     }
-    // }
     let vec_of_link_parts_hashmap = get_providers_json_local_data();
     if vec_of_link_parts_hashmap.is_empty() {
         println!(
@@ -50,7 +29,6 @@ pub async fn mongo_insert_data(
     //todo: add case add in non empty collection
     for (key, vec_of_link_parts) in vec_of_link_parts_hashmap {
         let future_inserting_docs = mongo_insert_docs_in_empty_collection(
-            mongo_url,
             db_name_handle,
             format!("{}{}", key, CONFIG
             .mongo_params
