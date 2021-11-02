@@ -303,3 +303,17 @@ This week in rust check
 Hazard pointer https://youtu.be/2Iu2BnO9iHg
 <br/>
 
+### -------------------
+Type safe relationship between enums.
+We have two different enums Number and ErrorNumber
+And we can write some matching for them
+Like Number::One => ErrorNumber::One
+This can be realized safetly as tree
+Like implement get_error for Number or something
+It can be graph but we can mismatch something like
+Number::One => ErrorNumber::One
+Number::Two => ErrorNumber::One
+Its not a  TYPE SAFE Graph, coz it's compiled successfully
+It must be many to many Graph-enum-type-system
+Ask someone about it
+<br/>
