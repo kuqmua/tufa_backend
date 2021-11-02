@@ -317,3 +317,8 @@ Its not a  TYPE SAFE Graph, coz it's compiled successfully
 It must be many to many Graph-enum-type-system
 Ask someone about it
 <br/>
+
+### -------------------
+find out what happens in function can return some error
+but you use ? operator on option, result and await cases
+<br/>
