@@ -1,6 +1,6 @@
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::mongo_integration::mongo_drop_collection_wrapper::mongo_drop_collection_wrapper;
+use crate::mongo_integration::mongo_drop_collection_checked_on_empty::mongo_drop_collection_checked_on_empty;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
@@ -18,7 +18,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             provider_kind_handle, db_collection_handle_second_part
         );
         //using different (old) tokio runtime 0.2.25
-        let future_possible_drop_collection = mongo_drop_collection_wrapper(
+        let future_possible_drop_collection = mongo_drop_collection_checked_on_empty(
             &mongo_url,
             &db_name_handle,
             db_collection_name,

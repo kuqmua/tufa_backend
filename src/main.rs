@@ -110,8 +110,9 @@ mod logs_logic {
 pub mod mongo_integration {
     pub mod mongo_check_collection_is_empty;
     pub mod mongo_drop_collection;
-    pub mod mongo_drop_collection_wrapper;
+    pub mod mongo_drop_collection_checked_on_empty;
     pub mod mongo_drop_db;
+    pub mod mongo_drop_empty_collection;
     pub mod mongo_get_db_url;
     pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider;
     pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider_wrapper;

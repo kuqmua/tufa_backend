@@ -5,7 +5,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn mongo_drop_collection_wrapper(
+pub async fn mongo_drop_collection_checked_on_empty(
     mongo_url: &str,
     db_name: &str,
     db_collection_name: &str,
@@ -17,7 +17,7 @@ pub async fn mongo_drop_collection_wrapper(
     let collection = db.collection::<Document>(db_collection_name);
     if !check_if_collection_empty {
         collection.drop(None).await?;
-        return Ok(true)
+        return Ok(true);
     }
     let documents_number = collection.count_documents(None, None).await?;
     if documents_number == 0 {

@@ -12,7 +12,9 @@ pub async fn mongo_drop_empty_collection(
 ) -> Result<bool, mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client = Client::with_options(client_options)?;
-    let collection = client.database(db_name).collection::<Document>(db_collection_name);
+    let collection = client
+        .database(db_name)
+        .collection::<Document>(db_collection_name);
     let documents_number = collection.count_documents(None, None).await?;
     if documents_number > 0 {
         print_colorful_message(
@@ -25,6 +27,6 @@ pub async fn mongo_drop_empty_collection(
         Ok(false)
     } else {
         collection.drop(None).await?;
-        Ok(true)   
+        Ok(true)
     }
 }
