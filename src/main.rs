@@ -112,6 +112,7 @@ pub mod mongo_integration {
     pub mod mongo_drop_collection;
     pub mod mongo_drop_empty_db;
     pub mod mongo_drop_db;
+    pub mod mongo_check_db_is_empty;
     pub mod mongo_drop_empty_collection;
     pub mod mongo_get_db_url;
     pub mod mongo_get_possible_aggregation_with_randomization_doc_for_provider;
