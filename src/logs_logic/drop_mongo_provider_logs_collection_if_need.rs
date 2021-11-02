@@ -18,12 +18,8 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             provider_kind_handle, db_collection_handle_second_part
         );
         //using different (old) tokio runtime 0.2.25
-        let future_possible_drop_collection = mongo_drop_empty_collection(
-            &mongo_url,
-            &db_name_handle,
-            db_collection_name
-        )
-        .await;
+        let future_possible_drop_collection =
+            mongo_drop_empty_collection(&mongo_url, &db_name_handle, db_collection_name).await;
         match future_possible_drop_collection {
             Ok(result_flag) => (provider_kind_handle, result_flag),
             Err(e) => {
