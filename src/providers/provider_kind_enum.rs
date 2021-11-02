@@ -31,7 +31,6 @@ use mongodb::{
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::mongo_integration::mongo_get_possible_aggregation_with_randomization_doc_for_provider::mongo_get_possible_aggregation_with_randomization_doc_for_provider;
 use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
@@ -281,9 +280,7 @@ impl ProviderKind {
                                                 option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
                                             }
                                         } else {
-                                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = mongo_get_possible_aggregation_with_randomization_doc_for_provider(
-                                                        provider_kind
-                                            );
+                                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = ProviderKind::get_mongo_doc_randomization_aggregation(provider_kind);
                                         }
                                     } else {
                                         option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
@@ -380,6 +377,18 @@ impl ProviderKind {
             ProviderKind::Medrxiv => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_medrxiv_link_parts_for_mongo,
             ProviderKind::Reddit => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_reddit_link_parts_for_mongo,
             ProviderKind::Twitter => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_twitter_link_parts_for_mongo,
+        }
+    }
+    pub fn get_mongo_doc_randomization_aggregation(provider_kind: ProviderKind) -> Option<Document> {
+        if ProviderKind::enable_links_limit_for(provider_kind) {
+            if ProviderKind::enable_randomize_order_mongo_link_parts_for(provider_kind)
+            {
+                Some(doc! { "$sample" : {"size": ProviderKind::get_links_limit_for_provider(provider_kind) }})
+            } else {
+                Some(doc! { "$limit" : ProviderKind::get_links_limit_for_provider(provider_kind) })
+            }
+        } else {
+            None
         }
     }
 }
