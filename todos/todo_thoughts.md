@@ -320,5 +320,5 @@ Ask someone about it
 
 ### -------------------
 find out what happens in function can return some error
-but you use ? operator on option, result and await cases
+but you use ? operator on result and await cases
 <br/>
