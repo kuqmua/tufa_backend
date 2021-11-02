@@ -21,8 +21,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         let future_possible_drop_collection = mongo_drop_collection_checked_on_empty(
             &mongo_url,
             &db_name_handle,
-            db_collection_name,
-            false, //todo
+            db_collection_name
         )
         .await;
         match future_possible_drop_collection {

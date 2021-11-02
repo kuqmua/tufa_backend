@@ -9,16 +9,11 @@ pub async fn mongo_drop_collection_checked_on_empty(
     mongo_url: &str,
     db_name: &str,
     db_collection_name: &str,
-    check_if_collection_empty: bool,
 ) -> Result<bool, mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client = Client::with_options(client_options)?;
     let db = client.database(db_name);
     let collection = db.collection::<Document>(db_collection_name);
-    if !check_if_collection_empty {
-        collection.drop(None).await?;
-        return Ok(true);
-    }
     let documents_number = collection.count_documents(None, None).await?;
     if documents_number == 0 {
         collection.drop(None).await?;
