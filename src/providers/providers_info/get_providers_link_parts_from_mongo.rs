@@ -5,6 +5,8 @@ use futures::future::join_all;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
+use crate::providers::providers_info::get_provider_link_parts_from_mongo::get_provider_link_parts_from_mongo;
+
 pub async fn get_providers_link_parts_from_mongo(
     providers_string_into_enum_hashmap: HashMap<&'static str, ProviderKind>,
 ) -> HashMap<&'static str, Vec<String>> {
@@ -29,28 +31,4 @@ pub async fn get_providers_link_parts_from_mongo(
     let vec_of_link_parts_hashmap = vec_of_link_parts_hashmap_under_arc.lock().unwrap().clone();
 
     vec_of_link_parts_hashmap
-}
-
-#[allow(clippy::too_many_arguments)]
-async fn get_provider_link_parts_from_mongo(
-    provider_kind: ProviderKind,
-    vec_of_link_parts_hashmap_under_arc_handle: Arc<Mutex<HashMap<&'static str, Vec<String>>>>,
-) {
-    let result_getting_provider_link_parts =
-        ProviderKind::mongo_get_provider_link_parts_as_bson_string(provider_kind).await;
-    match result_getting_provider_link_parts {
-        Ok(option_provider_link_parts) => {
-            if let Some(provider_link_parts) = option_provider_link_parts {
-                let mut vec_of_link_parts_hashmap_under_arc_handle_locked =
-                    vec_of_link_parts_hashmap_under_arc_handle.lock().unwrap();
-                vec_of_link_parts_hashmap_under_arc_handle_locked.insert(
-                    ProviderKind::get_string_name(provider_kind),
-                    provider_link_parts,
-                );
-            }
-        }
-        Err(e) => {
-            println!("result_getting_provider_link_parts error {:#?}", e);
-        }
-    }
 }
