@@ -360,4 +360,26 @@ impl ProviderKind {
         }
         Ok(vec_of_strings_to_return)
     }
+    pub fn enable_links_limit_for(provider_kind: ProviderKind) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => CONFIG.enable_providers_links_limits.enable_links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers_links_limits.enable_links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers_links_limits.enable_links_limit_for_github,
+            ProviderKind::Habr => CONFIG.enable_providers_links_limits.enable_links_limit_for_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers_links_limits.enable_links_limit_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers_links_limits.enable_links_limit_for_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers_links_limits.enable_links_limit_for_twitter,
+        }
+    }
+    pub fn enable_randomize_order_mongo_link_parts_for(provider_kind: ProviderKind) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_arxiv_link_parts_for_mongo,
+            ProviderKind::Biorxiv => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_biorxiv_link_parts_for_mongo,
+            ProviderKind::Github => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_github_link_parts_for_mongo,
+            ProviderKind::Habr => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_habr_link_parts_for_mongo,
+            ProviderKind::Medrxiv => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_medrxiv_link_parts_for_mongo,
+            ProviderKind::Reddit => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_reddit_link_parts_for_mongo,
+            ProviderKind::Twitter => CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo.enable_randomize_order_for_twitter_link_parts_for_mongo,
+        }
+    }
 }
