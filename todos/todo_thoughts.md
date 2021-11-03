@@ -322,3 +322,8 @@ Ask someone about it
 find out what happens in function can return some error
 but you use ? operator on result and await cases
 <br/>
+
+### -------------------
+Complete all exercises
+https://github.com/rust-lang/rustlings
+<br/>
