@@ -140,11 +140,11 @@ mod providers {
             pub mod generate_reddit_links;
             pub mod generate_twitter_links;
         }
+        pub mod get_provider_link_parts_from_mongo;
         pub mod get_providers_json_local_data;
         pub mod get_providers_link_parts;
         pub mod get_providers_link_parts_from_mongo;
         pub mod get_twitter_providers_names;
-        pub mod get_provider_link_parts_from_mongo;
     }
     pub mod get_providers_link_parts_wrapper;
     pub mod provider_kind_enum;
