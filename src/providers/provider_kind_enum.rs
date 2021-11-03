@@ -289,16 +289,18 @@ impl ProviderKind {
                 // let aggregation_stage_1_get_docs_in_random_order_with_limit =
                 //     doc! { "$sample" : {"size": 5 }};
                 // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
-                return Ok(Some(
-                    mongo_possibly_get_documents_as_string_vector(
-                        collection,
-                        &CONFIG
-                            .mongo_params
-                            .providers_db_collection_document_field_name_handle,
-                        option_aggregation_stage_1_get_docs_in_random_order_with_limit,
-                    )
-                    .await?,
-                ));
+                let option_vec_of_strings = mongo_possibly_get_documents_as_string_vector(
+                    collection,
+                    &CONFIG
+                        .mongo_params
+                        .providers_db_collection_document_field_name_handle,
+                    option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+                )
+                .await?;
+                match option_vec_of_strings {
+                    Some(vec_of_strings) => return Ok(Some(vec_of_strings)),
+                    None => return Ok(None),
+                }
             }
         }
         Ok(None)
