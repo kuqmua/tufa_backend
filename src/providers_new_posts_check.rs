@@ -28,14 +28,14 @@ type ArcMutexErrorPostsHandle = Arc<
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
-    provider_kind_handle_clone: ProviderKind,
+    provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
     option_provider_providers: Option<Vec<String>>,
     posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
     let enum_success_unsuccess_option_posts = rss_part(
-        provider_kind_handle_clone,
+        provider_kind,
         CONFIG.params.enable_error_prints,
         vec_of_provider_links,
         option_provider_providers,
