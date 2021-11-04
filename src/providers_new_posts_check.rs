@@ -28,7 +28,6 @@ type ArcMutexErrorPostsHandle = Arc<
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
-    provider_link: &str,
     provider_kind_handle_clone: ProviderKind,
     vec_of_provider_links: Vec<String>,
     option_provider_providers: Option<Vec<String>>,

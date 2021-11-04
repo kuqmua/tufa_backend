@@ -97,9 +97,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .arxiv_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -159,9 +156,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .biorxiv_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -221,9 +215,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .github_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -282,7 +273,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG.providers_check_links.habr_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -342,9 +332,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .medrxiv_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -404,9 +391,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .reddit_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             None,
@@ -468,9 +452,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     threads_vec_checker.push(true);
                                                     threads_vec.push(thread::spawn(move || {
                                                         providers_new_posts_check(
-                                                            &CONFIG
-                                                                .providers_check_links
-                                                                .twitter_link,
                                                             provider_kind_handle_clone,
                                                             vec_of_provider_links,
                                                             Some(twitter_providers),
