@@ -37,7 +37,6 @@ type SuccessErrorTuple = (
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_part(
-    provider_link: &str,
     provider_kind: ProviderKind,
     enable_error_prints_handle: bool,
     vec_of_provider_links: Vec<String>,
@@ -46,22 +45,42 @@ pub fn rss_part(
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true;
             }
         }
         ProviderKind::Biorxiv => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true;
             }
         }
         ProviderKind::Github => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true;
             }
         }
         ProviderKind::Medrxiv => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true;
             }
         }
@@ -84,12 +103,22 @@ pub fn rss_part(
             }
         },
         ProviderKind::Reddit => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true; //todo
             }
         }
         ProviderKind::Habr => {
-            if check_link(provider_link, enable_error_prints_handle).0 {
+            if check_link(
+                ProviderKind::get_check_link(provider_kind),
+                enable_error_prints_handle,
+            )
+            .0
+            {
                 availability_checker_flag = true;
             }
         }
@@ -100,7 +129,10 @@ pub fn rss_part(
             PrintType::Success,
             file!().to_string(),
             line!().to_string(),
-            format!("i can reach {}", provider_link),
+            format!(
+                "i can reach {}",
+                ProviderKind::get_check_link(provider_kind)
+            ),
         );
         let links_temp_naming: Vec<String> = vec_of_provider_links;
         if !links_temp_naming.is_empty() {
@@ -308,7 +340,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
             ProviderKind::Biorxiv => {
@@ -317,7 +353,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
             ProviderKind::Github => {
@@ -326,7 +366,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
             ProviderKind::Medrxiv => {
@@ -335,7 +379,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
             ProviderKind::Twitter => {
@@ -357,7 +405,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
             ProviderKind::Habr => {
@@ -367,7 +419,11 @@ pub fn rss_part(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("i cannot reach {} for {:#?}", provider_link, provider_kind),
+                    format!(
+                        "i cannot reach {} for {:#?}",
+                        ProviderKind::get_check_link(provider_kind),
+                        provider_kind
+                    ),
                 );
             }
         }

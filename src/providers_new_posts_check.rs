@@ -36,7 +36,6 @@ pub fn providers_new_posts_check(
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
     let enum_success_unsuccess_option_posts = rss_part(
-        provider_link,
         provider_kind_handle_clone,
         CONFIG.params.enable_error_prints,
         vec_of_provider_links,
