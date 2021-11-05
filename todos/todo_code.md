@@ -395,3 +395,19 @@ pub fn generate_nametag_text(name: String) -> Result<String, String> {
 ### -------------------
 .map_err() function in code examples
 <br/>
+
+### -------------------
+use Option ref to remove borrow error
+struct Point {
+    x: i32,
+    y: i32,
+}
+fn main() {
+    let y: Option<Point> = Some(Point { x: 100, y: 200 });
+    match y {
+        Some(ref p) => println!("Co-ordinates are {},{} ", p.x, p.y),
+        _ => println!("no match"),
+    }
+    y; // Fix without deleting this line.
+}
+<br/>
