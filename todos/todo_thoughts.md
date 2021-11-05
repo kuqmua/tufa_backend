@@ -344,3 +344,12 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
 }
 <br/>
 
+### -------------------
+learn more about rust macro system
+#[macro_export]
+macro_rules! my_macro {
+    () => {
+        println!("Check out my macro!")
+    };
+}
+<br/>
