@@ -379,3 +379,14 @@ big enum of enums(recursive) of all errors in project
 ### -------------------
 move providers link parts (specific urls) to project constants
 <br/>
+
+### -------------------
+error handling working this way
+pub fn generate_nametag_text(name: String) -> Result<String, String> {
+    if name.len() > 0 {
+        Ok(format!("Hi! My name is {}", name))
+    } else {
+        Err("`name` was empty; it must be nonempty.".into())
+    }
+}
+<br/>
