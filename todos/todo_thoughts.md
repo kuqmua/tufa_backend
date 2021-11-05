@@ -330,4 +330,17 @@ https://github.com/rust-lang/rustlings
 
 ### -------------------
 learn more about iterator methods
+
+fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
+    map.into_iter().filter(|pair| pair.1 == &value).count()
+    --------------
+    WHY THIS NOT WORKING?
+    map.into_iter().filter(|(key, val)| val == &value).count()
+}
+fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
+    collection.into_iter().fold(0, |result, map| {
+        result + map.into_iter().filter(|pair| pair.1 == &value).count()
+    })
+}
 <br/>
+
