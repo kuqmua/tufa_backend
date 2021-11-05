@@ -390,3 +390,8 @@ pub fn generate_nametag_text(name: String) -> Result<String, String> {
     }
 }
 <br/>
+
+
+### -------------------
+.map_err() function in code examples
+<br/>
