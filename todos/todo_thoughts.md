@@ -327,3 +327,7 @@ but you use ? operator on result and await cases
 Complete all exercises
 https://github.com/rust-lang/rustlings
 <br/>
+
+### -------------------
+learn more about iterator methods
+<br/>
