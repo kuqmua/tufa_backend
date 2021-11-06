@@ -40,6 +40,13 @@ pub fn entry() {
             async_tokio_wrapper();
         }
         Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!("check_net_wrapper error: {:#?}", e),
+            );
             //do something with it
         }
     }

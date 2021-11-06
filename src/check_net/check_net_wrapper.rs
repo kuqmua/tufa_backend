@@ -1,8 +1,5 @@
 use crate::check_net::check_link::check_link;
 
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
 use crate::config_mods::config::CONFIG;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
@@ -17,15 +14,19 @@ use crate::mongo_integration::mongo_check_availability::mongo_check_availability
 use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
 use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
 
+#[derive(Debug)]
 pub enum CheckNetError {
     StartingLink {
+        link: String,
         handled: HandledReachProviderStatusInfo,
         unhandled: UnhandledReachProviderInfo,
     },
     Postgres {
+        link: String,
         error: ConnectionError,
     },
     Mongo {
+        link: String,
         error: mongodb::error::Error,
     },
 }
@@ -35,6 +36,7 @@ pub fn check_net_wrapper() -> Result<(), CheckNetError> {
     let check_link_result = check_link(&CONFIG.params.starting_check_link);
     if !check_link_result.0 {
         return Err(CheckNetError::StartingLink {
+            link: CONFIG.params.starting_check_link.clone(),
             handled: check_link_result.2,
             unhandled: check_link_result.1,
         });
@@ -44,7 +46,10 @@ pub fn check_net_wrapper() -> Result<(), CheckNetError> {
     match result_postgres_link_checked {
         Ok(_) => {}
         Err(e) => {
-            return Err(CheckNetError::Postgres { error: e });
+            return Err(CheckNetError::Postgres {
+                link: postgres_get_db_url(),
+                error: e,
+            });
         }
     }
     let result_mongo_link_checked = mongo_check_availability(
@@ -54,7 +59,10 @@ pub fn check_net_wrapper() -> Result<(), CheckNetError> {
     match result_mongo_link_checked {
         Ok(_) => {}
         Err(e) => {
-            return Err(CheckNetError::Mongo { error: e });
+            return Err(CheckNetError::Mongo {
+                link: mongo_get_db_url(),
+                error: e,
+            });
         }
     }
     Ok(())
