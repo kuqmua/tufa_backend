@@ -353,3 +353,10 @@ macro_rules! my_macro {
     };
 }
 <br/>
+
+### -------------------
+AsRef trait find out more
+fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
+    arg.as_ref().as_bytes().len()
+}
+<br/>
