@@ -34,9 +34,14 @@ pub fn entry() {
         }
     }
 
-    let is_all_available = check_net_wrapper();
-    if is_all_available {
-        async_tokio_wrapper();
+    let is_all_available_result = check_net_wrapper();
+    match is_all_available_result {
+        Ok(_) => {
+            async_tokio_wrapper();
+        }
+        Err(e) => {
+            //do something with it
+        }
     }
     //move time measument in some inner part coz it would be server here
     if CONFIG.params.enable_time_measurement {
