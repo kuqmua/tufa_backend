@@ -109,6 +109,7 @@ mod logs_logic {
     pub mod insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 }
 pub mod mongo_integration {
+    pub mod mongo_check_availability;
     pub mod mongo_check_collection_is_empty;
     pub mod mongo_check_db_is_empty;
     pub mod mongo_drop_collection;

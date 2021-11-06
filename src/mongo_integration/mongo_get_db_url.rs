@@ -2,6 +2,7 @@ use crate::config_mods::config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn mongo_get_db_url() -> String {
+    //maybe rename it into get mongo_url?
     format!(
         "{}{}{}{}{}{}{}{}{}{}",
         &CONFIG
