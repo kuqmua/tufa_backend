@@ -27,7 +27,7 @@ pub fn mongo_get_db_url() -> String {
         .mongo_url_parts
         .mongo_fifth_handle_url_part;
     let mongo_params = &CONFIG.mongo_params.mongo_authorization.mongo_params;
-    let mongo_url = format!(
+    format!(
         "{}{}{}{}{}{}{}{}{}{}",
         mongo_first_handle_url_part,
         mongo_login,
@@ -39,6 +39,5 @@ pub fn mongo_get_db_url() -> String {
         mongo_port,
         mongo_fifth_handle_url_part,
         mongo_params
-    );
-    mongo_url
+    )
 }
