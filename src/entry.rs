@@ -33,6 +33,7 @@ pub fn entry() {
             );
         }
     }
+    //todo: add block to check links to databases
     if check_link(
         &CONFIG.params.starting_check_link,
         CONFIG.params.enable_error_prints,

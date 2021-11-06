@@ -169,34 +169,12 @@ mod providers_new_posts_check;
 
 #[macro_use]
 extern crate diesel;
-
-extern crate dotenv;
 #[macro_use]
 extern crate lazy_static;
 
-use crate::postgres_integration::create_post::create_post;
-use crate::postgres_integration::establish_connection::establish_connection;
-
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-// use crate::config_mods::config_structs::get_lazy_config_information::TEST;
-// use crate::config_mods::config_structs::get_lazy_config_information::TESTTWO;
-// use crate::config_mods::env_var_enum::EnvVar;
-// use crate::config_mods::env_var_bool_enum::EnvBoolVar;
+extern crate dotenv;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    // println!("TEST {:#?}", TESTTWO[&EnvBoolVar::EnableInfoForArxiv]);
-    // let bbb =  TEST[&EnvVar::ArxivLink];
-    // let f = TESTTWO[&EnvBoolVar::EnableInfoForArxiv];
     entry::entry();
-    ////////////////////////////////////////////////////
-    let posgtres_connection = establish_connection(postgres_get_db_url());
-    match posgtres_connection {
-        Some(pg_connection) => {
-            create_post(&pg_connection, "post_title", "post_body");
-        }
-        None => {
-            println!("todo")
-        }
-    }
 }

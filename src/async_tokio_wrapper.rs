@@ -12,6 +12,9 @@ use crate::config_mods::config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
+use crate::postgres_integration::create_post::create_post;
+use crate::postgres_integration::establish_connection::establish_connection;
+use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 // for key in vec_of_provider_names.clone() {
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
@@ -38,9 +41,18 @@ use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 pub async fn async_tokio_wrapper() {
     //todo: add check of doc already is in collection or add flag forse
     //todo add flag for provider
+    let posgtres_connection = establish_connection(postgres_get_db_url());
+    match posgtres_connection {
+        Some(pg_connection) => {
+            create_post(&pg_connection, "post_title", "post_body");
+        }
+        None => {
+            println!("todo")
+        }
+    }
+
     let _ = mongo_insert_data(&CONFIG.mongo_params.providers_db_name_handle).await;
     let option_tuple = check_new_posts_threads_parts().await;
-
     match option_tuple {
         Some((_posts, error_posts)) => {
             if !error_posts.is_empty() {
