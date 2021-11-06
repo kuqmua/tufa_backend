@@ -123,6 +123,7 @@ pub mod postgres_integration {
     pub mod create_post;
     pub mod establish_connection;
     pub mod models;
+    pub mod postgres_get_db_url;
     pub mod schema;
 }
 pub mod prints {
@@ -173,10 +174,10 @@ extern crate dotenv;
 #[macro_use]
 extern crate lazy_static;
 
-use crate::config_mods::config::CONFIG;
 use crate::postgres_integration::create_post::create_post;
 use crate::postgres_integration::establish_connection::establish_connection;
 
+use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 // use crate::config_mods::config_structs::get_lazy_config_information::TEST;
 // use crate::config_mods::config_structs::get_lazy_config_information::TESTTWO;
 // use crate::config_mods::env_var_enum::EnvVar;
@@ -188,39 +189,8 @@ fn main() {
     // let bbb =  TEST[&EnvVar::ArxivLink];
     // let f = TESTTWO[&EnvBoolVar::EnableInfoForArxiv];
     entry::entry();
-    /////////////////////////////////////////////////////
-    let postgres_url = format!(
-        "{}{}{}{}{}{}{}{}{}{}",
-        CONFIG
-            .postgres_params
-            .postgres_url_parts
-            .postgres_first_handle_url_part,
-        CONFIG.postgres_params.postgres_authorization.postgres_login,
-        CONFIG
-            .postgres_params
-            .postgres_url_parts
-            .postgres_second_handle_url_part,
-        CONFIG
-            .postgres_params
-            .postgres_authorization
-            .postgres_password,
-        CONFIG
-            .postgres_params
-            .postgres_url_parts
-            .postgres_third_handle_url_part,
-        CONFIG.postgres_params.postgres_authorization.postgres_ip,
-        CONFIG
-            .postgres_params
-            .postgres_url_parts
-            .postgres_fourth_handle_url_part,
-        CONFIG.postgres_params.postgres_authorization.postgres_port,
-        CONFIG
-            .postgres_params
-            .postgres_url_parts
-            .postgres_fifth_handle_url_part,
-        CONFIG.postgres_params.postgres_authorization.postgres_db
-    );
-    let posgtres_connection = establish_connection(postgres_url);
+    ////////////////////////////////////////////////////
+    let posgtres_connection = establish_connection(postgres_get_db_url());
     match posgtres_connection {
         Some(pg_connection) => {
             create_post(&pg_connection, "post_title", "post_body");
