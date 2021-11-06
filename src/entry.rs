@@ -13,16 +13,26 @@ extern crate num_cpus;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
-    let cpus = num_cpus::get();
-
     if CONFIG.params.enable_prints {
+        let cpus = num_cpus::get();
         if cpus > 1 {
-            println!("We are on a multicore system with {} CPUs", cpus);
+            print_colorful_message(
+                None,
+                PrintType::Info,
+                file!().to_string(),
+                line!().to_string(),
+                format!("We are on a multicore system with {} CPUs", cpus),
+            );
         } else {
-            println!("We are on a single core system");
+            print_colorful_message(
+                None,
+                PrintType::Info,
+                file!().to_string(),
+                line!().to_string(),
+                "We are on a single core system".to_string(),
+            );
         }
     }
-    let enable_common_time_measurement = CONFIG.params.enable_time_measurement; //need to be different variable cuz move happpens
     if check_link(
         &CONFIG.params.starting_check_link,
         CONFIG.params.enable_error_prints,
@@ -30,24 +40,31 @@ pub fn entry() {
     .0
     {
         if CONFIG.params.enable_prints {
-            let its_all_good_message =
-                "server can reach ".to_string() + &CONFIG.params.starting_check_link;
-            println!("{}", its_all_good_message);
+            print_colorful_message(
+                None,
+                PrintType::Info,
+                file!().to_string(),
+                line!().to_string(),
+                format!("server can reach {}", &CONFIG.params.starting_check_link),
+            );
         }
         async_tokio_wrapper();
-    } else if CONFIG.params.enable_error_prints {
-        let warning_high_message =
-            "server cannot reach ".to_string() + &CONFIG.params.starting_check_link;
+    } else {
         print_colorful_message(
             None,
             PrintType::Error,
             file!().to_string(),
             line!().to_string(),
-            warning_high_message,
+            format!("server cannot reach {}", &CONFIG.params.starting_check_link),
         );
     }
-
-    if enable_common_time_measurement {
-        println!("main done in {} seconds", time.elapsed().as_secs());
+    if CONFIG.params.enable_time_measurement {
+        print_colorful_message(
+            None,
+            PrintType::Info,
+            file!().to_string(),
+            line!().to_string(),
+            format!("main done in {} seconds", time.elapsed().as_secs()),
+        );
     }
 }
