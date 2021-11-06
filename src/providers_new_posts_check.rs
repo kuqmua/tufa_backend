@@ -7,8 +7,6 @@ use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
-use crate::config_mods::config::CONFIG;
-
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -36,7 +34,6 @@ pub fn providers_new_posts_check(
 ) {
     let enum_success_unsuccess_option_posts = rss_part(
         provider_kind,
-        CONFIG.params.enable_error_prints,
         vec_of_provider_links,
         option_provider_providers,
     );

@@ -5,10 +5,11 @@ use crate::check_net::fetch_link::fetch_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+use crate::config_mods::config::CONFIG;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_link(
     link: &str,
-    enable_error_prints_handle: bool,
 ) -> (
     bool,
     UnhandledReachProviderInfo,
@@ -23,7 +24,7 @@ pub fn check_link(
             if fetch_tuple_result.0 {
                 can_i = true;
             } else {
-                if enable_error_prints_handle {
+                if CONFIG.params.enable_error_prints {
                     match fetch_tuple_result.1 {
                         HandledReachProviderStatusInfo::ResStatusError(status_code) => {
                             let error_message = format!(
@@ -69,7 +70,7 @@ pub fn check_link(
         Err(e) => {
             unhandled_info = UnhandledReachProviderInfo::Failure(e.to_string());
             handled_info = HandledReachProviderStatusInfo::Initialized;
-            if enable_error_prints_handle {
+            if CONFIG.params.enable_error_prints {
                 let error_message =
                     format!("{} check_link fetch_result Box<dyn Error> {}", link, e);
                 print_colorful_message(

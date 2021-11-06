@@ -38,19 +38,13 @@ type SuccessErrorTuple = (
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_part(
     provider_kind: ProviderKind,
-    enable_error_prints_handle: bool,
     vec_of_provider_links: Vec<String>,
     option_twitter_providers_names: Option<Vec<String>>,
 ) -> SuccessErrorTuple {
     let mut availability_checker_flag: bool = false;
     match provider_kind {
         ProviderKind::Arxiv => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true;
             } else {
                 print_colorful_message(
@@ -67,12 +61,7 @@ pub fn rss_part(
             }
         }
         ProviderKind::Biorxiv => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true;
             } else {
                 print_colorful_message(
@@ -89,12 +78,7 @@ pub fn rss_part(
             }
         }
         ProviderKind::Github => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true;
             } else {
                 print_colorful_message(
@@ -111,12 +95,7 @@ pub fn rss_part(
             }
         }
         ProviderKind::Medrxiv => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true;
             } else {
                 print_colorful_message(
@@ -163,12 +142,7 @@ pub fn rss_part(
             }
         },
         ProviderKind::Reddit => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true; //todo
             } else {
                 print_colorful_message(
@@ -185,12 +159,7 @@ pub fn rss_part(
             }
         }
         ProviderKind::Habr => {
-            if check_link(
-                ProviderKind::get_check_link(provider_kind),
-                enable_error_prints_handle,
-            )
-            .0
-            {
+            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
                 availability_checker_flag = true;
             } else {
                 print_colorful_message(
