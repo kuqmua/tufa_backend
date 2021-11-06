@@ -437,3 +437,39 @@ mod test {
     }
 }
 <br/>
+
+### -------------------
+find out more about downcast errors
+<br/>
+
+### -------------------
+error handling working this way
+pub fn generate_nametag_text(name: String) -> Result<String, String> {
+    if name.len() > 0 {
+        Ok(format!("Hi! My name is {}", name))
+    } else {
+        Err("`name` was empty; it must be nonempty.".into())
+    }
+}
+<br/>
+
+
+### -------------------
+.map_err() function in code examples
+<br/>
+
+### -------------------
+use Option ref to remove borrow error
+struct Point {
+    x: i32,
+    y: i32,
+}
+fn main() {
+    let y: Option<Point> = Some(Point { x: 100, y: 200 });
+    match y {
+        Some(ref p) => println!("Co-ordinates are {},{} ", p.x, p.y),
+        _ => println!("no match"),
+    }
+    y; // Fix without deleting this line.
+}
+<br/>
