@@ -27,11 +27,8 @@ pub fn check_link(
                 if CONFIG.params.enable_error_prints {
                     match fetch_tuple_result.1 {
                         HandledReachProviderStatusInfo::ResStatusError(status_code) => {
-                            let error_message = format!(
-                                "{} ResStatusError: {}",
-                                link,
-                                status_code.clone().to_string()
-                            );
+                            let error_message =
+                                format!("{} ResStatusError: {}", link, status_code.clone());
                             print_colorful_message(
                                 None,
                                 PrintType::Error,

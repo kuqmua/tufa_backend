@@ -6,6 +6,7 @@ mod authorization {
 mod check_net {
     pub mod check_link;
     pub mod check_link_metainfo_structures;
+    pub mod check_net_wrapper;
     pub mod fetch_link;
 }
 mod constants {
@@ -121,7 +122,6 @@ pub mod mongo_integration {
 }
 pub mod postgres_integration {
     pub mod create_post;
-    pub mod establish_connection;
     pub mod models;
     pub mod postgres_get_db_url;
     pub mod schema;

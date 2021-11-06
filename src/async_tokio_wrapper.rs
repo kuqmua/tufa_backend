@@ -13,8 +13,10 @@ use crate::config_mods::config::CONFIG;
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
 use crate::postgres_integration::create_post::create_post;
-use crate::postgres_integration::establish_connection::establish_connection;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+
+use diesel::pg::PgConnection;
+use diesel::prelude::*;
 // for key in vec_of_provider_names.clone() {
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
@@ -41,13 +43,23 @@ use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 pub async fn async_tokio_wrapper() {
     //todo: add check of doc already is in collection or add flag forse
     //todo add flag for provider
-    let posgtres_connection = establish_connection(postgres_get_db_url());
-    match posgtres_connection {
-        Some(pg_connection) => {
+    let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
+    match result_postgres_establish_connection {
+        Ok(pg_connection) => {
             create_post(&pg_connection, "post_title", "post_body");
         }
-        None => {
-            println!("todo")
+        Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::WarningHigh,
+                file!().to_string(),
+                line!().to_string(),
+                format!(
+                    "PgConnection::establish {} error: {:#?}",
+                    &postgres_get_db_url(),
+                    e
+                ),
+            );
         }
     }
 

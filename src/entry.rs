@@ -8,6 +8,8 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::config::CONFIG;
 
+use crate::check_net::check_net_wrapper::check_net_wrapper;
+
 extern crate num_cpus;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -33,6 +35,7 @@ pub fn entry() {
             );
         }
     }
+    println!("-------------- {}", check_net_wrapper());
     //todo: add block to check links to databases
     if check_link(&CONFIG.params.starting_check_link).0 {
         if CONFIG.params.enable_prints {
