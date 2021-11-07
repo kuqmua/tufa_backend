@@ -144,7 +144,6 @@ mod providers {
             pub mod generate_twitter_links;
         }
         pub mod get_provider_link_parts_from_mongo;
-        pub mod get_providers_json_local_data;
         pub mod get_providers_link_parts;
         pub mod get_providers_link_parts_from_mongo;
         pub mod get_twitter_providers_names;
