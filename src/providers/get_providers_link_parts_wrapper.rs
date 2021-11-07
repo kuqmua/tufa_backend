@@ -10,13 +10,8 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<&'static str, Vec<String>>> {
-    let providers_string_into_enum_hashmap: HashMap<&'static str, ProviderKind> =
-        ProviderKind::into_string_name_and_kind_hashmap();
-    let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {
-        providers_string_into_enum_hashmap,
-    })
-    .await;
+pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<ProviderKind, Vec<String>>> {
+    let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {}).await;
     if !providers_link_parts.is_empty() {
         Some(providers_link_parts)
     } else {
