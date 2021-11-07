@@ -17,6 +17,8 @@ use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
+
+use crate::providers::provider_kind_enum::ProviderKind;
 // for key in vec_of_provider_names.clone() {
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
@@ -41,29 +43,41 @@ use diesel::prelude::*;
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    //todo: add check of doc already is in collection or add flag forse
-    //todo add flag for provider
-    let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
-    match result_postgres_establish_connection {
-        Ok(pg_connection) => {
-            let _ = postgres_create_post(&pg_connection, "post_title", "post_body");
-        }
-        Err(e) => {
-            print_colorful_message(
-                None,
-                PrintType::WarningHigh,
-                file!().to_string(),
-                line!().to_string(),
-                format!(
-                    "PgConnection::establish {} error: {:#?}",
-                    &postgres_get_db_url(),
-                    e
-                ),
-            );
+    if CONFIG
+        .params
+        .enable_initialize_mongo_with_providers_link_parts
+    {
+        let vec_of_link_parts_hashmap = ProviderKind::get_providers_json_local_data();
+        if !vec_of_link_parts_hashmap.is_empty() {
+            //todo: add check of doc already is in collection or add flag forse
+            //todo add flag for provider
+            let result_postgres_establish_connection =
+                PgConnection::establish(&postgres_get_db_url());
+            match result_postgres_establish_connection {
+                Ok(pg_connection) => {
+                    let _ = postgres_create_post(&pg_connection, "post_title", "post_body");
+                }
+                Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!(
+                            "PgConnection::establish {} error: {:#?}",
+                            &postgres_get_db_url(),
+                            e
+                        ),
+                    );
+                }
+            }
+            let _ = mongo_insert_data(
+                &CONFIG.mongo_params.providers_db_name_handle,
+                vec_of_link_parts_hashmap,
+            )
+            .await;
         }
     }
-
-    let _ = mongo_insert_data(&CONFIG.mongo_params.providers_db_name_handle).await;
     let option_tuple = check_new_posts_threads_parts().await;
     match option_tuple {
         Some((_posts, error_posts)) => {

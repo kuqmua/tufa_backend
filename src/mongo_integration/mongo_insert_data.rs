@@ -1,9 +1,12 @@
+use std::collections::HashMap;
+
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::config::CONFIG;
+
 use crate::providers::provider_kind_enum::ProviderKind;
 
 pub enum PutDataInMongoResult {
@@ -13,15 +16,10 @@ pub enum PutDataInMongoResult {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn mongo_insert_data(db_name_handle: &str) -> PutDataInMongoResult {
-    let vec_of_link_parts_hashmap = ProviderKind::get_providers_json_local_data();
-    if vec_of_link_parts_hashmap.is_empty() {
-        println!(
-            "vec_of_link_parts_hashmap.len() {}",
-            vec_of_link_parts_hashmap.len()
-        );
-        return PutDataInMongoResult::Failure;
-    }
+pub async fn mongo_insert_data(
+    db_name_handle: &str,
+    vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,
+) -> PutDataInMongoResult {
     let mut vec_of_futures = Vec::with_capacity(vec_of_link_parts_hashmap.len());
     //todo: add case add in non empty collection
     for (provider_kind, vec_of_link_parts) in vec_of_link_parts_hashmap {

@@ -145,6 +145,7 @@ impl ConfigStruct {
                 enable_cleaning_warning_logs_db_collections_in_mongo: bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],//used in code not for providers logic
                 enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
                 enable_write_error_logs_in_mongo: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInMongo],
+                enable_initialize_mongo_with_providers_link_parts: bool_vars[&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts],
             },
             mongo_params: MongoParams {
                 providers_db_name_handle: string_vars[&EnvStringVar::ProvidersDbNameHandle].clone(),
