@@ -4,8 +4,6 @@ mod authorization {
     }
 }
 mod check_net {
-    pub mod check_link;
-    pub mod check_link_metainfo_structures;
     pub mod check_net_wrapper;
     pub mod fetch_link;
 }

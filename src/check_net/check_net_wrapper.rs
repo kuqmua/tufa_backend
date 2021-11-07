@@ -11,9 +11,6 @@ use diesel::prelude::*;
 
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 
-use crate::check_net::check_link_metainfo_structures::HandledReachProviderStatusInfo;
-use crate::check_net::check_link_metainfo_structures::UnhandledReachProviderInfo;
-
 use reqwest::StatusCode;
 
 #[derive(Debug)]
