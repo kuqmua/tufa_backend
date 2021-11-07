@@ -3,6 +3,7 @@ use std::fs;
 
 use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_providers_json_local_data() -> HashMap<&'static str, Vec<String>> {
@@ -21,7 +22,7 @@ pub fn get_providers_json_local_data() -> HashMap<&'static str, Vec<String>> {
         match result_of_reading_to_string {
             Ok(file_content) => {
                 let file_content_from_str_result: Result<
-                    ProviderLinkPartStruct,
+                    ProvidersInitJsonSchema,
                     serde_json::Error,
                 > = serde_json::from_str(&file_content);
                 match file_content_from_str_result {
@@ -52,8 +53,4 @@ pub fn get_providers_json_local_data() -> HashMap<&'static str, Vec<String>> {
     }
     // println!("vec_of_link_parts_hashmap {:#?}", vec_of_link_parts_hashmap)
     vec_of_link_parts_hashmap
-}
-#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
-pub struct ProviderLinkPartStruct {
-    pub data: Vec<String>,
 }
