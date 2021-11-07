@@ -4,6 +4,7 @@ mod authorization {
     }
 }
 mod check_net {
+    pub mod check_net_error_enum;
     pub mod check_net_wrapper;
     pub mod fetch_link;
 }
