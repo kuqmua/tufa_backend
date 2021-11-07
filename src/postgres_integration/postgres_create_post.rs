@@ -8,7 +8,11 @@ use crate::postgres_integration::schema::posts;
 
 use crate::postgres_integration::models::{NewPost, Post};
 
-pub fn create_post<'a>(conn: &PgConnection, title: &'a str, body: &'a str) -> Option<Post> {
+pub fn postgres_create_post<'a>(
+    conn: &PgConnection,
+    title: &'a str,
+    body: &'a str,
+) -> Option<Post> {
     let new_post = NewPost { title, body };
     let result: Result<Post, diesel::result::Error> = diesel::insert_into(posts::table)
         .values(&new_post)

@@ -121,8 +121,8 @@ pub mod mongo_integration {
     pub mod mongo_possibly_get_documents_as_string_vector;
 }
 pub mod postgres_integration {
-    pub mod create_post;
     pub mod models;
+    pub mod postgres_create_post;
     pub mod postgres_get_db_url;
     pub mod schema;
 }

@@ -12,7 +12,7 @@ use crate::config_mods::config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
-use crate::postgres_integration::create_post::create_post;
+use crate::postgres_integration::postgres_create_post::postgres_create_post;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use diesel::pg::PgConnection;
@@ -46,7 +46,7 @@ pub async fn async_tokio_wrapper() {
     let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
     match result_postgres_establish_connection {
         Ok(pg_connection) => {
-            create_post(&pg_connection, "post_title", "post_body");
+            postgres_create_post(&pg_connection, "post_title", "post_body");
         }
         Err(e) => {
             print_colorful_message(
