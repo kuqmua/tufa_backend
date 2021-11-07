@@ -1,6 +1,6 @@
 #[derive(Debug)]
 pub enum HandledReachProviderStatusInfo {
-    Initialized,
+    // Initialized,
     ResStatusError(reqwest::StatusCode),
     Success,
 }

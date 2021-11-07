@@ -3,7 +3,7 @@ use std::thread;
 
 use crate::authorization::reddit::reddit_authorization;
 
-use crate::check_net::check_link::check_link;
+use crate::check_net::fetch_link::fetch_link;
 
 use crate::fetch::rss_check_available_providers::rss_check_available_providers;
 use crate::fetch::rss_divide_to_equal_for_each_provider::rss_divide_to_equal_for_each_provider;
@@ -41,141 +41,142 @@ pub fn rss_part(
     vec_of_provider_links: Vec<String>,
     option_twitter_providers_names: Option<Vec<String>>,
 ) -> SuccessErrorTuple {
-    let mut availability_checker_flag: bool = false;
-    match provider_kind {
-        ProviderKind::Arxiv => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true;
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-        ProviderKind::Biorxiv => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true;
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-        ProviderKind::Github => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true;
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-        ProviderKind::Medrxiv => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true;
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-        ProviderKind::Twitter => match option_twitter_providers_names.clone() {
-            Some(twitter_providers_names) => {
-                let twitter_available_providers_links: Vec<String> =
-                    rss_check_available_providers(twitter_providers_names);
-                if !twitter_available_providers_links.is_empty() {
-                    availability_checker_flag = true;
-                } else {
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!(
-                            "i cannot reach {} for {:#?}",
-                            ProviderKind::get_check_link(provider_kind),
-                            provider_kind
-                        ),
-                    );
-                }
-            }
-            None => {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "option_twitter_providers_names is None for Twitter".to_string(),
-                );
-            }
-        },
-        ProviderKind::Reddit => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true; //todo
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-        ProviderKind::Habr => {
-            if check_link(ProviderKind::get_check_link(provider_kind)).0 {
-                availability_checker_flag = true;
-            } else {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "i cannot reach {} for {:#?}",
-                        ProviderKind::get_check_link(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
-        }
-    }
+    let mut availability_checker_flag: bool = true;
+    //mock that for now
+    // match provider_kind {
+    //     ProviderKind::Arxiv => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true;
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    //     ProviderKind::Biorxiv => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true;
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    //     ProviderKind::Github => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true;
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    //     ProviderKind::Medrxiv => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true;
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    //     ProviderKind::Twitter => match option_twitter_providers_names.clone() {
+    //         Some(twitter_providers_names) => {
+    //             let twitter_available_providers_links: Vec<String> =
+    //                 rss_check_available_providers(twitter_providers_names);
+    //             if !twitter_available_providers_links.is_empty() {
+    //                 availability_checker_flag = true;
+    //             } else {
+    //                 print_colorful_message(
+    //                     Some(&provider_kind),
+    //                     PrintType::Error,
+    //                     file!().to_string(),
+    //                     line!().to_string(),
+    //                     format!(
+    //                         "i cannot reach {} for {:#?}",
+    //                         ProviderKind::get_check_link(provider_kind),
+    //                         provider_kind
+    //                     ),
+    //                 );
+    //             }
+    //         }
+    //         None => {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::WarningHigh,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 "option_twitter_providers_names is None for Twitter".to_string(),
+    //             );
+    //         }
+    //     },
+    //     ProviderKind::Reddit => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true; //todo
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    //     ProviderKind::Habr => {
+    //         if check_link(ProviderKind::get_check_link(provider_kind)).0 {
+    //             availability_checker_flag = true;
+    //         } else {
+    //             print_colorful_message(
+    //                 Some(&provider_kind),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "i cannot reach {} for {:#?}",
+    //                     ProviderKind::get_check_link(provider_kind),
+    //                     provider_kind
+    //                 ),
+    //             );
+    //         }
+    //     }
+    // }
     if !availability_checker_flag {
         return (None, None);
     }
