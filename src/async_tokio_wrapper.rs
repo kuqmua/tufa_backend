@@ -46,7 +46,7 @@ pub async fn async_tokio_wrapper() {
     let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
     match result_postgres_establish_connection {
         Ok(pg_connection) => {
-            postgres_create_post(&pg_connection, "post_title", "post_body");
+            let _ = postgres_create_post(&pg_connection, "post_title", "post_body");
         }
         Err(e) => {
             print_colorful_message(

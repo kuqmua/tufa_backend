@@ -1,10 +1,3 @@
-use crate::check_net::fetch_link::fetch_link;
-
-use crate::config_mods::config::CONFIG;
-
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-
 use diesel::prelude::ConnectionError;
 
 use reqwest::StatusCode;
