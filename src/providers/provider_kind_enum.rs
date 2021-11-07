@@ -34,8 +34,6 @@ use crate::prints::print_type_enum::PrintType;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
 
-///////////////
-
 use std::fs;
 
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
@@ -482,55 +480,52 @@ impl ProviderKind {
             ProviderKind::Habr => &CONFIG.providers_check_links.habr_link,
         }
     }
-    //////////////////////
-
-    // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    // pub fn get_providers_json_local_data() -> HashMap<ProviderKind, Vec<String>> {
-    //     let mut vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>> = HashMap::new();
-    //     //todo: do it async in parallel
-    //     for provider_name in ProviderKind::get_enabled_string_name_vec() {
-    //         let result_of_reading_to_string = fs::read_to_string(&format!(
-    //             "{}{}{}{}",
-    //             CONFIG.mongo_params.path_to_provider_link_parts_folder,
-    //             provider_name,
-    //             CONFIG
-    //                 .mongo_params
-    //                 .providers_db_collection_handle_second_part,
-    //             CONFIG.mongo_params.log_file_extension
-    //         ));
-    //         match result_of_reading_to_string {
-    //             Ok(file_content) => {
-    //                 let file_content_from_str_result: Result<
-    //                     ProvidersInitJsonSchema,
-    //                     serde_json::Error,
-    //                 > = serde_json::from_str(&file_content);
-    //                 match file_content_from_str_result {
-    //                     Ok(file_content_as_struct) => {
-    //                         let mut vec_of_link_parts: Vec<String> =
-    //                             Vec::with_capacity(file_content_as_struct.data.len());
-    //                         for link_part in file_content_as_struct.data {
-    //                             vec_of_link_parts.push(link_part)
-    //                         }
-    //                         vec_of_link_parts_hashmap.insert(provider_name, vec_of_link_parts);
-    //                     }
-    //                     Err(e) => println!("file_content_from_str_result error {:#?}", e),
-    //                 }
-    //             }
-    //             Err(e) => {
-    //                 println!(
-    //                     "cannot read_to_string from file {}{}{}{}, reason: {}",
-    //                     CONFIG.mongo_params.path_to_provider_link_parts_folder,
-    //                     provider_name,
-    //                     CONFIG
-    //                         .mongo_params
-    //                         .providers_db_collection_handle_second_part,
-    //                     CONFIG.mongo_params.log_file_extension,
-    //                     e
-    //                 )
-    //             }
-    //         }
-    //     }
-    //     println!("vec_of_link_parts_hashmap {:#?}", vec_of_link_parts_hashmap);
-    //     vec_of_link_parts_hashmap
-    // }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn get_providers_json_local_data() -> HashMap<ProviderKind, Vec<String>> {
+        let mut vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>> = HashMap::new();
+        //todo: do it async in parallel
+        for provider_kind in ProviderKind::get_enabled_providers_vec() {
+            let result_of_reading_to_string = fs::read_to_string(&format!(
+                "{}{}{}{}",
+                CONFIG.mongo_params.path_to_provider_link_parts_folder,
+                ProviderKind::get_string_name(provider_kind),
+                CONFIG
+                    .mongo_params
+                    .providers_db_collection_handle_second_part,
+                CONFIG.mongo_params.log_file_extension
+            ));
+            match result_of_reading_to_string {
+                Ok(file_content) => {
+                    let file_content_from_str_result: Result<
+                        ProvidersInitJsonSchema,
+                        serde_json::Error,
+                    > = serde_json::from_str(&file_content);
+                    match file_content_from_str_result {
+                        Ok(file_content_as_struct) => {
+                            let mut vec_of_link_parts: Vec<String> =
+                                Vec::with_capacity(file_content_as_struct.data.len());
+                            for link_part in file_content_as_struct.data {
+                                vec_of_link_parts.push(link_part)
+                            }
+                            vec_of_link_parts_hashmap.insert(provider_kind, vec_of_link_parts);
+                        }
+                        Err(e) => println!("file_content_from_str_result error {:#?}", e),
+                    }
+                }
+                Err(e) => {
+                    println!(
+                        "cannot read_to_string from file {}{}{}{}, reason: {}",
+                        CONFIG.mongo_params.path_to_provider_link_parts_folder,
+                        ProviderKind::get_string_name(provider_kind),
+                        CONFIG
+                            .mongo_params
+                            .providers_db_collection_handle_second_part,
+                        CONFIG.mongo_params.log_file_extension,
+                        e
+                    )
+                }
+            }
+        }
+        vec_of_link_parts_hashmap
+    }
 }
