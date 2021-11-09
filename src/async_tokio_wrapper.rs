@@ -90,11 +90,34 @@ pub async fn async_tokio_wrapper() {
                         && CONFIG.params.enable_write_error_logs_in_mongo
                     {
                         async_write_fetch_error_logs_into_mongo_wrapper(error_posts.clone());
-                        rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        if ProviderKind::clean_providers_logs_directory().len() == 0 {
+                            rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        }
+                        else {
+                            print_colorful_message(
+                                None,
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "ProviderKind::clean_providers_logs_directory.len() > 0 (todo1)".to_string(),
+                            );
+                        }
+                        
                     } else if CONFIG.params.enable_write_error_logs_in_local_folder {
                         async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
                     } else if CONFIG.params.enable_write_error_logs_in_mongo {
-                        rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        if ProviderKind::clean_providers_logs_directory().len() == 0 {
+                            rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
+                        }
+                        else {
+                            print_colorful_message(
+                                None,
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "ProviderKind::clean_providers_logs_directory.len() > 0 (todo1)".to_string(),
+                            );
+                        }
                     }
                 });
                 match wrong_cases_thread.join() {

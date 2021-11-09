@@ -24,8 +24,6 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     )>,
 ) {
     let time = Instant::now();
-    //todo: write some logic around it
-    let result_hashmap = ProviderKind::clean_providers_logs_directory();
     let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
     for (
         link,
