@@ -1,5 +1,16 @@
 use std::collections::HashMap;
 
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
+
+use mongodb::{
+    bson::{doc, Document},
+    options::ClientOptions,
+    Client,
+};
+
+use std::fs;
+
 use crate::config_mods::config::CONFIG;
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
@@ -8,10 +19,18 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+
 use procedural_macros_lib::EnumVariantCount;
 
-use strum::IntoEnumIterator;
-use strum_macros::EnumIter;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
+
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
+
+use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
+
+use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
 
 // use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
 
@@ -21,22 +40,6 @@ use strum_macros::EnumIter;
 
 // use crate::prints::print_colorful_message::print_colorful_message;
 // use crate::prints::print_type_enum::PrintType;
-
-use mongodb::{
-    bson::{doc, Document},
-    options::ClientOptions,
-    Client,
-};
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
-
-use std::fs;
-
-use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
 #[derive(
     EnumVariantCount,
@@ -537,5 +540,39 @@ impl ProviderKind {
             }
         }
         vec_of_link_parts_hashmap
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn is_cleaning_warning_logs_directory_enable(provider_kind: ProviderKind) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_biorxiv,
+            ProviderKind::Github => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_habr,
+            ProviderKind::Habr => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_habr,
+            ProviderKind::Medrxiv => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_medrxiv,
+            ProviderKind::Reddit => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_reddit,
+            ProviderKind::Twitter => CONFIG
+            .enable_providers_cleaning_warning_logs_directory
+            .enable_cleaning_warning_logs_directory_for_twitter
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn clean_providers_logs_directory() {
+        for provider_kind in
+            ProviderKind::iter().filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
+        {
+            rss_clean_logs_directory(provider_kind);
+        }
     }
 }

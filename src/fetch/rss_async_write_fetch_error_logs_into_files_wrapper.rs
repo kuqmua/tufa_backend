@@ -1,6 +1,5 @@
 use crate::fetch::async_write_json_into_file::async_write_json_into_file;
 use crate::fetch::provider_log_into_json::provider_log_into_json;
-use crate::fetch::rss_clean_logs_directory_wrapper::rss_clean_logs_directory_wrapper;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
@@ -25,7 +24,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     )>,
 ) {
     let time = Instant::now();
-    rss_clean_logs_directory_wrapper();
+    ProviderKind::clean_providers_logs_directory();
     let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
     for (
         link,
