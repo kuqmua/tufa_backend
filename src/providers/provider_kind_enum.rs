@@ -11,7 +11,7 @@ use mongodb::{
 
 use std::fs;
 
-use crate::config_mods::config::CONFIG;
+use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -568,12 +568,19 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn clean_providers_logs_directory() {
+    pub fn clean_providers_logs_directory() -> HashMap::<ProviderKind, CleanLogsDirError> {
+        let mut result_hashmap: HashMap::<ProviderKind, CleanLogsDirError> = HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in
             ProviderKind::iter().filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
         {
-            rss_clean_logs_directory(provider_kind);
+            match rss_clean_logs_directory(provider_kind) {
+                Ok(_) => {},
+                Err(e) => {
+                    result_hashmap.insert(provider_kind, e);
+                },
+            }
         }
+        result_hashmap
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
