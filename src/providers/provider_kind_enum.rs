@@ -575,4 +575,11 @@ impl ProviderKind {
             rss_clean_logs_directory(provider_kind);
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
+        format!(
+            "logs/{}/{:?}",
+            &CONFIG.params.warning_logs_directory_name, provider_kind
+        )
+    }
 }

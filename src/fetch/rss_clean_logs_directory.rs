@@ -3,16 +3,12 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config_mods::config::CONFIG;
 use std::fs;
 use std::path::Path;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_clean_logs_directory(provider_kind: ProviderKind) {
-    let path = format!(
-        "logs/{}/{:?}",
-        &CONFIG.params.warning_logs_directory_name, provider_kind
-    );
+    let path = ProviderKind::get_path_to_logs_directory(provider_kind);
     if Path::new(&path).is_dir() {
         let result_of_recursively_removing_warning_logs_directory = fs::remove_dir_all(&path);
         match result_of_recursively_removing_warning_logs_directory {
