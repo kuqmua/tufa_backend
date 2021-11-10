@@ -167,6 +167,7 @@ mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;
+mod write_error_posts_wrapper;
 
 #[macro_use]
 extern crate diesel;
