@@ -119,9 +119,15 @@ pub mod mongo_integration {
     pub mod mongo_possibly_get_documents_as_string_vector;
 }
 pub mod postgres_integration {
-    pub mod models;
+    pub mod models {
+        pub mod insertable {
+            pub mod new_post;
+        }
+        pub mod queryable {
+            pub mod post;
+        }
+    }
     pub mod postgres_check_availability;
-    pub mod postgres_create_post;
     pub mod postgres_delete_post;
     pub mod postgres_get_db_url;
     pub mod schema;

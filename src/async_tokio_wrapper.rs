@@ -12,8 +12,8 @@ use crate::config_mods::config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
-use crate::postgres_integration::postgres_create_post::postgres_create_post;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+use crate::postgres_integration::models::insertable::new_post::NewPost;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -54,7 +54,7 @@ pub async fn async_tokio_wrapper() {
                 PgConnection::establish(&postgres_get_db_url());
             match result_postgres_establish_connection {
                 Ok(pg_connection) => {
-                    let _ = postgres_create_post(&pg_connection, "post_title", "post_body");
+                    let _ = NewPost::insert_into_postgres(&pg_connection, NewPost{title: "post_title", body:"post_body"});
                 }
                 Err(e) => {
                     print_colorful_message(
