@@ -147,20 +147,25 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 &provider_kind,
             );
             if let Some(json) = option_json {
-                let option_stringified_json = json_to_string(json);
-                if let Some(stringified_json) = option_stringified_json {
-                    match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                        Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
-                        None => {
-                            print_colorful_message(
-                            None,
-                            PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
-                            "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
-                                .to_string(),
-                        );
+                let result_stringified_json = json_to_string(json);
+                match result_stringified_json {
+                    Ok(stringified_json) => {
+                        match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                            Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                            None => {
+                                print_colorful_message(
+                                None,
+                                PrintType::WarningHigh,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
+                                    .to_string(),
+                            );
+                            }
                         }
+                    },
+                    Err(e) => {
+                        //todo
                     }
                 }
             }
