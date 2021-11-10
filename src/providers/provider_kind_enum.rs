@@ -11,7 +11,6 @@ use mongodb::{
 
 use std::fs;
 
-use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -19,6 +18,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -544,40 +544,55 @@ impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn is_cleaning_warning_logs_directory_enable(provider_kind: ProviderKind) -> bool {
         match provider_kind {
-            ProviderKind::Arxiv => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_biorxiv,
-            ProviderKind::Github => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_habr,
-            ProviderKind::Habr => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_habr,
-            ProviderKind::Medrxiv => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_medrxiv,
-            ProviderKind::Reddit => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_reddit,
-            ProviderKind::Twitter => CONFIG
-            .enable_providers_cleaning_warning_logs_directory
-            .enable_cleaning_warning_logs_directory_for_twitter
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_habr
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_twitter
+            }
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn clean_providers_logs_directory() -> HashMap::<ProviderKind, CleanLogsDirError> {
-        let mut result_hashmap: HashMap::<ProviderKind, CleanLogsDirError> = HashMap::with_capacity(ProviderKind::get_length());
-        for provider_kind in
-            ProviderKind::iter().filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
+    pub fn clean_providers_logs_directory() -> HashMap<ProviderKind, CleanLogsDirError> {
+        let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
+            HashMap::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter()
+            .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
         {
             match rss_clean_logs_directory(provider_kind) {
-                Ok(_) => {},
+                Ok(_) => {}
                 Err(e) => {
                     result_hashmap.insert(provider_kind, e);
-                },
+                }
             }
         }
         result_hashmap

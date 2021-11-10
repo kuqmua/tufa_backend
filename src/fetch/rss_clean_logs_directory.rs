@@ -6,7 +6,7 @@ use std::path::Path;
 #[derive(Debug)]
 pub enum CleanLogsDirError {
     PathIsNotDir { path: String },
-    RemoveDirAll { error: std::io::Error},
+    RemoveDirAll { error: std::io::Error },
 }
 impl From<String> for CleanLogsDirError {
     fn from(e: String) -> Self {
