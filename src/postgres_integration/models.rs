@@ -21,11 +21,10 @@ pub struct NewPost<'a> {
 impl<'a> NewPost<'a> {
     pub fn insert_into_postgres(
         connection: &PgConnection,
-        title: &'a str,
-        body: &'a str,
+        new_post: Self,
     ) -> Result<Post, diesel::result::Error> {
         diesel::insert_into(posts::table)
-            .values(&NewPost { title, body })
+            .values(&new_post)
             .get_result(connection)
     }
 }
