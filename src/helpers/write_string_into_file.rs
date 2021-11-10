@@ -1,5 +1,5 @@
-use std::{fs::File, io::Write};
 use std::io::Error;
+use std::{fs::File, io::Write};
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn write_string_into_file(file_name: String, stringified_json: String) -> Result<(), Error> {
