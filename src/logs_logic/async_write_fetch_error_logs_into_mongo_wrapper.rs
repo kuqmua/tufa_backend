@@ -163,6 +163,13 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         }
                     },
                     Err(e) => {
+                        print_colorful_message(
+                            Some(&provider_kind),
+                            PrintType::WarningLow,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
+                        );
                         //todo
                     }
                 }
