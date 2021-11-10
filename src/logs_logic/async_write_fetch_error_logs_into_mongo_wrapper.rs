@@ -1,5 +1,3 @@
-use crate::helpers::json_to_string::json_to_string;
-
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
@@ -147,7 +145,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 &provider_kind,
             );
             if let Some(json) = option_json {
-                let result_stringified_json = json_to_string(json);
+                let result_stringified_json = serde_json::to_string_pretty(&json);
                 match result_stringified_json {
                     Ok(stringified_json) => {
                         match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
