@@ -461,3 +461,10 @@ fn main() {
     y; // Fix without deleting this line.
 }
 <br/>
+    
+### -------------------
+rewrite error handling like this?
+    if let Err(merge_errors) = builder.merge_pipelines() {
+        errors.extend(merge_errors);
+    }
+<br/>
