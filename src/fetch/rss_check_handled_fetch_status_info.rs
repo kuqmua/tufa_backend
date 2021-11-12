@@ -18,24 +18,22 @@ pub fn rss_check_handled_fetch_status_info(
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, HandledFetchStatusInfo, AreThereItems) {
     //todo: change order
-    let value3: HandledFetchStatusInfo;
-    let mut rxiv_post_struct_wrapper_handle: CommonRssPostStruct = CommonRssPostStruct::new();
-    let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
-        HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => {
-            value3 = HandledFetchStatusInfo::ResToTextError(res_to_text_string_error);
-        }
-        HandledFetchStatusInfo::ResStatusError(res_error_code) => {
-            value3 = HandledFetchStatusInfo::ResStatusError(res_error_code);
-        }
+        HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => (
+            CommonRssPostStruct::new(),
+            HandledFetchStatusInfo::ResToTextError(res_to_text_string_error),
+            AreThereItems::NopeNoTag("todo: this is incorrect. rewrite enums!".to_string()),
+        ),
+        HandledFetchStatusInfo::ResStatusError(res_error_code) => (
+            CommonRssPostStruct::new(),
+            HandledFetchStatusInfo::ResStatusError(res_error_code),
+            AreThereItems::NopeNoTag("todo: this is incorrect. rewrite enums!".to_string()),
+        ),
         HandledFetchStatusInfo::Success => {
             let since_fetch = Instant::now();
-            value3 = HandledFetchStatusInfo::Success;
             let provider_kind_clone_for_prints = provider_kind;
             let (rxiv_post_struct_handle, are_there_items_handle) =
                 rss_parse_string_into_struct(fetch_result_string, value, provider_kind);
-            rxiv_post_struct_wrapper_handle = rxiv_post_struct_handle;
-            are_there_items_wrapper_handle = are_there_items_handle;
             print_colorful_message(
                 Some(&provider_kind_clone_for_prints),
                 PrintType::TimeMeasurement,
@@ -49,11 +47,11 @@ pub fn rss_check_handled_fetch_status_info(
                     since_fetch.elapsed().as_millis(),
                 ),
             );
+            (
+                rxiv_post_struct_handle,
+                HandledFetchStatusInfo::Success,
+                are_there_items_handle,
+            )
         }
     }
-    (
-        rxiv_post_struct_wrapper_handle,
-        value3,
-        are_there_items_wrapper_handle,
-    )
 }

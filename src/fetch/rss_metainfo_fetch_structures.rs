@@ -12,7 +12,7 @@ pub enum UnhandledFetchStatusInfo {
 #[derive(Debug, Clone)] //Debug only for prints
 pub enum AreThereItems {
     Yep,
-    Initialized,
     NopeButThereIsTag(String),
     ConversionFromStrError(String, String),
+    NopeNoTag(String),
 }

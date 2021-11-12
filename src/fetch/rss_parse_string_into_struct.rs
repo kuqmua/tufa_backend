@@ -47,21 +47,12 @@ use serde_xml_rs::from_str;
 
 use regex::Regex;
 
-// use std::time::Instant;
-// let time = Instant::now();
-// println!(
-//     "weeeeeeeee in {}.{}ms abs",
-//     time.elapsed().as_secs(),
-//     time.elapsed().as_millis()
-// );
 // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
     provider_kind: ProviderKind,
 ) -> (CommonRssPostStruct, AreThereItems) {
-    let mut rss_post_struct_handle: CommonRssPostStruct = CommonRssPostStruct::new();
-    let mut are_there_items_handle: AreThereItems = AreThereItems::Initialized;
     let what_should_find_in_fetch_result_string: &str;
     match provider_kind {
         ProviderKind::Arxiv => {
@@ -184,12 +175,13 @@ pub fn rss_parse_string_into_struct(
                     }
 
                     if !rss_page_struct.items.is_empty() {
-                        are_there_items_handle = AreThereItems::Yep;
+                        return (rss_page_struct, AreThereItems::Yep);
                     } else {
-                        are_there_items_handle =
-                            AreThereItems::NopeButThereIsTag(fetch_result_string);
+                        return (
+                            rss_page_struct,
+                            AreThereItems::NopeButThereIsTag(fetch_result_string),
+                        );
                     }
-                    return (rss_page_struct, are_there_items_handle);
                 }
                 Err(e) => {
                     print_colorful_message(
@@ -200,7 +192,7 @@ pub fn rss_parse_string_into_struct(
                         format!("Rss conversion from str error: {}", &e),
                     );
                     return (
-                        rss_post_struct_handle,
+                        CommonRssPostStruct::new(),
                         AreThereItems::ConversionFromStrError(fetch_result_string, e.to_string()),
                     );
                 }
@@ -210,7 +202,6 @@ pub fn rss_parse_string_into_struct(
             what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
         }
     }
-
     match fetch_result_string.find(what_should_find_in_fetch_result_string) {
         Some(_) => {
             //preparation
@@ -440,12 +431,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -455,10 +447,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -566,12 +561,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -581,10 +577,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -598,7 +597,6 @@ pub fn rss_parse_string_into_struct(
                             let mut count = 0;
                             let mut rss_page_struct: CommonRssPostStruct =
                                 CommonRssPostStruct::new();
-
                             loop {
                                 if count < rss_struct.entries.len() {
                                     // if count == 0 {
@@ -700,12 +698,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -715,10 +714,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -826,12 +828,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -841,10 +844,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -952,12 +958,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -967,10 +974,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -1081,12 +1091,13 @@ pub fn rss_parse_string_into_struct(
                                 }
                             }
                             if !rss_page_struct.items.is_empty() {
-                                are_there_items_handle = AreThereItems::Yep;
+                                (rss_page_struct, AreThereItems::Yep)
                             } else {
-                                are_there_items_handle =
-                                    AreThereItems::NopeButThereIsTag(fetch_result_string);
+                                (
+                                    rss_page_struct,
+                                    AreThereItems::NopeButThereIsTag(fetch_result_string),
+                                )
                             }
-                            rss_post_struct_handle = rss_page_struct;
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -1096,10 +1107,13 @@ pub fn rss_parse_string_into_struct(
                                 line!().to_string(),
                                 format!("Rss conversion from str error: {}", &e),
                             );
-                            are_there_items_handle = AreThereItems::ConversionFromStrError(
-                                fetch_result_string,
-                                e.to_string(),
-                            );
+                            (
+                                CommonRssPostStruct::new(),
+                                AreThereItems::ConversionFromStrError(
+                                    fetch_result_string,
+                                    e.to_string(),
+                                ),
+                            )
                         }
                     }
                 }
@@ -1117,7 +1131,10 @@ pub fn rss_parse_string_into_struct(
                 line!().to_string(),
                 warning_message,
             );
+            (
+                CommonRssPostStruct::new(),
+                AreThereItems::NopeNoTag(what_should_find_in_fetch_result_string.to_string()),
+            )
         }
     }
-    (rss_post_struct_handle, are_there_items_handle)
 }

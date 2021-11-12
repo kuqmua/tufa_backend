@@ -43,15 +43,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     AreThereItems::Yep => {
                         unhandled_success_handled_success_are_there_items_yep_posts.push(value.0);
                     }
-                    AreThereItems::Initialized => {
-                        some_error_posts.push((
-                            value.1,
-                            value.2,
-                            value.3,
-                            AreThereItems::Initialized,
-                            provider_kind,
-                        ));
-                    }
                     AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                         //"</item>" tag
                         some_error_posts.push((
@@ -68,6 +59,15 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             value.2,
                             value.3,
                             AreThereItems::ConversionFromStrError(fetch_result_string, error),
+                            provider_kind,
+                        ));
+                    }
+                    AreThereItems::NopeNoTag(tag) => {
+                        some_error_posts.push((
+                            value.1,
+                            value.2,
+                            value.3,
+                            AreThereItems::NopeNoTag(tag),
                             provider_kind,
                         ));
                     }

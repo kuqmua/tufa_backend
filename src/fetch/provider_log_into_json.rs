@@ -32,12 +32,6 @@ pub fn provider_log_into_json(
                 );
                     None
                 }
-                //todo: field names into config?
-                AreThereItems::Initialized => Some(json!({
-                    "link": link,
-                    "part_of": format!("{:?}", provider_kind),
-                    "date": Local::now().to_string()
-                })),
                 AreThereItems::NopeButThereIsTag(fetch_result_string) => {
                     //"</item>" tag
                     Some(json!({
@@ -51,6 +45,12 @@ pub fn provider_log_into_json(
                     "link": link,
                     "fetch_result_string": fetch_result_string,
                     "error": error,
+                    "part_of": format!("{:?}", provider_kind),
+                    "date": Local::now().to_string()
+                })),
+                AreThereItems::NopeNoTag(tag) => Some(json!({
+                    "link": link,
+                    "tag": tag,
                     "part_of": format!("{:?}", provider_kind),
                     "date": Local::now().to_string()
                 })),
