@@ -100,15 +100,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     ));
                 }
             },
-            UnhandledFetchStatusInfo::Initialized => {
-                some_error_posts.push((
-                    value.1,
-                    UnhandledFetchStatusInfo::Initialized,
-                    value.3,
-                    value.4,
-                    provider_kind,
-                ));
-            }
             UnhandledFetchStatusInfo::Failure(box_dyn_error) => {
                 some_error_posts.push((
                     value.1,

@@ -24,16 +24,13 @@ pub fn rss_fetch_and_parse_provider_data(
     AreThereItems,
 )> {
     let time = Instant::now();
-    let hashmap_to_return = Arc::new(Mutex::new(vec![
-        (
-            CommonRssPostStruct::new(),
-            "".to_string(),
-            UnhandledFetchStatusInfo::Initialized,
-            HandledFetchStatusInfo::Initialized,
-            AreThereItems::Initialized,
-        );
-        links.len()
-    ]));
+    let hashmap_to_return = Arc::new(Mutex::new(Vec::<(
+        CommonRssPostStruct,
+        String,
+        UnhandledFetchStatusInfo, //todo: add another enum for initialization
+        HandledFetchStatusInfo,
+        AreThereItems,
+    )>::with_capacity(links.len())));
     print_colorful_message(
         Some(&provider_kind),
         PrintType::TimeMeasurement,
@@ -63,13 +60,13 @@ pub fn rss_fetch_and_parse_provider_data(
                         );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked[element_index].0 = post_struct_wrapper_handle;
-                    hashmap_to_return_handle_locked[element_index].1 = link;
-                    hashmap_to_return_handle_locked[element_index].2 =
-                        UnhandledFetchStatusInfo::Success;
-                    hashmap_to_return_handle_locked[element_index].3 = value3;
-                    hashmap_to_return_handle_locked[element_index].4 =
-                        are_there_items_wrapper_handle;
+                    hashmap_to_return_handle_locked.push((
+                        post_struct_wrapper_handle,
+                        link,
+                        UnhandledFetchStatusInfo::Success,
+                        value3,
+                        are_there_items_wrapper_handle,
+                    ))
                 }
                 Err(e) => {
                     let mut hashmap_to_return_handle_locked =

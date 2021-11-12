@@ -8,7 +8,6 @@ pub enum HandledFetchStatusInfo {
 #[derive(Debug, Clone)] //Debug only for prints
 pub enum UnhandledFetchStatusInfo {
     Failure(String),
-    Initialized,
     Success,
 }
 #[derive(Debug, Clone)] //Debug only for prints

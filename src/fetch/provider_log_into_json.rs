@@ -76,11 +76,6 @@ pub fn provider_log_into_json(
                 }))
             }
         },
-        UnhandledFetchStatusInfo::Initialized => Some(json!({
-            "link": link,
-            "part_of": format!("{:?}", provider_kind),
-            "date": Local::now().to_string()
-        })),
         UnhandledFetchStatusInfo::Failure(box_dyn_error) => Some(json!({
             "link": link,
             "error": box_dyn_error,
