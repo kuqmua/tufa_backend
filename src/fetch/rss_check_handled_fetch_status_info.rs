@@ -22,9 +22,6 @@ pub fn rss_check_handled_fetch_status_info(
     let mut rxiv_post_struct_wrapper_handle: CommonRssPostStruct = CommonRssPostStruct::new();
     let mut are_there_items_wrapper_handle: AreThereItems = AreThereItems::Initialized;
     match handled_fetch_status_info {
-        HandledFetchStatusInfo::Initialized => {
-            value3 = HandledFetchStatusInfo::Initialized;
-        }
         HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => {
             value3 = HandledFetchStatusInfo::ResToTextError(res_to_text_string_error);
         }

@@ -23,12 +23,9 @@ pub fn rss_check_provider_status(
     link: &str,
 ) -> Result<(bool, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
     let res = reqwest::blocking::get(link)?;
-    let mut result_tuple: (bool, HandledFetchStatusInfo) =
-        (false, HandledFetchStatusInfo::Initialized);
     if res.status() == reqwest::StatusCode::OK {
-        result_tuple.0 = true;
+        Ok((true, HandledFetchStatusInfo::Success))
     } else {
-        result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
         print_colorful_message(
             None,
             PrintType::Error,
@@ -36,6 +33,6 @@ pub fn rss_check_provider_status(
             line!().to_string(),
             format!("{} {}", link, res.status()),
         );
+        Ok((false, HandledFetchStatusInfo::ResStatusError(res.status())))
     }
-    Ok(result_tuple)
 }

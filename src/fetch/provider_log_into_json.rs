@@ -55,11 +55,6 @@ pub fn provider_log_into_json(
                     "date": Local::now().to_string()
                 })),
             },
-            HandledFetchStatusInfo::Initialized => Some(json!({
-                "link": link,
-                "part_of": format!("{:?}", provider_kind),
-                "date": Local::now().to_string()
-            })),
             HandledFetchStatusInfo::ResToTextError(error) => Some(json!({
                 "link": link,
                 "error": error,

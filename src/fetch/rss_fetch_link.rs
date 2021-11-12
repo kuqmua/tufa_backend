@@ -36,15 +36,11 @@ pub fn rss_fetch_link(
             res.status(),
         ),
     );
-
-    let mut result_tuple: (String, HandledFetchStatusInfo) =
-        ("".to_string(), HandledFetchStatusInfo::Initialized);
     if res.status() == reqwest::StatusCode::OK {
         let res_to_text_result = res.text();
         match res_to_text_result {
-            Ok(norm) => result_tuple = (norm, HandledFetchStatusInfo::Success),
+            Ok(norm) => Ok((norm, HandledFetchStatusInfo::Success)),
             Err(e) => {
-                result_tuple.1 = HandledFetchStatusInfo::ResToTextError(e.to_string());
                 print_colorful_message(
                     None,
                     PrintType::Error,
@@ -52,10 +48,13 @@ pub fn rss_fetch_link(
                     line!().to_string(),
                     format!("LINK: {} ResToTextError...(decided to not show)", link),
                 );
+                Ok((
+                    "".to_string(),
+                    HandledFetchStatusInfo::ResToTextError(e.to_string()),
+                ))
             }
         }
     } else {
-        result_tuple.1 = HandledFetchStatusInfo::ResStatusError(res.status());
         print_colorful_message(
             None,
             PrintType::Error,
@@ -63,6 +62,9 @@ pub fn rss_fetch_link(
             line!().to_string(),
             format!("LINK: {} RES.STATUS: {}", link, res.status()),
         );
+        Ok((
+            "".to_string(),
+            HandledFetchStatusInfo::ResStatusError(res.status()),
+        ))
     }
-    Ok(result_tuple)
 }

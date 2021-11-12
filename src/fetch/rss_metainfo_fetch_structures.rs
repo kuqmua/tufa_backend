@@ -1,6 +1,5 @@
 #[derive(Debug, Clone)] //Debug only for prints
 pub enum HandledFetchStatusInfo {
-    Initialized,
     ResToTextError(String),
     ResStatusError(reqwest::StatusCode),
     Success,

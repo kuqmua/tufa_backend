@@ -72,15 +72,6 @@ pub fn rss_filter_fetched_and_parsed_posts(
                         ));
                     }
                 },
-                HandledFetchStatusInfo::Initialized => {
-                    some_error_posts.push((
-                        value.1,
-                        value.2,
-                        HandledFetchStatusInfo::Initialized,
-                        value.4,
-                        provider_kind,
-                    ));
-                }
                 HandledFetchStatusInfo::ResToTextError(error) => {
                     some_error_posts.push((
                         value.1,
