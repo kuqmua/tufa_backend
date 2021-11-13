@@ -22,7 +22,11 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let path_to_file = format!(
         "logs/{}/{:?}/{}/{:?}-{}.json",
-        &warning_logs_directory_name, provider_kind, dir, provider_kind, replaced_link
+        &warning_logs_directory_name,
+        ProviderKind::get_string_name(*provider_kind),
+        dir,
+        ProviderKind::get_string_name(*provider_kind),
+        replaced_link
     ); //add save function what convert string into save path
     let result_of_opening_file = File::open(&path_to_file);
     match result_of_opening_file {
