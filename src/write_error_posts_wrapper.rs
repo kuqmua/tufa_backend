@@ -1,5 +1,6 @@
 use crate::fetch::rss_async_write_fetch_error_logs_into_files_wrapper::rss_async_write_fetch_error_logs_into_files_wrapper;
 use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_write_fetch_error_logs_into_mongo_wrapper;
+use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::WriteLogsResult;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
@@ -43,15 +44,43 @@ pub async fn write_error_posts_wrapper(
     }
     if CONFIG.params.enable_write_error_logs_in_mongo {
         let result = async_write_fetch_error_logs_into_mongo_wrapper(error_posts).await;
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
-            format!(
-                "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
-                result
-            ),
-        );
+        match result {
+            WriteLogsResult::Success => {
+                print_colorful_message(
+                    None,
+                    PrintType::Success,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
+                        result
+                    ),
+                );
+            }
+            WriteLogsResult::PartialSuccess => {
+                print_colorful_message(
+                    None,
+                    PrintType::PartialSuccess,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
+                        result
+                    ),
+                );
+            }
+            WriteLogsResult::Failure => {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
+                        result
+                    ),
+                );
+            }
+        }
     }
 }
