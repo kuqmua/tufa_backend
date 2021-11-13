@@ -11,12 +11,13 @@ fn ci_check_compromised_github_auth_info() {
         Ok(_) => {
             match std::env::var(GITHUB_NAME_ENV_NAME) {
                 Ok(github_name) => {
-                    if github_name != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            GITHUB_NAME_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, github_name
-                        );
-                    }
+                    assert!(
+                        !(github_name != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        GITHUB_NAME_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        github_name
+                    );
                 }
                 Err(e) => {
                     panic!(
@@ -27,12 +28,13 @@ fn ci_check_compromised_github_auth_info() {
             }
             match std::env::var(GITHUB_TOKEN_ENV_NAME) {
                 Ok(github_token) => {
-                    if github_token != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            GITHUB_TOKEN_ENV_NAME, _USER_CREDENTIALS_DUMMY_HANDLE, github_token
-                        );
-                    }
+                    assert!(
+                        !(github_token != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        GITHUB_TOKEN_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        github_token
+                    );
                 }
                 Err(e) => {
                     panic!(

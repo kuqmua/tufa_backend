@@ -3,12 +3,14 @@ pub fn generate_twitter_links(
     twitter_subs_names: Vec<String>,
 ) -> Vec<String> {
     //example https://nitter.pussthecat.org/Tom_McGurl/rss
-    if twitter_provider_names.is_empty() {
-        panic!("twitter_provider_names is empty!!!");
-    }
-    if twitter_subs_names.is_empty() {
-        panic!("twitter_subs_names is empty!");
-    }
+    assert!(
+        !twitter_provider_names.is_empty(),
+        "twitter_provider_names is empty!!!"
+    );
+    assert!(
+        !twitter_subs_names.is_empty(),
+        "twitter_subs_names is empty!"
+    );
     let twitter_subs_names_length = twitter_subs_names.len();
     let mut twitter_sections_links: Vec<String> = Vec::with_capacity(twitter_subs_names_length);
     if twitter_subs_names_length > twitter_provider_names.len() {
@@ -21,8 +23,7 @@ pub fn generate_twitter_links(
         for (twitter_sub_name_index, sub_name) in twitter_subs_names.into_iter().enumerate() {
             let sub_link: String = format!(
                 "https://{}/{}/rss",
-                twitter_provider_names[twitter_provider_name_index],
-                sub_name.to_string(),
+                twitter_provider_names[twitter_provider_name_index], sub_name,
             );
             twitter_sections_links.push(sub_link);
             if twitter_sub_name_index != 0
@@ -37,14 +38,14 @@ pub fn generate_twitter_links(
         for (index, sub_name) in twitter_subs_names.into_iter().enumerate() {
             let sub_link: String = format!(
                 "https://{}/{}/rss",
-                twitter_provider_names_splited[index],
-                sub_name.to_string(),
+                twitter_provider_names_splited[index], sub_name,
             );
             twitter_sections_links.push(sub_link);
         }
     }
-    if twitter_sections_links.is_empty() {
-        panic!("twitter_sections_links is empty in generate_twitter_hashmap_links()!!!");
-    }
+    assert!(
+        !twitter_sections_links.is_empty(),
+        "twitter_sections_links is empty in generate_twitter_hashmap_links()!!!"
+    );
     twitter_sections_links //maybe change structure for memory effective reasons
 }

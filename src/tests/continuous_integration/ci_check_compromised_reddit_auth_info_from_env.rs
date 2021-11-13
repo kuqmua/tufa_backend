@@ -15,14 +15,13 @@ fn ci_check_compromised_reddit_auth_info() {
         Ok(_) => {
             match std::env::var(REDDIT_USER_AGENT_ENV_NAME) {
                 Ok(reddit_user_agent) => {
-                    if reddit_user_agent != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            REDDIT_USER_AGENT_ENV_NAME,
-                            _USER_CREDENTIALS_DUMMY_HANDLE,
-                            reddit_user_agent
-                        );
-                    }
+                    assert!(
+                        !(reddit_user_agent != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        REDDIT_USER_AGENT_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        reddit_user_agent
+                    );
                 }
                 Err(e) => {
                     panic!(
@@ -33,14 +32,13 @@ fn ci_check_compromised_reddit_auth_info() {
             }
             match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
                 Ok(reddit_client_id) => {
-                    if reddit_client_id != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            REDDIT_CLIENT_ID_ENV_NAME,
-                            _USER_CREDENTIALS_DUMMY_HANDLE,
-                            reddit_client_id
-                        );
-                    }
+                    assert!(
+                        !(reddit_client_id != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        REDDIT_CLIENT_ID_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        reddit_client_id
+                    );
                 }
                 Err(e) => {
                     panic!(
@@ -51,14 +49,13 @@ fn ci_check_compromised_reddit_auth_info() {
             }
             match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
                 Ok(rediit_client_secret) => {
-                    if rediit_client_secret != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            REDDIT_CLIENT_SECRET_ENV_NAME,
-                            _USER_CREDENTIALS_DUMMY_HANDLE,
-                            rediit_client_secret
-                        );
-                    }
+                    assert!(
+                        !(rediit_client_secret != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        REDDIT_CLIENT_SECRET_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        rediit_client_secret
+                    );
                 }
                 Err(e) => {
                     panic!(
@@ -69,14 +66,13 @@ fn ci_check_compromised_reddit_auth_info() {
             }
             match std::env::var(REDDIT_USERNAME_ENV_NAME) {
                 Ok(reddit_username) => {
-                    if reddit_username != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            REDDIT_USERNAME_ENV_NAME,
-                            _USER_CREDENTIALS_DUMMY_HANDLE,
-                            reddit_username
-                        );
-                    }
+                    assert!(
+                        !(reddit_username != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        REDDIT_USERNAME_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        reddit_username
+                    );
                 }
                 Err(e) => {
                     panic!(
@@ -87,14 +83,13 @@ fn ci_check_compromised_reddit_auth_info() {
             }
             match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
                 Ok(reddit_password) => {
-                    if reddit_password != _USER_CREDENTIALS_DUMMY_HANDLE {
-                        panic!(
-                            "{} != {}, found {}",
-                            REDDIT_PASSWORD_ENV_NAME,
-                            _USER_CREDENTIALS_DUMMY_HANDLE,
-                            reddit_password
-                        );
-                    }
+                    assert!(
+                        !(reddit_password != _USER_CREDENTIALS_DUMMY_HANDLE),
+                        "{} != {}, found {}",
+                        REDDIT_PASSWORD_ENV_NAME,
+                        _USER_CREDENTIALS_DUMMY_HANDLE,
+                        reddit_password
+                    );
                 }
                 Err(e) => {
                     panic!(

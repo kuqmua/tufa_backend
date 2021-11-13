@@ -10,10 +10,14 @@ fn ci_check_compromised_github_auth_info_with_config_init() {
     let config_handle: ConfigStruct = ConfigStruct::new().expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
     let github_name = &config_handle.github_authorization.github_name;
     let github_token = &config_handle.github_authorization.github_token;
-    if github_name != _USER_CREDENTIALS_DUMMY_HANDLE {
-        panic!("github_name != {}", _USER_CREDENTIALS_DUMMY_HANDLE);
-    }
-    if github_token != _USER_CREDENTIALS_DUMMY_HANDLE {
-        panic!("github_token != {}", _USER_CREDENTIALS_DUMMY_HANDLE);
-    }
+    assert!(
+        !(github_name != _USER_CREDENTIALS_DUMMY_HANDLE),
+        "github_name != {}",
+        _USER_CREDENTIALS_DUMMY_HANDLE
+    );
+    assert!(
+        !(github_token != _USER_CREDENTIALS_DUMMY_HANDLE),
+        "github_token != {}",
+        _USER_CREDENTIALS_DUMMY_HANDLE
+    );
 }
