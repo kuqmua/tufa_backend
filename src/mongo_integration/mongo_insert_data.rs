@@ -39,20 +39,32 @@ pub async fn mongo_insert_data(
     }
     //todo add iteration function which returns Success Partial Success Failure
     let mut checker_if_all_true = true;
-    for future_result in &vec_of_futures {
-        match future_result {
-            Ok(boolean_result) => {
-                if *boolean_result == false {
-                    checker_if_all_true = *boolean_result;
+    for i in 0..vec_of_futures.len() {
+        match vec_of_futures.get(i) {
+            Some(future_result) => match future_result {
+                Ok(boolean_result) => {
+                    if !boolean_result {
+                        checker_if_all_true = *boolean_result;
+                    }
                 }
-                break;
-            }
-            Err(_) => {
+                Err(_) => {
+                    checker_if_all_true = false;
+                }
+            },
+            None => {
+                //todo: handle this case or rewrite this code
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    "vec_of_futures.get(i) is None. WHY?????".to_string(),
+                );
                 checker_if_all_true = false;
-                break;
             }
         }
     }
+
     if checker_if_all_true {
         return PutDataInMongoResult::Success;
     }
@@ -60,7 +72,7 @@ pub async fn mongo_insert_data(
     for future_result in &vec_of_futures {
         match future_result {
             Ok(boolean_result) => {
-                if *boolean_result == true {
+                if *boolean_result {
                     checker_if_all_false = false
                 }
             }
