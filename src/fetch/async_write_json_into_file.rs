@@ -19,7 +19,7 @@ pub async fn async_write_json_into_file(
     let time = Instant::now();
     rss_write_error_logs_into_file_for_provider_wrapper_checker(
         json_object,
-        &provider_kind,
+        provider_kind,
         unhandled_success_handled_success_are_there_items_initialized_posts_dir,
         warning_logs_directory_name,
         &link,
