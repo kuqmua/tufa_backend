@@ -11,6 +11,10 @@ use mongodb::{
 
 use std::fs;
 
+use std::sync::{Arc, Mutex};
+
+use futures::future::join_all;
+
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -26,7 +30,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-use crate::mongo_integration::mongo_possibly_get_documents_as_string_vector::mongo_possibly_get_documents_as_string_vector;
+use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
@@ -75,6 +79,7 @@ impl ProviderKind {
             ProviderKind::Twitter => TWITTER_NAME_TO_CHECK,
         }
     }
+    //todo: collection logs or what? there are many collections...
     pub fn get_mongo_collection_name(provider_kind: ProviderKind) -> String {
         let name = ProviderKind::get_string_name(provider_kind);
         format!(
@@ -315,7 +320,7 @@ impl ProviderKind {
                 // let aggregation_stage_1_get_docs_in_random_order_with_limit =
                 //     doc! { "$sample" : {"size": 5 }};
                 // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
-                let option_vec_of_strings = mongo_possibly_get_documents_as_string_vector(
+                let vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
                     &CONFIG
                         .mongo_params
@@ -323,71 +328,98 @@ impl ProviderKind {
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await?;
-                match option_vec_of_strings {
-                    Some(vec_of_strings) => return Ok(Some(vec_of_strings)),
-                    None => return Ok(None),
-                }
+                //todo remove option
+                return Ok(Some(vec_of_strings));
             }
         }
         Ok(None)
-        // match needed_db_collection {
-        //     Some(collection_name) => {
-        //         let collection = db.collection(&collection_name);
-        //         let documents_number = collection.count_documents(None, None).await?;
-        //         if documents_number > 0 {
-        //             //rewrite as PrintType::Info or something
-        //             print_colorful_message(
-        //                 None,
-        //                 PrintType::Success,
-        //                 file!().to_string(),
-        //                 line!().to_string(),
-        //                 format!("collection.count_documents {}", documents_number),
-        //             );
-        //             let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
-        //             if CONFIG.params.enable_provider_links_limit {
-        //                 if CONFIG.params.enable_common_providers_links_limit {
-        //                     if CONFIG.params.enable_randomize_order_for_providers_link_parts_for_mongo {
-        //                         option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }});
-        //                     }
-        //                     else {
-        //                         option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
-        //                     }
-        //                 } else {
-        //                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = ProviderKind::get_mongo_doc_randomization_aggregation(provider_kind);
-        //                 }
-        //             } else {
-        //                 option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
-        //             }
-        //             // let aggregation_stage_1_get_docs_in_random_order_with_limit =
-        //             //     doc! { "$sample" : {"size": 5 }};
-        //             // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
-        //             Ok(Some(mongo_possibly_get_documents_as_string_vector(
-        //                 collection,
-        //                 &CONFIG.mongo_params.providers_db_collection_document_field_name_handle,
-        //                 option_aggregation_stage_1_get_docs_in_random_order_with_limit,
-        //             )
-        //             .await?))
-        //         } else {
-        //             print_colorful_message(
-        //                 None,
-        //                 PrintType::WarningLow,
-        //                 file!().to_string(),
-        //                 line!().to_string(),
-        //                 format!("documents_number is {}", documents_number),
-        //             );
-        //             Ok(None)
-        //         }
-        //     }
-        //     None => {
-        //         print_colorful_message(
-        //             None,
-        //             PrintType::WarningLow,
-        //             file!().to_string(),
-        //             line!().to_string(),
-        //             "needed_db_collection is None".to_string(),
-        //         );
-        //         Ok(None)
-        //     }
+    }
+    #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
+    pub async fn mongo_get_providers_link_parts(
+        provider_kind_vec: Vec<ProviderKind>,
+    ) -> Result<
+        HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
+        mongodb::error::Error,
+    > {
+        let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
+        let client = Client::with_options(client_options)?;
+        let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
+        let vec_collection_names = db.list_collection_names(None).await?;
+        let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
+            ProviderKind,
+            Result<Vec<String>, mongodb::error::Error>,
+        >::new(
+        )));
+        let mut vec_of_tasks = Vec::with_capacity(provider_kind_vec.len());
+        for provider_kind in provider_kind_vec {
+            let vec_provider_kind_with_collection_names_under_arc_handle =
+                Arc::clone(&vec_provider_kind_with_collection_names_under_arc);
+            let collection_name = ProviderKind::get_mongo_collection_name(provider_kind);
+            let collection = db.collection::<Document>(&collection_name);
+            if vec_collection_names.contains(&collection_name) {
+                vec_of_tasks.push(tokio::task::spawn(async move {
+                    let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
+                        Document,
+                    >;
+                    if CONFIG.params.enable_provider_links_limit {
+                        if CONFIG.params.enable_common_providers_links_limit {
+                            if CONFIG
+                                .params
+                                .enable_randomize_order_for_providers_link_parts_for_mongo
+                            {
+                                option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
+                                    doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }},
+                                );
+                            } else {
+                                option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                                    Some(doc! { "$limit" :  CONFIG.params.common_providers_links_limit });
+                            }
+                        } else {
+                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                                ProviderKind::get_mongo_doc_randomization_aggregation(provider_kind);
+                        }
+                    } else {
+                        option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
+                    }
+                    let result_vec_of_strings = mongo_get_documents_as_string_vector(
+                        collection,
+                        &CONFIG
+                            .mongo_params
+                            .providers_db_collection_document_field_name_handle,
+                        option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+                    )
+                    .await;
+                    let mut vec_provider_kind_with_collection_names_under_arc_handle_locked =
+                        vec_provider_kind_with_collection_names_under_arc_handle
+                            .lock()
+                            .unwrap();
+                    match result_vec_of_strings {
+                        Ok(vec_of_strings) => {
+                            vec_provider_kind_with_collection_names_under_arc_handle_locked
+                                .insert(provider_kind, Ok(vec_of_strings));
+                        },
+                        Err(e) => {
+                            vec_provider_kind_with_collection_names_under_arc_handle_locked
+                                .insert(provider_kind, Err(e));
+                        },
+                    }
+                }));
+            } else {
+                let mut vec_provider_kind_with_collection_names_under_arc_handle_locked =
+                    vec_provider_kind_with_collection_names_under_arc_handle
+                        .lock()
+                        .unwrap();
+                vec_provider_kind_with_collection_names_under_arc_handle_locked
+                    .insert(provider_kind, Ok(Vec::<String>::new()));
+            }
+        }
+        let _ = join_all(vec_of_tasks).await;
+        let vec_provider_kind_with_collection_names =
+            vec_provider_kind_with_collection_names_under_arc
+                .lock()
+                .unwrap()
+                .clone();
+        Ok(vec_provider_kind_with_collection_names)
     }
     pub fn enable_links_limit_for(provider_kind: ProviderKind) -> bool {
         match provider_kind {

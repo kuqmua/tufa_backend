@@ -1,5 +1,5 @@
-use crate::postgres_integration::schema::posts;
 use crate::postgres_integration::models::queryable::post::Post;
+use crate::postgres_integration::schema::posts;
 
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
