@@ -1,8 +1,8 @@
-use crate::fetch::async_write_json_into_file::async_write_json_into_file;
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
 use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
+use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
 use crate::providers::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
@@ -42,7 +42,8 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         );
         match option_json {
             Some(json_object) => {
-                vec_of_write_into_files_futures.push(async_write_json_into_file(
+                vec_of_write_into_files_futures
+                    .push(rss_write_error_logs_into_file_for_provider_wrapper_checker(
                     json_object,
                     provider_kind,
                     &CONFIG

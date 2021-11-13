@@ -10,14 +10,17 @@ use crate::prints::print_type_enum::PrintType;
 use std::fs::File;
 use std::io::ErrorKind;
 
+use std::time::Instant;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
+pub async fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,
     provider_kind: ProviderKind,
     dir: &str,
     warning_logs_directory_name: &str,
-    link: &str,
+    link: String,
 ) -> Result<(), std::io::Error> {
+    let time = Instant::now();
     let path_to_provider_log_file = format!(
         "logs/{}/{:?}/{}",
         warning_logs_directory_name, provider_kind, warning_logs_directory_name
@@ -77,5 +80,17 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
             }
         }
     }
+    print_colorful_message(
+        Some(&provider_kind),
+        PrintType::TimeMeasurement,
+        file!().to_string(),
+        line!().to_string(),
+        format!(
+            "write fetch error logs into file done in {} seconds {} miliseconds for {:#?}",
+            time.elapsed().as_secs(),
+            time.elapsed().as_millis(),
+            provider_kind
+        ),
+    );
     Ok(())
 }
