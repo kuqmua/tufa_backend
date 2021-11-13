@@ -29,8 +29,7 @@ pub enum WriteLogsResult {
     Failure,
 }
 
-#[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
-#[tokio::main]
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     error_posts: Vec<(
         String,

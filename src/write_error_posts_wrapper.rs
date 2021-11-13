@@ -42,6 +42,16 @@ pub async fn write_error_posts_wrapper(
         }
     }
     if CONFIG.params.enable_write_error_logs_in_mongo {
-        async_write_fetch_error_logs_into_mongo_wrapper(error_posts);
+        let result = async_write_fetch_error_logs_into_mongo_wrapper(error_posts).await;
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!(
+                "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
+                result
+            ),
+        );
     }
 }
