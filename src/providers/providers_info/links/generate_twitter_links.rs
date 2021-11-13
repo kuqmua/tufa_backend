@@ -1,3 +1,7 @@
+use crate::constants::project_constants::TWITTER_LINK_FIRST_PART;
+use crate::constants::project_constants::TWITTER_LINK_SECOND_PART;
+use crate::constants::project_constants::TWITTER_LINK_THIRD_PART;
+
 pub fn generate_twitter_links(
     twitter_provider_names: Vec<String>,
     twitter_subs_names: Vec<String>,
@@ -22,8 +26,12 @@ pub fn generate_twitter_links(
 
         for (twitter_sub_name_index, sub_name) in twitter_subs_names.into_iter().enumerate() {
             let sub_link: String = format!(
-                "https://{}/{}/rss",
-                twitter_provider_names[twitter_provider_name_index], sub_name,
+                "{}{}{}{}{}",
+                TWITTER_LINK_FIRST_PART,
+                twitter_provider_names[twitter_provider_name_index],
+                TWITTER_LINK_SECOND_PART,
+                sub_name,
+                TWITTER_LINK_THIRD_PART
             );
             twitter_sections_links.push(sub_link);
             if twitter_sub_name_index != 0
@@ -37,8 +45,12 @@ pub fn generate_twitter_links(
         let twitter_provider_names_splited = &twitter_provider_names[0..twitter_subs_names_length];
         for (index, sub_name) in twitter_subs_names.into_iter().enumerate() {
             let sub_link: String = format!(
-                "https://{}/{}/rss",
-                twitter_provider_names_splited[index], sub_name,
+                "{}{}{}{}{}",
+                TWITTER_LINK_FIRST_PART,
+                twitter_provider_names_splited[index],
+                TWITTER_LINK_SECOND_PART,
+                sub_name,
+                TWITTER_LINK_THIRD_PART
             );
             twitter_sections_links.push(sub_link);
         }

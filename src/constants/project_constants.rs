@@ -45,3 +45,6 @@ pub const HABR_LINK_FIRST_PART: &str = "https://habr.com/ru/rss/";
 pub const MEDRXIV_LINK_FIRST_PART: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";
 pub const REDDIT_LINK_FIRST_PART: &str = "https://www.reddit.com/r/";
 pub const REDDIT_LINK_SECOND_PART: &str = "/new.json";
+pub const TWITTER_LINK_FIRST_PART: &str = "https://";
+pub const TWITTER_LINK_SECOND_PART: &str = "/";
+pub const TWITTER_LINK_THIRD_PART: &str = "/rss";
