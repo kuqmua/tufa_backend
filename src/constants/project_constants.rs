@@ -38,3 +38,4 @@ pub const HABR_FILTER_HANDLE_TO_REMOVE_2: &str = "</channel>";
 pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 
 pub const ARXIV_LINK_FIRST_PART: &str = "http://export.arxiv.org/rss/";
+pub const BIORXIV_LINK_FIRST_PART: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";
