@@ -39,3 +39,5 @@ pub const HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2: &str = "         ";
 
 pub const ARXIV_LINK_FIRST_PART: &str = "http://export.arxiv.org/rss/";
 pub const BIORXIV_LINK_FIRST_PART: &str = "http://connect.biorxiv.org/biorxiv_xml.php?subject=";
+pub const GITHUB_LINK_FIRST_PART: &str = "https://github.com/";
+pub const GITHUB_LINK_SECOND_PART: &str = ".private.atom?token=";
