@@ -5,7 +5,6 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
@@ -14,10 +13,9 @@ use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::config_mods::config::CONFIG;
 
-// use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
+use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_twitter_providers_names::get_twitter_providers_names;
-
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
 use crate::providers::providers_info::links::generate_github_links::generate_github_links;
@@ -39,7 +37,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
         ProviderKind,
     )>,
 )> {
-    if !ProviderKind::get_enabled_string_name_vec().is_empty() {
+    if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
         match option_providers_link_parts {
             Some(providers_link_parts) => {

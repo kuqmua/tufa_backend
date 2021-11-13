@@ -146,9 +146,7 @@ mod providers {
             pub mod generate_reddit_links;
             pub mod generate_twitter_links;
         }
-        pub mod get_provider_link_parts_from_mongo;
         pub mod get_providers_link_parts;
-        pub mod get_providers_link_parts_from_mongo;
         pub mod get_twitter_providers_names;
         pub mod providers_init_json_schema;
     }
