@@ -17,8 +17,16 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     dir: &str,
     warning_logs_directory_name: &str,
     link: &str,
-) {
-    create_provider_logs_dir_if_dont_exists(dir, Some(&provider_kind), warning_logs_directory_name);
+) -> Result<(), std::io::Error> {
+    let path_to_provider_log_file = format!(
+        "logs/{}/{:?}/{}",
+        warning_logs_directory_name, provider_kind, warning_logs_directory_name
+    );
+    if let Err(e) =
+        create_provider_logs_dir_if_dont_exists(path_to_provider_log_file, provider_kind)
+    {
+        return Err(e);
+    };
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
     let path_to_file = format!(
         "logs/{}/{:?}/{}/{:?}-{}.json",
@@ -61,4 +69,5 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
             }
         }
     }
+    Ok(())
 }
