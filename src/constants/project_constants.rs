@@ -2,7 +2,7 @@ pub const ENV_FILE_NAME: &str = ".env";
 
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
-pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
+// pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
 pub const ARXIV_NAME_TO_CHECK: &str = "arxiv";
 pub const BIORXIV_NAME_TO_CHECK: &str = "biorxiv";

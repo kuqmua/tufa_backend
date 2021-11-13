@@ -94,7 +94,7 @@ pub mod config_mods {
     pub mod env_var_enum;
 }
 pub mod helpers {
-    pub mod create_provider_logs_dir_if_dont_exists;
+    pub mod create_dir_if_it_doesnt_exist;
     pub mod resource;
     pub mod write_json_into_file;
     pub mod write_string_into_file;

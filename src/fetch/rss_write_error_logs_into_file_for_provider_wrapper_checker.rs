@@ -1,6 +1,6 @@
 use serde_json::Value;
 
-use crate::helpers::create_provider_logs_dir_if_dont_exists::create_provider_logs_dir_if_dont_exists;
+use crate::helpers::create_dir_if_it_doesnt_exist::create_dir_if_it_doesnt_exist;
 use crate::helpers::write_json_into_file::write_json_into_file;
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -22,9 +22,17 @@ pub fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
         "logs/{}/{:?}/{}",
         warning_logs_directory_name, provider_kind, warning_logs_directory_name
     );
-    if let Err(e) =
-        create_provider_logs_dir_if_dont_exists(path_to_provider_log_file, provider_kind)
-    {
+    if let Err(e) = create_dir_if_it_doesnt_exist(&path_to_provider_log_file) {
+        print_colorful_message(
+            Some(&provider_kind),
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!(
+                "folder creation path is not valid: {}, error: {:#?}",
+                path_to_provider_log_file, e
+            ),
+        );
         return Err(e);
     };
     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
