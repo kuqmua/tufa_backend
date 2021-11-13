@@ -42,3 +42,4 @@ pub const BIORXIV_LINK_FIRST_PART: &str = "http://connect.biorxiv.org/biorxiv_xm
 pub const GITHUB_LINK_FIRST_PART: &str = "https://github.com/";
 pub const GITHUB_LINK_SECOND_PART: &str = ".private.atom?token=";
 pub const HABR_LINK_FIRST_PART: &str = "https://habr.com/ru/rss/";
+pub const MEDRXIV_LINK_FIRST_PART: &str = "http://connect.medrxiv.org/medrxiv_xml.php?subject=";
