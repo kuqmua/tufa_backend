@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    thread::{self, JoinHandle},
+};
 
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -15,7 +18,6 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
 use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
@@ -27,6 +29,10 @@ use crate::{
     fetch::rss_metainfo_fetch_structures::{
         AreThereItems, HandledFetchStatusInfo, UnhandledFetchStatusInfo,
     },
+};
+use crate::{
+    constants::project_constants::BIORXIV_NAME_TO_CHECK,
+    providers_new_posts_check::providers_new_posts_check,
 };
 
 use procedural_macros_lib::EnumVariantCount;
@@ -766,70 +772,71 @@ impl ProviderKind {
             ProviderKind::Twitter => generate_twitter_links(names_vector),
         }
     }
-    // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    // pub fn provider_wrapper_new_posts_check(
-    //     provider_kind: ProviderKind,
-    //     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
-    //     posts: Arc<Mutex<CommonRssPostStruct>>,
-    //     error_posts: Arc<
-    //         Mutex<
-    //             Vec<(
-    //                 String,
-    //                 UnhandledFetchStatusInfo,
-    //                 HandledFetchStatusInfo,
-    //                 AreThereItems,
-    //                 ProviderKind,
-    //             )>,
-    //         >,
-    //     >,
-    // ) {
-    //     match providers_link_parts.get(&provider_kind) {
-    //         Some(arxiv_link_parts) => {
-    //             if arxiv_link_parts.is_empty() {
-    //                 print_colorful_message(
-    //                     Some(&provider_kind),
-    //                     PrintType::Error,
-    //                     file!().to_string(),
-    //                     line!().to_string(),
-    //                     "arxiv_link_parts.is_empty".to_string(),
-    //                 );
-    //             } else {
-    //                 if CONFIG.enable_providers_prints.enable_prints_arxiv {
-    //                     println!(
-    //                         "{:#?} elements in {:#?} HashMap",
-    //                         arxiv_link_parts.len(),
-    //                         provider_kind
-    //                     );
-    //                 };
-    //                 let posts_handle = Arc::clone(&posts);
-    //                 let error_posts_handle = Arc::clone(&error_posts);
-    //                 let provider_kind_handle_clone = *provider_kind;
-    //                 let vec_of_provider_links = generate_arxiv_links(arxiv_link_parts.to_vec());
-    //                 threads_vec_checker.push(true);
-    //                 threads_vec.push(thread::spawn(move || {
-    //                     providers_new_posts_check(
-    //                         provider_kind_handle_clone,
-    //                         vec_of_provider_links,
-    //                         None,
-    //                         posts_handle,
-    //                         error_posts_handle,
-    //                     );
-    //                 }));
-    //             }
-    //         }
-    //         None => {
-    //             print_colorful_message(
-    //                 Some(provider_kind_handle),
-    //                 PrintType::Error,
-    //                 file!().to_string(),
-    //                 line!().to_string(),
-    //                 format!(
-    //                     "no such provider_name - {} for {:#?}",
-    //                     ProviderKind::get_string_name(provider_name),
-    //                     provider_kind_handle
-    //                 ),
-    //             );
-    //         }
-    //     }
-    // }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn provider_wrapper_new_posts_check(
+        provider_kind: ProviderKind,
+        providers_link_parts: HashMap<ProviderKind, Vec<String>>,
+        posts: Arc<Mutex<Vec<CommonRssPostStruct>>>,
+        error_posts: Arc<
+            Mutex<
+                Vec<(
+                    String,
+                    UnhandledFetchStatusInfo,
+                    HandledFetchStatusInfo,
+                    AreThereItems,
+                    ProviderKind,
+                )>,
+            >,
+        >,
+        mut threads_vec_checker: Vec<bool>,
+        mut threads_vec: Vec<JoinHandle<()>>,
+    ) {
+        match providers_link_parts.get(&provider_kind) {
+            Some(arxiv_link_parts) => {
+                if arxiv_link_parts.is_empty() {
+                    print_colorful_message(
+                        Some(&provider_kind),
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        "arxiv_link_parts.is_empty".to_string(),
+                    );
+                } else {
+                    if CONFIG.enable_providers_prints.enable_prints_arxiv {
+                        println!(
+                            "{:#?} elements in {:#?} HashMap",
+                            arxiv_link_parts.len(),
+                            provider_kind
+                        );
+                    };
+                    let posts_handle = Arc::clone(&posts);
+                    let error_posts_handle = Arc::clone(&error_posts);
+                    // let provider_kind_handle_clone = *provider_kind;
+                    let vec_of_provider_links = generate_arxiv_links(arxiv_link_parts.to_vec());
+                    threads_vec_checker.push(true);
+                    threads_vec.push(thread::spawn(move || {
+                        providers_new_posts_check(
+                            provider_kind,
+                            vec_of_provider_links,
+                            posts_handle,
+                            error_posts_handle,
+                        );
+                    }));
+                }
+            }
+            None => {
+                print_colorful_message(
+                    Some(&provider_kind),
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "no such provider_name - {} for {:#?}",
+                        ProviderKind::get_string_name(provider_kind),
+                        provider_kind
+                    ),
+                );
+            }
+        }
+    }
 }
