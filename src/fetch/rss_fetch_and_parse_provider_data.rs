@@ -31,17 +31,6 @@ pub fn rss_fetch_and_parse_provider_data(
         HandledFetchStatusInfo,
         AreThereItems,
     )>::with_capacity(links.len())));
-    print_colorful_message(
-        Some(&provider_kind),
-        PrintType::TimeMeasurement,
-        file!().to_string(),
-        line!().to_string(),
-        format!(
-            "hashmap init in {}.{}ms",
-            time.elapsed().as_secs(),
-            time.elapsed().as_millis(),
-        ),
-    );
     let mut thread_vector = Vec::with_capacity(links.len());
     for (element_index, link) in &mut links.into_iter().enumerate() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
