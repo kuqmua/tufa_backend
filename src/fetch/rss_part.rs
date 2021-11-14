@@ -66,7 +66,7 @@ pub fn rss_part(
     }
     let links_temp_naming: Vec<String> = vec_of_provider_links;
     if !links_temp_naming.is_empty() {
-        let links_len = links_temp_naming.len();
+        // let links_len = links_temp_naming.len();
         let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
             CommonRssPostStruct,
             String,

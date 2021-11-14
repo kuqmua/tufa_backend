@@ -147,7 +147,7 @@ mod providers {
             pub mod generate_twitter_links;
         }
         pub mod get_providers_link_parts;
-        pub mod get_twitter_providers_names;
+        pub mod get_twitter_provider_name;
         pub mod providers_init_json_schema;
     }
     pub mod get_providers_link_parts_wrapper;
