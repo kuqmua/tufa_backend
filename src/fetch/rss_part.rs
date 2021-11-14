@@ -4,32 +4,22 @@ use crate::authorization::reddit::reddit_authorization;
 
 use crate::check_net::fetch_link::fetch_link;
 
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
+use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
-use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::config_mods::config::CONFIG;
 
 //todo: think about naming
 type SuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
-    Option<
-        Vec<(
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        )>,
-    >,
+    Option<Vec<(String, AreThereItems, ProviderKind)>>,
 );
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -66,13 +56,16 @@ pub fn rss_part(
     }
     let links_temp_naming: Vec<String> = vec_of_provider_links;
     if !links_temp_naming.is_empty() {
-        let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
-            CommonRssPostStruct,
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-        )>;
+        // let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
+        //     CommonRssPostStruct,
+        //     String,
+        //     UnhandledFetchStatusInfo,
+        //     HandledFetchStatusInfo,
+        //     AreThereItems,
+        // )>;
+        let unfiltered_posts_vec_after_fetch_and_parse: Vec<
+            Result<(CommonRssPostStruct, String, AreThereItems), String>,
+        >;
         match provider_kind {
             ProviderKind::Arxiv => {
                 unfiltered_posts_vec_after_fetch_and_parse =

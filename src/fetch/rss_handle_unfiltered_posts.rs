@@ -12,32 +12,18 @@ use std::mem;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 //todo: think about naming
 type UnfilteredSuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
-    Option<
-        Vec<(
-            String,
-            UnhandledFetchStatusInfo,
-            HandledFetchStatusInfo,
-            AreThereItems,
-            ProviderKind,
-        )>,
-    >,
+    Option<Vec<(String, AreThereItems, ProviderKind)>>,
 );
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_handle_unfiltered_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<(
-        CommonRssPostStruct,
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-    )>,
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
+        Result<(CommonRssPostStruct, String, AreThereItems), String>,
+    >,
     provider_kind: ProviderKind,
 ) -> UnfilteredSuccessErrorTuple {
     let unfiltered_posts_hashmap_after_fetch_and_parse_len_counter =

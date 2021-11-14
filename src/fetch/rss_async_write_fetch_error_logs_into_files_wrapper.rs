@@ -1,7 +1,5 @@
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
 use crate::providers::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
@@ -15,28 +13,13 @@ use crate::prints::print_type_enum::PrintType;
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]
 pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
-    error_posts: Vec<(
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-        ProviderKind,
-    )>,
+    error_posts: Vec<(String, AreThereItems, ProviderKind)>,
 ) {
     let time = Instant::now();
     let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
-    for (
-        link,
-        unhandled_fetch_status_info,
-        handled_fetch_status_info,
-        are_there_items,
-        provider_kind,
-    ) in error_posts
-    {
+    for (link, are_there_items, provider_kind) in error_posts {
         let option_json = provider_log_into_json(
             &link.clone(), //todo understand lifetimes to remove it
-            &unhandled_fetch_status_info,
-            &handled_fetch_status_info,
             &are_there_items,
             &provider_kind,
         );

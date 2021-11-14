@@ -1,7 +1,5 @@
 use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
@@ -31,13 +29,7 @@ pub enum WriteLogsResult {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
-    error_posts: Vec<(
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-        ProviderKind,
-    )>,
+    error_posts: Vec<(String, AreThereItems, ProviderKind)>,
 ) -> WriteLogsResult {
     if error_posts.is_empty() {
         print_colorful_message(
@@ -55,11 +47,12 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
     //restructure into hashmap for better usage
-    for element in &error_posts {
-        if !vec_of_error_provider_kinds.contains(&element.4) {
+    for (link, are_there_items, provider_kind) in &error_posts {
+        if !vec_of_error_provider_kinds.contains(&provider_kind) {
             let empty_vec_of_stringified_json: Vec<String> = Vec::new();
-            hashmap_of_provider_vec_of_strings.insert(element.4, empty_vec_of_stringified_json);
-            vec_of_error_provider_kinds.push(element.4);
+            hashmap_of_provider_vec_of_strings
+                .insert(*provider_kind, empty_vec_of_stringified_json);
+            vec_of_error_provider_kinds.push(*provider_kind);
         }
     }
     let hashmap_len = hashmap_of_provider_vec_of_strings.len();
@@ -127,19 +120,10 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             .map(|x: (ProviderKind, bool)| -> ProviderKind { x.0 })
             .collect();
     }
-    for (
-        link,
-        unhandled_fetch_status_info,
-        handled_fetch_status_info,
-        are_there_items,
-        provider_kind,
-    ) in error_posts
-    {
+    for (link, are_there_items, provider_kind) in error_posts {
         if !vec_of_failed_collections_drops.contains(&provider_kind) {
             let option_json = provider_log_into_json(
                 &link.clone(), //todo understand lifetimes to remove it
-                &unhandled_fetch_status_info,
-                &handled_fetch_status_info,
                 &are_there_items,
                 &provider_kind,
             );

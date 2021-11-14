@@ -10,20 +10,10 @@ use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
-pub async fn write_error_posts_wrapper(
-    error_posts: Vec<(
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-        ProviderKind,
-    )>,
-) {
+pub async fn write_error_posts_wrapper(error_posts: Vec<(String, AreThereItems, ProviderKind)>) {
     //todo add flag in config or if its already exists put it here
     if CONFIG.params.enable_write_error_logs_in_local_folder {
         let cleaning_hashmap_result = ProviderKind::clean_providers_logs_directory();

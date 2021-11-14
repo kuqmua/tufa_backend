@@ -1,15 +1,13 @@
 use std::thread;
 use std::thread::JoinHandle;
 
+use std::sync::{Arc, Mutex};
+
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use std::sync::{Arc, Mutex};
-
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 
 use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -19,13 +17,7 @@ use crate::providers_new_posts_check::providers_new_posts_check;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn check_new_posts_threads_parts() -> Option<(
     Vec<CommonRssPostStruct>,
-    Vec<(
-        String,
-        UnhandledFetchStatusInfo,
-        HandledFetchStatusInfo,
-        AreThereItems,
-        ProviderKind,
-    )>,
+    Vec<(String, AreThereItems, ProviderKind)>,
 )> {
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
@@ -38,13 +30,10 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         ProviderKind::get_enabled_string_name_vec().len(),
                     );
                     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
-                    let error_posts = Arc::new(Mutex::new(Vec::<(
-                        String,
-                        UnhandledFetchStatusInfo,
-                        HandledFetchStatusInfo,
-                        AreThereItems,
-                        ProviderKind,
-                    )>::new()));
+                    let error_posts =
+                        Arc::new(Mutex::new(
+                            Vec::<(String, AreThereItems, ProviderKind)>::new(),
+                        ));
                     //check if provider_names are unique
                     for provider_kind in ProviderKind::get_enabled_providers_vec() {
                         match providers_link_parts.get(&provider_kind) {
@@ -138,13 +127,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         None
                     } else {
                         let posts_done: Vec<CommonRssPostStruct>;
-                        let error_posts_done: Vec<(
-                            String,
-                            UnhandledFetchStatusInfo,
-                            HandledFetchStatusInfo,
-                            AreThereItems,
-                            ProviderKind,
-                        )>;
+                        let error_posts_done: Vec<(String, AreThereItems, ProviderKind)>;
                         match posts.lock() {
                             Ok(ok_posts_lock) => {
                                 posts_done = ok_posts_lock.to_vec();
