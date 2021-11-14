@@ -46,7 +46,9 @@ pub async fn async_tokio_wrapper() {
         .params
         .enable_initialize_mongo_with_providers_link_parts
     {
-        let vec_of_link_parts_hashmap = ProviderKind::get_providers_json_local_data();
+        let vec_of_link_parts_hashmap = ProviderKind::get_providers_json_local_data_processed(
+            ProviderKind::get_providers_json_local_data_unprocessed(),
+        );
         if !vec_of_link_parts_hashmap.is_empty() {
             //todo: add check of doc already is in collection or add flag forse
             //todo add flag for provider

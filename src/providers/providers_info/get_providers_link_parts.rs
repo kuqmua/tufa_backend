@@ -13,7 +13,9 @@ pub async fn get_providers_link_parts_as_hashmap(
 ) -> HashMap<ProviderKind, Vec<String>> {
     //todo: return different type as errors or success enum
     match resource {
-        Resource::Local => ProviderKind::get_providers_json_local_data(),
+        Resource::Local => ProviderKind::get_providers_json_local_data_processed(
+            ProviderKind::get_providers_json_local_data_unprocessed(),
+        ),
         Resource::Mongodb => {
             let mongo_result = ProviderKind::mongo_get_providers_link_parts(
                 ProviderKind::get_enabled_providers_vec(),

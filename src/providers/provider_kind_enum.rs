@@ -536,8 +536,12 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn get_providers_json_local_data() -> HashMap<ProviderKind, Vec<String>> {
-        let mut vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>> = HashMap::new();
+    pub fn get_providers_json_local_data_unprocessed(
+    ) -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
+        let mut vec_of_link_parts_hashmap: HashMap<
+            ProviderKind,
+            Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
+        > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
         //todo: do it async in parallel
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let result_of_reading_to_string = fs::read_to_string(&format!(
@@ -562,26 +566,64 @@ impl ProviderKind {
                             for link_part in file_content_as_struct.data {
                                 vec_of_link_parts.push(link_part)
                             }
-                            vec_of_link_parts_hashmap.insert(provider_kind, vec_of_link_parts);
+                            vec_of_link_parts_hashmap
+                                .insert(provider_kind, Ok(Ok(vec_of_link_parts)));
                         }
-                        Err(e) => println!("file_content_from_str_result error {:#?}", e),
+                        Err(e) => {
+                            vec_of_link_parts_hashmap.insert(provider_kind, Ok(Err(e)));
+                        }
                     }
                 }
                 Err(e) => {
-                    println!(
-                        "cannot read_to_string from file {}{}{}{}, reason: {}",
-                        CONFIG.mongo_params.path_to_provider_link_parts_folder,
-                        ProviderKind::get_string_name(provider_kind),
-                        CONFIG
-                            .mongo_params
-                            .providers_db_collection_handle_second_part,
-                        CONFIG.mongo_params.log_file_extension,
-                        e
-                    )
+                    vec_of_link_parts_hashmap.insert(provider_kind, Err(e));
                 }
             }
         }
         vec_of_link_parts_hashmap
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn get_providers_json_local_data_processed(
+        unprocessed_hashmap: HashMap<
+            ProviderKind,
+            Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
+        >,
+    ) -> HashMap<ProviderKind, Vec<String>> {
+        let mut return_handle: HashMap<ProviderKind, Vec<String>> =
+            HashMap::with_capacity(unprocessed_hashmap.len());
+        for (provider_kind, result) in unprocessed_hashmap {
+            match result {
+                Ok(second_result) => {
+                    match second_result {
+                        Ok(vec) => {
+                            return_handle.insert(provider_kind, vec);
+                        }
+                        Err(e) => {
+                            print_colorful_message(
+                                    Some(&provider_kind),
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
+                                );
+                            //todo: just create Vec::new() -> bad solution
+                            return_handle.insert(provider_kind, Vec::<String>::new());
+                        }
+                    }
+                }
+                Err(e) => {
+                    print_colorful_message(
+                                    Some(&provider_kind),
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
+                                );
+                    //todo: just create Vec::new() -> bad solution
+                    return_handle.insert(provider_kind, Vec::<String>::new());
+                }
+            }
+        }
+        return_handle
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn is_cleaning_warning_logs_directory_enable(provider_kind: ProviderKind) -> bool {
