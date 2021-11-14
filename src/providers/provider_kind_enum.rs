@@ -335,7 +335,7 @@ impl ProviderKind {
         Ok(None)
     }
     #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
-    pub async fn mongo_get_providers_link_parts(
+    pub async fn mongo_get_providers_link_parts_unprocessed(
         provider_kind_vec: Vec<ProviderKind>,
     ) -> Result<
         HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
@@ -420,6 +420,54 @@ impl ProviderKind {
                 .unwrap()
                 .clone();
         Ok(vec_provider_kind_with_collection_names)
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn mongo_get_providers_link_parts_processed(
+        unprocessed_result: Result<
+            HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
+            mongodb::error::Error,
+        >,
+    ) -> HashMap<ProviderKind, Vec<String>> {
+        match unprocessed_result {
+            Ok(hashmap_with_possible_errors) => {
+                let mut hashmap_without_possible_errors =
+                    HashMap::with_capacity(hashmap_with_possible_errors.len());
+                for (provider_kind, result_vec) in hashmap_with_possible_errors {
+                    match result_vec {
+                        Ok(vec) => {
+                            hashmap_without_possible_errors.insert(provider_kind, vec);
+                        }
+                        Err(e) => {
+                            print_colorful_message(
+                                    Some(&provider_kind),
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("(todo!)ProviderKind::mongo_get_providers_link_parts_processed ({:#?}), error: {:#?}", provider_kind, e),
+                                );
+                            //todo: just create Vec::new() -> bad solution
+                            hashmap_without_possible_errors
+                                .insert(provider_kind, Vec::<String>::new());
+                        }
+                    }
+                }
+                hashmap_without_possible_errors
+            }
+            Err(e) => {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "(todo!)ProviderKind::mongo_get_providers_link_parts_processed error: {:#?}",
+                        e
+                    ),
+                );
+                //todo: just create Vec::new() -> bad solution
+                ProviderKind::generate_hashmap_with_empty_string_vecs_for_enabled_providers()
+            }
+        }
     }
     pub fn generate_hashmap_with_empty_string_vecs_for_enabled_providers(
     ) -> HashMap<ProviderKind, Vec<String>> {
