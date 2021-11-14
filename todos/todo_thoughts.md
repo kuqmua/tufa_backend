@@ -468,3 +468,8 @@ rewrite error handling like this?
         errors.extend(merge_errors);
     }
 <br/>
+
+
+### -------------------
+how to clone custom error? which contains std error or lib errors
+<br/>
