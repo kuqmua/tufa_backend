@@ -2,7 +2,6 @@
 pub enum HandledFetchStatusInfo {
     ResToTextError(String),
     ResStatusError(reqwest::StatusCode),
-    Success,
 }
 #[derive(Debug, Clone)] //Debug only for prints
 pub enum UnhandledFetchStatusInfo {
@@ -15,4 +14,17 @@ pub enum AreThereItems {
     NopeButThereIsTag(String),
     ConversionFromStrError(String, String),
     NopeNoTag(String),
+}
+
+#[derive(Debug)] //Debug only for prints
+pub enum RssFetchLinkError {
+    ReqwestBlockingGet(reqwest::Error),
+    StatusCode(reqwest::StatusCode),
+    ResToTextError(reqwest::Error),
+}
+
+impl From<reqwest::Error> for RssFetchLinkError {
+    fn from(e: reqwest::Error) -> Self {
+        RssFetchLinkError::ReqwestBlockingGet(e)
+    }
 }

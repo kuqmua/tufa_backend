@@ -1,4 +1,4 @@
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
@@ -19,10 +19,7 @@ use std::time::Instant;
 //     result_tuplefff.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
 // }
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn rss_fetch_link(
-    link: &str,
-    time: Instant,
-) -> Result<(String, HandledFetchStatusInfo), Box<dyn std::error::Error>> {
+pub fn rss_fetch_link(link: &str, time: Instant) -> Result<String, RssFetchLinkError> {
     let res = reqwest::blocking::get(link)?;
     print_colorful_message(
         None,
@@ -36,25 +33,7 @@ pub fn rss_fetch_link(
             res.status(),
         ),
     );
-    if res.status() == reqwest::StatusCode::OK {
-        let res_to_text_result = res.text();
-        match res_to_text_result {
-            Ok(norm) => Ok((norm, HandledFetchStatusInfo::Success)),
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("LINK: {} ResToTextError...(decided to not show)", link),
-                );
-                Ok((
-                    "".to_string(),
-                    HandledFetchStatusInfo::ResToTextError(e.to_string()),
-                ))
-            }
-        }
-    } else {
+    if !(res.status() == reqwest::StatusCode::OK) {
         print_colorful_message(
             None,
             PrintType::Error,
@@ -62,9 +41,7 @@ pub fn rss_fetch_link(
             line!().to_string(),
             format!("LINK: {} RES.STATUS: {}", link, res.status()),
         );
-        Ok((
-            "".to_string(),
-            HandledFetchStatusInfo::ResStatusError(res.status()),
-        ))
+        return Err(RssFetchLinkError::StatusCode(res.status()));
     }
+    Ok(res.text()?)
 }

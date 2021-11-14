@@ -73,7 +73,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                     };
                                     let posts_handle = Arc::clone(&posts);
                                     let error_posts_handle = Arc::clone(&error_posts);
-                                    // let provider_kind_handle_clone = *provider_kind;
                                     let vec_of_provider_links = ProviderKind::get_provider_links(
                                         provider_kind,
                                         link_parts.to_vec(),

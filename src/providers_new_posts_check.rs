@@ -33,6 +33,7 @@ pub fn providers_new_posts_check(
 ) {
     let enum_success_unsuccess_option_posts = rss_part(provider_kind, vec_of_provider_links);
     //maybe do it in parrallel? success and error posts
+    //todo: try to lock few times
     if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
         match posts_handle.lock() {
             Ok(mut posts_handle_locked) => {
