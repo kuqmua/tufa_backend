@@ -15,7 +15,6 @@ use crate::config_mods::config::CONFIG;
 
 use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::providers_info::get_twitter_providers_names::get_twitter_providers_names;
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
 use crate::providers::providers_info::links::generate_github_links::generate_github_links;
@@ -96,7 +95,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -152,7 +150,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -208,7 +205,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -261,7 +257,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -317,7 +312,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -373,7 +367,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        None,
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );
@@ -398,7 +391,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                 ProviderKind::Twitter => {
                                     match providers_link_parts.get(&provider_name) {
                                         Some(twitter_link_parts) => {
-                                            let twitter_providers = get_twitter_providers_names();
                                             if twitter_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
@@ -407,14 +399,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     line!().to_string(),
                                                     "twitter_link_parts.is_empty".to_string(),
                                                 );
-                                            } else if twitter_providers.is_empty() {
-                                                print_colorful_message(
-                                                    Some(provider_kind_handle),
-                                                    PrintType::Error,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
-                                                    "twitter_providers.is_empty()".to_string(),
-                                                );
                                             } else {
                                                 let posts_handle = Arc::clone(&posts);
                                                 let error_posts_handle = Arc::clone(&error_posts);
@@ -422,7 +406,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     *provider_kind_handle;
 
                                                 let vec_of_provider_links = generate_twitter_links(
-                                                    twitter_providers.clone(),
                                                     twitter_link_parts.to_vec(),
                                                 );
                                                 threads_vec_checker.push(true);
@@ -430,7 +413,6 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                                                     providers_new_posts_check(
                                                         provider_kind_handle_clone,
                                                         vec_of_provider_links,
-                                                        Some(twitter_providers),
                                                         posts_handle,
                                                         error_posts_handle,
                                                     );

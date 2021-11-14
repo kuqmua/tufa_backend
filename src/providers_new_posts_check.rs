@@ -28,15 +28,10 @@ type ArcMutexErrorPostsHandle = Arc<
 pub fn providers_new_posts_check(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
-    option_provider_providers: Option<Vec<String>>,
     posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
-    let enum_success_unsuccess_option_posts = rss_part(
-        provider_kind,
-        vec_of_provider_links,
-        option_provider_providers,
-    );
+    let enum_success_unsuccess_option_posts = rss_part(provider_kind, vec_of_provider_links);
     //maybe do it in parrallel? success and error posts
     if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
         match posts_handle.lock() {
