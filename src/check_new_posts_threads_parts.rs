@@ -64,437 +64,391 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         {
                             Some(provider_kind_handle) => match provider_kind_handle {
                                 ProviderKind::Arxiv => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(arxiv_link_parts) => {
-                                                if arxiv_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "arxiv_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_arxiv
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            arxiv_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_arxiv_links(
-                                                            arxiv_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(arxiv_link_parts) => {
+                                            if arxiv_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "arxiv_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG
+                                                    .enable_providers_prints
+                                                    .enable_prints_arxiv
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        arxiv_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links =
+                                                    generate_arxiv_links(arxiv_link_parts.to_vec());
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Biorxiv => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(biorxiv_link_parts) => {
-                                                if biorxiv_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "biorxiv_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_biorxiv
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            biorxiv_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_biorxiv_links(
-                                                            biorxiv_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(biorxiv_link_parts) => {
+                                            if biorxiv_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "biorxiv_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG
+                                                    .enable_providers_prints
+                                                    .enable_prints_biorxiv
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        biorxiv_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links = generate_biorxiv_links(
+                                                    biorxiv_link_parts.to_vec(),
+                                                );
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Github => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(github_link_parts) => {
-                                                if github_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "github_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_github
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            github_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_github_links(
-                                                            github_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(github_link_parts) => {
+                                            if github_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "github_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG
+                                                    .enable_providers_prints
+                                                    .enable_prints_github
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        github_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links = generate_github_links(
+                                                    github_link_parts.to_vec(),
+                                                );
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Habr => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(habr_link_parts) => {
-                                                if habr_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "habr_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_habr
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            habr_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links = generate_habr_links(
-                                                        habr_link_parts.to_vec(),
-                                                    );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(habr_link_parts) => {
+                                            if habr_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "habr_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG.enable_providers_prints.enable_prints_habr
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        habr_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links =
+                                                    generate_habr_links(habr_link_parts.to_vec());
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Medrxiv => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(medrxiv_link_parts) => {
-                                                if medrxiv_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "medrxiv_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_medrxiv
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            medrxiv_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_medrxiv_links(
-                                                            medrxiv_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(medrxiv_link_parts) => {
+                                            if medrxiv_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "medrxiv_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG
+                                                    .enable_providers_prints
+                                                    .enable_prints_medrxiv
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        medrxiv_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links = generate_medrxiv_links(
+                                                    medrxiv_link_parts.to_vec(),
+                                                );
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Reddit => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(reddit_link_parts) => {
-                                                if reddit_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "reddit_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else {
-                                                    if CONFIG
-                                                        .enable_providers_prints
-                                                        .enable_prints_reddit
-                                                    {
-                                                        println!(
-                                                            "{:#?} elements in {:#?} HashMap",
-                                                            reddit_link_parts.len(),
-                                                            provider_kind_handle
-                                                        );
-                                                    };
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-                                                    let vec_of_provider_links =
-                                                        generate_reddit_links(
-                                                            reddit_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            None,
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(reddit_link_parts) => {
+                                            if reddit_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "reddit_link_parts.is_empty".to_string(),
                                                 );
+                                            } else {
+                                                if CONFIG
+                                                    .enable_providers_prints
+                                                    .enable_prints_reddit
+                                                {
+                                                    println!(
+                                                        "{:#?} elements in {:#?} HashMap",
+                                                        reddit_link_parts.len(),
+                                                        provider_kind_handle
+                                                    );
+                                                };
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+                                                let vec_of_provider_links = generate_reddit_links(
+                                                    reddit_link_parts.to_vec(),
+                                                );
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        None,
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
                                 ProviderKind::Twitter => {
-                                    if ProviderKind::is_enabled(*provider_kind_handle) {
-                                        match providers_link_parts.get(&provider_name) {
-                                            Some(twitter_link_parts) => {
-                                                let twitter_providers =
-                                                    get_twitter_providers_names();
-                                                if twitter_link_parts.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "twitter_link_parts.is_empty".to_string(),
-                                                    );
-                                                } else if twitter_providers.is_empty() {
-                                                    print_colorful_message(
-                                                        Some(provider_kind_handle),
-                                                        PrintType::Error,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
-                                                        "twitter_providers.is_empty()".to_string(),
-                                                    );
-                                                } else {
-                                                    let posts_handle = Arc::clone(&posts);
-                                                    let error_posts_handle =
-                                                        Arc::clone(&error_posts);
-                                                    let provider_kind_handle_clone =
-                                                        *provider_kind_handle;
-
-                                                    let vec_of_provider_links =
-                                                        generate_twitter_links(
-                                                            twitter_providers.clone(),
-                                                            twitter_link_parts.to_vec(),
-                                                        );
-                                                    threads_vec_checker.push(true);
-                                                    threads_vec.push(thread::spawn(move || {
-                                                        providers_new_posts_check(
-                                                            provider_kind_handle_clone,
-                                                            vec_of_provider_links,
-                                                            Some(twitter_providers),
-                                                            posts_handle,
-                                                            error_posts_handle,
-                                                        );
-                                                    }));
-                                                }
-                                            }
-                                            None => {
+                                    match providers_link_parts.get(&provider_name) {
+                                        Some(twitter_link_parts) => {
+                                            let twitter_providers = get_twitter_providers_names();
+                                            if twitter_link_parts.is_empty() {
                                                 print_colorful_message(
                                                     Some(provider_kind_handle),
                                                     PrintType::Error,
                                                     file!().to_string(),
                                                     line!().to_string(),
-                                                    format!(
-                                                        "no such provider_name - {} for {:#?}",
-                                                        ProviderKind::get_string_name(
-                                                            provider_name
-                                                        ),
-                                                        provider_kind_handle
-                                                    ),
+                                                    "twitter_link_parts.is_empty".to_string(),
                                                 );
+                                            } else if twitter_providers.is_empty() {
+                                                print_colorful_message(
+                                                    Some(provider_kind_handle),
+                                                    PrintType::Error,
+                                                    file!().to_string(),
+                                                    line!().to_string(),
+                                                    "twitter_providers.is_empty()".to_string(),
+                                                );
+                                            } else {
+                                                let posts_handle = Arc::clone(&posts);
+                                                let error_posts_handle = Arc::clone(&error_posts);
+                                                let provider_kind_handle_clone =
+                                                    *provider_kind_handle;
+
+                                                let vec_of_provider_links = generate_twitter_links(
+                                                    twitter_providers.clone(),
+                                                    twitter_link_parts.to_vec(),
+                                                );
+                                                threads_vec_checker.push(true);
+                                                threads_vec.push(thread::spawn(move || {
+                                                    providers_new_posts_check(
+                                                        provider_kind_handle_clone,
+                                                        vec_of_provider_links,
+                                                        Some(twitter_providers),
+                                                        posts_handle,
+                                                        error_posts_handle,
+                                                    );
+                                                }));
                                             }
+                                        }
+                                        None => {
+                                            print_colorful_message(
+                                                Some(provider_kind_handle),
+                                                PrintType::Error,
+                                                file!().to_string(),
+                                                line!().to_string(),
+                                                format!(
+                                                    "no such provider_name - {} for {:#?}",
+                                                    ProviderKind::get_string_name(provider_name),
+                                                    provider_kind_handle
+                                                ),
+                                            );
                                         }
                                     }
                                 }
