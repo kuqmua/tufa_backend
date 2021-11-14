@@ -1,57 +1,35 @@
-use std::time::Instant;
+// use std::time::Instant;
 
-use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::providers::provider_kind_enum::ProviderKind;
+// use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+// use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+// use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
+// use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
+// use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
+// use crate::prints::print_colorful_message::print_colorful_message;
+// use crate::prints::print_type_enum::PrintType;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn rss_check_handled_fetch_status_info(
-    handled_fetch_status_info: HandledFetchStatusInfo,
-    fetch_result_string: String,
-    time: Instant,
-    value: &str,
-    provider_kind: ProviderKind,
-) -> (CommonRssPostStruct, HandledFetchStatusInfo, AreThereItems) {
-    //todo: change order
-    match handled_fetch_status_info {
-        HandledFetchStatusInfo::ResToTextError(res_to_text_string_error) => (
-            CommonRssPostStruct::new(),
-            HandledFetchStatusInfo::ResToTextError(res_to_text_string_error),
-            AreThereItems::NopeNoTag("todo: this is incorrect. rewrite enums!".to_string()),
-        ),
-        HandledFetchStatusInfo::ResStatusError(res_error_code) => (
-            CommonRssPostStruct::new(),
-            HandledFetchStatusInfo::ResStatusError(res_error_code),
-            AreThereItems::NopeNoTag("todo: this is incorrect. rewrite enums!".to_string()),
-        ),
-        HandledFetchStatusInfo::Success => {
-            let since_fetch = Instant::now();
-            let provider_kind_clone_for_prints = provider_kind;
-            let (rxiv_post_struct_handle, are_there_items_handle) =
-                rss_parse_string_into_struct(fetch_result_string, value, provider_kind);
-            print_colorful_message(
-                Some(&provider_kind_clone_for_prints),
-                PrintType::TimeMeasurement,
-                file!().to_string(),
-                line!().to_string(),
-                format!(
-                    "parse in {}.{}ms abs, rel {}.{}ms",
-                    time.elapsed().as_secs(),
-                    time.elapsed().as_millis(),
-                    since_fetch.elapsed().as_secs(),
-                    since_fetch.elapsed().as_millis(),
-                ),
-            );
-            (
-                rxiv_post_struct_handle,
-                HandledFetchStatusInfo::Success,
-                are_there_items_handle,
-            )
-        }
-    }
-}
+// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+// pub fn rss_check_handled_fetch_status_info(
+//     response_text: String,
+//     time: Instant,
+//     value: &str,
+//     provider_kind: ProviderKind,
+// ) -> (CommonRssPostStruct, ) {
+//     let since_fetch = Instant::now();
+
+//     print_colorful_message(
+//         Some(&provider_kind),
+//         PrintType::TimeMeasurement,
+//         file!().to_string(),
+//         line!().to_string(),
+//         format!(
+//             "parse in {}.{}ms abs, rel {}.{}ms",
+//             time.elapsed().as_secs(),
+//             time.elapsed().as_millis(),
+//             since_fetch.elapsed().as_secs(),
+//             since_fetch.elapsed().as_millis(),
+//         ),
+//     );
+//     (rxiv_post_struct_handle, are_there_items_handle)
+// }
