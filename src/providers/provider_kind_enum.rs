@@ -1,7 +1,4 @@
-use std::{
-    collections::HashMap,
-    thread::{self, JoinHandle},
-};
+use std::collections::HashMap;
 
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -18,22 +15,14 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
+use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
+use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
 use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
-use crate::{
-    constants::project_constants::ARXIV_NAME_TO_CHECK,
-    fetch::rss_metainfo_fetch_structures::{
-        AreThereItems, HandledFetchStatusInfo, UnhandledFetchStatusInfo,
-    },
-};
-use crate::{
-    constants::project_constants::BIORXIV_NAME_TO_CHECK,
-    providers_new_posts_check::providers_new_posts_check,
-};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -46,8 +35,6 @@ use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_do
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
 use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
-
-use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
@@ -120,6 +107,17 @@ impl ProviderKind {
             ProviderKind::Medrxiv => CONFIG.enable_providers.enable_medrxiv,
             ProviderKind::Reddit => CONFIG.enable_providers.enable_reddit,
             ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
+        }
+    }
+    pub fn is_prints_enabled(provider_kind: ProviderKind) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => CONFIG.enable_providers_prints.enable_prints_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers_prints.enable_prints_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers_prints.enable_prints_github,
+            ProviderKind::Habr => CONFIG.enable_providers_prints.enable_prints_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers_prints.enable_prints_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers_prints.enable_prints_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
         }
     }
     pub fn is_mongo_initialization_enabled(provider_kind: ProviderKind) -> bool {
@@ -770,73 +768,6 @@ impl ProviderKind {
             ProviderKind::Medrxiv => generate_medrxiv_links(names_vector),
             ProviderKind::Reddit => generate_reddit_links(names_vector),
             ProviderKind::Twitter => generate_twitter_links(names_vector),
-        }
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn provider_wrapper_new_posts_check(
-        provider_kind: ProviderKind,
-        providers_link_parts: HashMap<ProviderKind, Vec<String>>,
-        posts: Arc<Mutex<Vec<CommonRssPostStruct>>>,
-        error_posts: Arc<
-            Mutex<
-                Vec<(
-                    String,
-                    UnhandledFetchStatusInfo,
-                    HandledFetchStatusInfo,
-                    AreThereItems,
-                    ProviderKind,
-                )>,
-            >,
-        >,
-        mut threads_vec_checker: Vec<bool>,
-        mut threads_vec: Vec<JoinHandle<()>>,
-    ) {
-        match providers_link_parts.get(&provider_kind) {
-            Some(arxiv_link_parts) => {
-                if arxiv_link_parts.is_empty() {
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        "arxiv_link_parts.is_empty".to_string(),
-                    );
-                } else {
-                    if CONFIG.enable_providers_prints.enable_prints_arxiv {
-                        println!(
-                            "{:#?} elements in {:#?} HashMap",
-                            arxiv_link_parts.len(),
-                            provider_kind
-                        );
-                    };
-                    let posts_handle = Arc::clone(&posts);
-                    let error_posts_handle = Arc::clone(&error_posts);
-                    // let provider_kind_handle_clone = *provider_kind;
-                    let vec_of_provider_links = generate_arxiv_links(arxiv_link_parts.to_vec());
-                    threads_vec_checker.push(true);
-                    threads_vec.push(thread::spawn(move || {
-                        providers_new_posts_check(
-                            provider_kind,
-                            vec_of_provider_links,
-                            posts_handle,
-                            error_posts_handle,
-                        );
-                    }));
-                }
-            }
-            None => {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "no such provider_name - {} for {:#?}",
-                        ProviderKind::get_string_name(provider_kind),
-                        provider_kind
-                    ),
-                );
-            }
         }
     }
 }
