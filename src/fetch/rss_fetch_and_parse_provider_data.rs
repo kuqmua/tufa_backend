@@ -1,10 +1,6 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-// use crate::fetch::rss_check_handled_fetch_status_info::rss_check_handled_fetch_status_info;
 use crate::fetch::rss_fetch_link::rss_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
-// use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
-// use crate::fetch::rss_metainfo_fetch_structures::UnhandledFetchStatusInfo;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -19,10 +15,11 @@ use super::rss_parse_string_into_struct::rss_parse_string_into_struct;
 pub fn rss_fetch_and_parse_provider_data(
     links: Vec<String>,
     provider_kind: ProviderKind,
-) -> Vec<Result<(CommonRssPostStruct, String, AreThereItems), RssFetchLinkError>> {
+) -> Vec<Result<(CommonRssPostStruct, String, AreThereItems), String>> {
+    //RssFetchLinkError
     let time = Instant::now();
     let hashmap_to_return = Arc::new(Mutex::new(Vec::<
-        Result<(CommonRssPostStruct, String, AreThereItems), RssFetchLinkError>,
+        Result<(CommonRssPostStruct, String, AreThereItems), String>, //RssFetchLinkError
     >::with_capacity(links.len())));
     let mut thread_vector = Vec::with_capacity(links.len());
     for (element_index, link) in &mut links.into_iter().enumerate() {
@@ -32,13 +29,6 @@ pub fn rss_fetch_and_parse_provider_data(
             let fetch_result = rss_fetch_link(&link, time);
             match fetch_result {
                 Ok(response_text) => {
-                    // let (post_struct_wrapper_handle, value3, are_there_items_wrapper_handle) =
-                    //     rss_check_handled_fetch_status_info(
-                    //         response_text,
-                    //         time,
-                    //         &link,
-                    //         provider_kind_clone,
-                    //     );
                     let (post_struct_wrapper_handle, are_there_items_handle) =
                         rss_parse_string_into_struct(response_text, &link, provider_kind);
                     let mut hashmap_to_return_handle_locked =
@@ -59,7 +49,8 @@ pub fn rss_fetch_and_parse_provider_data(
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked[element_index] = Err(e);
+                    hashmap_to_return_handle_locked[element_index] = Err(e.to_string());
+                    //it must not be a string. i dont know how to clone custom error(enum) RssFetchLinkError
                 }
             }
         });
