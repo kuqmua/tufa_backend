@@ -15,7 +15,6 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
 use crate::constants::project_constants::HABR_NAME_TO_CHECK;
@@ -23,6 +22,12 @@ use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
+use crate::{
+    constants::project_constants::ARXIV_NAME_TO_CHECK,
+    fetch::rss_metainfo_fetch_structures::{
+        AreThereItems, HandledFetchStatusInfo, UnhandledFetchStatusInfo,
+    },
+};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -35,6 +40,16 @@ use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_do
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
 use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
+
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+
+use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
+use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
+use crate::providers::providers_info::links::generate_github_links::generate_github_links;
+use crate::providers::providers_info::links::generate_habr_links::generate_habr_links;
+use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
+use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
+use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
 
 // use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
 
@@ -150,12 +165,12 @@ impl ProviderKind {
     pub fn stringify(provider_kind: ProviderKind) -> &'static str {
         match provider_kind {
             ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Biorxiv => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Github => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Habr => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Medrxiv => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Reddit => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Twitter => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Biorxiv => stringify!(ProviderKind::BIorxiv),
+            ProviderKind::Github => stringify!(ProviderKind::Github),
+            ProviderKind::Habr => stringify!(ProviderKind::Habr),
+            ProviderKind::Medrxiv => stringify!(ProviderKind::Medrxiv),
+            ProviderKind::Reddit => stringify!(ProviderKind::Reddit),
+            ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
         }
     }
     pub fn get_length() -> usize {
@@ -736,4 +751,85 @@ impl ProviderKind {
             &CONFIG.params.warning_logs_directory_name, provider_kind
         )
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn get_provider_links(
+        provider_kind: ProviderKind,
+        names_vector: Vec<String>,
+    ) -> Vec<String> {
+        match provider_kind {
+            ProviderKind::Arxiv => generate_arxiv_links(names_vector),
+            ProviderKind::Biorxiv => generate_biorxiv_links(names_vector),
+            ProviderKind::Github => generate_github_links(names_vector),
+            ProviderKind::Habr => generate_habr_links(names_vector),
+            ProviderKind::Medrxiv => generate_medrxiv_links(names_vector),
+            ProviderKind::Reddit => generate_reddit_links(names_vector),
+            ProviderKind::Twitter => generate_twitter_links(names_vector),
+        }
+    }
+    // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    // pub fn provider_wrapper_new_posts_check(
+    //     provider_kind: ProviderKind,
+    //     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
+    //     posts: Arc<Mutex<CommonRssPostStruct>>,
+    //     error_posts: Arc<
+    //         Mutex<
+    //             Vec<(
+    //                 String,
+    //                 UnhandledFetchStatusInfo,
+    //                 HandledFetchStatusInfo,
+    //                 AreThereItems,
+    //                 ProviderKind,
+    //             )>,
+    //         >,
+    //     >,
+    // ) {
+    //     match providers_link_parts.get(&provider_kind) {
+    //         Some(arxiv_link_parts) => {
+    //             if arxiv_link_parts.is_empty() {
+    //                 print_colorful_message(
+    //                     Some(&provider_kind),
+    //                     PrintType::Error,
+    //                     file!().to_string(),
+    //                     line!().to_string(),
+    //                     "arxiv_link_parts.is_empty".to_string(),
+    //                 );
+    //             } else {
+    //                 if CONFIG.enable_providers_prints.enable_prints_arxiv {
+    //                     println!(
+    //                         "{:#?} elements in {:#?} HashMap",
+    //                         arxiv_link_parts.len(),
+    //                         provider_kind
+    //                     );
+    //                 };
+    //                 let posts_handle = Arc::clone(&posts);
+    //                 let error_posts_handle = Arc::clone(&error_posts);
+    //                 let provider_kind_handle_clone = *provider_kind;
+    //                 let vec_of_provider_links = generate_arxiv_links(arxiv_link_parts.to_vec());
+    //                 threads_vec_checker.push(true);
+    //                 threads_vec.push(thread::spawn(move || {
+    //                     providers_new_posts_check(
+    //                         provider_kind_handle_clone,
+    //                         vec_of_provider_links,
+    //                         None,
+    //                         posts_handle,
+    //                         error_posts_handle,
+    //                     );
+    //                 }));
+    //             }
+    //         }
+    //         None => {
+    //             print_colorful_message(
+    //                 Some(provider_kind_handle),
+    //                 PrintType::Error,
+    //                 file!().to_string(),
+    //                 line!().to_string(),
+    //                 format!(
+    //                     "no such provider_name - {} for {:#?}",
+    //                     ProviderKind::get_string_name(provider_name),
+    //                     provider_kind_handle
+    //                 ),
+    //             );
+    //         }
+    //     }
+    // }
 }

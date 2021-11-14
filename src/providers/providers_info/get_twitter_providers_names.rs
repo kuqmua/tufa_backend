@@ -1,5 +1,6 @@
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn get_twitter_providers_names() -> Vec<String> {
+    //todo: move it into env file
     let twitter_providers_names: Vec<String> = vec![
         // "nitter.42l.fr".to_string(),
         // "nitter.pussthecsat.org".to_string(),
