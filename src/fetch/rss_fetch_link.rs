@@ -33,7 +33,7 @@ pub fn rss_fetch_link(link: &str, time: Instant) -> Result<String, RssFetchLinkE
             res.status(),
         ),
     );
-    if !(res.status() == reqwest::StatusCode::OK) {
+    if res.status() != reqwest::StatusCode::OK {
         print_colorful_message(
             None,
             PrintType::Error,
