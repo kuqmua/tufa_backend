@@ -11,18 +11,20 @@ use crate::prints::print_type_enum::PrintType;
 use std::mem;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
+
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 //todo: think about naming
 type UnfilteredSuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
-    Option<Vec<(String, AreThereItems, ProviderKind)>>,
+    Option<Vec<PostErrorVariant>>,
 );
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
-        Result<(CommonRssPostStruct, String, AreThereItems), String>,
+        Result<(CommonRssPostStruct, String, NoItemsError), String>,
     >,
     provider_kind: ProviderKind,
 ) -> UnfilteredSuccessErrorTuple {
