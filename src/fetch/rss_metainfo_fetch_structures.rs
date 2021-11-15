@@ -11,11 +11,10 @@ pub enum UnhandledFetchStatusInfo {
     Success,
 }
 #[derive(Debug, Clone)] //Debug only for prints
-pub enum AreThereItems {
-    Yep,
-    NopeButThereIsTag(String),
+pub enum NoItemsError {
+    ThereIsTag(String),
     ConversionFromStrError(String, String),
-    NopeNoTag(String),
+    NoTag(String),
 }
 
 #[derive(Debug, Display)] //Debug only for prints
