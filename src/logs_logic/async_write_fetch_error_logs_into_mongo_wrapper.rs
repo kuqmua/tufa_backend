@@ -1,5 +1,5 @@
 use crate::fetch::provider_log_into_json::provider_log_into_json;
-use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
@@ -29,7 +29,7 @@ pub enum WriteLogsResult {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
-    error_posts: Vec<(String, AreThereItems, ProviderKind)>,
+    error_posts: Vec<(String, NoItemsError, ProviderKind)>,
 ) -> WriteLogsResult {
     if error_posts.is_empty() {
         print_colorful_message(
@@ -122,13 +122,12 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     }
     for (link, are_there_items, provider_kind) in error_posts {
         if !vec_of_failed_collections_drops.contains(&provider_kind) {
-            let option_json = provider_log_into_json(
+            let json = provider_log_into_json(
                 &link.clone(), //todo understand lifetimes to remove it
                 &are_there_items,
                 &provider_kind,
             );
-            if let Some(json) = option_json {
-                let result_stringified_json = serde_json::to_string_pretty(&json);
+            let result_stringified_json = serde_json::to_string_pretty(&json);
                 match result_stringified_json {
                     Ok(stringified_json) => {
                         match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
@@ -158,7 +157,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         //todo
                     }
                 }
-            }
         }
     }
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
