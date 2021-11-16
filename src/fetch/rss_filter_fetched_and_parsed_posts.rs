@@ -19,38 +19,43 @@ type FilterParsedSuccessErrorTuple = (
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_filter_fetched_and_parsed_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
-        Result<(CommonRssPostStruct, String, NoItemsError), String>,
-    >,
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>>,//it must be enum
     provider_kind: ProviderKind,
 ) -> FilterParsedSuccessErrorTuple {
     let mut unhandled_success_handled_success_are_there_items_yep_posts: Vec<CommonRssPostStruct> =
-        Vec::new();
+        Vec::with_capacity(unfiltered_posts_hashmap_after_fetch_and_parse.len());
     let mut some_error_posts: Vec<PostErrorVariant> =
         Vec::with_capacity(unfiltered_posts_hashmap_after_fetch_and_parse.len());
     for result in unfiltered_posts_hashmap_after_fetch_and_parse {
         match result {
-            Ok((post, link, are_there_items)) => {
-                match are_there_items {
-                    NoItemsError::ThereIsTag(fetch_result_string) => {
-                        //"</item>" tag
-                        some_error_posts.push(PostErrorVariant::NoItems{
-                            link,
-                            no_items_error: NoItemsError::ThereIsTag(fetch_result_string),
-                            provider_kind,
-                        });
-                    }
-                    NoItemsError::ConversionFromStrError(fetch_result_string, error) => {
-                        some_error_posts.push(PostErrorVariant::NoItems{
-                            link,
-                            no_items_error: NoItemsError::ConversionFromStrError(fetch_result_string, error),
-                            provider_kind,
-                        });
-                    }
-                    NoItemsError::NoTag(tag) => {
-                        some_error_posts.push(PostErrorVariant::NoItems{link, no_items_error: NoItemsError::NoTag(tag), provider_kind});
+            Ok(second_result) => match second_result {
+                Ok(post) => {
+                    unhandled_success_handled_success_are_there_items_yep_posts.push(post);
+                }
+                Err((err, link)) => {
+                    match err {
+                        NoItemsError::ThereIsTag(fetch_result_string) => {
+                            //"</item>" tag
+                            some_error_posts.push(PostErrorVariant::NoItems{
+                                link,
+                                no_items_error: NoItemsError::ThereIsTag(fetch_result_string),
+                                provider_kind,
+                            });
+                        }
+                        NoItemsError::ConversionFromStrError(fetch_result_string, error) => {
+                            some_error_posts.push(PostErrorVariant::NoItems{
+                                link,
+                                no_items_error: NoItemsError::ConversionFromStrError(fetch_result_string, error),
+                                provider_kind,
+                            });
+                        }
+                        NoItemsError::NoTag(tag) => {
+                            some_error_posts.push(PostErrorVariant::NoItems{link, no_items_error: NoItemsError::NoTag(tag), provider_kind});
+                        }
                     }
                 }
+                
+
             }
             Err(string_error) => {
                 some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError(string_error))//rewrite this error coz it must not be string. dont know to to clone error between threads
