@@ -3,14 +3,14 @@ use crate::fetch::rss_part::rss_part;
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_metainfo_fetch_structures::AreThereItems;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-type ArcMutexErrorPostsHandle = Arc<Mutex<Vec<(String, AreThereItems, ProviderKind)>>>;
+type ArcMutexErrorPostsHandle = Arc<Mutex<Vec<PostErrorVariant>>>;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
