@@ -10,16 +10,16 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-use super::rss_parse_string_into_struct::rss_parse_string_into_struct;
+use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 
 pub fn rss_fetch_and_parse_provider_data(
     links: Vec<String>,
     provider_kind: ProviderKind,
-) -> Vec<Result<Result<(CommonRssPostStruct, String), NoItemsError>, String>> {
+) -> Vec<Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>> {
     //RssFetchLinkError
     let time = Instant::now();
     let hashmap_to_return = Arc::new(Mutex::new(Vec::<
-        Result<Result<(CommonRssPostStruct, String), NoItemsError>, String>,
+        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>,
     >::with_capacity(links.len())));
     let mut thread_vector = Vec::with_capacity(links.len());
     for (element_index, link) in &mut links.into_iter().enumerate() {
@@ -33,12 +33,12 @@ pub fn rss_fetch_and_parse_provider_data(
                         Ok(post_struct) => {
                             let mut hashmap_to_return_handle_locked =
                                 hashmap_to_return_handle.lock().unwrap();
-                            hashmap_to_return_handle_locked.push(Ok(Ok((post_struct, link))))
+                            hashmap_to_return_handle_locked.push(Ok(Ok(post_struct)))
                         }
                         Err(e) => {
                             let mut hashmap_to_return_handle_locked =
                                 hashmap_to_return_handle.lock().unwrap();
-                            hashmap_to_return_handle_locked.push(Ok(Err(e)))
+                            hashmap_to_return_handle_locked.push(Ok(Err((e, link))))
                         }
                     }
                 }
