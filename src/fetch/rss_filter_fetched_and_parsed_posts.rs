@@ -3,23 +3,23 @@ use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 #[derive(Debug, Clone)]
-pub enum PostErrorVariant {//todo: think about this naming
-    NoItems{ 
+pub enum PostErrorVariant {
+    //todo: think about this naming
+    NoItems {
         link: String,
         no_items_error: NoItemsError,
-        provider_kind: ProviderKind
+        provider_kind: ProviderKind,
     },
-    RssFetchAndParseProviderDataError(String),//rewrite this error coz it must not be string. dont know to to clone error between threads
+    RssFetchAndParseProviderDataError(String), //rewrite this error coz it must not be string. dont know to to clone error between threads
 }
 
-type FilterParsedSuccessErrorTuple = (
-    Vec<CommonRssPostStruct>,
-    Vec<PostErrorVariant>
-);
+type FilterParsedSuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_filter_fetched_and_parsed_posts(
-    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>>,//it must be enum
+    unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
+        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>,
+    >, //it must be enum
     provider_kind: ProviderKind,
 ) -> FilterParsedSuccessErrorTuple {
     let mut unhandled_success_handled_success_are_there_items_yep_posts: Vec<CommonRssPostStruct> =
@@ -36,29 +36,36 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     match err {
                         NoItemsError::ThereIsTag(fetch_result_string) => {
                             //"</item>" tag
-                            some_error_posts.push(PostErrorVariant::NoItems{
+                            some_error_posts.push(PostErrorVariant::NoItems {
                                 link,
                                 no_items_error: NoItemsError::ThereIsTag(fetch_result_string),
                                 provider_kind,
                             });
                         }
                         NoItemsError::ConversionFromStrError(fetch_result_string, error) => {
-                            some_error_posts.push(PostErrorVariant::NoItems{
+                            some_error_posts.push(PostErrorVariant::NoItems {
                                 link,
-                                no_items_error: NoItemsError::ConversionFromStrError(fetch_result_string, error),
+                                no_items_error: NoItemsError::ConversionFromStrError(
+                                    fetch_result_string,
+                                    error,
+                                ),
                                 provider_kind,
                             });
                         }
                         NoItemsError::NoTag(tag) => {
-                            some_error_posts.push(PostErrorVariant::NoItems{link, no_items_error: NoItemsError::NoTag(tag), provider_kind});
+                            some_error_posts.push(PostErrorVariant::NoItems {
+                                link,
+                                no_items_error: NoItemsError::NoTag(tag),
+                                provider_kind,
+                            });
                         }
                     }
                 }
-                
-
-            }
+            },
             Err(string_error) => {
-                some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError(string_error))//rewrite this error coz it must not be string. dont know to to clone error between threads
+                some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError(
+                    string_error,
+                )) //rewrite this error coz it must not be string. dont know to to clone error between threads
             }
         }
     }

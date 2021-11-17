@@ -15,10 +15,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers_new_posts_check::providers_new_posts_check;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_new_posts_threads_parts() -> Option<(
-    Vec<CommonRssPostStruct>,
-    Vec<PostErrorVariant>,
-)> {
+pub async fn check_new_posts_threads_parts(
+) -> Option<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>)> {
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
         match option_providers_link_parts {
@@ -30,10 +28,7 @@ pub async fn check_new_posts_threads_parts() -> Option<(
                         ProviderKind::get_enabled_string_name_vec().len(),
                     );
                     let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
-                    let error_posts =
-                        Arc::new(Mutex::new(
-                            Vec::<PostErrorVariant>::new(),
-                        ));
+                    let error_posts = Arc::new(Mutex::new(Vec::<PostErrorVariant>::new()));
                     //check if provider_names are unique
                     for provider_kind in ProviderKind::get_enabled_providers_vec() {
                         match providers_link_parts.get(&provider_kind) {

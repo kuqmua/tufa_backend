@@ -17,10 +17,10 @@ pub async fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,
     provider_kind: ProviderKind,
     path_to_provider_log_file: String,
-    path_to_file: String
+    path_to_file: String,
 ) -> Result<(), std::io::Error> {
     let time = Instant::now();
-    
+
     if let Err(e) = create_dir_if_it_doesnt_exist(&path_to_provider_log_file) {
         print_colorful_message(
             Some(&provider_kind),

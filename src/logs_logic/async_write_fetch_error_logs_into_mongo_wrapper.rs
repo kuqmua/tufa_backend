@@ -128,14 +128,12 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 &provider_kind,
             );
             let result_stringified_json = serde_json::to_string_pretty(&json);
-                match result_stringified_json {
-                    Ok(stringified_json) => {
-                        match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                            Some(stringified_json_vec) => {
-                                stringified_json_vec.push(stringified_json)
-                            }
-                            None => {
-                                print_colorful_message(
+            match result_stringified_json {
+                Ok(stringified_json) => {
+                    match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                        Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                        None => {
+                            print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
                                 file!().to_string(),
@@ -143,20 +141,20 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                                 "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
                                     .to_string(),
                             );
-                            }
                         }
                     }
-                    Err(e) => {
-                        print_colorful_message(
-                            Some(&provider_kind),
-                            PrintType::WarningLow,
-                            file!().to_string(),
-                            line!().to_string(),
-                            format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
-                        );
-                        //todo
-                    }
                 }
+                Err(e) => {
+                    print_colorful_message(
+                        Some(&provider_kind),
+                        PrintType::WarningLow,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
+                    );
+                    //todo
+                }
+            }
         }
     }
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
