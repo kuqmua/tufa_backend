@@ -1,5 +1,5 @@
 use crate::fetch::provider_log_into_json::provider_log_into_json;
-use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
@@ -16,7 +16,9 @@ use crate::prints::print_type_enum::PrintType;
 
 use std::collections::HashMap;
 
+use chrono::Local;
 use futures::future::join_all;
+use serde_json::json;
 
 #[derive(
     Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize, PartialEq, Eq, Hash, Copy,
@@ -29,7 +31,7 @@ pub enum WriteLogsResult {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
-    error_posts: Vec<(String, NoItemsError, ProviderKind)>,
+    error_posts: Vec<PostErrorVariant>,
 ) -> WriteLogsResult {
     if error_posts.is_empty() {
         print_colorful_message(
@@ -47,12 +49,34 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
     //restructure into hashmap for better usage
-    for (link, are_there_items, provider_kind) in &error_posts {
-        if !vec_of_error_provider_kinds.contains(&provider_kind) {
-            let empty_vec_of_stringified_json: Vec<String> = Vec::new();
-            hashmap_of_provider_vec_of_strings
-                .insert(*provider_kind, empty_vec_of_stringified_json);
-            vec_of_error_provider_kinds.push(*provider_kind);
+    //(link, are_there_items, provider_kind)
+    for post_error_variant in &error_posts {
+        match post_error_variant {
+            PostErrorVariant::NoItems {
+                link: _,//todo
+                no_items_error: _,//todo
+                provider_kind,
+            } => {
+                if !vec_of_error_provider_kinds.contains(&provider_kind) {
+                    let empty_vec_of_stringified_json: Vec<String> = Vec::new();
+                    hashmap_of_provider_vec_of_strings
+                        .insert(*provider_kind, empty_vec_of_stringified_json);
+                    vec_of_error_provider_kinds.push(*provider_kind);
+                }
+            },
+            PostErrorVariant::RssFetchAndParseProviderDataError {
+                link: _,//todo
+                provider_kind,
+                error: _,//it must be different type but dont know how to clone error to different thread
+            } => {
+                if !vec_of_error_provider_kinds.contains(&provider_kind) {
+                    let empty_vec_of_stringified_json: Vec<String> = Vec::new();
+                    hashmap_of_provider_vec_of_strings
+                        .insert(*provider_kind, empty_vec_of_stringified_json);
+                    vec_of_error_provider_kinds.push(*provider_kind);
+                }
+            }, //rewrite this error coz it must not be string. dont know to to clone error between threads
+
         }
     }
     let hashmap_len = hashmap_of_provider_vec_of_strings.len();
@@ -120,42 +144,96 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             .map(|x: (ProviderKind, bool)| -> ProviderKind { x.0 })
             .collect();
     }
-    for (link, are_there_items, provider_kind) in error_posts {
-        if !vec_of_failed_collections_drops.contains(&provider_kind) {
-            let json = provider_log_into_json(
-                &link.clone(), //todo understand lifetimes to remove it
-                &are_there_items,
-                &provider_kind,
-            );
-            let result_stringified_json = serde_json::to_string_pretty(&json);
-            match result_stringified_json {
-                Ok(stringified_json) => {
-                    match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                        Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
-                        None => {
+    ////(link, are_there_items, provider_kind)
+    for post_error_variant in error_posts {
+        ///////
+        match post_error_variant {
+            PostErrorVariant::NoItems {
+                link,
+                no_items_error,
+                provider_kind,
+            } => {
+                if !vec_of_failed_collections_drops.contains(&provider_kind) {
+                    let json = provider_log_into_json(
+                        &link.clone(), //todo understand lifetimes to remove it
+                        &no_items_error,
+                        &provider_kind,
+                    );
+                    let result_stringified_json = serde_json::to_string_pretty(&json);
+                    match result_stringified_json {
+                        Ok(stringified_json) => {
+                            match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                                Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                                None => {
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::WarningHigh,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
+                                            .to_string(),
+                                    );
+                                }
+                            }
+                        }
+                        Err(e) => {
                             print_colorful_message(
-                                None,
-                                PrintType::WarningHigh,
+                                Some(&provider_kind),
+                                PrintType::WarningLow,
                                 file!().to_string(),
                                 line!().to_string(),
-                                "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
-                                    .to_string(),
+                                format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
                             );
+                            //todo
                         }
                     }
                 }
-                Err(e) => {
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::WarningLow,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
-                    );
-                    //todo
+            },
+            PostErrorVariant::RssFetchAndParseProviderDataError {
+                link,
+                provider_kind,
+                error,//it must be different type but dont know how to clone error to different thread
+            } => {
+                if !vec_of_failed_collections_drops.contains(&provider_kind) {
+                    let json = json!({
+                        "link": link,
+                        "stringified_error": error,
+                        "part_of": ProviderKind::get_string_name(provider_kind),
+                        "date": Local::now().to_string()
+                    });
+                    let result_stringified_json = serde_json::to_string_pretty(&json);
+                    match result_stringified_json {
+                        Ok(stringified_json) => {
+                            match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
+                                Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                                None => {
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::WarningHigh,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
+                                            .to_string(),
+                                    );
+                                }
+                            }
+                        }
+                        Err(e) => {
+                            print_colorful_message(
+                                Some(&provider_kind),
+                                PrintType::WarningLow,
+                                file!().to_string(),
+                                line!().to_string(),
+                                format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
+                            );
+                            //todo
+                        }
+                    }
                 }
-            }
+            }, 
+
         }
+        ///////
     }
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
     for element in hashmap_of_provider_vec_of_strings {
