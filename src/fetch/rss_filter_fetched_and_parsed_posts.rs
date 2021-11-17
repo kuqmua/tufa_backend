@@ -10,7 +10,11 @@ pub enum PostErrorVariant {
         no_items_error: NoItemsError,
         provider_kind: ProviderKind,
     },
-    RssFetchAndParseProviderDataError(String), //rewrite this error coz it must not be string. dont know to to clone error between threads
+    RssFetchAndParseProviderDataError {
+        link: String,
+        provider_kind: ProviderKind,
+        error: String,//it must be different type but dont know how to clone error to different thread
+    }, //rewrite this error coz it must not be string. dont know to to clone error between threads
 }
 
 type FilterParsedSuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
@@ -18,7 +22,7 @@ type FilterParsedSuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVar
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
-        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>,
+        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>,
     >, //it must be enum
     provider_kind: ProviderKind,
 ) -> FilterParsedSuccessErrorTuple {
@@ -62,10 +66,12 @@ pub fn rss_filter_fetched_and_parsed_posts(
                     }
                 }
             },
-            Err(string_error) => {
-                some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError(
-                    string_error,
-                )) //rewrite this error coz it must not be string. dont know to to clone error between threads
+            Err((link, provider_kind, string_error)) => {
+                some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError {
+                    link,
+                    provider_kind,
+                    error: string_error,
+                }) //rewrite this error coz it must not be string. dont know to to clone error between threads
             }
         }
     }

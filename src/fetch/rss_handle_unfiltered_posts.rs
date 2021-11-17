@@ -24,7 +24,7 @@ type UnfilteredSuccessErrorTuple = (
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_handle_unfiltered_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
-        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, String>,
+        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>,
     >,
     provider_kind: ProviderKind,
 ) -> UnfilteredSuccessErrorTuple {
