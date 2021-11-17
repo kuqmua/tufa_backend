@@ -16,15 +16,11 @@ use std::time::Instant;
 pub async fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
     json_object: Value,
     provider_kind: ProviderKind,
-    dir: &str,
-    warning_logs_directory_name: &str,
-    link: String,
+    path_to_provider_log_file: String,
+    path_to_file: String
 ) -> Result<(), std::io::Error> {
     let time = Instant::now();
-    let path_to_provider_log_file = format!(
-        "logs/{}/{:?}/{}",
-        warning_logs_directory_name, provider_kind, warning_logs_directory_name
-    );
+    
     if let Err(e) = create_dir_if_it_doesnt_exist(&path_to_provider_log_file) {
         print_colorful_message(
             Some(&provider_kind),
@@ -38,15 +34,6 @@ pub async fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
         );
         return Err(e);
     };
-    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-    let path_to_file = format!(
-        "logs/{}/{:?}/{}/{:?}-{}.json",
-        &warning_logs_directory_name,
-        ProviderKind::get_string_name(provider_kind),
-        dir,
-        ProviderKind::get_string_name(provider_kind),
-        replaced_link
-    ); //add save function what convert string into save path
     let result_of_opening_file = File::open(&path_to_file);
     match result_of_opening_file {
         Ok(_) => {
