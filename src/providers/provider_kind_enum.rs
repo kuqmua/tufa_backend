@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, path::Path};
 
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -22,7 +22,7 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::{config_mods::config::CONFIG, fetch::rss_clean_logs_directory::CleanLogsDirError};
+use crate::{config_mods::config::CONFIG};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -34,8 +34,6 @@ use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_do
 
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 
-use crate::fetch::rss_clean_logs_directory::rss_clean_logs_directory;
-
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
 use crate::providers::providers_info::links::generate_github_links::generate_github_links;
@@ -44,14 +42,21 @@ use crate::providers::providers_info::links::generate_medrxiv_links::generate_me
 use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
 
-// use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
-
-// use crate::helpers::resource::Resource;
-
-// use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-
-// use crate::prints::print_colorful_message::print_colorful_message;
-// use crate::prints::print_type_enum::PrintType;
+#[derive(Debug)]
+pub enum CleanLogsDirError {
+    PathIsNotDir { path: String },
+    RemoveDirAll { error: std::io::Error },
+}
+impl From<String> for CleanLogsDirError {
+    fn from(e: String) -> Self {
+        CleanLogsDirError::PathIsNotDir { path: e }
+    }
+}
+impl From<std::io::Error> for CleanLogsDirError {
+    fn from(e: std::io::Error) -> Self {
+        CleanLogsDirError::RemoveDirAll { error: e }
+    }
+}
 
 #[derive(
     EnumVariantCount,
@@ -739,7 +744,7 @@ impl ProviderKind {
         for provider_kind in ProviderKind::iter()
             .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
         {
-            match rss_clean_logs_directory(provider_kind) {
+            match ProviderKind::clean_logs_directory(provider_kind) {
                 Ok(_) => {}
                 Err(e) => {
                     result_hashmap.insert(provider_kind, e);
@@ -779,4 +784,13 @@ impl ProviderKind {
             ProviderKind::Twitter => generate_twitter_links(names_vector),
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub fn clean_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
+    let path = ProviderKind::get_path_to_logs_directory(provider_kind);
+    if !Path::new(&path).is_dir() {
+        return Err(CleanLogsDirError::PathIsNotDir { path });
+    }
+    fs::remove_dir_all(&path)?;
+    Ok(())
+}
 }
