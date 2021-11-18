@@ -12,23 +12,25 @@ pub fn provider_log_into_json(
     provider_kind: &ProviderKind,
 ) -> Value {
     match no_items_error {
-        NoItemsError::ThereIsTag(fetch_result_string) => {
-            //"</item>" tag
+        NoItemsError::ThereIsTag(tag) => {
             json!({
+                "error_kind": stringify!(NoItemsError::ThereIsTag),
                 "link": link,
-                "fetch_result_string": fetch_result_string,
+                "tag": tag,
                 "part_of": ProviderKind::get_string_name(*provider_kind),
                 "date": Local::now().to_string()
             })
         }
-        NoItemsError::ConversionFromStrError(fetch_result_string, error) => json!({
+        NoItemsError::ConversionFromStrError(string, error) => json!({
+            "error_kind": stringify!(NoItemsError::ConversionFromStrError),
             "link": link,
-            "fetch_result_string": fetch_result_string,
+            "string": string,
             "error": error,
             "part_of": ProviderKind::get_string_name(*provider_kind),
             "date": Local::now().to_string()
         }),
         NoItemsError::NoTag(tag) => json!({
+            "error_kind": stringify!(NoItemsError::NoTag),
             "link": link,
             "tag": tag,
             "part_of": ProviderKind::get_string_name(*provider_kind),
