@@ -15,7 +15,6 @@ mod constants {
 }
 mod fetch {
     pub mod parse_github_html;
-    pub mod provider_log_into_json;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_clean_logs_directory;
     pub mod rss_fetch_and_parse_provider_data;

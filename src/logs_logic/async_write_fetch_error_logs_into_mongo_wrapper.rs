@@ -1,5 +1,5 @@
-use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
 use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
@@ -154,7 +154,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 provider_kind,
             } => {
                 if !vec_of_failed_collections_drops.contains(&provider_kind) {
-                    let json = provider_log_into_json(
+                    let json = NoItemsError::into_json_with_link_and_provider_kind(
                         &link.clone(), //todo understand lifetimes to remove it
                         &no_items_error,
                         &provider_kind,

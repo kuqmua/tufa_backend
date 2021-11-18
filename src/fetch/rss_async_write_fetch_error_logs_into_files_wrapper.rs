@@ -1,5 +1,5 @@
-use crate::fetch::provider_log_into_json::provider_log_into_json;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
 use crate::providers::provider_kind_enum::ProviderKind;
 use chrono::Local;
@@ -23,7 +23,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 no_items_error,
                 provider_kind,
             } => {
-                let json_object = provider_log_into_json(
+                let json_object = NoItemsError::into_json_with_link_and_provider_kind(
                     &link.clone(), //todo understand lifetimes to remove it
                     &no_items_error,
                     &provider_kind,
