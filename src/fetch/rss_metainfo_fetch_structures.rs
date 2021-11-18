@@ -7,6 +7,16 @@ pub enum NoItemsError {
     NoTag(String),
 }
 
+impl NoItemsError {
+    pub fn get_stringified_kind(error: &NoItemsError) -> &'static str {
+        match error {
+            NoItemsError::ThereIsTag(_) => stringify!(NoItemsError::ThereIsTag),
+            NoItemsError::ConversionFromStrError(_, _) => stringify!(NoItemsError::ConversionFromStrError),
+            NoItemsError::NoTag(_) => stringify!(NoItemsError::NoTag),
+        }
+    }
+}
+
 #[derive(Debug, Display)] //Debug only for prints
 pub enum RssFetchLinkError {
     ReqwestBlockingGet(reqwest::Error),
