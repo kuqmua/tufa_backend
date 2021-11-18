@@ -384,3 +384,8 @@ move providers link parts (specific urls) to project constants
 remove unhandled_success_handled_success_are_there_items_initialized_posts_dir - like fileds from config
 rename it 
 <br/>
+
+### -------------------
+rewrite rss_write_error_logs_into_file_for_provider_wrapper_checker.rs 
+into std::fs::OpenOptions::new().write(true).truncate(true).open("./file")?;
+<br/>
