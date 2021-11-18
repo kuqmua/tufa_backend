@@ -473,3 +473,9 @@ rewrite error handling like this?
 ### -------------------
 how to clone custom error? which contains std error or lib errors
 <br/>
+
+### -------------------
+crate for git repos integration 
+git2 = "0.13"
+<br/>
+    
