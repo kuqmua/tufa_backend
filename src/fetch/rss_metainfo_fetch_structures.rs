@@ -1,16 +1,6 @@
 use strum_macros::Display;
 
 #[derive(Debug, Clone)] //Debug only for prints
-pub enum HandledFetchStatusInfo {
-    ResToTextError(String),
-    ResStatusError(reqwest::StatusCode),
-}
-#[derive(Debug, Clone)] //Debug only for prints
-pub enum UnhandledFetchStatusInfo {
-    Failure(String),
-    Success,
-}
-#[derive(Debug, Clone)] //Debug only for prints
 pub enum NoItemsError {
     ThereIsTag(String),
     ConversionFromStrError(String, String),
@@ -21,7 +11,6 @@ pub enum NoItemsError {
 pub enum RssFetchLinkError {
     ReqwestBlockingGet(reqwest::Error),
     StatusCode(reqwest::StatusCode),
-    ResToTextError(reqwest::Error),
 }
 
 impl From<reqwest::Error> for RssFetchLinkError {

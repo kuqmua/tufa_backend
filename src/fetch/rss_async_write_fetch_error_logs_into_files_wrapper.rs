@@ -4,7 +4,7 @@ use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::r
 use crate::providers::provider_kind_enum::ProviderKind;
 use chrono::Local;
 use futures::future::join_all;
-use serde_json::{Value, json};
+use serde_json::json;
 use std::time::Instant;
 
 use crate::config_mods::config::CONFIG;
@@ -16,7 +16,6 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
 ) {
     let time = Instant::now();
     let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
-    let json_object: Value;
     for post_error_variant in error_posts {
         match post_error_variant {
             PostErrorVariant::NoItems {

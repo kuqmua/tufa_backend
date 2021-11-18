@@ -1,3 +1,4 @@
+use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -41,6 +42,7 @@ pub fn rss_fetch_link(link: &str, time: Instant) -> Result<String, RssFetchLinkE
             line!().to_string(),
             format!("LINK: {} RES.STATUS: {}", link, res.status()),
         );
+        handle_error_status_code(res.status(), link);
         return Err(RssFetchLinkError::StatusCode(res.status()));
     }
     Ok(res.text()?)
