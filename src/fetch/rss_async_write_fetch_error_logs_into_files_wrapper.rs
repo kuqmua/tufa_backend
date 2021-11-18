@@ -29,13 +29,6 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     &provider_kind,
                 );
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                let path_to_provider_log_file =
-                    format!(
-                    "logs/{}/{:?}/{}",
-                    &CONFIG.params.warning_logs_directory_name, provider_kind, &CONFIG
-                    .params
-                    .unhandled_success_handled_success_are_there_items_initialized_posts_dir
-                );
                 let path_to_file = format!(
                     "logs/{}/{:?}/{}/{:?}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
@@ -50,7 +43,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         provider_kind,
-                        path_to_provider_log_file,
+                        ProviderKind::get_path_to_provider_log_file(provider_kind),
                         path_to_file,
                     ),
                 );
@@ -61,13 +54,6 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 error: string_error,
             } => {
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                let path_to_provider_log_file =
-                    format!(
-                    "logs/{}/{:?}/{}",
-                    &CONFIG.params.warning_logs_directory_name, provider_kind, &CONFIG
-                    .params
-                    .unhandled_success_handled_success_are_there_items_initialized_posts_dir
-                );
                 let path_to_file = format!(
                     "logs/{}/{:?}/{}/{:?}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
@@ -88,7 +74,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         provider_kind,
-                        path_to_provider_log_file,
+                        ProviderKind::get_path_to_provider_log_file(provider_kind),
                         path_to_file,
                     ),
                 );
