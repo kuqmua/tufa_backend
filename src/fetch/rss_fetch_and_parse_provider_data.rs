@@ -15,7 +15,8 @@ use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 pub fn rss_fetch_and_parse_provider_data(
     links: Vec<String>,
     provider_kind: ProviderKind,
-) -> Vec<Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>> {
+) -> Vec<Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>>
+{
     //RssFetchLinkError
     let time = Instant::now();
     let hashmap_to_return = Arc::new(Mutex::new(Vec::<
@@ -52,7 +53,8 @@ pub fn rss_fetch_and_parse_provider_data(
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked[element_index] = Err((link, provider_kind_clone, e.to_string()));
+                    hashmap_to_return_handle_locked[element_index] =
+                        Err((link, provider_kind_clone, e.to_string()));
                     //it must not be a string. i dont know how to clone custom error(enum) RssFetchLinkError
                 }
             }

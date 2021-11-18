@@ -53,8 +53,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     for post_error_variant in &error_posts {
         match post_error_variant {
             PostErrorVariant::NoItems {
-                link: _,//todo
-                no_items_error: _,//todo
+                link: _,           //todo
+                no_items_error: _, //todo
                 provider_kind,
             } => {
                 if !vec_of_error_provider_kinds.contains(&provider_kind) {
@@ -63,11 +63,11 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         .insert(*provider_kind, empty_vec_of_stringified_json);
                     vec_of_error_provider_kinds.push(*provider_kind);
                 }
-            },
+            }
             PostErrorVariant::RssFetchAndParseProviderDataError {
-                link: _,//todo
+                link: _, //todo
                 provider_kind,
-                error: _,//it must be different type but dont know how to clone error to different thread
+                error: _, //it must be different type but dont know how to clone error to different thread
             } => {
                 if !vec_of_error_provider_kinds.contains(&provider_kind) {
                     let empty_vec_of_stringified_json: Vec<String> = Vec::new();
@@ -75,8 +75,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         .insert(*provider_kind, empty_vec_of_stringified_json);
                     vec_of_error_provider_kinds.push(*provider_kind);
                 }
-            }, //rewrite this error coz it must not be string. dont know to to clone error between threads
-
+            } //rewrite this error coz it must not be string. dont know to to clone error between threads
         }
     }
     let hashmap_len = hashmap_of_provider_vec_of_strings.len();
@@ -163,7 +162,9 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     match result_stringified_json {
                         Ok(stringified_json) => {
                             match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                                Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                                Some(stringified_json_vec) => {
+                                    stringified_json_vec.push(stringified_json)
+                                }
                                 None => {
                                     print_colorful_message(
                                         None,
@@ -188,11 +189,11 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         }
                     }
                 }
-            },
+            }
             PostErrorVariant::RssFetchAndParseProviderDataError {
                 link,
                 provider_kind,
-                error,//it must be different type but dont know how to clone error to different thread
+                error, //it must be different type but dont know how to clone error to different thread
             } => {
                 if !vec_of_failed_collections_drops.contains(&provider_kind) {
                     let json = json!({
@@ -205,7 +206,9 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     match result_stringified_json {
                         Ok(stringified_json) => {
                             match hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) {
-                                Some(stringified_json_vec) => stringified_json_vec.push(stringified_json),
+                                Some(stringified_json_vec) => {
+                                    stringified_json_vec.push(stringified_json)
+                                }
                                 None => {
                                     print_colorful_message(
                                         None,
@@ -230,8 +233,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                         }
                     }
                 }
-            }, 
-
+            }
         }
         ///////
     }

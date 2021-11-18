@@ -65,7 +65,10 @@ pub fn rss_part(
         //     NoItemsError,
         // )>;
         let unfiltered_posts_vec_after_fetch_and_parse: Vec<
-            Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>,
+            Result<
+                Result<CommonRssPostStruct, (NoItemsError, String)>,
+                (String, ProviderKind, String),
+            >,
         >;
         match provider_kind {
             ProviderKind::Arxiv => {

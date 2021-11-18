@@ -55,10 +55,10 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     ),
                 );
             }
-            PostErrorVariant::RssFetchAndParseProviderDataError{
-                link, 
-                provider_kind, 
-                error: string_error
+            PostErrorVariant::RssFetchAndParseProviderDataError {
+                link,
+                provider_kind,
+                error: string_error,
             } => {
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_provider_log_file =

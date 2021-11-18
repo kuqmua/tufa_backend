@@ -13,7 +13,7 @@ pub enum PostErrorVariant {
     RssFetchAndParseProviderDataError {
         link: String,
         provider_kind: ProviderKind,
-        error: String,//it must be different type but dont know how to clone error to different thread
+        error: String, //it must be different type but dont know how to clone error to different thread
     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
 }
 
