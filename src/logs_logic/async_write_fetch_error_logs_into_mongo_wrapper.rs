@@ -1,13 +1,13 @@
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
-use crate::logs_logic::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version::insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version;
 
 use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 
 use std::time::Instant;
 
@@ -248,8 +248,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         );
         //if push mongo_insert_docs_in_empty_collection then cant do join_all()
         vec_of_futures.push(
-            insert_docs_in_empty_mongo_collection_wrapper_under_old_tokio_version(
-                element.0,
+            mongo_insert_docs_in_empty_collection(
                 &CONFIG.mongo_params.db_providers_logs_name_handle,
                 collection_handle, //fix naming later
                 element.1,
@@ -274,8 +273,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     let results_vec_len = results_vec.len();
     if results_vec_len == hashmap_len {
         let mut checker_if_all_true = true;
-        for (_, boolean_result) in &results_vec {
-            if !(*boolean_result) {
+        for result in &results_vec {
+            if result.is_err() {
                 checker_if_all_true = false;
                 break;
             }
@@ -284,8 +283,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
             return WriteLogsResult::Success;
         }
         let mut checker_if_all_false = true;
-        for (_, boolean_result) in results_vec {
-            if boolean_result {
+        for result in results_vec {
+            if result.is_ok() {
                 checker_if_all_false = false;
                 break;
             }
@@ -304,8 +303,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         WriteLogsResult::PartialSuccess
     } else {
         let mut checker_if_all_false = true;
-        for (_, boolean_result) in results_vec {
-            if boolean_result {
+        for result in results_vec {
+            if result.is_ok() {
                 checker_if_all_false = false;
                 break;
             }
