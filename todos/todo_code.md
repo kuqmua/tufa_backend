@@ -379,3 +379,8 @@ big enum of enums(recursive) of all errors in project
 ### -------------------
 move providers link parts (specific urls) to project constants
 <br/>
+
+### -------------------
+remove unhandled_success_handled_success_are_there_items_initialized_posts_dir - like fileds from config
+rename it 
+<br/>
