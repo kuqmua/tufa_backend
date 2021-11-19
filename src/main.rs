@@ -94,7 +94,6 @@ pub mod helpers {
 }
 mod logs_logic {
     pub mod async_write_fetch_error_logs_into_mongo_wrapper;
-    pub mod drop_mongo_logs_collection_wrapper_for_providers;
     pub mod drop_mongo_provider_logs_collection_if_need;
 }
 pub mod mongo_integration {

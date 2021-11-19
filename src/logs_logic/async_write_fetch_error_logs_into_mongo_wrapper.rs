@@ -1,6 +1,6 @@
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::logs_logic::drop_mongo_logs_collection_wrapper_for_providers::drop_mongo_logs_collection_wrapper_for_providers;
+use crate::logs_logic::drop_mongo_provider_logs_collection_if_need::drop_mongo_provider_logs_collection_if_need;
 
 use crate::config_mods::config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -44,7 +44,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         return WriteLogsResult::Success;
     }
     let time = Instant::now();
-    let mongo_url = mongo_get_db_url();
     //todo: move this to config
     let mut vec_of_error_provider_kinds: Vec<ProviderKind> = Vec::with_capacity(error_posts.len());
     let mut hashmap_of_provider_vec_of_strings: HashMap<ProviderKind, Vec<String>> = HashMap::new();
@@ -97,7 +96,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         /////////////////////////////////////////////////////
         //old tokio runtime
         let dropping_db_result = mongo_drop_db(
-            &mongo_url,
+            &mongo_get_db_url(),
             &CONFIG.mongo_params.db_providers_logs_name_handle,
         )
         .await;
@@ -111,7 +110,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     line!().to_string(),
                     format!(
                         "mongo_drop_db url: {}, db name: {}, error: {:#?} \n maybe disable mongo dropping db parameter in config?",
-                        &mongo_url, &CONFIG.mongo_params.db_providers_logs_name_handle, e
+                        &mongo_get_db_url(), &CONFIG.mongo_params.db_providers_logs_name_handle, e
                     ),
                 );
                 return WriteLogsResult::Failure;
@@ -126,14 +125,12 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     {
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
-            let mongo_url_clone = mongo_url.clone();
-            vec_join.push(drop_mongo_logs_collection_wrapper_for_providers(
+            vec_join.push(drop_mongo_provider_logs_collection_if_need(
+                ProviderKind::is_cleaning_warning_logs_db_collections_in_mongo_enabled(
+                    provider_kind_handle,
+                ),
                 provider_kind_handle,
-                mongo_url_clone,
-                &CONFIG
-                    .mongo_params
-                    .db_providers_logs_collection_handle_second_part,
-                &CONFIG.mongo_params.db_providers_logs_name_handle,
+                mongo_get_db_url(),
             ))
         }
         let result_vec = join_all(vec_join).await;
