@@ -133,8 +133,8 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         let result_vec = join_all(vec_join).await;
         vec_of_failed_collections_drops = result_vec
             .into_iter()
-            .filter(|x| !x.1)
-            .map(|x: (ProviderKind, bool)| -> ProviderKind { x.0 })
+            .filter(|(_, result)| result.is_err())
+            .map(|(provider_kind, _)| -> ProviderKind { provider_kind }) //todo: handle error
             .collect();
     }
     ////(link, are_there_items, provider_kind)
