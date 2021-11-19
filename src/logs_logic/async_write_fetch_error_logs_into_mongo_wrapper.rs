@@ -126,9 +126,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
             vec_join.push(drop_mongo_provider_logs_collection_if_need(
-                ProviderKind::is_cleaning_warning_logs_db_collections_in_mongo_enabled(
-                    provider_kind_handle,
-                ),
                 provider_kind_handle,
                 mongo_get_db_url(),
             ))

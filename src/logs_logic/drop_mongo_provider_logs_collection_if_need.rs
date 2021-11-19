@@ -8,11 +8,11 @@ use crate::prints::print_type_enum::PrintType;
 use crate::config_mods::config::CONFIG;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
-    enable_cleaning_warning_logs_db_provider_collection: bool,
     provider_kind_handle: ProviderKind,
     mongo_url: String,
 ) -> (ProviderKind, bool) {
-    if enable_cleaning_warning_logs_db_provider_collection {
+    if ProviderKind::is_cleaning_warning_logs_db_collections_in_mongo_enabled(provider_kind_handle)
+    {
         let db_collection_name = &format!(
             "{:#?}{}",
             provider_kind_handle,
