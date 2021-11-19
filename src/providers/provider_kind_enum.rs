@@ -15,6 +15,7 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
+use crate::config_mods::config::CONFIG;
 use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
@@ -22,7 +23,6 @@ use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
-use crate::{config_mods::config::CONFIG};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -168,6 +168,47 @@ impl ProviderKind {
                     .mongo_params
                     .enable_initialize_mongo_with_providers_link_parts
                     .enable_initialize_mongo_with_twitter_link_parts
+            }
+        }
+    }
+    pub fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(
+        provider_kind: ProviderKind,
+    ) -> bool {
+        match provider_kind {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_github
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter
             }
         }
     }
@@ -764,9 +805,11 @@ impl ProviderKind {
     pub fn get_path_to_provider_log_file(provider_kind: ProviderKind) -> String {
         format!(
             "logs/{}/{:?}/{}",
-            &CONFIG.params.warning_logs_directory_name, provider_kind, &CONFIG
-            .params
-            .unhandled_success_handled_success_are_there_items_initialized_posts_dir
+            &CONFIG.params.warning_logs_directory_name,
+            provider_kind,
+            &CONFIG
+                .params
+                .unhandled_success_handled_success_are_there_items_initialized_posts_dir
         )
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -785,12 +828,12 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn clean_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
-    let path = ProviderKind::get_path_to_logs_directory(provider_kind);
-    if !Path::new(&path).is_dir() {
-        return Err(CleanLogsDirError::PathIsNotDir { path });
+    pub fn clean_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
+        let path = ProviderKind::get_path_to_logs_directory(provider_kind);
+        if !Path::new(&path).is_dir() {
+            return Err(CleanLogsDirError::PathIsNotDir { path });
+        }
+        fs::remove_dir_all(&path)?;
+        Ok(())
     }
-    fs::remove_dir_all(&path)?;
-    Ok(())
-}
 }
