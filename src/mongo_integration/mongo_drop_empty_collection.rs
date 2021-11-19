@@ -4,12 +4,23 @@ use mongodb::{options::ClientOptions, Client};
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+#[derive(Debug)]
+pub enum MongoDropEmptyCollectionError {
+    MongoError(mongodb::error::Error),
+    NotEmpty(u64),
+}
+impl From<mongodb::error::Error> for MongoDropEmptyCollectionError {
+    fn from(e: mongodb::error::Error) -> Self {
+        MongoDropEmptyCollectionError::MongoError(e)
+    }
+}
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_drop_empty_collection(
     mongo_url: &str,
     db_name: &str,
     db_collection_name: &str,
-) -> Result<bool, mongodb::error::Error> {
+) -> Result<(), MongoDropEmptyCollectionError> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client = Client::with_options(client_options)?;
     let collection = client
@@ -24,9 +35,9 @@ pub async fn mongo_drop_empty_collection(
             line!().to_string(),
             "collection is not empty".to_string(),
         );
-        Ok(false)
+        Err(MongoDropEmptyCollectionError::NotEmpty(documents_number))
     } else {
         collection.drop(None).await?;
-        Ok(true)
+        Ok(())
     }
 }

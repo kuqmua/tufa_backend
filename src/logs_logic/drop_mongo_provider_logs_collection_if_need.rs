@@ -11,6 +11,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
     provider_kind_handle: ProviderKind,
     mongo_url: String,
 ) -> (ProviderKind, bool) {
+    //Result<(), (ProviderKind, mongodb::error::Error)>
     if ProviderKind::is_cleaning_warning_logs_db_collections_in_mongo_enabled(provider_kind_handle)
     {
         let db_collection_name = &format!(
@@ -28,7 +29,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         )
         .await;
         match future_possible_drop_collection {
-            Ok(result_flag) => (provider_kind_handle, result_flag),
+            Ok(()) => (provider_kind_handle, true),
             Err(e) => {
                 print_colorful_message(
                     Some(&provider_kind_handle),
