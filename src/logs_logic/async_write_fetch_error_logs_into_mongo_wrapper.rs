@@ -57,7 +57,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 no_items_error: _, //todo
                 provider_kind,
             } => {
-                if !vec_of_error_provider_kinds.contains(&provider_kind) {
+                if !vec_of_error_provider_kinds.contains(provider_kind) {
                     let empty_vec_of_stringified_json: Vec<String> = Vec::new();
                     hashmap_of_provider_vec_of_strings
                         .insert(*provider_kind, empty_vec_of_stringified_json);
@@ -69,7 +69,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 provider_kind,
                 error: _, //it must be different type but dont know how to clone error to different thread
             } => {
-                if !vec_of_error_provider_kinds.contains(&provider_kind) {
+                if !vec_of_error_provider_kinds.contains(provider_kind) {
                     let empty_vec_of_stringified_json: Vec<String> = Vec::new();
                     hashmap_of_provider_vec_of_strings
                         .insert(*provider_kind, empty_vec_of_stringified_json);
@@ -247,13 +247,11 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 .db_providers_logs_collection_handle_second_part
         );
         //if push mongo_insert_docs_in_empty_collection then cant do join_all()
-        vec_of_futures.push(
-            mongo_insert_docs_in_empty_collection(
-                &CONFIG.mongo_params.db_providers_logs_name_handle,
-                collection_handle, //fix naming later
-                element.1,
-            ),
-        );
+        vec_of_futures.push(mongo_insert_docs_in_empty_collection(
+            &CONFIG.mongo_params.db_providers_logs_name_handle,
+            collection_handle, //fix naming later
+            element.1,
+        ));
     }
     //todo write some logic around provider_kind
     let results_vec = join_all(vec_of_futures).await;

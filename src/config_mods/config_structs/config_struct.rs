@@ -372,7 +372,7 @@ impl ConfigStruct {
                 info_blue: u8_vars[&EnvU8Var::InfoBlue],
             },
         };
-        return Ok(handle_config);
+        Ok(handle_config)
         // return ConfigStruct::wrap_config_checks(handle_config);
     }
     // fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError<'static>> {

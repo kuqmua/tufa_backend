@@ -584,14 +584,12 @@ impl EnvBoolVar {
         let string_name = EnvBoolVar::get_env_name(env_var_name_kind);
         match std::env::var(string_name) {
             Ok(handle) => Ok(handle),
-            Err(e) => {
-                return Err(ConfigError {
-                    env_var_name_kind: ConfigEnvVarErrorType::Bool(env_var_name_kind),
-                    was_dotenv_enable,
-                    env_name: string_name,
-                    env_error: ConfigErrorInnerType::VarErrorHandle(e),
-                })
-            }
+            Err(e) => Err(ConfigError {
+                env_var_name_kind: ConfigEnvVarErrorType::Bool(env_var_name_kind),
+                was_dotenv_enable,
+                env_name: string_name,
+                env_error: ConfigErrorInnerType::VarErrorHandle(e),
+            }),
         }
     }
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvBoolVar, bool>, ConfigError<'static>> {
