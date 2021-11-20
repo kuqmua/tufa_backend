@@ -779,7 +779,7 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn clean_providers_logs_directory() -> HashMap<ProviderKind, CleanLogsDirError> {
+    pub fn remove_providers_logs_directory() -> HashMap<ProviderKind, CleanLogsDirError> {
         let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter()
