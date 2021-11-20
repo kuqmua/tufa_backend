@@ -11,6 +11,7 @@ use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_wrapper() -> Option<HashMap<ProviderKind, Vec<String>>> {
+    //todo: write Resource logic
     let providers_link_parts = get_providers_link_parts_as_hashmap(&Resource::Mongodb {}).await;
     if !providers_link_parts.is_empty() {
         Some(providers_link_parts)
