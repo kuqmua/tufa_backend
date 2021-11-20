@@ -43,8 +43,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         provider_kind,
-                        ProviderKind::get_path_to_provider_log_file(provider_kind),
-                        path_to_file,
+                        path_to_file, //todo: if it will be std::path::Path - value does not live long enough
                     ),
                 );
             }
@@ -74,8 +73,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     rss_write_error_logs_into_file_for_provider_wrapper_checker(
                         json_object,
                         provider_kind,
-                        ProviderKind::get_path_to_provider_log_file(provider_kind),
-                        path_to_file,
+                        path_to_file, //todo: if it will be std::path::Path - value does not live long enough
                     ),
                 );
             }

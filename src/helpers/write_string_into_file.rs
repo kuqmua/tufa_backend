@@ -1,9 +1,9 @@
 use std::io::Error;
+use std::path::Path;
 use std::{fs::File, io::Write};
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn write_string_into_file(path_to_file: String, stringified_json: String) -> Result<(), Error> {
-    let path = std::path::Path::new(&path_to_file);
+pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(), Error> {
     if let Some(prefix) = path.parent() {
         std::fs::create_dir_all(prefix)?;
     }
