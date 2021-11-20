@@ -39,7 +39,6 @@ pub fn rss_part(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> Result<SuccessErrorTuple, RssPartError> {
-    let mut availability_checker_flag: bool = false;
     let status_code = check_link_status_code(ProviderKind::get_check_link(provider_kind))?;
     if StatusCode::is_success(&status_code) {
         return Err(RssPartError::StatusCode(status_code));

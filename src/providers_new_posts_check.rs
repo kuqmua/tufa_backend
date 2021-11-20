@@ -19,45 +19,47 @@ pub fn providers_new_posts_check(
     posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
-    let enum_success_unsuccess_option_posts = rss_part(provider_kind, vec_of_provider_links);
-    //maybe do it in parrallel? success and error posts
-    //todo: try to lock few times
-    if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
-        match posts_handle.lock() {
-            Ok(mut posts_handle_locked) => {
-                for success_post in success_posts {
-                    posts_handle_locked.push(success_post);
+    let result = rss_part(provider_kind, vec_of_provider_links);
+    if let Ok(enum_success_unsuccess_option_posts) = result {
+        //maybe do it in parrallel? success and error posts
+        //todo: try to lock few times
+        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+            match posts_handle.lock() {
+                Ok(mut posts_handle_locked) => {
+                    for success_post in success_posts {
+                        posts_handle_locked.push(success_post);
+                    }
                 }
-            }
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("posts_handle.lock() (success_posts) error: {:#?}", e),
-                );
+                Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("posts_handle.lock() (success_posts) error: {:#?}", e),
+                    );
+                }
             }
         }
-    }
-    if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
-        match error_posts_handle.lock() {
-            Ok(mut error_posts_handle_locked) => {
-                for unsuccess_post in unsuccess_posts {
-                    error_posts_handle_locked.push(unsuccess_post);
+        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+            match error_posts_handle.lock() {
+                Ok(mut error_posts_handle_locked) => {
+                    for unsuccess_post in unsuccess_posts {
+                        error_posts_handle_locked.push(unsuccess_post);
+                    }
                 }
-            }
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "error_posts_handle.lock() (unsuccess_posts_posts) error: {:#?}",
-                        e
-                    ),
-                );
+                Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!(
+                            "error_posts_handle.lock() (unsuccess_posts_posts) error: {:#?}",
+                            e
+                        ),
+                    );
+                }
             }
         }
     }
