@@ -57,13 +57,6 @@ pub fn rss_part(
     }
     let links_temp_naming: Vec<String> = vec_of_provider_links;
     if !links_temp_naming.is_empty() {
-        // let unfiltered_posts_vec_after_fetch_and_parse: Vec<(
-        //     CommonRssPostStruct,
-        //     String,
-        //     UnhandledFetchStatusInfo,
-        //     HandledFetchStatusInfo,
-        //     NoItemsError,
-        // )>;
         let unfiltered_posts_vec_after_fetch_and_parse: Vec<
             Result<
                 Result<CommonRssPostStruct, (NoItemsError, String)>,
