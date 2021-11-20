@@ -738,6 +738,7 @@ impl ProviderKind {
         }
         return_handle
     }
+    //todo add errors warning low warning high info and others
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn is_cleaning_warning_logs_directory_enable(provider_kind: ProviderKind) -> bool {
         match provider_kind {
@@ -779,8 +780,8 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn remove_providers_logs_directory() -> Result<(), HashMap<ProviderKind, CleanLogsDirError>>
-    {
+    pub fn remove_providers_logs_directories(
+    ) -> Result<(), HashMap<ProviderKind, CleanLogsDirError>> {
         let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter()
@@ -796,6 +797,26 @@ impl ProviderKind {
             Err(result_hashmap)
         }
     }
+    //
+    // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    // pub fn remove_existing_providers_logs_directory_(result_removing_logs_directory: Result<(), HashMap<ProviderKind, CleanLogsDirError>>) ->
+    // {
+    //     let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
+    //         HashMap::with_capacity(ProviderKind::get_length());
+    //     for provider_kind in ProviderKind::iter()
+    //         .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
+    //     {
+    //         if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
+    //             result_hashmap.insert(provider_kind, e);
+    //         }
+    //     }
+    //     if result_hashmap.is_empty() {
+    //         Ok(())
+    //     } else {
+    //         Err(result_hashmap)
+    //     }
+    // }
+    ////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
         format!(

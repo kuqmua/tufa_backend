@@ -16,7 +16,7 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
     //todo add flag in config or if its already exists put it here
     //maybe instead of if write match to local or to mongo or postgres
     if CONFIG.params.enable_write_error_logs_in_local_folder {
-        let cleaning_hashmap_result = ProviderKind::remove_providers_logs_directory();
+        let cleaning_hashmap_result = ProviderKind::remove_providers_logs_directories();
         //todo add enable_writing logs if not clean or not enabled cleaning
         match cleaning_hashmap_result {
             Ok(()) => {
@@ -29,7 +29,7 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("ProviderKind::remove_providers_logs_directory() failed for {:#?} (todo2) error: {:#?}", provider_kind, error),
+                                    format!("ProviderKind::remove_providers_logs_directories() failed for {:#?} (todo2) error: {:#?}", provider_kind, error),
                                 );
                 }
             }
