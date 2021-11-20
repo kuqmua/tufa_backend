@@ -787,9 +787,20 @@ impl ProviderKind {
         {
             match ProviderKind::clean_logs_directory(provider_kind) {
                 Ok(_) => {}
-                Err(e) => {
-                    result_hashmap.insert(provider_kind, e);
-                }
+                Err(e) => match &e {
+                    CleanLogsDirError::PathIsNotDir { path: _ } => {
+                        print_colorful_message(
+                            Some(&provider_kind),
+                            PrintType::WarningLow,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("{:#?}, error: {:#?}", provider_kind, e),
+                        );
+                    }
+                    CleanLogsDirError::CannotRemoveDir { error: _ } => {
+                        result_hashmap.insert(provider_kind, e);
+                    }
+                },
             }
         }
         result_hashmap
