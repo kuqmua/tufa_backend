@@ -2,7 +2,7 @@ use reqwest::StatusCode;
 
 use crate::authorization::reddit::reddit_authorization;
 
-use crate::check_net::fetch_link::fetch_link;
+use crate::check_net::check_link_status_code::check_link_status_code;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
@@ -29,7 +29,7 @@ pub fn rss_part(
     vec_of_provider_links: Vec<String>,
 ) -> SuccessErrorTuple {
     let mut availability_checker_flag: bool = false;
-    let result = fetch_link(ProviderKind::get_check_link(provider_kind));
+    let result = check_link_status_code(ProviderKind::get_check_link(provider_kind));
     match result {
         Ok(status_code) => {
             if StatusCode::is_success(&status_code) {

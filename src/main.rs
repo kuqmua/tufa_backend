@@ -4,9 +4,9 @@ mod authorization {
     }
 }
 mod check_net {
+    pub mod check_link_status_code;
     pub mod check_net_error_enum;
     pub mod check_net_wrapper;
-    pub mod fetch_link;
 }
 mod constants {
     pub mod env_var_names_constants;
