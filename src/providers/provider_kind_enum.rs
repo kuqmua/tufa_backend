@@ -45,7 +45,7 @@ use crate::providers::providers_info::links::generate_twitter_links::generate_tw
 #[derive(Debug)]
 pub enum CleanLogsDirError {
     PathIsNotDir { path: String },
-    RemoveDirAll { error: std::io::Error },
+    CannotRemoveDir { error: std::io::Error },
 }
 impl From<String> for CleanLogsDirError {
     fn from(e: String) -> Self {
@@ -54,7 +54,7 @@ impl From<String> for CleanLogsDirError {
 }
 impl From<std::io::Error> for CleanLogsDirError {
     fn from(e: std::io::Error) -> Self {
-        CleanLogsDirError::RemoveDirAll { error: e }
+        CleanLogsDirError::CannotRemoveDir { error: e }
     }
 }
 
