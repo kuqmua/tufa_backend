@@ -3,9 +3,12 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 
-use crate::constants::project_constants::COMMON_PROVIDER_ITEM_HANDLE;
-
+use crate::constants::project_constants::ARXIV_PROVIDER_ITEM_HANDLE;
+use crate::constants::project_constants::BIORXIV_PROVIDER_ITEM_HANDLE;
 use crate::constants::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
+use crate::constants::project_constants::HABR_PROVIDER_ITEM_HANDLE;
+use crate::constants::project_constants::MEDRXIV_PROVIDER_ITEM_HANDLE;
+use crate::constants::project_constants::TWITTER_PROVIDER_ITEM_HANDLE;
 
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
@@ -55,18 +58,16 @@ pub fn rss_parse_string_into_struct(
 ) -> Result<CommonRssPostStruct, NoItemsError> {
     let what_should_find_in_fetch_result_string: &str;
     match provider_kind {
-        ProviderKind::Arxiv => {
-            what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
-        }
+        ProviderKind::Arxiv => what_should_find_in_fetch_result_string = ARXIV_PROVIDER_ITEM_HANDLE,
         ProviderKind::Biorxiv => {
-            what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+            what_should_find_in_fetch_result_string = BIORXIV_PROVIDER_ITEM_HANDLE
         }
         ProviderKind::Github => {
             what_should_find_in_fetch_result_string = GITHUB_PROVIDER_ITEM_HANDLE
         }
-        ProviderKind::Habr => what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE,
+        ProviderKind::Habr => what_should_find_in_fetch_result_string = HABR_PROVIDER_ITEM_HANDLE,
         ProviderKind::Medrxiv => {
-            what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+            what_should_find_in_fetch_result_string = MEDRXIV_PROVIDER_ITEM_HANDLE
         }
         ProviderKind::Reddit => {
             //todo option fields
@@ -197,7 +198,7 @@ pub fn rss_parse_string_into_struct(
             }
         }
         ProviderKind::Twitter => {
-            what_should_find_in_fetch_result_string = COMMON_PROVIDER_ITEM_HANDLE
+            what_should_find_in_fetch_result_string = TWITTER_PROVIDER_ITEM_HANDLE
         }
     }
     match fetch_result_string.find(what_should_find_in_fetch_result_string) {

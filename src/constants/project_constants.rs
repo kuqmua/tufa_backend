@@ -12,8 +12,13 @@ pub const MEDRXIV_NAME_TO_CHECK: &str = "medrxiv";
 pub const REDDIT_NAME_TO_CHECK: &str = "reddit";
 pub const TWITTER_NAME_TO_CHECK: &str = "twitter";
 
-pub const COMMON_PROVIDER_ITEM_HANDLE: &str = "</item>";
+pub const ARXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
+pub const BIORXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
 pub const GITHUB_PROVIDER_ITEM_HANDLE: &str = "</entry>";
+pub const HABR_PROVIDER_ITEM_HANDLE: &str = "</item>";
+pub const MEDRXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
+//no reddit item handle
+pub const TWITTER_PROVIDER_ITEM_HANDLE: &str = "</item>";
 
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_1: &str = "<dc:creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "bbb<creator>";
