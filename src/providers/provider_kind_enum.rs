@@ -786,22 +786,8 @@ impl ProviderKind {
         for provider_kind in ProviderKind::iter()
             .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
         {
-            match ProviderKind::remove_logs_directory(provider_kind) {
-                Ok(_) => {}
-                Err(e) => match &e {
-                    CleanLogsDirError::PathIsNotDir { path: _ } => {
-                        print_colorful_message(
-                            Some(&provider_kind),
-                            PrintType::WarningLow,
-                            file!().to_string(),
-                            line!().to_string(),
-                            format!("{:#?}, error: {:#?}", provider_kind, e),
-                        );
-                    }
-                    CleanLogsDirError::CannotRemoveDir { error: _ } => {
-                        result_hashmap.insert(provider_kind, e);
-                    }
-                },
+            if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
+                result_hashmap.insert(provider_kind, e);
             }
         }
         if result_hashmap.is_empty() {
