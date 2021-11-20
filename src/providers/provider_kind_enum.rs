@@ -43,9 +43,14 @@ use crate::providers::providers_info::links::generate_reddit_links::generate_red
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
 
 #[derive(Debug)]
+pub struct RemoveDirError {
+    error: std::io::Error,
+}
+
+#[derive(Debug)]
 pub enum CleanLogsDirError {
     PathIsNotDir { path: String },
-    CannotRemoveDir { error: std::io::Error },
+    CannotRemoveDir { error: RemoveDirError },
 }
 impl From<String> for CleanLogsDirError {
     fn from(e: String) -> Self {
@@ -54,7 +59,9 @@ impl From<String> for CleanLogsDirError {
 }
 impl From<std::io::Error> for CleanLogsDirError {
     fn from(e: std::io::Error) -> Self {
-        CleanLogsDirError::CannotRemoveDir { error: e }
+        CleanLogsDirError::CannotRemoveDir {
+            error: RemoveDirError { error: e },
+        }
     }
 }
 
@@ -799,7 +806,7 @@ impl ProviderKind {
     }
     //
     // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    // pub fn remove_existing_providers_logs_directory_(result_removing_logs_directory: Result<(), HashMap<ProviderKind, CleanLogsDirError>>) ->
+    // pub fn remove_existing_providers_logs_directories(result_removing_logs_directory: Result<(), HashMap<ProviderKind, CleanLogsDirError>>) ->
     // {
     //     let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
     //         HashMap::with_capacity(ProviderKind::get_length());
@@ -816,7 +823,7 @@ impl ProviderKind {
     //         Err(result_hashmap)
     //     }
     // }
-    ////
+    // ////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
         format!(
