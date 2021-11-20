@@ -44,7 +44,7 @@ use crate::providers::providers_info::links::generate_twitter_links::generate_tw
 
 #[derive(Debug)]
 pub struct RemoveDirError {
-    error: std::io::Error,
+    pub error: std::io::Error,
 }
 
 #[derive(Debug)]
@@ -804,26 +804,20 @@ impl ProviderKind {
             Err(result_hashmap)
         }
     }
-    //
-    // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    // pub fn remove_existing_providers_logs_directories(result_removing_logs_directory: Result<(), HashMap<ProviderKind, CleanLogsDirError>>) ->
-    // {
-    //     let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
-    //         HashMap::with_capacity(ProviderKind::get_length());
-    //     for provider_kind in ProviderKind::iter()
-    //         .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
-    //     {
-    //         if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
-    //             result_hashmap.insert(provider_kind, e);
-    //         }
-    //     }
-    //     if result_hashmap.is_empty() {
-    //         Ok(())
-    //     } else {
-    //         Err(result_hashmap)
-    //     }
-    // }
-    // ////
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn remove_existing_providers_logs_directories(
+    ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
+        if let Err(error_hashmap) = ProviderKind::remove_providers_logs_directories() {
+            let mut return_hashmap = HashMap::with_capacity(error_hashmap.len());
+            for (provider_kind, error) in error_hashmap {
+                if let CleanLogsDirError::CannotRemoveDir { error: e } = error {
+                    return_hashmap.insert(provider_kind, e);
+                }
+            }
+            return Err(return_hashmap);
+        }
+        Ok(())
+    }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
         format!(
