@@ -43,7 +43,7 @@ pub async fn mongo_insert_data(
         if result.is_err() {
             checker_if_all_true = false;
             break;
-    }
+        }
     }
     if checker_if_all_true {
         return PutDataInMongoResult::Success;
