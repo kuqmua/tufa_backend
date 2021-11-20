@@ -4,7 +4,7 @@ use crate::helpers::write_json_into_file::{write_json_into_file, WriteJsonIntoFi
 use crate::providers::provider_kind_enum::ProviderKind;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn rss_write_error_logs_into_file_for_provider_wrapper_checker(
+pub async fn write_provider_json_into_file(
     json: Value,
     provider_kind: ProviderKind,
     path: String,

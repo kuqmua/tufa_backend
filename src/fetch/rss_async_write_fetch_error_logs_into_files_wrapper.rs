@@ -1,6 +1,6 @@
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::fetch::rss_write_error_logs_into_file_for_provider_wrapper_checker::rss_write_error_logs_into_file_for_provider_wrapper_checker;
+use crate::fetch::write_provider_json_into_file::write_provider_json_into_file;
 use crate::providers::provider_kind_enum::ProviderKind;
 use chrono::Local;
 use futures::future::join_all;
@@ -39,13 +39,11 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     ProviderKind::get_string_name(provider_kind),
                     replaced_link
                 ); //add save function what convert string into save path
-                vec_of_write_into_files_futures.push(
-                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
-                        json_object,
-                        provider_kind,
-                        path_to_file, //todo: if it will be std::path::Path - value does not live long enough
-                    ),
-                );
+                vec_of_write_into_files_futures.push(write_provider_json_into_file(
+                    json_object,
+                    provider_kind,
+                    path_to_file, //todo: if it will be std::path::Path - value does not live long enough
+                ));
             }
             PostErrorVariant::RssFetchAndParseProviderDataError {
                 link,
@@ -69,13 +67,11 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     "part_of": ProviderKind::get_string_name(provider_kind),
                     "date": Local::now().to_string()
                 });
-                vec_of_write_into_files_futures.push(
-                    rss_write_error_logs_into_file_for_provider_wrapper_checker(
-                        json_object,
-                        provider_kind,
-                        path_to_file, //todo: if it will be std::path::Path - value does not live long enough
-                    ),
-                );
+                vec_of_write_into_files_futures.push(write_provider_json_into_file(
+                    json_object,
+                    provider_kind,
+                    path_to_file, //todo: if it will be std::path::Path - value does not live long enough
+                ));
             }
         }
     }
