@@ -30,7 +30,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 );
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
-                    "logs/{}/{:?}/{}/{:?}-{}.json",
+                    "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
                     ProviderKind::get_string_name(provider_kind),
                     &CONFIG
@@ -55,7 +55,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             } => {
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
-                    "logs/{}/{:?}/{}/{:?}-{}.json",
+                    "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
                     ProviderKind::get_string_name(provider_kind),
                     &CONFIG
