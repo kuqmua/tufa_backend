@@ -814,6 +814,9 @@ impl ProviderKind {
                     return_hashmap.insert(provider_kind, e);
                 }
             }
+            if return_hashmap.is_empty() {
+                return Ok(());
+            }
             return Err(return_hashmap);
         }
         Ok(())
