@@ -2,6 +2,7 @@ use std::thread;
 
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
+use futures::executor::block_on;
 
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
@@ -90,7 +91,7 @@ pub async fn async_tokio_wrapper() {
         Some((_posts, error_posts)) => {
             if !error_posts.is_empty() {
                 let wrong_cases_thread = thread::spawn(move || {
-                    write_error_posts_wrapper(error_posts);
+                    block_on(write_error_posts_wrapper(error_posts));
                 });
                 match wrong_cases_thread.join() {
                     Ok(_) => {}
