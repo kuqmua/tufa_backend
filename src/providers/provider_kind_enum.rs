@@ -15,14 +15,16 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-use crate::config_mods::config::CONFIG;
-use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
 use crate::constants::project_constants::HABR_NAME_TO_CHECK;
 use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
 use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
 use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+use crate::constants::project_constants::{ARXIV_NAME_TO_CHECK, GITHUB_PROVIDER_ITEM_HANDLE};
+use crate::{
+    config_mods::config::CONFIG, constants::project_constants::COMMON_PROVIDER_ITEM_HANDLE,
+};
 
 use procedural_macros_lib::EnumVariantCount;
 
@@ -862,5 +864,17 @@ impl ProviderKind {
         }
         fs::remove_dir_all(&path)?;
         Ok(())
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    pub fn get_item_handle(provider_kind: ProviderKind) -> Option<&'static str> {
+        match provider_kind {
+            ProviderKind::Arxiv => Some(COMMON_PROVIDER_ITEM_HANDLE),
+            ProviderKind::Biorxiv => Some(COMMON_PROVIDER_ITEM_HANDLE),
+            ProviderKind::Github => Some(GITHUB_PROVIDER_ITEM_HANDLE),
+            ProviderKind::Habr => Some(COMMON_PROVIDER_ITEM_HANDLE),
+            ProviderKind::Medrxiv => Some(COMMON_PROVIDER_ITEM_HANDLE),
+            ProviderKind::Reddit => None,
+            ProviderKind::Twitter => Some(COMMON_PROVIDER_ITEM_HANDLE),
+        }
     }
 }
