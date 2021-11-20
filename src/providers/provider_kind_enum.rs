@@ -785,7 +785,7 @@ impl ProviderKind {
         for provider_kind in ProviderKind::iter()
             .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
         {
-            match ProviderKind::clean_logs_directory(provider_kind) {
+            match ProviderKind::remove_logs_directory(provider_kind) {
                 Ok(_) => {}
                 Err(e) => match &e {
                     CleanLogsDirError::PathIsNotDir { path: _ } => {
@@ -839,7 +839,7 @@ impl ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn clean_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
+    pub fn remove_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
         let path = ProviderKind::get_path_to_logs_directory(provider_kind);
         if !Path::new(&path).is_dir() {
             return Err(CleanLogsDirError::PathIsNotDir { path });
