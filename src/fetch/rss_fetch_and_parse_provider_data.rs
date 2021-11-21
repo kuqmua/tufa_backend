@@ -63,7 +63,6 @@ pub fn rss_fetch_and_parse_provider_data(
                         hashmap_to_return_handle.lock().unwrap();
                     hashmap_to_return_handle_locked[element_index] =
                         Err((link, provider_kind_clone, e));
-                    //it must not be a string. i dont know how to clone custom error(enum) RssFetchLinkError
                 }
             }
         });
