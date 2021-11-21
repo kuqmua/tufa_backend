@@ -62,14 +62,28 @@ pub async fn check_new_posts_threads_parts(
                                         link_parts.to_vec(),
                                     );
                                     threads_vec_checker.push(true);
-                                    threads_vec.push(thread::spawn(move || {
-                                        providers_new_posts_check(
-                                            provider_kind,
-                                            vec_of_provider_links,
-                                            posts_handle,
-                                            error_posts_handle,
+                                    if vec_of_provider_links.is_empty() {
+                                        print_colorful_message(
+                                            Some(&provider_kind),
+                                            PrintType::WarningLow,
+                                            file!().to_string(),
+                                            line!().to_string(),
+                                            format!(
+                                                "vec_of_provider_links.is_empty - {} for {:#?}",
+                                                ProviderKind::get_string_name(provider_kind),
+                                                provider_kind
+                                            ),
                                         );
-                                    }));
+                                    } else {
+                                        threads_vec.push(thread::spawn(move || {
+                                            providers_new_posts_check(
+                                                provider_kind,
+                                                vec_of_provider_links,
+                                                posts_handle,
+                                                error_posts_handle,
+                                            );
+                                        }));
+                                    }
                                 }
                             }
                             None => {
