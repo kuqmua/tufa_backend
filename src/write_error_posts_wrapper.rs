@@ -20,7 +20,7 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
         //todo add enable_writing logs if not clean or not enabled cleaning
         match cleaning_hashmap_result {
             Ok(()) => {
-                rss_async_write_fetch_error_logs_into_files_wrapper(error_posts.clone());
+                rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
             }
             Err(error_hashmap) => {
                 for (provider_kind, error) in error_hashmap {
@@ -34,8 +34,8 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
                 }
             }
         }
-    }
-    if CONFIG.params.enable_write_error_logs_in_mongo {
+    } else if CONFIG.params.enable_write_error_logs_in_mongo {
+        //remove writing logs dublication in different sources coz need to be cloned
         let result = async_write_fetch_error_logs_into_mongo_wrapper(error_posts).await;
         match result {
             WriteLogsResult::Success => {

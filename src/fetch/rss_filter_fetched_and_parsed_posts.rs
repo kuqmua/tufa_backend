@@ -1,8 +1,11 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
+
 use crate::providers::provider_kind_enum::ProviderKind;
 
-#[derive(Debug, Clone)]
+use super::rss_metainfo_fetch_structures::RssFetchLinkError;
+
+#[derive(Debug)]
 pub enum PostErrorVariant {
     //todo: think about this naming
     NoItems {
@@ -13,7 +16,7 @@ pub enum PostErrorVariant {
     RssFetchAndParseProviderDataError {
         link: String,
         provider_kind: ProviderKind,
-        error: String, //it must be different type but dont know how to clone error to different thread
+        error: RssFetchLinkError,
     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
 }
 
@@ -22,7 +25,10 @@ type FilterParsedSuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVar
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
-        Result<Result<CommonRssPostStruct, (NoItemsError, String)>, (String, ProviderKind, String)>,
+        Result<
+            Result<CommonRssPostStruct, (NoItemsError, String)>,
+            (String, ProviderKind, RssFetchLinkError),
+        >,
     >, //it must be enum
     provider_kind: ProviderKind,
 ) -> FilterParsedSuccessErrorTuple {

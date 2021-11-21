@@ -48,7 +48,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             PostErrorVariant::RssFetchAndParseProviderDataError {
                 link,
                 provider_kind,
-                error: string_error,
+                error,
             } => {
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
@@ -63,7 +63,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 ); //add save function what convert string into save path
                 let json_object = json!({
                     "link": link,
-                    "stringified_error": string_error,
+                    "stringified_error": error.to_string(),
                     "part_of": ProviderKind::get_string_name(provider_kind),
                     "date": Local::now().to_string()
                 });

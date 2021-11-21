@@ -192,7 +192,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 if !vec_of_failed_collections_drops.contains(&provider_kind) {
                     let json = json!({
                         "link": link,
-                        "stringified_error": error,
+                        "stringified_error": error.to_string(),
                         "part_of": ProviderKind::get_string_name(provider_kind),
                         "date": Local::now().to_string()
                     });
