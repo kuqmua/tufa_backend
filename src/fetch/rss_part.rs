@@ -14,7 +14,7 @@ type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
 #[derive(Debug)]
 pub enum RssPartError {
-    ReqwestError(String), //reqwest::Error
+    ReqwestError(reqwest::Error),
     StatusCode(StatusCode),
 }
 // impl From<reqwest::Error> for RssPartError {
@@ -22,14 +22,14 @@ pub enum RssPartError {
 //         RssPartError::ReqwestError(e)
 //     }
 // }
-impl Clone for RssPartError {
-    fn clone(&self) -> RssPartError {
-        match self {
-            Self::ReqwestError(e) => RssPartError::ReqwestError(e.clone()), //reqwest::Error::new(*e)//i dont think its correct implementation
-            Self::StatusCode(status_code) => RssPartError::StatusCode(*status_code),
-        }
-    }
-}
+// impl Clone for RssPartError {
+//     fn clone(&self) -> RssPartError {
+//         match self {
+//             Self::ReqwestError(e) => RssPartError::ReqwestError(e.clone()), //reqwest::Error::new(*e)//i dont think its correct implementation
+//             Self::StatusCode(status_code) => RssPartError::StatusCode(*status_code),
+//         }
+//     }
+// }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_part(
@@ -50,9 +50,6 @@ pub fn rss_part(
                 )),
             )
         }
-        Err(e) => (
-            provider_kind,
-            Err(RssPartError::ReqwestError(e.to_string())), //todo: remove to_string() later, dont know how to clone error
-        ),
+        Err(e) => (provider_kind, Err(RssPartError::ReqwestError(e))),
     }
 }

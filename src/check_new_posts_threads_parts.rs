@@ -149,8 +149,9 @@ pub async fn check_new_posts_threads_parts() -> Option<
                         )>;
                         // let error_posts_done: Vec<PostErrorVariant>;
                         match posts_and_errors_arc_mutex.lock() {
-                            Ok(ok_posts_and_errors) => {
-                                posts_and_errors_to_return = ok_posts_and_errors.to_vec();
+                            Ok(mut ok_posts_and_errors) => {
+                                posts_and_errors_to_return =
+                                    ok_posts_and_errors.drain(..).collect();
                             }
                             Err(e) => {
                                 posts_and_errors_to_return = Vec::new(); //todo - why we need this?
