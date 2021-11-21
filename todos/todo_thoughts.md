@@ -479,3 +479,6 @@ crate for git repos integration
 git2 = "0.13"
 <br/>
     
+### -------------------
+impl serde::Serialize and deserialize for structs and enums
+<br/>
