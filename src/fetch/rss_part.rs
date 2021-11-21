@@ -42,8 +42,6 @@ pub fn rss_part(
                 )),
             )
         }
-        Err(e) => {
-            return (provider_kind, Err(RssPartError::ReqwestError(e)));
-        }
+        Err(e) => (provider_kind, Err(RssPartError::ReqwestError(e))),
     }
 }
