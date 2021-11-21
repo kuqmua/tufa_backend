@@ -6,7 +6,6 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
-use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -41,42 +40,8 @@ pub fn rss_part(
     }
     let links_temp_naming: Vec<String> = vec_of_provider_links;
     if !links_temp_naming.is_empty() {
-        let unfiltered_posts_vec_after_fetch_and_parse: Vec<
-            Result<
-                Result<CommonRssPostStruct, (NoItemsError, String)>,
-                (String, ProviderKind, String),
-            >,
-        >;
-        match provider_kind {
-            ProviderKind::Arxiv => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Biorxiv => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Github => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Medrxiv => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Twitter => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Reddit => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-            ProviderKind::Habr => {
-                unfiltered_posts_vec_after_fetch_and_parse =
-                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-            }
-        }
+        let unfiltered_posts_vec_after_fetch_and_parse =
+            rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
         if !unfiltered_posts_vec_after_fetch_and_parse.is_empty() {
             Ok(rss_handle_unfiltered_posts(
                 unfiltered_posts_vec_after_fetch_and_parse,
