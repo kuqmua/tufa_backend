@@ -1,7 +1,5 @@
 use reqwest::StatusCode;
 
-use crate::authorization::reddit::reddit_authorization;
-
 use crate::check_net::check_link_status_code::check_link_status_code;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
@@ -14,8 +12,6 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
-use crate::config_mods::config::CONFIG;
 
 //todo: think about naming
 type SuccessErrorTuple = (
@@ -40,7 +36,7 @@ pub fn rss_part(
     vec_of_provider_links: Vec<String>,
 ) -> Result<SuccessErrorTuple, RssPartError> {
     let status_code = check_link_status_code(ProviderKind::get_check_link(provider_kind))?;
-    if StatusCode::is_success(&status_code) {
+    if !StatusCode::is_success(&status_code) {
         return Err(RssPartError::StatusCode(status_code));
     }
     let links_temp_naming: Vec<String> = vec_of_provider_links;
@@ -73,34 +69,8 @@ pub fn rss_part(
                     rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
             }
             ProviderKind::Reddit => {
-                //what should i do with authorization?
-                let is_reddit_authorized = reddit_authorization::reddit_authorization(
-                    &CONFIG.reddit_authorization.reddit_user_agent,
-                    &CONFIG.reddit_authorization.reddit_client_id,
-                    &CONFIG.reddit_authorization.reddit_client_secret,
-                    &CONFIG.reddit_authorization.reddit_username,
-                    &CONFIG.reddit_authorization.reddit_password,
-                );
-                if is_reddit_authorized {
-                    print_colorful_message(
-                        Some(&provider_kind),
-                        PrintType::Success,
-                        file!().to_string(),
-                        line!().to_string(),
-                        "success reddit authorization".to_string(),
-                    );
-                    unfiltered_posts_vec_after_fetch_and_parse =
-                        rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-                } else {
-                    unfiltered_posts_vec_after_fetch_and_parse = Vec::new(); //rethink this
-                    print_colorful_message(
-                                Some(&provider_kind),
-                                PrintType::Error,
-                                file!().to_string(),
-                                line!().to_string(),
-                                "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),
-                            );
-                }
+                unfiltered_posts_vec_after_fetch_and_parse =
+                    rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
             }
             ProviderKind::Habr => {
                 unfiltered_posts_vec_after_fetch_and_parse =

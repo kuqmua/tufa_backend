@@ -1,8 +1,3 @@
-mod authorization {
-    pub mod reddit {
-        pub mod reddit_authorization;
-    }
-}
 mod check_net {
     pub mod check_link_status_code;
     pub mod check_net_error_enum;
