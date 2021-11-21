@@ -22,6 +22,14 @@ impl From<reqwest::Error> for RssPartError {
         RssPartError::ReqwestError(e)
     }
 }
+impl Clone for RssPartError {
+    fn clone(&self) -> RssPartError {
+        match self {
+            Self::ReqwestError(e) => RssPartError::ReqwestError(reqwest::Error::from(*e)), //i dont think its correct implementation
+            Self::StatusCode(status_code) => RssPartError::StatusCode(status_code.clone()),
+        }
+    }
+}
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_part(
