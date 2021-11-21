@@ -20,49 +20,52 @@ pub fn providers_new_posts_check(
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
     let result = rss_part(provider_kind, vec_of_provider_links);
-    if let Ok((vec_common_rss_post_structs, vec_post_error_variants)) = result {
-        //maybe do it in parrallel? success and error posts
-        //todo: try to lock few times
-        if !vec_common_rss_post_structs.is_empty() {
-            //must check on empty coz lock it for nothing is bad
-            match posts_handle.lock() {
-                Ok(mut posts_handle_locked) => {
-                    for post in vec_common_rss_post_structs {
-                        posts_handle_locked.push(post);
+    match result {
+        Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+            //maybe do it in parrallel? success and error posts
+            //todo: try to lock few times
+            if !vec_common_rss_post_structs.is_empty() {
+                //must check on empty coz lock it for nothing is bad
+                match posts_handle.lock() {
+                    Ok(mut posts_handle_locked) => {
+                        for post in vec_common_rss_post_structs {
+                            posts_handle_locked.push(post);
+                        }
+                    }
+                    Err(e) => {
+                        print_colorful_message(
+                            None,
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("posts_handle.lock() (success_posts) error: {:#?}", e),
+                        );
                     }
                 }
-                Err(e) => {
-                    print_colorful_message(
-                        None,
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!("posts_handle.lock() (success_posts) error: {:#?}", e),
-                    );
+            }
+            if !vec_post_error_variants.is_empty() {
+                //must check on empty coz lock it for nothing is bad
+                match error_posts_handle.lock() {
+                    Ok(mut error_posts_handle_locked) => {
+                        for error_post in vec_post_error_variants {
+                            error_posts_handle_locked.push(error_post);
+                        }
+                    }
+                    Err(e) => {
+                        print_colorful_message(
+                            None,
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!(
+                                "error_posts_handle.lock() (unsuccess_posts_posts) error: {:#?}",
+                                e
+                            ),
+                        );
+                    }
                 }
             }
         }
-        if !vec_post_error_variants.is_empty() {
-            //must check on empty coz lock it for nothing is bad
-            match error_posts_handle.lock() {
-                Ok(mut error_posts_handle_locked) => {
-                    for error_post in vec_post_error_variants {
-                        error_posts_handle_locked.push(error_post);
-                    }
-                }
-                Err(e) => {
-                    print_colorful_message(
-                        None,
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!(
-                            "error_posts_handle.lock() (unsuccess_posts_posts) error: {:#?}",
-                            e
-                        ),
-                    );
-                }
-            }
-        }
+        Err(e) => {}
     }
 }
