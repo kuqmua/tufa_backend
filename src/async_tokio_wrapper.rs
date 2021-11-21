@@ -40,6 +40,30 @@ use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 //     }
 // }
 
+// use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+// use reqwest::StatusCode;
+// #[derive(Debug)]
+// pub enum PostErrorVariant {
+//     //todo: think about this naming
+//     NoItems {
+//         link: String,
+//         no_items_error: NoItemsError,
+//         provider_kind: ProviderKind,
+//     },
+//     RssFetchAndParseProviderDataError {
+//         link: String,
+//         provider_kind: ProviderKind,
+//         error: RssFetchLinkError,
+//     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
+// }
+
+// #[derive(Debug)]
+// pub enum RssPartError {
+//     ReqwestError(reqwest::Error),
+//     StatusCode(StatusCode),
+// }
+//TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
+
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
