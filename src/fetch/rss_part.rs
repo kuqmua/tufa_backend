@@ -108,10 +108,10 @@ pub fn rss_part(
             }
         }
         if !unfiltered_posts_vec_after_fetch_and_parse.is_empty() {
-            return Ok(rss_handle_unfiltered_posts(
+            Ok(rss_handle_unfiltered_posts(
                 unfiltered_posts_vec_after_fetch_and_parse,
                 provider_kind,
-            ));
+            ))
         } else {
             print_colorful_message(
                 Some(&provider_kind),
@@ -123,7 +123,7 @@ pub fn rss_part(
                     provider_kind
                 ),
             );
-            return Ok((None, None));
+            Ok((None, None))
         }
     } else {
         print_colorful_message(
@@ -133,6 +133,6 @@ pub fn rss_part(
             line!().to_string(),
             format!("links_temp_naming is empty for{:#?}", provider_kind),
         );
-        return Ok((None, None));
+        Ok((None, None))
     }
 }
