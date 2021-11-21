@@ -9,9 +9,6 @@ use crate::fetch::rss_handle_unfiltered_posts::rss_handle_unfiltered_posts;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
 //todo: think about naming
 type SuccessErrorTuple = (
     Option<Vec<CommonRssPostStruct>>,
@@ -38,36 +35,8 @@ pub fn rss_part(
     if !StatusCode::is_success(&status_code) {
         return Err(RssPartError::StatusCode(status_code));
     }
-    let links_temp_naming: Vec<String> = vec_of_provider_links;
-    if !links_temp_naming.is_empty() {
-        let unfiltered_posts_vec_after_fetch_and_parse =
-            rss_fetch_and_parse_provider_data(links_temp_naming, provider_kind);
-        if !unfiltered_posts_vec_after_fetch_and_parse.is_empty() {
-            Ok(rss_handle_unfiltered_posts(
-                unfiltered_posts_vec_after_fetch_and_parse,
-                provider_kind,
-            ))
-        } else {
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                format!(
-                    "unfiltered_posts_vec_after_fetch_and_parse is empty for{:#?}",
-                    provider_kind
-                ),
-            );
-            Ok((None, None))
-        }
-    } else {
-        print_colorful_message(
-            Some(&provider_kind),
-            PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
-            format!("links_temp_naming is empty for{:#?}", provider_kind),
-        );
-        Ok((None, None))
-    }
+    Ok(rss_handle_unfiltered_posts(
+        rss_fetch_and_parse_provider_data(vec_of_provider_links, provider_kind),
+        provider_kind,
+    ))
 }
