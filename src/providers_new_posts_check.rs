@@ -1,23 +1,29 @@
-use crate::fetch::rss_part::rss_part;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
+use crate::fetch::rss_part::{rss_part, RssPartError};
 
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+// use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-type ArcMutexErrorPostsHandle = Arc<Mutex<Vec<PostErrorVariant>>>;
+#[derive(Debug, Clone)]
+pub enum NewPostsCheckError {
+    PostErrorVariant(PostErrorVariant),
+    RssPartError(RssPartError),
+}
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn providers_new_posts_check(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
     posts_handle: Arc<Mutex<Vec<CommonRssPostStruct>>>,
-    error_posts_handle: ArcMutexErrorPostsHandle,
+    error_posts_handle: Arc<Mutex<Vec<NewPostsCheckError>>>,
 ) {
     let result = rss_part(provider_kind, vec_of_provider_links);
     match result.1 {
@@ -47,8 +53,9 @@ pub fn providers_new_posts_check(
                 //must check on empty coz lock it for nothing is bad
                 match error_posts_handle.lock() {
                     Ok(mut error_posts_handle_locked) => {
-                        for error_post in vec_post_error_variants {
-                            error_posts_handle_locked.push(error_post);
+                        for post_error_variant in vec_post_error_variants {
+                            error_posts_handle_locked
+                                .push(NewPostsCheckError::PostErrorVariant(post_error_variant))
                         }
                     }
                     Err(e) => {
@@ -66,6 +73,8 @@ pub fn providers_new_posts_check(
                 }
             }
         }
-        Err(e) => {}
+        Err(e) => {
+            //todo
+        }
     }
 }
