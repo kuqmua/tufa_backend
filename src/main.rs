@@ -15,7 +15,6 @@ mod fetch {
     pub mod rss_fetch_link;
     pub mod rss_filter_fetched_and_parsed_posts;
     pub mod rss_handle_error_status_code;
-    pub mod rss_handle_unfiltered_posts;
     pub mod rss_metainfo_fetch_structures;
     pub mod rss_parse_string_into_struct;
     pub mod rss_part;

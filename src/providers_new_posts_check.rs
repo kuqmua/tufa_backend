@@ -20,14 +20,15 @@ pub fn providers_new_posts_check(
     error_posts_handle: ArcMutexErrorPostsHandle,
 ) {
     let result = rss_part(provider_kind, vec_of_provider_links);
-    if let Ok(enum_success_unsuccess_option_posts) = result {
+    if let Ok((vec_common_rss_post_structs, vec_post_error_variants)) = result {
         //maybe do it in parrallel? success and error posts
         //todo: try to lock few times
-        if let Some(success_posts) = enum_success_unsuccess_option_posts.0 {
+        if !vec_common_rss_post_structs.is_empty() {
+            //must check on empty coz lock it for nothing is bad
             match posts_handle.lock() {
                 Ok(mut posts_handle_locked) => {
-                    for success_post in success_posts {
-                        posts_handle_locked.push(success_post);
+                    for post in vec_common_rss_post_structs {
+                        posts_handle_locked.push(post);
                     }
                 }
                 Err(e) => {
@@ -41,11 +42,12 @@ pub fn providers_new_posts_check(
                 }
             }
         }
-        if let Some(unsuccess_posts) = enum_success_unsuccess_option_posts.1 {
+        if !vec_post_error_variants.is_empty() {
+            //must check on empty coz lock it for nothing is bad
             match error_posts_handle.lock() {
                 Ok(mut error_posts_handle_locked) => {
-                    for unsuccess_post in unsuccess_posts {
-                        error_posts_handle_locked.push(unsuccess_post);
+                    for error_post in vec_post_error_variants {
+                        error_posts_handle_locked.push(error_post);
                     }
                 }
                 Err(e) => {
