@@ -14,19 +14,19 @@ type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
 #[derive(Debug)]
 pub enum RssPartError {
-    ReqwestError(reqwest::Error),
+    ReqwestError(String), //reqwest::Error
     StatusCode(StatusCode),
 }
-impl From<reqwest::Error> for RssPartError {
-    fn from(e: reqwest::Error) -> Self {
-        RssPartError::ReqwestError(e)
-    }
-}
+// impl From<reqwest::Error> for RssPartError {
+//     fn from(e: reqwest::Error) -> Self {
+//         RssPartError::ReqwestError(e)
+//     }
+// }
 impl Clone for RssPartError {
     fn clone(&self) -> RssPartError {
         match self {
-            Self::ReqwestError(e) => RssPartError::ReqwestError(reqwest::Error::from(*e)), //i dont think its correct implementation
-            Self::StatusCode(status_code) => RssPartError::StatusCode(status_code.clone()),
+            Self::ReqwestError(e) => RssPartError::ReqwestError(e.clone()), //reqwest::Error::new(*e)//i dont think its correct implementation
+            Self::StatusCode(status_code) => RssPartError::StatusCode(*status_code),
         }
     }
 }
@@ -50,6 +50,9 @@ pub fn rss_part(
                 )),
             )
         }
-        Err(e) => (provider_kind, Err(RssPartError::ReqwestError(e))),
+        Err(e) => (
+            provider_kind,
+            Err(RssPartError::ReqwestError(e.to_string())), //todo: remove to_string() later, dont know how to clone error
+        ),
     }
 }

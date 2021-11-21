@@ -88,21 +88,28 @@ pub async fn async_tokio_wrapper() {
     }
     let option_tuple = check_new_posts_threads_parts().await;
     match option_tuple {
-        Some((_posts, error_posts)) => {
-            if !error_posts.is_empty() {
-                let wrong_cases_thread = thread::spawn(move || {
-                    block_on(write_error_posts_wrapper(error_posts));
-                });
-                match wrong_cases_thread.join() {
-                    Ok(_) => {}
-                    Err(e) => {
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            format!("wrong_cases_thread.join() error: {:#?}", e),
-                        );
+        Some(vec) => {
+            if !vec.is_empty() {
+                for (provider_kind, result_vec) in vec {
+                    match result_vec {
+                        Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+                            let wrong_cases_thread = thread::spawn(move || {
+                                block_on(write_error_posts_wrapper(vec_post_error_variants));
+                            });
+                            match wrong_cases_thread.join() {
+                                Ok(_) => {}
+                                Err(e) => {
+                                    print_colorful_message(
+                                        None,
+                                        PrintType::Error,
+                                        file!().to_string(),
+                                        line!().to_string(),
+                                        format!("wrong_cases_thread.join() error: {:#?}", e),
+                                    );
+                                }
+                            }
+                        }
+                        Err(e) => {}
                     }
                 }
             }
