@@ -14,11 +14,15 @@ use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
-use crate::providers_new_posts_check::NewPostsCheckError;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_new_posts_threads_parts(
-) -> Option<(Vec<CommonRssPostStruct>, Vec<NewPostsCheckError>)> {
+pub async fn check_new_posts_threads_parts() -> Option<
+    //it must be not an option
+    Vec<(
+        ProviderKind,
+        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+    )>,
+> {
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
         match option_providers_link_parts {
@@ -32,7 +36,7 @@ pub async fn check_new_posts_threads_parts(
                     let posts_and_errors: Vec<(
                         ProviderKind,
                         Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-                    )>;
+                    )> = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
                     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
                     //check if provider_names are unique
                     for provider_kind in ProviderKind::get_enabled_providers_vec() {
@@ -139,14 +143,17 @@ pub async fn check_new_posts_threads_parts(
                     if *is_all_elelements_false {
                         None
                     } else {
-                        let posts_done: Vec<CommonRssPostStruct>;
-                        let error_posts_done: Vec<NewPostsCheckError>;
-                        match posts.lock() {
-                            Ok(ok_posts_lock) => {
-                                posts_done = ok_posts_lock.to_vec();
+                        let posts_and_errors_to_return: Vec<(
+                            ProviderKind,
+                            Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+                        )>;
+                        // let error_posts_done: Vec<PostErrorVariant>;
+                        match posts_and_errors_arc_mutex.lock() {
+                            Ok(ok_posts_and_errors) => {
+                                posts_and_errors_to_return = ok_posts_and_errors.to_vec();
                             }
                             Err(e) => {
-                                posts_done = Vec::new();
+                                posts_and_errors_to_return = Vec::new(); //todo - why we need this?
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
@@ -156,25 +163,10 @@ pub async fn check_new_posts_threads_parts(
                                 );
                             }
                         }
-                        match error_posts.lock() {
-                            Ok(ok_error_posts_lock) => {
-                                error_posts_done = ok_error_posts_lock.to_vec();
-                            }
-                            Err(e) => {
-                                error_posts_done = Vec::new();
-                                print_colorful_message(
-                                    None,
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("error_posts.lock() error: {:#?}", e),
-                                );
-                            }
-                        }
-                        if posts_done.is_empty() && error_posts_done.is_empty() {
-                            None
+                        if posts_and_errors_to_return.is_empty() {
+                            None //todo - it must be not an option
                         } else {
-                            Some((posts_done, error_posts_done))
+                            Some(posts_and_errors_to_return)
                         }
                     }
                 } else {
