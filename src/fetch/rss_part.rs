@@ -27,13 +27,23 @@ impl From<reqwest::Error> for RssPartError {
 pub fn rss_part(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
-) -> Result<SuccessErrorTuple, RssPartError> {
-    let status_code = check_link_status_code(ProviderKind::get_check_link(provider_kind))?;
-    if !StatusCode::is_success(&status_code) {
-        return Err(RssPartError::StatusCode(status_code));
+) -> (ProviderKind, Result<SuccessErrorTuple, RssPartError>) {
+    let check_link_result = check_link_status_code(ProviderKind::get_check_link(provider_kind));
+    match check_link_result {
+        Ok(status_code) => {
+            if !StatusCode::is_success(&status_code) {
+                return (provider_kind, Err(RssPartError::StatusCode(status_code)));
+            }
+            (
+                provider_kind,
+                Ok(rss_filter_fetched_and_parsed_posts(
+                    rss_fetch_and_parse_provider_data(vec_of_provider_links, provider_kind),
+                    provider_kind,
+                )),
+            )
+        }
+        Err(e) => {
+            return (provider_kind, Err(RssPartError::ReqwestError(e)));
+        }
     }
-    Ok(rss_filter_fetched_and_parsed_posts(
-        rss_fetch_and_parse_provider_data(vec_of_provider_links, provider_kind),
-        provider_kind,
-    ))
 }
