@@ -7,6 +7,8 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_part::RssPartError;
 
 use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -27,8 +29,11 @@ pub async fn check_new_posts_threads_parts(
                     let mut threads_vec_checker = Vec::<bool>::with_capacity(
                         ProviderKind::get_enabled_string_name_vec().len(),
                     );
-                    let posts = Arc::new(Mutex::new(Vec::<CommonRssPostStruct>::new()));
-                    let error_posts = Arc::new(Mutex::new(Vec::<NewPostsCheckError>::new()));
+                    let posts_and_errors: Vec<(
+                        ProviderKind,
+                        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+                    )>;
+                    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
                     //check if provider_names are unique
                     for provider_kind in ProviderKind::get_enabled_providers_vec() {
                         match providers_link_parts.get(&provider_kind) {
@@ -55,8 +60,8 @@ pub async fn check_new_posts_threads_parts(
                                             ),
                                         );
                                     };
-                                    let posts_handle = Arc::clone(&posts);
-                                    let error_posts_handle = Arc::clone(&error_posts);
+                                    let posts_and_errors_handle =
+                                        Arc::clone(&posts_and_errors_arc_mutex);
                                     let vec_of_provider_links = ProviderKind::get_provider_links(
                                         provider_kind,
                                         link_parts.to_vec(),
@@ -79,8 +84,7 @@ pub async fn check_new_posts_threads_parts(
                                             providers_new_posts_check(
                                                 provider_kind,
                                                 vec_of_provider_links,
-                                                posts_handle,
-                                                error_posts_handle,
+                                                posts_and_errors_handle,
                                             );
                                         }));
                                     }
