@@ -4,3 +4,9 @@ pub enum Resource {
     Mongodb,
     PostgreSql,
 }
+
+#[derive(Debug)]
+pub enum ResourceError {
+    NoLinkParts(Resource),
+    Other,
+}

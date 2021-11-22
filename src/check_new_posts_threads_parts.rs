@@ -16,13 +16,17 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers_new_posts_check::providers_new_posts_check;
 
 use crate::helpers::resource::Resource;
+use crate::helpers::resource::ResourceError;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_new_posts_threads_parts() -> Vec<(
+pub async fn check_new_posts_threads_parts() -> 
+Result<Vec<(
     ProviderKind,
     Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-)> {
-    let providers_link_parts = get_providers_link_parts_wrapper(&Resource::Mongodb {}).await;
+)>, ResourceError> 
+{
+    let resource = Resource::Mongodb;
+    let providers_link_parts = get_providers_link_parts_wrapper(&resource).await;//Resource hardcode warning
     if providers_link_parts.is_empty() {
         print_colorful_message(
             None,
@@ -31,7 +35,7 @@ pub async fn check_new_posts_threads_parts() -> Vec<(
             line!().to_string(),
             "providers_link_parts is empty".to_string(),
         );
-        return Vec::new();
+        return Err(ResourceError::NoLinkParts(resource));
     }
     let mut threads_vec: Vec<JoinHandle<()>> =
         Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
@@ -141,7 +145,7 @@ pub async fn check_new_posts_threads_parts() -> Vec<(
     }
     let is_all_elelements_false = &threads_vec_checker.iter().all(|&item| !item);
     if *is_all_elelements_false {
-        Vec::new()
+        Ok(Vec::new())
     } else {
         let posts_and_errors_to_return: Vec<(
             ProviderKind,
@@ -164,9 +168,9 @@ pub async fn check_new_posts_threads_parts() -> Vec<(
             }
         }
         if posts_and_errors_to_return.is_empty() {
-            Vec::new() //todo - it must be not an option
+            Ok(Vec::new()) //todo - it must be not an option
         } else {
-            posts_and_errors_to_return
+            Ok(posts_and_errors_to_return)
         }
     }
 }
