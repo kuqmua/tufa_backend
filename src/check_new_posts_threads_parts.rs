@@ -15,6 +15,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
+use crate::helpers::resource::Resource;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn check_new_posts_threads_parts() -> 
     //it must be not an option
@@ -23,173 +25,159 @@ pub async fn check_new_posts_threads_parts() ->
         Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
     )> {
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
-        let option_providers_link_parts = get_providers_link_parts_wrapper().await;
-        match option_providers_link_parts {
-            Some(providers_link_parts) => {
-                if !providers_link_parts.is_empty() {
-                    let mut threads_vec: Vec<JoinHandle<()>> =
-                        Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
-                    let mut threads_vec_checker = Vec::<bool>::with_capacity(
-                        ProviderKind::get_enabled_string_name_vec().len(),
-                    );
-                    let posts_and_errors: Vec<(
-                        ProviderKind,
-                        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-                    )> = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
-                    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
-                    //check if provider_names are unique
-                    for provider_kind in ProviderKind::get_enabled_providers_vec() {
-                        match providers_link_parts.get(&provider_kind) {
-                            Some(link_parts) => {
-                                if link_parts.is_empty() {
-                                    print_colorful_message(
-                                        Some(&provider_kind),
-                                        PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
-                                        "link_parts.is_empty".to_string(),
-                                    );
-                                } else {
-                                    if ProviderKind::is_prints_enabled(provider_kind) {
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::Info,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            format!(
-                                                "{:#?} elements in {:#?} HashMap",
-                                                link_parts.len(),
-                                                provider_kind
-                                            ),
-                                        );
-                                    };
-                                    let posts_and_errors_handle =
-                                        Arc::clone(&posts_and_errors_arc_mutex);
-                                    let vec_of_provider_links = ProviderKind::get_provider_links(
-                                        provider_kind,
-                                        link_parts.to_vec(),
-                                    );
-                                    threads_vec_checker.push(true);
-                                    if vec_of_provider_links.is_empty() {
-                                        print_colorful_message(
-                                            Some(&provider_kind),
-                                            PrintType::WarningLow,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            format!(
-                                                "vec_of_provider_links.is_empty - {} for {:#?}",
-                                                ProviderKind::get_string_name(provider_kind),
-                                                provider_kind
-                                            ),
-                                        );
-                                    } else {
-                                        threads_vec.push(thread::spawn(move || {
-                                            providers_new_posts_check(
-                                                provider_kind,
-                                                vec_of_provider_links,
-                                                posts_and_errors_handle,
-                                            );
-                                        }));
-                                    }
-                                }
-                            }
-                            None => {
+        let providers_link_parts = get_providers_link_parts_wrapper(&Resource::Mongodb {}).await;
+        if !providers_link_parts.is_empty() {
+            let mut threads_vec: Vec<JoinHandle<()>> =
+                Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
+            let mut threads_vec_checker = Vec::<bool>::with_capacity(
+                ProviderKind::get_enabled_string_name_vec().len(),
+            );
+            let posts_and_errors: Vec<(
+                ProviderKind,
+                Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+            )> = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
+            let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
+            //check if provider_names are unique
+            for provider_kind in ProviderKind::get_enabled_providers_vec() {
+                match providers_link_parts.get(&provider_kind) {
+                    Some(link_parts) => {
+                        if link_parts.is_empty() {
+                            print_colorful_message(
+                                Some(&provider_kind),
+                                PrintType::Error,
+                                file!().to_string(),
+                                line!().to_string(),
+                                "link_parts.is_empty".to_string(),
+                            );
+                        } else {
+                            if ProviderKind::is_prints_enabled(provider_kind) {
                                 print_colorful_message(
                                     Some(&provider_kind),
-                                    PrintType::Error,
+                                    PrintType::Info,
                                     file!().to_string(),
                                     line!().to_string(),
                                     format!(
-                                        "no such provider_name - {} for {:#?}",
+                                        "{:#?} elements in {:#?} HashMap",
+                                        link_parts.len(),
+                                        provider_kind
+                                    ),
+                                );
+                            };
+                            let posts_and_errors_handle =
+                                Arc::clone(&posts_and_errors_arc_mutex);
+                            let vec_of_provider_links = ProviderKind::get_provider_links(
+                                provider_kind,
+                                link_parts.to_vec(),
+                            );
+                            threads_vec_checker.push(true);
+                            if vec_of_provider_links.is_empty() {
+                                print_colorful_message(
+                                    Some(&provider_kind),
+                                    PrintType::WarningLow,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!(
+                                        "vec_of_provider_links.is_empty - {} for {:#?}",
                                         ProviderKind::get_string_name(provider_kind),
                                         provider_kind
                                     ),
                                 );
+                            } else {
+                                threads_vec.push(thread::spawn(move || {
+                                    providers_new_posts_check(
+                                        provider_kind,
+                                        vec_of_provider_links,
+                                        posts_and_errors_handle,
+                                    );
+                                }));
                             }
                         }
                     }
-                    for (index, thread_vec) in threads_vec.into_iter().enumerate() {
-                        match thread_vec.join() {
-                            Ok(_) => {}
-                            Err(e) => {
-                                print_colorful_message(
-                                    None,
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("thread_vec.join() error: {:#?}", e),
-                                );
-                                let option_element = threads_vec_checker.get_mut(index);
-                                match option_element {
-                                    Some(element) => {
-                                        *element = false;
-                                    }
-                                    None => {
-                                        print_colorful_message(
-                                            None,
-                                            PrintType::Error,
-                                            file!().to_string(),
-                                            line!().to_string(),
-                                            "threads_vec_checker.get_mut(index) is None"
-                                                .to_string(),
-                                        );
-                                    }
-                                }
-                            }
-                        }
+                    None => {
+                        print_colorful_message(
+                            Some(&provider_kind),
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!(
+                                "no such provider_name - {} for {:#?}",
+                                ProviderKind::get_string_name(provider_kind),
+                                provider_kind
+                            ),
+                        );
                     }
-                    let is_all_elelements_false = &threads_vec_checker.iter().all(|&item| !item);
-                    if *is_all_elelements_false {
-                        Vec::new()
-                    } else {
-                        let posts_and_errors_to_return: Vec<(
-                            ProviderKind,
-                            Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-                        )>;
-                        // let error_posts_done: Vec<PostErrorVariant>;
-                        match posts_and_errors_arc_mutex.lock() {
-                            Ok(mut ok_posts_and_errors) => {
-                                posts_and_errors_to_return =
-                                    ok_posts_and_errors.drain(..).collect();
-                            }
-                            Err(e) => {
-                                posts_and_errors_to_return = Vec::new(); //todo - why we need this?
-                                print_colorful_message(
-                                    None,
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("posts.lock() error: {:#?}", e),
-                                );
-                            }
-                        }
-                        if posts_and_errors_to_return.is_empty() {
-                            Vec::new() //todo - it must be not an option
-                        } else {
-                            posts_and_errors_to_return
-                        }
-                    }
-                } else {
-                    print_colorful_message(
-                        None,
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        "providers_link_parts is empty".to_string(),
-                    );
-                    Vec::new()
                 }
             }
-            None => {
-                print_colorful_message(
-                    None,
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    "there arent provider link parts ".to_string(),
-                );
-                Vec::new()
+            for (index, thread_vec) in threads_vec.into_iter().enumerate() {
+                match thread_vec.join() {
+                    Ok(_) => {}
+                    Err(e) => {
+                        print_colorful_message(
+                            None,
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("thread_vec.join() error: {:#?}", e),
+                        );
+                        let option_element = threads_vec_checker.get_mut(index);
+                        match option_element {
+                            Some(element) => {
+                                *element = false;
+                            }
+                            None => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    "threads_vec_checker.get_mut(index) is None"
+                                        .to_string(),
+                                );
+                            }
+                        }
+                    }
+                }
             }
+            let is_all_elelements_false = &threads_vec_checker.iter().all(|&item| !item);
+            if *is_all_elelements_false {
+                Vec::new()
+            } else {
+                let posts_and_errors_to_return: Vec<(
+                    ProviderKind,
+                    Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+                )>;
+                // let error_posts_done: Vec<PostErrorVariant>;
+                match posts_and_errors_arc_mutex.lock() {
+                    Ok(mut ok_posts_and_errors) => {
+                        posts_and_errors_to_return =
+                            ok_posts_and_errors.drain(..).collect();
+                    }
+                    Err(e) => {
+                        posts_and_errors_to_return = Vec::new(); //todo - why we need this?
+                        print_colorful_message(
+                            None,
+                            PrintType::Error,
+                            file!().to_string(),
+                            line!().to_string(),
+                            format!("posts.lock() error: {:#?}", e),
+                        );
+                    }
+                }
+                if posts_and_errors_to_return.is_empty() {
+                    Vec::new() //todo - it must be not an option
+                } else {
+                    posts_and_errors_to_return
+                }
+            }
+        } else {
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                "providers_link_parts is empty".to_string(),
+            );
+            Vec::new()
         }
     } else {
         print_colorful_message(
