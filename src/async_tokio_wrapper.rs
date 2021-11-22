@@ -111,30 +111,32 @@ pub async fn async_tokio_wrapper() {
         }
     }
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
-        let vec = check_new_posts_threads_parts().await;
-        if !vec.is_empty() {
-            for (provider_kind, result_vec) in vec {
-                match result_vec {
-                    Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
-                        let wrong_cases_thread = thread::spawn(move || {
-                            block_on(write_error_posts_wrapper(vec_post_error_variants));
-                        });
-                        match wrong_cases_thread.join() {
-                            Ok(_) => {}
-                            Err(e) => {
-                                print_colorful_message(
-                                    None,
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("wrong_cases_thread.join() error: {:#?}", e),
-                                );
-                            }
-                        }
-                    }
-                    Err(e) => {}
-                }
-            }
-        }
+        let _vec = check_new_posts_threads_parts().await;
+        //todo: conversion function before write_error_posts_wrapper
+        //commented before conversion function implementation
+        // if !vec.is_empty() {
+        //     for (provider_kind, result_vec) in vec {
+        //         match result_vec {
+        //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+        //                 let wrong_cases_thread = thread::spawn(move || {
+        //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
+        //                 });
+        //                 match wrong_cases_thread.join() {
+        //                     Ok(_) => {}
+        //                     Err(e) => {
+        //                         print_colorful_message(
+        //                             None,
+        //                             PrintType::Error,
+        //                             file!().to_string(),
+        //                             line!().to_string(),
+        //                             format!("wrong_cases_thread.join() error: {:#?}", e),
+        //                         );
+        //                     }
+        //                 }
+        //             }
+        //             Err(e) => {}
+        //         }
+        //     }
+        // }
     }
 }
