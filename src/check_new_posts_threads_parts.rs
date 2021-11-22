@@ -16,13 +16,12 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers_new_posts_check::providers_new_posts_check;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_new_posts_threads_parts() -> Option<
+pub async fn check_new_posts_threads_parts() -> 
     //it must be not an option
     Vec<(
         ProviderKind,
         Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-    )>,
-> {
+    )> {
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let option_providers_link_parts = get_providers_link_parts_wrapper().await;
         match option_providers_link_parts {
@@ -141,7 +140,7 @@ pub async fn check_new_posts_threads_parts() -> Option<
                     }
                     let is_all_elelements_false = &threads_vec_checker.iter().all(|&item| !item);
                     if *is_all_elelements_false {
-                        None
+                        Vec::new()
                     } else {
                         let posts_and_errors_to_return: Vec<(
                             ProviderKind,
@@ -165,9 +164,9 @@ pub async fn check_new_posts_threads_parts() -> Option<
                             }
                         }
                         if posts_and_errors_to_return.is_empty() {
-                            None //todo - it must be not an option
+                            Vec::new() //todo - it must be not an option
                         } else {
-                            Some(posts_and_errors_to_return)
+                            posts_and_errors_to_return
                         }
                     }
                 } else {
@@ -178,7 +177,7 @@ pub async fn check_new_posts_threads_parts() -> Option<
                         line!().to_string(),
                         "providers_link_parts is empty".to_string(),
                     );
-                    None
+                    Vec::new()
                 }
             }
             None => {
@@ -189,7 +188,7 @@ pub async fn check_new_posts_threads_parts() -> Option<
                     line!().to_string(),
                     "there arent provider link parts ".to_string(),
                 );
-                None
+                Vec::new()
             }
         }
     } else {
@@ -200,6 +199,6 @@ pub async fn check_new_posts_threads_parts() -> Option<
             line!().to_string(),
             "CONFIG.params.vec_of_provider_names is empty".to_string(),
         );
-        None
+        Vec::new()
     }
 }
