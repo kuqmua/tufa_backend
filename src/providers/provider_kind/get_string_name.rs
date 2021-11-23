@@ -1,12 +1,12 @@
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
-use crate::constants::project_constants::HABR_NAME_TO_CHECK;
-use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
-use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
-use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
+const ARXIV_NAME_TO_CHECK: &str = "arxiv";
+const BIORXIV_NAME_TO_CHECK: &str = "biorxiv";
+const GITHUB_NAME_TO_CHECK: &str = "github";
+const HABR_NAME_TO_CHECK: &str = "habr";
+const MEDRXIV_NAME_TO_CHECK: &str = "medrxiv";
+const REDDIT_NAME_TO_CHECK: &str = "reddit";
+const TWITTER_NAME_TO_CHECK: &str = "twitter";
 
 impl ProviderKind {
     pub fn get_string_name(provider_kind: ProviderKind) -> &'static str {

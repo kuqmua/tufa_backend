@@ -4,14 +4,6 @@ pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
 // pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
-pub const ARXIV_NAME_TO_CHECK: &str = "arxiv";
-pub const BIORXIV_NAME_TO_CHECK: &str = "biorxiv";
-pub const GITHUB_NAME_TO_CHECK: &str = "github";
-pub const HABR_NAME_TO_CHECK: &str = "habr";
-pub const MEDRXIV_NAME_TO_CHECK: &str = "medrxiv";
-pub const REDDIT_NAME_TO_CHECK: &str = "reddit";
-pub const TWITTER_NAME_TO_CHECK: &str = "twitter";
-
 pub const ARXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
 pub const BIORXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
 pub const GITHUB_PROVIDER_ITEM_HANDLE: &str = "</entry>";
