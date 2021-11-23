@@ -107,17 +107,6 @@ pub enum ProviderKind {
 }
 
 impl ProviderKind {
-    pub fn get_string_name(provider_kind: ProviderKind) -> &'static str {
-        match provider_kind {
-            ProviderKind::Arxiv => ARXIV_NAME_TO_CHECK,
-            ProviderKind::Biorxiv => BIORXIV_NAME_TO_CHECK,
-            ProviderKind::Github => GITHUB_NAME_TO_CHECK,
-            ProviderKind::Habr => HABR_NAME_TO_CHECK,
-            ProviderKind::Medrxiv => MEDRXIV_NAME_TO_CHECK,
-            ProviderKind::Reddit => REDDIT_NAME_TO_CHECK,
-            ProviderKind::Twitter => TWITTER_NAME_TO_CHECK,
-        }
-    }
     //todo: collection logs or what? there are many collections...
     pub fn get_mongo_collection_name(provider_kind: ProviderKind) -> String {
         let name = ProviderKind::get_string_name(provider_kind);
@@ -241,7 +230,7 @@ impl ProviderKind {
     pub fn stringify(provider_kind: ProviderKind) -> &'static str {
         match provider_kind {
             ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Biorxiv => stringify!(ProviderKind::BIorxiv),
+            ProviderKind::Biorxiv => stringify!(ProviderKind::Biorxiv),
             ProviderKind::Github => stringify!(ProviderKind::Github),
             ProviderKind::Habr => stringify!(ProviderKind::Habr),
             ProviderKind::Medrxiv => stringify!(ProviderKind::Medrxiv),

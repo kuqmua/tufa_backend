@@ -136,6 +136,9 @@ mod providers {
         pub mod get_twitter_provider_name;
         pub mod providers_init_json_schema;
     }
+    pub mod provider_kind {
+        pub mod get_string_name;
+    }
     pub mod provider_kind_enum;
 }
 #[cfg(test)]
