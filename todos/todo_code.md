@@ -389,3 +389,8 @@ rename it
 if error size > then ok return type then allocate error on heap, otherwise actual return type would be more then needed
 maybe write some tests or linter or lib or rustanalyzer flag to check it
 <br/>
+
+### -------------------
+Rename all functions return type to mean something.
+type = ....
+<br/>
