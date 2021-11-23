@@ -399,3 +399,8 @@ type = ....
 wrap blocking diesel function into spawn blocking under tokio runtime
 (rustacean station - tokio ecosystem with alice ryhl) 24:30
 <br/>
+ 
+### -------------------
+tokio main has configuration to configure how many threads to use (default - one thread)
+change it
+<br/>
