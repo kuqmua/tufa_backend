@@ -394,3 +394,8 @@ maybe write some tests or linter or lib or rustanalyzer flag to check it
 Rename all functions return type to mean something.
 type = ....
 <br/>
+
+### -------------------
+wrap blocking diesel function into spawn blocking under tokio runtime
+(rustacean station - tokio ecosystem with alice ryhl) 24:30
+<br/>
