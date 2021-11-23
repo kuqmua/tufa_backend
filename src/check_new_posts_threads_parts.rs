@@ -11,12 +11,10 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_part::RssPartError;
 
-use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
-use crate::helpers::resource::Resource;
 use crate::helpers::resource::ResourceError;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
