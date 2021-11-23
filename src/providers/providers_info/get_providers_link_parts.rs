@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::helpers::resource::Resource;
 
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::{MongoGetProvidersLinkPartsProcessedResult, ProviderKind};
 
 // #[derive(Debug)]
 // pub enum LocalResourceError {
@@ -29,7 +29,16 @@ pub async fn get_providers_link_parts_as_hashmap(
             success_hashmap
         }
         // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
-        Resource::Mongodb => ProviderKind::mongo_get_providers_link_parts_processed().await,
+        Resource::Mongodb => {
+            match ProviderKind::mongo_get_providers_link_parts_processed().await {
+                MongoGetProvidersLinkPartsProcessedResult::DoubleHashmap(
+                    (success_hashmap, errors_hashmap)
+                ) => {
+                    success_hashmap
+                },
+                MongoGetProvidersLinkPartsProcessedResult::MongoConnection(e) => todo!(),
+            }
+        },
         //     Result<
         //     HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
         //     mongodb::error::Error,

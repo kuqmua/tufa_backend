@@ -78,6 +78,12 @@ pub enum GetProvidersJsonLocalDataProcessedError {
     StdIoError(std::io::Error),
 }
 
+#[derive(Debug)]
+pub enum MongoGetProvidersLinkPartsProcessedResult {
+    DoubleHashmap((HashMap<ProviderKind, Vec<String>>, HashMap<ProviderKind, mongodb::error::Error>)),
+    MongoConnection(mongodb::error::Error),
+}
+
 #[derive(
     EnumVariantCount,
     EnumIter,
@@ -431,8 +437,8 @@ impl ProviderKind {
         let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
             ProviderKind,
             Result<Vec<String>, mongodb::error::Error>,
-        >::new(
-        )));
+        >::new()
+    ));
         let mut vec_of_tasks = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let vec_provider_kind_with_collection_names_under_arc_handle =
@@ -506,15 +512,15 @@ impl ProviderKind {
     }
     /////////////////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub async fn mongo_get_providers_link_parts_processed() -> HashMap<ProviderKind, Vec<String>> {
+    pub async fn mongo_get_providers_link_parts_processed() -> MongoGetProvidersLinkPartsProcessedResult {//HashMap<ProviderKind, Vec<String>>
         match ProviderKind::mongo_get_providers_link_parts_unprocessed().await {
-            Ok(hashmap_with_possible_errors) => {
-                let mut hashmap_without_possible_errors =
-                    HashMap::with_capacity(hashmap_with_possible_errors.len());
-                for (provider_kind, result_vec) in hashmap_with_possible_errors {
+            Ok(unprocessed_hashmap) => {
+                let mut first_return_handle: HashMap<ProviderKind, Vec<String>> = HashMap::with_capacity(unprocessed_hashmap.len());
+                let mut second_return_handle: HashMap<ProviderKind, mongodb::error::Error> = HashMap::with_capacity(unprocessed_hashmap.len());
+                for (provider_kind, result_vec) in unprocessed_hashmap {
                     match result_vec {
                         Ok(vec) => {
-                            hashmap_without_possible_errors.insert(provider_kind, vec);
+                            first_return_handle.insert(provider_kind, vec);
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -524,13 +530,12 @@ impl ProviderKind {
                                     line!().to_string(),
                                     format!("(todo!)ProviderKind::mongo_get_providers_link_parts_processed ({:#?}), error: {:#?}", provider_kind, e),
                                 );
-                            //todo: just create Vec::new() -> bad solution
-                            hashmap_without_possible_errors
-                                .insert(provider_kind, Vec::<String>::new());
+                                second_return_handle
+                                .insert(provider_kind, e);
                         }
                     }
                 }
-                hashmap_without_possible_errors
+                MongoGetProvidersLinkPartsProcessedResult::DoubleHashmap((first_return_handle, second_return_handle))
             }
             Err(e) => {
                 print_colorful_message(
@@ -543,8 +548,7 @@ impl ProviderKind {
                         e
                     ),
                 );
-                //todo: just create Vec::new() -> bad solution
-                ProviderKind::generate_hashmap_with_empty_string_vecs_for_enabled_providers()
+                MongoGetProvidersLinkPartsProcessedResult::MongoConnection(e)
             }
         }
     }
