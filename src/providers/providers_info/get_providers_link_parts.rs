@@ -30,19 +30,9 @@ pub async fn get_providers_link_parts_as_hashmap(
         }
         // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
         Resource::Mongodb => {
-            match ProviderKind::mongo_get_providers_link_parts_processed().await {
-                MongoGetProvidersLinkPartsProcessedResult::DoubleHashmap(
-                    (success_hashmap, errors_hashmap)
-                ) => {
-                    success_hashmap
-                },
-                MongoGetProvidersLinkPartsProcessedResult::MongoConnection(e) => todo!(),
-            }
+            let (success_hashmap, mongo_get_providers_link_part_processed_result) = ProviderKind::mongo_get_providers_link_parts_processed().await;
+            success_hashmap
         },
-        //     Result<
-        //     HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
-        //     mongodb::error::Error,
-        // >
         Resource::PostgreSql => {
             todo!()
         }

@@ -80,7 +80,7 @@ pub enum GetProvidersJsonLocalDataProcessedError {
 
 #[derive(Debug)]
 pub enum MongoGetProvidersLinkPartsProcessedResult {
-    DoubleHashmap((HashMap<ProviderKind, Vec<String>>, HashMap<ProviderKind, mongodb::error::Error>)),
+    MongoDocuments(HashMap<ProviderKind, mongodb::error::Error>),
     MongoConnection(mongodb::error::Error),
 }
 
@@ -512,7 +512,7 @@ impl ProviderKind {
     }
     /////////////////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub async fn mongo_get_providers_link_parts_processed() -> MongoGetProvidersLinkPartsProcessedResult {//HashMap<ProviderKind, Vec<String>>
+    pub async fn mongo_get_providers_link_parts_processed() -> (HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsProcessedResult) {//HashMap<ProviderKind, Vec<String>>
         match ProviderKind::mongo_get_providers_link_parts_unprocessed().await {
             Ok(unprocessed_hashmap) => {
                 let mut first_return_handle: HashMap<ProviderKind, Vec<String>> = HashMap::with_capacity(unprocessed_hashmap.len());
@@ -535,7 +535,7 @@ impl ProviderKind {
                         }
                     }
                 }
-                MongoGetProvidersLinkPartsProcessedResult::DoubleHashmap((first_return_handle, second_return_handle))
+                (first_return_handle, MongoGetProvidersLinkPartsProcessedResult::MongoDocuments(second_return_handle))
             }
             Err(e) => {
                 print_colorful_message(
@@ -548,7 +548,7 @@ impl ProviderKind {
                         e
                     ),
                 );
-                MongoGetProvidersLinkPartsProcessedResult::MongoConnection(e)
+                (HashMap::new(), MongoGetProvidersLinkPartsProcessedResult::MongoConnection(e))
             }
         }
     }
