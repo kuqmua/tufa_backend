@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::thread;
 use std::thread::JoinHandle;
 
@@ -19,24 +20,15 @@ use crate::helpers::resource::Resource;
 use crate::helpers::resource::ResourceError;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_new_posts_threads_parts() -> 
-Result<Vec<(
-    ProviderKind,
-    Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-)>, ResourceError> 
-{
-    let resource = Resource::Mongodb;
-    let providers_link_parts = get_providers_link_parts_wrapper(&resource).await;//Resource hardcode warning
-    if providers_link_parts.is_empty() {
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
-            "providers_link_parts is empty".to_string(),
-        );
-        return Err(ResourceError::NoLinkParts(resource));
-    }
+pub async fn check_new_posts_threads_parts(
+    providers_link_parts: HashMap<ProviderKind, Vec<String>>,
+) -> Result<
+    Vec<(
+        ProviderKind,
+        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+    )>,
+    ResourceError,
+> {
     let mut threads_vec: Vec<JoinHandle<()>> =
         Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
     let mut threads_vec_checker =

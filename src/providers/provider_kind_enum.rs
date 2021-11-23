@@ -72,6 +72,12 @@ impl From<std::io::Error> for CleanLogsDirError {
     }
 }
 
+#[derive(Debug)]
+pub enum GetProvidersJsonLocalDataProcessedError {
+    SerdeJsonErrors(Vec<serde_json::Error>),
+    StdIoError(std::io::Error),
+}
+
 #[derive(
     EnumVariantCount,
     EnumIter,
@@ -414,9 +420,7 @@ impl ProviderKind {
         Ok(None)
     }
     #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
-    pub async fn mongo_get_providers_link_parts_unprocessed(
-        provider_kind_vec: Vec<ProviderKind>,
-    ) -> Result<
+    pub async fn mongo_get_providers_link_parts_unprocessed() -> Result<
         HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
         mongodb::error::Error,
     > {
@@ -429,8 +433,8 @@ impl ProviderKind {
             Result<Vec<String>, mongodb::error::Error>,
         >::new(
         )));
-        let mut vec_of_tasks = Vec::with_capacity(provider_kind_vec.len());
-        for provider_kind in provider_kind_vec {
+        let mut vec_of_tasks = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+        for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let vec_provider_kind_with_collection_names_under_arc_handle =
                 Arc::clone(&vec_provider_kind_with_collection_names_under_arc);
             let collection_name = ProviderKind::get_mongo_collection_name(provider_kind);
@@ -500,18 +504,10 @@ impl ProviderKind {
                 .clone();
         Ok(vec_provider_kind_with_collection_names)
     }
+    /////////////////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn mongo_get_providers_link_parts_processed(
-        unprocessed_result: Result<
-            HashMap<
-                ProviderKind, 
-                Result<
-                    Vec<String>, 
-                    mongodb::error::Error>>,
-            mongodb::error::Error,
-        >,
-    ) -> HashMap<ProviderKind, Vec<String>> {
-        match unprocessed_result {
+    pub async fn mongo_get_providers_link_parts_processed() -> HashMap<ProviderKind, Vec<String>> {
+        match ProviderKind::mongo_get_providers_link_parts_unprocessed().await {
             Ok(hashmap_with_possible_errors) => {
                 let mut hashmap_without_possible_errors =
                     HashMap::with_capacity(hashmap_with_possible_errors.len());
@@ -552,6 +548,7 @@ impl ProviderKind {
             }
         }
     }
+    //////////
     pub fn generate_hashmap_with_empty_string_vecs_for_enabled_providers(
     ) -> HashMap<ProviderKind, Vec<String>> {
         let mut hashmap_with_empty_vecs = HashMap::<ProviderKind, Vec<String>>::with_capacity(
@@ -686,7 +683,8 @@ impl ProviderKind {
         > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
         //todo: do it async in parallel
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
-            let result_of_reading_to_string = fs::read_to_string(&ProviderKind::get_init_local_data_file_path(provider_kind));
+            let result_of_reading_to_string =
+                fs::read_to_string(&ProviderKind::get_init_local_data_file_path(provider_kind));
             match result_of_reading_to_string {
                 Ok(file_content) => {
                     let file_content_from_str_result: Result<
@@ -715,27 +713,26 @@ impl ProviderKind {
         }
         vec_of_link_parts_hashmap
     }
+    ////////////////////
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn get_providers_json_local_data_processed(
-        unprocessed_hashmap: HashMap<
-            ProviderKind,
-            Result<
-                Result<
-                    Vec<String>, 
-                    serde_json::Error //serde_json::from_str(&file_content)
-                >, 
-                std::io::Error
-            >,
-        >,
-    ) -> HashMap<ProviderKind, Vec<String>> {
-        let mut return_handle: HashMap<ProviderKind, Vec<String>> =
+    pub fn get_providers_json_local_data_processed() -> (
+        HashMap<ProviderKind, Vec<String>>,
+        HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>,
+    ) {
+        let unprocessed_hashmap = ProviderKind::get_providers_json_local_data_unprocessed();
+        let mut first_return_handle: HashMap<ProviderKind, Vec<String>> =
             HashMap::with_capacity(unprocessed_hashmap.len());
+        let mut second_return_handle: HashMap<
+            ProviderKind,
+            GetProvidersJsonLocalDataProcessedError,
+        > = HashMap::with_capacity(unprocessed_hashmap.len());
         for (provider_kind, result) in unprocessed_hashmap {
             match result {
                 Ok(second_result) => {
+                    let mut serde_json_error_vec = Vec::<serde_json::Error>::new();
                     match second_result {
                         Ok(vec) => {
-                            return_handle.insert(provider_kind, vec);
+                            first_return_handle.insert(provider_kind, vec);
                         }
                         Err(e) => {
                             print_colorful_message(
@@ -745,9 +742,16 @@ impl ProviderKind {
                                     line!().to_string(),
                                     format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
                                 );
-                            //todo: just create Vec::new() -> bad solution
-                            return_handle.insert(provider_kind, Vec::<String>::new());
+                            serde_json_error_vec.push(e);
                         }
+                    }
+                    if !serde_json_error_vec.is_empty() {
+                        second_return_handle.insert(
+                            provider_kind,
+                            GetProvidersJsonLocalDataProcessedError::SerdeJsonErrors(
+                                serde_json_error_vec,
+                            ),
+                        );
                     }
                 }
                 Err(e) => {
@@ -758,13 +762,16 @@ impl ProviderKind {
                                     line!().to_string(),
                                     format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
                                 );
-                    //todo: just create Vec::new() -> bad solution
-                    return_handle.insert(provider_kind, Vec::<String>::new());
+                    second_return_handle.insert(
+                        provider_kind,
+                        GetProvidersJsonLocalDataProcessedError::StdIoError(e),
+                    );
                 }
             }
         }
-        return_handle
+        (first_return_handle, second_return_handle)
     }
+    /////////////////
     //todo add errors warning low warning high info and others
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn is_cleaning_warning_logs_directory_enable(provider_kind: ProviderKind) -> bool {

@@ -6,6 +6,7 @@ use futures::executor::block_on;
 
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
+use crate::helpers::resource::{Resource, ResourceError};
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
@@ -16,6 +17,7 @@ use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 use crate::postgres_integration::models::insertable::new_post::NewPost;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
+use crate::providers::get_providers_link_parts_wrapper::get_providers_link_parts_wrapper;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::write_error_posts_wrapper::write_error_posts_wrapper;
@@ -71,10 +73,9 @@ pub async fn async_tokio_wrapper() {
         .params
         .enable_initialize_mongo_with_providers_link_parts
     {
-        let vec_of_link_parts_hashmap = ProviderKind::get_providers_json_local_data_processed(
-            ProviderKind::get_providers_json_local_data_unprocessed(),
-        );
-        if !vec_of_link_parts_hashmap.is_empty() {
+        let (success_hashmap, errors_hashmap) =
+            ProviderKind::get_providers_json_local_data_processed();
+        if !success_hashmap.is_empty() {
             //todo: add check of doc already is in collection or add flag forse
             //todo add flag for provider
             let result_postgres_establish_connection =
@@ -105,13 +106,25 @@ pub async fn async_tokio_wrapper() {
             }
             let _ = mongo_insert_data(
                 &CONFIG.mongo_params.providers_db_name_handle,
-                vec_of_link_parts_hashmap,
+                success_hashmap,
             )
             .await;
         }
     }
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
-        let _vec = check_new_posts_threads_parts().await;
+        let resource = Resource::Mongodb;
+        let providers_link_parts = get_providers_link_parts_wrapper(&resource).await; //Resource hardcode warning
+        if providers_link_parts.is_empty() {
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                "providers_link_parts is empty".to_string(),
+            );
+            // return Err(ResourceError::NoLinkParts(resource));
+        }
+        let _vec = check_new_posts_threads_parts(providers_link_parts).await;
         //todo: conversion function before write_error_posts_wrapper
         //commented before conversion function implementation
         // if !vec.is_empty() {
@@ -138,5 +151,5 @@ pub async fn async_tokio_wrapper() {
         //         }
         //     }
         // }
-    }
+    };
 }
