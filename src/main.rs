@@ -158,6 +158,7 @@ mod providers {
         pub mod mongo_get_providers_link_parts_processed;
         pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
         pub mod enable_links_limit_for;
+        pub mod enable_randomize_order_mongo_link_parts_for;
     }
     pub mod provider_kind_enum;
 }
