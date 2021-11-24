@@ -148,6 +148,7 @@ mod providers {
         pub mod get_enabled_providers_vec;
         pub mod get_mongo_initialization_string_name_vec;
         pub mod get_mongo_initialization_provider_kind_vec;
+        pub mod into_vec;
     }
     pub mod provider_kind_enum;
 }
