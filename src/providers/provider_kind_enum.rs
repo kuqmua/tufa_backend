@@ -6,8 +6,6 @@ use mongodb::bson::doc;
 
 use std::fs;
 
-use crate::config_mods::config::CONFIG;
-
 use crate::constants::project_constants::ARXIV_PROVIDER_ITEM_HANDLE;
 use crate::constants::project_constants::BIORXIV_PROVIDER_ITEM_HANDLE;
 use crate::constants::project_constants::GITHUB_PROVIDER_ITEM_HANDLE;
@@ -62,17 +60,6 @@ pub enum ProviderKind {
 impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn get_path_to_provider_log_file(provider_kind: ProviderKind) -> String {
-        format!(
-            "logs/{}/{:?}/{}",
-            &CONFIG.params.warning_logs_directory_name,
-            provider_kind,
-            &CONFIG
-                .params
-                .unhandled_success_handled_success_are_there_items_initialized_posts_dir
-        )
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_provider_links(

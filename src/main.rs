@@ -168,6 +168,7 @@ mod providers {
         pub mod remove_providers_logs_directories;
         pub mod remove_existing_providers_logs_directories;
         pub mod get_path_to_logs_directory;
+        pub mod get_path_to_provider_log_file;
     }
     pub mod provider_kind_enum;
 }
