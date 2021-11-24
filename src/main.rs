@@ -161,6 +161,7 @@ mod providers {
         pub mod enable_randomize_order_mongo_link_parts_for;
         pub mod get_mongo_doc_randomization_aggregation;
         pub mod get_check_link;
+        pub mod get_init_local_data_file_path;
     }
     pub mod provider_kind_enum;
 }
