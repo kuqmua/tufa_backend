@@ -77,45 +77,6 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn enable_links_limit_for(provider_kind: ProviderKind) -> bool {
-        match provider_kind {
-            ProviderKind::Arxiv => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_arxiv
-            }
-            ProviderKind::Biorxiv => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_biorxiv
-            }
-            ProviderKind::Github => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_github
-            }
-            ProviderKind::Habr => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_habr
-            }
-            ProviderKind::Medrxiv => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_medrxiv
-            }
-            ProviderKind::Reddit => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_reddit
-            }
-            ProviderKind::Twitter => {
-                CONFIG
-                    .enable_providers_links_limits
-                    .enable_links_limit_for_twitter
-            }
-        }
-    }
     pub fn enable_randomize_order_mongo_link_parts_for(provider_kind: ProviderKind) -> bool {
         match provider_kind {
             ProviderKind::Arxiv => {
