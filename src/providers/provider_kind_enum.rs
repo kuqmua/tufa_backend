@@ -92,17 +92,6 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn get_links_limit_for_provider(provider_kind: ProviderKind) -> i64 {
-        match provider_kind {
-            ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.providers_links_limits.links_limit_for_biorxiv,
-            ProviderKind::Github => CONFIG.providers_links_limits.links_limit_for_github,
-            ProviderKind::Habr => CONFIG.providers_links_limits.links_limit_for_habr,
-            ProviderKind::Medrxiv => CONFIG.providers_links_limits.links_limit_for_medrxiv,
-            ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
-            ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
-        }
-    }
     pub fn is_provider_kind_string_exists(potential_provider_kind_string: &str) -> bool {
         for provider_kind in ProviderKind::iter() {
             let provider_kind_string = ProviderKind::get_string_name(provider_kind);
