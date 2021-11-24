@@ -317,7 +317,7 @@ impl ProviderKind {
         let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
         let mut needed_db_collection: Option<String> = None;
         for collection_name in db.list_collection_names(None).await? {
-            if collection_name == *ProviderKind::get_mongo_collection_name(provider_kind) {
+            if collection_name == *ProviderKind::get_mongo_log_collection_name(provider_kind) {
                 needed_db_collection = Some(collection_name);
             }
         }
@@ -392,7 +392,7 @@ impl ProviderKind {
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let vec_provider_kind_with_collection_names_under_arc_handle =
                 Arc::clone(&vec_provider_kind_with_collection_names_under_arc);
-            let collection_name = ProviderKind::get_mongo_collection_name(provider_kind);
+            let collection_name = ProviderKind::get_mongo_log_collection_name(provider_kind);
             let collection = db.collection::<Document>(&collection_name);
             if vec_collection_names.contains(&collection_name) {
                 vec_of_tasks.push(tokio::task::spawn(async move {
