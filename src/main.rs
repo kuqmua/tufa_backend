@@ -144,6 +144,7 @@ mod providers {
         pub mod is_mongo_initialization_enabled;
         pub mod is_cleaning_warning_logs_db_collections_in_mongo_enabled;
         pub mod stringify;
+        pub mod get_enabled_string_name_vec;
     }
     pub mod provider_kind_enum;
 }

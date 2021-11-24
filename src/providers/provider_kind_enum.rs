@@ -77,18 +77,7 @@ pub enum MongoGetProvidersLinkPartsProcessedResult {
     MongoConnection(mongodb::error::Error),
 }
 
-#[derive(
-    EnumVariantCount,
-    EnumIter,
-    Clone,
-    Debug,
-    serde_derive::Serialize,
-    serde_derive::Deserialize,
-    PartialEq,
-    Eq,
-    Hash,
-    Copy,
-)]
+#[derive(EnumVariantCount, EnumIter, Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize, PartialEq, Eq, Hash, Copy)]
 pub enum ProviderKind {
     Arxiv,
     Biorxiv,
@@ -102,15 +91,6 @@ pub enum ProviderKind {
 impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
-    }
-    pub fn get_enabled_string_name_vec() -> Vec<&'static str> {
-        let mut string_name_vec: Vec<&'static str> = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in
-            ProviderKind::iter().filter(|element| ProviderKind::is_enabled(*element))
-        {
-            string_name_vec.push(ProviderKind::get_string_name(provider_kind));
-        }
-        string_name_vec
     }
     pub fn get_enabled_providers_vec() -> Vec<ProviderKind> {
         let mut providers_vec: Vec<ProviderKind> = Vec::with_capacity(ProviderKind::get_length());
