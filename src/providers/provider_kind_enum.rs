@@ -1,10 +1,6 @@
-use std::path::Path;
-
 use strum_macros::EnumIter;
 
 use mongodb::bson::doc;
-
-use std::fs;
 
 use crate::constants::project_constants::ARXIV_PROVIDER_ITEM_HANDLE;
 use crate::constants::project_constants::BIORXIV_PROVIDER_ITEM_HANDLE;
@@ -52,15 +48,6 @@ pub enum ProviderKind {
 impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn remove_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
-        let path = ProviderKind::get_path_to_logs_directory(provider_kind);
-        if !Path::new(&path).is_dir() {
-            return Err(CleanLogsDirError::PathIsNotDir { path });
-        }
-        fs::remove_dir_all(&path)?;
-        Ok(())
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_item_handle(provider_kind: ProviderKind) -> Option<&'static str> {
