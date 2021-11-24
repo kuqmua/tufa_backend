@@ -92,15 +92,6 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn is_provider_kind_string_exists(potential_provider_kind_string: &str) -> bool {
-        for provider_kind in ProviderKind::iter() {
-            let provider_kind_string = ProviderKind::get_string_name(provider_kind);
-            if provider_kind_string == potential_provider_kind_string {
-                return true;
-            }
-        }
-        false
-    }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_provider_link_parts_as_bson_string(
         provider_kind: ProviderKind,
