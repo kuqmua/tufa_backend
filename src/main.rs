@@ -138,6 +138,7 @@ mod providers {
     }
     pub mod provider_kind {
         pub mod get_string_name;
+        pub mod get_mongo_collection_name;
     }
     pub mod provider_kind_enum;
 }

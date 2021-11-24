@@ -16,13 +16,6 @@ use std::sync::{Arc, Mutex};
 use futures::future::join_all;
 
 use crate::config_mods::config::CONFIG;
-// use crate::constants::project_constants::ARXIV_NAME_TO_CHECK;
-// use crate::constants::project_constants::BIORXIV_NAME_TO_CHECK;
-// use crate::constants::project_constants::GITHUB_NAME_TO_CHECK;
-// use crate::constants::project_constants::HABR_NAME_TO_CHECK;
-// use crate::constants::project_constants::MEDRXIV_NAME_TO_CHECK;
-// use crate::constants::project_constants::REDDIT_NAME_TO_CHECK;
-// use crate::constants::project_constants::TWITTER_NAME_TO_CHECK;
 
 use crate::constants::project_constants::ARXIV_PROVIDER_ITEM_HANDLE;
 use crate::constants::project_constants::BIORXIV_PROVIDER_ITEM_HANDLE;
@@ -107,17 +100,6 @@ pub enum ProviderKind {
 }
 
 impl ProviderKind {
-    //todo: collection logs or what? there are many collections...
-    pub fn get_mongo_collection_name(provider_kind: ProviderKind) -> String {
-        let name = ProviderKind::get_string_name(provider_kind);
-        format!(
-            "{}{}",
-            name,
-            CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part
-        )
-    }
     pub fn is_enabled(provider_kind: ProviderKind) -> bool {
         match provider_kind {
             ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
