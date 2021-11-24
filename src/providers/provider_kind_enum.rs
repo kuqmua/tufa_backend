@@ -15,14 +15,6 @@ use crate::constants::project_constants::TWITTER_PROVIDER_ITEM_HANDLE;
 
 use procedural_macros_lib::EnumVariantCount;
 
-use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
-use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
-use crate::providers::providers_info::links::generate_github_links::generate_github_links;
-use crate::providers::providers_info::links::generate_habr_links::generate_habr_links;
-use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
-use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
-use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
-
 #[derive(Debug)]
 pub struct RemoveDirError {
     pub error: std::io::Error,
@@ -60,21 +52,6 @@ pub enum ProviderKind {
 impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn get_provider_links(
-        provider_kind: ProviderKind,
-        names_vector: Vec<String>,
-    ) -> Vec<String> {
-        match provider_kind {
-            ProviderKind::Arxiv => generate_arxiv_links(names_vector),
-            ProviderKind::Biorxiv => generate_biorxiv_links(names_vector),
-            ProviderKind::Github => generate_github_links(names_vector),
-            ProviderKind::Habr => generate_habr_links(names_vector),
-            ProviderKind::Medrxiv => generate_medrxiv_links(names_vector),
-            ProviderKind::Reddit => generate_reddit_links(names_vector),
-            ProviderKind::Twitter => generate_twitter_links(names_vector),
-        }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn remove_logs_directory(provider_kind: ProviderKind) -> Result<(), CleanLogsDirError> {
