@@ -92,13 +92,6 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, ProviderKind)> {
-        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            provider_kind_vec.push((ProviderKind::get_string_name(provider_kind), provider_kind));
-        }
-        provider_kind_vec
-    }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, ProviderKind> {
         //its String coz legacy
