@@ -153,6 +153,7 @@ mod providers {
         pub mod into_string_name_and_kind_hashmap;
         pub mod get_links_limit_for_provider;
         pub mod is_provider_kind_string_exists;
+        pub mod mongo_get_provider_link_parts_as_bson_string;
     }
     pub mod provider_kind_enum;
 }
