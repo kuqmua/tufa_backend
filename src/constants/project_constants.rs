@@ -4,14 +4,6 @@ pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
 // pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
-pub const ARXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
-pub const BIORXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
-pub const GITHUB_PROVIDER_ITEM_HANDLE: &str = "</entry>";
-pub const HABR_PROVIDER_ITEM_HANDLE: &str = "</item>";
-pub const MEDRXIV_PROVIDER_ITEM_HANDLE: &str = "</item>";
-//no reddit item handle
-pub const TWITTER_PROVIDER_ITEM_HANDLE: &str = "</item>";
-
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_1: &str = "<dc:creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1: &str = "bbb<creator>";
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_2: &str = "</dc:creator>";
