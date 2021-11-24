@@ -146,6 +146,7 @@ mod providers {
         pub mod stringify;
         pub mod get_enabled_string_name_vec;
         pub mod get_enabled_providers_vec;
+        pub mod get_mongo_initialization_string_name_vec;
     }
     pub mod provider_kind_enum;
 }
