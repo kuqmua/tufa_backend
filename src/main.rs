@@ -140,6 +140,7 @@ mod providers {
         pub mod get_string_name;
         pub mod get_mongo_log_collection_name;
         pub mod is_enabled;
+        pub mod is_prints_enabled;
     }
     pub mod provider_kind_enum;
 }
