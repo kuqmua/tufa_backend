@@ -166,6 +166,7 @@ mod providers {
         pub mod get_providers_json_local_data_processed;
         pub mod is_cleaning_warning_logs_directory_enable;
         pub mod remove_providers_logs_directories;
+        pub mod remove_existing_providers_logs_directories;
     }
     pub mod provider_kind_enum;
 }

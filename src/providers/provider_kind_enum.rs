@@ -1,4 +1,4 @@
-use std::{collections::HashMap, path::Path};
+use std::path::Path;
 
 use strum_macros::EnumIter;
 
@@ -62,24 +62,6 @@ pub enum ProviderKind {
 impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
-    }
-    
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn remove_existing_providers_logs_directories(
-    ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
-        if let Err(error_hashmap) = ProviderKind::remove_providers_logs_directories() {
-            let mut return_hashmap = HashMap::with_capacity(error_hashmap.len());
-            for (provider_kind, error) in error_hashmap {
-                if let CleanLogsDirError::CannotRemoveDir { error: e } = error {
-                    return_hashmap.insert(provider_kind, e);
-                }
-            }
-            if return_hashmap.is_empty() {
-                return Ok(());
-            }
-            return Err(return_hashmap);
-        }
-        Ok(())
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_path_to_logs_directory(provider_kind: ProviderKind) -> String {
