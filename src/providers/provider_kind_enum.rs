@@ -1,6 +1,5 @@
 use std::{collections::HashMap, path::Path};
 
-use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
 use mongodb::bson::doc;
@@ -64,24 +63,7 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn remove_providers_logs_directories(
-    ) -> Result<(), HashMap<ProviderKind, CleanLogsDirError>> {
-        let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
-            HashMap::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter()
-            .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
-        {
-            if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
-                result_hashmap.insert(provider_kind, e);
-            }
-        }
-        if result_hashmap.is_empty() {
-            Ok(())
-        } else {
-            Err(result_hashmap)
-        }
-    }
+    
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn remove_existing_providers_logs_directories(
     ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
