@@ -162,6 +162,7 @@ mod providers {
         pub mod get_mongo_doc_randomization_aggregation;
         pub mod get_check_link;
         pub mod get_init_local_data_file_path;
+        pub mod get_providers_json_local_data_unprocessed;
     }
     pub mod provider_kind_enum;
 }
