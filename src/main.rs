@@ -164,6 +164,7 @@ mod providers {
         pub mod get_init_local_data_file_path;
         pub mod get_providers_json_local_data_unprocessed;
         pub mod get_providers_json_local_data_processed;
+        pub mod is_cleaning_warning_logs_directory_enable;
     }
     pub mod provider_kind_enum;
 }
