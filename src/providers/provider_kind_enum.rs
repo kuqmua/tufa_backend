@@ -92,17 +92,6 @@ impl ProviderKind {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, ProviderKind> {
-        //its String coz legacy
-        let mut config_provider_string_to_enum_struct_hasmap: HashMap<&'static str, ProviderKind> =
-            HashMap::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            config_provider_string_to_enum_struct_hasmap
-                .insert(ProviderKind::get_string_name(provider_kind), provider_kind);
-        }
-        config_provider_string_to_enum_struct_hasmap
-    }
     pub fn get_links_limit_for_provider(provider_kind: ProviderKind) -> i64 {
         match provider_kind {
             ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,

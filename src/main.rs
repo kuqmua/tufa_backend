@@ -150,6 +150,7 @@ mod providers {
         pub mod get_mongo_initialization_provider_kind_vec;
         pub mod into_vec;
         pub mod into_string_name_and_kind_tuple_vec;
+        pub mod into_string_name_and_kind_hashmap;
     }
     pub mod provider_kind_enum;
 }
