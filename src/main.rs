@@ -83,6 +83,7 @@ pub mod config_mods {
     }
     pub mod env_var_enum_functions{
         pub mod get_env_name;
+        pub mod into_vec;
     }
     pub mod config_struct;
     pub mod lazy_static_config;
