@@ -85,6 +85,7 @@ pub mod config_mods {
         pub mod get_env_name;
         pub mod into_vec;
         pub mod into_string_name_and_kind_tuple_vec;
+        pub mod into_string_name_and_kind_hashmap;
     }
     pub mod config_struct;
     pub mod lazy_static_config;
