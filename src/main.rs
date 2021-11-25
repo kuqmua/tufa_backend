@@ -48,7 +48,6 @@ pub mod config_mods {
         pub mod env_var_u8_enum;
     }
     pub mod config_structs {
-        pub mod config_struct;
         pub mod enable_error_providers_prints_struct;
         pub mod enable_initialize_mongo_with_providers_link_parts_struct;
         pub mod enable_partial_success_providers_prints_struct;
@@ -77,6 +76,7 @@ pub mod config_mods {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
+    pub mod config_struct;
     pub mod config;
     pub mod env_var_enum;
 }
