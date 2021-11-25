@@ -4,7 +4,6 @@ mod check_net {
     pub mod check_net_wrapper;
 }
 mod constants {
-    pub mod env_var_names_constants;
     pub mod project_constants;
     pub mod tests_constants;
 }

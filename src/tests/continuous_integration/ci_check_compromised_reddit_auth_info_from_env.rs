@@ -1,24 +1,20 @@
-use crate::constants::env_var_names_constants::REDDIT_CLIENT_ID_ENV_NAME;
-use crate::constants::env_var_names_constants::REDDIT_CLIENT_SECRET_ENV_NAME;
-use crate::constants::env_var_names_constants::REDDIT_PASSWORD_ENV_NAME;
-use crate::constants::env_var_names_constants::REDDIT_USERNAME_ENV_NAME;
-use crate::constants::env_var_names_constants::REDDIT_USER_AGENT_ENV_NAME;
+use dotenv::dotenv;
 
 use crate::constants::tests_constants::_USER_CREDENTIALS_DUMMY_HANDLE;
 
-use dotenv::dotenv;
+use crate::config_mods::env_var_enum::EnvVar;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 fn ci_check_compromised_reddit_auth_info() {
     match dotenv() {
         Ok(_) => {
-            match std::env::var(REDDIT_USER_AGENT_ENV_NAME) {
+            match std::env::var(EnvVar::get_env_name(EnvVar::RedditUserAgent)) {
                 Ok(reddit_user_agent) => {
                     assert!(
                         !(reddit_user_agent != _USER_CREDENTIALS_DUMMY_HANDLE),
                         "{} != {}, found {}",
-                        REDDIT_USER_AGENT_ENV_NAME,
+                        EnvVar::get_env_name(EnvVar::RedditUserAgent),
                         _USER_CREDENTIALS_DUMMY_HANDLE,
                         reddit_user_agent
                     );
@@ -26,16 +22,16 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        REDDIT_USER_AGENT_ENV_NAME, e
+                        EnvVar::get_env_name(EnvVar::RedditUserAgent), e
                     );
                 }
             }
-            match std::env::var(REDDIT_CLIENT_ID_ENV_NAME) {
+            match std::env::var(EnvVar::get_env_name(EnvVar::RedditClientId)) {
                 Ok(reddit_client_id) => {
                     assert!(
                         !(reddit_client_id != _USER_CREDENTIALS_DUMMY_HANDLE),
                         "{} != {}, found {}",
-                        REDDIT_CLIENT_ID_ENV_NAME,
+                        EnvVar::get_env_name(EnvVar::RedditClientId),
                         _USER_CREDENTIALS_DUMMY_HANDLE,
                         reddit_client_id
                     );
@@ -43,16 +39,16 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        REDDIT_CLIENT_ID_ENV_NAME, e
+                        EnvVar::get_env_name(EnvVar::RedditClientId), e
                     );
                 }
             }
-            match std::env::var(REDDIT_CLIENT_SECRET_ENV_NAME) {
+            match std::env::var(EnvVar::get_env_name(EnvVar::RedditClientSecret)) {
                 Ok(rediit_client_secret) => {
                     assert!(
                         !(rediit_client_secret != _USER_CREDENTIALS_DUMMY_HANDLE),
                         "{} != {}, found {}",
-                        REDDIT_CLIENT_SECRET_ENV_NAME,
+                        EnvVar::get_env_name(EnvVar::RedditClientSecret),
                         _USER_CREDENTIALS_DUMMY_HANDLE,
                         rediit_client_secret
                     );
@@ -60,16 +56,16 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        REDDIT_CLIENT_SECRET_ENV_NAME, e
+                        EnvVar::get_env_name(EnvVar::RedditClientSecret), e
                     );
                 }
             }
-            match std::env::var(REDDIT_USERNAME_ENV_NAME) {
+            match std::env::var(EnvVar::get_env_name(EnvVar::RedditUsername)) {
                 Ok(reddit_username) => {
                     assert!(
                         !(reddit_username != _USER_CREDENTIALS_DUMMY_HANDLE),
                         "{} != {}, found {}",
-                        REDDIT_USERNAME_ENV_NAME,
+                        EnvVar::get_env_name(EnvVar::RedditUsername),
                         _USER_CREDENTIALS_DUMMY_HANDLE,
                         reddit_username
                     );
@@ -77,16 +73,16 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        REDDIT_USERNAME_ENV_NAME, e
+                        EnvVar::get_env_name(EnvVar::RedditUsername), e
                     );
                 }
             }
-            match std::env::var(REDDIT_PASSWORD_ENV_NAME) {
+            match std::env::var(EnvVar::get_env_name(EnvVar::RedditPassword)) {
                 Ok(reddit_password) => {
                     assert!(
                         !(reddit_password != _USER_CREDENTIALS_DUMMY_HANDLE),
                         "{} != {}, found {}",
-                        REDDIT_PASSWORD_ENV_NAME,
+                        EnvVar::get_env_name(EnvVar::RedditPassword),
                         _USER_CREDENTIALS_DUMMY_HANDLE,
                         reddit_password
                     );
@@ -94,7 +90,7 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        REDDIT_PASSWORD_ENV_NAME, e
+                        EnvVar::get_env_name(EnvVar::RedditPassword), e
                     );
                 }
             }
