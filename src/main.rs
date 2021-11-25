@@ -43,6 +43,7 @@ pub mod config_mods {
     }
     pub mod config_functions {
         pub mod new;
+        pub mod check_valid_i64_providers_links_limits_for_mongo;
     }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum;
