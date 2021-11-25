@@ -81,6 +81,9 @@ pub mod config_mods {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
+    pub mod env_var_enum_functions{
+        pub mod get_env_name;
+    }
     pub mod config_struct;
     pub mod lazy_static_config;
     pub mod env_var_enum;
