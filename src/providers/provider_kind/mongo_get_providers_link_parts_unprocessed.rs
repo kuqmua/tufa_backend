@@ -2,7 +2,8 @@ use std::collections::HashMap;
 
 use mongodb::{Client, options::ClientOptions, bson::{doc, Document}};
 
-use crate::{config_mods::config::CONFIG, mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector};
+use crate::{mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector};
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::{mongo_integration::mongo_get_db_url::mongo_get_db_url, providers::provider_kind_enum::ProviderKind};
 

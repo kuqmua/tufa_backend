@@ -4,7 +4,7 @@ use std::time::Instant;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 extern crate num_cpus;
 

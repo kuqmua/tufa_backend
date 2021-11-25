@@ -1,6 +1,6 @@
 use mongodb::{options::ClientOptions, Client};
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[tokio::main] //must be coz diesel(postgres) blocking inside tokio runtime - cause panic

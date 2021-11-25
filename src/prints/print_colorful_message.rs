@@ -1,4 +1,4 @@
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 use ansi_term::Colour::RGB;
 

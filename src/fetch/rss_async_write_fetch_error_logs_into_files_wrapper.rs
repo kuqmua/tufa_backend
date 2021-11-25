@@ -7,7 +7,7 @@ use futures::future::join_all;
 use serde_json::json;
 use std::time::Instant;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 #[tokio::main]

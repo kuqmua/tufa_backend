@@ -4,7 +4,7 @@ use mongodb::{
     Client,
 };
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 

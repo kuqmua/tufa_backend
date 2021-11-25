@@ -1,6 +1,6 @@
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 impl ProviderKind {
     pub fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(

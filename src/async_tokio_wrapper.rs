@@ -10,7 +10,7 @@ use crate::helpers::resource::{Resource, ResourceError};
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 

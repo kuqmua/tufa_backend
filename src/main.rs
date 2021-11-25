@@ -77,7 +77,7 @@ pub mod config_mods {
         pub mod reddit_authorization_struct;
     }
     pub mod config_struct;
-    pub mod config;
+    pub mod lazy_static_config;
     pub mod env_var_enum;
 }
 pub mod helpers {

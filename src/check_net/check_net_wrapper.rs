@@ -1,6 +1,6 @@
 use crate::check_net::check_link_status_code::check_link_status_code;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;

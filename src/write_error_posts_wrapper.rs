@@ -5,7 +5,7 @@ use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::WriteLog
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

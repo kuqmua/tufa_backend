@@ -5,7 +5,7 @@ use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_inser
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-use crate::config_mods::config::CONFIG;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
