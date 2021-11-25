@@ -330,7 +330,6 @@ impl ConfigStruct {
                 info_blue: u8_vars[&EnvU8Var::InfoBlue],
             },
         };
-        Ok(handle_config)
-        // return ConfigStruct::wrap_config_checks(handle_config);
+        ConfigStruct::wrap_config_checks(handle_config)
     }
 }
