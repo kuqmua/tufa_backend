@@ -41,6 +41,9 @@ pub mod config_mods {
         pub mod var_or_bool_parse_error_enum;
         pub mod var_or_int_parse_error_enum;
     }
+    pub mod config_functions {
+        pub mod new;
+    }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum;
