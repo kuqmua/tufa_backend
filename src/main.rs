@@ -41,14 +41,17 @@ pub mod config_mods {
         pub mod var_or_int_parse_error_enum;
     }
     pub mod config_functions {
-        pub mod new;
         pub mod check_valid_i64_providers_links_limits_for_mongo;
+        pub mod new;
         pub mod wrap_config_checks;
     }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum;
         pub mod env_var_string_enum;
+        pub mod env_var_u8_enum_functions {
+            pub mod get_env_name;
+        }
         pub mod env_var_u8_enum;
     }
     pub mod config_structs {
@@ -80,15 +83,15 @@ pub mod config_mods {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
-    pub mod env_var_enum_functions{
+    pub mod env_var_enum_functions {
         pub mod get_env_name;
-        pub mod into_vec;
-        pub mod into_string_name_and_kind_tuple_vec;
         pub mod into_string_name_and_kind_hashmap;
+        pub mod into_string_name_and_kind_tuple_vec;
+        pub mod into_vec;
     }
     pub mod config_struct;
-    pub mod lazy_static_config;
     pub mod env_var_enum;
+    pub mod lazy_static_config;
 }
 pub mod helpers {
     pub mod create_dir_if_it_doesnt_exist;
@@ -147,41 +150,41 @@ mod providers {
         pub mod providers_init_json_schema;
     }
     pub mod provider_kind {
-        pub mod get_string_name;
-        pub mod get_mongo_log_collection_name;
-        pub mod is_enabled;
-        pub mod is_prints_enabled;
-        pub mod is_mongo_initialization_enabled;
-        pub mod is_cleaning_warning_logs_db_collections_in_mongo_enabled;
-        pub mod stringify;
-        pub mod get_enabled_string_name_vec;
-        pub mod get_enabled_providers_vec;
-        pub mod get_mongo_initialization_string_name_vec;
-        pub mod get_mongo_initialization_provider_kind_vec;
-        pub mod into_vec;
-        pub mod into_string_name_and_kind_tuple_vec;
-        pub mod into_string_name_and_kind_hashmap;
-        pub mod get_links_limit_for_provider;
-        pub mod is_provider_kind_string_exists;
-        pub mod mongo_get_provider_link_parts_as_bson_string;
-        pub mod mongo_get_providers_link_parts_unprocessed;
-        pub mod mongo_get_providers_link_parts_processed;
-        pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
         pub mod enable_links_limit_for;
         pub mod enable_randomize_order_mongo_link_parts_for;
-        pub mod get_mongo_doc_randomization_aggregation;
+        pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
         pub mod get_check_link;
+        pub mod get_enabled_providers_vec;
+        pub mod get_enabled_string_name_vec;
         pub mod get_init_local_data_file_path;
-        pub mod get_providers_json_local_data_unprocessed;
-        pub mod get_providers_json_local_data_processed;
-        pub mod is_cleaning_warning_logs_directory_enable;
-        pub mod remove_providers_logs_directories;
-        pub mod remove_existing_providers_logs_directories;
+        pub mod get_item_handle;
+        pub mod get_links_limit_for_provider;
+        pub mod get_mongo_doc_randomization_aggregation;
+        pub mod get_mongo_initialization_provider_kind_vec;
+        pub mod get_mongo_initialization_string_name_vec;
+        pub mod get_mongo_log_collection_name;
         pub mod get_path_to_logs_directory;
         pub mod get_path_to_provider_log_file;
         pub mod get_provider_links;
+        pub mod get_providers_json_local_data_processed;
+        pub mod get_providers_json_local_data_unprocessed;
+        pub mod get_string_name;
+        pub mod into_string_name_and_kind_hashmap;
+        pub mod into_string_name_and_kind_tuple_vec;
+        pub mod into_vec;
+        pub mod is_cleaning_warning_logs_db_collections_in_mongo_enabled;
+        pub mod is_cleaning_warning_logs_directory_enable;
+        pub mod is_enabled;
+        pub mod is_mongo_initialization_enabled;
+        pub mod is_prints_enabled;
+        pub mod is_provider_kind_string_exists;
+        pub mod mongo_get_provider_link_parts_as_bson_string;
+        pub mod mongo_get_providers_link_parts_processed;
+        pub mod mongo_get_providers_link_parts_unprocessed;
+        pub mod remove_existing_providers_logs_directories;
         pub mod remove_logs_directory;
-        pub mod get_item_handle;
+        pub mod remove_providers_logs_directories;
+        pub mod stringify;
     }
     pub mod provider_kind_enum;
 }
