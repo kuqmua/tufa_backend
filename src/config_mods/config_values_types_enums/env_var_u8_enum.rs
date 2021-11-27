@@ -58,21 +58,6 @@ impl EnvU8Var {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn get_string_from_env_var(
-        env_var_name_kind: EnvU8Var,
-        was_dotenv_enable: bool,
-    ) -> Result<String, ConfigError<'static>> {
-        let string_name = EnvU8Var::get_env_name(env_var_name_kind);
-        match std::env::var(string_name) {
-            Ok(handle) => Ok(handle),
-            Err(e) => Err(ConfigError {
-                env_var_name_kind: ConfigEnvVarErrorType::U8(env_var_name_kind),
-                was_dotenv_enable,
-                env_name: string_name,
-                env_error: ConfigErrorInnerType::VarErrorHandle(e),
-            }),
-        }
-    }
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvU8Var, u8>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
         match dotenv() {
