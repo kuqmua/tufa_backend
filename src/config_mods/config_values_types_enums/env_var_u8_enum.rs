@@ -58,13 +58,6 @@ impl EnvU8Var {
     pub fn get_length() -> usize {
         ENUM_LENGTH
     }
-    pub fn into_vec() -> Vec<EnvU8Var> {
-        let mut env_var_name_kind_vec = Vec::with_capacity(EnvU8Var::get_length());
-        for env_var_name_kind in EnvU8Var::iter() {
-            env_var_name_kind_vec.push(env_var_name_kind);
-        }
-        env_var_name_kind_vec
-    }
     pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, EnvU8Var)> {
         let mut env_var_name_kind_vec = Vec::with_capacity(EnvU8Var::get_length());
         for env_var_name_kind in EnvU8Var::iter() {
