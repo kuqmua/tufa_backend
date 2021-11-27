@@ -46,6 +46,9 @@ pub mod config_mods {
         pub mod wrap_config_checks;
     }
     pub mod config_values_types_enums {
+        pub mod env_var_bool_enum_functions {
+            pub mod get_env_values_hashmap;
+        }
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum_functions {
             pub mod get_env_name;
