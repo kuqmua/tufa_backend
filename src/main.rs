@@ -47,7 +47,9 @@ pub mod config_mods {
     }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum_impl {
-            pub mod get_env_name;
+            pub mod traits {
+                pub mod get_env_name;
+            }
             pub mod get_env_values_hashmap;
             pub mod get_string_from_env_var;
             pub mod into_string_name_and_kind_hashmap;
@@ -56,7 +58,9 @@ pub mod config_mods {
         }
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum_impl {
-            pub mod get_env_name;
+            pub mod traits {
+                pub mod get_env_name;
+            }
             pub mod get_env_values_hashmap;
             pub mod get_string_from_env_var;
             pub mod into_string_name_and_kind_hashmap;
@@ -65,7 +69,9 @@ pub mod config_mods {
         }
         pub mod env_var_i64_enum;
         pub mod env_var_string_enum_impl {
-            pub mod get_env_name;
+            pub mod traits {
+                pub mod get_env_name;
+            }
             pub mod get_env_values_hashmap;
             pub mod get_string_from_env_var;
             pub mod into_string_name_and_kind_hashmap;
@@ -74,7 +80,9 @@ pub mod config_mods {
         }
         pub mod env_var_string_enum;
         pub mod env_var_u8_enum_impl {
-            pub mod get_env_name;
+            pub mod traits {
+                pub mod get_env_name;
+            }
             pub mod get_env_values_hashmap;
             pub mod get_string_from_env_var;
             pub mod into_string_name_and_kind_hashmap;
