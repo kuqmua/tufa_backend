@@ -8,10 +8,11 @@ use crate::config_mods::config_error_mods::config_env_var_error_type_enum::Confi
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::config_mods::config_error_mods::var_or_int_parse_error_enum::VarOrIntParseError;
+use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
-use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
+use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvI64Var {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvI64Var, i64>, ConfigError<'static>> {
@@ -40,7 +41,7 @@ impl EnvI64Var {
                         error_option = Some(ConfigError {
                             env_var_name_kind: ConfigEnvVarErrorType::I64(env_var_name_kind),
                             was_dotenv_enable,
-                            env_name: EnvI64Var::get_env_name(env_var_name_kind),
+                            env_name: env_var_name_kind.get_env_name(),
                             env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(
                                 VarOrIntParseError::Int(e),
                             ),

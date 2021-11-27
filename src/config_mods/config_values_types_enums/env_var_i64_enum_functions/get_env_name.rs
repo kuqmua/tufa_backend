@@ -1,10 +1,11 @@
+use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 use crate::config_mods::env_var_enum::EnvVar;
 
-use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
+use crate::traits::get_env_name_trait::GetEnvName;
 
-impl EnvI64Var {
-    pub fn get_env_name(env_var_name_kind: EnvI64Var) -> &'static str {
-        match env_var_name_kind {
+impl GetEnvName for EnvI64Var {
+    fn get_env_name(self: &EnvI64Var) -> &'static str {
+        match self {
             EnvI64Var::CommonProvidersLinksLimit => {
                 EnvVar::get_env_name(EnvVar::CommonProvidersLinksLimit)
             }
