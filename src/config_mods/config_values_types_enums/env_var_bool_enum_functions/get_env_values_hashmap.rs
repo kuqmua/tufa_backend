@@ -12,6 +12,7 @@ use crate::config_mods::config_error_mods::var_or_bool_parse_error_enum::VarOrBo
 use crate::constants::project_constants::ENV_FILE_NAME;
 
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvBoolVar {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvBoolVar, bool>, ConfigError<'static>> {
@@ -40,7 +41,7 @@ impl EnvBoolVar {
                         error_option = Some(ConfigError {
                             env_var_name_kind: ConfigEnvVarErrorType::Bool(env_var_name_kind),
                             was_dotenv_enable,
-                            env_name: EnvBoolVar::get_env_name(env_var_name_kind),
+                            env_name: env_var_name_kind.get_env_name(),
                             env_error: ConfigErrorInnerType::VarOrBoolParseErrorHandle(
                                 VarOrBoolParseError::Bool(e),
                             ),

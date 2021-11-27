@@ -1,10 +1,11 @@
 use crate::config_mods::env_var_enum::EnvVar;
 
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+use crate::traits::get_env_name_trait::GetEnvName;
 
-impl EnvBoolVar {
-    pub fn get_env_name(env_var_name_kind: EnvBoolVar) -> &'static str {
-        match env_var_name_kind {
+impl GetEnvName for EnvBoolVar {
+    fn get_env_name(self: &EnvBoolVar) -> &'static str {
+        match self {
             EnvBoolVar::EnableProviders => EnvVar::get_env_name(EnvVar::EnableProviders),
             EnvBoolVar::EnableCleaningWarningLogsDirectory => {
                 EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectory)

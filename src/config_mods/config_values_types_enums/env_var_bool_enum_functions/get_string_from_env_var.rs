@@ -3,13 +3,14 @@ use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
 
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvBoolVar {
     pub fn get_string_from_env_var(
         env_var_name_kind: EnvBoolVar,
         was_dotenv_enable: bool,
     ) -> Result<String, ConfigError<'static>> {
-        let string_name = EnvBoolVar::get_env_name(env_var_name_kind);
+        let string_name = env_var_name_kind.get_env_name();
         match std::env::var(string_name) {
             Ok(handle) => Ok(handle),
             Err(e) => Err(ConfigError {
