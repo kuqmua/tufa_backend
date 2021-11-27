@@ -4,12 +4,14 @@ use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigE
 
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
+use crate::traits::get_env_name_trait::GetEnvName;
+
 impl EnvU8Var {
     pub fn get_string_from_env_var(
         env_var_name_kind: EnvU8Var,
         was_dotenv_enable: bool,
     ) -> Result<String, ConfigError<'static>> {
-        let string_name = EnvU8Var::get_env_name(env_var_name_kind);
+        let string_name = env_var_name_kind.get_env_name();
         match std::env::var(string_name) {
             Ok(handle) => Ok(handle),
             Err(e) => Err(ConfigError {

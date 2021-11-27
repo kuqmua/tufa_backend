@@ -2,9 +2,11 @@ use crate::config_mods::env_var_enum::EnvVar;
 
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
-impl EnvU8Var {
-    pub fn get_env_name(env_var_name_kind: EnvU8Var) -> &'static str {
-        match env_var_name_kind {
+use crate::traits::get_env_name_trait::GetEnvName;
+
+impl GetEnvName for EnvU8Var {
+    fn get_env_name(self: &EnvU8Var) -> &'static str {
+        match self {
             EnvU8Var::ErrorRed => EnvVar::get_env_name(EnvVar::ErrorRed),
             EnvU8Var::ErrorGreen => EnvVar::get_env_name(EnvVar::ErrorGreen),
             EnvU8Var::ErrorBlue => EnvVar::get_env_name(EnvVar::ErrorBlue),

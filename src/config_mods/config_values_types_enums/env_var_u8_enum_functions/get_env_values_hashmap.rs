@@ -13,6 +13,8 @@ use crate::constants::project_constants::ENV_FILE_NAME;
 
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
+use crate::traits::get_env_name_trait::GetEnvName;
+
 impl EnvU8Var {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvU8Var, u8>, ConfigError<'static>> {
         let was_dotenv_enable: bool;
@@ -40,7 +42,7 @@ impl EnvU8Var {
                         error_option = Some(ConfigError {
                             env_var_name_kind: ConfigEnvVarErrorType::U8(env_var_name_kind),
                             was_dotenv_enable,
-                            env_name: EnvU8Var::get_env_name(env_var_name_kind),
+                            env_name: env_var_name_kind.get_env_name(),
                             env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(
                                 VarOrIntParseError::Int(e),
                             ),
