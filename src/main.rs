@@ -47,6 +47,7 @@ pub mod config_mods {
     }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum_functions {
+            pub mod get_env_name;
             pub mod get_env_values_hashmap;
             pub mod get_string_from_env_var;
             pub mod into_string_name_and_kind_hashmap;
