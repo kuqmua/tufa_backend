@@ -8,10 +8,10 @@ use crate::config_mods::config_error_mods::config_env_var_error_type_enum::Confi
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::config_mods::config_error_mods::var_or_bool_parse_error_enum::VarOrBoolParseError;
+use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
-use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvBoolVar {

@@ -2,10 +2,9 @@ use std::collections::HashMap;
 
 use strum::IntoEnumIterator;
 
-use crate::{
-    config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar,
-    traits::get_env_name_trait::GetEnvName,
-};
+use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+
+use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvBoolVar {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

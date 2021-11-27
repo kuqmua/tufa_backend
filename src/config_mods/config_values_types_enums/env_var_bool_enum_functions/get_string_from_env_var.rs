@@ -1,8 +1,8 @@
 use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
-
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
+
 use crate::traits::get_env_name_trait::GetEnvName;
 
 impl EnvBoolVar {

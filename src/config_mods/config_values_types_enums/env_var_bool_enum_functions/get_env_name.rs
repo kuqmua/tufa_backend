@@ -1,6 +1,6 @@
+use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::config_mods::env_var_enum::EnvVar;
 
-use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::traits::get_env_name_trait::GetEnvName;
 
 impl GetEnvName for EnvBoolVar {
