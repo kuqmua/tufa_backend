@@ -51,6 +51,7 @@ pub mod config_mods {
         pub mod env_var_string_enum;
         pub mod env_var_u8_enum_functions {
             pub mod get_env_name;
+            pub mod into_string_name_and_kind_hashmap;
             pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
         }
