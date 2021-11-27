@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use procedural_macros_lib::EnumVariantCount;
 
 use strum::IntoEnumIterator;
@@ -185,19 +183,5 @@ impl EnvStringVar {
             ));
         }
         env_var_name_kind_vec
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, EnvStringVar> {
-        let mut config_env_var_name_kind_string_to_enum_struct_hasmap: HashMap<
-            &'static str,
-            EnvStringVar,
-        > = HashMap::with_capacity(EnvStringVar::get_length());
-        for env_var_name_kind_kind in EnvStringVar::iter() {
-            config_env_var_name_kind_string_to_enum_struct_hasmap.insert(
-                EnvStringVar::get_env_name(env_var_name_kind_kind),
-                env_var_name_kind_kind,
-            );
-        }
-        config_env_var_name_kind_string_to_enum_struct_hasmap
     }
 }
