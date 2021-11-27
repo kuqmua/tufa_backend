@@ -13,16 +13,24 @@ impl EnvVar {
             EnvVar::RedditPassword => "REDDIT_PASSWORD",
             EnvVar::StartingCheckLink => "STARTING_CHECK_LINK",
             EnvVar::WarningLogsDirectoryName => "WARNING_LOGS_DIRECTORY_NAME",
-            EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => "UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR",
+            EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
+                "UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR"
+            }
             EnvVar::EnableProviders => "ENABLE_PROVIDERS",
             EnvVar::EnableCleaningWarningLogsDirectory => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY",
-            EnvVar::EnableCleaningWarningLogsDbInMongo => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO",
+            EnvVar::EnableCleaningWarningLogsDbInMongo => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO"
+            }
             EnvVar::EnableTimeMeasurement => "ENABLE_TIME_MEASUREMENT",
             EnvVar::EnableProviderLinksLimit => "ENABLE_PROVIDER_LINKS_LIMIT",
             EnvVar::EnableCommonProvidersLinksLimit => "ENABLE_COMMON_PROVIDERS_LINKS_LIMIT",
             EnvVar::CommonProvidersLinksLimit => "COMMON_PROVIDERS_LINKS_LIMIT",
-            EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO",
+            EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO"
+            }
             EnvVar::EnablePrints => "ENABLE_PRINTS",
             EnvVar::EnableErrorPrints => "ENABLE_ERROR_PRINTS",
             EnvVar::EnableWarningHighPrints => "ENABLE_WARNING_HIGH_PRINTS",
@@ -30,37 +38,73 @@ impl EnvVar {
             EnvVar::EnableSuccessPrints => "ENABLE_SUCCESS_PRINTS",
             EnvVar::EnablePartialSuccessPrints => "ENABLE_PARTIAL_SUCCESS_PRINTS",
             EnvVar::EnableTimeMeasurementPrints => "ENABLE_TIME_MEASUREMENT_PRINTS",
-            EnvVar::EnableCleaningWarningLogsDirectoryPrints => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS",
+            EnvVar::EnableCleaningWarningLogsDirectoryPrints => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS"
+            }
             EnvVar::EnableInfoPrints => "ENABLE_INFO_PRINTS",
             EnvVar::EnableAllProvidersPrints => "ENABLE_ALL_PROVIDERS_PRINTS",
             EnvVar::EnableErrorPrintsForAllProviders => "ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableWarningHighPrintsForAllProviders => "ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableWarningLowPrintsForAllProviders => "ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS",
+            EnvVar::EnableWarningHighPrintsForAllProviders => {
+                "ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS"
+            }
+            EnvVar::EnableWarningLowPrintsForAllProviders => {
+                "ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS"
+            }
             EnvVar::EnableSuccessPrintsForAllProviders => "ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnablePartialSuccessPrintsForAllProviders => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableTimeMeasurementPrintsForAllProviders => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS",
+            EnvVar::EnablePartialSuccessPrintsForAllProviders => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS"
+            }
+            EnvVar::EnableTimeMeasurementPrintsForAllProviders => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS"
+            }
             EnvVar::EnableInfoPrintsForAllProviders => "ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS",
             EnvVar::EnableWriteErrorLogsInLocalFolder => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER",
             EnvVar::EnableWriteErrorLogsInMongo => "ENABLE_WRITE_ERROR_LOGS_IN_MONGO",
-            EnvVar::EnableInitializeMongoWithProvidersLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS",
+            EnvVar::EnableInitializeMongoWithProvidersLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS"
+            }
 
             EnvVar::ProvidersDbNameHandle => "PROVIDERS_DB_NAME_HANDLE",
-            EnvVar::ProvidersDbCollectionHandleSecondPart => "PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART",
-            EnvVar::ProvidersDbCollectionDocumentFieldNameHandle => "PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE",
+            EnvVar::ProvidersDbCollectionHandleSecondPart => {
+                "PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART"
+            }
+            EnvVar::ProvidersDbCollectionDocumentFieldNameHandle => {
+                "PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE"
+            }
             EnvVar::PathToProviderLinkPartsFolder => "PATH_TO_PROVIDER_LINK_PARTS_FOLDER",
             EnvVar::LogFileExtension => "LOG_FILE_EXTENSION",
             EnvVar::DbProvidersLogsNameHandle => "DB_PROVIDERS_LOGS_NAME_HANDLE",
-            EnvVar::DbProvidersLogsCollectionHandleSecondPart => "DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART",
-            EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle => "DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE",
+            EnvVar::DbProvidersLogsCollectionHandleSecondPart => {
+                "DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART"
+            }
+            EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle => {
+                "DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE"
+            }
 
-            EnvVar::EnableInitializeMongoWithArxivLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithBiorxivLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithGithubLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithHabrLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithMedrxivLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithRedditLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS",
-            EnvVar::EnableInitializeMongoWithTwitterLinkParts => "ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS",
+            EnvVar::EnableInitializeMongoWithArxivLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithBiorxivLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithGithubLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithHabrLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithMedrxivLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithRedditLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS"
+            }
+            EnvVar::EnableInitializeMongoWithTwitterLinkParts => {
+                "ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS"
+            }
 
             EnvVar::MongoFirstHandleUrlPart => "MONGO_FIRST_HANDLE_URL_PART",
             EnvVar::MongoSecondHandleUrlPart => "MONGO_SECOND_HANDLE_URL_PART",
@@ -143,36 +187,88 @@ impl EnvVar {
             EnvVar::EnableSuccessPrintsForTwitter => "ENABLE_SUCCESS_PRINTS_FOR_TWITTER",
 
             EnvVar::EnablePartialSuccessPrintsForArxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV",
-            EnvVar::EnablePartialSuccessPrintsForBiorxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV",
-            EnvVar::EnablePartialSuccessPrintsForGithub => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB",
+            EnvVar::EnablePartialSuccessPrintsForBiorxiv => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV"
+            }
+            EnvVar::EnablePartialSuccessPrintsForGithub => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB"
+            }
             EnvVar::EnablePartialSuccessPrintsForHabr => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR",
-            EnvVar::EnablePartialSuccessPrintsForMedrxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV",
-            EnvVar::EnablePartialSuccessPrintsForReddit => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT",
-            EnvVar::EnablePartialSuccessPrintsForTwitter => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER",
+            EnvVar::EnablePartialSuccessPrintsForMedrxiv => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV"
+            }
+            EnvVar::EnablePartialSuccessPrintsForReddit => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT"
+            }
+            EnvVar::EnablePartialSuccessPrintsForTwitter => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER"
+            }
 
-            EnvVar::EnableCleaningWarningLogsDirectoryForArxiv => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV",
-            EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV",
-            EnvVar::EnableCleaningWarningLogsDirectoryForGithub => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB",
-            EnvVar::EnableCleaningWarningLogsDirectoryForHabr => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR",
-            EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV",
-            EnvVar::EnableCleaningWarningLogsDirectoryForReddit => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT",
-            EnvVar::EnableCleaningWarningLogsDirectoryForTwitter => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER",
+            EnvVar::EnableCleaningWarningLogsDirectoryForArxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForGithub => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForHabr => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForReddit => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT"
+            }
+            EnvVar::EnableCleaningWarningLogsDirectoryForTwitter => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER"
+            }
 
-            EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForGithub => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForHabr => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForReddit => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT",
-            EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER",
+            EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForGithub => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForHabr => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForReddit => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT"
+            }
+            EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER"
+            }
 
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT",
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER",
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT"
+            }
+            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => {
+                "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER"
+            }
 
             EnvVar::EnableTimeMeasurementForArxiv => "ENABLE_TIME_MEASUREMENT_FOR_ARXIV",
             EnvVar::EnableTimeMeasurementForBiorxiv => "ENABLE_TIME_MEASUREMENT_FOR_BIORXIV",
@@ -198,13 +294,27 @@ impl EnvVar {
             EnvVar::EnableLinksLimitForReddit => "ENABLE_LINKS_LIMIT_FOR_REDDIT",
             EnvVar::EnableLinksLimitForTwitter => "ENABLE_LINKS_LIMIT_FOR_TWITTER",
 
-            EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO",
-            EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => "ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO",
+            EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO"
+            }
+            EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => {
+                "ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO"
+            }
 
             EnvVar::LinksLimitForArxiv => "LINKS_LIMIT_FOR_ARXIV",
             EnvVar::LinksLimitForBiorxiv => "LINKS_LIMIT_FOR_BIORXIV",
@@ -237,7 +347,7 @@ impl EnvVar {
             EnvVar::TimeMeasurementBlue => "TIME_MEASUREMENT_BLUE",
             EnvVar::InfoRed => "INFO_RED",
             EnvVar::InfoGreen => "INFO_GREEN",
-            EnvVar::InfoBlue =>"INFO_BLUE",
+            EnvVar::InfoBlue => "INFO_BLUE",
         }
     }
 }

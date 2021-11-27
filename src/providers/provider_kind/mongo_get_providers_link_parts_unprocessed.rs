@@ -1,11 +1,18 @@
 use std::collections::HashMap;
 
-use mongodb::{Client, options::ClientOptions, bson::{doc, Document}};
+use mongodb::{
+    bson::{doc, Document},
+    options::ClientOptions,
+    Client,
+};
 
-use crate::{mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector};
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 
-use crate::{mongo_integration::mongo_get_db_url::mongo_get_db_url, providers::provider_kind_enum::ProviderKind};
+use crate::{
+    mongo_integration::mongo_get_db_url::mongo_get_db_url,
+    providers::provider_kind_enum::ProviderKind,
+};
 
 use std::sync::{Arc, Mutex};
 
@@ -24,8 +31,8 @@ impl ProviderKind {
         let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
             ProviderKind,
             Result<Vec<String>, mongodb::error::Error>,
-        >::new()
-    ));
+        >::new(
+        )));
         let mut vec_of_tasks = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let vec_provider_kind_with_collection_names_under_arc_handle =

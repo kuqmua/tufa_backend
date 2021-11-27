@@ -1,9 +1,17 @@
-use mongodb::{Client, options::ClientOptions, bson::{doc, Document}};
+use mongodb::{
+    bson::{doc, Document},
+    options::ClientOptions,
+    Client,
+};
 
-use crate::{mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector};
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 
-use crate::{mongo_integration::mongo_get_db_url::mongo_get_db_url, prints::{print_colorful_message::print_colorful_message, print_type_enum::PrintType}, providers::provider_kind_enum::ProviderKind};
+use crate::{
+    mongo_integration::mongo_get_db_url::mongo_get_db_url,
+    prints::{print_colorful_message::print_colorful_message, print_type_enum::PrintType},
+    providers::provider_kind_enum::ProviderKind,
+};
 
 impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

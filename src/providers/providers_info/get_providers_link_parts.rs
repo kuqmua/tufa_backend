@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use crate::helpers::resource::Resource;
 
-use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::get_providers_json_local_data_processed::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
+use crate::providers::provider_kind_enum::ProviderKind;
 
 #[derive(Debug)]
 pub enum LocalResourceErrorStatus {
@@ -23,13 +23,20 @@ pub async fn get_providers_link_parts_as_hashmap(
         Resource::Local => {
             let (success_hashmap, errors_hashmap) =
                 ProviderKind::get_providers_json_local_data_processed();
-            (success_hashmap, LocalResourceErrorStatus::Local(errors_hashmap))
+            (
+                success_hashmap,
+                LocalResourceErrorStatus::Local(errors_hashmap),
+            )
         }
         // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
         Resource::Mongodb => {
-            let (success_hashmap, mongo_get_providers_link_part_processed_result) = ProviderKind::mongo_get_providers_link_parts_processed().await;
-            (success_hashmap, LocalResourceErrorStatus::Mongodb(mongo_get_providers_link_part_processed_result))
-        },
+            let (success_hashmap, mongo_get_providers_link_part_processed_result) =
+                ProviderKind::mongo_get_providers_link_parts_processed().await;
+            (
+                success_hashmap,
+                LocalResourceErrorStatus::Mongodb(mongo_get_providers_link_part_processed_result),
+            )
+        }
         Resource::PostgreSql => {
             todo!()
         }

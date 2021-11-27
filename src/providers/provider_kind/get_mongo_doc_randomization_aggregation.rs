@@ -1,8 +1,6 @@
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use mongodb::{
-    bson::{doc, Document}
-};
+use mongodb::bson::{doc, Document};
 
 impl ProviderKind {
     pub fn get_mongo_doc_randomization_aggregation(

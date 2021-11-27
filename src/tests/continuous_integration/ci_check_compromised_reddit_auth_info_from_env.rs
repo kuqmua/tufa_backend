@@ -22,7 +22,8 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::RedditUserAgent), e
+                        EnvVar::get_env_name(EnvVar::RedditUserAgent),
+                        e
                     );
                 }
             }
@@ -39,7 +40,8 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::RedditClientId), e
+                        EnvVar::get_env_name(EnvVar::RedditClientId),
+                        e
                     );
                 }
             }
@@ -56,7 +58,8 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::RedditClientSecret), e
+                        EnvVar::get_env_name(EnvVar::RedditClientSecret),
+                        e
                     );
                 }
             }
@@ -73,7 +76,8 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::RedditUsername), e
+                        EnvVar::get_env_name(EnvVar::RedditUsername),
+                        e
                     );
                 }
             }
@@ -90,7 +94,8 @@ fn ci_check_compromised_reddit_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::RedditPassword), e
+                        EnvVar::get_env_name(EnvVar::RedditPassword),
+                        e
                     );
                 }
             }

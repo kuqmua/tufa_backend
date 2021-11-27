@@ -1,5 +1,5 @@
-use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_enum::CleanLogsDirError;
+use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_enum::RemoveDirError;
 
 use std::collections::HashMap;

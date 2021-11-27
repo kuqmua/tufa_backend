@@ -22,7 +22,8 @@ fn ci_check_compromised_github_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::GithubName), e
+                        EnvVar::get_env_name(EnvVar::GithubName),
+                        e
                     );
                 }
             }
@@ -39,7 +40,8 @@ fn ci_check_compromised_github_auth_info() {
                 Err(e) => {
                     panic!(
                         "{} not found in env vars, error: {:#?}",
-                        EnvVar::get_env_name(EnvVar::GithubToken), e
+                        EnvVar::get_env_name(EnvVar::GithubToken),
+                        e
                     );
                 }
             }

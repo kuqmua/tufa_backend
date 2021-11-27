@@ -1,8 +1,8 @@
-use std::path::Path;
 use std::fs;
+use std::path::Path;
 
-use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_enum::CleanLogsDirError;
+use crate::providers::provider_kind_enum::ProviderKind;
 
 impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

@@ -9,8 +9,7 @@ impl ProviderKind {
             ProviderKind::get_string_name(provider_kind),
             CONFIG
                 .mongo_params
-                .providers_db_collection_handle_second_part
-                //todo rename it into db log collection
+                .providers_db_collection_handle_second_part //todo rename it into db log collection
         )
     }
 }

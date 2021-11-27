@@ -27,7 +27,18 @@ impl From<std::io::Error> for CleanLogsDirError {
     }
 }
 
-#[derive(EnumVariantCount, EnumIter, Clone, Debug, serde_derive::Serialize, serde_derive::Deserialize, PartialEq, Eq, Hash, Copy)]
+#[derive(
+    EnumVariantCount,
+    EnumIter,
+    Clone,
+    Debug,
+    serde_derive::Serialize,
+    serde_derive::Deserialize,
+    PartialEq,
+    Eq,
+    Hash,
+    Copy,
+)]
 pub enum ProviderKind {
     Arxiv,
     Biorxiv,

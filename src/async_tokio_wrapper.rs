@@ -17,8 +17,8 @@ use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 use crate::postgres_integration::models::insertable::new_post::NewPost;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
-use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
 
 use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 // for key in vec_of_provider_names.clone() {
@@ -113,7 +113,8 @@ pub async fn async_tokio_wrapper() {
     }
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let resource = Resource::Mongodb;
-        let (providers_link_parts, something) = get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
+        let (providers_link_parts, something) =
+            get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
         if providers_link_parts.is_empty() {
             print_colorful_message(
                 None,
