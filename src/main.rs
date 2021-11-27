@@ -229,6 +229,9 @@ mod tests {
         pub mod ci_check_new_env_vars;
     }
 }
+mod traits {
+    pub mod get_env_name_trait;
+}
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
