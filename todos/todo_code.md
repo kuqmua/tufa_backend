@@ -404,3 +404,7 @@ wrap blocking diesel function into spawn blocking under tokio runtime
 tokio main has configuration to configure how many threads to use (default - one thread)
 change it
 <br/>
+
+### -------------------
+rewrite into_vec impl for enums into array(from vec to array)
+<br/>
