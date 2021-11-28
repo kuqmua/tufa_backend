@@ -37,38 +37,12 @@ use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 use crate::config_mods::config_struct::ConfigStruct;
 
-use crate::providers::provider_kind_enum::ProviderKind;
-
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError<'static>> {
         let string_vars = EnvStringVar::get_env_values_hashmap()?;
         let bool_vars = EnvBoolVar::get_env_values_hashmap()?;
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
-        //todo: rewrite it with type system enum ProviderKind
-        let mut vec_of_provider_names_handle =
-            Vec::<&'static str>::with_capacity(ProviderKind::get_length());
-        if bool_vars[&EnvBoolVar::EnableArxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Arxiv));
-        }
-        if bool_vars[&EnvBoolVar::EnableBiorxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Biorxiv))
-        }
-        if bool_vars[&EnvBoolVar::EnableGithub] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Github));
-        }
-        if bool_vars[&EnvBoolVar::EnableHabr] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Habr))
-        }
-        if bool_vars[&EnvBoolVar::EnableMedrxiv] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Medrxiv))
-        }
-        if bool_vars[&EnvBoolVar::EnableReddit] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Reddit))
-        }
-        if bool_vars[&EnvBoolVar::EnableTwitter] {
-            vec_of_provider_names_handle.push(ProviderKind::get_string_name(ProviderKind::Twitter))
-        }
         let handle_config: ConfigStruct = ConfigStruct {
             github_authorization: GithubAuthorization {
                 github_name: string_vars[&EnvStringVar::GithubName].clone(),

@@ -172,23 +172,10 @@ and maybe rewrite it as struct with methods
 
 ### -------------------
 Resource::PostgreSql => { 
-
-<br/>
-
-### -------------------
-let mut vec_of_enums: Vec<ProviderKind> =
-            Vec::with_capacity(CONFIG.params.vec_of_provider_names.len());
-        //check if provider_names are unique
 <br/>
 
 ### -------------------
 rename this check_new_posts_threads_parts
-<br/>
-
-### -------------------
-Struct itertools::structs::Unique
-//check if provider_names are unique
-            for provider_name in &CONFIG.params.vec_of_provider_names {
 <br/>
 
 ### -------------------

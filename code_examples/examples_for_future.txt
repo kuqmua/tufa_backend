@@ -1,16 +1,3 @@
-// put_data_in_mongo(
-    //     &mongo_url,
-    //     &CONFIG.mongo_params.db_name_handle,
-    //     &CONFIG.mongo_params.db_collection_handle_second_part,
-    //     &CONFIG.mongo_params.db_collection_document_field_name_handle,
-    //     &CONFIG.mongo_params.path_to_provider_link_parts_folder,
-    //     CONFIG.mongo_params.vec_of_provider_names.clone(),
-    //     &CONFIG.mongo_params.file_extension,
-    // );
-
-# mongo_url="mongodb://root:rootpassword@localhost:27017"
-# mongo_url = "mongodb+srv://mongodbcloudlogin:mongodbcloudpassword@tufa-mongo.y2xob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
 //mongodb run command
 db.run_command(doc! {"ping": 1}, None).await?;
 let filter = doc! { "author": "George Orwell" };

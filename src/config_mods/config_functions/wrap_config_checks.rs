@@ -199,12 +199,6 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !ConfigStruct::check_valid_vec_of_provider_names(&config_handle) {
-        //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //         "vec_of_provider_names is not valid".to_string(),
-        //     ));
-        //     drop(error);
-        // }
         Ok(config_handle)
     }
 }
