@@ -342,10 +342,6 @@ except maybe loops or early return cases
 <br/>
 
 ### -------------------
-config get bool string u8 i64 vars number 
-<br/>
-
-### -------------------
 warning: variant is never constructed: `PostgreSql`
   --> src/providers_info/get_project_information/get_providers_link_parts.rs:62:5
    |
@@ -390,8 +386,4 @@ wrap blocking diesel function into spawn blocking under tokio runtime
 ### -------------------
 tokio main has configuration to configure how many threads to use (default - one thread)
 change it
-<br/>
-
-### -------------------
-rewrite into_vec impl for enums into array(from vec to array)
 <br/>
