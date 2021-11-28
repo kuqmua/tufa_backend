@@ -7,7 +7,7 @@ impl ProviderKind {
         format!(
             "{}{}{}{}",
             CONFIG.mongo_params.path_to_provider_link_parts_folder,
-            ProviderKind::get_string_name(provider_kind),
+            provider_kind,
             CONFIG
                 .mongo_params
                 .providers_db_collection_handle_second_part,

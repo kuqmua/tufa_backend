@@ -1,7 +1,6 @@
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::write_provider_json_into_file::write_provider_json_into_file;
-use crate::providers::provider_kind_enum::ProviderKind;
 use chrono::Local;
 use futures::future::join_all;
 use serde_json::json;
@@ -32,11 +31,11 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
-                    ProviderKind::get_string_name(provider_kind),
+                    provider_kind,
                     &CONFIG
                         .params
                         .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    ProviderKind::get_string_name(provider_kind),
+                    provider_kind,
                     replaced_link
                 ); //add save function what convert string into save path
                 vec_of_write_into_files_futures.push(write_provider_json_into_file(
@@ -54,17 +53,17 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.params.warning_logs_directory_name,
-                    ProviderKind::get_string_name(provider_kind),
+                    provider_kind,
                     &CONFIG
                         .params
                         .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    ProviderKind::get_string_name(provider_kind),
+                    provider_kind,
                     replaced_link
                 ); //add save function what convert string into save path
                 let json_object = json!({
                     "link": link,
                     "stringified_error": error.to_string(),
-                    "part_of": ProviderKind::get_string_name(provider_kind),
+                    "part_of": format!("{}",provider_kind),
                     "date": Local::now().to_string()
                 });
                 vec_of_write_into_files_futures.push(write_provider_json_into_file(

@@ -27,7 +27,7 @@ pub async fn mongo_insert_data(
             db_name_handle,
             format!(
                 "{}{}",
-                ProviderKind::get_string_name(provider_kind),
+                provider_kind,
                 CONFIG
                     .mongo_params
                     .providers_db_collection_handle_second_part

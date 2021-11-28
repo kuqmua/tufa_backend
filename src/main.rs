@@ -233,7 +233,6 @@ mod providers {
             pub mod is_enabled;
             pub mod is_mongo_initialization_enabled;
             pub mod is_prints_enabled;
-            pub mod is_provider_kind_string_exists;
             pub mod mongo_get_provider_link_parts_as_bson_string;
             pub mod mongo_get_providers_link_parts_processed;
             pub mod mongo_get_providers_link_parts_unprocessed;

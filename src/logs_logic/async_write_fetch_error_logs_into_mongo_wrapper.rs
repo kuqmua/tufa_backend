@@ -193,7 +193,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     let json = json!({
                         "link": link,
                         "stringified_error": error.to_string(),
-                        "part_of": ProviderKind::get_string_name(provider_kind),
+                        "part_of": format!("{}", provider_kind),
                         "date": Local::now().to_string()
                     });
                     let result_stringified_json = serde_json::to_string_pretty(&json);

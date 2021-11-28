@@ -33,7 +33,7 @@ impl NoItemsError {
                     "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                     "link": link,
                     "tag": tag,
-                    "part_of": ProviderKind::get_string_name(*provider_kind),
+                    "part_of": format!("{}", provider_kind),
                     "date": Local::now().to_string()
                 })
             }
@@ -42,14 +42,14 @@ impl NoItemsError {
                 "link": link,
                 "string": string,
                 "error": error,
-                "part_of": ProviderKind::get_string_name(*provider_kind),
+                "part_of": format!("{}", provider_kind),
                 "date": Local::now().to_string()
             }),
             NoItemsError::NoTag(tag) => json!({
                 "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                 "link": link,
                 "tag": tag,
-                "part_of": ProviderKind::get_string_name(*provider_kind),
+                "part_of": format!("{}", provider_kind),
                 "date": Local::now().to_string()
             }),
         }
