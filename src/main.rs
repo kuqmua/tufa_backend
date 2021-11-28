@@ -204,9 +204,7 @@ mod providers {
         pub mod providers_init_json_schema;
     }
     pub mod provider_kind_impl {
-        pub mod traits {
-            pub mod display;
-        }
+        pub mod traits {}
         pub mod enable_links_limit_for;
         pub mod enable_randomize_order_mongo_link_parts_for;
         pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;

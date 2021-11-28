@@ -2,7 +2,6 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 impl ProviderKind {
     pub fn get_string_name(provider_kind: ProviderKind) -> &'static str {
-        //todo: procedural macros
         match provider_kind {
             ProviderKind::Arxiv => "arxiv",
             ProviderKind::Biorxiv => "biorxiv",
