@@ -1,8 +1,10 @@
+use procedural_macros_lib::AllVariants;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum_macros::EnumIter;
 
 #[derive(
+    AllVariants,
     EnumVariantCount,
     EnumIter,
     Clone,
