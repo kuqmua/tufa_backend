@@ -224,7 +224,6 @@ mod providers {
             pub mod get_provider_links;
             pub mod get_providers_json_local_data_processed;
             pub mod get_providers_json_local_data_unprocessed;
-            pub mod get_string_name;
             pub mod into_string_name_and_kind_hashmap;
             pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
