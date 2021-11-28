@@ -72,11 +72,7 @@ pub async fn check_new_posts_threads_parts(
                             PrintType::WarningLow,
                             file!().to_string(),
                             line!().to_string(),
-                            format!(
-                                "vec_of_provider_links.is_empty - {} for {:#?}",
-                                ProviderKind::get_string_name(provider_kind),
-                                provider_kind
-                            ),
+                            format!("vec_of_provider_links.is_empty for {:?}", provider_kind),
                         );
                     } else {
                         threads_vec.push(thread::spawn(move || {
@@ -95,11 +91,7 @@ pub async fn check_new_posts_threads_parts(
                     PrintType::Error,
                     file!().to_string(),
                     line!().to_string(),
-                    format!(
-                        "no such provider_name - {} for {:#?}",
-                        ProviderKind::get_string_name(provider_kind),
-                        provider_kind
-                    ),
+                    format!("no such provider_name for {:?}", provider_kind),
                 );
             }
         }

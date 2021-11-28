@@ -24,7 +24,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 provider_kind,
             } => {
                 let json_object = NoItemsError::into_json_with_link_and_provider_kind(
-                    &link.clone(), //todo understand lifetimes to remove it
+                    &link,
                     &no_items_error,
                     &provider_kind,
                 );
