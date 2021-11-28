@@ -132,7 +132,7 @@ pub mod config_mods {
         pub mod providers_links_limits_struct;
         pub mod reddit_authorization_struct;
     }
-    pub mod env_var_enum_functions {
+    pub mod env_var_enum_impl {
         pub mod get_env_name;
         pub mod into_array;
         pub mod into_string_name_and_kind_hashmap;
