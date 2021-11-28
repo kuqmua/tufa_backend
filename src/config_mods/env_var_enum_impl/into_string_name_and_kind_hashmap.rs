@@ -4,6 +4,8 @@ use strum::IntoEnumIterator;
 
 use crate::config_mods::env_var_enum::EnvVar;
 
+use crate::traits::get_env_name_trait::GetEnvName;
+
 impl EnvVar {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, EnvVar> {
@@ -13,7 +15,7 @@ impl EnvVar {
         > = HashMap::with_capacity(EnvVar::get_length());
         for env_var_name_kind_kind in EnvVar::iter() {
             config_env_var_name_kind_string_to_enum_struct_hasmap.insert(
-                EnvVar::get_env_name(env_var_name_kind_kind),
+                env_var_name_kind_kind.get_env_name(),
                 env_var_name_kind_kind,
             );
         }

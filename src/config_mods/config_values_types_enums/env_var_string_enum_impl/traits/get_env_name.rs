@@ -7,99 +7,90 @@ use crate::traits::get_env_name_trait::GetEnvName;
 impl GetEnvName for EnvStringVar {
     fn get_env_name(self: &EnvStringVar) -> &'static str {
         match self {
-            EnvStringVar::GithubName => EnvVar::get_env_name(EnvVar::GithubName),
-            EnvStringVar::GithubToken => EnvVar::get_env_name(EnvVar::GithubToken),
+            EnvStringVar::GithubName => EnvVar::GithubName.get_env_name(),
+            EnvStringVar::GithubToken => EnvVar::GithubToken.get_env_name(),
 
-            EnvStringVar::RedditUserAgent => EnvVar::get_env_name(EnvVar::RedditUserAgent),
-            EnvStringVar::RedditClientId => EnvVar::get_env_name(EnvVar::RedditClientId),
-            EnvStringVar::RedditClientSecret => EnvVar::get_env_name(EnvVar::RedditClientSecret),
-            EnvStringVar::RedditUsername => EnvVar::get_env_name(EnvVar::RedditUsername),
-            EnvStringVar::RedditPassword => EnvVar::get_env_name(EnvVar::RedditPassword),
+            EnvStringVar::RedditUserAgent => EnvVar::RedditUserAgent.get_env_name(),
+            EnvStringVar::RedditClientId => EnvVar::RedditClientId.get_env_name(),
+            EnvStringVar::RedditClientSecret => EnvVar::RedditClientSecret.get_env_name(),
+            EnvStringVar::RedditUsername => EnvVar::RedditUsername.get_env_name(),
+            EnvStringVar::RedditPassword => EnvVar::RedditPassword.get_env_name(),
 
-            EnvStringVar::StartingCheckLink => EnvVar::get_env_name(EnvVar::StartingCheckLink),
+            EnvStringVar::StartingCheckLink => EnvVar::StartingCheckLink.get_env_name(),
             EnvStringVar::WarningLogsDirectoryName => {
-                EnvVar::get_env_name(EnvVar::WarningLogsDirectoryName)
+                EnvVar::WarningLogsDirectoryName.get_env_name()
             }
             EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
-                EnvVar::get_env_name(
-                    EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
-                )
+                EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
+                    .get_env_name()
             }
 
-            EnvStringVar::ProvidersDbNameHandle => {
-                EnvVar::get_env_name(EnvVar::ProvidersDbNameHandle)
-            }
+            EnvStringVar::ProvidersDbNameHandle => EnvVar::ProvidersDbNameHandle.get_env_name(),
             EnvStringVar::ProvidersDbCollectionHandleSecondPart => {
-                EnvVar::get_env_name(EnvVar::ProvidersDbCollectionHandleSecondPart)
+                EnvVar::ProvidersDbCollectionHandleSecondPart.get_env_name()
             }
             EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle => {
-                EnvVar::get_env_name(EnvVar::ProvidersDbCollectionDocumentFieldNameHandle)
+                EnvVar::ProvidersDbCollectionDocumentFieldNameHandle.get_env_name()
             }
             EnvStringVar::PathToProviderLinkPartsFolder => {
-                EnvVar::get_env_name(EnvVar::PathToProviderLinkPartsFolder)
+                EnvVar::PathToProviderLinkPartsFolder.get_env_name()
             }
-            EnvStringVar::LogFileExtension => EnvVar::get_env_name(EnvVar::LogFileExtension),
+            EnvStringVar::LogFileExtension => EnvVar::LogFileExtension.get_env_name(),
             EnvStringVar::DbProvidersLogsNameHandle => {
-                EnvVar::get_env_name(EnvVar::DbProvidersLogsNameHandle)
+                EnvVar::DbProvidersLogsNameHandle.get_env_name()
             }
             EnvStringVar::DbProvidersLogsCollectionHandleSecondPart => {
-                EnvVar::get_env_name(EnvVar::DbProvidersLogsCollectionHandleSecondPart)
+                EnvVar::DbProvidersLogsCollectionHandleSecondPart.get_env_name()
             }
             EnvStringVar::DbProvidersLogsCollectionDocumentFieldNameHandle => {
-                EnvVar::get_env_name(EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle)
+                EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle.get_env_name()
             }
 
-            EnvStringVar::MongoFirstHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::MongoFirstHandleUrlPart)
-            }
+            EnvStringVar::MongoFirstHandleUrlPart => EnvVar::MongoFirstHandleUrlPart.get_env_name(),
             EnvStringVar::MongoSecondHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::MongoSecondHandleUrlPart)
+                EnvVar::MongoSecondHandleUrlPart.get_env_name()
             }
-            EnvStringVar::MongoThirdHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::MongoThirdHandleUrlPart)
-            }
+            EnvStringVar::MongoThirdHandleUrlPart => EnvVar::MongoThirdHandleUrlPart.get_env_name(),
             EnvStringVar::MongoFourthHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::MongoFourthHandleUrlPart)
+                EnvVar::MongoFourthHandleUrlPart.get_env_name()
             }
-            EnvStringVar::MongoFifthHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::MongoFifthHandleUrlPart)
-            }
+            EnvStringVar::MongoFifthHandleUrlPart => EnvVar::MongoFifthHandleUrlPart.get_env_name(),
 
-            EnvStringVar::MongoLogin => EnvVar::get_env_name(EnvVar::MongoLogin),
-            EnvStringVar::MongoPassword => EnvVar::get_env_name(EnvVar::MongoPassword),
-            EnvStringVar::MongoIp => EnvVar::get_env_name(EnvVar::MongoIp),
-            EnvStringVar::MongoPort => EnvVar::get_env_name(EnvVar::MongoPort),
-            EnvStringVar::MongoParams => EnvVar::get_env_name(EnvVar::MongoParams),
+            EnvStringVar::MongoLogin => EnvVar::MongoLogin.get_env_name(),
+            EnvStringVar::MongoPassword => EnvVar::MongoPassword.get_env_name(),
+            EnvStringVar::MongoIp => EnvVar::MongoIp.get_env_name(),
+            EnvStringVar::MongoPort => EnvVar::MongoPort.get_env_name(),
+            EnvStringVar::MongoParams => EnvVar::MongoParams.get_env_name(),
 
             EnvStringVar::PostgresFirstHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::PostgresFirstHandleUrlPart)
+                EnvVar::PostgresFirstHandleUrlPart.get_env_name()
             }
             EnvStringVar::PostgresSecondHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::PostgresSecondHandleUrlPart)
+                EnvVar::PostgresSecondHandleUrlPart.get_env_name()
             }
             EnvStringVar::PostgresThirdHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::PostgresThirdHandleUrlPart)
+                EnvVar::PostgresThirdHandleUrlPart.get_env_name()
             }
             EnvStringVar::PostgresFourthHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::PostgresFourthHandleUrlPart)
+                EnvVar::PostgresFourthHandleUrlPart.get_env_name()
             }
             EnvStringVar::PostgresFifthHandleUrlPart => {
-                EnvVar::get_env_name(EnvVar::PostgresFifthHandleUrlPart)
+                EnvVar::PostgresFifthHandleUrlPart.get_env_name()
             }
 
-            EnvStringVar::PostgresLogin => EnvVar::get_env_name(EnvVar::PostgresLogin),
-            EnvStringVar::PostgresPassword => EnvVar::get_env_name(EnvVar::PostgresPassword),
-            EnvStringVar::PostgresIp => EnvVar::get_env_name(EnvVar::PostgresIp),
-            EnvStringVar::PostgresPort => EnvVar::get_env_name(EnvVar::PostgresPort),
-            EnvStringVar::PostgresDb => EnvVar::get_env_name(EnvVar::PostgresDb),
+            EnvStringVar::PostgresLogin => EnvVar::PostgresLogin.get_env_name(),
+            EnvStringVar::PostgresPassword => EnvVar::PostgresPassword.get_env_name(),
+            EnvStringVar::PostgresIp => EnvVar::PostgresIp.get_env_name(),
+            EnvStringVar::PostgresPort => EnvVar::PostgresPort.get_env_name(),
+            EnvStringVar::PostgresDb => EnvVar::PostgresDb.get_env_name(),
 
-            EnvStringVar::ArxivLink => EnvVar::get_env_name(EnvVar::ArxivLink),
-            EnvStringVar::BiorxivLink => EnvVar::get_env_name(EnvVar::BiorxivLink),
-            EnvStringVar::GithubLink => EnvVar::get_env_name(EnvVar::GithubLink),
-            EnvStringVar::HabrLink => EnvVar::get_env_name(EnvVar::HabrLink),
-            EnvStringVar::MedrxivLink => EnvVar::get_env_name(EnvVar::MedrxivLink),
-            EnvStringVar::RedditLink => EnvVar::get_env_name(EnvVar::RedditLink),
-            EnvStringVar::TwitterLink => EnvVar::get_env_name(EnvVar::TwitterLink),
+            EnvStringVar::ArxivLink => EnvVar::ArxivLink.get_env_name(),
+            EnvStringVar::BiorxivLink => EnvVar::BiorxivLink.get_env_name(),
+            EnvStringVar::GithubLink => EnvVar::GithubLink.get_env_name(),
+            EnvStringVar::HabrLink => EnvVar::HabrLink.get_env_name(),
+            EnvStringVar::MedrxivLink => EnvVar::MedrxivLink.get_env_name(),
+            EnvStringVar::RedditLink => EnvVar::RedditLink.get_env_name(),
+            EnvStringVar::TwitterLink => EnvVar::TwitterLink.get_env_name(),
         }
     }
 }

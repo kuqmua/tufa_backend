@@ -1,8 +1,10 @@
 use crate::config_mods::env_var_enum::EnvVar;
 
-impl EnvVar {
-    pub fn get_env_name(env_var_name_kind: EnvVar) -> &'static str {
-        match env_var_name_kind {
+use crate::traits::get_env_name_trait::GetEnvName;
+
+impl GetEnvName for EnvVar {
+    fn get_env_name(self: &EnvVar) -> &'static str {
+        match self {
             EnvVar::GithubName => "GITHUB_NAME",
             EnvVar::GithubToken => "GITHUB_TOKEN",
 

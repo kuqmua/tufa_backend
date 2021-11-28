@@ -6,378 +6,354 @@ use crate::traits::get_env_name_trait::GetEnvName;
 impl GetEnvName for EnvBoolVar {
     fn get_env_name(self: &EnvBoolVar) -> &'static str {
         match self {
-            EnvBoolVar::EnableProviders => EnvVar::get_env_name(EnvVar::EnableProviders),
+            EnvBoolVar::EnableProviders => EnvVar::EnableProviders.get_env_name(),
             EnvBoolVar::EnableCleaningWarningLogsDirectory => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectory)
+                EnvVar::EnableCleaningWarningLogsDirectory.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongo => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongo)
+                EnvVar::EnableCleaningWarningLogsDbInMongo.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo)
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo.get_env_name()
             }
-            EnvBoolVar::EnableTimeMeasurement => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurement)
-            }
-            EnvBoolVar::EnableProviderLinksLimit => {
-                EnvVar::get_env_name(EnvVar::EnableProviderLinksLimit)
-            }
+            EnvBoolVar::EnableTimeMeasurement => EnvVar::EnableTimeMeasurement.get_env_name(),
+            EnvBoolVar::EnableProviderLinksLimit => EnvVar::EnableProviderLinksLimit.get_env_name(),
             EnvBoolVar::EnableCommonProvidersLinksLimit => {
-                EnvVar::get_env_name(EnvVar::EnableCommonProvidersLinksLimit)
+                EnvVar::EnableCommonProvidersLinksLimit.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo.get_env_name()
             }
-            EnvBoolVar::EnablePrints => EnvVar::get_env_name(EnvVar::EnablePrints),
-            EnvBoolVar::EnableErrorPrints => EnvVar::get_env_name(EnvVar::EnableErrorPrints),
-            EnvBoolVar::EnableWarningHighPrints => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrints)
-            }
-            EnvBoolVar::EnableWarningLowPrints => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrints)
-            }
-            EnvBoolVar::EnableSuccessPrints => EnvVar::get_env_name(EnvVar::EnableSuccessPrints),
+            EnvBoolVar::EnablePrints => EnvVar::EnablePrints.get_env_name(),
+            EnvBoolVar::EnableErrorPrints => EnvVar::EnableErrorPrints.get_env_name(),
+            EnvBoolVar::EnableWarningHighPrints => EnvVar::EnableWarningHighPrints.get_env_name(),
+            EnvBoolVar::EnableWarningLowPrints => EnvVar::EnableWarningLowPrints.get_env_name(),
+            EnvBoolVar::EnableSuccessPrints => EnvVar::EnableSuccessPrints.get_env_name(),
             EnvBoolVar::EnablePartialSuccessPrints => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrints)
+                EnvVar::EnablePartialSuccessPrints.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementPrints => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementPrints)
+                EnvVar::EnableTimeMeasurementPrints.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryPrints => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryPrints)
+                EnvVar::EnableCleaningWarningLogsDirectoryPrints.get_env_name()
             }
-            EnvBoolVar::EnableInfoPrints => EnvVar::get_env_name(EnvVar::EnableInfoPrints),
-            EnvBoolVar::EnableAllProvidersPrints => {
-                EnvVar::get_env_name(EnvVar::EnableAllProvidersPrints)
-            }
+            EnvBoolVar::EnableInfoPrints => EnvVar::EnableInfoPrints.get_env_name(),
+            EnvBoolVar::EnableAllProvidersPrints => EnvVar::EnableAllProvidersPrints.get_env_name(),
             EnvBoolVar::EnableErrorPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForAllProviders)
+                EnvVar::EnableErrorPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForAllProviders)
+                EnvVar::EnableWarningHighPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForAllProviders)
+                EnvVar::EnableWarningLowPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForAllProviders)
+                EnvVar::EnableSuccessPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForAllProviders)
+                EnvVar::EnablePartialSuccessPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementPrintsForAllProviders)
+                EnvVar::EnableTimeMeasurementPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => {
-                EnvVar::get_env_name(
-                    EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders,
-                )
+                EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableInfoPrintsForAllProviders => {
-                EnvVar::get_env_name(EnvVar::EnableInfoPrintsForAllProviders)
+                EnvVar::EnableInfoPrintsForAllProviders.get_env_name()
             }
             EnvBoolVar::EnableWriteErrorLogsInLocalFolder => {
-                EnvVar::get_env_name(EnvVar::EnableWriteErrorLogsInLocalFolder)
+                EnvVar::EnableWriteErrorLogsInLocalFolder.get_env_name()
             }
             EnvBoolVar::EnableWriteErrorLogsInMongo => {
-                EnvVar::get_env_name(EnvVar::EnableWriteErrorLogsInMongo)
+                EnvVar::EnableWriteErrorLogsInMongo.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithProvidersLinkParts)
+                EnvVar::EnableInitializeMongoWithProvidersLinkParts.get_env_name()
             }
 
             EnvBoolVar::EnableInitializeMongoWithArxivLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithArxivLinkParts)
+                EnvVar::EnableInitializeMongoWithArxivLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithBiorxivLinkParts)
+                EnvVar::EnableInitializeMongoWithBiorxivLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithGithubLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithGithubLinkParts)
+                EnvVar::EnableInitializeMongoWithGithubLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithHabrLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithHabrLinkParts)
+                EnvVar::EnableInitializeMongoWithHabrLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithMedrxivLinkParts)
+                EnvVar::EnableInitializeMongoWithMedrxivLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithRedditLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithRedditLinkParts)
+                EnvVar::EnableInitializeMongoWithRedditLinkParts.get_env_name()
             }
             EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts => {
-                EnvVar::get_env_name(EnvVar::EnableInitializeMongoWithTwitterLinkParts)
+                EnvVar::EnableInitializeMongoWithTwitterLinkParts.get_env_name()
             }
 
-            EnvBoolVar::EnableArxiv => EnvVar::get_env_name(EnvVar::EnableArxiv),
-            EnvBoolVar::EnableBiorxiv => EnvVar::get_env_name(EnvVar::EnableBiorxiv),
-            EnvBoolVar::EnableGithub => EnvVar::get_env_name(EnvVar::EnableGithub),
-            EnvBoolVar::EnableHabr => EnvVar::get_env_name(EnvVar::EnableHabr),
-            EnvBoolVar::EnableMedrxiv => EnvVar::get_env_name(EnvVar::EnableMedrxiv),
-            EnvBoolVar::EnableReddit => EnvVar::get_env_name(EnvVar::EnableReddit),
-            EnvBoolVar::EnableTwitter => EnvVar::get_env_name(EnvVar::EnableTwitter),
+            EnvBoolVar::EnableArxiv => EnvVar::EnableArxiv.get_env_name(),
+            EnvBoolVar::EnableBiorxiv => EnvVar::EnableBiorxiv.get_env_name(),
+            EnvBoolVar::EnableGithub => EnvVar::EnableGithub.get_env_name(),
+            EnvBoolVar::EnableHabr => EnvVar::EnableHabr.get_env_name(),
+            EnvBoolVar::EnableMedrxiv => EnvVar::EnableMedrxiv.get_env_name(),
+            EnvBoolVar::EnableReddit => EnvVar::EnableReddit.get_env_name(),
+            EnvBoolVar::EnableTwitter => EnvVar::EnableTwitter.get_env_name(),
 
-            EnvBoolVar::EnablePrintsArxiv => EnvVar::get_env_name(EnvVar::EnablePrintsArxiv),
-            EnvBoolVar::EnablePrintsBiorxiv => EnvVar::get_env_name(EnvVar::EnablePrintsBiorxiv),
-            EnvBoolVar::EnablePrintsGithub => EnvVar::get_env_name(EnvVar::EnablePrintsGithub),
-            EnvBoolVar::EnablePrintsHabr => EnvVar::get_env_name(EnvVar::EnablePrintsHabr),
-            EnvBoolVar::EnablePrintsMedrxiv => EnvVar::get_env_name(EnvVar::EnablePrintsMedrxiv),
-            EnvBoolVar::EnablePrintsReddit => EnvVar::get_env_name(EnvVar::EnablePrintsReddit),
-            EnvBoolVar::EnablePrintsTwitter => EnvVar::get_env_name(EnvVar::EnablePrintsTwitter),
+            EnvBoolVar::EnablePrintsArxiv => EnvVar::EnablePrintsArxiv.get_env_name(),
+            EnvBoolVar::EnablePrintsBiorxiv => EnvVar::EnablePrintsBiorxiv.get_env_name(),
+            EnvBoolVar::EnablePrintsGithub => EnvVar::EnablePrintsGithub.get_env_name(),
+            EnvBoolVar::EnablePrintsHabr => EnvVar::EnablePrintsHabr.get_env_name(),
+            EnvBoolVar::EnablePrintsMedrxiv => EnvVar::EnablePrintsMedrxiv.get_env_name(),
+            EnvBoolVar::EnablePrintsReddit => EnvVar::EnablePrintsReddit.get_env_name(),
+            EnvBoolVar::EnablePrintsTwitter => EnvVar::EnablePrintsTwitter.get_env_name(),
 
             EnvBoolVar::EnableWarningHighPrintsForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForArxiv)
+                EnvVar::EnableWarningHighPrintsForArxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForBiorxiv)
+                EnvVar::EnableWarningHighPrintsForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForGithub)
+                EnvVar::EnableWarningHighPrintsForGithub.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForHabr)
+                EnvVar::EnableWarningHighPrintsForHabr.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForMedrxiv)
+                EnvVar::EnableWarningHighPrintsForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForReddit)
+                EnvVar::EnableWarningHighPrintsForReddit.get_env_name()
             }
             EnvBoolVar::EnableWarningHighPrintsForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableWarningHighPrintsForTwitter)
+                EnvVar::EnableWarningHighPrintsForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableWarningLowPrintsForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForArxiv)
+                EnvVar::EnableWarningLowPrintsForArxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForBiorxiv)
+                EnvVar::EnableWarningLowPrintsForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForGithub)
+                EnvVar::EnableWarningLowPrintsForGithub.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForHabr)
+                EnvVar::EnableWarningLowPrintsForHabr.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForMedrxiv)
+                EnvVar::EnableWarningLowPrintsForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForReddit)
+                EnvVar::EnableWarningLowPrintsForReddit.get_env_name()
             }
             EnvBoolVar::EnableWarningLowPrintsForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableWarningLowPrintsForTwitter)
+                EnvVar::EnableWarningLowPrintsForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableErrorPrintsForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForArxiv)
+                EnvVar::EnableErrorPrintsForArxiv.get_env_name()
             }
             EnvBoolVar::EnableErrorPrintsForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForBiorxiv)
+                EnvVar::EnableErrorPrintsForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableErrorPrintsForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForGithub)
+                EnvVar::EnableErrorPrintsForGithub.get_env_name()
             }
-            EnvBoolVar::EnableErrorPrintsForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForHabr)
-            }
+            EnvBoolVar::EnableErrorPrintsForHabr => EnvVar::EnableErrorPrintsForHabr.get_env_name(),
             EnvBoolVar::EnableErrorPrintsForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForMedrxiv)
+                EnvVar::EnableErrorPrintsForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableErrorPrintsForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForReddit)
+                EnvVar::EnableErrorPrintsForReddit.get_env_name()
             }
             EnvBoolVar::EnableErrorPrintsForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableErrorPrintsForTwitter)
+                EnvVar::EnableErrorPrintsForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableSuccessPrintsForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForArxiv)
+                EnvVar::EnableSuccessPrintsForArxiv.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForBiorxiv)
+                EnvVar::EnableSuccessPrintsForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForGithub)
+                EnvVar::EnableSuccessPrintsForGithub.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForHabr)
+                EnvVar::EnableSuccessPrintsForHabr.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForMedrxiv)
+                EnvVar::EnableSuccessPrintsForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForReddit)
+                EnvVar::EnableSuccessPrintsForReddit.get_env_name()
             }
             EnvBoolVar::EnableSuccessPrintsForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableSuccessPrintsForTwitter)
+                EnvVar::EnableSuccessPrintsForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnablePartialSuccessPrintsForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForArxiv)
+                EnvVar::EnablePartialSuccessPrintsForArxiv.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForBiorxiv)
+                EnvVar::EnablePartialSuccessPrintsForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForGithub => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForGithub)
+                EnvVar::EnablePartialSuccessPrintsForGithub.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForHabr => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForHabr)
+                EnvVar::EnablePartialSuccessPrintsForHabr.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForMedrxiv)
+                EnvVar::EnablePartialSuccessPrintsForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForReddit => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForReddit)
+                EnvVar::EnablePartialSuccessPrintsForReddit.get_env_name()
             }
             EnvBoolVar::EnablePartialSuccessPrintsForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnablePartialSuccessPrintsForTwitter)
+                EnvVar::EnablePartialSuccessPrintsForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForArxiv)
+                EnvVar::EnableCleaningWarningLogsDirectoryForArxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv)
+                EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForGithub)
+                EnvVar::EnableCleaningWarningLogsDirectoryForGithub.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForHabr)
+                EnvVar::EnableCleaningWarningLogsDirectoryForHabr.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv)
+                EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForReddit)
+                EnvVar::EnableCleaningWarningLogsDirectoryForReddit.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDirectoryForTwitter)
+                EnvVar::EnableCleaningWarningLogsDirectoryForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForGithub)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForGithub.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForHabr)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForHabr.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForReddit)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForReddit.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbInMongoForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter)
+                EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv)
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => {
-                EnvVar::get_env_name(
-                    EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv,
-                )
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub)
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr)
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => {
-                EnvVar::get_env_name(
-                    EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv,
-                )
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit)
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit.get_env_name()
             }
             EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => {
-                EnvVar::get_env_name(
-                    EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter,
-                )
+                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableTimeMeasurementForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForArxiv)
+                EnvVar::EnableTimeMeasurementForArxiv.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForBiorxiv)
+                EnvVar::EnableTimeMeasurementForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForGithub)
+                EnvVar::EnableTimeMeasurementForGithub.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForHabr)
+                EnvVar::EnableTimeMeasurementForHabr.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForMedrxiv)
+                EnvVar::EnableTimeMeasurementForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForReddit)
+                EnvVar::EnableTimeMeasurementForReddit.get_env_name()
             }
             EnvBoolVar::EnableTimeMeasurementForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableTimeMeasurementForTwitter)
+                EnvVar::EnableTimeMeasurementForTwitter.get_env_name()
             }
 
-            EnvBoolVar::EnableInfoForArxiv => EnvVar::get_env_name(EnvVar::EnableInfoForArxiv),
-            EnvBoolVar::EnableInfoForBiorxiv => EnvVar::get_env_name(EnvVar::EnableInfoForBiorxiv),
-            EnvBoolVar::EnableInfoForGithub => EnvVar::get_env_name(EnvVar::EnableInfoForGithub),
-            EnvBoolVar::EnableInfoForHabr => EnvVar::get_env_name(EnvVar::EnableInfoForHabr),
-            EnvBoolVar::EnableInfoForMedrxiv => EnvVar::get_env_name(EnvVar::EnableInfoForMedrxiv),
-            EnvBoolVar::EnableInfoForReddit => EnvVar::get_env_name(EnvVar::EnableInfoForReddit),
-            EnvBoolVar::EnableInfoForTwitter => EnvVar::get_env_name(EnvVar::EnableInfoForTwitter),
+            EnvBoolVar::EnableInfoForArxiv => EnvVar::EnableInfoForArxiv.get_env_name(),
+            EnvBoolVar::EnableInfoForBiorxiv => EnvVar::EnableInfoForBiorxiv.get_env_name(),
+            EnvBoolVar::EnableInfoForGithub => EnvVar::EnableInfoForGithub.get_env_name(),
+            EnvBoolVar::EnableInfoForHabr => EnvVar::EnableInfoForHabr.get_env_name(),
+            EnvBoolVar::EnableInfoForMedrxiv => EnvVar::EnableInfoForMedrxiv.get_env_name(),
+            EnvBoolVar::EnableInfoForReddit => EnvVar::EnableInfoForReddit.get_env_name(),
+            EnvBoolVar::EnableInfoForTwitter => EnvVar::EnableInfoForTwitter.get_env_name(),
 
-            EnvBoolVar::EnableLinksLimitForArxiv => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForArxiv)
-            }
+            EnvBoolVar::EnableLinksLimitForArxiv => EnvVar::EnableLinksLimitForArxiv.get_env_name(),
             EnvBoolVar::EnableLinksLimitForBiorxiv => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForBiorxiv)
+                EnvVar::EnableLinksLimitForBiorxiv.get_env_name()
             }
             EnvBoolVar::EnableLinksLimitForGithub => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForGithub)
+                EnvVar::EnableLinksLimitForGithub.get_env_name()
             }
-            EnvBoolVar::EnableLinksLimitForHabr => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForHabr)
-            }
+            EnvBoolVar::EnableLinksLimitForHabr => EnvVar::EnableLinksLimitForHabr.get_env_name(),
             EnvBoolVar::EnableLinksLimitForMedrxiv => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForMedrxiv)
+                EnvVar::EnableLinksLimitForMedrxiv.get_env_name()
             }
             EnvBoolVar::EnableLinksLimitForReddit => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForReddit)
+                EnvVar::EnableLinksLimitForReddit.get_env_name()
             }
             EnvBoolVar::EnableLinksLimitForTwitter => {
-                EnvVar::get_env_name(EnvVar::EnableLinksLimitForTwitter)
+                EnvVar::EnableLinksLimitForTwitter.get_env_name()
             }
 
             EnvBoolVar::EnableRandomizeOrderForArxivLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForGithubLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForHabrLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForRedditLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo.get_env_name()
             }
             EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => {
-                EnvVar::get_env_name(EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo)
+                EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo.get_env_name()
             }
         }
     }
