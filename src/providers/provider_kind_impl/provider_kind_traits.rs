@@ -5,6 +5,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 impl ProviderKindTrait for ProviderKind {
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_link_limits_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -44,6 +45,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -83,6 +85,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_check_link(&self) -> &'static str {
         match self {
             ProviderKind::Arxiv => &CONFIG.providers_check_links.arxiv_link,
@@ -94,6 +97,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => &CONFIG.providers_check_links.habr_link,
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_init_local_data_file_path(&self) -> String {
         format!(
             "{}{}{}{}",
@@ -115,6 +119,17 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Medrxiv => Some("</item>"),
             ProviderKind::Reddit => None,
             ProviderKind::Twitter => Some("</item>"),
+        }
+    }
+    fn get_links_limit_for_provider(&self) -> i64 {
+        match self {
+            ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.providers_links_limits.links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.providers_links_limits.links_limit_for_github,
+            ProviderKind::Habr => CONFIG.providers_links_limits.links_limit_for_habr,
+            ProviderKind::Medrxiv => CONFIG.providers_links_limits.links_limit_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
+            ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
         }
     }
 }

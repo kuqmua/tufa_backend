@@ -10,10 +10,10 @@ impl ProviderKind {
         if provider_kind.is_link_limits_enabled() {
             if provider_kind.is_randomize_order_mongo_link_parts_enabled() {
                 Some(
-                    doc! { "$sample" : {"size": ProviderKind::get_links_limit_for_provider(provider_kind) }},
+                    doc! { "$sample" : {"size": provider_kind.get_links_limit_for_provider() }},
                 )
             } else {
-                Some(doc! { "$limit" : ProviderKind::get_links_limit_for_provider(provider_kind) })
+                Some(doc! { "$limit" : provider_kind.get_links_limit_for_provider() })
             }
         } else {
             None

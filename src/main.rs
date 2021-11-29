@@ -208,7 +208,6 @@ mod providers {
             pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
             pub mod get_enabled_providers_vec;
             pub mod get_enabled_string_name_vec;
-            pub mod get_links_limit_for_provider;
             pub mod get_mongo_doc_randomization_aggregation;
             pub mod get_mongo_initialization_provider_kind_vec;
             pub mod get_mongo_initialization_string_name_vec;

@@ -4,4 +4,5 @@ pub trait ProviderKindTrait {
     fn get_check_link(&self) -> &'static str;
     fn get_init_local_data_file_path(&self) -> String;
     fn get_item_handle(&self) -> Option<&'static str>;
+    fn get_links_limit_for_provider(&self) -> i64;
 }
