@@ -1,3 +1,5 @@
+use mongodb::bson::{Document, doc};
+
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::config_mods::lazy_static_config::CONFIG;
@@ -130,6 +132,19 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Medrxiv => CONFIG.providers_links_limits.links_limit_for_medrxiv,
             ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
             ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
+        }
+    }
+    fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
+        if self.is_link_limits_enabled() {
+            if self.is_randomize_order_mongo_link_parts_enabled() {
+                Some(
+                    doc! { "$sample" : {"size": self.get_links_limit_for_provider() }},
+                )
+            } else {
+                Some(doc! { "$limit" : self.get_links_limit_for_provider() })
+            }
+        } else {
+            None
         }
     }
 }

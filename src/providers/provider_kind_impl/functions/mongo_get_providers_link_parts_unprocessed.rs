@@ -6,7 +6,7 @@ use mongodb::{
     Client,
 };
 
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::{config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait};
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 
 use crate::{
@@ -59,7 +59,7 @@ impl ProviderKind {
                             }
                         } else {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                ProviderKind::get_mongo_doc_randomization_aggregation(provider_kind);
+                            provider_kind.get_mongo_doc_randomization_aggregation();
                         }
                     } else {
                         option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
