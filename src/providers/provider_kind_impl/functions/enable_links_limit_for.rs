@@ -3,7 +3,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::config_mods::lazy_static_config::CONFIG;
 
 impl ProviderKind {
-    pub fn enable_links_limit_for(provider_kind: ProviderKind) -> bool {
+    pub fn is_link_limits_enabled(provider_kind: ProviderKind) -> bool {
         match provider_kind {
             ProviderKind::Arxiv => {
                 CONFIG

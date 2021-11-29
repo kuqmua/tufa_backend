@@ -204,10 +204,8 @@ mod providers {
         pub mod providers_init_json_schema;
     }
     pub mod provider_kind_impl {
-        pub mod traits {
-            pub mod enable_links_limit_for;
-        }
         pub mod functions {
+            pub mod enable_links_limit_for;
             pub mod enable_randomize_order_mongo_link_parts_for;
             pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
             pub mod get_check_link;
@@ -241,6 +239,9 @@ mod providers {
             pub mod remove_providers_logs_directories;
             pub mod stringify;
         }
+        pub mod traits {
+            pub mod provider_kind_trait;
+        }
     }
     pub mod provider_kind_enum;
 }
@@ -258,7 +259,6 @@ mod tests {
 }
 mod traits {
     pub mod get_env_name_trait;
-    pub mod is_link_limits_enable_trait;
 }
 mod async_tokio_wrapper;
 mod check_new_posts_threads_parts;
