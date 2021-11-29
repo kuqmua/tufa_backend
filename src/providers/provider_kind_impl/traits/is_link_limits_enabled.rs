@@ -2,9 +2,11 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
-impl ProviderKind {
-    pub fn is_link_limits_enabled(provider_kind: ProviderKind) -> bool {
-        match provider_kind {
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+
+impl ProviderKindTrait for ProviderKind {
+    fn is_link_limits_enabled(self: &ProviderKind) -> bool {
+        match self {
             ProviderKind::Arxiv => {
                 CONFIG
                     .enable_providers_links_limits

@@ -1,3 +1,3 @@
 pub trait ProviderKindTrait {
-    fn is_link_limits_enabled(&self) -> &'static str;
+    fn is_link_limits_enabled(&self) -> bool;
 }
