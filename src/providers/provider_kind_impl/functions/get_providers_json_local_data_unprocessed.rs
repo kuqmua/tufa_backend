@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use std::fs;
 
@@ -16,7 +17,7 @@ impl ProviderKind {
         //todo: do it async in parallel
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let result_of_reading_to_string =
-                fs::read_to_string(&ProviderKind::get_init_local_data_file_path(provider_kind));
+                fs::read_to_string(&provider_kind.get_init_local_data_file_path());
             match result_of_reading_to_string {
                 Ok(file_content) => {
                     let file_content_from_str_result: Result<
