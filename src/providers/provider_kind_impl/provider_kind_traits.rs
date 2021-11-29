@@ -5,7 +5,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 impl ProviderKindTrait for ProviderKind {
-    fn is_link_limits_enabled(self: &ProviderKind) -> bool {
+    fn is_link_limits_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
                 CONFIG
@@ -44,7 +44,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
-    fn is_randomize_order_mongo_link_parts_enabled(self: &ProviderKind) -> bool {
+    fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
                 CONFIG
@@ -83,7 +83,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
-    fn get_check_link(self: &ProviderKind) -> &'static str {
+    fn get_check_link(&self) -> &'static str {
         match self {
             ProviderKind::Arxiv => &CONFIG.providers_check_links.arxiv_link,
             ProviderKind::Biorxiv => &CONFIG.providers_check_links.biorxiv_link,
