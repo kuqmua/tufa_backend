@@ -8,6 +8,7 @@ use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_pa
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 //todo: think about naming
 type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
@@ -36,7 +37,7 @@ pub fn rss_part(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> (ProviderKind, Result<SuccessErrorTuple, RssPartError>) {
-    let check_link_result = check_link_status_code(ProviderKind::get_check_link(provider_kind));
+    let check_link_result = check_link_status_code(provider_kind.get_check_link());
     match check_link_result {
         Ok(status_code) => {
             if !StatusCode::is_success(&status_code) {

@@ -83,4 +83,15 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    fn get_check_link(self: &ProviderKind) -> &'static str {
+        match self {
+            ProviderKind::Arxiv => &CONFIG.providers_check_links.arxiv_link,
+            ProviderKind::Biorxiv => &CONFIG.providers_check_links.biorxiv_link,
+            ProviderKind::Github => &CONFIG.providers_check_links.github_link,
+            ProviderKind::Medrxiv => &CONFIG.providers_check_links.medrxiv_link,
+            ProviderKind::Twitter => &CONFIG.providers_check_links.twitter_link,
+            ProviderKind::Reddit => &CONFIG.providers_check_links.reddit_link,
+            ProviderKind::Habr => &CONFIG.providers_check_links.habr_link,
+        }
+    }
 }
