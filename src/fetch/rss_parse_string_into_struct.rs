@@ -39,6 +39,8 @@ use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsin
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 use crate::fetch::parse_github_html::parse_github_html;
 
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+
 use serde_xml_rs::from_str;
 
 use regex::Regex;
@@ -49,7 +51,7 @@ pub fn rss_parse_string_into_struct(
     value: &str,
     provider_kind: ProviderKind,
 ) -> Result<CommonRssPostStruct, NoItemsError> {
-    match ProviderKind::get_item_handle(provider_kind) {
+    match provider_kind.get_item_handle() {
         Some(what_should_find_in_fetch_result_string) => {
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {

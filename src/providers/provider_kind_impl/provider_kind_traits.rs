@@ -105,4 +105,16 @@ impl ProviderKindTrait for ProviderKind {
             CONFIG.mongo_params.log_file_extension
         )
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_item_handle(&self) -> Option<&'static str> {
+        match self {
+            ProviderKind::Arxiv => Some("</item>"),
+            ProviderKind::Biorxiv => Some("</item>"),
+            ProviderKind::Github => Some("</entry>"),
+            ProviderKind::Habr => Some("</item>"),
+            ProviderKind::Medrxiv => Some("</item>"),
+            ProviderKind::Reddit => None,
+            ProviderKind::Twitter => Some("</item>"),
+        }
+    }
 }
