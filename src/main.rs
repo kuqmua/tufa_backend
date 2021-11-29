@@ -205,7 +205,6 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
-            pub mod enable_randomize_order_mongo_link_parts_for;
             pub mod generate_hashmap_with_empty_string_vecs_for_enabled_providers;
             pub mod get_check_link;
             pub mod get_enabled_providers_vec;
@@ -238,9 +237,7 @@ mod providers {
             pub mod remove_providers_logs_directories;
             pub mod stringify;
         }
-        pub mod traits {
-            pub mod is_link_limits_enabled;
-        }
+        pub mod provider_kind_traits;
     }
     pub mod provider_kind_enum;
 }

@@ -8,7 +8,7 @@ impl ProviderKind {
         provider_kind: ProviderKind,
     ) -> Option<Document> {
         if provider_kind.is_link_limits_enabled() {
-            if ProviderKind::enable_randomize_order_mongo_link_parts_for(provider_kind) {
+            if provider_kind.is_randomize_order_mongo_link_parts_enabled() {
                 Some(
                     doc! { "$sample" : {"size": ProviderKind::get_links_limit_for_provider(provider_kind) }},
                 )
