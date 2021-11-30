@@ -14,4 +14,5 @@ pub trait ProviderKindTrait {
     fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String>;
     fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enable(&self) -> bool;
+    fn is_enabled(&self) -> bool;
 }

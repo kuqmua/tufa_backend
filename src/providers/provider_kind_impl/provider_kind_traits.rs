@@ -280,4 +280,15 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    fn is_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers.enable_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers.enable_github,
+            ProviderKind::Habr => CONFIG.enable_providers.enable_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers.enable_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers.enable_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
+        }
+    }
 }
