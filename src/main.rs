@@ -210,7 +210,6 @@ mod providers {
             pub mod get_enabled_string_name_vec;
             pub mod get_mongo_initialization_provider_kind_vec;
             pub mod get_mongo_initialization_string_name_vec;
-            pub mod get_mongo_log_collection_name;
             pub mod get_path_to_logs_directory;
             pub mod get_path_to_provider_log_file;
             pub mod get_provider_links;

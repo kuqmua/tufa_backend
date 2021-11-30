@@ -25,7 +25,7 @@ impl ProviderKind {
         let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
         let mut needed_db_collection: Option<String> = None;
         for collection_name in db.list_collection_names(None).await? {
-            if collection_name == *ProviderKind::get_mongo_log_collection_name(provider_kind) {
+            if collection_name == provider_kind.get_mongo_log_collection_name() {
                 needed_db_collection = Some(collection_name);
             }
         }

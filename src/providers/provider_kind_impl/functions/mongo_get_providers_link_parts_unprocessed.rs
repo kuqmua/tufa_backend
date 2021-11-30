@@ -37,7 +37,7 @@ impl ProviderKind {
         for provider_kind in ProviderKind::get_enabled_providers_vec() {
             let vec_provider_kind_with_collection_names_under_arc_handle =
                 Arc::clone(&vec_provider_kind_with_collection_names_under_arc);
-            let collection_name = ProviderKind::get_mongo_log_collection_name(provider_kind);
+            let collection_name = provider_kind.get_mongo_log_collection_name();
             let collection = db.collection::<Document>(&collection_name);
             if vec_collection_names.contains(&collection_name) {
                 vec_of_tasks.push(tokio::task::spawn(async move {

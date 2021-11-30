@@ -147,4 +147,13 @@ impl ProviderKindTrait for ProviderKind {
             None
         }
     }
+    fn get_mongo_log_collection_name(&self) -> String {
+        format!(
+            "{}{}",
+            self,
+            CONFIG
+                .mongo_params
+                .providers_db_collection_handle_second_part //todo rename it into db log collection
+        )
+    }
 }
