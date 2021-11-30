@@ -16,6 +16,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers_new_posts_check::providers_new_posts_check;
 
 use crate::helpers::resource::ResourceError;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn check_new_posts_threads_parts(
@@ -64,7 +65,7 @@ pub async fn check_new_posts_threads_parts(
                     };
                     let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
                     let vec_of_provider_links =
-                        ProviderKind::get_provider_links(provider_kind, link_parts.to_vec());
+                    provider_kind.get_provider_links(link_parts.to_vec());
                     threads_vec_checker.push(true);
                     if vec_of_provider_links.is_empty() {
                         print_colorful_message(

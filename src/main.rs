@@ -210,7 +210,6 @@ mod providers {
             pub mod get_enabled_string_name_vec;
             pub mod get_mongo_initialization_provider_kind_vec;
             pub mod get_mongo_initialization_string_name_vec;
-            pub mod get_provider_links;
             pub mod get_providers_json_local_data_processed;
             pub mod get_providers_json_local_data_unprocessed;
             pub mod into_string_name_and_kind_hashmap;
