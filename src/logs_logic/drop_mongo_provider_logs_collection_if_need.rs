@@ -8,15 +8,17 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+
 pub async fn drop_mongo_provider_logs_collection_if_need(
-    provider_kind_handle: ProviderKind,
+    provider_kind: ProviderKind,
     mongo_url: String,
 ) -> (ProviderKind, Result<(), MongoDropEmptyCollectionError>) {
-    if ProviderKind::is_cleaning_warning_logs_db_collections_in_mongo_enabled(provider_kind_handle)
+    if provider_kind.is_cleaning_warning_logs_db_collections_in_mongo_enabled()
     {
         let db_collection_name = &format!(
             "{:#?}{}",
-            provider_kind_handle,
+            provider_kind,
             &CONFIG
                 .mongo_params
                 .db_providers_logs_collection_handle_second_part
@@ -29,19 +31,19 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         )
         .await;
         match future_possible_drop_collection {
-            Ok(()) => (provider_kind_handle, Ok(())),
+            Ok(()) => (provider_kind, Ok(())),
             Err(e) => {
                 print_colorful_message(
-                    Some(&provider_kind_handle),
+                    Some(&provider_kind),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     format!("drop fail with error {:#?}", e),
                 );
-                (provider_kind_handle, Err(e))
+                (provider_kind, Err(e))
             }
         }
     } else {
-        (provider_kind_handle, Ok(()))
+        (provider_kind, Ok(()))
     }
 }

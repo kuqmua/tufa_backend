@@ -215,7 +215,6 @@ mod providers {
             pub mod into_string_name_and_kind_hashmap;
             pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
-            pub mod is_cleaning_warning_logs_db_collections_in_mongo_enabled;
             pub mod is_cleaning_warning_logs_directory_enable;
             pub mod is_enabled;
             pub mod is_mongo_initialization_enabled;
