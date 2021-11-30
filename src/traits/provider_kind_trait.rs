@@ -9,4 +9,5 @@ pub trait ProviderKindTrait {
     fn get_links_limit_for_provider(&self) -> i64;
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document>;
     fn get_mongo_log_collection_name(&self) -> String;
+    fn get_path_to_logs_directory(&self) -> String;
 }

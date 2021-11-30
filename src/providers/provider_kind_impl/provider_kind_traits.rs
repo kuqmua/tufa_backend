@@ -123,6 +123,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => Some("</item>"),
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_links_limit_for_provider(&self) -> i64 {
         match self {
             ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,
@@ -134,6 +135,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
         if self.is_link_limits_enabled() {
             if self.is_randomize_order_mongo_link_parts_enabled() {
@@ -147,6 +149,7 @@ impl ProviderKindTrait for ProviderKind {
             None
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_log_collection_name(&self) -> String {
         format!(
             "{}{}",
@@ -154,6 +157,13 @@ impl ProviderKindTrait for ProviderKind {
             CONFIG
                 .mongo_params
                 .providers_db_collection_handle_second_part //todo rename it into db log collection
+        )
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_path_to_logs_directory(&self) -> String {
+        format!(
+            "logs/{}/{:?}",
+            &CONFIG.params.warning_logs_directory_name, self
         )
     }
 }
