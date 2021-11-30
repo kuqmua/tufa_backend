@@ -50,7 +50,7 @@ pub async fn check_new_posts_threads_parts(
                         "link_parts.is_empty".to_string(),
                     );
                 } else {
-                    if ProviderKind::is_prints_enabled(provider_kind) {
+                    if provider_kind.is_prints_enabled() {
                         print_colorful_message(
                             Some(&provider_kind),
                             PrintType::Info,

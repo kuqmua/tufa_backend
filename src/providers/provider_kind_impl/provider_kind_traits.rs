@@ -337,4 +337,15 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    fn is_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_providers_prints.enable_prints_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers_prints.enable_prints_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers_prints.enable_prints_github,
+            ProviderKind::Habr => CONFIG.enable_providers_prints.enable_prints_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers_prints.enable_prints_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers_prints.enable_prints_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
+        }
+    }
 }
