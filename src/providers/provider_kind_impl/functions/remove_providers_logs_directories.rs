@@ -1,5 +1,6 @@
 use crate::providers::provider_kind_enum::CleanLogsDirError;
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use std::collections::HashMap;
 
@@ -12,7 +13,7 @@ impl ProviderKind {
         let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter()
-            .filter(|element| ProviderKind::is_cleaning_warning_logs_directory_enable(*element))
+            .filter(|provider_kind| provider_kind.is_cleaning_warning_logs_directory_enable())
         {
             if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
                 result_hashmap.insert(provider_kind, e);
