@@ -166,4 +166,15 @@ impl ProviderKindTrait for ProviderKind {
             &CONFIG.params.warning_logs_directory_name, self
         )
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_path_to_provider_log_file(&self) -> String {
+        format!(
+            "logs/{}/{:?}/{}",
+            &CONFIG.params.warning_logs_directory_name,
+            self,
+            &CONFIG
+                .params
+                .unhandled_success_handled_success_are_there_items_initialized_posts_dir
+        )
+    }
 }
