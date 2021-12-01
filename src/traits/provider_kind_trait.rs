@@ -4,6 +4,8 @@ use mongodb::bson::Document;
 
 use crate::providers::provider_kind_enum::CleanLogsDirError;
 
+use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
+
 pub trait ProviderKindTrait {
     fn is_link_limits_enabled(&self) -> bool;
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool;
@@ -28,4 +30,5 @@ pub trait ProviderKindTrait {
     fn get_enabled_string_name_vec() -> Vec<String>;
     fn get_mongo_initialization_provider_kind_vec() -> Vec<Self> where Self: Sized;
     fn get_mongo_initialization_string_name_vec() -> Vec<String>;
+    fn get_providers_json_local_data_processed() -> (HashMap<Self, Vec<String>>,HashMap<Self, GetProvidersJsonLocalDataProcessedError>) where Self: Sized;
 }

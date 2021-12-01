@@ -3,8 +3,9 @@ use std::collections::HashMap;
 use crate::helpers::resource::Resource;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_providers_json_local_data_processed::GetProvidersJsonLocalDataProcessedError;
+use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind_impl::functions::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[derive(Debug)]
 pub enum LocalResourceErrorStatus {
