@@ -205,7 +205,6 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
-            pub mod get_mongo_initialization_string_name_vec;
             pub mod get_providers_json_local_data_processed;
             pub mod get_providers_json_local_data_unprocessed;
             pub mod into_string_name_and_kind_hashmap;
