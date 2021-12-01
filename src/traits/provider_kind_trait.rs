@@ -36,4 +36,5 @@ pub trait ProviderKindTrait {
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)> where Self: Sized;
     fn into_vec() -> Vec<Self> where Self: Sized;
     fn remove_existing_providers_logs_directories() -> Result<(), HashMap<Self, RemoveDirError>> where Self: Sized;
+    fn remove_providers_logs_directories() -> Result<(), HashMap<Self, CleanLogsDirError>> where Self: Sized;
 }

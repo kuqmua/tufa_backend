@@ -10,6 +10,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing)]
 pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
