@@ -210,6 +210,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => generate_twitter_links(names_vector),
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -290,6 +291,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
@@ -301,6 +303,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_initialization_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -347,6 +350,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => CONFIG.enable_providers_prints.enable_prints_arxiv,
@@ -387,6 +391,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         hashmap_with_empty_vecs
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_providers_vec() -> Vec<ProviderKind> {
         let mut providers_vec: Vec<ProviderKind> = Vec::with_capacity(ProviderKind::get_length());
         for provider_kind in
@@ -396,6 +401,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         providers_vec
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_string_name_vec() -> Vec<String> {
         let mut string_name_vec: Vec<String> = Vec::with_capacity(ProviderKind::get_length());
         for provider_kind in
@@ -405,6 +411,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         string_name_vec
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_provider_kind_vec() -> Vec<ProviderKind> {
         let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
             Vec::with_capacity(ProviderKind::get_length());
@@ -415,6 +422,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         vec_of_filtered_provider_names
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_string_name_vec() -> Vec<String> {
         let mut vec_of_filtered_provider_names: Vec<String> =
             Vec::with_capacity(ProviderKind::get_length());
@@ -530,5 +538,13 @@ impl ProviderKindTrait for ProviderKind {
                 .insert(format!("{}", provider_kind), provider_kind);
         }
         config_provider_string_to_enum_struct_hasmap
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_string_name_and_kind_tuple_vec() -> Vec<(String, ProviderKind)> {
+        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter() {
+            provider_kind_vec.push((format!("{}", provider_kind), provider_kind));
+        }
+        provider_kind_vec
     }
 }
