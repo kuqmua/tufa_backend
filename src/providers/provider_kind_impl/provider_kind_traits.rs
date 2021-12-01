@@ -400,4 +400,14 @@ impl ProviderKindTrait for ProviderKind {
         }
         string_name_vec
     }
+    fn get_mongo_initialization_provider_kind_vec() -> Vec<ProviderKind> {
+        let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
+            Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter()
+            .filter(|provider_kind| provider_kind.is_mongo_initialization_enabled())
+        {
+            vec_of_filtered_provider_names.push(provider_kind)
+        }
+        vec_of_filtered_provider_names
+    }
 }

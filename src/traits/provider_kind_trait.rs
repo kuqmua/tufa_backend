@@ -26,4 +26,5 @@ pub trait ProviderKindTrait {
     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<Self, Vec<String>> where Self: Sized;
     fn get_enabled_providers_vec() -> Vec<Self> where Self: Sized;
     fn get_enabled_string_name_vec() -> Vec<String>;
+    fn get_mongo_initialization_provider_kind_vec() -> Vec<Self> where Self: Sized;
 }
