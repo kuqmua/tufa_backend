@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use mongodb::bson::Document;
 
-use crate::providers::provider_kind_enum::CleanLogsDirError;
+use crate::providers::provider_kind_enum::{CleanLogsDirError, RemoveDirError};
 
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 
@@ -35,4 +35,5 @@ pub trait ProviderKindTrait {
     fn into_string_name_and_kind_hashmap() -> HashMap<String, Self> where Self: Sized;
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)> where Self: Sized;
     fn into_vec() -> Vec<Self> where Self: Sized;
+    fn remove_existing_providers_logs_directories() -> Result<(), HashMap<Self, RemoveDirError>> where Self: Sized;
 }

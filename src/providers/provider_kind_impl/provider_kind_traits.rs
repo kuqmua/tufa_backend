@@ -7,7 +7,7 @@ use strum::IntoEnumIterator;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError};
+use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError, RemoveDirError};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -554,5 +554,22 @@ impl ProviderKindTrait for ProviderKind {
             provider_kind_vec.push(provider_kind);
         }
         provider_kind_vec
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn remove_existing_providers_logs_directories(
+    ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
+        if let Err(error_hashmap) = ProviderKind::remove_providers_logs_directories() {
+            let mut return_hashmap = HashMap::with_capacity(error_hashmap.len());
+            for (provider_kind, error) in error_hashmap {
+                if let CleanLogsDirError::CannotRemoveDir { error: e } = error {
+                    return_hashmap.insert(provider_kind, e);
+                }
+            }
+            if return_hashmap.is_empty() {
+                return Ok(());
+            }
+            return Err(return_hashmap);
+        }
+        Ok(())
     }
 }
