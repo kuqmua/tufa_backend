@@ -391,4 +391,13 @@ impl ProviderKindTrait for ProviderKind {
         }
         providers_vec
     }
+    fn get_enabled_string_name_vec() -> Vec<String> {
+        let mut string_name_vec: Vec<String> = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in
+            ProviderKind::iter().filter(|element| element.is_enabled())
+        {
+            string_name_vec.push(format!("{}", provider_kind));
+        }
+        string_name_vec
+    }
 }
