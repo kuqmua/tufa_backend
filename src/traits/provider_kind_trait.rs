@@ -20,4 +20,5 @@ pub trait ProviderKindTrait {
     fn is_mongo_initialization_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
     fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError>;
+    fn stringify(&self) -> &'static str;
 }

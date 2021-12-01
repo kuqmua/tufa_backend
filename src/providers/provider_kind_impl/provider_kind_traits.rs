@@ -360,4 +360,15 @@ impl ProviderKindTrait for ProviderKind {
         fs::remove_dir_all(&path)?;
         Ok(())
     }
+    fn stringify(&self) -> &'static str {
+        match self {
+            ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Biorxiv => stringify!(ProviderKind::Biorxiv),
+            ProviderKind::Github => stringify!(ProviderKind::Github),
+            ProviderKind::Habr => stringify!(ProviderKind::Habr),
+            ProviderKind::Medrxiv => stringify!(ProviderKind::Medrxiv),
+            ProviderKind::Reddit => stringify!(ProviderKind::Reddit),
+            ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
+        }
+    }
 }
