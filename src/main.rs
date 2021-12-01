@@ -219,7 +219,6 @@ mod providers {
             pub mod mongo_get_providers_link_parts_processed;
             pub mod mongo_get_providers_link_parts_unprocessed;
             pub mod remove_existing_providers_logs_directories;
-            pub mod remove_logs_directory;
             pub mod remove_providers_logs_directories;
             pub mod stringify;
         }

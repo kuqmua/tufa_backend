@@ -1,5 +1,7 @@
 use mongodb::bson::Document;
 
+use crate::providers::provider_kind_enum::CleanLogsDirError;
+
 pub trait ProviderKindTrait {
     fn is_link_limits_enabled(&self) -> bool;
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool;
@@ -17,4 +19,5 @@ pub trait ProviderKindTrait {
     fn is_enabled(&self) -> bool;
     fn is_mongo_initialization_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
+    fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError>;
 }

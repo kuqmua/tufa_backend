@@ -15,7 +15,7 @@ impl ProviderKind {
         for provider_kind in ProviderKind::iter()
             .filter(|provider_kind| provider_kind.is_cleaning_warning_logs_directory_enable())
         {
-            if let Err(e) = ProviderKind::remove_logs_directory(provider_kind) {
+            if let Err(e) = provider_kind.remove_logs_directory() {
                 result_hashmap.insert(provider_kind, e);
             }
         }

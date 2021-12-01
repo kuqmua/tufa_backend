@@ -1,6 +1,9 @@
+use std::fs;
+use std::path::Path;
+
 use mongodb::bson::{Document, doc};
 
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -347,5 +350,14 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Reddit => CONFIG.enable_providers_prints.enable_prints_reddit,
             ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
         }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError> {
+        let path = self.get_path_to_logs_directory();
+        if !Path::new(&path).is_dir() {
+            return Err(CleanLogsDirError::PathIsNotDir { path });
+        }
+        fs::remove_dir_all(&path)?;
+        Ok(())
     }
 }
