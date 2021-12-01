@@ -547,4 +547,12 @@ impl ProviderKindTrait for ProviderKind {
         }
         provider_kind_vec
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_vec() -> Vec<ProviderKind> {
+        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter() {
+            provider_kind_vec.push(provider_kind);
+        }
+        provider_kind_vec
+    }
 }

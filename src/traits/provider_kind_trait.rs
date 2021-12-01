@@ -34,4 +34,5 @@ pub trait ProviderKindTrait {
     fn get_providers_json_local_data_unprocessed() -> HashMap<Self, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> where Self: Sized;
     fn into_string_name_and_kind_hashmap() -> HashMap<String, Self> where Self: Sized;
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)> where Self: Sized;
+    fn into_vec() -> Vec<Self> where Self: Sized;
 }

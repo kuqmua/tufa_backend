@@ -205,7 +205,6 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
-            pub mod into_vec;
             pub mod mongo_get_provider_link_parts_as_bson_string;
             pub mod mongo_get_providers_link_parts_processed;
             pub mod mongo_get_providers_link_parts_unprocessed;
