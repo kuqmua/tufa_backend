@@ -3,6 +3,7 @@ use std::fs;
 use std::path::Path;
 
 use mongodb::bson::{Document, doc};
+use strum::IntoEnumIterator;
 
 use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError};
 
@@ -380,5 +381,14 @@ impl ProviderKindTrait for ProviderKind {
             hashmap_with_empty_vecs.insert(*provider_kind, Vec::<String>::new());
         }
         hashmap_with_empty_vecs
+    }
+    fn get_enabled_providers_vec() -> Vec<ProviderKind> {
+        let mut providers_vec: Vec<ProviderKind> = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in
+            ProviderKind::iter().filter(|provider_kind| provider_kind.is_enabled())
+        {
+            providers_vec.push(provider_kind);
+        }
+        providers_vec
     }
 }

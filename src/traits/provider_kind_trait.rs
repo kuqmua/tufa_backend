@@ -24,4 +24,5 @@ pub trait ProviderKindTrait {
     fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError>;
     fn stringify(&self) -> &'static str;
     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<Self, Vec<String>> where Self: Sized;
+    fn get_enabled_providers_vec() -> Vec<Self> where Self: Sized;
 }
