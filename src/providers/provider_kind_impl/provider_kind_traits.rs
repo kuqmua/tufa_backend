@@ -11,6 +11,7 @@ use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
+use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
@@ -480,5 +481,43 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
         (first_return_handle, second_return_handle)
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_providers_json_local_data_unprocessed() -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
+        let mut vec_of_link_parts_hashmap: HashMap<
+            ProviderKind,
+            Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
+        > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+        //todo: do it async in parallel
+        for provider_kind in ProviderKind::get_enabled_providers_vec() {
+            let result_of_reading_to_string =
+                fs::read_to_string(&provider_kind.get_init_local_data_file_path());
+            match result_of_reading_to_string {
+                Ok(file_content) => {
+                    let file_content_from_str_result: Result<
+                        ProvidersInitJsonSchema,
+                        serde_json::Error,
+                    > = serde_json::from_str(&file_content);
+                    match file_content_from_str_result {
+                        Ok(file_content_as_struct) => {
+                            let mut vec_of_link_parts: Vec<String> =
+                                Vec::with_capacity(file_content_as_struct.data.len());
+                            for link_part in file_content_as_struct.data {
+                                vec_of_link_parts.push(link_part)
+                            }
+                            vec_of_link_parts_hashmap
+                                .insert(provider_kind, Ok(Ok(vec_of_link_parts)));
+                        }
+                        Err(e) => {
+                            vec_of_link_parts_hashmap.insert(provider_kind, Ok(Err(e)));
+                        }
+                    }
+                }
+                Err(e) => {
+                    vec_of_link_parts_hashmap.insert(provider_kind, Err(e));
+                }
+            }
+        }
+        vec_of_link_parts_hashmap
     }
 }
