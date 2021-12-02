@@ -13,8 +13,7 @@ pub enum MongoGetProvidersLinkPartsProcessedResult {
     MongoConnection(mongodb::error::Error),
 }
 
-impl ProviderKind {
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_providers_link_parts_processed() -> (
         HashMap<ProviderKind, Vec<String>>,
         MongoGetProvidersLinkPartsProcessedResult,
@@ -66,4 +65,3 @@ impl ProviderKind {
             }
         }
     }
-}

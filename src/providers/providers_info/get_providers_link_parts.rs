@@ -4,7 +4,8 @@ use crate::helpers::resource::Resource;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
-use crate::providers::provider_kind_impl::functions::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
+use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
+use crate::mongo_integration::mongo_get_providers_link_parts_processed::mongo_get_providers_link_parts_processed;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[derive(Debug)]
@@ -32,7 +33,7 @@ pub async fn get_providers_link_parts_as_hashmap(
         // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
         Resource::Mongodb => {
             let (success_hashmap, mongo_get_providers_link_part_processed_result) =
-                ProviderKind::mongo_get_providers_link_parts_processed().await;
+                mongo_get_providers_link_parts_processed().await;
             (
                 success_hashmap,
                 LocalResourceErrorStatus::Mongodb(mongo_get_providers_link_part_processed_result),
