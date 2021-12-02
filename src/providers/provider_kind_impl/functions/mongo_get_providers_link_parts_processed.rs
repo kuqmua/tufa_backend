@@ -5,6 +5,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+use crate::mongo_integration::mongo_get_providers_link_parts_unprocessed::mongo_get_providers_link_parts_unprocessed;
+
 #[derive(Debug)]
 pub enum MongoGetProvidersLinkPartsProcessedResult {
     MongoDocuments(HashMap<ProviderKind, mongodb::error::Error>),
@@ -18,7 +20,7 @@ impl ProviderKind {
         MongoGetProvidersLinkPartsProcessedResult,
     ) {
         //HashMap<ProviderKind, Vec<String>>
-        match ProviderKind::mongo_get_providers_link_parts_unprocessed().await {
+        match mongo_get_providers_link_parts_unprocessed().await {
             Ok(unprocessed_hashmap) => {
                 let mut first_return_handle: HashMap<ProviderKind, Vec<String>> =
                     HashMap::with_capacity(unprocessed_hashmap.len());

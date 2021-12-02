@@ -18,8 +18,7 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
-impl ProviderKind {
-    #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
+#[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
     pub async fn mongo_get_providers_link_parts_unprocessed() -> Result<
         HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>,
         mongodb::error::Error,
@@ -104,4 +103,3 @@ impl ProviderKind {
                 .clone();
         Ok(vec_provider_kind_with_collection_names)
     }
-}
