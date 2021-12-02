@@ -13,7 +13,7 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
-impl ProviderKind {
+impl ProviderKind {//rust does not support async traits yet (end of 2021). only with  third party crate
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_provider_link_parts_as_bson_string(
         provider_kind: ProviderKind,
