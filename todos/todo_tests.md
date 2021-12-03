@@ -47,3 +47,7 @@ just for comfort to see all available variables in .env
 ### -------------------
 check if there is a check in config new for empty string values and other of each fields
 <br/>
+
+### -------------------
+create big json file to test parsing speed as test
+<br/>
