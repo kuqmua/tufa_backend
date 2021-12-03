@@ -1,10 +1,6 @@
 # todo_code
 
 ### -------------------
-db for provider links
-<br/>
-
-### -------------------
 write logs into db in different service
 <br/>
 
@@ -37,11 +33,6 @@ compute post's hash and send hashes from client app to server to check server al
 <br/>
 
 ### -------------------
-items: vec![BiorxivPageStructItem::new(); 30],
-whats strange what only 30...weird
-<br/>
-
-### -------------------
 rename some local variables in functions
 <br/>
 
@@ -51,6 +42,7 @@ service for date/time checking and executing arxiv for example one time per week
 
 ### -------------------
 problem - now code waiting for all http reqwests to complete. rewrite it into event loop
+Or message queue
 <br/>
 
 ### -------------------
@@ -63,6 +55,7 @@ do some work on better differences in colors in prints
 
 ### -------------------
 function to write save path from string and change some symbols
+(Partially done)
 <br/>
 
 ### -------------------
@@ -83,6 +76,7 @@ rewrite code in which there is a buffer overflow
 
 ### -------------------
 futures in some cases instead of threads (like file open or write in file)
+Or tokio tasks
 <br/>
 
 ### -------------------
@@ -98,10 +92,6 @@ if let Ok(something) = something.lock() {}
 instead of 
 something.lock().unwrap();
 or match some none
-<br/>
-
-### -------------------
-create big json file to test parsing speed
 <br/>
 
 ### -------------------
