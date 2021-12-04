@@ -53,7 +53,6 @@ pub mod config_mods {
             }
             pub mod functions {
                 pub mod get_env_values_hashmap;
-                pub mod get_string_from_env_var;
             }
         }
         pub mod env_var_bool_enum;
@@ -64,7 +63,6 @@ pub mod config_mods {
             }
             pub mod functions {
                 pub mod get_env_values_hashmap;
-                pub mod get_string_from_env_var;
             }
         }
         pub mod env_var_i64_enum;
@@ -75,7 +73,6 @@ pub mod config_mods {
             }
             pub mod functions {
                 pub mod get_env_values_hashmap;
-                pub mod get_string_from_env_var;
             }
         }
         pub mod env_var_string_enum;
@@ -86,7 +83,6 @@ pub mod config_mods {
             }
             pub mod functions {
                 pub mod get_env_values_hashmap;
-                pub mod get_string_from_env_var;
             }
         }
         pub mod env_var_u8_enum;

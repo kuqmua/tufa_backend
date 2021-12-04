@@ -14,6 +14,7 @@ use crate::constants::project_constants::ENV_FILE_NAME;
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 use crate::traits::env_var_trait::EnvVarTrait;
+use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
 impl EnvU8Var {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvU8Var, u8>, ConfigError<'static>> {
@@ -33,7 +34,7 @@ impl EnvU8Var {
         let mut hmap: HashMap<EnvU8Var, u8> = HashMap::new();
         let mut error_option: Option<ConfigError> = None;
         for env_var_name_kind in EnvU8Var::iter() {
-            match EnvU8Var::get_string_from_env_var(env_var_name_kind, was_dotenv_enable) {
+            match env_var_name_kind.get_string_from_env_var(was_dotenv_enable) {
                 Ok(env_var_string) => match env_var_string.parse::<u8>() {
                     Ok(handle) => {
                         hmap.insert(env_var_name_kind, handle);
