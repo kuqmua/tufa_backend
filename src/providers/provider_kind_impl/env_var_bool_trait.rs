@@ -1,28 +1,8 @@
-use std::collections::HashMap;
-use std::fs;
-use std::path::Path;
-
-use mongodb::bson::{doc, Document};
-use strum::IntoEnumIterator;
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_enum::{CleanLogsDirError, ProviderKind, RemoveDirError};
+use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
-use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
-
-use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
-use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
-use crate::providers::providers_info::links::generate_github_links::generate_github_links;
-use crate::providers::providers_info::links::generate_habr_links::generate_habr_links;
-use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
-use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
-use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
-
-use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
+use crate::traits::env_var_bool_trait::EnvVarBoolTrait;
 
 impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
