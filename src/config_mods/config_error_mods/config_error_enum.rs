@@ -16,7 +16,7 @@ pub enum VarOrIntParseError {
 
 #[must_use]
 #[derive(Debug)]
-pub enum ConfigError<'a> {
+pub enum ConfigErrorEnum<'a> {
     Message(String),
     GithubNameError {
         was_dotenv_enable: bool,
