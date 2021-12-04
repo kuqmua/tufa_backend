@@ -2,12 +2,12 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
-use mongodb::bson::{Document, doc};
+use mongodb::bson::{doc, Document};
 use strum::IntoEnumIterator;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_enum::{ProviderKind, CleanLogsDirError, RemoveDirError};
+use crate::providers::provider_kind_enum::{CleanLogsDirError, ProviderKind, RemoveDirError};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -25,6 +25,116 @@ use crate::providers::providers_info::links::generate_twitter_links::generate_tw
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 
 impl ProviderKindTrait for ProviderKind {
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_initialization_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_arxiv_link_parts
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_biorxiv_link_parts
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_github_link_parts
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_habr_link_parts
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_medrxiv_link_parts
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_reddit_link_parts
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .mongo_params
+                    .enable_initialize_mongo_with_providers_link_parts
+                    .enable_initialize_mongo_with_twitter_link_parts
+            }
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers.enable_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers.enable_github,
+            ProviderKind::Habr => CONFIG.enable_providers.enable_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers.enable_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers.enable_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_providers_prints.enable_prints_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers_prints.enable_prints_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers_prints.enable_prints_github,
+            ProviderKind::Habr => CONFIG.enable_providers_prints.enable_prints_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers_prints.enable_prints_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers_prints.enable_prints_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
+        }
+    }
+    fn is_warning_high_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_github
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_warning_high_providers_prints
+                    .enable_warning_high_prints_for_twitter
+            }
+        }
+    }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_link_limits_enabled(&self) -> bool {
         match self {
@@ -157,9 +267,7 @@ impl ProviderKindTrait for ProviderKind {
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
         if self.is_link_limits_enabled() {
             if self.is_randomize_order_mongo_link_parts_enabled() {
-                Some(
-                    doc! { "$sample" : {"size": self.get_links_limit_for_provider() }},
-                )
+                Some(doc! { "$sample" : {"size": self.get_links_limit_for_provider() }})
             } else {
                 Some(doc! { "$limit" : self.get_links_limit_for_provider() })
             }
@@ -196,10 +304,7 @@ impl ProviderKindTrait for ProviderKind {
         )
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_provider_links(
-        &self,
-        names_vector: Vec<String>,
-    ) -> Vec<String> {
+    fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String> {
         match self {
             ProviderKind::Arxiv => generate_arxiv_links(names_vector),
             ProviderKind::Biorxiv => generate_biorxiv_links(names_vector),
@@ -291,77 +396,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_enabled(&self) -> bool {
-        match self {
-            ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_providers.enable_biorxiv,
-            ProviderKind::Github => CONFIG.enable_providers.enable_github,
-            ProviderKind::Habr => CONFIG.enable_providers.enable_habr,
-            ProviderKind::Medrxiv => CONFIG.enable_providers.enable_medrxiv,
-            ProviderKind::Reddit => CONFIG.enable_providers.enable_reddit,
-            ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
-        }
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_mongo_initialization_enabled(&self) -> bool {
-        match self {
-            ProviderKind::Arxiv => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_arxiv_link_parts
-            }
-            ProviderKind::Biorxiv => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_biorxiv_link_parts
-            }
-            ProviderKind::Github => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_github_link_parts
-            }
-            ProviderKind::Habr => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_habr_link_parts
-            }
-            ProviderKind::Medrxiv => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_medrxiv_link_parts
-            }
-            ProviderKind::Reddit => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_reddit_link_parts
-            }
-            ProviderKind::Twitter => {
-                CONFIG
-                    .mongo_params
-                    .enable_initialize_mongo_with_providers_link_parts
-                    .enable_initialize_mongo_with_twitter_link_parts
-            }
-        }
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_prints_enabled(&self) -> bool {
-        match self {
-            ProviderKind::Arxiv => CONFIG.enable_providers_prints.enable_prints_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_providers_prints.enable_prints_biorxiv,
-            ProviderKind::Github => CONFIG.enable_providers_prints.enable_prints_github,
-            ProviderKind::Habr => CONFIG.enable_providers_prints.enable_prints_habr,
-            ProviderKind::Medrxiv => CONFIG.enable_providers_prints.enable_prints_medrxiv,
-            ProviderKind::Reddit => CONFIG.enable_providers_prints.enable_prints_reddit,
-            ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
-        }
-    }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError> {
         let path = self.get_path_to_logs_directory();
@@ -382,7 +417,8 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
         }
     }
-    fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<ProviderKind, Vec<String>> {
+    fn generate_hashmap_with_empty_string_vecs_for_enabled_providers(
+    ) -> HashMap<ProviderKind, Vec<String>> {
         let mut hashmap_with_empty_vecs = HashMap::<ProviderKind, Vec<String>>::with_capacity(
             ProviderKind::get_enabled_providers_vec().len(),
         );
@@ -394,8 +430,7 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_providers_vec() -> Vec<ProviderKind> {
         let mut providers_vec: Vec<ProviderKind> = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in
-            ProviderKind::iter().filter(|provider_kind| provider_kind.is_enabled())
+        for provider_kind in ProviderKind::iter().filter(|provider_kind| provider_kind.is_enabled())
         {
             providers_vec.push(provider_kind);
         }
@@ -404,9 +439,7 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_string_name_vec() -> Vec<String> {
         let mut string_name_vec: Vec<String> = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in
-            ProviderKind::iter().filter(|element| element.is_enabled())
-        {
+        for provider_kind in ProviderKind::iter().filter(|element| element.is_enabled()) {
             string_name_vec.push(format!("{}", provider_kind));
         }
         string_name_vec
@@ -491,7 +524,8 @@ impl ProviderKindTrait for ProviderKind {
         (first_return_handle, second_return_handle)
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_providers_json_local_data_unprocessed() -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
+    fn get_providers_json_local_data_unprocessed(
+    ) -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
         let mut vec_of_link_parts_hashmap: HashMap<
             ProviderKind,
             Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
