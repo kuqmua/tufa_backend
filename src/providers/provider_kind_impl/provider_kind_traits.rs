@@ -99,6 +99,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_warning_high_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -139,6 +140,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_warning_low_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -179,6 +181,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_error_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -219,6 +222,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_success_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -259,6 +263,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_partial_success_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -299,6 +304,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -339,6 +345,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_db_in_mongo_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -379,6 +386,7 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_time_measurement_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -416,6 +424,19 @@ impl ProviderKindTrait for ProviderKind {
                     .enable_providers_time_measurement
                     .enable_time_measurement_for_twitter
             }
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_info_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_providers_info.enable_info_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_providers_info.enable_info_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_providers_info.enable_info_for_github,
+            ProviderKind::Habr => CONFIG.enable_providers_info.enable_info_for_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_providers_info.enable_info_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_providers_info.enable_info_for_reddit,
+            ProviderKind::Twitter => CONFIG.enable_providers_info.enable_info_for_twitter,
         }
     }
 
