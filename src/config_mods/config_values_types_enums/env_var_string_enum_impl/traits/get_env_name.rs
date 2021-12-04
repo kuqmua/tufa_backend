@@ -93,4 +93,7 @@ impl GetEnvName for EnvStringVar {
             EnvStringVar::TwitterLink => EnvVar::TwitterLink.get_env_name(),
         }
     }
+    fn into_array() -> &'static [Self] {
+        EnvStringVar::all_variants()
+    }
 }

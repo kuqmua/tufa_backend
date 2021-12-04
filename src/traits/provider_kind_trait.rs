@@ -22,7 +22,6 @@ pub trait ProviderKindTrait {
     fn is_info_prints_enabled(&self) -> bool;
     fn is_link_limits_enabled(&self) -> bool;
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool;
-
     fn is_cleaning_warning_logs_directory_enable(&self) -> bool;
     fn get_check_link(&self) -> &'static str;
     fn get_item_handle(&self) -> Option<&'static str>;
@@ -35,16 +34,40 @@ pub trait ProviderKindTrait {
     fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError>;
     fn stringify(&self) -> &'static str;
     fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String>;
-    fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<Self, Vec<String>> where Self: Sized;
-    fn get_enabled_providers_vec() -> Vec<Self> where Self: Sized;
+    fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<Self, Vec<String>>
+    where
+        Self: Sized;
+    fn get_enabled_providers_vec() -> Vec<Self>
+    where
+        Self: Sized;
     fn get_enabled_string_name_vec() -> Vec<String>;
-    fn get_mongo_initialization_provider_kind_vec() -> Vec<Self> where Self: Sized;
+    fn get_mongo_initialization_provider_kind_vec() -> Vec<Self>
+    where
+        Self: Sized;
     fn get_mongo_initialization_string_name_vec() -> Vec<String>;
-    fn get_providers_json_local_data_processed() -> (HashMap<Self, Vec<String>>,HashMap<Self, GetProvidersJsonLocalDataProcessedError>) where Self: Sized;
-    fn get_providers_json_local_data_unprocessed() -> HashMap<Self, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> where Self: Sized;
-    fn into_string_name_and_kind_hashmap() -> HashMap<String, Self> where Self: Sized;
-    fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)> where Self: Sized;
-    fn into_vec() -> Vec<Self> where Self: Sized;
-    fn remove_existing_providers_logs_directories() -> Result<(), HashMap<Self, RemoveDirError>> where Self: Sized;
-    fn remove_providers_logs_directories() -> Result<(), HashMap<Self, CleanLogsDirError>> where Self: Sized;
+    fn get_providers_json_local_data_processed() -> (
+        HashMap<Self, Vec<String>>,
+        HashMap<Self, GetProvidersJsonLocalDataProcessedError>,
+    )
+    where
+        Self: Sized;
+    fn get_providers_json_local_data_unprocessed(
+    ) -> HashMap<Self, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
+    where
+        Self: Sized;
+    fn into_string_name_and_kind_hashmap() -> HashMap<String, Self>
+    where
+        Self: Sized;
+    fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)>
+    where
+        Self: Sized;
+    fn into_vec() -> Vec<Self>
+    where
+        Self: Sized;
+    fn remove_existing_providers_logs_directories() -> Result<(), HashMap<Self, RemoveDirError>>
+    where
+        Self: Sized;
+    fn remove_providers_logs_directories() -> Result<(), HashMap<Self, CleanLogsDirError>>
+    where
+        Self: Sized;
 }

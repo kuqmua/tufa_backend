@@ -33,4 +33,7 @@ impl GetEnvName for EnvU8Var {
             EnvU8Var::InfoBlue => EnvVar::InfoBlue.get_env_name(),
         }
     }
+    fn into_array() -> &'static [Self] {
+        EnvU8Var::all_variants()
+    }
 }

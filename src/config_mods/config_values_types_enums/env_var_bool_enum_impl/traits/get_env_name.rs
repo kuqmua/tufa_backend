@@ -357,4 +357,7 @@ impl GetEnvName for EnvBoolVar {
             }
         }
     }
+    fn into_array() -> &'static [Self] {
+        EnvBoolVar::all_variants()
+    }
 }

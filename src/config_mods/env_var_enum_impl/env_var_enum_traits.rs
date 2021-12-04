@@ -352,4 +352,7 @@ impl GetEnvName for EnvVar {
             EnvVar::InfoBlue => "INFO_BLUE",
         }
     }
+    fn into_array() -> &'static [Self] {
+        EnvVar::all_variants()
+    }
 }

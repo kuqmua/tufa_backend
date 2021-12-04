@@ -18,4 +18,7 @@ impl GetEnvName for EnvI64Var {
             EnvI64Var::LinksLimitForTwitter => EnvVar::LinksLimitForTwitter.get_env_name(),
         }
     }
+    fn into_array() -> &'static [Self] {
+        EnvI64Var::all_variants()
+    }
 }
