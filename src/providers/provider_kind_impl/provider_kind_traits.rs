@@ -72,6 +72,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_enabled(&self) -> bool {
         match self {
@@ -84,6 +85,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_prints_enabled(&self) -> bool {
         match self {
@@ -96,6 +98,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => CONFIG.enable_providers_prints.enable_prints_twitter,
         }
     }
+
     fn is_warning_high_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -135,6 +138,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     fn is_warning_low_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -174,6 +178,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     fn is_error_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -213,6 +218,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     fn is_success_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -252,6 +258,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     fn is_partial_success_prints_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -291,6 +298,47 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
+    fn is_cleaning_warning_logs_directory_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_github
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_twitter
+            }
+        }
+    }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_link_limits_enabled(&self) -> bool {
         match self {
@@ -331,6 +379,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool {
         match self {
@@ -371,6 +420,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_check_link(&self) -> &'static str {
         match self {
@@ -383,6 +433,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => &CONFIG.providers_check_links.habr_link,
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_init_local_data_file_path(&self) -> String {
         format!(
@@ -395,6 +446,7 @@ impl ProviderKindTrait for ProviderKind {
             CONFIG.mongo_params.log_file_extension
         )
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_item_handle(&self) -> Option<&'static str> {
         match self {
@@ -407,6 +459,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => Some("</item>"),
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_links_limit_for_provider(&self) -> i64 {
         match self {
@@ -419,6 +472,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
         if self.is_link_limits_enabled() {
@@ -431,6 +485,7 @@ impl ProviderKindTrait for ProviderKind {
             None
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_log_collection_name(&self) -> String {
         format!(
@@ -441,6 +496,7 @@ impl ProviderKindTrait for ProviderKind {
                 .providers_db_collection_handle_second_part //todo rename it into db log collection
         )
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_path_to_logs_directory(&self) -> String {
         format!(
@@ -448,6 +504,7 @@ impl ProviderKindTrait for ProviderKind {
             &CONFIG.params.warning_logs_directory_name, self
         )
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_path_to_provider_log_file(&self) -> String {
         format!(
@@ -459,6 +516,7 @@ impl ProviderKindTrait for ProviderKind {
                 .unhandled_success_handled_success_are_there_items_initialized_posts_dir
         )
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String> {
         match self {
@@ -471,6 +529,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => generate_twitter_links(names_vector),
         }
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool {
         match self {
@@ -511,6 +570,7 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+
     //todo add errors warning low warning high info and others
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_directory_enable(&self) -> bool {
@@ -562,6 +622,7 @@ impl ProviderKindTrait for ProviderKind {
         fs::remove_dir_all(&path)?;
         Ok(())
     }
+
     fn stringify(&self) -> &'static str {
         match self {
             ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
@@ -573,6 +634,7 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
         }
     }
+
     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers(
     ) -> HashMap<ProviderKind, Vec<String>> {
         let mut hashmap_with_empty_vecs = HashMap::<ProviderKind, Vec<String>>::with_capacity(
@@ -583,6 +645,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         hashmap_with_empty_vecs
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_providers_vec() -> Vec<ProviderKind> {
         let mut providers_vec: Vec<ProviderKind> = Vec::with_capacity(ProviderKind::get_length());
@@ -592,6 +655,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         providers_vec
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_string_name_vec() -> Vec<String> {
         let mut string_name_vec: Vec<String> = Vec::with_capacity(ProviderKind::get_length());
@@ -600,6 +664,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         string_name_vec
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_provider_kind_vec() -> Vec<ProviderKind> {
         let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
@@ -611,6 +676,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         vec_of_filtered_provider_names
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_string_name_vec() -> Vec<String> {
         let mut vec_of_filtered_provider_names: Vec<String> =
@@ -622,6 +688,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         vec_of_filtered_provider_names
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_providers_json_local_data_processed() -> (
         HashMap<ProviderKind, Vec<String>>,
@@ -679,6 +746,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         (first_return_handle, second_return_handle)
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_providers_json_local_data_unprocessed(
     ) -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
@@ -718,6 +786,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         vec_of_link_parts_hashmap
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
         //its String coz legacy
@@ -729,6 +798,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         config_provider_string_to_enum_struct_hasmap
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, ProviderKind)> {
         let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
@@ -737,6 +807,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         provider_kind_vec
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_vec() -> Vec<ProviderKind> {
         let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
@@ -745,6 +816,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         provider_kind_vec
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn remove_existing_providers_logs_directories(
     ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
@@ -762,6 +834,7 @@ impl ProviderKindTrait for ProviderKind {
         }
         Ok(())
     }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn remove_providers_logs_directories() -> Result<(), HashMap<ProviderKind, CleanLogsDirError>> {
         let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
