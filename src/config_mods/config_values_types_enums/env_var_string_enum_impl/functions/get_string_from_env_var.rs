@@ -4,7 +4,7 @@ use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigE
 
 use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStringVar;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvStringVar {
     pub fn get_string_from_env_var(

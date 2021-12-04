@@ -134,7 +134,6 @@ pub mod config_mods {
     }
     pub mod env_var_enum_impl {
         pub mod functions {
-            pub mod into_string_name_and_kind_hashmap;
             pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
         }
@@ -224,7 +223,7 @@ mod tests {
     }
 }
 mod traits {
-    pub mod get_env_name_trait;
+    pub mod env_var_trait;
     pub mod provider_kind_trait;
 }
 mod async_tokio_wrapper;

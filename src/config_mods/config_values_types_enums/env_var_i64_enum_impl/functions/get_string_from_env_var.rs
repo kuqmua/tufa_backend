@@ -3,7 +3,7 @@ use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvI64Var {
     pub fn get_string_from_env_var(

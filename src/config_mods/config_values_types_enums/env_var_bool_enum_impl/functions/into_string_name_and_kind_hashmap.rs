@@ -4,7 +4,7 @@ use strum::IntoEnumIterator;
 
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvBoolVar {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

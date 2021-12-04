@@ -12,7 +12,7 @@ use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar
 
 use crate::constants::project_constants::ENV_FILE_NAME;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvBoolVar {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvBoolVar, bool>, ConfigError<'static>> {

@@ -2,7 +2,7 @@ use crate::config_mods::env_var_enum::EnvVar;
 
 use strum::IntoEnumIterator;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVar {
     pub fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, EnvVar)> {

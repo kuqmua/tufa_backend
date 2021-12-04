@@ -13,7 +13,7 @@ use crate::constants::project_constants::ENV_FILE_NAME;
 
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvU8Var {
     pub fn get_env_values_hashmap() -> Result<HashMap<EnvU8Var, u8>, ConfigError<'static>> {

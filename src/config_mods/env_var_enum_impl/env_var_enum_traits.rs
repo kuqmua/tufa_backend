@@ -1,358 +1,370 @@
+use std::collections::HashMap;
+
+use strum::IntoEnumIterator;
+
 use crate::config_mods::env_var_enum::EnvVar;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
-impl GetEnvName for EnvVar {
-    fn get_env_name(self: &EnvVar) -> &'static str {
+impl EnvVarTrait for EnvVar {
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_env_name(&self) -> &'static str {
         match self {
-            EnvVar::GithubName => "GITHUB_NAME",
-            EnvVar::GithubToken => "GITHUB_TOKEN",
+            Self::GithubName => "GITHUB_NAME",
+            Self::GithubToken => "GITHUB_TOKEN",
 
-            EnvVar::RedditUserAgent => "REDDIT_USER_AGENT",
-            EnvVar::RedditClientId => "REDDIT_CLIENT_ID",
-            EnvVar::RedditClientSecret => "REDDIT_CLIENT_SECRET",
-            EnvVar::RedditUsername => "REDDIT_USERNAME",
-            EnvVar::RedditPassword => "REDDIT_PASSWORD",
-            EnvVar::StartingCheckLink => "STARTING_CHECK_LINK",
-            EnvVar::WarningLogsDirectoryName => "WARNING_LOGS_DIRECTORY_NAME",
-            EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
+            Self::RedditUserAgent => "REDDIT_USER_AGENT",
+            Self::RedditClientId => "REDDIT_CLIENT_ID",
+            Self::RedditClientSecret => "REDDIT_CLIENT_SECRET",
+            Self::RedditUsername => "REDDIT_USERNAME",
+            Self::RedditPassword => "REDDIT_PASSWORD",
+            Self::StartingCheckLink => "STARTING_CHECK_LINK",
+            Self::WarningLogsDirectoryName => "WARNING_LOGS_DIRECTORY_NAME",
+            Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
                 "UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR"
             }
-            EnvVar::EnableProviders => "ENABLE_PROVIDERS",
-            EnvVar::EnableCleaningWarningLogsDirectory => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY",
-            EnvVar::EnableCleaningWarningLogsDbInMongo => {
-                "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO"
-            }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo => {
+            Self::EnableProviders => "ENABLE_PROVIDERS",
+            Self::EnableCleaningWarningLogsDirectory => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY",
+            Self::EnableCleaningWarningLogsDbInMongo => "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO",
+            Self::EnableCleaningWarningLogsDbCollectionsInMongo => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO"
             }
-            EnvVar::EnableTimeMeasurement => "ENABLE_TIME_MEASUREMENT",
-            EnvVar::EnableProviderLinksLimit => "ENABLE_PROVIDER_LINKS_LIMIT",
-            EnvVar::EnableCommonProvidersLinksLimit => "ENABLE_COMMON_PROVIDERS_LINKS_LIMIT",
-            EnvVar::CommonProvidersLinksLimit => "COMMON_PROVIDERS_LINKS_LIMIT",
-            EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
+            Self::EnableTimeMeasurement => "ENABLE_TIME_MEASUREMENT",
+            Self::EnableProviderLinksLimit => "ENABLE_PROVIDER_LINKS_LIMIT",
+            Self::EnableCommonProvidersLinksLimit => "ENABLE_COMMON_PROVIDERS_LINKS_LIMIT",
+            Self::CommonProvidersLinksLimit => "COMMON_PROVIDERS_LINKS_LIMIT",
+            Self::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_PROVIDERS_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnablePrints => "ENABLE_PRINTS",
-            EnvVar::EnableErrorPrints => "ENABLE_ERROR_PRINTS",
-            EnvVar::EnableWarningHighPrints => "ENABLE_WARNING_HIGH_PRINTS",
-            EnvVar::EnableWarningLowPrints => "ENABLE_WARNING_LOW_PRINTS",
-            EnvVar::EnableSuccessPrints => "ENABLE_SUCCESS_PRINTS",
-            EnvVar::EnablePartialSuccessPrints => "ENABLE_PARTIAL_SUCCESS_PRINTS",
-            EnvVar::EnableTimeMeasurementPrints => "ENABLE_TIME_MEASUREMENT_PRINTS",
-            EnvVar::EnableCleaningWarningLogsDirectoryPrints => {
+            Self::EnablePrints => "ENABLE_PRINTS",
+            Self::EnableErrorPrints => "ENABLE_ERROR_PRINTS",
+            Self::EnableWarningHighPrints => "ENABLE_WARNING_HIGH_PRINTS",
+            Self::EnableWarningLowPrints => "ENABLE_WARNING_LOW_PRINTS",
+            Self::EnableSuccessPrints => "ENABLE_SUCCESS_PRINTS",
+            Self::EnablePartialSuccessPrints => "ENABLE_PARTIAL_SUCCESS_PRINTS",
+            Self::EnableTimeMeasurementPrints => "ENABLE_TIME_MEASUREMENT_PRINTS",
+            Self::EnableCleaningWarningLogsDirectoryPrints => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS"
             }
-            EnvVar::EnableInfoPrints => "ENABLE_INFO_PRINTS",
-            EnvVar::EnableAllProvidersPrints => "ENABLE_ALL_PROVIDERS_PRINTS",
-            EnvVar::EnableErrorPrintsForAllProviders => "ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableWarningHighPrintsForAllProviders => {
+            Self::EnableInfoPrints => "ENABLE_INFO_PRINTS",
+            Self::EnableAllProvidersPrints => "ENABLE_ALL_PROVIDERS_PRINTS",
+            Self::EnableErrorPrintsForAllProviders => "ENABLE_ERROR_PRINTS_FOR_ALL_PROVIDERS",
+            Self::EnableWarningHighPrintsForAllProviders => {
                 "ENABLE_WARNING_HIGH_PRINTS_FOR_ALL_PROVIDERS"
             }
-            EnvVar::EnableWarningLowPrintsForAllProviders => {
+            Self::EnableWarningLowPrintsForAllProviders => {
                 "ENABLE_WARNING_LOW_PRINTS_FOR_ALL_PROVIDERS"
             }
-            EnvVar::EnableSuccessPrintsForAllProviders => "ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnablePartialSuccessPrintsForAllProviders => {
+            Self::EnableSuccessPrintsForAllProviders => "ENABLE_SUCCESS_PRINTS_FOR_ALL_PROVIDERS",
+            Self::EnablePartialSuccessPrintsForAllProviders => {
                 "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ALL_PROVIDERS"
             }
-            EnvVar::EnableTimeMeasurementPrintsForAllProviders => {
+            Self::EnableTimeMeasurementPrintsForAllProviders => {
                 "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ALL_PROVIDERS"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => {
+            Self::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_PRINTS_FOR_ALL_PROVIDERS"
             }
-            EnvVar::EnableInfoPrintsForAllProviders => "ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS",
-            EnvVar::EnableWriteErrorLogsInLocalFolder => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER",
-            EnvVar::EnableWriteErrorLogsInMongo => "ENABLE_WRITE_ERROR_LOGS_IN_MONGO",
-            EnvVar::EnableInitializeMongoWithProvidersLinkParts => {
+            Self::EnableInfoPrintsForAllProviders => "ENABLE_INFO_PRINTS_FOR_ALL_PROVIDERS",
+            Self::EnableWriteErrorLogsInLocalFolder => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER",
+            Self::EnableWriteErrorLogsInMongo => "ENABLE_WRITE_ERROR_LOGS_IN_MONGO",
+            Self::EnableInitializeMongoWithProvidersLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_PROVIDERS_LINK_PARTS"
             }
 
-            EnvVar::ProvidersDbNameHandle => "PROVIDERS_DB_NAME_HANDLE",
-            EnvVar::ProvidersDbCollectionHandleSecondPart => {
+            Self::ProvidersDbNameHandle => "PROVIDERS_DB_NAME_HANDLE",
+            Self::ProvidersDbCollectionHandleSecondPart => {
                 "PROVIDERS_DB_COLLECTION_HANDLE_SECOND_PART"
             }
-            EnvVar::ProvidersDbCollectionDocumentFieldNameHandle => {
+            Self::ProvidersDbCollectionDocumentFieldNameHandle => {
                 "PROVIDERS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE"
             }
-            EnvVar::PathToProviderLinkPartsFolder => "PATH_TO_PROVIDER_LINK_PARTS_FOLDER",
-            EnvVar::LogFileExtension => "LOG_FILE_EXTENSION",
-            EnvVar::DbProvidersLogsNameHandle => "DB_PROVIDERS_LOGS_NAME_HANDLE",
-            EnvVar::DbProvidersLogsCollectionHandleSecondPart => {
+            Self::PathToProviderLinkPartsFolder => "PATH_TO_PROVIDER_LINK_PARTS_FOLDER",
+            Self::LogFileExtension => "LOG_FILE_EXTENSION",
+            Self::DbProvidersLogsNameHandle => "DB_PROVIDERS_LOGS_NAME_HANDLE",
+            Self::DbProvidersLogsCollectionHandleSecondPart => {
                 "DB_PROVIDERS_LOGS_COLLECTION_HANDLE_SECOND_PART"
             }
-            EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle => {
+            Self::DbProvidersLogsCollectionDocumentFieldNameHandle => {
                 "DB_PROVIDERS_LOGS_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE"
             }
 
-            EnvVar::EnableInitializeMongoWithArxivLinkParts => {
+            Self::EnableInitializeMongoWithArxivLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_ARXIV_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithBiorxivLinkParts => {
+            Self::EnableInitializeMongoWithBiorxivLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_BIORXIV_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithGithubLinkParts => {
+            Self::EnableInitializeMongoWithGithubLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_GITHUB_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithHabrLinkParts => {
+            Self::EnableInitializeMongoWithHabrLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_HABR_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithMedrxivLinkParts => {
+            Self::EnableInitializeMongoWithMedrxivLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_MEDRXIV_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithRedditLinkParts => {
+            Self::EnableInitializeMongoWithRedditLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_REDDIT_LINK_PARTS"
             }
-            EnvVar::EnableInitializeMongoWithTwitterLinkParts => {
+            Self::EnableInitializeMongoWithTwitterLinkParts => {
                 "ENABLE_INITIALIZE_MONGO_WITH_TWITTER_LINK_PARTS"
             }
 
-            EnvVar::MongoFirstHandleUrlPart => "MONGO_FIRST_HANDLE_URL_PART",
-            EnvVar::MongoSecondHandleUrlPart => "MONGO_SECOND_HANDLE_URL_PART",
-            EnvVar::MongoThirdHandleUrlPart => "MONGO_THIRD_HANDLE_URL_PART",
-            EnvVar::MongoFourthHandleUrlPart => "MONGO_FOURTH_HANDLE_URL_PART",
-            EnvVar::MongoFifthHandleUrlPart => "MONGO_FIFTH_HANDLE_URL_PART",
+            Self::MongoFirstHandleUrlPart => "MONGO_FIRST_HANDLE_URL_PART",
+            Self::MongoSecondHandleUrlPart => "MONGO_SECOND_HANDLE_URL_PART",
+            Self::MongoThirdHandleUrlPart => "MONGO_THIRD_HANDLE_URL_PART",
+            Self::MongoFourthHandleUrlPart => "MONGO_FOURTH_HANDLE_URL_PART",
+            Self::MongoFifthHandleUrlPart => "MONGO_FIFTH_HANDLE_URL_PART",
 
-            EnvVar::MongoLogin => "MONGO_LOGIN",
-            EnvVar::MongoPassword => "MONGO_PASSWORD",
-            EnvVar::MongoIp => "MONGO_IP",
-            EnvVar::MongoPort => "MONGO_PORT",
-            EnvVar::MongoParams => "MONGO_PARAMS",
+            Self::MongoLogin => "MONGO_LOGIN",
+            Self::MongoPassword => "MONGO_PASSWORD",
+            Self::MongoIp => "MONGO_IP",
+            Self::MongoPort => "MONGO_PORT",
+            Self::MongoParams => "MONGO_PARAMS",
 
-            EnvVar::PostgresFirstHandleUrlPart => "POSTGRES_FIRST_HANDLE_URL_PART",
-            EnvVar::PostgresSecondHandleUrlPart => "POSTGRES_SECOND_HANDLE_URL_PART",
-            EnvVar::PostgresThirdHandleUrlPart => "POSTGRES_THIRD_HANDLE_URL_PART",
-            EnvVar::PostgresFourthHandleUrlPart => "POSTGRES_FOURTH_HANDLE_URL_PART",
-            EnvVar::PostgresFifthHandleUrlPart => "POSTGRES_FIFTH_HANDLE_URL_PART",
+            Self::PostgresFirstHandleUrlPart => "POSTGRES_FIRST_HANDLE_URL_PART",
+            Self::PostgresSecondHandleUrlPart => "POSTGRES_SECOND_HANDLE_URL_PART",
+            Self::PostgresThirdHandleUrlPart => "POSTGRES_THIRD_HANDLE_URL_PART",
+            Self::PostgresFourthHandleUrlPart => "POSTGRES_FOURTH_HANDLE_URL_PART",
+            Self::PostgresFifthHandleUrlPart => "POSTGRES_FIFTH_HANDLE_URL_PART",
 
-            EnvVar::PostgresLogin => "POSTGRES_LOGIN",
-            EnvVar::PostgresPassword => "POSTGRES_PASSWORD",
-            EnvVar::PostgresIp => "POSTGRES_IP",
-            EnvVar::PostgresPort => "POSTGRES_PORT",
-            EnvVar::PostgresDb => "POSTGRES_DB",
+            Self::PostgresLogin => "POSTGRES_LOGIN",
+            Self::PostgresPassword => "POSTGRES_PASSWORD",
+            Self::PostgresIp => "POSTGRES_IP",
+            Self::PostgresPort => "POSTGRES_PORT",
+            Self::PostgresDb => "POSTGRES_DB",
 
-            EnvVar::EnableArxiv => "ENABLE_ARXIV",
-            EnvVar::EnableBiorxiv => "ENABLE_BIORXIV",
-            EnvVar::EnableGithub => "ENABLE_GITHUB",
-            EnvVar::EnableHabr => "ENABLE_HABR",
-            EnvVar::EnableMedrxiv => "ENABLE_MEDRXIV",
-            EnvVar::EnableReddit => "ENABLE_REDDIT",
-            EnvVar::EnableTwitter => "ENABLE_TWITTER",
+            Self::EnableArxiv => "ENABLE_ARXIV",
+            Self::EnableBiorxiv => "ENABLE_BIORXIV",
+            Self::EnableGithub => "ENABLE_GITHUB",
+            Self::EnableHabr => "ENABLE_HABR",
+            Self::EnableMedrxiv => "ENABLE_MEDRXIV",
+            Self::EnableReddit => "ENABLE_REDDIT",
+            Self::EnableTwitter => "ENABLE_TWITTER",
 
-            EnvVar::ArxivLink => "ARXIV_LINK",
-            EnvVar::BiorxivLink => "BIORXIV_LINK",
-            EnvVar::GithubLink => "GITHUB_LINK",
-            EnvVar::HabrLink => "HABR_LINK",
-            EnvVar::MedrxivLink => "MEDRXIV_LINK",
-            EnvVar::RedditLink => "REDDIT_LINK",
-            EnvVar::TwitterLink => "TWITTER_LINK",
+            Self::ArxivLink => "ARXIV_LINK",
+            Self::BiorxivLink => "BIORXIV_LINK",
+            Self::GithubLink => "GITHUB_LINK",
+            Self::HabrLink => "HABR_LINK",
+            Self::MedrxivLink => "MEDRXIV_LINK",
+            Self::RedditLink => "REDDIT_LINK",
+            Self::TwitterLink => "TWITTER_LINK",
 
-            EnvVar::EnablePrintsArxiv => "ENABLE_PRINTS_ARXIV",
-            EnvVar::EnablePrintsBiorxiv => "ENABLE_PRINTS_BIORXIV",
-            EnvVar::EnablePrintsGithub => "ENABLE_PRINTS_GITHUB",
-            EnvVar::EnablePrintsHabr => "ENABLE_PRINTS_HABR",
-            EnvVar::EnablePrintsMedrxiv => "ENABLE_PRINTS_MEDRXIV",
-            EnvVar::EnablePrintsReddit => "ENABLE_PRINTS_REDDIT",
-            EnvVar::EnablePrintsTwitter => "ENABLE_PRINTS_TWITTER",
+            Self::EnablePrintsArxiv => "ENABLE_PRINTS_ARXIV",
+            Self::EnablePrintsBiorxiv => "ENABLE_PRINTS_BIORXIV",
+            Self::EnablePrintsGithub => "ENABLE_PRINTS_GITHUB",
+            Self::EnablePrintsHabr => "ENABLE_PRINTS_HABR",
+            Self::EnablePrintsMedrxiv => "ENABLE_PRINTS_MEDRXIV",
+            Self::EnablePrintsReddit => "ENABLE_PRINTS_REDDIT",
+            Self::EnablePrintsTwitter => "ENABLE_PRINTS_TWITTER",
 
-            EnvVar::EnableWarningHighPrintsForArxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV",
-            EnvVar::EnableWarningHighPrintsForBiorxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV",
-            EnvVar::EnableWarningHighPrintsForGithub => "ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB",
-            EnvVar::EnableWarningHighPrintsForHabr => "ENABLE_WARNING_HIGH_PRINTS_FOR_HABR",
-            EnvVar::EnableWarningHighPrintsForMedrxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV",
-            EnvVar::EnableWarningHighPrintsForReddit => "ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT",
-            EnvVar::EnableWarningHighPrintsForTwitter => "ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER",
+            Self::EnableWarningHighPrintsForArxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_ARXIV",
+            Self::EnableWarningHighPrintsForBiorxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_BIORXIV",
+            Self::EnableWarningHighPrintsForGithub => "ENABLE_WARNING_HIGH_PRINTS_FOR_GITHUB",
+            Self::EnableWarningHighPrintsForHabr => "ENABLE_WARNING_HIGH_PRINTS_FOR_HABR",
+            Self::EnableWarningHighPrintsForMedrxiv => "ENABLE_WARNING_HIGH_PRINTS_FOR_MEDRXIV",
+            Self::EnableWarningHighPrintsForReddit => "ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT",
+            Self::EnableWarningHighPrintsForTwitter => "ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER",
 
-            EnvVar::EnableWarningLowPrintsForArxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV",
-            EnvVar::EnableWarningLowPrintsForBiorxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV",
-            EnvVar::EnableWarningLowPrintsForGithub => "ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB",
-            EnvVar::EnableWarningLowPrintsForHabr => "ENABLE_WARNING_LOW_PRINTS_FOR_HABR",
-            EnvVar::EnableWarningLowPrintsForMedrxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV",
-            EnvVar::EnableWarningLowPrintsForReddit => "ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT",
-            EnvVar::EnableWarningLowPrintsForTwitter => "ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER",
+            Self::EnableWarningLowPrintsForArxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV",
+            Self::EnableWarningLowPrintsForBiorxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV",
+            Self::EnableWarningLowPrintsForGithub => "ENABLE_WARNING_LOW_PRINTS_FOR_GITHUB",
+            Self::EnableWarningLowPrintsForHabr => "ENABLE_WARNING_LOW_PRINTS_FOR_HABR",
+            Self::EnableWarningLowPrintsForMedrxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_MEDRXIV",
+            Self::EnableWarningLowPrintsForReddit => "ENABLE_WARNING_LOW_PRINTS_FOR_REDDIT",
+            Self::EnableWarningLowPrintsForTwitter => "ENABLE_WARNING_LOW_PRINTS_FOR_TWITTER",
 
-            EnvVar::EnableErrorPrintsForArxiv => "ENABLE_ERROR_PRINTS_FOR_ARXIV",
-            EnvVar::EnableErrorPrintsForBiorxiv => "ENABLE_ERROR_PRINTS_FOR_BIORXIV",
-            EnvVar::EnableErrorPrintsForGithub => "ENABLE_ERROR_PRINTS_FOR_GITHUB",
-            EnvVar::EnableErrorPrintsForHabr => "ENABLE_ERROR_PRINTS_FOR_HABR",
-            EnvVar::EnableErrorPrintsForMedrxiv => "ENABLE_ERROR_PRINTS_FOR_MEDRXIV",
-            EnvVar::EnableErrorPrintsForReddit => "ENABLE_ERROR_PRINTS_FOR_REDDIT",
-            EnvVar::EnableErrorPrintsForTwitter => "ENABLE_ERROR_PRINTS_FOR_TWITTER",
+            Self::EnableErrorPrintsForArxiv => "ENABLE_ERROR_PRINTS_FOR_ARXIV",
+            Self::EnableErrorPrintsForBiorxiv => "ENABLE_ERROR_PRINTS_FOR_BIORXIV",
+            Self::EnableErrorPrintsForGithub => "ENABLE_ERROR_PRINTS_FOR_GITHUB",
+            Self::EnableErrorPrintsForHabr => "ENABLE_ERROR_PRINTS_FOR_HABR",
+            Self::EnableErrorPrintsForMedrxiv => "ENABLE_ERROR_PRINTS_FOR_MEDRXIV",
+            Self::EnableErrorPrintsForReddit => "ENABLE_ERROR_PRINTS_FOR_REDDIT",
+            Self::EnableErrorPrintsForTwitter => "ENABLE_ERROR_PRINTS_FOR_TWITTER",
 
-            EnvVar::EnableSuccessPrintsForArxiv => "ENABLE_SUCCESS_PRINTS_FOR_ARXIV",
-            EnvVar::EnableSuccessPrintsForBiorxiv => "ENABLE_SUCCESS_PRINTS_FOR_BIORXIV",
-            EnvVar::EnableSuccessPrintsForGithub => "ENABLE_SUCCESS_PRINTS_FOR_GITHUB",
-            EnvVar::EnableSuccessPrintsForHabr => "ENABLE_SUCCESS_PRINTS_FOR_HABR",
-            EnvVar::EnableSuccessPrintsForMedrxiv => "ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV",
-            EnvVar::EnableSuccessPrintsForReddit => "ENABLE_SUCCESS_PRINTS_FOR_REDDIT",
-            EnvVar::EnableSuccessPrintsForTwitter => "ENABLE_SUCCESS_PRINTS_FOR_TWITTER",
+            Self::EnableSuccessPrintsForArxiv => "ENABLE_SUCCESS_PRINTS_FOR_ARXIV",
+            Self::EnableSuccessPrintsForBiorxiv => "ENABLE_SUCCESS_PRINTS_FOR_BIORXIV",
+            Self::EnableSuccessPrintsForGithub => "ENABLE_SUCCESS_PRINTS_FOR_GITHUB",
+            Self::EnableSuccessPrintsForHabr => "ENABLE_SUCCESS_PRINTS_FOR_HABR",
+            Self::EnableSuccessPrintsForMedrxiv => "ENABLE_SUCCESS_PRINTS_FOR_MEDRXIV",
+            Self::EnableSuccessPrintsForReddit => "ENABLE_SUCCESS_PRINTS_FOR_REDDIT",
+            Self::EnableSuccessPrintsForTwitter => "ENABLE_SUCCESS_PRINTS_FOR_TWITTER",
 
-            EnvVar::EnablePartialSuccessPrintsForArxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV",
-            EnvVar::EnablePartialSuccessPrintsForBiorxiv => {
+            Self::EnablePartialSuccessPrintsForArxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV",
+            Self::EnablePartialSuccessPrintsForBiorxiv => {
                 "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV"
             }
-            EnvVar::EnablePartialSuccessPrintsForGithub => {
-                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB"
-            }
-            EnvVar::EnablePartialSuccessPrintsForHabr => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR",
-            EnvVar::EnablePartialSuccessPrintsForMedrxiv => {
+            Self::EnablePartialSuccessPrintsForGithub => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_GITHUB",
+            Self::EnablePartialSuccessPrintsForHabr => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_HABR",
+            Self::EnablePartialSuccessPrintsForMedrxiv => {
                 "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_MEDRXIV"
             }
-            EnvVar::EnablePartialSuccessPrintsForReddit => {
-                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT"
-            }
-            EnvVar::EnablePartialSuccessPrintsForTwitter => {
+            Self::EnablePartialSuccessPrintsForReddit => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_REDDIT",
+            Self::EnablePartialSuccessPrintsForTwitter => {
                 "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_TWITTER"
             }
 
-            EnvVar::EnableCleaningWarningLogsDirectoryForArxiv => {
+            Self::EnableCleaningWarningLogsDirectoryForArxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForBiorxiv => {
+            Self::EnableCleaningWarningLogsDirectoryForBiorxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForGithub => {
+            Self::EnableCleaningWarningLogsDirectoryForGithub => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForHabr => {
+            Self::EnableCleaningWarningLogsDirectoryForHabr => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForMedrxiv => {
+            Self::EnableCleaningWarningLogsDirectoryForMedrxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForReddit => {
+            Self::EnableCleaningWarningLogsDirectoryForReddit => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT"
             }
-            EnvVar::EnableCleaningWarningLogsDirectoryForTwitter => {
+            Self::EnableCleaningWarningLogsDirectoryForTwitter => {
                 "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER"
             }
 
-            EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv => {
+            Self::EnableCleaningWarningLogsDbInMongoForArxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_ARXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv => {
+            Self::EnableCleaningWarningLogsDbInMongoForBiorxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_BIORXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForGithub => {
+            Self::EnableCleaningWarningLogsDbInMongoForGithub => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_GITHUB"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForHabr => {
+            Self::EnableCleaningWarningLogsDbInMongoForHabr => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_HABR"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv => {
+            Self::EnableCleaningWarningLogsDbInMongoForMedrxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_MEDRXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForReddit => {
+            Self::EnableCleaningWarningLogsDbInMongoForReddit => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_REDDIT"
             }
-            EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter => {
+            Self::EnableCleaningWarningLogsDbInMongoForTwitter => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_IN_MONGO_FOR_TWITTER"
             }
 
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_ARXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_BIORXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_GITHUB"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_HABR"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_MEDRXIV"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_REDDIT"
             }
-            EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => {
+            Self::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => {
                 "ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_IN_MONGO_FOR_TWITTER"
             }
 
-            EnvVar::EnableTimeMeasurementForArxiv => "ENABLE_TIME_MEASUREMENT_FOR_ARXIV",
-            EnvVar::EnableTimeMeasurementForBiorxiv => "ENABLE_TIME_MEASUREMENT_FOR_BIORXIV",
-            EnvVar::EnableTimeMeasurementForGithub => "ENABLE_TIME_MEASUREMENT_FOR_GITHUB",
-            EnvVar::EnableTimeMeasurementForHabr => "ENABLE_TIME_MEASUREMENT_FOR_HABR",
-            EnvVar::EnableTimeMeasurementForMedrxiv => "ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV",
-            EnvVar::EnableTimeMeasurementForReddit => "ENABLE_TIME_MEASUREMENT_FOR_REDDIT",
-            EnvVar::EnableTimeMeasurementForTwitter => "ENABLE_TIME_MEASUREMENT_FOR_TWITTER",
+            Self::EnableTimeMeasurementForArxiv => "ENABLE_TIME_MEASUREMENT_FOR_ARXIV",
+            Self::EnableTimeMeasurementForBiorxiv => "ENABLE_TIME_MEASUREMENT_FOR_BIORXIV",
+            Self::EnableTimeMeasurementForGithub => "ENABLE_TIME_MEASUREMENT_FOR_GITHUB",
+            Self::EnableTimeMeasurementForHabr => "ENABLE_TIME_MEASUREMENT_FOR_HABR",
+            Self::EnableTimeMeasurementForMedrxiv => "ENABLE_TIME_MEASUREMENT_FOR_MEDRXIV",
+            Self::EnableTimeMeasurementForReddit => "ENABLE_TIME_MEASUREMENT_FOR_REDDIT",
+            Self::EnableTimeMeasurementForTwitter => "ENABLE_TIME_MEASUREMENT_FOR_TWITTER",
 
-            EnvVar::EnableInfoForArxiv => "ENABLE_INFO_FOR_ARXIV",
-            EnvVar::EnableInfoForBiorxiv => "ENABLE_INFO_FOR_BIORXIV",
-            EnvVar::EnableInfoForGithub => "ENABLE_INFO_FOR_GITHUB",
-            EnvVar::EnableInfoForHabr => "ENABLE_INFO_FOR_HABR",
-            EnvVar::EnableInfoForMedrxiv => "ENABLE_INFO_FOR_MEDRXIV",
-            EnvVar::EnableInfoForReddit => "ENABLE_INFO_FOR_REDDIT",
-            EnvVar::EnableInfoForTwitter => "ENABLE_INFO_FOR_TWITTER",
+            Self::EnableInfoForArxiv => "ENABLE_INFO_FOR_ARXIV",
+            Self::EnableInfoForBiorxiv => "ENABLE_INFO_FOR_BIORXIV",
+            Self::EnableInfoForGithub => "ENABLE_INFO_FOR_GITHUB",
+            Self::EnableInfoForHabr => "ENABLE_INFO_FOR_HABR",
+            Self::EnableInfoForMedrxiv => "ENABLE_INFO_FOR_MEDRXIV",
+            Self::EnableInfoForReddit => "ENABLE_INFO_FOR_REDDIT",
+            Self::EnableInfoForTwitter => "ENABLE_INFO_FOR_TWITTER",
 
-            EnvVar::EnableLinksLimitForArxiv => "ENABLE_LINKS_LIMIT_FOR_ARXIV",
-            EnvVar::EnableLinksLimitForBiorxiv => "ENABLE_LINKS_LIMIT_FOR_BIORXIV",
-            EnvVar::EnableLinksLimitForGithub => "ENABLE_LINKS_LIMIT_FOR_GITHUB",
-            EnvVar::EnableLinksLimitForHabr => "ENABLE_LINKS_LIMIT_FOR_HABR",
-            EnvVar::EnableLinksLimitForMedrxiv => "ENABLE_LINKS_LIMIT_FOR_MEDRXIV",
-            EnvVar::EnableLinksLimitForReddit => "ENABLE_LINKS_LIMIT_FOR_REDDIT",
-            EnvVar::EnableLinksLimitForTwitter => "ENABLE_LINKS_LIMIT_FOR_TWITTER",
+            Self::EnableLinksLimitForArxiv => "ENABLE_LINKS_LIMIT_FOR_ARXIV",
+            Self::EnableLinksLimitForBiorxiv => "ENABLE_LINKS_LIMIT_FOR_BIORXIV",
+            Self::EnableLinksLimitForGithub => "ENABLE_LINKS_LIMIT_FOR_GITHUB",
+            Self::EnableLinksLimitForHabr => "ENABLE_LINKS_LIMIT_FOR_HABR",
+            Self::EnableLinksLimitForMedrxiv => "ENABLE_LINKS_LIMIT_FOR_MEDRXIV",
+            Self::EnableLinksLimitForReddit => "ENABLE_LINKS_LIMIT_FOR_REDDIT",
+            Self::EnableLinksLimitForTwitter => "ENABLE_LINKS_LIMIT_FOR_TWITTER",
 
-            EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForArxivLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_ARXIV_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForBiorxivLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_BIORXIV_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForGithubLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_GITHUB_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForHabrLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_HABR_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForMedrxivLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_MEDRXIV_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForRedditLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_REDDIT_LINK_PARTS_FOR_MONGO"
             }
-            EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo => {
+            Self::EnableRandomizeOrderForTwitterLinkPartsForMongo => {
                 "ENABLE_RANDOMIZE_ORDER_FOR_TWITTER_LINK_PARTS_FOR_MONGO"
             }
 
-            EnvVar::LinksLimitForArxiv => "LINKS_LIMIT_FOR_ARXIV",
-            EnvVar::LinksLimitForBiorxiv => "LINKS_LIMIT_FOR_BIORXIV",
-            EnvVar::LinksLimitForGithub => "LINKS_LIMIT_FOR_GITHUB",
-            EnvVar::LinksLimitForHabr => "LINKS_LIMIT_FOR_HABR",
-            EnvVar::LinksLimitForMedrxiv => "LINKS_LIMIT_FOR_MEDRXIV",
-            EnvVar::LinksLimitForReddit => "LINKS_LIMIT_FOR_REDDIT",
-            EnvVar::LinksLimitForTwitter => "LINKS_LIMIT_FOR_TWITTER",
+            Self::LinksLimitForArxiv => "LINKS_LIMIT_FOR_ARXIV",
+            Self::LinksLimitForBiorxiv => "LINKS_LIMIT_FOR_BIORXIV",
+            Self::LinksLimitForGithub => "LINKS_LIMIT_FOR_GITHUB",
+            Self::LinksLimitForHabr => "LINKS_LIMIT_FOR_HABR",
+            Self::LinksLimitForMedrxiv => "LINKS_LIMIT_FOR_MEDRXIV",
+            Self::LinksLimitForReddit => "LINKS_LIMIT_FOR_REDDIT",
+            Self::LinksLimitForTwitter => "LINKS_LIMIT_FOR_TWITTER",
 
-            EnvVar::ErrorRed => "ERROR_RED",
-            EnvVar::ErrorGreen => "ERROR_GREEN",
-            EnvVar::ErrorBlue => "ERROR_BLUE",
-            EnvVar::WarningHighRed => "WARNING_HIGH_RED",
-            EnvVar::WarningHighGreen => "WARNING_HIGH_GREEN",
-            EnvVar::WarningHighBlue => "WARNING_HIGH_BLUE",
-            EnvVar::WarningLowRed => "WARNING_LOW_RED",
-            EnvVar::WarningLowGreen => "WARNING_LOW_GREEN",
-            EnvVar::WarningLowBlue => "WARNING_LOW_BLUE",
-            EnvVar::SuccessRed => "SUCCESS_RED",
-            EnvVar::SuccessGreen => "SUCCESS_GREEN",
-            EnvVar::SuccessBlue => "SUCCESS_BLUE",
-            EnvVar::PartialSuccessRed => "PARTIAL_SUCCESS_RED",
-            EnvVar::PartialSuccessGreen => "PARTIAL_SUCCESS_GREEN",
-            EnvVar::PartialSuccessBlue => "PARTIAL_SUCCESS_BLUE",
-            EnvVar::CleaningRed => "CLEANING_RED",
-            EnvVar::CleaningGreen => "CLEANING_GREEN",
-            EnvVar::CleaningBlue => "CLEANING_BLUE",
-            EnvVar::TimeMeasurementRed => "TIME_MEASUREMENT_RED",
-            EnvVar::TimeMeasurementGreen => "TIME_MEASUREMENT_GREEN",
-            EnvVar::TimeMeasurementBlue => "TIME_MEASUREMENT_BLUE",
-            EnvVar::InfoRed => "INFO_RED",
-            EnvVar::InfoGreen => "INFO_GREEN",
-            EnvVar::InfoBlue => "INFO_BLUE",
+            Self::ErrorRed => "ERROR_RED",
+            Self::ErrorGreen => "ERROR_GREEN",
+            Self::ErrorBlue => "ERROR_BLUE",
+            Self::WarningHighRed => "WARNING_HIGH_RED",
+            Self::WarningHighGreen => "WARNING_HIGH_GREEN",
+            Self::WarningHighBlue => "WARNING_HIGH_BLUE",
+            Self::WarningLowRed => "WARNING_LOW_RED",
+            Self::WarningLowGreen => "WARNING_LOW_GREEN",
+            Self::WarningLowBlue => "WARNING_LOW_BLUE",
+            Self::SuccessRed => "SUCCESS_RED",
+            Self::SuccessGreen => "SUCCESS_GREEN",
+            Self::SuccessBlue => "SUCCESS_BLUE",
+            Self::PartialSuccessRed => "PARTIAL_SUCCESS_RED",
+            Self::PartialSuccessGreen => "PARTIAL_SUCCESS_GREEN",
+            Self::PartialSuccessBlue => "PARTIAL_SUCCESS_BLUE",
+            Self::CleaningRed => "CLEANING_RED",
+            Self::CleaningGreen => "CLEANING_GREEN",
+            Self::CleaningBlue => "CLEANING_BLUE",
+            Self::TimeMeasurementRed => "TIME_MEASUREMENT_RED",
+            Self::TimeMeasurementGreen => "TIME_MEASUREMENT_GREEN",
+            Self::TimeMeasurementBlue => "TIME_MEASUREMENT_BLUE",
+            Self::InfoRed => "INFO_RED",
+            Self::InfoGreen => "INFO_GREEN",
+            Self::InfoBlue => "INFO_BLUE",
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_array() -> &'static [Self] {
-        EnvVar::all_variants()
+        Self::all_variants()
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, Self> {
+        let mut config_env_var_name_kind_string_to_enum_struct_hasmap: HashMap<&'static str, Self> =
+            HashMap::with_capacity(Self::get_length());
+        for env_var_name_kind_kind in Self::iter() {
+            config_env_var_name_kind_string_to_enum_struct_hasmap.insert(
+                env_var_name_kind_kind.get_env_name(),
+                env_var_name_kind_kind,
+            );
+        }
+        config_env_var_name_kind_string_to_enum_struct_hasmap
     }
 }

@@ -4,7 +4,7 @@ use crate::constants::tests_constants::_USER_CREDENTIALS_DUMMY_HANDLE;
 
 use crate::config_mods::env_var_enum::EnvVar;
 
-use crate::traits::get_env_name_trait::GetEnvName;
+use crate::traits::env_var_trait::EnvVarTrait;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
