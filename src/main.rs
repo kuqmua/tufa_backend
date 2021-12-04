@@ -116,6 +116,7 @@ pub mod config_mods {
     pub mod lazy_static_bool_hashmap;
     pub mod lazy_static_config;
     pub mod lazy_static_i64_hashmap;
+    pub mod lazy_static_string_hashmap;
     pub mod lazy_static_u8_hashmap;
 }
 pub mod helpers {
