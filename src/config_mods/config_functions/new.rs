@@ -1,5 +1,7 @@
 extern crate toml;
 
+use std::collections::HashMap;
+
 use crate::config_mods::config_structs::github_authorization_struct::GithubAuthorization;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
@@ -36,11 +38,12 @@ use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStrin
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 use crate::config_mods::config_struct::ConfigStruct;
+use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError<'static>> {
-        let string_vars = EnvStringVar::get_env_values_hashmap()?;
-        let bool_vars = EnvBoolVar::get_env_values_hashmap()?;
+        let string_vars = EnvStringVar::get_env_values_hashmap::<String>()?;
+        let bool_vars: HashMap<EnvBoolVar, bool> = EnvBoolVar::get_env_values_hashmap()?;
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
         let handle_config: ConfigStruct = ConfigStruct {
