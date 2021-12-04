@@ -102,4 +102,12 @@ impl EnvVarTrait for EnvStringVar {
         }
         env_var_name_kind_vec
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_vec() -> Vec<Self> {
+        let mut env_var_name_kind_vec = Vec::with_capacity(Self::get_length());
+        for env_var_name_kind in Self::iter() {
+            env_var_name_kind_vec.push(env_var_name_kind);
+        }
+        env_var_name_kind_vec
+    }
 }

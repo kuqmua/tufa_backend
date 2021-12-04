@@ -133,9 +133,6 @@ pub mod config_mods {
         pub mod reddit_authorization_struct;
     }
     pub mod env_var_enum_impl {
-        pub mod functions {
-            pub mod into_vec;
-        }
         pub mod env_var_enum_traits;
     }
     pub mod config_struct;
