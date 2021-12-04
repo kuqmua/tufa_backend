@@ -53,10 +53,6 @@ pub mod config_mods {
             pub mod functions {
                 pub mod get_env_values_hashmap;
                 pub mod get_string_from_env_var;
-                pub mod into_array;
-                pub mod into_string_name_and_kind_hashmap;
-                pub mod into_string_name_and_kind_tuple_vec;
-                pub mod into_vec;
             }
         }
         pub mod env_var_bool_enum;
@@ -67,10 +63,6 @@ pub mod config_mods {
             pub mod functions {
                 pub mod get_env_values_hashmap;
                 pub mod get_string_from_env_var;
-                pub mod into_array;
-                pub mod into_string_name_and_kind_hashmap;
-                pub mod into_string_name_and_kind_tuple_vec;
-                pub mod into_vec;
             }
         }
         pub mod env_var_i64_enum;
@@ -81,10 +73,6 @@ pub mod config_mods {
             pub mod functions {
                 pub mod get_env_values_hashmap;
                 pub mod get_string_from_env_var;
-                pub mod into_array;
-                pub mod into_string_name_and_kind_hashmap;
-                pub mod into_string_name_and_kind_tuple_vec;
-                pub mod into_vec;
             }
         }
         pub mod env_var_string_enum;
@@ -95,10 +83,6 @@ pub mod config_mods {
             pub mod functions {
                 pub mod get_env_values_hashmap;
                 pub mod get_string_from_env_var;
-                pub mod into_array;
-                pub mod into_string_name_and_kind_hashmap;
-                pub mod into_string_name_and_kind_tuple_vec;
-                pub mod into_vec;
             }
         }
         pub mod env_var_u8_enum;
