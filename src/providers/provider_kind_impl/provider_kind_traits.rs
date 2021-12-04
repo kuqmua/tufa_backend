@@ -135,6 +135,45 @@ impl ProviderKindTrait for ProviderKind {
             }
         }
     }
+    fn is_warning_low_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_github
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_warning_low_providers_prints
+                    .enable_warning_low_prints_for_twitter
+            }
+        }
+    }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_link_limits_enabled(&self) -> bool {
         match self {
