@@ -113,6 +113,7 @@ pub mod config_mods {
     }
     pub mod config_struct;
     pub mod env_var_enum;
+    pub mod lazy_static_bool_hashmap;
     pub mod lazy_static_config;
 }
 pub mod helpers {
