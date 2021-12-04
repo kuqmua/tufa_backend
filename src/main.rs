@@ -177,7 +177,7 @@ mod providers {
         pub mod functions {
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
-        pub mod provider_kind_traits;
+        pub mod provider_kind_trait;
     }
     pub mod get_providers_json_local_data_processed_error;
     pub mod provider_kind_enum;
@@ -195,6 +195,7 @@ mod tests {
     }
 }
 mod traits {
+    pub mod env_var_bool_trait;
     pub mod env_var_trait;
     pub mod env_var_typed_trait;
     pub mod provider_kind_trait;

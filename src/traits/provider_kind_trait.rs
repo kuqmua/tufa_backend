@@ -23,6 +23,7 @@ pub trait ProviderKindTrait {
     fn is_link_limits_enabled(&self) -> bool;
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enable(&self) -> bool;
+
     fn get_check_link(&self) -> &'static str;
     fn get_item_handle(&self) -> Option<&'static str>;
     fn get_links_limit_for_provider(&self) -> i64;
