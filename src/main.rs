@@ -48,6 +48,7 @@ pub mod config_mods {
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum_impl {
             pub mod traits {
+                pub mod env_var_bool_trait;
                 pub mod env_var_trait;
                 pub mod env_var_typed_trait;
             }

@@ -1,4 +1,4 @@
-pub trait ProviderKindTrait {
+pub trait EnvVarBoolTrait {
     fn is_mongo_initialization_enabled(&self) -> bool;
     fn is_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
