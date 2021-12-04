@@ -8,4 +8,7 @@ pub trait EnvVarTrait {
     fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, Self>
     where
         Self: std::marker::Sized;
+    fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, Self)>
+    where
+        Self: std::marker::Sized;
 }

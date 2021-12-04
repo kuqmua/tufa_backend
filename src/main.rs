@@ -134,7 +134,6 @@ pub mod config_mods {
     }
     pub mod env_var_enum_impl {
         pub mod functions {
-            pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
         }
         pub mod env_var_enum_traits;
