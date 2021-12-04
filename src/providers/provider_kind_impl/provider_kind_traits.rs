@@ -387,6 +387,47 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_github
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
+                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter
+            }
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_time_measurement_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
@@ -522,6 +563,48 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
 
+    //todo add errors warning low warning high info and others
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_cleaning_warning_logs_directory_enable(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_habr
+            }
+            ProviderKind::Habr => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_habr
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_medrxiv
+            }
+            ProviderKind::Reddit => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_reddit
+            }
+            ProviderKind::Twitter => {
+                CONFIG
+                    .enable_providers_cleaning_warning_logs_directory
+                    .enable_cleaning_warning_logs_directory_for_twitter
+            }
+        }
+    }
+
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_check_link(&self) -> &'static str {
         match self {
@@ -533,19 +616,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Reddit => &CONFIG.providers_check_links.reddit_link,
             ProviderKind::Habr => &CONFIG.providers_check_links.habr_link,
         }
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_init_local_data_file_path(&self) -> String {
-        format!(
-            "{}{}{}{}",
-            CONFIG.mongo_params.path_to_provider_link_parts_folder,
-            self,
-            CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part,
-            CONFIG.mongo_params.log_file_extension
-        )
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -619,6 +689,42 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_init_local_data_file_path(&self) -> String {
+        format!(
+            "{}{}{}{}",
+            CONFIG.mongo_params.path_to_provider_link_parts_folder,
+            self,
+            CONFIG
+                .mongo_params
+                .providers_db_collection_handle_second_part,
+            CONFIG.mongo_params.log_file_extension
+        )
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError> {
+        let path = self.get_path_to_logs_directory();
+        if !Path::new(&path).is_dir() {
+            return Err(CleanLogsDirError::PathIsNotDir { path });
+        }
+        fs::remove_dir_all(&path)?;
+        Ok(())
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn stringify(&self) -> &'static str {
+        match self {
+            ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
+            ProviderKind::Biorxiv => stringify!(ProviderKind::Biorxiv),
+            ProviderKind::Github => stringify!(ProviderKind::Github),
+            ProviderKind::Habr => stringify!(ProviderKind::Habr),
+            ProviderKind::Medrxiv => stringify!(ProviderKind::Medrxiv),
+            ProviderKind::Reddit => stringify!(ProviderKind::Reddit),
+            ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String> {
         match self {
             ProviderKind::Arxiv => generate_arxiv_links(names_vector),
@@ -632,110 +738,6 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool {
-        match self {
-            ProviderKind::Arxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv
-            }
-            ProviderKind::Biorxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv
-            }
-            ProviderKind::Github => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_github
-            }
-            ProviderKind::Habr => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_habr
-            }
-            ProviderKind::Medrxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv
-            }
-            ProviderKind::Reddit => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit
-            }
-            ProviderKind::Twitter => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_collections_in_mongo
-                    .enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter
-            }
-        }
-    }
-
-    //todo add errors warning low warning high info and others
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_cleaning_warning_logs_directory_enable(&self) -> bool {
-        match self {
-            ProviderKind::Arxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_arxiv
-            }
-            ProviderKind::Biorxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_biorxiv
-            }
-            ProviderKind::Github => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_habr
-            }
-            ProviderKind::Habr => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_habr
-            }
-            ProviderKind::Medrxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_medrxiv
-            }
-            ProviderKind::Reddit => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_reddit
-            }
-            ProviderKind::Twitter => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_directory
-                    .enable_cleaning_warning_logs_directory_for_twitter
-            }
-        }
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError> {
-        let path = self.get_path_to_logs_directory();
-        if !Path::new(&path).is_dir() {
-            return Err(CleanLogsDirError::PathIsNotDir { path });
-        }
-        fs::remove_dir_all(&path)?;
-        Ok(())
-    }
-
-    fn stringify(&self) -> &'static str {
-        match self {
-            ProviderKind::Arxiv => stringify!(ProviderKind::Arxiv),
-            ProviderKind::Biorxiv => stringify!(ProviderKind::Biorxiv),
-            ProviderKind::Github => stringify!(ProviderKind::Github),
-            ProviderKind::Habr => stringify!(ProviderKind::Habr),
-            ProviderKind::Medrxiv => stringify!(ProviderKind::Medrxiv),
-            ProviderKind::Reddit => stringify!(ProviderKind::Reddit),
-            ProviderKind::Twitter => stringify!(ProviderKind::Twitter),
-        }
-    }
-
     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers(
     ) -> HashMap<ProviderKind, Vec<String>> {
         let mut hashmap_with_empty_vecs = HashMap::<ProviderKind, Vec<String>>::with_capacity(
