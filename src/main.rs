@@ -133,15 +133,13 @@ pub mod config_mods {
         pub mod reddit_authorization_struct;
     }
     pub mod env_var_enum_impl {
-        pub mod traits {
-            pub mod get_env_name;
-        }
         pub mod functions {
             pub mod into_array;
             pub mod into_string_name_and_kind_hashmap;
             pub mod into_string_name_and_kind_tuple_vec;
             pub mod into_vec;
         }
+        pub mod env_var_enum_traits;
     }
     pub mod config_struct;
     pub mod env_var_enum;
@@ -167,10 +165,10 @@ pub mod mongo_integration {
     pub mod mongo_drop_empty_db;
     pub mod mongo_get_db_url;
     pub mod mongo_get_documents_as_string_vector;
+    pub mod mongo_get_providers_link_parts_processed;
+    pub mod mongo_get_providers_link_parts_unprocessed;
     pub mod mongo_insert_data;
     pub mod mongo_insert_docs_in_empty_collection;
-    pub mod mongo_get_providers_link_parts_unprocessed;
-    pub mod mongo_get_providers_link_parts_processed;
 }
 pub mod postgres_integration {
     pub mod models {
