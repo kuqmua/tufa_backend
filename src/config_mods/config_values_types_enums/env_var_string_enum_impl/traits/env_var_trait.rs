@@ -2,9 +2,6 @@ use std::collections::HashMap;
 
 use strum::IntoEnumIterator;
 
-use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
-use crate::config_mods::config_error_mods::config_error::ConfigError;
-use crate::config_mods::config_error_mods::config_error_inner_type_enum::ConfigErrorInnerType;
 use crate::config_mods::env_var_enum::EnvVar;
 
 use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStringVar;
@@ -112,20 +109,5 @@ impl EnvVarTrait for EnvStringVar {
             env_var_name_kind_vec.push(env_var_name_kind);
         }
         env_var_name_kind_vec
-    }
-    fn get_string_from_env_var(
-        &self,
-        was_dotenv_enable: bool,
-    ) -> Result<String, ConfigError<'static>> {
-        let string_name = self.get_env_name();
-        match std::env::var(string_name) {
-            Ok(handle) => Ok(handle),
-            Err(e) => Err(ConfigError {
-                env_var_name_kind: ConfigEnvVarErrorType::String(*self),
-                was_dotenv_enable,
-                env_name: string_name,
-                env_error: ConfigErrorInnerType::VarErrorHandle(e),
-            }),
-        }
     }
 }

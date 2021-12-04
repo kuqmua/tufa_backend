@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::config_mods::config_error_mods::config_error::ConfigError;
-
 pub trait EnvVarTrait {
     fn get_env_name(&self) -> &'static str;
     fn into_array() -> &'static [Self]
@@ -16,8 +14,4 @@ pub trait EnvVarTrait {
     fn into_vec() -> Vec<Self>
     where
         Self: std::marker::Sized;
-    fn get_string_from_env_var(
-        &self,
-        was_dotenv_enable: bool,
-    ) -> Result<String, ConfigError<'static>>;
 }
