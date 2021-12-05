@@ -10,18 +10,3 @@ pub struct EnableProviders {
     pub enable_reddit: bool,
     pub enable_twitter: bool,
 }
-
-impl EnableProviders {
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn is_enabled(&self, provider_kind: ProviderKind) -> bool {
-        match provider_kind {
-            ProviderKind::Arxiv => self.enable_arxiv,
-            ProviderKind::Biorxiv => self.enable_biorxiv,
-            ProviderKind::Github => self.enable_github,
-            ProviderKind::Habr => self.enable_habr,
-            ProviderKind::Medrxiv => self.enable_medrxiv,
-            ProviderKind::Reddit => self.enable_reddit,
-            ProviderKind::Twitter => self.enable_twitter,
-        }
-    }
-}

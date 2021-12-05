@@ -2,7 +2,6 @@ extern crate toml;
 
 use std::collections::HashMap;
 
-use crate::config_mods::config_structs::github_authorization_struct::GithubAuthorization;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
@@ -47,10 +46,8 @@ impl ConfigStruct {
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
         let handle_config: ConfigStruct = ConfigStruct {
-            github_authorization: GithubAuthorization {
-                github_name: string_vars[&EnvStringVar::GithubName].clone(),
-                github_token: string_vars[&EnvStringVar::GithubToken].clone(),
-            },
+            github_name: string_vars[&EnvStringVar::GithubName].clone(),
+            github_token: string_vars[&EnvStringVar::GithubToken].clone(),
             reddit_authorization: RedditAuthorization {
                 reddit_user_agent: string_vars[&EnvStringVar::RedditUserAgent].clone(),
                 reddit_client_id: string_vars[&EnvStringVar::RedditClientId].clone(),

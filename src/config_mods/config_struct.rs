@@ -1,6 +1,5 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::github_authorization_struct::GithubAuthorization;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
@@ -25,7 +24,9 @@ use crate::config_mods::config_structs::reddit_authorization_struct::RedditAutho
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
-    pub github_authorization: GithubAuthorization,
+    pub github_name: String,
+    pub github_token: String,
+
     pub reddit_authorization: RedditAuthorization,
     pub params: Params,
     pub mongo_params: MongoParams,

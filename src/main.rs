@@ -95,7 +95,6 @@ pub mod config_mods {
         pub mod enable_success_providers_prints_struct;
         pub mod enable_warning_high_providers_prints_struct;
         pub mod enable_warning_low_providers_prints_struct;
-        pub mod github_authorization_struct;
         pub mod mongo_authorization_struct;
         pub mod mongo_params_struct;
         pub mod mongo_url_parts_struct;

@@ -8,8 +8,8 @@ use crate::constants::tests_constants::_USER_CREDENTIALS_DUMMY_HANDLE;
 #[test]
 fn ci_check_compromised_github_auth_info_with_config_init() {
     let config_handle: ConfigStruct = ConfigStruct::new().expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
-    let github_name = &config_handle.github_authorization.github_name;
-    let github_token = &config_handle.github_authorization.github_token;
+    let github_name = &config_handle.github_name;
+    let github_token = &config_handle.github_token;
     assert!(
         !(github_name != _USER_CREDENTIALS_DUMMY_HANDLE),
         "github_name != {}",
