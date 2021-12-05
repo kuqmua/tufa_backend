@@ -8,11 +8,11 @@ use crate::constants::tests_constants::_USER_CREDENTIALS_DUMMY_HANDLE;
 #[test]
 fn ci_check_compromised_reddit_auth_info_with_config_init() {
     let config_handle: ConfigStruct = ConfigStruct::new().expect(LOAD_CONFIG_FILE_ERROR_MESSAGE);
-    let reddit_user_agent = &config_handle.reddit_authorization.reddit_user_agent;
-    let reddit_client_id = &config_handle.reddit_authorization.reddit_client_id;
-    let reddit_client_secret = &config_handle.reddit_authorization.reddit_client_secret;
-    let reddit_username = &config_handle.reddit_authorization.reddit_username;
-    let reddit_password = &config_handle.reddit_authorization.reddit_password;
+    let reddit_user_agent = &config_handle.reddit_user_agent;
+    let reddit_client_id = &config_handle.reddit_client_id;
+    let reddit_client_secret = &config_handle.reddit_client_secret;
+    let reddit_username = &config_handle.reddit_username;
+    let reddit_password = &config_handle.reddit_password;
     assert!(
         !(reddit_user_agent != _USER_CREDENTIALS_DUMMY_HANDLE),
         "reddit_user_agent != {}",

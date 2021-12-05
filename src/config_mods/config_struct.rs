@@ -20,14 +20,18 @@ use crate::config_mods::config_structs::print_colors_struct::PrintColors;
 use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
-use crate::config_mods::config_structs::reddit_authorization_struct::RedditAuthorization;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
 
-    pub reddit_authorization: RedditAuthorization,
+    pub reddit_user_agent: String,
+    pub reddit_client_id: String,
+    pub reddit_client_secret: String,
+    pub reddit_username: String,
+    pub reddit_password: String,
+
     pub params: Params,
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,

@@ -105,7 +105,6 @@ pub mod config_mods {
         pub mod print_colors_struct;
         pub mod providers_check_links_struct;
         pub mod providers_links_limits_struct;
-        pub mod reddit_authorization_struct;
     }
     pub mod env_var_enum_impl {
         pub mod env_var_enum_traits;

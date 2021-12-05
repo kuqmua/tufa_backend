@@ -27,7 +27,6 @@ use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_l
 use crate::config_mods::config_structs::mongo_url_parts_struct::MongoUrlParts;
 use crate::config_mods::config_structs::mongo_authorization_struct::MongoAuthorization;
 use crate::config_mods::config_structs::postgres_authorization_struct::PostgresAuthorization;
-use crate::config_mods::config_structs::reddit_authorization_struct::RedditAuthorization;
 
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 
@@ -48,13 +47,11 @@ impl ConfigStruct {
         let handle_config: ConfigStruct = ConfigStruct {
             github_name: string_vars[&EnvStringVar::GithubName].clone(),
             github_token: string_vars[&EnvStringVar::GithubToken].clone(),
-            reddit_authorization: RedditAuthorization {
-                reddit_user_agent: string_vars[&EnvStringVar::RedditUserAgent].clone(),
-                reddit_client_id: string_vars[&EnvStringVar::RedditClientId].clone(),
-                reddit_client_secret: string_vars[&EnvStringVar::RedditClientSecret].clone(),
-                reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
-                reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
-            },
+            reddit_user_agent: string_vars[&EnvStringVar::RedditUserAgent].clone(),
+            reddit_client_id: string_vars[&EnvStringVar::RedditClientId].clone(),
+            reddit_client_secret: string_vars[&EnvStringVar::RedditClientSecret].clone(),
+            reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
+            reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
             params: Params {
                 starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
                 warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName].clone(),
