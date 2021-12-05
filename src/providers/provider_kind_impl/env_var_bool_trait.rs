@@ -56,13 +56,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_providers.enable_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_providers.enable_biorxiv,
-            ProviderKind::Github => CONFIG.enable_providers.enable_github,
-            ProviderKind::Habr => CONFIG.enable_providers.enable_habr,
-            ProviderKind::Medrxiv => CONFIG.enable_providers.enable_medrxiv,
-            ProviderKind::Reddit => CONFIG.enable_providers.enable_reddit,
-            ProviderKind::Twitter => CONFIG.enable_providers.enable_twitter,
+            ProviderKind::Arxiv => CONFIG.enable_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_biorxiv,
+            ProviderKind::Github => CONFIG.enable_github,
+            ProviderKind::Habr => CONFIG.enable_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_reddit,
+            ProviderKind::Twitter => CONFIG.enable_twitter,
         }
     }
 

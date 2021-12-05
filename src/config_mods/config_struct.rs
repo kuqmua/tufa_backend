@@ -1,6 +1,5 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
 
@@ -42,7 +41,14 @@ pub struct ConfigStruct {
 
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,
-    pub enable_providers: EnableProviders,
+
+    pub enable_arxiv: bool,
+    pub enable_biorxiv: bool,
+    pub enable_github: bool,
+    pub enable_habr: bool,
+    pub enable_medrxiv: bool,
+    pub enable_reddit: bool,
+    pub enable_twitter: bool,
 
     pub arxiv_link: String,
     pub biorxiv_link: String,

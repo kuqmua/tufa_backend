@@ -3,7 +3,6 @@ extern crate toml;
 use std::collections::HashMap;
 
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::mongo_authorization_struct::MongoAuthorization;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::mongo_url_parts_struct::MongoUrlParts;
@@ -165,22 +164,21 @@ impl ConfigStruct {
                     postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
                 },
             },
-            enable_providers: EnableProviders {
-                enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableArxiv],
-                enable_biorxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableBiorxiv],
-                enable_github: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableGithub],
-                enable_habr: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableHabr],
-                enable_medrxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableMedrxiv],
-                enable_reddit: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableReddit],
-                enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
-                    && bool_vars[&EnvBoolVar::EnableTwitter],
-            },
+
+            enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableArxiv],
+            enable_biorxiv: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableBiorxiv],
+            enable_github: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableGithub],
+            enable_habr: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableHabr],
+            enable_medrxiv: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableMedrxiv],
+            enable_reddit: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableReddit],
+            enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
+                && bool_vars[&EnvBoolVar::EnableTwitter],
 
             arxiv_link: string_vars[&EnvStringVar::ArxivLink].clone(),
             biorxiv_link: string_vars[&EnvStringVar::BiorxivLink].clone(),

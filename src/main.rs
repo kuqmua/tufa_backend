@@ -81,7 +81,6 @@ pub mod config_mods {
     }
     pub mod config_structs {
         pub mod enable_initialize_mongo_with_providers_link_parts_struct;
-        pub mod enable_providers_struct;
         pub mod mongo_authorization_struct;
         pub mod mongo_params_struct;
         pub mod mongo_url_parts_struct;
