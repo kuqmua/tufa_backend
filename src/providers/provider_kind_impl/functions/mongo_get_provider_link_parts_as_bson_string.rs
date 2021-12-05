@@ -25,7 +25,7 @@ impl ProviderKind {
         let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
         let client = Client::with_options(client_options)?;
         //declare db name. there is no create db method in mongo
-        let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
+        let db = client.database(&CONFIG.providers_db_name_handle);
         let mut needed_db_collection: Option<String> = None;
         for collection_name in db.list_collection_names(None).await? {
             if collection_name == provider_kind.get_mongo_log_collection_name() {
@@ -69,9 +69,7 @@ impl ProviderKind {
                 // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
                 let vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
-                    &CONFIG
-                        .mongo_params
-                        .providers_db_collection_document_field_name_handle,
+                    &CONFIG.providers_db_collection_document_field_name_handle,
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await?;

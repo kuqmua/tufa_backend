@@ -7,7 +7,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), mongodb::error::Error> {
     let client_options = ClientOptions::parse(mongo_url).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
+    let db = client.database(&CONFIG.providers_db_name_handle);
     db.list_collection_names(None).await?; //todo: remove this and find something lite like ping
     Ok(())
 }

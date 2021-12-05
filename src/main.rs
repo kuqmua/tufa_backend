@@ -79,15 +79,6 @@ pub mod config_mods {
         }
         pub mod env_var_u8_enum;
     }
-    pub mod config_structs {
-        pub mod enable_initialize_mongo_with_providers_link_parts_struct;
-        pub mod mongo_authorization_struct;
-        pub mod mongo_params_struct;
-        pub mod mongo_url_parts_struct;
-        pub mod postgres_authorization_struct;
-        pub mod postgres_params_struct;
-        pub mod postgres_url_parts_struct;
-    }
     pub mod env_var_enum_impl {
         pub mod env_var_enum_traits;
     }

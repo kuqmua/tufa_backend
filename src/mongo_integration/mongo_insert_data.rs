@@ -27,10 +27,7 @@ pub async fn mongo_insert_data(
             db_name_handle,
             format!(
                 "{}{}",
-                provider_kind,
-                CONFIG
-                    .mongo_params
-                    .providers_db_collection_handle_second_part
+                provider_kind, CONFIG.providers_db_collection_handle_second_part
             ),
             vec_of_link_parts,
         )

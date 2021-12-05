@@ -100,11 +100,7 @@ pub async fn async_tokio_wrapper() {
                     );
                 }
             }
-            let _ = mongo_insert_data(
-                &CONFIG.mongo_params.providers_db_name_handle,
-                success_hashmap,
-            )
-            .await;
+            let _ = mongo_insert_data(&CONFIG.providers_db_name_handle, success_hashmap).await;
         }
     }
     if !ProviderKind::get_enabled_providers_vec().is_empty() {

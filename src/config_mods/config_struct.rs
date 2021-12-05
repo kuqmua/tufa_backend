@@ -1,8 +1,5 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
-use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
-
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
     pub github_name: String,
@@ -39,8 +36,48 @@ pub struct ConfigStruct {
     pub enable_write_error_logs_in_mongo: bool,
     pub enable_initialize_mongo_with_providers_link_parts: bool,
 
-    pub mongo_params: MongoParams,
-    pub postgres_params: PostgresParams,
+    pub providers_db_name_handle: String,
+    pub providers_db_collection_handle_second_part: String,
+    pub providers_db_collection_document_field_name_handle: String,
+    //
+    pub db_providers_logs_name_handle: String,
+    pub db_providers_logs_collection_handle_second_part: String,
+    pub db_providers_logs_collection_document_field_name_handle: String,
+    //
+    pub path_to_provider_link_parts_folder: String,
+    pub log_file_extension: String,
+
+    pub enable_initialize_mongo_with_arxiv_link_parts: bool,
+    pub enable_initialize_mongo_with_biorxiv_link_parts: bool,
+    pub enable_initialize_mongo_with_github_link_parts: bool,
+    pub enable_initialize_mongo_with_habr_link_parts: bool,
+    pub enable_initialize_mongo_with_medrxiv_link_parts: bool,
+    pub enable_initialize_mongo_with_reddit_link_parts: bool,
+    pub enable_initialize_mongo_with_twitter_link_parts: bool,
+
+    pub mongo_first_handle_url_part: String,
+    pub mongo_second_handle_url_part: String,
+    pub mongo_third_handle_url_part: String,
+    pub mongo_fourth_handle_url_part: String,
+    pub mongo_fifth_handle_url_part: String,
+
+    pub mongo_login: String,
+    pub mongo_password: String,
+    pub mongo_ip: String,
+    pub mongo_port: String,
+    pub mongo_params: String,
+
+    pub postgres_first_handle_url_part: String,
+    pub postgres_second_handle_url_part: String,
+    pub postgres_third_handle_url_part: String,
+    pub postgres_fourth_handle_url_part: String,
+    pub postgres_fifth_handle_url_part: String,
+
+    pub postgres_login: String,
+    pub postgres_password: String,
+    pub postgres_ip: String,
+    pub postgres_port: String,
+    pub postgres_db: String,
 
     pub enable_arxiv: bool,
     pub enable_biorxiv: bool,

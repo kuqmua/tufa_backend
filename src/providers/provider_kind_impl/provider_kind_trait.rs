@@ -83,9 +83,7 @@ impl ProviderKindTrait for ProviderKind {
         format!(
             "{}{}",
             self,
-            CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part //todo rename it into db log collection
+            CONFIG.providers_db_collection_handle_second_part //todo rename it into db log collection
         )
     }
 
@@ -108,12 +106,10 @@ impl ProviderKindTrait for ProviderKind {
     fn get_init_local_data_file_path(&self) -> String {
         format!(
             "{}{}{}{}",
-            CONFIG.mongo_params.path_to_provider_link_parts_folder,
+            CONFIG.path_to_provider_link_parts_folder,
             self,
-            CONFIG
-                .mongo_params
-                .providers_db_collection_handle_second_part,
-            CONFIG.mongo_params.log_file_extension
+            CONFIG.providers_db_collection_handle_second_part,
+            CONFIG.log_file_extension
         )
     }
 

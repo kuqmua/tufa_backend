@@ -2,16 +2,7 @@ extern crate toml;
 
 use std::collections::HashMap;
 
-use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::config_mods::config_structs::mongo_authorization_struct::MongoAuthorization;
-use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
-use crate::config_mods::config_structs::mongo_url_parts_struct::MongoUrlParts;
-use crate::config_mods::config_structs::postgres_authorization_struct::PostgresAuthorization;
-use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
-use crate::config_mods::config_structs::postgres_url_parts_struct::PostgresUrlParts;
-
 use crate::config_mods::config_error_mods::config_error::ConfigError;
-
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStringVar;
@@ -68,102 +59,83 @@ impl ConfigStruct {
             enable_initialize_mongo_with_providers_link_parts: bool_vars
                 [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts],
 
-            mongo_params: MongoParams {
-                providers_db_name_handle: string_vars[&EnvStringVar::ProvidersDbNameHandle].clone(),
-                providers_db_collection_handle_second_part: string_vars
-                    [&EnvStringVar::ProvidersDbCollectionHandleSecondPart]
-                    .clone(),
-                providers_db_collection_document_field_name_handle: string_vars
-                    [&EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle]
-                    .clone(),
-                db_providers_logs_name_handle: string_vars
-                    [&EnvStringVar::DbProvidersLogsNameHandle]
-                    .clone(),
-                db_providers_logs_collection_handle_second_part: string_vars
-                    [&EnvStringVar::DbProvidersLogsCollectionHandleSecondPart]
-                    .clone(),
-                db_providers_logs_collection_document_field_name_handle: string_vars
-                    [&EnvStringVar::DbProvidersLogsCollectionDocumentFieldNameHandle]
-                    .clone(),
-                path_to_provider_link_parts_folder: string_vars
-                    [&EnvStringVar::PathToProviderLinkPartsFolder]
-                    .clone(),
-                log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
-                enable_initialize_mongo_with_providers_link_parts:
-                    EnableInitializeMongoWithProvidersLinkParts {
-                        enable_initialize_mongo_with_arxiv_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
-                        enable_initialize_mongo_with_biorxiv_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
-                        enable_initialize_mongo_with_github_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
-                        enable_initialize_mongo_with_habr_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
-                        enable_initialize_mongo_with_medrxiv_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
-                        enable_initialize_mongo_with_reddit_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
-                        enable_initialize_mongo_with_twitter_link_parts: bool_vars
-                            [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                            && bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
-                    },
-                mongo_url_parts: MongoUrlParts {
-                    mongo_first_handle_url_part: string_vars
-                        [&EnvStringVar::MongoFirstHandleUrlPart]
-                        .clone(),
-                    mongo_second_handle_url_part: string_vars
-                        [&EnvStringVar::MongoSecondHandleUrlPart]
-                        .clone(),
-                    mongo_third_handle_url_part: string_vars
-                        [&EnvStringVar::MongoThirdHandleUrlPart]
-                        .clone(),
-                    mongo_fourth_handle_url_part: string_vars
-                        [&EnvStringVar::MongoFourthHandleUrlPart]
-                        .clone(),
-                    mongo_fifth_handle_url_part: string_vars
-                        [&EnvStringVar::MongoFifthHandleUrlPart]
-                        .clone(),
-                },
-                mongo_authorization: MongoAuthorization {
-                    mongo_login: string_vars[&EnvStringVar::MongoLogin].clone(),
-                    mongo_password: string_vars[&EnvStringVar::MongoPassword].clone(),
-                    mongo_ip: string_vars[&EnvStringVar::MongoIp].clone(),
-                    mongo_port: string_vars[&EnvStringVar::MongoPort].clone(),
-                    mongo_params: string_vars[&EnvStringVar::MongoParams].clone(),
-                },
-            },
-            postgres_params: PostgresParams {
-                postgres_url_parts: PostgresUrlParts {
-                    postgres_first_handle_url_part: string_vars
-                        [&EnvStringVar::PostgresFirstHandleUrlPart]
-                        .clone(),
-                    postgres_second_handle_url_part: string_vars
-                        [&EnvStringVar::PostgresSecondHandleUrlPart]
-                        .clone(),
-                    postgres_third_handle_url_part: string_vars
-                        [&EnvStringVar::PostgresThirdHandleUrlPart]
-                        .clone(),
-                    postgres_fourth_handle_url_part: string_vars
-                        [&EnvStringVar::PostgresFourthHandleUrlPart]
-                        .clone(),
-                    postgres_fifth_handle_url_part: string_vars
-                        [&EnvStringVar::PostgresFifthHandleUrlPart]
-                        .clone(),
-                },
-                postgres_authorization: PostgresAuthorization {
-                    postgres_login: string_vars[&EnvStringVar::PostgresLogin].clone(),
-                    postgres_password: string_vars[&EnvStringVar::PostgresPassword].clone(),
-                    postgres_ip: string_vars[&EnvStringVar::PostgresIp].clone(),
-                    postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
-                    postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
-                },
-            },
+            providers_db_name_handle: string_vars[&EnvStringVar::ProvidersDbNameHandle].clone(),
+            providers_db_collection_handle_second_part: string_vars
+                [&EnvStringVar::ProvidersDbCollectionHandleSecondPart]
+                .clone(),
+            providers_db_collection_document_field_name_handle: string_vars
+                [&EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle]
+                .clone(),
+            db_providers_logs_name_handle: string_vars[&EnvStringVar::DbProvidersLogsNameHandle]
+                .clone(),
+            db_providers_logs_collection_handle_second_part: string_vars
+                [&EnvStringVar::DbProvidersLogsCollectionHandleSecondPart]
+                .clone(),
+            db_providers_logs_collection_document_field_name_handle: string_vars
+                [&EnvStringVar::DbProvidersLogsCollectionDocumentFieldNameHandle]
+                .clone(),
+            path_to_provider_link_parts_folder: string_vars
+                [&EnvStringVar::PathToProviderLinkPartsFolder]
+                .clone(),
+            log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
+
+            enable_initialize_mongo_with_arxiv_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
+            enable_initialize_mongo_with_biorxiv_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
+            enable_initialize_mongo_with_github_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
+            enable_initialize_mongo_with_habr_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
+            enable_initialize_mongo_with_medrxiv_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
+            enable_initialize_mongo_with_reddit_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
+            enable_initialize_mongo_with_twitter_link_parts: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
+
+            mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
+                .clone(),
+            mongo_second_handle_url_part: string_vars[&EnvStringVar::MongoSecondHandleUrlPart]
+                .clone(),
+            mongo_third_handle_url_part: string_vars[&EnvStringVar::MongoThirdHandleUrlPart]
+                .clone(),
+            mongo_fourth_handle_url_part: string_vars[&EnvStringVar::MongoFourthHandleUrlPart]
+                .clone(),
+            mongo_fifth_handle_url_part: string_vars[&EnvStringVar::MongoFifthHandleUrlPart]
+                .clone(),
+
+            mongo_login: string_vars[&EnvStringVar::MongoLogin].clone(),
+            mongo_password: string_vars[&EnvStringVar::MongoPassword].clone(),
+            mongo_ip: string_vars[&EnvStringVar::MongoIp].clone(),
+            mongo_port: string_vars[&EnvStringVar::MongoPort].clone(),
+            mongo_params: string_vars[&EnvStringVar::MongoParams].clone(),
+
+            postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
+                .clone(),
+            postgres_second_handle_url_part: string_vars
+                [&EnvStringVar::PostgresSecondHandleUrlPart]
+                .clone(),
+            postgres_third_handle_url_part: string_vars[&EnvStringVar::PostgresThirdHandleUrlPart]
+                .clone(),
+            postgres_fourth_handle_url_part: string_vars
+                [&EnvStringVar::PostgresFourthHandleUrlPart]
+                .clone(),
+            postgres_fifth_handle_url_part: string_vars[&EnvStringVar::PostgresFifthHandleUrlPart]
+                .clone(),
+
+            postgres_login: string_vars[&EnvStringVar::PostgresLogin].clone(),
+            postgres_password: string_vars[&EnvStringVar::PostgresPassword].clone(),
+            postgres_ip: string_vars[&EnvStringVar::PostgresIp].clone(),
+            postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
+            postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
             enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]
                 && bool_vars[&EnvBoolVar::EnableArxiv],

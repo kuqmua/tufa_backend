@@ -26,7 +26,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
 {
     let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.mongo_params.providers_db_name_handle);
+    let db = client.database(&CONFIG.providers_db_name_handle);
     let vec_collection_names = db.list_collection_names(None).await?;
     let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
         ProviderKind,
@@ -62,9 +62,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
                 }
                 let result_vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
-                    &CONFIG
-                        .mongo_params
-                        .providers_db_collection_document_field_name_handle,
+                    &CONFIG.providers_db_collection_document_field_name_handle,
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await;

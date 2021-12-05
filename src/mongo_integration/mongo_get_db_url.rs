@@ -5,30 +5,15 @@ pub fn mongo_get_db_url() -> String {
     //maybe rename it into get mongo_url?
     format!(
         "{}{}{}{}{}{}{}{}{}{}",
-        &CONFIG
-            .mongo_params
-            .mongo_url_parts
-            .mongo_first_handle_url_part,
-        &CONFIG.mongo_params.mongo_authorization.mongo_login,
-        &CONFIG
-            .mongo_params
-            .mongo_url_parts
-            .mongo_second_handle_url_part,
-        &CONFIG.mongo_params.mongo_authorization.mongo_password,
-        &CONFIG
-            .mongo_params
-            .mongo_url_parts
-            .mongo_third_handle_url_part,
-        &CONFIG.mongo_params.mongo_authorization.mongo_ip,
-        &CONFIG
-            .mongo_params
-            .mongo_url_parts
-            .mongo_fourth_handle_url_part,
-        &CONFIG.mongo_params.mongo_authorization.mongo_port,
-        &CONFIG
-            .mongo_params
-            .mongo_url_parts
-            .mongo_fifth_handle_url_part,
-        &CONFIG.mongo_params.mongo_authorization.mongo_params
+        &CONFIG.mongo_first_handle_url_part,
+        &CONFIG.mongo_login,
+        &CONFIG.mongo_second_handle_url_part,
+        &CONFIG.mongo_password,
+        &CONFIG.mongo_third_handle_url_part,
+        &CONFIG.mongo_ip,
+        &CONFIG.mongo_fourth_handle_url_part,
+        &CONFIG.mongo_port,
+        &CONFIG.mongo_fifth_handle_url_part,
+        &CONFIG.mongo_params
     )
 }
