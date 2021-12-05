@@ -96,7 +96,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         /////////////////////////////////////////////////////
         //old tokio runtime
         let dropping_db_result =
-            mongo_drop_db(&mongo_get_db_url(), &CONFIG.db_providers_logs_name_handle).await;
+            mongo_drop_db(&mongo_get_db_url(), &CONFIG.mongo_providers_logs_db_name).await;
         match dropping_db_result {
             Ok(_) => (),
             Err(e) => {
@@ -107,7 +107,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                     line!().to_string(),
                     format!(
                         "mongo_drop_db url: {}, db name: {}, error: {:#?} \n maybe disable mongo dropping db parameter in config?",
-                        &mongo_get_db_url(), &CONFIG.db_providers_logs_name_handle, e
+                        &mongo_get_db_url(), &CONFIG.mongo_providers_logs_db_name, e
                     ),
                 );
                 return WriteLogsResult::Failure;
@@ -230,11 +230,11 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         let collection_handle = format!(
             "{:#?}{}",
             element.0.clone(),
-            &CONFIG.db_providers_logs_collection_handle_second_part
+            &CONFIG.mongo_providers_logs_db_collection_handle_second_part
         );
         //if push mongo_insert_docs_in_empty_collection then cant do join_all()
         vec_of_futures.push(mongo_insert_docs_in_empty_collection(
-            &CONFIG.db_providers_logs_name_handle,
+            &CONFIG.mongo_providers_logs_db_name,
             collection_handle, //fix naming later
             element.1,
         ));

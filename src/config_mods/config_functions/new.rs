@@ -58,9 +58,9 @@ impl ConfigStruct {
             providers_db_collection_document_field_name_handle: string_vars
                 [&EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle]
                 .clone(),
-            db_providers_logs_name_handle: string_vars[&EnvStringVar::DbProvidersLogsNameHandle]
+            mongo_providers_logs_db_name: string_vars[&EnvStringVar::DbProvidersLogsNameHandle]
                 .clone(),
-            db_providers_logs_collection_handle_second_part: string_vars
+            mongo_providers_logs_db_collection_handle_second_part: string_vars
                 [&EnvStringVar::DbProvidersLogsCollectionHandleSecondPart]
                 .clone(),
             db_providers_logs_collection_document_field_name_handle: string_vars

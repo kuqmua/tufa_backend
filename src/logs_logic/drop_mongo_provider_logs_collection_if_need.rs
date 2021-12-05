@@ -17,12 +17,12 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
     if provider_kind.is_cleaning_warning_logs_db_collections_in_mongo_enabled() {
         let db_collection_name = &format!(
             "{:#?}{}",
-            provider_kind, &CONFIG.db_providers_logs_collection_handle_second_part
+            provider_kind, &CONFIG.mongo_providers_logs_db_collection_handle_second_part
         );
         //using different (old) tokio runtime 0.2.25
         let future_possible_drop_collection = mongo_drop_empty_collection(
             &mongo_url,
-            &CONFIG.db_providers_logs_name_handle,
+            &CONFIG.mongo_providers_logs_db_name,
             db_collection_name,
         )
         .await;
