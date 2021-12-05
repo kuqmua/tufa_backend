@@ -10,7 +10,6 @@ use crate::config_mods::config_structs::mongo_url_parts_struct::MongoUrlParts;
 use crate::config_mods::config_structs::postgres_authorization_struct::PostgresAuthorization;
 use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
 use crate::config_mods::config_structs::postgres_url_parts_struct::PostgresUrlParts;
-use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
 
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 
@@ -182,15 +181,14 @@ impl ConfigStruct {
                 enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
                     && bool_vars[&EnvBoolVar::EnableTwitter],
             },
-            providers_check_links: ProvidersCheckLinks {
-                arxiv_link: string_vars[&EnvStringVar::ArxivLink].clone(),
-                biorxiv_link: string_vars[&EnvStringVar::BiorxivLink].clone(),
-                github_link: string_vars[&EnvStringVar::GithubLink].clone(),
-                habr_link: string_vars[&EnvStringVar::HabrLink].clone(),
-                medrxiv_link: string_vars[&EnvStringVar::MedrxivLink].clone(),
-                reddit_link: string_vars[&EnvStringVar::RedditLink].clone(),
-                twitter_link: string_vars[&EnvStringVar::TwitterLink].clone(),
-            },
+
+            arxiv_link: string_vars[&EnvStringVar::ArxivLink].clone(),
+            biorxiv_link: string_vars[&EnvStringVar::BiorxivLink].clone(),
+            github_link: string_vars[&EnvStringVar::GithubLink].clone(),
+            habr_link: string_vars[&EnvStringVar::HabrLink].clone(),
+            medrxiv_link: string_vars[&EnvStringVar::MedrxivLink].clone(),
+            reddit_link: string_vars[&EnvStringVar::RedditLink].clone(),
+            twitter_link: string_vars[&EnvStringVar::TwitterLink].clone(),
 
             enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
                 && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]

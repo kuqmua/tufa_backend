@@ -88,7 +88,6 @@ pub mod config_mods {
         pub mod postgres_authorization_struct;
         pub mod postgres_params_struct;
         pub mod postgres_url_parts_struct;
-        pub mod providers_check_links_struct;
     }
     pub mod env_var_enum_impl {
         pub mod env_var_enum_traits;

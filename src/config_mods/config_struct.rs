@@ -3,7 +3,6 @@ extern crate toml;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
-use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
@@ -44,7 +43,14 @@ pub struct ConfigStruct {
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,
     pub enable_providers: EnableProviders,
-    pub providers_check_links: ProvidersCheckLinks,
+
+    pub arxiv_link: String,
+    pub biorxiv_link: String,
+    pub github_link: String,
+    pub habr_link: String,
+    pub medrxiv_link: String,
+    pub reddit_link: String,
+    pub twitter_link: String,
 
     pub enable_prints_arxiv: bool,
     pub enable_prints_biorxiv: bool,
