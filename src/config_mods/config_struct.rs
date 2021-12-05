@@ -14,7 +14,6 @@ use crate::config_mods::config_structs::enable_providers_info_struct::EnableProv
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::print_colors_struct::PrintColors;
 use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
@@ -84,5 +83,28 @@ pub struct ConfigStruct {
     pub enable_randomize_order_for_reddit_link_parts_for_mongo: bool,
     pub enable_randomize_order_for_twitter_link_parts_for_mongo: bool,
 
-    pub print_colors: PrintColors,
+    pub error_red: u8,
+    pub error_green: u8,
+    pub error_blue: u8,
+    pub warning_high_red: u8,
+    pub warning_high_green: u8,
+    pub warning_high_blue: u8,
+    pub warning_low_red: u8,
+    pub warning_low_green: u8,
+    pub warning_low_blue: u8,
+    pub success_red: u8,
+    pub success_green: u8,
+    pub success_blue: u8,
+    pub partial_success_red: u8,
+    pub partial_success_green: u8,
+    pub partial_success_blue: u8,
+    pub cleaning_red: u8,
+    pub cleaning_green: u8,
+    pub cleaning_blue: u8,
+    pub time_measurement_red: u8,
+    pub time_measurement_green: u8,
+    pub time_measurement_blue: u8,
+    pub info_red: u8,
+    pub info_green: u8,
+    pub info_blue: u8,
 }

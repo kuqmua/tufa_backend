@@ -17,7 +17,6 @@ use crate::config_mods::config_structs::enable_providers_info_struct::EnableProv
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::print_colors_struct::PrintColors;
 use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
@@ -596,32 +595,31 @@ impl ConfigStruct {
             enable_randomize_order_for_twitter_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo]
                 && bool_vars[&EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo],
-            print_colors: PrintColors {
-                error_red: u8_vars[&EnvU8Var::ErrorRed],
-                error_green: u8_vars[&EnvU8Var::ErrorGreen],
-                error_blue: u8_vars[&EnvU8Var::ErrorBlue],
-                warning_high_red: u8_vars[&EnvU8Var::WarningHighRed],
-                warning_high_green: u8_vars[&EnvU8Var::WarningHighGreen],
-                warning_high_blue: u8_vars[&EnvU8Var::WarningHighBlue],
-                warning_low_red: u8_vars[&EnvU8Var::WarningLowRed],
-                warning_low_green: u8_vars[&EnvU8Var::WarningLowGreen],
-                warning_low_blue: u8_vars[&EnvU8Var::WarningLowBlue],
-                success_red: u8_vars[&EnvU8Var::SuccessRed],
-                success_green: u8_vars[&EnvU8Var::SuccessGreen],
-                success_blue: u8_vars[&EnvU8Var::SuccessBlue],
-                partial_success_red: u8_vars[&EnvU8Var::PartialSuccessRed],
-                partial_success_green: u8_vars[&EnvU8Var::PartialSuccessGreen],
-                partial_success_blue: u8_vars[&EnvU8Var::PartialSuccessBlue],
-                cleaning_red: u8_vars[&EnvU8Var::CleaningRed],
-                cleaning_green: u8_vars[&EnvU8Var::CleaningGreen],
-                cleaning_blue: u8_vars[&EnvU8Var::CleaningBlue],
-                time_measurement_red: u8_vars[&EnvU8Var::TimeMeasurementRed],
-                time_measurement_green: u8_vars[&EnvU8Var::TimeMeasurementGreen],
-                time_measurement_blue: u8_vars[&EnvU8Var::TimeMeasurementBlue],
-                info_red: u8_vars[&EnvU8Var::InfoRed],
-                info_green: u8_vars[&EnvU8Var::InfoGreen],
-                info_blue: u8_vars[&EnvU8Var::InfoBlue],
-            },
+
+            error_red: u8_vars[&EnvU8Var::ErrorRed],
+            error_green: u8_vars[&EnvU8Var::ErrorGreen],
+            error_blue: u8_vars[&EnvU8Var::ErrorBlue],
+            warning_high_red: u8_vars[&EnvU8Var::WarningHighRed],
+            warning_high_green: u8_vars[&EnvU8Var::WarningHighGreen],
+            warning_high_blue: u8_vars[&EnvU8Var::WarningHighBlue],
+            warning_low_red: u8_vars[&EnvU8Var::WarningLowRed],
+            warning_low_green: u8_vars[&EnvU8Var::WarningLowGreen],
+            warning_low_blue: u8_vars[&EnvU8Var::WarningLowBlue],
+            success_red: u8_vars[&EnvU8Var::SuccessRed],
+            success_green: u8_vars[&EnvU8Var::SuccessGreen],
+            success_blue: u8_vars[&EnvU8Var::SuccessBlue],
+            partial_success_red: u8_vars[&EnvU8Var::PartialSuccessRed],
+            partial_success_green: u8_vars[&EnvU8Var::PartialSuccessGreen],
+            partial_success_blue: u8_vars[&EnvU8Var::PartialSuccessBlue],
+            cleaning_red: u8_vars[&EnvU8Var::CleaningRed],
+            cleaning_green: u8_vars[&EnvU8Var::CleaningGreen],
+            cleaning_blue: u8_vars[&EnvU8Var::CleaningBlue],
+            time_measurement_red: u8_vars[&EnvU8Var::TimeMeasurementRed],
+            time_measurement_green: u8_vars[&EnvU8Var::TimeMeasurementGreen],
+            time_measurement_blue: u8_vars[&EnvU8Var::TimeMeasurementBlue],
+            info_red: u8_vars[&EnvU8Var::InfoRed],
+            info_green: u8_vars[&EnvU8Var::InfoGreen],
+            info_blue: u8_vars[&EnvU8Var::InfoBlue],
         };
         ConfigStruct::wrap_config_checks(handle_config)
     }

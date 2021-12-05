@@ -100,7 +100,6 @@ pub mod config_mods {
         pub mod postgres_authorization_struct;
         pub mod postgres_params_struct;
         pub mod postgres_url_parts_struct;
-        pub mod print_colors_struct;
         pub mod providers_check_links_struct;
         pub mod providers_links_limits_struct;
     }

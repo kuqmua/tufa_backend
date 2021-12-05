@@ -236,11 +236,8 @@ pub fn print_colorful_message(
             None => match print_type {
                 PrintType::Error => {
                     if CONFIG.enable_error_prints {
-                        let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.error_red,
-                            CONFIG.print_colors.error_green,
-                            CONFIG.print_colors.error_blue,
-                        );
+                        let rgb_color: ansi_term::Colour =
+                            RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                         eprintln!(
                             "{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
@@ -254,9 +251,9 @@ pub fn print_colorful_message(
                 PrintType::WarningHigh => {
                     if CONFIG.enable_warning_high_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.warning_high_red,
-                            CONFIG.print_colors.warning_high_green,
-                            CONFIG.print_colors.warning_high_blue,
+                            CONFIG.warning_high_red,
+                            CONFIG.warning_high_green,
+                            CONFIG.warning_high_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -271,9 +268,9 @@ pub fn print_colorful_message(
                 PrintType::WarningLow => {
                     if CONFIG.enable_warning_low_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.warning_low_red,
-                            CONFIG.print_colors.warning_low_green,
-                            CONFIG.print_colors.warning_low_blue,
+                            CONFIG.warning_low_red,
+                            CONFIG.warning_low_green,
+                            CONFIG.warning_low_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -288,9 +285,9 @@ pub fn print_colorful_message(
                 PrintType::Success => {
                     if CONFIG.enable_success_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.success_red,
-                            CONFIG.print_colors.success_green,
-                            CONFIG.print_colors.success_blue,
+                            CONFIG.success_red,
+                            CONFIG.success_green,
+                            CONFIG.success_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -305,9 +302,9 @@ pub fn print_colorful_message(
                 PrintType::PartialSuccess => {
                     if CONFIG.enable_partial_success_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.partial_success_red,
-                            CONFIG.print_colors.partial_success_green,
-                            CONFIG.print_colors.partial_success_blue,
+                            CONFIG.partial_success_red,
+                            CONFIG.partial_success_green,
+                            CONFIG.partial_success_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -322,9 +319,9 @@ pub fn print_colorful_message(
                 PrintType::TimeMeasurement => {
                     if CONFIG.enable_time_measurement_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.time_measurement_red,
-                            CONFIG.print_colors.time_measurement_green,
-                            CONFIG.print_colors.time_measurement_blue,
+                            CONFIG.time_measurement_red,
+                            CONFIG.time_measurement_green,
+                            CONFIG.time_measurement_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -339,9 +336,9 @@ pub fn print_colorful_message(
                 PrintType::CleaningWarningLogsDirectory => {
                     if CONFIG.enable_cleaning_warning_logs_directory_prints {
                         let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.cleaning_red,
-                            CONFIG.print_colors.cleaning_green,
-                            CONFIG.print_colors.cleaning_blue,
+                            CONFIG.cleaning_red,
+                            CONFIG.cleaning_green,
+                            CONFIG.cleaning_blue,
                         );
                         eprintln!(
                             "{}{}{}{}\n{}",
@@ -355,11 +352,8 @@ pub fn print_colorful_message(
                 }
                 PrintType::Info => {
                     if CONFIG.enable_info_prints {
-                        let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.print_colors.info_red,
-                            CONFIG.print_colors.info_green,
-                            CONFIG.print_colors.info_blue,
-                        );
+                        let rgb_color: ansi_term::Colour =
+                            RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
                         eprintln!(
                             "{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
@@ -396,11 +390,8 @@ fn handle_provider_prints(
         match print_type {
             PrintType::Error => {
                 if CONFIG.enable_error_prints && enable_error_prints_for_provider {
-                    let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.error_red,
-                        CONFIG.print_colors.error_green,
-                        CONFIG.print_colors.error_blue,
-                    );
+                    let rgb_color: ansi_term::Colour =
+                        RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                     eprintln!(
                         "{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
@@ -414,9 +405,9 @@ fn handle_provider_prints(
             PrintType::WarningHigh => {
                 if CONFIG.enable_warning_high_prints && enable_warning_high_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.warning_high_red,
-                        CONFIG.print_colors.warning_high_green,
-                        CONFIG.print_colors.warning_high_blue,
+                        CONFIG.warning_high_red,
+                        CONFIG.warning_high_green,
+                        CONFIG.warning_high_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -431,9 +422,9 @@ fn handle_provider_prints(
             PrintType::WarningLow => {
                 if CONFIG.enable_warning_low_prints && enable_warning_low_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.warning_low_red,
-                        CONFIG.print_colors.warning_low_green,
-                        CONFIG.print_colors.warning_low_blue,
+                        CONFIG.warning_low_red,
+                        CONFIG.warning_low_green,
+                        CONFIG.warning_low_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -448,9 +439,9 @@ fn handle_provider_prints(
             PrintType::Success => {
                 if CONFIG.enable_success_prints && enable_success_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.success_red,
-                        CONFIG.print_colors.success_green,
-                        CONFIG.print_colors.success_blue,
+                        CONFIG.success_red,
+                        CONFIG.success_green,
+                        CONFIG.success_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -467,9 +458,9 @@ fn handle_provider_prints(
                     && enable_partial_success_prints_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.partial_success_red,
-                        CONFIG.print_colors.partial_success_green,
-                        CONFIG.print_colors.partial_success_blue,
+                        CONFIG.partial_success_red,
+                        CONFIG.partial_success_green,
+                        CONFIG.partial_success_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -484,9 +475,9 @@ fn handle_provider_prints(
             PrintType::TimeMeasurement => {
                 if CONFIG.enable_time_measurement_prints && enable_provider_time_measurement {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.time_measurement_red,
-                        CONFIG.print_colors.time_measurement_green,
-                        CONFIG.print_colors.time_measurement_blue,
+                        CONFIG.time_measurement_red,
+                        CONFIG.time_measurement_green,
+                        CONFIG.time_measurement_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -503,9 +494,9 @@ fn handle_provider_prints(
                     && enable_cleaning_warning_logs_directory_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.cleaning_red,
-                        CONFIG.print_colors.cleaning_green,
-                        CONFIG.print_colors.cleaning_blue,
+                        CONFIG.cleaning_red,
+                        CONFIG.cleaning_green,
+                        CONFIG.cleaning_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
@@ -520,9 +511,9 @@ fn handle_provider_prints(
             PrintType::Info => {
                 if CONFIG.enable_info_prints && enable_info_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.print_colors.cleaning_red,
-                        CONFIG.print_colors.cleaning_green,
-                        CONFIG.print_colors.cleaning_blue,
+                        CONFIG.cleaning_red,
+                        CONFIG.cleaning_green,
+                        CONFIG.cleaning_blue,
                     );
                     eprintln!(
                         "{}{}{}{}\n{}",
