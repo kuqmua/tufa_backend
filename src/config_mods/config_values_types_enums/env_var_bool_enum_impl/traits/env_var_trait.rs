@@ -28,7 +28,7 @@ impl EnvVarTrait for EnvBoolVar {
             Self::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
                 EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo.get_env_name()
             }
-            Self::EnablePrints => EnvVar::EnablePrints.get_env_name(),
+
             Self::EnableErrorPrints => EnvVar::EnableErrorPrints.get_env_name(),
             Self::EnableWarningHighPrints => EnvVar::EnableWarningHighPrints.get_env_name(),
             Self::EnableWarningLowPrints => EnvVar::EnableWarningLowPrints.get_env_name(),
@@ -102,6 +102,7 @@ impl EnvVarTrait for EnvBoolVar {
             Self::EnableReddit => EnvVar::EnableReddit.get_env_name(),
             Self::EnableTwitter => EnvVar::EnableTwitter.get_env_name(),
 
+            Self::EnablePrints => EnvVar::EnablePrints.get_env_name(),
             Self::EnablePrintsArxiv => EnvVar::EnablePrintsArxiv.get_env_name(),
             Self::EnablePrintsBiorxiv => EnvVar::EnablePrintsBiorxiv.get_env_name(),
             Self::EnablePrintsGithub => EnvVar::EnablePrintsGithub.get_env_name(),

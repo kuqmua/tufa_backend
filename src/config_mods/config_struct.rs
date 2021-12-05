@@ -21,7 +21,6 @@ pub struct ConfigStruct {
     pub common_providers_links_limit: i64,
     pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
     //
-    pub enable_prints: bool,
     pub enable_error_prints: bool,
     pub enable_warning_high_prints: bool,
     pub enable_warning_low_prints: bool,
@@ -95,6 +94,7 @@ pub struct ConfigStruct {
     pub reddit_check_link: String,
     pub twitter_check_link: String,
 
+    pub enable_prints: bool,
     pub enable_prints_arxiv: bool,
     pub enable_prints_biorxiv: bool,
     pub enable_prints_github: bool,

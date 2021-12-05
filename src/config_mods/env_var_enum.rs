@@ -37,7 +37,7 @@ pub enum EnvVar {
     EnableCommonProvidersLinksLimit,
     CommonProvidersLinksLimit,
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
-    EnablePrints,
+
     EnableErrorPrints,
     EnableWarningHighPrints,
     EnableWarningLowPrints,
@@ -99,6 +99,7 @@ pub enum EnvVar {
     PostgresPort,
     PostgresDb,
 
+    EnablePrints,
     EnableArxiv,
     EnableBiorxiv,
     EnableGithub,

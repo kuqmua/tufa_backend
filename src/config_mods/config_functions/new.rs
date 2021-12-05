@@ -38,7 +38,7 @@ impl ConfigStruct {
             common_providers_links_limit: i64_vars[&EnvI64Var::CommonProvidersLinksLimit],
             enable_randomize_order_for_providers_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo],
-            enable_prints: bool_vars[&EnvBoolVar::EnablePrints],
+
             enable_error_prints: bool_vars[&EnvBoolVar::EnableErrorPrints],
             enable_warning_high_prints: bool_vars[&EnvBoolVar::EnableWarningHighPrints],
             enable_warning_low_prints: bool_vars[&EnvBoolVar::EnableWarningLowPrints],
@@ -160,6 +160,7 @@ impl ConfigStruct {
             reddit_check_link: string_vars[&EnvStringVar::RedditCheckLink].clone(),
             twitter_check_link: string_vars[&EnvStringVar::TwitterCheckLink].clone(),
 
+            enable_prints: bool_vars[&EnvBoolVar::EnablePrints],
             enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
                 && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                 && bool_vars[&EnvBoolVar::EnablePrintsArxiv],

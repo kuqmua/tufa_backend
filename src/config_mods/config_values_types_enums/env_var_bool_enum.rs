@@ -25,7 +25,7 @@ pub enum EnvBoolVar {
     EnableProviderLinksLimit,
     EnableCommonProvidersLinksLimit,
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
-    EnablePrints,
+
     EnableErrorPrints,
     EnableWarningHighPrints,
     EnableWarningLowPrints,
@@ -45,6 +45,7 @@ pub enum EnvBoolVar {
     EnableInfoPrintsForAllProviders,
     EnableWriteErrorLogsInLocalFolder,
     EnableWriteErrorLogsInMongo,
+
     EnableInitializeMongoWithProvidersLinkParts,
     EnableInitializeMongoWithArxivLinkParts,
     EnableInitializeMongoWithBiorxivLinkParts,
@@ -53,6 +54,7 @@ pub enum EnvBoolVar {
     EnableInitializeMongoWithMedrxivLinkParts,
     EnableInitializeMongoWithRedditLinkParts,
     EnableInitializeMongoWithTwitterLinkParts,
+
     EnableArxiv,
     EnableBiorxiv,
     EnableGithub,
@@ -60,6 +62,8 @@ pub enum EnvBoolVar {
     EnableMedrxiv,
     EnableReddit,
     EnableTwitter,
+
+    EnablePrints,
     EnablePrintsArxiv,
     EnablePrintsBiorxiv,
     EnablePrintsGithub,
@@ -67,6 +71,7 @@ pub enum EnvBoolVar {
     EnablePrintsMedrxiv,
     EnablePrintsReddit,
     EnablePrintsTwitter,
+
     EnableWarningHighPrintsForArxiv,
     EnableWarningHighPrintsForBiorxiv,
     EnableWarningHighPrintsForGithub,
@@ -74,6 +79,7 @@ pub enum EnvBoolVar {
     EnableWarningHighPrintsForMedrxiv,
     EnableWarningHighPrintsForReddit,
     EnableWarningHighPrintsForTwitter,
+
     EnableWarningLowPrintsForArxiv,
     EnableWarningLowPrintsForBiorxiv,
     EnableWarningLowPrintsForGithub,
@@ -81,6 +87,7 @@ pub enum EnvBoolVar {
     EnableWarningLowPrintsForMedrxiv,
     EnableWarningLowPrintsForReddit,
     EnableWarningLowPrintsForTwitter,
+
     EnableErrorPrintsForArxiv,
     EnableErrorPrintsForBiorxiv,
     EnableErrorPrintsForGithub,
@@ -88,6 +95,7 @@ pub enum EnvBoolVar {
     EnableErrorPrintsForMedrxiv,
     EnableErrorPrintsForReddit,
     EnableErrorPrintsForTwitter,
+
     EnableSuccessPrintsForArxiv,
     EnableSuccessPrintsForBiorxiv,
     EnableSuccessPrintsForGithub,
@@ -95,6 +103,7 @@ pub enum EnvBoolVar {
     EnableSuccessPrintsForMedrxiv,
     EnableSuccessPrintsForReddit,
     EnableSuccessPrintsForTwitter,
+
     EnablePartialSuccessPrintsForArxiv,
     EnablePartialSuccessPrintsForBiorxiv,
     EnablePartialSuccessPrintsForGithub,
@@ -102,6 +111,7 @@ pub enum EnvBoolVar {
     EnablePartialSuccessPrintsForMedrxiv,
     EnablePartialSuccessPrintsForReddit,
     EnablePartialSuccessPrintsForTwitter,
+
     EnableCleaningWarningLogsDirectoryForArxiv,
     EnableCleaningWarningLogsDirectoryForBiorxiv,
     EnableCleaningWarningLogsDirectoryForGithub,
@@ -109,6 +119,7 @@ pub enum EnvBoolVar {
     EnableCleaningWarningLogsDirectoryForMedrxiv,
     EnableCleaningWarningLogsDirectoryForReddit,
     EnableCleaningWarningLogsDirectoryForTwitter,
+
     EnableCleaningWarningLogsDbInMongoForArxiv,
     EnableCleaningWarningLogsDbInMongoForBiorxiv,
     EnableCleaningWarningLogsDbInMongoForGithub,
@@ -116,6 +127,7 @@ pub enum EnvBoolVar {
     EnableCleaningWarningLogsDbInMongoForMedrxiv,
     EnableCleaningWarningLogsDbInMongoForReddit,
     EnableCleaningWarningLogsDbInMongoForTwitter,
+
     EnableCleaningWarningLogsDbCollectionsInMongoForArxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForGithub,
@@ -123,6 +135,7 @@ pub enum EnvBoolVar {
     EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForReddit,
     EnableCleaningWarningLogsDbCollectionsInMongoForTwitter,
+
     EnableTimeMeasurementForArxiv,
     EnableTimeMeasurementForBiorxiv,
     EnableTimeMeasurementForGithub,
@@ -130,6 +143,7 @@ pub enum EnvBoolVar {
     EnableTimeMeasurementForMedrxiv,
     EnableTimeMeasurementForReddit,
     EnableTimeMeasurementForTwitter,
+
     EnableInfoForArxiv,
     EnableInfoForBiorxiv,
     EnableInfoForGithub,
@@ -137,6 +151,7 @@ pub enum EnvBoolVar {
     EnableInfoForMedrxiv,
     EnableInfoForReddit,
     EnableInfoForTwitter,
+
     EnableLinksLimitForArxiv,
     EnableLinksLimitForBiorxiv,
     EnableLinksLimitForGithub,
@@ -144,6 +159,7 @@ pub enum EnvBoolVar {
     EnableLinksLimitForMedrxiv,
     EnableLinksLimitForReddit,
     EnableLinksLimitForTwitter,
+
     EnableRandomizeOrderForArxivLinkPartsForMongo,
     EnableRandomizeOrderForBiorxivLinkPartsForMongo,
     EnableRandomizeOrderForGithubLinkPartsForMongo,
