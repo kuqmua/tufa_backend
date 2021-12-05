@@ -1,6 +1,5 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
@@ -56,7 +55,14 @@ pub struct ConfigStruct {
     pub enable_warning_low_providers_prints: EnableWarningLowProvidersPrints,
     pub enable_success_providers_prints: EnableSuccessProvidersPrints,
     pub enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints,
-    pub enable_error_providers_prints: EnableErrorProvidersPrints,
+
+    pub enable_error_prints_for_arxiv: bool,
+    pub enable_error_prints_for_biorxiv: bool,
+    pub enable_error_prints_for_github: bool,
+    pub enable_error_prints_for_habr: bool,
+    pub enable_error_prints_for_medrxiv: bool,
+    pub enable_error_prints_for_reddit: bool,
+    pub enable_error_prints_for_twitter: bool,
 
     pub enable_cleaning_warning_logs_directory_for_arxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_biorxiv: bool,
