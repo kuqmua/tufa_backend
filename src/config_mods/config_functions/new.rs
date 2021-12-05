@@ -41,8 +41,6 @@ impl ConfigStruct {
 
             enable_time_measurement_prints: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints],
             enable_info_prints: bool_vars[&EnvBoolVar::EnableInfoPrints],
-            enable_cleaning_warning_logs_directory_prints: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
             enable_cleaning_warning_logs_db_in_mongo: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo], //used in code not for providers logic
             enable_cleaning_warning_logs_db_collections_in_mongo: bool_vars
@@ -338,6 +336,8 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::EnableErrorPrintsForAllProviders]
                 && bool_vars[&EnvBoolVar::EnableErrorPrintsForTwitter],
 
+            enable_cleaning_warning_logs_directory_prints: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
             enable_cleaning_warning_logs_directory_for_arxiv: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
                 && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],

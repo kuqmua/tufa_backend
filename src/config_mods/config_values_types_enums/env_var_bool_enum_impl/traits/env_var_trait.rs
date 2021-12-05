@@ -30,9 +30,6 @@ impl EnvVarTrait for EnvBoolVar {
             }
 
             Self::EnableTimeMeasurementPrints => EnvVar::EnableTimeMeasurementPrints.get_env_name(),
-            Self::EnableCleaningWarningLogsDirectoryPrints => {
-                EnvVar::EnableCleaningWarningLogsDirectoryPrints.get_env_name()
-            }
             Self::EnableInfoPrints => EnvVar::EnableInfoPrints.get_env_name(),
             Self::EnableAllProvidersPrints => EnvVar::EnableAllProvidersPrints.get_env_name(),
             Self::EnableErrorPrintsForAllProviders => {
@@ -203,6 +200,9 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnablePartialSuccessPrintsForTwitter.get_env_name()
             }
 
+            Self::EnableCleaningWarningLogsDirectoryPrints => {
+                EnvVar::EnableCleaningWarningLogsDirectoryPrints.get_env_name()
+            }
             Self::EnableCleaningWarningLogsDirectoryForArxiv => {
                 EnvVar::EnableCleaningWarningLogsDirectoryForArxiv.get_env_name()
             }

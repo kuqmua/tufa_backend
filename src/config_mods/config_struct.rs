@@ -22,7 +22,7 @@ pub struct ConfigStruct {
     pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
 
     pub enable_time_measurement_prints: bool,
-    pub enable_cleaning_warning_logs_directory_prints: bool,
+
     pub enable_info_prints: bool,
 
     pub enable_write_error_logs_in_local_folder: bool,
@@ -143,6 +143,7 @@ pub struct ConfigStruct {
     pub enable_error_prints_for_reddit: bool,
     pub enable_error_prints_for_twitter: bool,
 
+    pub enable_cleaning_warning_logs_directory_prints: bool,
     pub enable_cleaning_warning_logs_directory_for_arxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_biorxiv: bool,
     pub enable_cleaning_warning_logs_directory_for_github: bool,

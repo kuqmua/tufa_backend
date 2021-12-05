@@ -39,7 +39,6 @@ pub enum EnvVar {
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
 
     EnableTimeMeasurementPrints,
-    EnableCleaningWarningLogsDirectoryPrints,
     EnableInfoPrints,
     EnableAllProvidersPrints,
     EnableErrorPrintsForAllProviders,
@@ -165,6 +164,7 @@ pub enum EnvVar {
     EnablePartialSuccessPrintsForReddit,
     EnablePartialSuccessPrintsForTwitter,
 
+    EnableCleaningWarningLogsDirectoryPrints,
     EnableCleaningWarningLogsDirectoryForArxiv,
     EnableCleaningWarningLogsDirectoryForBiorxiv,
     EnableCleaningWarningLogsDirectoryForGithub,

@@ -27,7 +27,6 @@ pub enum EnvBoolVar {
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
 
     EnableTimeMeasurementPrints,
-    EnableCleaningWarningLogsDirectoryPrints,
     EnableInfoPrints,
     EnableAllProvidersPrints,
     EnableErrorPrintsForAllProviders,
@@ -112,6 +111,7 @@ pub enum EnvBoolVar {
     EnablePartialSuccessPrintsForReddit,
     EnablePartialSuccessPrintsForTwitter,
 
+    EnableCleaningWarningLogsDirectoryPrints,
     EnableCleaningWarningLogsDirectoryForArxiv,
     EnableCleaningWarningLogsDirectoryForBiorxiv,
     EnableCleaningWarningLogsDirectoryForGithub,
