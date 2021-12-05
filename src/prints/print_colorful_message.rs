@@ -33,9 +33,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_arxiv,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_arxiv,
+                        CONFIG.enable_time_measurement_for_arxiv,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_arxiv,
@@ -64,9 +62,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_biorxiv,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_biorxiv,
+                        CONFIG.enable_time_measurement_for_biorxiv,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_biorxiv,
@@ -95,9 +91,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_github,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_github,
+                        CONFIG.enable_time_measurement_for_github,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_github,
@@ -126,9 +120,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_habr,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_habr,
+                        CONFIG.enable_time_measurement_for_habr,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_habr,
@@ -157,9 +149,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_medrxiv,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_medrxiv,
+                        CONFIG.enable_time_measurement_for_medrxiv,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_medrxiv,
@@ -188,9 +178,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_reddit,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_reddit,
+                        CONFIG.enable_time_measurement_for_reddit,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_reddit,
@@ -219,9 +207,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_partial_success_providers_prints
                             .enable_partial_success_prints_for_twitter,
-                        CONFIG
-                            .enable_providers_time_measurement
-                            .enable_time_measurement_for_twitter,
+                        CONFIG.enable_time_measurement_for_twitter,
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_twitter,

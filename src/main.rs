@@ -88,7 +88,6 @@ pub mod config_mods {
         pub mod enable_providers_cleaning_warning_logs_directory_struct;
         pub mod enable_providers_prints_struct;
         pub mod enable_providers_struct;
-        pub mod enable_providers_time_measurement_struct;
         pub mod enable_success_providers_prints_struct;
         pub mod enable_warning_high_providers_prints_struct;
         pub mod enable_warning_low_providers_prints_struct;
