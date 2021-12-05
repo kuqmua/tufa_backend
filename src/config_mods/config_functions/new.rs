@@ -11,7 +11,6 @@ use crate::config_mods::config_structs::postgres_url_parts_struct::PostgresUrlPa
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
-use crate::config_mods::config_structs::enable_providers_links_limit_struct::EnableProvidersLinksLimit;
 use crate::config_mods::config_structs::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
 use crate::config_mods::config_structs::enable_providers_info_struct::EnableProvidersInfo;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
@@ -548,22 +547,20 @@ impl ConfigStruct {
                     && bool_vars[&EnvBoolVar::EnableInfoPrintsForAllProviders]
                     && bool_vars[&EnvBoolVar::EnableInfoForTwitter],
             },
-            enable_providers_links_limits: EnableProvidersLinksLimit {
-                enable_links_limit_for_arxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForArxiv],
-                enable_links_limit_for_biorxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForBiorxiv],
-                enable_links_limit_for_github: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForGithub],
-                enable_links_limit_for_habr: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForHabr],
-                enable_links_limit_for_medrxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForMedrxiv],
-                enable_links_limit_for_reddit: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForReddit],
-                enable_links_limit_for_twitter: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
-                    && bool_vars[&EnvBoolVar::EnableLinksLimitForTwitter],
-            },
+            enable_links_limit_for_arxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForArxiv],
+            enable_links_limit_for_biorxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForBiorxiv],
+            enable_links_limit_for_github: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForGithub],
+            enable_links_limit_for_habr: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForHabr],
+            enable_links_limit_for_medrxiv: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForMedrxiv],
+            enable_links_limit_for_reddit: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForReddit],
+            enable_links_limit_for_twitter: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
+                && bool_vars[&EnvBoolVar::EnableLinksLimitForTwitter],
 
             links_limit_for_arxiv: i64_vars[&EnvI64Var::LinksLimitForArxiv],
             links_limit_for_biorxiv: i64_vars[&EnvI64Var::LinksLimitForBiorxiv],

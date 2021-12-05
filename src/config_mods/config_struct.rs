@@ -8,7 +8,6 @@ use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
-use crate::config_mods::config_structs::enable_providers_links_limit_struct::EnableProvidersLinksLimit;
 use crate::config_mods::config_structs::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
 use crate::config_mods::config_structs::enable_providers_info_struct::EnableProvidersInfo;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
@@ -71,7 +70,14 @@ pub struct ConfigStruct {
         EnableProvidersCleaningWarningLogsDbCollectionsInMongo,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub enable_providers_info: EnableProvidersInfo,
-    pub enable_providers_links_limits: EnableProvidersLinksLimit,
+
+    pub enable_links_limit_for_arxiv: bool,
+    pub enable_links_limit_for_biorxiv: bool,
+    pub enable_links_limit_for_github: bool,
+    pub enable_links_limit_for_habr: bool,
+    pub enable_links_limit_for_medrxiv: bool,
+    pub enable_links_limit_for_reddit: bool,
+    pub enable_links_limit_for_twitter: bool,
 
     pub links_limit_for_arxiv: i64,
     pub links_limit_for_biorxiv: i64,
