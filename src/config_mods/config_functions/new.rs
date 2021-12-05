@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
-use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
@@ -392,30 +391,28 @@ impl ConfigStruct {
                     && bool_vars[&EnvBoolVar::EnableErrorPrintsForAllProviders]
                     && bool_vars[&EnvBoolVar::EnableErrorPrintsForTwitter],
             },
-            enable_providers_cleaning_warning_logs_directory:
-                EnableProvidersCleaningWarningLogsDirectory {
-                    enable_cleaning_warning_logs_directory_for_arxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
-                    enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
-                    enable_cleaning_warning_logs_directory_for_github: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
-                    enable_cleaning_warning_logs_directory_for_habr: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
-                    enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
-                    enable_cleaning_warning_logs_directory_for_reddit: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
-                    enable_cleaning_warning_logs_directory_for_twitter: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
-                },
+
+            enable_cleaning_warning_logs_directory_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
+            enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
+            enable_cleaning_warning_logs_directory_for_github: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
+            enable_cleaning_warning_logs_directory_for_habr: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
+            enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
+            enable_cleaning_warning_logs_directory_for_reddit: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
+            enable_cleaning_warning_logs_directory_for_twitter: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
 
             enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
