@@ -3,7 +3,6 @@ extern crate toml;
 use std::collections::HashMap;
 
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
@@ -323,43 +322,42 @@ impl ConfigStruct {
                     && bool_vars[&EnvBoolVar::EnableSuccessPrintsForAllProviders]
                     && bool_vars[&EnvBoolVar::EnableSuccessPrintsForTwitter],
             },
-            enable_partial_success_providers_prints: EnablePartialSuccessProvidersPrints {
-                enable_partial_success_prints_for_arxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForArxiv],
-                enable_partial_success_prints_for_biorxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv],
-                enable_partial_success_prints_for_github: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForGithub],
-                enable_partial_success_prints_for_habr: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForHabr],
-                enable_partial_success_prints_for_medrxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv],
-                enable_partial_success_prints_for_reddit: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForReddit],
-                enable_partial_success_prints_for_twitter: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForTwitter],
-            },
+
+            enable_partial_success_prints_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForArxiv],
+            enable_partial_success_prints_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv],
+            enable_partial_success_prints_for_github: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForGithub],
+            enable_partial_success_prints_for_habr: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForHabr],
+            enable_partial_success_prints_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv],
+            enable_partial_success_prints_for_reddit: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForReddit],
+            enable_partial_success_prints_for_twitter: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrints]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForTwitter],
 
             enable_error_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                 && bool_vars[&EnvBoolVar::EnableErrorPrints]
