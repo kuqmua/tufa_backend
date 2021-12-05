@@ -29,7 +29,6 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo.get_env_name()
             }
 
-            Self::EnableSuccessPrints => EnvVar::EnableSuccessPrints.get_env_name(),
             Self::EnablePartialSuccessPrints => EnvVar::EnablePartialSuccessPrints.get_env_name(),
             Self::EnableTimeMeasurementPrints => EnvVar::EnableTimeMeasurementPrints.get_env_name(),
             Self::EnableCleaningWarningLogsDirectoryPrints => {
@@ -163,6 +162,7 @@ impl EnvVarTrait for EnvBoolVar {
             Self::EnableErrorPrintsForReddit => EnvVar::EnableErrorPrintsForReddit.get_env_name(),
             Self::EnableErrorPrintsForTwitter => EnvVar::EnableErrorPrintsForTwitter.get_env_name(),
 
+            Self::EnableSuccessPrints => EnvVar::EnableSuccessPrints.get_env_name(),
             Self::EnableSuccessPrintsForArxiv => EnvVar::EnableSuccessPrintsForArxiv.get_env_name(),
             Self::EnableSuccessPrintsForBiorxiv => {
                 EnvVar::EnableSuccessPrintsForBiorxiv.get_env_name()
