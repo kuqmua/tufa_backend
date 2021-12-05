@@ -19,22 +19,12 @@ use strum_macros::EnumIter;
 pub enum EnvStringVar {
     GithubName,
     GithubToken,
+
     RedditUserAgent,
     RedditClientId,
     RedditClientSecret,
     RedditUsername,
     RedditPassword,
-
-    WarningLogsDirectoryName,
-    UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
-    ProvidersDbNameHandle,
-    ProvidersDbCollectionHandleSecondPart,
-    ProvidersDbCollectionDocumentFieldNameHandle,
-    PathToProviderLinkPartsFolder,
-    LogFileExtension,
-    DbProvidersLogsNameHandle,
-    DbProvidersLogsCollectionHandleSecondPart,
-    DbProvidersLogsCollectionDocumentFieldNameHandle,
 
     MongoFirstHandleUrlPart,
     MongoSecondHandleUrlPart,
@@ -48,6 +38,10 @@ pub enum EnvStringVar {
     MongoPort,
     MongoParams,
 
+    MongoProvidersLogsDbName,
+    MongoProvidersLogsDbCollectionHandleSecondPart,
+    MongoProvidersLogsDbCollectionDocumentFieldNameHandle,
+
     PostgresFirstHandleUrlPart,
     PostgresSecondHandleUrlPart,
     PostgresThirdHandleUrlPart,
@@ -59,6 +53,11 @@ pub enum EnvStringVar {
     PostgresIp,
     PostgresPort,
     PostgresDb,
+
+    WarningLogsDirectoryName,
+    UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
+    PathToProviderLinkPartsFolder,
+    LogFileExtension,
 
     StartingCheckLink,
     ArxivCheckLink,
