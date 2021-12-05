@@ -26,7 +26,6 @@ pub enum EnvBoolVar {
     EnableCommonProvidersLinksLimit,
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
 
-    EnableWarningHighPrints,
     EnableWarningLowPrints,
     EnableSuccessPrints,
     EnablePartialSuccessPrints,
@@ -71,6 +70,7 @@ pub enum EnvBoolVar {
     EnablePrintsReddit,
     EnablePrintsTwitter,
 
+    EnableWarningHighPrints,
     EnableWarningHighPrintsForArxiv,
     EnableWarningHighPrintsForBiorxiv,
     EnableWarningHighPrintsForGithub,

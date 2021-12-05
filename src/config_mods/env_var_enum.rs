@@ -38,7 +38,6 @@ pub enum EnvVar {
     CommonProvidersLinksLimit,
     EnableRandomizeOrderForProvidersLinkPartsForMongo,
 
-    EnableWarningHighPrints,
     EnableWarningLowPrints,
     EnableSuccessPrints,
     EnablePartialSuccessPrints,
@@ -98,7 +97,6 @@ pub enum EnvVar {
     PostgresPort,
     PostgresDb,
 
-    EnablePrints,
     EnableArxiv,
     EnableBiorxiv,
     EnableGithub,
@@ -116,6 +114,7 @@ pub enum EnvVar {
     RedditCheckLink,
     TwitterCheckLink,
 
+    EnablePrints,
     EnablePrintsArxiv,
     EnablePrintsBiorxiv,
     EnablePrintsGithub,
@@ -124,6 +123,7 @@ pub enum EnvVar {
     EnablePrintsReddit,
     EnablePrintsTwitter,
 
+    EnableWarningHighPrints,
     EnableWarningHighPrintsForArxiv,
     EnableWarningHighPrintsForBiorxiv,
     EnableWarningHighPrintsForGithub,
