@@ -20,11 +20,66 @@ impl ConfigStruct {
         let handle_config: ConfigStruct = ConfigStruct {
             github_name: string_vars[&EnvStringVar::GithubName].clone(),
             github_token: string_vars[&EnvStringVar::GithubToken].clone(),
+
             reddit_user_agent: string_vars[&EnvStringVar::RedditUserAgent].clone(),
             reddit_client_id: string_vars[&EnvStringVar::RedditClientId].clone(),
             reddit_client_secret: string_vars[&EnvStringVar::RedditClientSecret].clone(),
             reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
             reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
+
+            mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
+                .clone(),
+            mongo_second_handle_url_part: string_vars[&EnvStringVar::MongoSecondHandleUrlPart]
+                .clone(),
+            mongo_third_handle_url_part: string_vars[&EnvStringVar::MongoThirdHandleUrlPart]
+                .clone(),
+            mongo_fourth_handle_url_part: string_vars[&EnvStringVar::MongoFourthHandleUrlPart]
+                .clone(),
+            mongo_fifth_handle_url_part: string_vars[&EnvStringVar::MongoFifthHandleUrlPart]
+                .clone(),
+
+            mongo_login: string_vars[&EnvStringVar::MongoLogin].clone(),
+            mongo_password: string_vars[&EnvStringVar::MongoPassword].clone(),
+            mongo_ip: string_vars[&EnvStringVar::MongoIp].clone(),
+            mongo_port: string_vars[&EnvStringVar::MongoPort].clone(),
+            mongo_params: string_vars[&EnvStringVar::MongoParams].clone(),
+
+            mongo_providers_logs_db_name: string_vars[&EnvStringVar::DbProvidersLogsNameHandle]
+                .clone(),
+            mongo_providers_logs_db_collection_handle_second_part: string_vars
+                [&EnvStringVar::DbProvidersLogsCollectionHandleSecondPart]
+                .clone(),
+            mongo_providers_logs_db_collection_document_field_name_handle: string_vars
+                [&EnvStringVar::DbProvidersLogsCollectionDocumentFieldNameHandle]
+                .clone(),
+
+                pub mongo_enable_initialization: bool,
+    pub mongo_enable_initialization_for_providers: bool,
+    
+
+            mongo_enable_initialization_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
+            mongo_enable_initialization_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
+            mongo_enable_initialization_for_github: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
+            mongo_enable_initialization_for_habr: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
+           mongo_enable_initialization_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
+            mongo_enable_initialization_for_reddit: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
+            mongo_enable_initialization_for_twitter: bool_vars
+                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
+                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
+
+
 
             warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName]
                 .clone(),
@@ -48,8 +103,6 @@ impl ConfigStruct {
             enable_write_error_logs_in_local_folder: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
             enable_write_error_logs_in_mongo: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInMongo],
-            enable_initialize_mongo_with_providers_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts],
 
             providers_db_name_handle: string_vars[&EnvStringVar::ProvidersDbNameHandle].clone(),
             providers_db_collection_handle_second_part: string_vars
@@ -58,57 +111,11 @@ impl ConfigStruct {
             providers_db_collection_document_field_name_handle: string_vars
                 [&EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle]
                 .clone(),
-            mongo_providers_logs_db_name: string_vars[&EnvStringVar::DbProvidersLogsNameHandle]
-                .clone(),
-            mongo_providers_logs_db_collection_handle_second_part: string_vars
-                [&EnvStringVar::DbProvidersLogsCollectionHandleSecondPart]
-                .clone(),
-            db_providers_logs_collection_document_field_name_handle: string_vars
-                [&EnvStringVar::DbProvidersLogsCollectionDocumentFieldNameHandle]
-                .clone(),
+
             path_to_provider_link_parts_folder: string_vars
                 [&EnvStringVar::PathToProviderLinkPartsFolder]
                 .clone(),
             log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
-
-            enable_initialize_mongo_with_arxiv_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithArxivLinkParts],
-            enable_initialize_mongo_with_biorxiv_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithBiorxivLinkParts],
-            enable_initialize_mongo_with_github_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithGithubLinkParts],
-            enable_initialize_mongo_with_habr_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithHabrLinkParts],
-            enable_initialize_mongo_with_medrxiv_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithMedrxivLinkParts],
-            enable_initialize_mongo_with_reddit_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithRedditLinkParts],
-            enable_initialize_mongo_with_twitter_link_parts: bool_vars
-                [&EnvBoolVar::EnableInitializeMongoWithProvidersLinkParts]
-                && bool_vars[&EnvBoolVar::EnableInitializeMongoWithTwitterLinkParts],
-
-            mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
-                .clone(),
-            mongo_second_handle_url_part: string_vars[&EnvStringVar::MongoSecondHandleUrlPart]
-                .clone(),
-            mongo_third_handle_url_part: string_vars[&EnvStringVar::MongoThirdHandleUrlPart]
-                .clone(),
-            mongo_fourth_handle_url_part: string_vars[&EnvStringVar::MongoFourthHandleUrlPart]
-                .clone(),
-            mongo_fifth_handle_url_part: string_vars[&EnvStringVar::MongoFifthHandleUrlPart]
-                .clone(),
-
-            mongo_login: string_vars[&EnvStringVar::MongoLogin].clone(),
-            mongo_password: string_vars[&EnvStringVar::MongoPassword].clone(),
-            mongo_ip: string_vars[&EnvStringVar::MongoIp].clone(),
-            mongo_port: string_vars[&EnvStringVar::MongoPort].clone(),
-            mongo_params: string_vars[&EnvStringVar::MongoParams].clone(),
 
             postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
                 .clone(),
