@@ -29,7 +29,6 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo.get_env_name()
             }
 
-            Self::EnableErrorPrints => EnvVar::EnableErrorPrints.get_env_name(),
             Self::EnableWarningHighPrints => EnvVar::EnableWarningHighPrints.get_env_name(),
             Self::EnableWarningLowPrints => EnvVar::EnableWarningLowPrints.get_env_name(),
             Self::EnableSuccessPrints => EnvVar::EnableSuccessPrints.get_env_name(),
@@ -155,6 +154,7 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnableWarningLowPrintsForTwitter.get_env_name()
             }
 
+            Self::EnableErrorPrints => EnvVar::EnableErrorPrints.get_env_name(),
             Self::EnableErrorPrintsForArxiv => EnvVar::EnableErrorPrintsForArxiv.get_env_name(),
             Self::EnableErrorPrintsForBiorxiv => EnvVar::EnableErrorPrintsForBiorxiv.get_env_name(),
             Self::EnableErrorPrintsForGithub => EnvVar::EnableErrorPrintsForGithub.get_env_name(),

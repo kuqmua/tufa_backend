@@ -20,8 +20,7 @@ pub struct ConfigStruct {
     pub enable_common_providers_links_limit: bool,
     pub common_providers_links_limit: i64,
     pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
-    //
-    pub enable_error_prints: bool,
+
     pub enable_warning_high_prints: bool,
     pub enable_warning_low_prints: bool,
     pub enable_success_prints: bool,
@@ -29,7 +28,7 @@ pub struct ConfigStruct {
     pub enable_time_measurement_prints: bool,
     pub enable_cleaning_warning_logs_directory_prints: bool,
     pub enable_info_prints: bool,
-    //
+
     pub enable_write_error_logs_in_local_folder: bool,
     pub enable_write_error_logs_in_mongo: bool,
     pub enable_initialize_mongo_with_providers_link_parts: bool,
@@ -37,11 +36,11 @@ pub struct ConfigStruct {
     pub providers_db_name_handle: String,
     pub providers_db_collection_handle_second_part: String,
     pub providers_db_collection_document_field_name_handle: String,
-    //
+
     pub db_providers_logs_name_handle: String,
     pub db_providers_logs_collection_handle_second_part: String,
     pub db_providers_logs_collection_document_field_name_handle: String,
-    //
+
     pub path_to_provider_link_parts_folder: String,
     pub log_file_extension: String,
 
@@ -135,6 +134,7 @@ pub struct ConfigStruct {
     pub enable_partial_success_prints_for_reddit: bool,
     pub enable_partial_success_prints_for_twitter: bool,
 
+    pub enable_error_prints: bool,
     pub enable_error_prints_for_arxiv: bool,
     pub enable_error_prints_for_biorxiv: bool,
     pub enable_error_prints_for_github: bool,
