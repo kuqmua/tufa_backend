@@ -2,7 +2,6 @@ extern crate toml;
 
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
-use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
@@ -61,8 +60,14 @@ pub struct ConfigStruct {
     pub enable_error_providers_prints: EnableErrorProvidersPrints,
     pub enable_providers_cleaning_warning_logs_directory:
         EnableProvidersCleaningWarningLogsDirectory,
-    pub enable_providers_cleaning_warning_logs_db_in_mongo:
-        EnableProvidersCleaningWarningLogsDbInMongo,
+
+    pub enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_github: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_habr: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool,
+    pub enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool,
 
     pub enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool,
     pub enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: bool,

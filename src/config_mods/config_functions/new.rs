@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
-use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
@@ -417,30 +416,28 @@ impl ConfigStruct {
                         [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
                         && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
                 },
-            enable_providers_cleaning_warning_logs_db_in_mongo:
-                EnableProvidersCleaningWarningLogsDbInMongo {
-                    enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv],
-                    enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForBiorxiv],
-                    enable_cleaning_warning_logs_db_in_mongo_for_github: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForGithub],
-                    enable_cleaning_warning_logs_db_in_mongo_for_habr: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForHabr],
-                    enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForMedrxiv],
-                    enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForReddit],
-                    enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool_vars
-                        [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
-                        && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForTwitter],
-                },
+
+            enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv],
+            enable_cleaning_warning_logs_db_in_mongo_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForBiorxiv],
+            enable_cleaning_warning_logs_db_in_mongo_for_github: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForGithub],
+            enable_cleaning_warning_logs_db_in_mongo_for_habr: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForHabr],
+            enable_cleaning_warning_logs_db_in_mongo_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForMedrxiv],
+            enable_cleaning_warning_logs_db_in_mongo_for_reddit: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForReddit],
+            enable_cleaning_warning_logs_db_in_mongo_for_twitter: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForTwitter],
 
             enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo]

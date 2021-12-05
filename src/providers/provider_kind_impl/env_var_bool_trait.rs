@@ -328,41 +328,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_db_in_mongo_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_arxiv
-            }
-            ProviderKind::Biorxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_biorxiv
-            }
-            ProviderKind::Github => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_github
-            }
-            ProviderKind::Habr => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_habr
-            }
-            ProviderKind::Medrxiv => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_medrxiv
-            }
-            ProviderKind::Reddit => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_reddit
-            }
-            ProviderKind::Twitter => {
-                CONFIG
-                    .enable_providers_cleaning_warning_logs_db_in_mongo
-                    .enable_cleaning_warning_logs_db_in_mongo_for_twitter
-            }
+            ProviderKind::Arxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_github,
+            ProviderKind::Habr => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_reddit,
+            ProviderKind::Twitter => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_twitter,
         }
     }
 
