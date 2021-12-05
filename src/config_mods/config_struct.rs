@@ -11,7 +11,6 @@ pub struct ConfigStruct {
     pub reddit_username: String,
     pub reddit_password: String,
 
-    pub starting_check_link: String,
     pub warning_logs_directory_name: String,
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
     pub enable_cleaning_warning_logs_db_in_mongo: bool,
@@ -87,6 +86,7 @@ pub struct ConfigStruct {
     pub enable_reddit: bool,
     pub enable_twitter: bool,
 
+    pub starting_check_link: String,
     pub arxiv_check_link: String,
     pub biorxiv_check_link: String,
     pub github_check_link: String,

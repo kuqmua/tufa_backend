@@ -26,7 +26,6 @@ impl ConfigStruct {
             reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
             reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
 
-            starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
             warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName]
                 .clone(),
             unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars
@@ -152,6 +151,7 @@ impl ConfigStruct {
             enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
                 && bool_vars[&EnvBoolVar::EnableTwitter],
 
+            starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
             arxiv_check_link: string_vars[&EnvStringVar::ArxivCheckLink].clone(),
             biorxiv_check_link: string_vars[&EnvStringVar::BiorxivCheckLink].clone(),
             github_check_link: string_vars[&EnvStringVar::GithubCheckLink].clone(),

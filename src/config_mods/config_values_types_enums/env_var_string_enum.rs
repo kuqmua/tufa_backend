@@ -24,7 +24,7 @@ pub enum EnvStringVar {
     RedditClientSecret,
     RedditUsername,
     RedditPassword,
-    StartingCheckLink,
+
     WarningLogsDirectoryName,
     UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
     ProvidersDbNameHandle,
@@ -35,26 +35,32 @@ pub enum EnvStringVar {
     DbProvidersLogsNameHandle,
     DbProvidersLogsCollectionHandleSecondPart,
     DbProvidersLogsCollectionDocumentFieldNameHandle,
+
     MongoFirstHandleUrlPart,
     MongoSecondHandleUrlPart,
     MongoThirdHandleUrlPart,
     MongoFourthHandleUrlPart,
     MongoFifthHandleUrlPart,
+
     MongoLogin,
     MongoPassword,
     MongoIp,
     MongoPort,
     MongoParams,
+
     PostgresFirstHandleUrlPart,
     PostgresSecondHandleUrlPart,
     PostgresThirdHandleUrlPart,
     PostgresFourthHandleUrlPart,
     PostgresFifthHandleUrlPart,
+
     PostgresLogin,
     PostgresPassword,
     PostgresIp,
     PostgresPort,
     PostgresDb,
+
+    StartingCheckLink,
     ArxivCheckLink,
     BiorxivCheckLink,
     GithubCheckLink,

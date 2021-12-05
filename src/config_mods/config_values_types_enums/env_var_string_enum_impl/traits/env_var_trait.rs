@@ -20,7 +20,6 @@ impl EnvVarTrait for EnvStringVar {
             Self::RedditUsername => EnvVar::RedditUsername.get_env_name(),
             Self::RedditPassword => EnvVar::RedditPassword.get_env_name(),
 
-            Self::StartingCheckLink => EnvVar::StartingCheckLink.get_env_name(),
             Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
             Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
                 EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
@@ -70,6 +69,7 @@ impl EnvVarTrait for EnvStringVar {
             Self::PostgresPort => EnvVar::PostgresPort.get_env_name(),
             Self::PostgresDb => EnvVar::PostgresDb.get_env_name(),
 
+            Self::StartingCheckLink => EnvVar::StartingCheckLink.get_env_name(),
             Self::ArxivCheckLink => EnvVar::ArxivCheckLink.get_env_name(),
             Self::BiorxivCheckLink => EnvVar::BiorxivCheckLink.get_env_name(),
             Self::GithubCheckLink => EnvVar::GithubCheckLink.get_env_name(),

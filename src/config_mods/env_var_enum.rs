@@ -19,12 +19,13 @@ use strum_macros::EnumIter;
 pub enum EnvVar {
     GithubName,
     GithubToken,
+
     RedditUserAgent,
     RedditClientId,
     RedditClientSecret,
     RedditUsername,
     RedditPassword,
-    StartingCheckLink,
+
     WarningLogsDirectoryName,
     UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
     EnableProviders,
@@ -65,6 +66,7 @@ pub enum EnvVar {
     DbProvidersLogsNameHandle,
     DbProvidersLogsCollectionHandleSecondPart,
     DbProvidersLogsCollectionDocumentFieldNameHandle,
+
     EnableInitializeMongoWithArxivLinkParts,
     EnableInitializeMongoWithBiorxivLinkParts,
     EnableInitializeMongoWithGithubLinkParts,
@@ -72,26 +74,31 @@ pub enum EnvVar {
     EnableInitializeMongoWithMedrxivLinkParts,
     EnableInitializeMongoWithRedditLinkParts,
     EnableInitializeMongoWithTwitterLinkParts,
+
     MongoFirstHandleUrlPart,
     MongoSecondHandleUrlPart,
     MongoThirdHandleUrlPart,
     MongoFourthHandleUrlPart,
     MongoFifthHandleUrlPart,
+
     MongoLogin,
     MongoPassword,
     MongoIp,
     MongoPort,
     MongoParams,
+
     PostgresFirstHandleUrlPart,
     PostgresSecondHandleUrlPart,
     PostgresThirdHandleUrlPart,
     PostgresFourthHandleUrlPart,
     PostgresFifthHandleUrlPart,
+
     PostgresLogin,
     PostgresPassword,
     PostgresIp,
     PostgresPort,
     PostgresDb,
+
     EnableArxiv,
     EnableBiorxiv,
     EnableGithub,
@@ -99,6 +106,8 @@ pub enum EnvVar {
     EnableMedrxiv,
     EnableReddit,
     EnableTwitter,
+
+    StartingCheckLink,
     ArxivCheckLink,
     BiorxivCheckLink,
     GithubCheckLink,
@@ -106,6 +115,7 @@ pub enum EnvVar {
     MedrxivCheckLink,
     RedditCheckLink,
     TwitterCheckLink,
+
     EnablePrintsArxiv,
     EnablePrintsBiorxiv,
     EnablePrintsGithub,
@@ -113,6 +123,7 @@ pub enum EnvVar {
     EnablePrintsMedrxiv,
     EnablePrintsReddit,
     EnablePrintsTwitter,
+
     EnableWarningHighPrintsForArxiv,
     EnableWarningHighPrintsForBiorxiv,
     EnableWarningHighPrintsForGithub,
@@ -120,6 +131,7 @@ pub enum EnvVar {
     EnableWarningHighPrintsForMedrxiv,
     EnableWarningHighPrintsForReddit,
     EnableWarningHighPrintsForTwitter,
+
     EnableWarningLowPrintsForArxiv,
     EnableWarningLowPrintsForBiorxiv,
     EnableWarningLowPrintsForGithub,
@@ -127,6 +139,7 @@ pub enum EnvVar {
     EnableWarningLowPrintsForMedrxiv,
     EnableWarningLowPrintsForReddit,
     EnableWarningLowPrintsForTwitter,
+
     EnableErrorPrintsForArxiv,
     EnableErrorPrintsForBiorxiv,
     EnableErrorPrintsForGithub,
@@ -134,6 +147,7 @@ pub enum EnvVar {
     EnableErrorPrintsForMedrxiv,
     EnableErrorPrintsForReddit,
     EnableErrorPrintsForTwitter,
+
     EnableSuccessPrintsForArxiv,
     EnableSuccessPrintsForBiorxiv,
     EnableSuccessPrintsForGithub,
@@ -141,6 +155,7 @@ pub enum EnvVar {
     EnableSuccessPrintsForMedrxiv,
     EnableSuccessPrintsForReddit,
     EnableSuccessPrintsForTwitter,
+
     EnablePartialSuccessPrintsForArxiv,
     EnablePartialSuccessPrintsForBiorxiv,
     EnablePartialSuccessPrintsForGithub,
@@ -148,6 +163,7 @@ pub enum EnvVar {
     EnablePartialSuccessPrintsForMedrxiv,
     EnablePartialSuccessPrintsForReddit,
     EnablePartialSuccessPrintsForTwitter,
+
     EnableCleaningWarningLogsDirectoryForArxiv,
     EnableCleaningWarningLogsDirectoryForBiorxiv,
     EnableCleaningWarningLogsDirectoryForGithub,
@@ -155,6 +171,7 @@ pub enum EnvVar {
     EnableCleaningWarningLogsDirectoryForMedrxiv,
     EnableCleaningWarningLogsDirectoryForReddit,
     EnableCleaningWarningLogsDirectoryForTwitter,
+
     EnableCleaningWarningLogsDbInMongoForArxiv,
     EnableCleaningWarningLogsDbInMongoForBiorxiv,
     EnableCleaningWarningLogsDbInMongoForGithub,
@@ -162,6 +179,7 @@ pub enum EnvVar {
     EnableCleaningWarningLogsDbInMongoForMedrxiv,
     EnableCleaningWarningLogsDbInMongoForReddit,
     EnableCleaningWarningLogsDbInMongoForTwitter,
+
     EnableCleaningWarningLogsDbCollectionsInMongoForArxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForGithub,
@@ -169,6 +187,7 @@ pub enum EnvVar {
     EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv,
     EnableCleaningWarningLogsDbCollectionsInMongoForReddit,
     EnableCleaningWarningLogsDbCollectionsInMongoForTwitter,
+
     EnableTimeMeasurementForArxiv,
     EnableTimeMeasurementForBiorxiv,
     EnableTimeMeasurementForGithub,
@@ -176,6 +195,7 @@ pub enum EnvVar {
     EnableTimeMeasurementForMedrxiv,
     EnableTimeMeasurementForReddit,
     EnableTimeMeasurementForTwitter,
+
     EnableInfoForArxiv,
     EnableInfoForBiorxiv,
     EnableInfoForGithub,
@@ -183,6 +203,7 @@ pub enum EnvVar {
     EnableInfoForMedrxiv,
     EnableInfoForReddit,
     EnableInfoForTwitter,
+
     EnableLinksLimitForArxiv,
     EnableLinksLimitForBiorxiv,
     EnableLinksLimitForGithub,
@@ -190,6 +211,7 @@ pub enum EnvVar {
     EnableLinksLimitForMedrxiv,
     EnableLinksLimitForReddit,
     EnableLinksLimitForTwitter,
+
     EnableRandomizeOrderForArxivLinkPartsForMongo,
     EnableRandomizeOrderForBiorxivLinkPartsForMongo,
     EnableRandomizeOrderForGithubLinkPartsForMongo,
@@ -197,6 +219,7 @@ pub enum EnvVar {
     EnableRandomizeOrderForMedrxivLinkPartsForMongo,
     EnableRandomizeOrderForRedditLinkPartsForMongo,
     EnableRandomizeOrderForTwitterLinkPartsForMongo,
+
     LinksLimitForArxiv,
     LinksLimitForBiorxiv,
     LinksLimitForGithub,
@@ -204,6 +227,7 @@ pub enum EnvVar {
     LinksLimitForMedrxiv,
     LinksLimitForReddit,
     LinksLimitForTwitter,
+
     ErrorRed,
     ErrorGreen,
     ErrorBlue,
