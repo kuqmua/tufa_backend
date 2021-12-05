@@ -14,7 +14,6 @@ use crate::config_mods::config_structs::enable_providers_info_struct::EnableProv
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
 
@@ -73,7 +72,14 @@ pub struct ConfigStruct {
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
     pub enable_providers_info: EnableProvidersInfo,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
-    pub providers_links_limits: ProvidersLinksLimits,
+
+    pub links_limit_for_arxiv: i64,
+    pub links_limit_for_biorxiv: i64,
+    pub links_limit_for_github: i64,
+    pub links_limit_for_habr: i64,
+    pub links_limit_for_medrxiv: i64,
+    pub links_limit_for_reddit: i64,
+    pub links_limit_for_twitter: i64,
 
     pub enable_randomize_order_for_arxiv_link_parts_for_mongo: bool,
     pub enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool,

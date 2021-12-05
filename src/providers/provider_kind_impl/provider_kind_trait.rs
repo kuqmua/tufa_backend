@@ -55,13 +55,13 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_links_limit_for_provider(&self) -> i64 {
         match self {
-            ProviderKind::Arxiv => CONFIG.providers_links_limits.links_limit_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.providers_links_limits.links_limit_for_biorxiv,
-            ProviderKind::Github => CONFIG.providers_links_limits.links_limit_for_github,
-            ProviderKind::Habr => CONFIG.providers_links_limits.links_limit_for_habr,
-            ProviderKind::Medrxiv => CONFIG.providers_links_limits.links_limit_for_medrxiv,
-            ProviderKind::Reddit => CONFIG.providers_links_limits.links_limit_for_reddit,
-            ProviderKind::Twitter => CONFIG.providers_links_limits.links_limit_for_twitter,
+            ProviderKind::Arxiv => CONFIG.links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.links_limit_for_github,
+            ProviderKind::Habr => CONFIG.links_limit_for_habr,
+            ProviderKind::Medrxiv => CONFIG.links_limit_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.links_limit_for_reddit,
+            ProviderKind::Twitter => CONFIG.links_limit_for_twitter,
         }
     }
 

@@ -17,7 +17,6 @@ use crate::config_mods::config_structs::enable_providers_info_struct::EnableProv
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
@@ -565,15 +564,15 @@ impl ConfigStruct {
                 enable_links_limit_for_twitter: bool_vars[&EnvBoolVar::EnableProviderLinksLimit]
                     && bool_vars[&EnvBoolVar::EnableLinksLimitForTwitter],
             },
-            providers_links_limits: ProvidersLinksLimits {
-                links_limit_for_arxiv: i64_vars[&EnvI64Var::LinksLimitForArxiv],
-                links_limit_for_biorxiv: i64_vars[&EnvI64Var::LinksLimitForBiorxiv],
-                links_limit_for_github: i64_vars[&EnvI64Var::LinksLimitForGithub],
-                links_limit_for_habr: i64_vars[&EnvI64Var::LinksLimitForHabr],
-                links_limit_for_medrxiv: i64_vars[&EnvI64Var::LinksLimitForMedrxiv],
-                links_limit_for_reddit: i64_vars[&EnvI64Var::LinksLimitForReddit],
-                links_limit_for_twitter: i64_vars[&EnvI64Var::LinksLimitForTwitter],
-            },
+
+            links_limit_for_arxiv: i64_vars[&EnvI64Var::LinksLimitForArxiv],
+            links_limit_for_biorxiv: i64_vars[&EnvI64Var::LinksLimitForBiorxiv],
+            links_limit_for_github: i64_vars[&EnvI64Var::LinksLimitForGithub],
+            links_limit_for_habr: i64_vars[&EnvI64Var::LinksLimitForHabr],
+            links_limit_for_medrxiv: i64_vars[&EnvI64Var::LinksLimitForMedrxiv],
+            links_limit_for_reddit: i64_vars[&EnvI64Var::LinksLimitForReddit],
+            links_limit_for_twitter: i64_vars[&EnvI64Var::LinksLimitForTwitter],
+
             enable_randomize_order_for_arxiv_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo]
                 && bool_vars[&EnvBoolVar::EnableRandomizeOrderForArxivLinkPartsForMongo],
