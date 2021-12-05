@@ -68,10 +68,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    if CONFIG
-        .params
-        .enable_initialize_mongo_with_providers_link_parts
-    {
+    if CONFIG.enable_initialize_mongo_with_providers_link_parts {
         let (success_hashmap, errors_hashmap) =
             ProviderKind::get_providers_json_local_data_processed();
         if !success_hashmap.is_empty() {

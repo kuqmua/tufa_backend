@@ -11,11 +11,9 @@ use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_d
 use crate::config_mods::config_structs::enable_providers_links_limit_struct::EnableProvidersLinksLimit;
 use crate::config_mods::config_structs::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
 use crate::config_mods::config_structs::enable_providers_info_struct::EnableProvidersInfo;
-use crate::config_mods::config_structs::enable_randomize_order_for_providers_link_parts_for_mongo_struct::EnableRandomizeOrderForProvidersLinkPartsForMongo;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::params_struct::Params;
 use crate::config_mods::config_structs::print_colors_struct::PrintColors;
 use crate::config_mods::config_structs::providers_links_limits_struct::ProvidersLinksLimits;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
@@ -32,7 +30,31 @@ pub struct ConfigStruct {
     pub reddit_username: String,
     pub reddit_password: String,
 
-    pub params: Params,
+    pub starting_check_link: String,
+    pub warning_logs_directory_name: String,
+    pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
+    pub enable_cleaning_warning_logs_db_in_mongo: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo: bool,
+    pub enable_time_measurement: bool,
+    pub enable_provider_links_limit: bool,
+    pub enable_common_providers_links_limit: bool,
+    pub common_providers_links_limit: i64,
+    pub enable_randomize_order_for_providers_link_parts_for_mongo: bool,
+    //
+    pub enable_prints: bool,
+    pub enable_error_prints: bool,
+    pub enable_warning_high_prints: bool,
+    pub enable_warning_low_prints: bool,
+    pub enable_success_prints: bool,
+    pub enable_partial_success_prints: bool,
+    pub enable_time_measurement_prints: bool,
+    pub enable_cleaning_warning_logs_directory_prints: bool,
+    pub enable_info_prints: bool,
+    //
+    pub enable_write_error_logs_in_local_folder: bool,
+    pub enable_write_error_logs_in_mongo: bool,
+    pub enable_initialize_mongo_with_providers_link_parts: bool,
+
     pub mongo_params: MongoParams,
     pub postgres_params: PostgresParams,
     pub enable_providers: EnableProviders,
@@ -53,7 +75,14 @@ pub struct ConfigStruct {
     pub enable_providers_info: EnableProvidersInfo,
     pub enable_providers_links_limits: EnableProvidersLinksLimit,
     pub providers_links_limits: ProvidersLinksLimits,
-    pub enable_randomize_order_for_providers_link_parts_for_mongo:
-        EnableRandomizeOrderForProvidersLinkPartsForMongo,
+
+    pub enable_randomize_order_for_arxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_biorxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_github_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_habr_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_medrxiv_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_reddit_link_parts_for_mongo: bool,
+    pub enable_randomize_order_for_twitter_link_parts_for_mongo: bool,
+
     pub print_colors: PrintColors,
 }

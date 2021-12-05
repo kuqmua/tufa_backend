@@ -78,7 +78,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         }
     }
     let hashmap_len = hashmap_of_provider_vec_of_strings.len();
-    if CONFIG.params.enable_cleaning_warning_logs_db_in_mongo {
+    if CONFIG.enable_cleaning_warning_logs_db_in_mongo {
         /////////////////////////////////////////////////////
         //this error exists only for cloud mongo
         //file: libs/mongo_integration/src/mongo_drop_db.rs:25
@@ -119,10 +119,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     }
     let mut vec_of_failed_collections_drops: Vec<ProviderKind> =
         Vec::with_capacity(vec_of_error_provider_kinds.len());
-    if CONFIG
-        .params
-        .enable_cleaning_warning_logs_db_collections_in_mongo
-    {
+    if CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo {
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
             vec_join.push(drop_mongo_provider_logs_collection_if_need(
@@ -249,7 +246,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     }
     //todo write some logic around provider_kind
     let results_vec = join_all(vec_of_futures).await;
-    if CONFIG.params.enable_time_measurement_prints {
+    if CONFIG.enable_time_measurement_prints {
         print_colorful_message(
             None,
             PrintType::TimeMeasurement,

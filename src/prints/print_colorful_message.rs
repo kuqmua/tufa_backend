@@ -12,7 +12,7 @@ pub fn print_colorful_message(
     line: String,
     message: String,
 ) {
-    if CONFIG.params.enable_prints {
+    if CONFIG.enable_prints {
         match provider_kind {
             Some(provider_kind) => match provider_kind {
                 ProviderKind::Arxiv => {
@@ -235,7 +235,7 @@ pub fn print_colorful_message(
             },
             None => match print_type {
                 PrintType::Error => {
-                    if CONFIG.params.enable_error_prints {
+                    if CONFIG.enable_error_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.error_red,
                             CONFIG.print_colors.error_green,
@@ -252,7 +252,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::WarningHigh => {
-                    if CONFIG.params.enable_warning_high_prints {
+                    if CONFIG.enable_warning_high_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.warning_high_red,
                             CONFIG.print_colors.warning_high_green,
@@ -269,7 +269,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::WarningLow => {
-                    if CONFIG.params.enable_warning_low_prints {
+                    if CONFIG.enable_warning_low_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.warning_low_red,
                             CONFIG.print_colors.warning_low_green,
@@ -286,7 +286,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::Success => {
-                    if CONFIG.params.enable_success_prints {
+                    if CONFIG.enable_success_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.success_red,
                             CONFIG.print_colors.success_green,
@@ -303,7 +303,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::PartialSuccess => {
-                    if CONFIG.params.enable_partial_success_prints {
+                    if CONFIG.enable_partial_success_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.partial_success_red,
                             CONFIG.print_colors.partial_success_green,
@@ -320,7 +320,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::TimeMeasurement => {
-                    if CONFIG.params.enable_time_measurement_prints {
+                    if CONFIG.enable_time_measurement_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.time_measurement_red,
                             CONFIG.print_colors.time_measurement_green,
@@ -337,7 +337,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::CleaningWarningLogsDirectory => {
-                    if CONFIG.params.enable_cleaning_warning_logs_directory_prints {
+                    if CONFIG.enable_cleaning_warning_logs_directory_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.cleaning_red,
                             CONFIG.print_colors.cleaning_green,
@@ -354,7 +354,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::Info => {
-                    if CONFIG.params.enable_info_prints {
+                    if CONFIG.enable_info_prints {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.print_colors.info_red,
                             CONFIG.print_colors.info_green,
@@ -395,7 +395,7 @@ fn handle_provider_prints(
     if enable_prints_provider {
         match print_type {
             PrintType::Error => {
-                if CONFIG.params.enable_error_prints && enable_error_prints_for_provider {
+                if CONFIG.enable_error_prints && enable_error_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.error_red,
                         CONFIG.print_colors.error_green,
@@ -412,9 +412,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::WarningHigh => {
-                if CONFIG.params.enable_warning_high_prints
-                    && enable_warning_high_prints_for_provider
-                {
+                if CONFIG.enable_warning_high_prints && enable_warning_high_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.warning_high_red,
                         CONFIG.print_colors.warning_high_green,
@@ -431,8 +429,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::WarningLow => {
-                if CONFIG.params.enable_warning_low_prints && enable_warning_low_prints_for_provider
-                {
+                if CONFIG.enable_warning_low_prints && enable_warning_low_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.warning_low_red,
                         CONFIG.print_colors.warning_low_green,
@@ -449,7 +446,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::Success => {
-                if CONFIG.params.enable_success_prints && enable_success_prints_for_provider {
+                if CONFIG.enable_success_prints && enable_success_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.success_red,
                         CONFIG.print_colors.success_green,
@@ -466,7 +463,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::PartialSuccess => {
-                if CONFIG.params.enable_partial_success_prints
+                if CONFIG.enable_partial_success_prints
                     && enable_partial_success_prints_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -485,8 +482,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::TimeMeasurement => {
-                if CONFIG.params.enable_time_measurement_prints && enable_provider_time_measurement
-                {
+                if CONFIG.enable_time_measurement_prints && enable_provider_time_measurement {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.time_measurement_red,
                         CONFIG.print_colors.time_measurement_green,
@@ -503,7 +499,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::CleaningWarningLogsDirectory => {
-                if CONFIG.params.enable_cleaning_warning_logs_directory_prints
+                if CONFIG.enable_cleaning_warning_logs_directory_prints
                     && enable_cleaning_warning_logs_directory_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(
@@ -522,7 +518,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::Info => {
-                if CONFIG.params.enable_info_prints && enable_info_prints_for_provider {
+                if CONFIG.enable_info_prints && enable_info_prints_for_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.print_colors.cleaning_red,
                         CONFIG.print_colors.cleaning_green,

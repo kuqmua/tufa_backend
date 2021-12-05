@@ -4,8 +4,10 @@ use mongodb::{
     Client,
 };
 
-use crate::{config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait};
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
+use crate::{
+    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
+};
 
 use crate::{
     mongo_integration::mongo_get_db_url::mongo_get_db_url,
@@ -13,7 +15,8 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
-impl ProviderKind {//rust does not support async traits yet (end of 2021). only with  third party crate
+impl ProviderKind {
+    //rust does not support async traits yet (end of 2021). only with  third party crate
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_provider_link_parts_as_bson_string(
         provider_kind: ProviderKind,
@@ -44,23 +47,19 @@ impl ProviderKind {//rust does not support async traits yet (end of 2021). only 
                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
                     Document,
                 >;
-                if CONFIG.params.enable_provider_links_limit {
-                    if CONFIG.params.enable_common_providers_links_limit {
-                        if CONFIG
-                            .params
-                            .enable_randomize_order_for_providers_link_parts_for_mongo
-                        {
+                if CONFIG.enable_provider_links_limit {
+                    if CONFIG.enable_common_providers_links_limit {
+                        if CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
-                                doc! { "$sample" : {"size": CONFIG.params.common_providers_links_limit }},
+                                doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
                             );
                         } else {
-                            option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
-                                doc! { "$limit" :  CONFIG.params.common_providers_links_limit },
-                            );
+                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                                Some(doc! { "$limit" :  CONFIG.common_providers_links_limit });
                         }
                     } else {
                         option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                        provider_kind.get_mongo_doc_randomization_aggregation();
+                            provider_kind.get_mongo_doc_randomization_aggregation();
                     }
                 } else {
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;

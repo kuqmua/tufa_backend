@@ -16,7 +16,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
     //todo add flag in config or if its already exists put it here
     //maybe instead of if write match to local or to mongo or postgres
-    if CONFIG.params.enable_write_error_logs_in_local_folder {
+    if CONFIG.enable_write_error_logs_in_local_folder {
         let cleaning_hashmap_result = ProviderKind::remove_existing_providers_logs_directories();
         //todo add enable_writing logs if not clean or not enabled cleaning
         match cleaning_hashmap_result {
@@ -35,7 +35,7 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
                 }
             }
         }
-    } else if CONFIG.params.enable_write_error_logs_in_mongo {
+    } else if CONFIG.enable_write_error_logs_in_mongo {
         //remove writing logs dublication in different sources coz need to be cloned
         let result = async_write_fetch_error_logs_into_mongo_wrapper(error_posts).await;
         match result {

@@ -1,5 +1,3 @@
-use crate::providers::provider_kind_enum::ProviderKind;
-
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct EnableProviders {
     pub enable_arxiv: bool,

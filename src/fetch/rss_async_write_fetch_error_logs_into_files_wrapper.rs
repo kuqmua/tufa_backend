@@ -30,11 +30,9 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
-                    &CONFIG.params.warning_logs_directory_name,
+                    &CONFIG.warning_logs_directory_name,
                     provider_kind,
-                    &CONFIG
-                        .params
-                        .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                    &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     provider_kind,
                     replaced_link
                 ); //add save function what convert string into save path
@@ -52,11 +50,9 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
-                    &CONFIG.params.warning_logs_directory_name,
+                    &CONFIG.warning_logs_directory_name,
                     provider_kind,
-                    &CONFIG
-                        .params
-                        .unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                    &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                     provider_kind,
                     replaced_link
                 ); //add save function what convert string into save path
@@ -75,7 +71,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         }
     }
     let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
-    if CONFIG.params.enable_time_measurement_prints {
+    if CONFIG.enable_time_measurement_prints {
         println!(
             "write fetch error logs into files done in {} seconds {} miliseconds",
             time.elapsed().as_secs(),

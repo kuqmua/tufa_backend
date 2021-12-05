@@ -13,7 +13,7 @@ use crate::check_net::check_net_wrapper::check_net_wrapper;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
-    if CONFIG.params.enable_prints {
+    if CONFIG.enable_prints {
         let cpus = num_cpus::get();
         if cpus > 1 {
             print_colorful_message(
@@ -51,7 +51,7 @@ pub fn entry() {
         }
     }
     //move time measument in some inner part coz it would be server here
-    if CONFIG.params.enable_time_measurement {
+    if CONFIG.enable_time_measurement {
         print_colorful_message(
             None,
             PrintType::Info,

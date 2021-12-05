@@ -91,14 +91,12 @@ pub mod config_mods {
         pub mod enable_providers_prints_struct;
         pub mod enable_providers_struct;
         pub mod enable_providers_time_measurement_struct;
-        pub mod enable_randomize_order_for_providers_link_parts_for_mongo_struct;
         pub mod enable_success_providers_prints_struct;
         pub mod enable_warning_high_providers_prints_struct;
         pub mod enable_warning_low_providers_prints_struct;
         pub mod mongo_authorization_struct;
         pub mod mongo_params_struct;
         pub mod mongo_url_parts_struct;
-        pub mod params_struct;
         pub mod postgres_authorization_struct;
         pub mod postgres_params_struct;
         pub mod postgres_url_parts_struct;
