@@ -1,18 +1,17 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
-use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
-use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
-use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
-use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
 use crate::config_mods::config_structs::enable_error_providers_prints_struct::EnableErrorProvidersPrints;
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
+use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
+use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
+use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
-use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_in_mongo_struct::EnableProvidersCleaningWarningLogsDbInMongo;
-use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct::EnableProvidersCleaningWarningLogsDbCollectionsInMongo;
+use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
+use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
+use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
 
 #[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
@@ -64,8 +63,14 @@ pub struct ConfigStruct {
         EnableProvidersCleaningWarningLogsDirectory,
     pub enable_providers_cleaning_warning_logs_db_in_mongo:
         EnableProvidersCleaningWarningLogsDbInMongo,
-    pub enable_providers_cleaning_warning_logs_db_collections_in_mongo:
-        EnableProvidersCleaningWarningLogsDbCollectionsInMongo,
+
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_github: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_habr: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit: bool,
+    pub enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter: bool,
 
     pub enable_time_measurement_for_arxiv: bool,
     pub enable_time_measurement_for_biorxiv: bool,
