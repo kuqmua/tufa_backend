@@ -39,7 +39,6 @@ impl ConfigStruct {
             enable_randomize_order_for_providers_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo],
 
-            enable_warning_low_prints: bool_vars[&EnvBoolVar::EnableWarningLowPrints],
             enable_success_prints: bool_vars[&EnvBoolVar::EnableSuccessPrints],
             enable_partial_success_prints: bool_vars[&EnvBoolVar::EnablePartialSuccessPrints],
             enable_time_measurement_prints: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints],
@@ -214,6 +213,7 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
                 && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForTwitter],
 
+            enable_warning_low_prints: bool_vars[&EnvBoolVar::EnableWarningLowPrints],
             enable_warning_low_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                 && bool_vars[&EnvBoolVar::EnableWarningLowPrints]
                 && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForAllProviders]
