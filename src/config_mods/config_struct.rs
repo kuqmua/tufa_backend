@@ -1,6 +1,5 @@
 extern crate toml;
 
-use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
@@ -46,7 +45,14 @@ pub struct ConfigStruct {
     pub postgres_params: PostgresParams,
     pub enable_providers: EnableProviders,
     pub providers_check_links: ProvidersCheckLinks,
-    pub enable_providers_prints: EnableProvidersPrints,
+
+    pub enable_prints_arxiv: bool,
+    pub enable_prints_biorxiv: bool,
+    pub enable_prints_github: bool,
+    pub enable_prints_habr: bool,
+    pub enable_prints_medrxiv: bool,
+    pub enable_prints_reddit: bool,
+    pub enable_prints_twitter: bool,
 
     pub enable_warning_high_prints_for_arxiv: bool,
     pub enable_warning_high_prints_for_biorxiv: bool,

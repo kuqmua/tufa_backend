@@ -3,7 +3,6 @@ extern crate toml;
 use std::collections::HashMap;
 
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
-use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
 use crate::config_mods::config_structs::mongo_authorization_struct::MongoAuthorization;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
@@ -192,29 +191,28 @@ impl ConfigStruct {
                 reddit_link: string_vars[&EnvStringVar::RedditLink].clone(),
                 twitter_link: string_vars[&EnvStringVar::TwitterLink].clone(),
             },
-            enable_providers_prints: EnableProvidersPrints {
-                enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsArxiv],
-                enable_prints_biorxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsBiorxiv],
-                enable_prints_github: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsGithub],
-                enable_prints_habr: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsHabr],
-                enable_prints_medrxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsMedrxiv],
-                enable_prints_reddit: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsReddit],
-                enable_prints_twitter: bool_vars[&EnvBoolVar::EnablePrints]
-                    && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnablePrintsTwitter],
-            },
+
+            enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsArxiv],
+            enable_prints_biorxiv: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsBiorxiv],
+            enable_prints_github: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsGithub],
+            enable_prints_habr: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsHabr],
+            enable_prints_medrxiv: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsMedrxiv],
+            enable_prints_reddit: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsReddit],
+            enable_prints_twitter: bool_vars[&EnvBoolVar::EnablePrints]
+                && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnablePrintsTwitter],
 
             enable_warning_high_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                 && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
