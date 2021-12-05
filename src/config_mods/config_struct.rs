@@ -2,7 +2,6 @@ extern crate toml;
 
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
-use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
@@ -52,7 +51,14 @@ pub struct ConfigStruct {
     pub enable_providers_prints: EnableProvidersPrints,
     pub enable_warning_high_providers_prints: EnableWarningHighProvidersPrints, //todo maybe rename it into  EnableWarningHighPrintsForProviders
     pub enable_warning_low_providers_prints: EnableWarningLowProvidersPrints,
-    pub enable_success_providers_prints: EnableSuccessProvidersPrints,
+
+    pub enable_success_prints_for_arxiv: bool,
+    pub enable_success_prints_for_biorxiv: bool,
+    pub enable_success_prints_for_github: bool,
+    pub enable_success_prints_for_habr: bool,
+    pub enable_success_prints_for_medrxiv: bool,
+    pub enable_success_prints_for_reddit: bool,
+    pub enable_success_prints_for_twitter: bool,
 
     pub enable_partial_success_prints_for_arxiv: bool,
     pub enable_partial_success_prints_for_biorxiv: bool,
