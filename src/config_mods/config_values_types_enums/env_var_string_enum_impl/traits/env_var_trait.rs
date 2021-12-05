@@ -70,13 +70,13 @@ impl EnvVarTrait for EnvStringVar {
             Self::PostgresPort => EnvVar::PostgresPort.get_env_name(),
             Self::PostgresDb => EnvVar::PostgresDb.get_env_name(),
 
-            Self::ArxivLink => EnvVar::ArxivLink.get_env_name(),
-            Self::BiorxivLink => EnvVar::BiorxivLink.get_env_name(),
-            Self::GithubLink => EnvVar::GithubLink.get_env_name(),
-            Self::HabrLink => EnvVar::HabrLink.get_env_name(),
-            Self::MedrxivLink => EnvVar::MedrxivLink.get_env_name(),
-            Self::RedditLink => EnvVar::RedditLink.get_env_name(),
-            Self::TwitterLink => EnvVar::TwitterLink.get_env_name(),
+            Self::ArxivCheckLink => EnvVar::ArxivCheckLink.get_env_name(),
+            Self::BiorxivCheckLink => EnvVar::BiorxivCheckLink.get_env_name(),
+            Self::GithubCheckLink => EnvVar::GithubCheckLink.get_env_name(),
+            Self::HabrCheckLink => EnvVar::HabrCheckLink.get_env_name(),
+            Self::MedrxivCheckLink => EnvVar::MedrxivCheckLink.get_env_name(),
+            Self::RedditCheckLink => EnvVar::RedditCheckLink.get_env_name(),
+            Self::TwitterCheckLink => EnvVar::TwitterCheckLink.get_env_name(),
         }
     }
     fn into_array() -> &'static [Self] {

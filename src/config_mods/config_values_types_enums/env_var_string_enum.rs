@@ -55,13 +55,13 @@ pub enum EnvStringVar {
     PostgresIp,
     PostgresPort,
     PostgresDb,
-    ArxivLink,
-    BiorxivLink,
-    GithubLink,
-    HabrLink,
-    MedrxivLink,
-    RedditLink,
-    TwitterLink,
+    ArxivCheckLink,
+    BiorxivCheckLink,
+    GithubCheckLink,
+    HabrCheckLink,
+    MedrxivCheckLink,
+    RedditCheckLink,
+    TwitterCheckLink,
 }
 
 impl EnvStringVar {

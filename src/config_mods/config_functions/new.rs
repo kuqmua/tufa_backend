@@ -152,13 +152,13 @@ impl ConfigStruct {
             enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
                 && bool_vars[&EnvBoolVar::EnableTwitter],
 
-            arxiv_link: string_vars[&EnvStringVar::ArxivLink].clone(),
-            biorxiv_link: string_vars[&EnvStringVar::BiorxivLink].clone(),
-            github_link: string_vars[&EnvStringVar::GithubLink].clone(),
-            habr_link: string_vars[&EnvStringVar::HabrLink].clone(),
-            medrxiv_link: string_vars[&EnvStringVar::MedrxivLink].clone(),
-            reddit_link: string_vars[&EnvStringVar::RedditLink].clone(),
-            twitter_link: string_vars[&EnvStringVar::TwitterLink].clone(),
+            arxiv_check_link: string_vars[&EnvStringVar::ArxivCheckLink].clone(),
+            biorxiv_check_link: string_vars[&EnvStringVar::BiorxivCheckLink].clone(),
+            github_check_link: string_vars[&EnvStringVar::GithubCheckLink].clone(),
+            habr_check_link: string_vars[&EnvStringVar::HabrCheckLink].clone(),
+            medrxiv_check_link: string_vars[&EnvStringVar::MedrxivCheckLink].clone(),
+            reddit_check_link: string_vars[&EnvStringVar::RedditCheckLink].clone(),
+            twitter_check_link: string_vars[&EnvStringVar::TwitterCheckLink].clone(),
 
             enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
                 && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
