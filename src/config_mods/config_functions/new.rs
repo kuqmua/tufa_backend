@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use crate::config_mods::config_structs::enable_initialize_mongo_with_providers_link_parts_struct::EnableInitializeMongoWithProvidersLinkParts;
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
-use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::mongo_authorization_struct::MongoAuthorization;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::mongo_url_parts_struct::MongoUrlParts;
@@ -216,43 +215,38 @@ impl ConfigStruct {
                     && bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                     && bool_vars[&EnvBoolVar::EnablePrintsTwitter],
             },
-            enable_warning_high_providers_prints: EnableWarningHighProvidersPrints {
-                enable_warning_high_prints_for_arxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForArxiv],
-                enable_warning_high_prints_for_biorxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForBiorxiv],
-                enable_warning_high_prints_for_github: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForGithub],
-                enable_warning_high_prints_for_habr: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForHabr],
-                enable_warning_high_prints_for_medrxiv: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForMedrxiv],
-                enable_warning_high_prints_for_reddit: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForReddit],
-                enable_warning_high_prints_for_twitter: bool_vars
-                    [&EnvBoolVar::EnableAllProvidersPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
-                    && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForTwitter],
-            },
+
+            enable_warning_high_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForArxiv],
+            enable_warning_high_prints_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForBiorxiv],
+            enable_warning_high_prints_for_github: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForGithub],
+            enable_warning_high_prints_for_habr: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForHabr],
+            enable_warning_high_prints_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForMedrxiv],
+            enable_warning_high_prints_for_reddit: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForReddit],
+            enable_warning_high_prints_for_twitter: bool_vars
+                [&EnvBoolVar::EnableAllProvidersPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForAllProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForTwitter],
 
             enable_warning_low_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableAllProvidersPrints]
                 && bool_vars[&EnvBoolVar::EnableWarningLowPrints]

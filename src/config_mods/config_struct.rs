@@ -2,7 +2,6 @@ extern crate toml;
 
 use crate::config_mods::config_structs::enable_providers_prints_struct::EnableProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_struct::EnableProviders;
-use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::mongo_params_struct::MongoParams;
 use crate::config_mods::config_structs::postgres_params_struct::PostgresParams;
 use crate::config_mods::config_structs::providers_check_links_struct::ProvidersCheckLinks;
@@ -48,7 +47,14 @@ pub struct ConfigStruct {
     pub enable_providers: EnableProviders,
     pub providers_check_links: ProvidersCheckLinks,
     pub enable_providers_prints: EnableProvidersPrints,
-    pub enable_warning_high_providers_prints: EnableWarningHighProvidersPrints, //todo maybe rename it into  EnableWarningHighPrintsForProviders
+
+    pub enable_warning_high_prints_for_arxiv: bool,
+    pub enable_warning_high_prints_for_biorxiv: bool,
+    pub enable_warning_high_prints_for_github: bool,
+    pub enable_warning_high_prints_for_habr: bool,
+    pub enable_warning_high_prints_for_medrxiv: bool,
+    pub enable_warning_high_prints_for_reddit: bool,
+    pub enable_warning_high_prints_for_twitter: bool,
 
     pub enable_warning_low_prints_for_arxiv: bool,
     pub enable_warning_low_prints_for_biorxiv: bool,

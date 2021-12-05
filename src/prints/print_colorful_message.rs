@@ -19,9 +19,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_arxiv,
                         CONFIG.enable_error_prints_for_arxiv,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_arxiv,
+                        CONFIG.enable_warning_high_prints_for_arxiv,
                         CONFIG.enable_warning_low_prints_for_arxiv,
                         CONFIG.enable_success_prints_for_arxiv,
                         CONFIG.enable_partial_success_prints_for_arxiv,
@@ -38,9 +36,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_biorxiv,
                         CONFIG.enable_error_prints_for_biorxiv,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_biorxiv,
+                        CONFIG.enable_warning_high_prints_for_biorxiv,
                         CONFIG.enable_warning_low_prints_for_biorxiv,
                         CONFIG.enable_success_prints_for_biorxiv,
                         CONFIG.enable_partial_success_prints_for_biorxiv,
@@ -57,9 +53,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_github,
                         CONFIG.enable_error_prints_for_github,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_github,
+                        CONFIG.enable_warning_high_prints_for_github,
                         CONFIG.enable_warning_low_prints_for_github,
                         CONFIG.enable_success_prints_for_github,
                         CONFIG.enable_partial_success_prints_for_github,
@@ -76,9 +70,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_habr,
                         CONFIG.enable_error_prints_for_habr,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_habr,
+                        CONFIG.enable_warning_high_prints_for_habr,
                         CONFIG.enable_warning_low_prints_for_habr,
                         CONFIG.enable_success_prints_for_habr,
                         CONFIG.enable_partial_success_prints_for_habr,
@@ -95,9 +87,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_medrxiv,
                         CONFIG.enable_error_prints_for_medrxiv,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_medrxiv,
+                        CONFIG.enable_warning_high_prints_for_medrxiv,
                         CONFIG.enable_warning_low_prints_for_medrxiv,
                         CONFIG.enable_success_prints_for_medrxiv,
                         CONFIG.enable_partial_success_prints_for_medrxiv,
@@ -114,9 +104,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_reddit,
                         CONFIG.enable_error_prints_for_reddit,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_reddit,
+                        CONFIG.enable_warning_high_prints_for_reddit,
                         CONFIG.enable_warning_low_prints_for_reddit,
                         CONFIG.enable_success_prints_for_reddit,
                         CONFIG.enable_partial_success_prints_for_reddit,
@@ -133,9 +121,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.enable_providers_prints.enable_prints_twitter,
                         CONFIG.enable_error_prints_for_twitter,
-                        CONFIG
-                            .enable_warning_high_providers_prints
-                            .enable_warning_high_prints_for_twitter,
+                        CONFIG.enable_warning_high_prints_for_twitter,
                         CONFIG.enable_warning_low_prints_for_twitter,
                         CONFIG.enable_success_prints_for_twitter,
                         CONFIG.enable_partial_success_prints_for_twitter,
