@@ -9,7 +9,6 @@ use crate::config_mods::config_structs::enable_error_providers_prints_struct::En
 use crate::config_mods::config_structs::enable_partial_success_providers_prints_struct::EnablePartialSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_providers_cleaning_warning_logs_directory_struct::EnableProvidersCleaningWarningLogsDirectory;
 use crate::config_mods::config_structs::enable_providers_time_measurement_struct::EnableProvidersTimeMeasurement;
-use crate::config_mods::config_structs::enable_providers_info_struct::EnableProvidersInfo;
 use crate::config_mods::config_structs::enable_success_providers_prints_struct::EnableSuccessProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_high_providers_prints_struct::EnableWarningHighProvidersPrints;
 use crate::config_mods::config_structs::enable_warning_low_providers_prints_struct::EnableWarningLowProvidersPrints;
@@ -69,7 +68,14 @@ pub struct ConfigStruct {
     pub enable_providers_cleaning_warning_logs_db_collections_in_mongo:
         EnableProvidersCleaningWarningLogsDbCollectionsInMongo,
     pub enable_providers_time_measurement: EnableProvidersTimeMeasurement,
-    pub enable_providers_info: EnableProvidersInfo,
+
+    pub enable_info_for_arxiv: bool,
+    pub enable_info_for_biorxiv: bool,
+    pub enable_info_for_github: bool,
+    pub enable_info_for_habr: bool,
+    pub enable_info_for_medrxiv: bool,
+    pub enable_info_for_reddit: bool,
+    pub enable_info_for_twitter: bool,
 
     pub enable_links_limit_for_arxiv: bool,
     pub enable_links_limit_for_biorxiv: bool,

@@ -86,7 +86,6 @@ pub mod config_mods {
         pub mod enable_providers_cleaning_warning_logs_db_collections_in_mongo_struct;
         pub mod enable_providers_cleaning_warning_logs_db_in_mongo_struct;
         pub mod enable_providers_cleaning_warning_logs_directory_struct;
-        pub mod enable_providers_info_struct;
         pub mod enable_providers_prints_struct;
         pub mod enable_providers_struct;
         pub mod enable_providers_time_measurement_struct;

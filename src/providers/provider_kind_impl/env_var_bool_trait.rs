@@ -451,13 +451,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_info_prints_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_providers_info.enable_info_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_providers_info.enable_info_for_biorxiv,
-            ProviderKind::Github => CONFIG.enable_providers_info.enable_info_for_github,
-            ProviderKind::Habr => CONFIG.enable_providers_info.enable_info_for_habr,
-            ProviderKind::Medrxiv => CONFIG.enable_providers_info.enable_info_for_medrxiv,
-            ProviderKind::Reddit => CONFIG.enable_providers_info.enable_info_for_reddit,
-            ProviderKind::Twitter => CONFIG.enable_providers_info.enable_info_for_twitter,
+            ProviderKind::Arxiv => CONFIG.enable_info_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_info_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_info_for_github,
+            ProviderKind::Habr => CONFIG.enable_info_for_habr,
+            ProviderKind::Medrxiv => CONFIG.enable_info_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.enable_info_for_reddit,
+            ProviderKind::Twitter => CONFIG.enable_info_for_twitter,
         }
     }
 

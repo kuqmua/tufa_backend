@@ -39,7 +39,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_arxiv,
-                        CONFIG.enable_providers_info.enable_info_for_arxiv,
+                        CONFIG.enable_info_for_arxiv,
                         print_type,
                         file,
                         line,
@@ -70,7 +70,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_biorxiv,
-                        CONFIG.enable_providers_info.enable_info_for_biorxiv,
+                        CONFIG.enable_info_for_biorxiv,
                         print_type,
                         file,
                         line,
@@ -101,7 +101,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_github,
-                        CONFIG.enable_providers_info.enable_info_for_github,
+                        CONFIG.enable_info_for_github,
                         print_type,
                         file,
                         line,
@@ -132,7 +132,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_habr,
-                        CONFIG.enable_providers_info.enable_info_for_habr,
+                        CONFIG.enable_info_for_habr,
                         print_type,
                         file,
                         line,
@@ -163,7 +163,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_medrxiv,
-                        CONFIG.enable_providers_info.enable_info_for_medrxiv,
+                        CONFIG.enable_info_for_medrxiv,
                         print_type,
                         file,
                         line,
@@ -194,7 +194,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_reddit,
-                        CONFIG.enable_providers_info.enable_info_for_reddit,
+                        CONFIG.enable_info_for_reddit,
                         print_type,
                         file,
                         line,
@@ -225,7 +225,7 @@ pub fn print_colorful_message(
                         CONFIG
                             .enable_providers_cleaning_warning_logs_directory
                             .enable_cleaning_warning_logs_directory_for_twitter,
-                        CONFIG.enable_providers_info.enable_info_for_twitter,
+                        CONFIG.enable_info_for_twitter,
                         print_type,
                         file,
                         line,
