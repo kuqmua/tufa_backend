@@ -192,19 +192,90 @@ impl ConfigStruct {
             mongo_enable_link_parts_randomize_order_for_providers: bool_vars
                 [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
                 && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders],
-            mongo_enable_link_parts_randomize_order_for_arxiv: bool,
-            mongo_enable_link_parts_randomize_order_for_biorxiv: bool,
-            mongo_enable_link_parts_randomize_order_for_github: bool,
-            mongo_enable_link_parts_randomize_order_for_habr: bool,
-            mongo_enable_link_parts_randomize_order_for_medrxiv: bool,
-            mongo_enable_link_parts_randomize_order_for_reddit: bool,
-            mongo_enable_link_parts_randomize_order_for_twitter: bool,
+            mongo_enable_link_parts_randomize_order_for_arxiv: bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForArxiv],
+            mongo_enable_link_parts_randomize_order_for_biorxiv:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForBiorxiv],
+            mongo_enable_link_parts_randomize_order_for_github:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForGithub],
+            mongo_enable_link_parts_randomize_order_for_habr:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForHabr],
+            mongo_enable_link_parts_randomize_order_for_medrxiv:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForMedrxiv],
+            mongo_enable_link_parts_randomize_order_for_reddit:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForReddit],
+            mongo_enable_link_parts_randomize_order_for_twitter:  bool_vars
+            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForTwitter],
+
+            postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
+                .clone(),
+            postgres_second_handle_url_part: string_vars
+                [&EnvStringVar::PostgresSecondHandleUrlPart]
+                .clone(),
+            postgres_third_handle_url_part: string_vars[&EnvStringVar::PostgresThirdHandleUrlPart]
+                .clone(),
+            postgres_fourth_handle_url_part: string_vars
+                [&EnvStringVar::PostgresFourthHandleUrlPart]
+                .clone(),
+            postgres_fifth_handle_url_part: string_vars[&EnvStringVar::PostgresFifthHandleUrlPart]
+                .clone(),
+
+            postgres_login: string_vars[&EnvStringVar::PostgresLogin].clone(),
+            postgres_password: string_vars[&EnvStringVar::PostgresPassword].clone(),
+            postgres_ip: string_vars[&EnvStringVar::PostgresIp].clone(),
+            postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
+            postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
             warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName]
                 .clone(),
             unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars
                 [&EnvStringVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir]
                 .clone(),
+            path_to_provider_link_parts_folder: string_vars
+                [&EnvStringVar::PathToProviderLinkPartsFolder]
+                .clone(),
+            log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
+
+             enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
+     enable_write_error_logs_in_local_folder_for_provider: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider],
+     enable_write_error_logs_in_local_folder_for_arxiv: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForArxiv],
+     enable_write_error_logs_in_local_folder_for_biorxiv:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForBiorxiv],
+     enable_write_error_logs_in_local_folder_for_github:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForGithub],
+     enable_write_error_logs_in_local_folder_for_habr:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForHabr],
+     enable_write_error_logs_in_local_folder_for_medrxiv:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForMedrxiv],
+     enable_write_error_logs_in_local_folder_for_reddit:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForReddit],
+     enable_write_error_logs_in_local_folder_for_twitter:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForTwitter],
+
+
             enable_time_measurement: bool_vars[&EnvBoolVar::EnableTimeMeasurement], //used in code not for providers logic
             enable_provider_links_limit: bool_vars[&EnvBoolVar::EnableProviderLinksLimit], //used in code not for providers logic
             enable_common_providers_links_limit: bool_vars
@@ -230,30 +301,6 @@ impl ConfigStruct {
             providers_db_collection_document_field_name_handle: string_vars
                 [&EnvStringVar::ProvidersDbCollectionDocumentFieldNameHandle]
                 .clone(),
-
-            path_to_provider_link_parts_folder: string_vars
-                [&EnvStringVar::PathToProviderLinkPartsFolder]
-                .clone(),
-            log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
-
-            postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
-                .clone(),
-            postgres_second_handle_url_part: string_vars
-                [&EnvStringVar::PostgresSecondHandleUrlPart]
-                .clone(),
-            postgres_third_handle_url_part: string_vars[&EnvStringVar::PostgresThirdHandleUrlPart]
-                .clone(),
-            postgres_fourth_handle_url_part: string_vars
-                [&EnvStringVar::PostgresFourthHandleUrlPart]
-                .clone(),
-            postgres_fifth_handle_url_part: string_vars[&EnvStringVar::PostgresFifthHandleUrlPart]
-                .clone(),
-
-            postgres_login: string_vars[&EnvStringVar::PostgresLogin].clone(),
-            postgres_password: string_vars[&EnvStringVar::PostgresPassword].clone(),
-            postgres_ip: string_vars[&EnvStringVar::PostgresIp].clone(),
-            postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
-            postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
             enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]
                 && bool_vars[&EnvBoolVar::EnableArxiv],
@@ -641,6 +688,7 @@ impl ConfigStruct {
             enable_randomize_order_for_twitter_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo]
                 && bool_vars[&EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo],
+
 
             error_red: u8_vars[&EnvU8Var::ErrorRed],
             error_green: u8_vars[&EnvU8Var::ErrorGreen],
