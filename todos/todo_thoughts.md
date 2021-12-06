@@ -491,3 +491,8 @@ learn https://github.com/Amanieu/parking_lot
 systemclt is-enabled docker
 <br/>
     
+### -------------------
+read about async cancelation
+https://blog.yoshuawuyts.com/async-cancellation-1/
+<br/>
+
