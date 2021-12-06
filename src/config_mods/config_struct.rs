@@ -212,7 +212,8 @@ pub struct ConfigStruct {
     pub enable_info_for_reddit: bool,
     pub enable_info_for_twitter: bool,
 
-    pub enable_provider_links_limit: bool,
+    pub enable_links_limit: bool,
+    pub enable_links_limit_for_providers: bool,
     pub enable_links_limit_for_arxiv: bool,
     pub enable_links_limit_for_biorxiv: bool,
     pub enable_links_limit_for_github: bool,
