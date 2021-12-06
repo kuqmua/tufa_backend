@@ -193,33 +193,33 @@ impl ConfigStruct {
                 [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
                 && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders],
             mongo_enable_link_parts_randomize_order_for_arxiv: bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForArxiv],
-            mongo_enable_link_parts_randomize_order_for_biorxiv:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForBiorxiv],
-            mongo_enable_link_parts_randomize_order_for_github:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForGithub],
-            mongo_enable_link_parts_randomize_order_for_habr:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForHabr],
-            mongo_enable_link_parts_randomize_order_for_medrxiv:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForMedrxiv],
-            mongo_enable_link_parts_randomize_order_for_reddit:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForReddit],
-            mongo_enable_link_parts_randomize_order_for_twitter:  bool_vars
-            [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
-            && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForTwitter],
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForArxiv],
+            mongo_enable_link_parts_randomize_order_for_biorxiv: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForBiorxiv],
+            mongo_enable_link_parts_randomize_order_for_github: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForGithub],
+            mongo_enable_link_parts_randomize_order_for_habr: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForHabr],
+            mongo_enable_link_parts_randomize_order_for_medrxiv: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForMedrxiv],
+            mongo_enable_link_parts_randomize_order_for_reddit: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForReddit],
+            mongo_enable_link_parts_randomize_order_for_twitter: bool_vars
+                [&EnvBoolVar::MongoEnableLinkPartsRandomizeOrder]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForProviders]
+                && bool_vars[&EnvBoolVar::MongoEnableLinkPartsRandomizeOrderForTwitter],
 
             postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
                 .clone(),
@@ -250,31 +250,63 @@ impl ConfigStruct {
                 .clone(),
             log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
 
-             enable_write_error_logs_in_local_folder: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
-     enable_write_error_logs_in_local_folder_for_provider: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider],
-     enable_write_error_logs_in_local_folder_for_arxiv: bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForArxiv],
-     enable_write_error_logs_in_local_folder_for_biorxiv:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForBiorxiv],
-     enable_write_error_logs_in_local_folder_for_github:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForGithub],
-     enable_write_error_logs_in_local_folder_for_habr:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForHabr],
-     enable_write_error_logs_in_local_folder_for_medrxiv:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForMedrxiv],
-     enable_write_error_logs_in_local_folder_for_reddit:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForReddit],
-     enable_write_error_logs_in_local_folder_for_twitter:  bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolder] 
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
-     && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForTwitter],
+            enable_write_error_logs_in_local_folder: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
+            enable_write_error_logs_in_local_folder_for_provider: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider],
+            enable_write_error_logs_in_local_folder_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForArxiv],
+            enable_write_error_logs_in_local_folder_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForBiorxiv],
+            enable_write_error_logs_in_local_folder_for_github: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForGithub],
+            enable_write_error_logs_in_local_folder_for_habr: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForHabr],
+            enable_write_error_logs_in_local_folder_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForMedrxiv],
+            enable_write_error_logs_in_local_folder_for_reddit: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForReddit],
+            enable_write_error_logs_in_local_folder_for_twitter: bool_vars
+                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForTwitter],
 
+            enable_cleaning_warning_logs_directory_prints: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
+            enable_cleaning_warning_logs_directory_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
+            enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
+            enable_cleaning_warning_logs_directory_for_github: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
+            enable_cleaning_warning_logs_directory_for_habr: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
+            enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
+            enable_cleaning_warning_logs_directory_for_reddit: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
+            enable_cleaning_warning_logs_directory_for_twitter: bool_vars
+                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
+                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
 
             enable_time_measurement: bool_vars[&EnvBoolVar::EnableTimeMeasurement], //used in code not for providers logic
             enable_provider_links_limit: bool_vars[&EnvBoolVar::EnableProviderLinksLimit], //used in code not for providers logic
@@ -509,30 +541,6 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::EnableErrorPrintsForAllProviders]
                 && bool_vars[&EnvBoolVar::EnableErrorPrintsForTwitter],
 
-            enable_cleaning_warning_logs_directory_prints: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDbCollectionsInMongo],
-            enable_cleaning_warning_logs_directory_for_arxiv: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForArxiv],
-            enable_cleaning_warning_logs_directory_for_biorxiv: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForBiorxiv],
-            enable_cleaning_warning_logs_directory_for_github: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForGithub],
-            enable_cleaning_warning_logs_directory_for_habr: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForHabr],
-            enable_cleaning_warning_logs_directory_for_medrxiv: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForMedrxiv],
-            enable_cleaning_warning_logs_directory_for_reddit: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForReddit],
-            enable_cleaning_warning_logs_directory_for_twitter: bool_vars
-                [&EnvBoolVar::EnableCleaningWarningLogsDirectory]
-                && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDirectoryForTwitter],
-
             enable_cleaning_warning_logs_db_in_mongo_for_arxiv: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDbInMongo]
                 && bool_vars[&EnvBoolVar::EnableCleaningWarningLogsDbInMongoForArxiv],
@@ -688,7 +696,6 @@ impl ConfigStruct {
             enable_randomize_order_for_twitter_link_parts_for_mongo: bool_vars
                 [&EnvBoolVar::EnableRandomizeOrderForProvidersLinkPartsForMongo]
                 && bool_vars[&EnvBoolVar::EnableRandomizeOrderForTwitterLinkPartsForMongo],
-
 
             error_red: u8_vars[&EnvU8Var::ErrorRed],
             error_green: u8_vars[&EnvU8Var::ErrorGreen],
