@@ -83,7 +83,7 @@ impl ProviderKindTrait for ProviderKind {
         format!(
             "{}{}",
             self,
-            CONFIG.providers_db_collection_handle_second_part //todo rename it into db log collection
+            CONFIG.mongo_providers_logs_db_collection_handle_second_part //todo rename it into db log collection
         )
     }
 
@@ -108,7 +108,7 @@ impl ProviderKindTrait for ProviderKind {
             "{}{}{}{}",
             CONFIG.path_to_provider_link_parts_folder,
             self,
-            CONFIG.providers_db_collection_handle_second_part,
+            CONFIG.mongo_providers_logs_db_collection_handle_second_part,
             CONFIG.log_file_extension
         )
     }

@@ -68,7 +68,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[deny(clippy::indexing_slicing)]
 #[tokio::main]
 pub async fn async_tokio_wrapper() {
-    if CONFIG.enable_initialize_mongo_with_providers_link_parts {
+    if CONFIG.mongo_enable_initialization {
         let (success_hashmap, errors_hashmap) =
             ProviderKind::get_providers_json_local_data_processed();
         if !success_hashmap.is_empty() {
@@ -100,7 +100,7 @@ pub async fn async_tokio_wrapper() {
                     );
                 }
             }
-            let _ = mongo_insert_data(&CONFIG.providers_db_name_handle, success_hashmap).await;
+            let _ = mongo_insert_data(&CONFIG.mongo_providers_logs_db_name, success_hashmap).await;
         }
     }
     if !ProviderKind::get_enabled_providers_vec().is_empty() {

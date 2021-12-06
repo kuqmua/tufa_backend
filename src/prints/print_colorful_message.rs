@@ -236,7 +236,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::CleaningWarningLogsDirectory => {
-                    if CONFIG.enable_cleaning_warning_logs_directory_prints {
+                    if CONFIG.enable_cleaning_warning_logs_directory {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.cleaning_red,
                             CONFIG.cleaning_green,
@@ -392,7 +392,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::CleaningWarningLogsDirectory => {
-                if CONFIG.enable_cleaning_warning_logs_directory_prints
+                if CONFIG.enable_cleaning_warning_logs_directory
                     && enable_cleaning_warning_logs_directory_for_provider
                 {
                     let rgb_color: ansi_term::Colour = RGB(

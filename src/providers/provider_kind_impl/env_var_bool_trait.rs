@@ -8,13 +8,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_initialization_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_initialize_mongo_with_arxiv_link_parts,
-            ProviderKind::Biorxiv => CONFIG.enable_initialize_mongo_with_biorxiv_link_parts,
-            ProviderKind::Github => CONFIG.enable_initialize_mongo_with_github_link_parts,
-            ProviderKind::Habr => CONFIG.enable_initialize_mongo_with_habr_link_parts,
-            ProviderKind::Medrxiv => CONFIG.enable_initialize_mongo_with_medrxiv_link_parts,
-            ProviderKind::Reddit => CONFIG.enable_initialize_mongo_with_reddit_link_parts,
-            ProviderKind::Twitter => CONFIG.enable_initialize_mongo_with_twitter_link_parts,
+            ProviderKind::Arxiv => CONFIG.mongo_enable_initialization_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_initialization_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_initialization_for_github,
+            ProviderKind::Habr => CONFIG.mongo_enable_initialization_for_habr,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_initialization_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.mongo_enable_initialization_for_reddit,
+            ProviderKind::Twitter => CONFIG.mongo_enable_initialization_for_twitter,
         }
     }
 
@@ -125,13 +125,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_db_in_mongo_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_biorxiv,
-            ProviderKind::Github => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_github,
-            ProviderKind::Habr => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_habr,
-            ProviderKind::Medrxiv => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_medrxiv,
-            ProviderKind::Reddit => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_reddit,
-            ProviderKind::Twitter => CONFIG.enable_cleaning_warning_logs_db_in_mongo_for_twitter,
+            ProviderKind::Arxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_cleaning_warning_logs_db_for_github,
+            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_for_habr,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.mongo_enable_cleaning_warning_logs_db_for_reddit,
+            ProviderKind::Twitter => CONFIG.mongo_enable_cleaning_warning_logs_db_for_twitter,
         }
     }
 
@@ -139,25 +139,25 @@ impl EnvVarBoolTrait for ProviderKind {
     fn is_cleaning_warning_logs_db_collections_in_mongo_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_arxiv
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_arxiv
             }
             ProviderKind::Biorxiv => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_biorxiv
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_biorxiv
             }
             ProviderKind::Github => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_github
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_github
             }
             ProviderKind::Habr => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_habr
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_habr
             }
             ProviderKind::Medrxiv => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_medrxiv
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_medrxiv
             }
             ProviderKind::Reddit => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_reddit
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_reddit
             }
             ProviderKind::Twitter => {
-                CONFIG.enable_cleaning_warning_logs_db_collections_in_mongo_for_twitter
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_twitter
             }
         }
     }
@@ -204,13 +204,13 @@ impl EnvVarBoolTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_randomize_order_mongo_link_parts_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_randomize_order_for_arxiv_link_parts_for_mongo,
-            ProviderKind::Biorxiv => CONFIG.enable_randomize_order_for_biorxiv_link_parts_for_mongo,
-            ProviderKind::Github => CONFIG.enable_randomize_order_for_github_link_parts_for_mongo,
-            ProviderKind::Habr => CONFIG.enable_randomize_order_for_habr_link_parts_for_mongo,
-            ProviderKind::Medrxiv => CONFIG.enable_randomize_order_for_medrxiv_link_parts_for_mongo,
-            ProviderKind::Reddit => CONFIG.enable_randomize_order_for_reddit_link_parts_for_mongo,
-            ProviderKind::Twitter => CONFIG.enable_randomize_order_for_twitter_link_parts_for_mongo,
+            ProviderKind::Arxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_link_parts_randomize_order_for_github,
+            ProviderKind::Habr => CONFIG.mongo_enable_link_parts_randomize_order_for_habr,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.mongo_enable_link_parts_randomize_order_for_reddit,
+            ProviderKind::Twitter => CONFIG.mongo_enable_link_parts_randomize_order_for_twitter,
         }
     }
 

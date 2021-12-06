@@ -25,7 +25,7 @@ impl ProviderKind {
         let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
         let client = Client::with_options(client_options)?;
         //declare db name. there is no create db method in mongo
-        let db = client.database(&CONFIG.providers_db_name_handle);
+        let db = client.database(&CONFIG.mongo_providers_logs_db_name);
         let mut needed_db_collection: Option<String> = None;
         for collection_name in db.list_collection_names(None).await? {
             if collection_name == provider_kind.get_mongo_log_collection_name() {
@@ -47,9 +47,9 @@ impl ProviderKind {
                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
                     Document,
                 >;
-                if CONFIG.enable_provider_links_limit {
+                if CONFIG.enable_links_limit_for_providers {
                     if CONFIG.enable_common_providers_links_limit {
-                        if CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo {
+                        if CONFIG. mongo_enable_link_parts_randomize_order {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
                                 doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
                             );
@@ -69,7 +69,7 @@ impl ProviderKind {
                 // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
                 let vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
-                    &CONFIG.providers_db_collection_document_field_name_handle,
+                    &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await?;

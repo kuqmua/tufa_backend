@@ -51,13 +51,11 @@ pub fn entry() {
         }
     }
     //move time measument in some inner part coz it would be server here
-    if CONFIG.enable_time_measurement {
         print_colorful_message(
             None,
-            PrintType::Info,
+            PrintType::TimeMeasurement,
             file!().to_string(),
             line!().to_string(),
             format!("main done in {} seconds", time.elapsed().as_secs()),
         );
-    }
 }

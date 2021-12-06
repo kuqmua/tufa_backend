@@ -11,6 +11,7 @@ use crate::traits::env_var_trait::EnvVarTrait;
 impl EnvVarTrait for EnvStringVar {
     fn get_env_name(&self) -> &'static str {
         match self {
+            //todo: reordering
             Self::GithubName => EnvVar::GithubName.get_env_name(),
             Self::GithubToken => EnvVar::GithubToken.get_env_name(),
 
@@ -26,22 +27,21 @@ impl EnvVarTrait for EnvStringVar {
                     .get_env_name()
             }
 
-            Self::ProvidersDbNameHandle => EnvVar::ProvidersDbNameHandle.get_env_name(),
-            Self::ProvidersDbCollectionHandleSecondPart => {
+            Self::MongoProvidersLogsDbName => EnvVar::ProvidersDbNameHandle.get_env_name(),
+            Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
                 EnvVar::ProvidersDbCollectionHandleSecondPart.get_env_name()
             }
-            Self::ProvidersDbCollectionDocumentFieldNameHandle => {
+            Self::MongoProvidersLogsDbCollectionDocumentFieldNameHandle => {
                 EnvVar::ProvidersDbCollectionDocumentFieldNameHandle.get_env_name()
             }
             Self::PathToProviderLinkPartsFolder => {
                 EnvVar::PathToProviderLinkPartsFolder.get_env_name()
             }
             Self::LogFileExtension => EnvVar::LogFileExtension.get_env_name(),
-            Self::DbProvidersLogsNameHandle => EnvVar::DbProvidersLogsNameHandle.get_env_name(),
-            Self::DbProvidersLogsCollectionHandleSecondPart => {
+            Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
                 EnvVar::DbProvidersLogsCollectionHandleSecondPart.get_env_name()
             }
-            Self::DbProvidersLogsCollectionDocumentFieldNameHandle => {
+            Self::MongoProvidersLogsDbCollectionDocumentFieldNameHandle => {
                 EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle.get_env_name()
             }
 

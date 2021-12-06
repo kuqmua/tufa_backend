@@ -26,7 +26,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
 {
     let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.providers_db_name_handle);
+    let db = client.database(&CONFIG.mongo_providers_logs_db_name);
     let vec_collection_names = db.list_collection_names(None).await?;
     let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
         ProviderKind,
@@ -43,9 +43,9 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
                     Document,
                 >;
-                if CONFIG.enable_provider_links_limit {
+                if CONFIG.enable_links_limit_for_providers {
                     if CONFIG.enable_common_providers_links_limit {
-                        if CONFIG.enable_randomize_order_for_providers_link_parts_for_mongo {
+                        if CONFIG.mongo_enable_link_parts_randomize_order_for_providers {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
                                 doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
                             );
@@ -62,7 +62,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
                 }
                 let result_vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
-                    &CONFIG.providers_db_collection_document_field_name_handle,
+                    &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await;

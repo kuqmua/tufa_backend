@@ -10,80 +10,81 @@ use crate::traits::env_var_trait::EnvVarTrait;
 impl EnvVarTrait for EnvBoolVar {
     fn get_env_name(&self) -> &'static str {
         match self {
+            //todo: reordering
             Self::EnableProviders => EnvVar::EnableProviders.get_env_name(),
             Self::EnableCleaningWarningLogsDirectory => {
                 EnvVar::EnableCleaningWarningLogsDirectory.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongo => {
+            Self::MongoEnableCleaningWarningLogsDb => {
                 EnvVar::EnableCleaningWarningLogsDbInMongo.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongo => {
+            Self::MongoEnableCleaningWarningLogsDbCollections => {
                 EnvVar::EnableCleaningWarningLogsDbCollectionsInMongo.get_env_name()
             }
-            Self::EnableTimeMeasurement => EnvVar::EnableTimeMeasurement.get_env_name(),
-            Self::EnableProviderLinksLimit => EnvVar::EnableProviderLinksLimit.get_env_name(),
+            Self::EnableTimeMeasurementPrints => EnvVar::EnableTimeMeasurement.get_env_name(),
+            Self::EnableLinksLimitForProviders => EnvVar::EnableProviderLinksLimit.get_env_name(),
             Self::EnableCommonProvidersLinksLimit => {
                 EnvVar::EnableCommonProvidersLinksLimit.get_env_name()
             }
-            Self::EnableRandomizeOrderForProvidersLinkPartsForMongo => {
+            Self::MongoEnableLinkPartsRandomizeOrderForProviders => {
                 EnvVar::EnableRandomizeOrderForProvidersLinkPartsForMongo.get_env_name()
             }
 
             Self::EnableTimeMeasurementPrints => EnvVar::EnableTimeMeasurementPrints.get_env_name(),
             Self::EnableInfoPrints => EnvVar::EnableInfoPrints.get_env_name(),
-            Self::EnableAllProvidersPrints => EnvVar::EnableAllProvidersPrints.get_env_name(),
-            Self::EnableErrorPrintsForAllProviders => {
+            Self::EnablePrintsForProviders => EnvVar::EnableAllProvidersPrints.get_env_name(),
+            Self::EnableErrorPrintsForProviders => {
                 EnvVar::EnableErrorPrintsForAllProviders.get_env_name()
             }
-            Self::EnableWarningHighPrintsForAllProviders => {
+            Self::EnableWarningHighPrintsForProviders => {
                 EnvVar::EnableWarningHighPrintsForAllProviders.get_env_name()
             }
-            Self::EnableWarningLowPrintsForAllProviders => {
+            Self::EnableWarningLowPrintsForProviders => {
                 EnvVar::EnableWarningLowPrintsForAllProviders.get_env_name()
             }
-            Self::EnableSuccessPrintsForAllProviders => {
+            Self::EnableSuccessPrintsForProviders => {
                 EnvVar::EnableSuccessPrintsForAllProviders.get_env_name()
             }
-            Self::EnablePartialSuccessPrintsForAllProviders => {
+            Self::EnablePartialSuccessPrintsForProviders => {
                 EnvVar::EnablePartialSuccessPrintsForAllProviders.get_env_name()
             }
-            Self::EnableTimeMeasurementPrintsForAllProviders => {
+            Self::EnableTimeMeasurementPrintsForProviders => {
                 EnvVar::EnableTimeMeasurementPrintsForAllProviders.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDirectoryPrintsForAllProviders => {
+            Self::EnableCleaningWarningLogsDirectoryForProviders => {
                 EnvVar::EnableCleaningWarningLogsDirectoryPrintsForAllProviders.get_env_name()
             }
-            Self::EnableInfoPrintsForAllProviders => {
+            Self::EnableInfoPrintsForProviders => {
                 EnvVar::EnableInfoPrintsForAllProviders.get_env_name()
             }
             Self::EnableWriteErrorLogsInLocalFolder => {
                 EnvVar::EnableWriteErrorLogsInLocalFolder.get_env_name()
             }
-            Self::EnableWriteErrorLogsInMongo => EnvVar::EnableWriteErrorLogsInMongo.get_env_name(),
-            Self::EnableInitializeMongoWithProvidersLinkParts => {
-                EnvVar::EnableInitializeMongoWithProvidersLinkParts.get_env_name()
+            Self::MongoEnableWriteErrorLogs => EnvVar::EnableWriteErrorLogsInMongo.get_env_name(),
+            Self::MongoEnableInitializationForProviders => {
+                EnvVar::MongoEnableInitializationForProviders.get_env_name()
             }
 
-            Self::EnableInitializeMongoWithArxivLinkParts => {
-                EnvVar::EnableInitializeMongoWithArxivLinkParts.get_env_name()
+            Self::MongoEnableInitializationForArxiv => {
+                EnvVar::MongoEnableInitializationForArxiv.get_env_name()
             }
-            Self::EnableInitializeMongoWithBiorxivLinkParts => {
-                EnvVar::EnableInitializeMongoWithBiorxivLinkParts.get_env_name()
+            Self::MongoEnableInitializationForBiorxiv => {
+                EnvVar::MongoEnableInitializationForBiorxiv.get_env_name()
             }
-            Self::EnableInitializeMongoWithGithubLinkParts => {
-                EnvVar::EnableInitializeMongoWithGithubLinkParts.get_env_name()
+            Self::MongoEnableInitializationForGithub => {
+                EnvVar::MongoEnableInitializationForGithub.get_env_name()
             }
-            Self::EnableInitializeMongoWithHabrLinkParts => {
-                EnvVar::EnableInitializeMongoWithHabrLinkParts.get_env_name()
+            Self::MongoEnableInitializationForHabr => {
+                EnvVar::MongoEnableInitializeationForHabr.get_env_name()
             }
-            Self::EnableInitializeMongoWithMedrxivLinkParts => {
-                EnvVar::EnableInitializeMongoWithMedrxivLinkParts.get_env_name()
+            Self::MongoEnableInitializationForMedrxiv => {
+                EnvVar::MongoEnableInitializationForMedrxiv.get_env_name()
             }
-            Self::EnableInitializeMongoWithRedditLinkParts => {
-                EnvVar::EnableInitializeMongoWithRedditLinkParts.get_env_name()
+            Self::MongoEnableInitializationForReddit => {
+                EnvVar::MongoEnableInitializeForReddit.get_env_name()
             }
-            Self::EnableInitializeMongoWithTwitterLinkParts => {
-                EnvVar::EnableInitializeMongoWithTwitterLinkParts.get_env_name()
+            Self::MongoEnableInitializationForTwitter => {
+                EnvVar::MongoEnableInitializationForTwitter.get_env_name()
             }
 
             Self::EnableArxiv => EnvVar::EnableArxiv.get_env_name(),
@@ -200,8 +201,8 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnablePartialSuccessPrintsForTwitter.get_env_name()
             }
 
-            Self::EnableCleaningWarningLogsDirectoryPrints => {
-                EnvVar::EnableCleaningWarningLogsDirectoryPrints.get_env_name()
+            Self::EnableCleaningWarningLogsDirectory => {
+                EnvVar::EnableCleaningWarningLogsDirectory.get_env_name()
             }
             Self::EnableCleaningWarningLogsDirectoryForArxiv => {
                 EnvVar::EnableCleaningWarningLogsDirectoryForArxiv.get_env_name()
@@ -225,48 +226,48 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnableCleaningWarningLogsDirectoryForTwitter.get_env_name()
             }
 
-            Self::EnableCleaningWarningLogsDbInMongoForArxiv => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForArxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForArxiv => {
+                EnvVar::MongoEnableCleaningWarningLogsDbForArxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForBiorxiv => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForBiorxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForBiorxiv => {
+                EnvVar::EnableCleaningWarningLogsDbForBiorxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForGithub => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForGithub.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForGithub => {
+                EnvVar::MongoEnableCleaningWarningLogsDbForGithub.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForHabr => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForHabr.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForHabr => {
+                EnvVar::MongoEnableCleaningWarningLogsDbForHabr.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForMedrxiv => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForMedrxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForMedrxiv => {
+                EnvVar::MongoEnableCleaningWarningLogsDbForMedrxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForReddit => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForReddit.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForReddit => {
+                EnvVar::MongoEnableCleaningWarningLogsDbForReddit.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbInMongoForTwitter => {
-                EnvVar::EnableCleaningWarningLogsDbInMongoForTwitter.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbForTwitter => {
+                EnvVar::MongoEnableCleaningWarningLogsDbInMongoForTwitter.get_env_name()
             }
 
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForArxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForArxiv => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForArxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForBiorxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForBiorxiv => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForBiorxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForGithub => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForGithub.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForGithub => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForGithub.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForHabr => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForHabr.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForHabr => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForHabr.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForMedrxiv.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForMedrxiv => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForMedrxiv.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForReddit => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForReddit.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForReddit => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForReddit.get_env_name()
             }
-            Self::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter => {
-                EnvVar::EnableCleaningWarningLogsDbCollectionsInMongoForTwitter.get_env_name()
+            Self::MongoEnableCleaningWarningLogsDbCollectionsForTwitter => {
+                EnvVar::MongoEnableCleaningWarningLogsDbCollectionsForTwitter.get_env_name()
             }
 
             Self::EnableTimeMeasurementForArxiv => {
@@ -307,26 +308,26 @@ impl EnvVarTrait for EnvBoolVar {
             Self::EnableLinksLimitForReddit => EnvVar::EnableLinksLimitForReddit.get_env_name(),
             Self::EnableLinksLimitForTwitter => EnvVar::EnableLinksLimitForTwitter.get_env_name(),
 
-            Self::EnableRandomizeOrderForArxivLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForArxivLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForArxiv => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForArxiv.get_env_name()
             }
-            Self::EnableRandomizeOrderForBiorxivLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForBiorxivLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForBiorxiv => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForBiorxiv.get_env_name()
             }
-            Self::EnableRandomizeOrderForGithubLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForGithubLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForGithub => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForGithub.get_env_name()
             }
-            Self::EnableRandomizeOrderForHabrLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForHabrLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForHabr => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForHabr.get_env_name()
             }
-            Self::EnableRandomizeOrderForMedrxivLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForMedrxivLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForMedrxiv => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForMedrxiv.get_env_name()
             }
-            Self::EnableRandomizeOrderForRedditLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForRedditLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForReddit => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForReddit.get_env_name()
             }
-            Self::EnableRandomizeOrderForTwitterLinkPartsForMongo => {
-                EnvVar::EnableRandomizeOrderForTwitterLinkPartsForMongo.get_env_name()
+            Self::MongoEnableLinkPartsRandomizeOrderForTwitter => {
+                EnvVar::MongoEnableLinkPartsRandomizeOrderForTwitter.get_env_name()
             }
         }
     }

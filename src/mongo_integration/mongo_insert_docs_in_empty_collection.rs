@@ -46,7 +46,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
     } else {
         let mut docs: Vec<Document> = Vec::with_capacity(vec_of_values.len());
         for value in &vec_of_values {
-            docs.push(doc! { &CONFIG.providers_db_collection_document_field_name_handle: value });
+            docs.push(doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: value });
         }
         collection.insert_many(docs, None).await?;
         Ok(())
