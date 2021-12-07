@@ -155,6 +155,12 @@ impl EnvVarTrait for EnvVar {
                 "MONGO_ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_FOR_TWITTER"
             }
 
+            Self::MongoEnableLinkPartsRandomizeOrder => {
+                "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER"
+            }
+            Self::MongoEnableLinkPartsRandomizeOrderForProviders => {
+                "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER_FOR_PROVIDERS"
+            }
             Self::MongoEnableLinkPartsRandomizeOrderForArxiv => {
                 "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER_FOR_ARXIV"
             }

@@ -506,55 +506,55 @@ impl ConfigStruct {
             enable_time_measurement_prints_for_providers: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders],
-            enable_time_measurement_for_arxiv: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+            enable_time_measurement_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForArxiv],
-            enable_time_measurement_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForArxiv],
+            enable_time_measurement_prints_for_biorxiv: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForBiorxiv],
-            enable_time_measurement_for_github: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForBiorxiv],
+            enable_time_measurement_prints_for_github: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForGithub],
-            enable_time_measurement_for_habr: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForGithub],
+            enable_time_measurement_prints_for_habr: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForHabr],
-            enable_time_measurement_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForHabr],
+            enable_time_measurement_prints_for_medrxiv: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForMedrxiv],
-            enable_time_measurement_for_reddit: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForMedrxiv],
+            enable_time_measurement_prints_for_reddit: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForReddit],
-            enable_time_measurement_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForReddit],
+            enable_time_measurement_prints_for_twitter: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementForTwitter],
+                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForTwitter],
 
             enable_info_prints: bool_vars[&EnvBoolVar::EnableInfoPrints],
             enable_info_prints_for_providers: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders],
-            enable_info_for_arxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
+            enable_info_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForArxiv],
-            enable_info_for_biorxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForArxiv],
+            enable_info_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForBiorxiv],
-            enable_info_for_github: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForBiorxiv],
+            enable_info_prints_for_github: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForGithub],
-            enable_info_for_habr: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForGithub],
+            enable_info_prints_for_habr: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForHabr],
-            enable_info_for_medrxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForHabr],
+            enable_info_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForReddit],
-            enable_info_for_reddit: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForReddit],
+            enable_info_prints_for_reddit: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForReddit],
-            enable_info_for_twitter: bool_vars[&EnvBoolVar::EnableInfoPrints]
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForReddit],
+            enable_info_prints_for_twitter: bool_vars[&EnvBoolVar::EnableInfoPrints]
                 && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoForTwitter],
+                && bool_vars[&EnvBoolVar::EnableInfoPrintsForTwitter],
 
             enable_links_limit: bool_vars[&EnvBoolVar::EnableLinksLimit],
             enable_links_limit_for_providers: bool_vars[&EnvBoolVar::EnableLinksLimit]
