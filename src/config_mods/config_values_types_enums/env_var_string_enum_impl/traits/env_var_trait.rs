@@ -21,30 +21,6 @@ impl EnvVarTrait for EnvStringVar {
             Self::RedditUsername => EnvVar::RedditUsername.get_env_name(),
             Self::RedditPassword => EnvVar::RedditPassword.get_env_name(),
 
-            Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
-            Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
-                EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
-                    .get_env_name()
-            }
-
-            Self::MongoProvidersLogsDbName => EnvVar::ProvidersDbNameHandle.get_env_name(),
-            Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
-                EnvVar::ProvidersDbCollectionHandleSecondPart.get_env_name()
-            }
-            Self::MongoProvidersLogsDbCollectionDocumentFieldNameHandle => {
-                EnvVar::ProvidersDbCollectionDocumentFieldNameHandle.get_env_name()
-            }
-            Self::PathToProviderLinkPartsFolder => {
-                EnvVar::PathToProviderLinkPartsFolder.get_env_name()
-            }
-            Self::LogFileExtension => EnvVar::LogFileExtension.get_env_name(),
-            Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
-                EnvVar::DbProvidersLogsCollectionHandleSecondPart.get_env_name()
-            }
-            Self::MongoProvidersLogsDbCollectionDocumentFieldNameHandle => {
-                EnvVar::DbProvidersLogsCollectionDocumentFieldNameHandle.get_env_name()
-            }
-
             Self::MongoFirstHandleUrlPart => EnvVar::MongoFirstHandleUrlPart.get_env_name(),
             Self::MongoSecondHandleUrlPart => EnvVar::MongoSecondHandleUrlPart.get_env_name(),
             Self::MongoThirdHandleUrlPart => EnvVar::MongoThirdHandleUrlPart.get_env_name(),
@@ -57,6 +33,21 @@ impl EnvVarTrait for EnvStringVar {
             Self::MongoPort => EnvVar::MongoPort.get_env_name(),
             Self::MongoParams => EnvVar::MongoParams.get_env_name(),
 
+
+            Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
+            Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
+                EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
+                    .get_env_name()
+            }
+
+            Self::MongoProvidersLogsDbName => EnvVar::MongoProvidersLogsDbName.get_env_name(),
+            Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
+                EnvVar::MongoProvidersLogsDbCollectionHandleSecondPart.get_env_name()
+            }
+            Self::MongoProvidersLogsDbCollectionDocumentFieldNameHandle => {
+                EnvVar::MongoProvidersLogsDbCollectionDocumentFieldNameHandle.get_env_name()
+            }
+
             Self::PostgresFirstHandleUrlPart => EnvVar::PostgresFirstHandleUrlPart.get_env_name(),
             Self::PostgresSecondHandleUrlPart => EnvVar::PostgresSecondHandleUrlPart.get_env_name(),
             Self::PostgresThirdHandleUrlPart => EnvVar::PostgresThirdHandleUrlPart.get_env_name(),
@@ -68,6 +59,18 @@ impl EnvVarTrait for EnvStringVar {
             Self::PostgresIp => EnvVar::PostgresIp.get_env_name(),
             Self::PostgresPort => EnvVar::PostgresPort.get_env_name(),
             Self::PostgresDb => EnvVar::PostgresDb.get_env_name(),
+
+
+            Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
+    Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir.get_env_name(),
+            Self::PathToProviderLinkPartsFolder => {
+                EnvVar::PathToProviderLinkPartsFolder.get_env_name()
+            }
+            Self::LogFileExtension => EnvVar::LogFileExtension.get_env_name(),
+
+            
+
+            
 
             Self::StartingCheckLink => EnvVar::StartingCheckLink.get_env_name(),
             Self::ArxivCheckLink => EnvVar::ArxivCheckLink.get_env_name(),
