@@ -11,7 +11,6 @@ use crate::traits::env_var_trait::EnvVarTrait;
 impl EnvVarTrait for EnvStringVar {
     fn get_env_name(&self) -> &'static str {
         match self {
-            //todo: reordering
             Self::GithubName => EnvVar::GithubName.get_env_name(),
             Self::GithubToken => EnvVar::GithubToken.get_env_name(),
 

@@ -13,27 +13,19 @@ use crate::check_net::check_net_wrapper::check_net_wrapper;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
+    let cpus = num_cpus::get();
     if CONFIG.enable_prints {
-        let cpus = num_cpus::get();
-        if cpus > 1 {
-            print_colorful_message(
-                None,
-                PrintType::Info,
-                file!().to_string(),
-                line!().to_string(),
-                format!("We are on a multicore system with {} CPUs", cpus),
-            );
-        } else {
-            print_colorful_message(
-                None,
-                PrintType::Info,
-                file!().to_string(),
-                line!().to_string(),
-                "We are on a single core system".to_string(),
-            );
-        }
+        print_colorful_message(
+            None,
+            PrintType::Info,
+            file!().to_string(),
+            line!().to_string(),
+            format!("We are on a multicore system with {} CPUs", cpus),
+        );
     }
-
+    if cpus <= 0 {
+        return;
+    } 
     let is_all_available_result = check_net_wrapper();
     match is_all_available_result {
         Ok(_) => {
