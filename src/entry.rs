@@ -26,22 +26,18 @@ pub fn entry() {
     if cpus <= 0 {
         return;
     } 
-    let is_all_available_result = check_net_wrapper();
-    match is_all_available_result {
-        Ok(_) => {
-            async_tokio_wrapper();
-        }
-        Err(e) => {
-            print_colorful_message(
-                None,
-                PrintType::WarningHigh,
-                file!().to_string(),
-                line!().to_string(),
-                format!("check_net_wrapper error: {:#?}", e),
-            );
-            //do something with it
-        }
+    if let Err(e) = check_net_wrapper() {
+        print_colorful_message(
+            None,
+            PrintType::WarningHigh,
+            file!().to_string(),
+            line!().to_string(),
+            format!("check_net_wrapper error: {:#?}", e),
+        );
+        //do something with it
+        return
     }
+    async_tokio_wrapper();
     //move time measument in some inner part coz it would be server here
     print_colorful_message(
         None,
