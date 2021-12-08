@@ -177,7 +177,7 @@ mod traits {
     pub mod env_var_typed_trait;
     pub mod provider_kind_trait;
 }
-mod async_tokio_wrapper;
+mod tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;

@@ -1,4 +1,4 @@
-use crate::async_tokio_wrapper::async_tokio_wrapper;
+use crate::tokio_wrapper::tokio_wrapper;
 use std::time::Instant;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -37,7 +37,7 @@ pub fn entry() {
         //do something with it
         return
     }
-    async_tokio_wrapper();
+    tokio_wrapper(cpus);
     //move time measument in some inner part coz it would be server here
     print_colorful_message(
         None,
