@@ -500,4 +500,9 @@ https://blog.yoshuawuyts.com/async-cancellation-1/
 read about debugging Rust application inside linux container
 https://blog.erebe.dev/blog/debug-rust-aplication-inside-container/index.html
 <br/>
-   
+
+### -------------------
+read how to write async tests
+https://docs.rs/tokio/1.14.0/tokio/attr.test.html
+<br/>
+
