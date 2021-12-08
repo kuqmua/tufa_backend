@@ -66,7 +66,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 //TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
 
 #[deny(clippy::indexing_slicing)]
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread", worker_threads = 12)]
 pub async fn async_tokio_wrapper() {
     if CONFIG.mongo_enable_initialization {
         let (success_hashmap, errors_hashmap) =
