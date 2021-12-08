@@ -33,12 +33,6 @@ impl EnvVarTrait for EnvStringVar {
             Self::MongoPort => EnvVar::MongoPort.get_env_name(),
             Self::MongoParams => EnvVar::MongoParams.get_env_name(),
 
-            Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
-            Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
-                EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
-                    .get_env_name()
-            }
-
             Self::MongoProvidersLogsDbName => EnvVar::MongoProvidersLogsDbName.get_env_name(),
             Self::MongoProvidersLogsDbCollectionHandleSecondPart => {
                 EnvVar::MongoProvidersLogsDbCollectionHandleSecondPart.get_env_name()
