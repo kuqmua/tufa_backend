@@ -47,11 +47,11 @@ impl EnvVarTrait for EnvVar {
             Self::MongoEnableInitializationForBiorxiv => "MONGO_ENABLE_INITIALIZATION_FOR_BIORXIV",
             Self::MongoEnableInitializationForGithub => "MONGO_ENABLE_INITIALIZATION_FOR_GITHUB",
             Self::MongoEnableInitializationForHabr => "MONGO_ENABLE_INITIALIZATION_FOR_HABR",
-            Self::MongoEnableInitializationForMedrxiv => "MONGOENABLE_INITIALIZATION_FOR_MEDRXIV",
+            Self::MongoEnableInitializationForMedrxiv => "MONGO_ENABLE_INITIALIZATION_FOR_MEDRXIV",
             Self::MongoEnableInitializationForReddit => "MONGO_ENABLE_INITIALIZATION_FOR_REDDIT",
             Self::MongoEnableInitializationForTwitter => "MONGO_ENABLE_INITIALIZATION_FOR_TWITTER",
 
-            Self::MongoEnableWriteErrorLogs => "ENABLE_WRITE_ERROR_LOGS",
+            Self::MongoEnableWriteErrorLogs => "MONGO_ENABLE_WRITE_ERROR_LOGS",
             Self::MongoEnableWriteErrorLogsForProviders => {
                 "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_PROVIDERS"
             }
@@ -170,7 +170,7 @@ impl EnvVarTrait for EnvVar {
 
             Self::EnableWriteErrorLogsInLocalFolder => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER",
             Self::EnableWriteErrorLogsInLocalFolderForProvider => {
-                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_PROVIDER"
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_PROVIDERS"
             }
             Self::EnableWriteErrorLogsInLocalFolderForArxiv => {
                 "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_ARXIV"
@@ -258,7 +258,7 @@ impl EnvVarTrait for EnvVar {
             Self::EnableWarningHighPrintsForReddit => "ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT",
             Self::EnableWarningHighPrintsForTwitter => "ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER",
 
-            Self::EnableWarningLowPrints => "ENABLE_WARNING_LOW",
+            Self::EnableWarningLowPrints => "ENABLE_WARNING_LOW_PRINTS",
             Self::EnableWarningLowPrintsForProviders => "ENABLE_WARNING_LOW_PRINTS_FOR_PROVIDERS",
             Self::EnableWarningLowPrintsForArxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV",
             Self::EnableWarningLowPrintsForBiorxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_BIORXIV",
