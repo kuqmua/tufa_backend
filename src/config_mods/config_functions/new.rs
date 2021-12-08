@@ -506,24 +506,28 @@ impl ConfigStruct {
             enable_time_measurement_prints_for_providers: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders],
-            enable_time_measurement_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+            enable_time_measurement_prints_for_arxiv: bool_vars
+                [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForArxiv],
             enable_time_measurement_prints_for_biorxiv: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForBiorxiv],
-            enable_time_measurement_prints_for_github: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+            enable_time_measurement_prints_for_github: bool_vars
+                [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForGithub],
-            enable_time_measurement_prints_for_habr: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+            enable_time_measurement_prints_for_habr: bool_vars
+                [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForHabr],
             enable_time_measurement_prints_for_medrxiv: bool_vars
                 [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForMedrxiv],
-            enable_time_measurement_prints_for_reddit: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints]
+            enable_time_measurement_prints_for_reddit: bool_vars
+                [&EnvBoolVar::EnableTimeMeasurementPrints]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
                 && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForReddit],
             enable_time_measurement_prints_for_twitter: bool_vars

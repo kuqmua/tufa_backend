@@ -39,69 +39,37 @@ impl EnvVarTrait for EnvVar {
                 "MONGO_PROVIDERS_LOGS_DB_COLLECTION_DOCUMENT_FIELD_NAME_HANDLE"
             }
 
-
-
-            
-            Self::MongoEnableInitialization => {
-                "MONGO_ENABLE_INITIALIZATION"
-            }
+            Self::MongoEnableInitialization => "MONGO_ENABLE_INITIALIZATION",
             Self::MongoEnableInitializationForProviders => {
                 "MONGO_ENABLE_INITIALIZATION_FOR_PROVIDERS"
             }
-            Self::MongoEnableInitializationForArxiv => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_ARXIV"
-            }
-            Self::MongoEnableInitializationForBiorxiv => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_BIORXIV"
-            }
-            Self::MongoEnableInitializationForGithub => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_GITHUB"
-            }
-            Self::MongoEnableInitializationForHabr => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_HABR"
-            }
-            Self::MongoEnableInitializationForMedrxiv => {
-                "MONGOENABLE_INITIALIZATION_FOR_MEDRXIV"
-            }
-            Self::MongoEnableInitializationForReddit => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_REDDIT"
-            }
-            Self::MongoEnableInitializationForTwitter => {
-                "MONGO_ENABLE_INITIALIZATION_FOR_TWITTER"
-            }
-            
-            Self::MongoEnableWriteErrorLogs => {
-                "ENABLE_WRITE_ERROR_LOGS"
-            }
+            Self::MongoEnableInitializationForArxiv => "MONGO_ENABLE_INITIALIZATION_FOR_ARXIV",
+            Self::MongoEnableInitializationForBiorxiv => "MONGO_ENABLE_INITIALIZATION_FOR_BIORXIV",
+            Self::MongoEnableInitializationForGithub => "MONGO_ENABLE_INITIALIZATION_FOR_GITHUB",
+            Self::MongoEnableInitializationForHabr => "MONGO_ENABLE_INITIALIZATION_FOR_HABR",
+            Self::MongoEnableInitializationForMedrxiv => "MONGOENABLE_INITIALIZATION_FOR_MEDRXIV",
+            Self::MongoEnableInitializationForReddit => "MONGO_ENABLE_INITIALIZATION_FOR_REDDIT",
+            Self::MongoEnableInitializationForTwitter => "MONGO_ENABLE_INITIALIZATION_FOR_TWITTER",
+
+            Self::MongoEnableWriteErrorLogs => "ENABLE_WRITE_ERROR_LOGS",
             Self::MongoEnableWriteErrorLogsForProviders => {
                 "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_PROVIDERS"
             }
-            Self::MongoEnableWriteErrorLogsForArxiv => {
-                "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_ARXIV"
-            }
+            Self::MongoEnableWriteErrorLogsForArxiv => "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_ARXIV",
             Self::MongoEnableWriteErrorLogsForBiorxiv => {
                 "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_BIORXIV"
             }
-            Self::MongoEnableWriteErrorLogsForGithub => {
-                "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_GITHUB"
-            }
-            Self::MongoEnableWriteErrorLogsForHabr => {
-                "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_HABR"
-            }
+            Self::MongoEnableWriteErrorLogsForGithub => "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_GITHUB",
+            Self::MongoEnableWriteErrorLogsForHabr => "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_HABR",
             Self::MongoEnableWriteErrorLogsForMedrxiv => {
                 "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_MEDRXIV"
             }
-            Self::MongoEnableWriteErrorLogsForReddit => {
-                "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_REDDIT"
-            }
+            Self::MongoEnableWriteErrorLogsForReddit => "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_REDDIT",
             Self::MongoEnableWriteErrorLogsForTwitter => {
                 "MONGO_ENABLE_WRITE_ERROR_LOGS_FOR_TWITTER"
             }
-            
 
-            Self::MongoEnableCleaningWarningLogsDb => {
-                "MONGO_ENABLE_CLEANING_WARNING_LOGS_DB"
-            }
+            Self::MongoEnableCleaningWarningLogsDb => "MONGO_ENABLE_CLEANING_WARNING_LOGS_DB",
             Self::MongoEnableCleaningWarningLogsDbForProviders => {
                 "MONGO_ENABLE_CLEANING_WARNING_LOGS_DB_FOR_PROVIDERS"
             }
@@ -155,9 +123,7 @@ impl EnvVarTrait for EnvVar {
                 "MONGO_ENABLE_CLEANING_WARNING_LOGS_DB_COLLECTIONS_FOR_TWITTER"
             }
 
-            Self::MongoEnableLinkPartsRandomizeOrder => {
-                "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER"
-            }
+            Self::MongoEnableLinkPartsRandomizeOrder => "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER",
             Self::MongoEnableLinkPartsRandomizeOrderForProviders => {
                 "MONGO_ENABLE_LINK_PARTS_RANDOMIZE_ORDER_FOR_PROVIDERS"
             }
@@ -201,45 +167,58 @@ impl EnvVarTrait for EnvVar {
             }
             Self::PathToProviderLinkPartsFolder => "PATH_TO_PROVIDER_LINK_PARTS_FOLDER",
             Self::LogFileExtension => "LOG_FILE_EXTENSION",
-            
+
             Self::EnableWriteErrorLogsInLocalFolder => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER",
-    Self::EnableWriteErrorLogsInLocalFolderForProvider => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_PROVIDER",
-    Self::EnableWriteErrorLogsInLocalFolderForArxiv => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_ARXIV",
-    Self::EnableWriteErrorLogsInLocalFolderForBiorxiv => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_BIORXIV",
-    Self::EnableWriteErrorLogsInLocalFolderForGithub => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_GITHUB",
-    Self::EnableWriteErrorLogsInLocalFolderForHabr => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_HABR",
-    Self::EnableWriteErrorLogsInLocalFolderForMedrxiv => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_MEDRXIV",
-    Self::EnableWriteErrorLogsInLocalFolderForReddit => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_REDDIT",
-    Self::EnableWriteErrorLogsInLocalFolderForTwitter => "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_TWITTER",
+            Self::EnableWriteErrorLogsInLocalFolderForProvider => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_PROVIDER"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForArxiv => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_ARXIV"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForBiorxiv => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_BIORXIV"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForGithub => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_GITHUB"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForHabr => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_HABR"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForMedrxiv => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_MEDRXIV"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForReddit => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_REDDIT"
+            }
+            Self::EnableWriteErrorLogsInLocalFolderForTwitter => {
+                "ENABLE_WRITE_ERROR_LOGS_IN_LOCAL_FOLDER_FOR_TWITTER"
+            }
 
-
-    Self::EnableCleaningWarningLogsDirectory => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForProviders => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_PROVIDERS"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForArxiv => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForBiorxiv => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForGithub => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForHabr => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForMedrxiv => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForReddit => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT"
-    }
-    Self::EnableCleaningWarningLogsDirectoryForTwitter => {
-        "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER"
-    }
+            Self::EnableCleaningWarningLogsDirectory => "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY",
+            Self::EnableCleaningWarningLogsDirectoryForProviders => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_PROVIDERS"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForArxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_ARXIV"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForBiorxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_BIORXIV"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForGithub => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_GITHUB"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForHabr => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_HABR"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForMedrxiv => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_MEDRXIV"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForReddit => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_REDDIT"
+            }
+            Self::EnableCleaningWarningLogsDirectoryForTwitter => {
+                "ENABLE_CLEANING_WARNING_LOGS_DIRECTORY_FOR_TWITTER"
+            }
 
             Self::StartingCheckLink => "STARTING_CHECK_LINK",
             Self::ArxivCheckLink => "ARXIV_CHECK_LINK",
@@ -258,8 +237,6 @@ impl EnvVarTrait for EnvVar {
             Self::EnableMedrxiv => "ENABLE_MEDRXIV",
             Self::EnableReddit => "ENABLE_REDDIT",
             Self::EnableTwitter => "ENABLE_TWITTER",
-
-
 
             Self::EnablePrints => "ENABLE_PRINTS",
             Self::EnablePrintsForProviders => "ENABLE_PRINTS_FOR_PROVIDERS",
@@ -281,7 +258,6 @@ impl EnvVarTrait for EnvVar {
             Self::EnableWarningHighPrintsForReddit => "ENABLE_WARNING_HIGH_PRINTS_FOR_REDDIT",
             Self::EnableWarningHighPrintsForTwitter => "ENABLE_WARNING_HIGH_PRINTS_FOR_TWITTER",
 
-            
             Self::EnableWarningLowPrints => "ENABLE_WARNING_LOW",
             Self::EnableWarningLowPrintsForProviders => "ENABLE_WARNING_LOW_PRINTS_FOR_PROVIDERS",
             Self::EnableWarningLowPrintsForArxiv => "ENABLE_WARNING_LOW_PRINTS_FOR_ARXIV",
@@ -303,7 +279,9 @@ impl EnvVarTrait for EnvVar {
             Self::EnableSuccessPrintsForTwitter => "ENABLE_SUCCESS_PRINTS_FOR_TWITTER",
 
             Self::EnablePartialSuccessPrints => "ENABLE_PARTIAL_SUCCESS_PRINTS",
-            Self::EnablePartialSuccessPrintsForProviders => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_PROVIDERS",
+            Self::EnablePartialSuccessPrintsForProviders => {
+                "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_PROVIDERS"
+            }
             Self::EnablePartialSuccessPrintsForArxiv => "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_ARXIV",
             Self::EnablePartialSuccessPrintsForBiorxiv => {
                 "ENABLE_PARTIAL_SUCCESS_PRINTS_FOR_BIORXIV"
@@ -329,17 +307,29 @@ impl EnvVarTrait for EnvVar {
             Self::EnableErrorPrintsForTwitter => "ENABLE_ERROR_PRINTS_FOR_TWITTER",
 
             Self::EnableTimeMeasurementPrints => "ENABLE_TIME_MEASUREMENT_PRINTS",
-            Self::EnableTimeMeasurementPrintsForProviders => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_PROVIDERS",
+            Self::EnableTimeMeasurementPrintsForProviders => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_PROVIDERS"
+            }
             Self::EnableTimeMeasurementPrintsForArxiv => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_ARXIV",
-            Self::EnableTimeMeasurementPrintsForBiorxiv => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_BIORXIV",
-            Self::EnableTimeMeasurementPrintsForGithub => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_GITHUB",
+            Self::EnableTimeMeasurementPrintsForBiorxiv => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_BIORXIV"
+            }
+            Self::EnableTimeMeasurementPrintsForGithub => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_GITHUB"
+            }
             Self::EnableTimeMeasurementPrintsForHabr => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_HABR",
-            Self::EnableTimeMeasurementPrintsForMedrxiv => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_MEDRXIV",
-            Self::EnableTimeMeasurementPrintsForReddit => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_REDDIT",
-            Self::EnableTimeMeasurementPrintsForTwitter => "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_TWITTER",
+            Self::EnableTimeMeasurementPrintsForMedrxiv => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_MEDRXIV"
+            }
+            Self::EnableTimeMeasurementPrintsForReddit => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_REDDIT"
+            }
+            Self::EnableTimeMeasurementPrintsForTwitter => {
+                "ENABLE_TIME_MEASUREMENT_PRINTS_FOR_TWITTER"
+            }
 
             Self::EnableInfoPrints => "ENABLE_INFO_PRINTS",
-            Self::EnableInfoPrintsForProviders=> "ENABLE_INFO_PRINTS_FOR_PROVIDERS",
+            Self::EnableInfoPrintsForProviders => "ENABLE_INFO_PRINTS_FOR_PROVIDERS",
             Self::EnableInfoPrintsForArxiv => "ENABLE_INFO_PRINTS_FOR_ARXIV",
             Self::EnableInfoPrintsForBiorxiv => "ENABLE_INFO_PRINTS_FOR_BIORXIV",
             Self::EnableInfoPrintsForGithub => "ENABLE_INFO_PRINTS_FOR_GITHUB",

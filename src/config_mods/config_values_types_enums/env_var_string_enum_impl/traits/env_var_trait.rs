@@ -33,7 +33,6 @@ impl EnvVarTrait for EnvStringVar {
             Self::MongoPort => EnvVar::MongoPort.get_env_name(),
             Self::MongoParams => EnvVar::MongoParams.get_env_name(),
 
-
             Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
             Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
                 EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
@@ -60,17 +59,15 @@ impl EnvVarTrait for EnvStringVar {
             Self::PostgresPort => EnvVar::PostgresPort.get_env_name(),
             Self::PostgresDb => EnvVar::PostgresDb.get_env_name(),
 
-
             Self::WarningLogsDirectoryName => EnvVar::WarningLogsDirectoryName.get_env_name(),
-    Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir.get_env_name(),
+            Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
+                EnvVar::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir
+                    .get_env_name()
+            }
             Self::PathToProviderLinkPartsFolder => {
                 EnvVar::PathToProviderLinkPartsFolder.get_env_name()
             }
             Self::LogFileExtension => EnvVar::LogFileExtension.get_env_name(),
-
-            
-
-            
 
             Self::StartingCheckLink => EnvVar::StartingCheckLink.get_env_name(),
             Self::ArxivCheckLink => EnvVar::ArxivCheckLink.get_env_name(),

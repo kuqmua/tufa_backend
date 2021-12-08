@@ -49,7 +49,7 @@ impl ProviderKind {
                 >;
                 if CONFIG.enable_links_limit_for_providers {
                     if CONFIG.enable_common_providers_links_limit {
-                        if CONFIG. mongo_enable_link_parts_randomize_order {
+                        if CONFIG.mongo_enable_link_parts_randomize_order {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
                                 doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
                             );

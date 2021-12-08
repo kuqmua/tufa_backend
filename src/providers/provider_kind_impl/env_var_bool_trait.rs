@@ -147,9 +147,7 @@ impl EnvVarBoolTrait for ProviderKind {
             ProviderKind::Github => {
                 CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_github
             }
-            ProviderKind::Habr => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_habr
-            }
+            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_habr,
             ProviderKind::Medrxiv => {
                 CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_medrxiv
             }
