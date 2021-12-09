@@ -73,35 +73,39 @@ pub async fn tokio_wrapper() {
         if !success_hashmap.is_empty() {
             //todo: add check of doc already is in collection or add flag forse
             //todo add flag for provider
-            let result_postgres_establish_connection =
-                PgConnection::establish(&postgres_get_db_url());
-            match result_postgres_establish_connection {
-                Ok(pg_connection) => {
-                    let _ = NewPost::insert_into_postgres(
-                        &pg_connection,
-                        NewPost {
-                            title: "post_title",
-                            body: "post_body",
-                        },
-                    );
-                }
-                Err(e) => {
-                    print_colorful_message(
-                        None,
-                        PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!(
-                            "PgConnection::establish {} error: {:#?}",
-                            &postgres_get_db_url(),
-                            e
-                        ),
-                    );
-                }
-            }
             let _ = mongo_insert_data(&CONFIG.mongo_providers_logs_db_name, success_hashmap).await;
         }
     }
+
+    if true {
+        //CONFIG.postgres_enable_initialization
+        let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
+        match result_postgres_establish_connection {
+            Ok(pg_connection) => {
+                let _ = NewPost::insert_into_postgres(
+                    &pg_connection,
+                    NewPost {
+                        title: "post_title",
+                        body: "post_body",
+                    },
+                );
+            }
+            Err(e) => {
+                print_colorful_message(
+                    None,
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!(
+                        "PgConnection::establish {} error: {:#?}",
+                        &postgres_get_db_url(),
+                        e
+                    ),
+                );
+            }
+        }
+    }
+
     if !ProviderKind::get_enabled_providers_vec().is_empty() {
         let resource = Resource::Mongodb;
         let (providers_link_parts, something) =
