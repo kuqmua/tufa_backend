@@ -105,10 +105,9 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_init_local_data_file_path(&self) -> String {
         format!(
-            "{}{}{}{}",
+            "{}{}_link_parts{}",
             CONFIG.path_to_provider_link_parts_folder,
             self,
-            CONFIG.mongo_providers_logs_db_collection_handle_second_part,
             CONFIG.log_file_extension
         )
     }

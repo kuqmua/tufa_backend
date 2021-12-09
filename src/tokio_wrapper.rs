@@ -77,8 +77,7 @@ pub async fn tokio_wrapper() {
         }
     }
 
-    if true {
-        //CONFIG.postgres_enable_initialization
+    if CONFIG.postgres_enable_initialization {
         let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
         match result_postgres_establish_connection {
             Ok(pg_connection) => {
