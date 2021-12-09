@@ -1287,6 +1287,7 @@ fn parse_github_html_second_part(
                                                 date = date_another_handle;
                                             }
                                             //todo case 3
+                                            //todo case 6
                                             _ => {
                                                 let warning_message = format!(
                                                     "different children.len(): {}",

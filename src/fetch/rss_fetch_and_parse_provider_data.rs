@@ -13,6 +13,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_fetch_and_parse_provider_data(
     links: Vec<String>,
     provider_kind: ProviderKind,
@@ -31,7 +32,7 @@ pub fn rss_fetch_and_parse_provider_data(
         >,
     >::with_capacity(links.len())));
     let mut thread_vector = Vec::with_capacity(links.len());
-    for (element_index, link) in &mut links.into_iter().enumerate() {
+    for link in &mut links.into_iter() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let provider_kind_clone = provider_kind;
         let handle = thread::spawn(move || {
@@ -61,8 +62,7 @@ pub fn rss_fetch_and_parse_provider_data(
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked[element_index] =
-                        Err((link, provider_kind_clone, e));
+                    hashmap_to_return_handle_locked.push(Err((link, provider_kind_clone, e)));
                 }
             }
         });
