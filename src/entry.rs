@@ -25,7 +25,7 @@ pub fn entry() {
     }
     if cpus <= 0 {
         return;
-    } 
+    }
     if let Err(e) = check_net_wrapper() {
         print_colorful_message(
             None,
@@ -35,9 +35,27 @@ pub fn entry() {
             format!("check_net_wrapper error: {:#?}", e),
         );
         //do something with it
-        return
+        return;
     }
-    tokio_wrapper(cpus);
+    let tokio_build_result = tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(cpus)
+        .enable_all()
+        .build();
+    match tokio_build_result {
+        Err(e) => {
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("Cannot build tokio runtime {:#?}", e),
+            );
+            return;
+        }
+        Ok(runtime) => {
+            runtime.block_on(tokio_wrapper());
+        }
+    }
     //move time measument in some inner part coz it would be server here
     print_colorful_message(
         None,

@@ -1,6 +1,6 @@
 mod check_net {
-    pub mod check_net_availability;
     pub mod check_link_status_code;
+    pub mod check_net_availability;
     pub mod check_net_error_enum;
     pub mod check_net_wrapper;
 }
@@ -177,10 +177,10 @@ mod traits {
     pub mod env_var_typed_trait;
     pub mod provider_kind_trait;
 }
-mod tokio_wrapper;
 mod check_new_posts_threads_parts;
 mod entry;
 mod providers_new_posts_check;
+mod tokio_wrapper;
 mod write_error_posts_wrapper;
 
 #[macro_use]
