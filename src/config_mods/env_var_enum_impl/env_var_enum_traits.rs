@@ -161,6 +161,30 @@ impl EnvVarTrait for EnvVar {
             Self::PostgresPort => "POSTGRES_PORT",
             Self::PostgresDb => "POSTGRES_DB",
 
+            Self::PostgresEnableInitialization => "POSTGRES_ENABLE_INITIALIZATION",
+            Self::PostgresEnableInitializationForProviders => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_PROVIDERS"
+            }
+            Self::PostgresEnableInitializationForArxiv => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_ARXIV"
+            }
+            Self::PostgresEnableInitializationForBiorxiv => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_BIORXIV"
+            }
+            Self::PostgresEnableInitializationForGithub => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_GITHUB"
+            }
+            Self::PostgresEnableInitializationForHabr => "POSTGRES_ENABLE_INITIALIZATION_FOR_HABR",
+            Self::PostgresEnableInitializationForMedrxiv => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_MEDRXIV"
+            }
+            Self::PostgresEnableInitializationForReddit => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_REDDIT"
+            }
+            Self::PostgresEnableInitializationForTwitter => {
+                "POSTGRES_ENABLE_INITIALIZATION_FOR_TWITTER"
+            }
+
             Self::WarningLogsDirectoryName => "WARNING_LOGS_DIRECTORY_NAME",
             Self::UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir => {
                 "UNHANDLED_SUCCESS_HANDLED_SUCCESS_ARE_THERE_ITEMS_INITIALIZED_POSTS_DIR"

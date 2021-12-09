@@ -146,6 +146,34 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::MongoEnableLinkPartsRandomizeOrderForTwitter.get_env_name()
             }
 
+            Self::PostgresEnableInitialization => {
+                EnvVar::PostgresEnableInitialization.get_env_name()
+            }
+            Self::PostgresEnableInitializationForProviders => {
+                EnvVar::PostgresEnableInitializationForProviders.get_env_name()
+            }
+            Self::PostgresEnableInitializationForArxiv => {
+                EnvVar::PostgresEnableInitializationForArxiv.get_env_name()
+            }
+            Self::PostgresEnableInitializationForBiorxiv => {
+                EnvVar::PostgresEnableInitializationForBiorxiv.get_env_name()
+            }
+            Self::PostgresEnableInitializationForGithub => {
+                EnvVar::PostgresEnableInitializationForGithub.get_env_name()
+            }
+            Self::PostgresEnableInitializationForHabr => {
+                EnvVar::PostgresEnableInitializationForHabr.get_env_name()
+            }
+            Self::PostgresEnableInitializationForMedrxiv => {
+                EnvVar::PostgresEnableInitializationForMedrxiv.get_env_name()
+            }
+            Self::PostgresEnableInitializationForReddit => {
+                EnvVar::PostgresEnableInitializationForReddit.get_env_name()
+            }
+            Self::PostgresEnableInitializationForTwitter => {
+                EnvVar::PostgresEnableInitializationForTwitter.get_env_name()
+            }
+
             Self::EnableWriteErrorLogsInLocalFolder => {
                 EnvVar::EnableWriteErrorLogsInLocalFolder.get_env_name()
             }

@@ -67,6 +67,16 @@ pub enum EnvBoolVar {
     MongoEnableLinkPartsRandomizeOrderForReddit,
     MongoEnableLinkPartsRandomizeOrderForTwitter,
 
+    PostgresEnableInitialization,
+    PostgresEnableInitializationForProviders,
+    PostgresEnableInitializationForArxiv,
+    PostgresEnableInitializationForBiorxiv,
+    PostgresEnableInitializationForGithub,
+    PostgresEnableInitializationForHabr,
+    PostgresEnableInitializationForMedrxiv,
+    PostgresEnableInitializationForReddit,
+    PostgresEnableInitializationForTwitter,
+
     EnableWriteErrorLogsInLocalFolder,
     EnableWriteErrorLogsInLocalFolderForProvider,
     EnableWriteErrorLogsInLocalFolderForArxiv,

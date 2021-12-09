@@ -240,6 +240,39 @@ impl ConfigStruct {
             postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
             postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
+            postgres_enable_initialization: bool_vars[&EnvBoolVar::PostgresEnableInitialization],
+            postgres_enable_initialization_for_providers: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders],
+            postgres_enable_initialization_for_arxiv: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForArxiv],
+            postgres_enable_initialization_for_biorxiv: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForBiorxiv],
+            postgres_enable_initialization_for_github: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForGithub],
+            postgres_enable_initialization_for_habr: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForHabr],
+            postgres_enable_initialization_for_medrxiv: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForArxiv],
+            postgres_enable_initialization_for_reddit: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForReddit],
+            postgres_enable_initialization_for_twitter: bool_vars
+                [&EnvBoolVar::PostgresEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitializationForTwitter],
+
             warning_logs_directory_name: string_vars[&EnvStringVar::WarningLogsDirectoryName]
                 .clone(),
             unhandled_success_handled_success_are_there_items_initialized_posts_dir: string_vars

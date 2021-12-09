@@ -104,6 +104,16 @@ pub enum EnvVar {
     PostgresPort,
     PostgresDb,
 
+    PostgresEnableInitialization,
+    PostgresEnableInitializationForProviders,
+    PostgresEnableInitializationForArxiv,
+    PostgresEnableInitializationForBiorxiv,
+    PostgresEnableInitializationForGithub,
+    PostgresEnableInitializationForHabr,
+    PostgresEnableInitializationForMedrxiv,
+    PostgresEnableInitializationForReddit,
+    PostgresEnableInitializationForTwitter,
+
     WarningLogsDirectoryName,
     UnhandledSuccessHandledSuccessAreThereItemsInitializedPostsDir,
     PathToProviderLinkPartsFolder,

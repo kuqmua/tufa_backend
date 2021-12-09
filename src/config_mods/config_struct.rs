@@ -89,6 +89,16 @@ pub struct ConfigStruct {
     pub postgres_port: String,
     pub postgres_db: String,
 
+    pub postgres_enable_initialization: bool,
+    pub postgres_enable_initialization_for_providers: bool,
+    pub postgres_enable_initialization_for_arxiv: bool,
+    pub postgres_enable_initialization_for_biorxiv: bool,
+    pub postgres_enable_initialization_for_github: bool,
+    pub postgres_enable_initialization_for_habr: bool,
+    pub postgres_enable_initialization_for_medrxiv: bool,
+    pub postgres_enable_initialization_for_reddit: bool,
+    pub postgres_enable_initialization_for_twitter: bool,
+
     pub warning_logs_directory_name: String,
     pub unhandled_success_handled_success_are_there_items_initialized_posts_dir: String,
     pub path_to_provider_link_parts_folder: String,
