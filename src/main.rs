@@ -158,6 +158,7 @@ mod providers {
     }
     pub mod get_providers_json_local_data_processed_error;
     pub mod provider_kind_enum;
+    pub mod get_providers_posts;
 }
 #[cfg(test)]
 mod tests {
@@ -181,7 +182,6 @@ mod check_new_posts_threads_parts;
 mod entry;
 mod init_dbs;
 mod providers_new_posts_check;
-mod tokio_wrapper;
 mod write_error_posts_wrapper;
 
 #[macro_use]

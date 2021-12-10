@@ -1,4 +1,4 @@
-use crate::tokio_wrapper::tokio_wrapper;
+use crate::providers::get_providers_posts::get_providers_posts;
 use std::time::Instant;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -9,6 +9,8 @@ use crate::config_mods::lazy_static_config::CONFIG;
 extern crate num_cpus;
 
 use crate::check_net::check_net_wrapper::check_net_wrapper;
+
+use crate::init_dbs::init_dbs;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
@@ -53,7 +55,8 @@ pub fn entry() {
             return;
         }
         Ok(runtime) => {
-            runtime.block_on(tokio_wrapper());
+            runtime.block_on(init_dbs());
+            runtime.block_on(get_providers_posts());
         }
     }
     //move time measument in some inner part coz it would be server here
