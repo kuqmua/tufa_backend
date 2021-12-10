@@ -16,15 +16,13 @@ use crate::init_dbs::init_dbs;
 pub fn entry() {
     let time = Instant::now();
     let cpus = num_cpus::get();
-    if CONFIG.enable_prints {
-        print_colorful_message(
-            None,
-            PrintType::Info,
-            file!().to_string(),
-            line!().to_string(),
-            format!("We are on a multicore system with {} CPUs", cpus),
-        );
-    }
+    print_colorful_message(
+        None,
+        PrintType::Info,
+        file!().to_string(),
+        line!().to_string(),
+        format!("We are on a multicore system with {} CPUs", cpus),
+    );
     if cpus <= 0 {
         return;
     }

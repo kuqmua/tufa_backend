@@ -157,8 +157,8 @@ mod providers {
         pub mod provider_kind_trait;
     }
     pub mod get_providers_json_local_data_processed_error;
-    pub mod provider_kind_enum;
     pub mod get_providers_posts;
+    pub mod provider_kind_enum;
 }
 #[cfg(test)]
 mod tests {
