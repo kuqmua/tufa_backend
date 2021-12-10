@@ -41,12 +41,12 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     providers_json_local_data_hashmap = success_hashmap;
     //todo: make it parrallel
     if CONFIG.mongo_enable_initialization {
-        let result = mongo_insert_data(
+        match mongo_insert_data(
             &CONFIG.mongo_providers_logs_db_name,
             providers_json_local_data_hashmap,
         )
-        .await;
-        match result {
+        .await
+        {
             PutDataInMongoResult::Success => (),
             PutDataInMongoResult::PartialSuccess => {
                 return Err(InitDbsError::MongoInsertDataPartial)

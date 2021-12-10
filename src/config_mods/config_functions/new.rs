@@ -55,7 +55,8 @@ impl ConfigStruct {
                 [&EnvStringVar::MongoProvidersLogsDbCollectionDocumentFieldNameHandle]
                 .clone(),
 
-            mongo_enable_initialization: bool_vars[&EnvBoolVar::MongoEnableInitialization],
+            mongo_enable_initialization: bool_vars[&EnvBoolVar::DbsEnableInitialization]
+                && bool_vars[&EnvBoolVar::MongoEnableInitialization],
             mongo_enable_initialization_for_providers: bool_vars
                 [&EnvBoolVar::MongoEnableInitialization]
                 && bool_vars[&EnvBoolVar::MongoEnableInitializationForProviders],
@@ -242,7 +243,8 @@ impl ConfigStruct {
             postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
             postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
-            postgres_enable_initialization: bool_vars[&EnvBoolVar::PostgresEnableInitialization],
+            postgres_enable_initialization: bool_vars[&EnvBoolVar::DbsEnableInitialization]
+                && bool_vars[&EnvBoolVar::PostgresEnableInitialization],
             postgres_enable_initialization_for_providers: bool_vars
                 [&EnvBoolVar::PostgresEnableInitialization]
                 && bool_vars[&EnvBoolVar::PostgresEnableInitializationForProviders],
