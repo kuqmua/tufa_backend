@@ -21,6 +21,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::init_dbs::init_dbs;
 // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
@@ -67,84 +68,55 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing)]
 pub async fn tokio_wrapper() {
-    if CONFIG.mongo_enable_initialization {
-        let (success_hashmap, errors_hashmap) =
-            ProviderKind::get_providers_json_local_data_processed();
-        if !success_hashmap.is_empty() {
-            //todo: add check of doc already is in collection or add flag forse
-            //todo add flag for provider
-            let _ = mongo_insert_data(&CONFIG.mongo_providers_logs_db_name, success_hashmap).await;
-        }
-    }
+    init_dbs().await;
 
-    if CONFIG.postgres_enable_initialization {
-        let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
-        match result_postgres_establish_connection {
-            Ok(pg_connection) => {
-                let _ = NewPost::insert_into_postgres(
-                    &pg_connection,
-                    NewPost {
-                        title: "post_title",
-                        body: "post_body",
-                    },
-                );
-            }
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "PgConnection::establish {} error: {:#?}",
-                        &postgres_get_db_url(),
-                        e
-                    ),
-                );
-            }
-        }
-    }
-
-    if !ProviderKind::get_enabled_providers_vec().is_empty() {
-        let resource = Resource::Mongodb;
-        let (providers_link_parts, something) =
-            get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
-        if providers_link_parts.is_empty() {
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                "providers_link_parts is empty".to_string(),
-            );
-            // return Err(ResourceError::NoLinkParts(resource));
-        }
-        let _vec = check_new_posts_threads_parts(providers_link_parts).await;
-        //todo: conversion function before write_error_posts_wrapper
-        //commented before conversion function implementation
-        // if !vec.is_empty() {
-        //     for (provider_kind, result_vec) in vec {
-        //         match result_vec {
-        //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
-        //                 let wrong_cases_thread = thread::spawn(move || {
-        //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
-        //                 });
-        //                 match wrong_cases_thread.join() {
-        //                     Ok(_) => {}
-        //                     Err(e) => {
-        //                         print_colorful_message(
-        //                             None,
-        //                             PrintType::Error,
-        //                             file!().to_string(),
-        //                             line!().to_string(),
-        //                             format!("wrong_cases_thread.join() error: {:#?}", e),
-        //                         );
-        //                     }
-        //                 }
-        //             }
-        //             Err(e) => {}
-        //         }
-        //     }
-        // }
+    if ProviderKind::get_enabled_providers_vec().is_empty() {
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            "all providers are disabled".to_owned(),
+        );
+        return;
     };
+    let resource = Resource::Mongodb;
+    let (providers_link_parts, something) = get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
+    if providers_link_parts.is_empty() {
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            "providers_link_parts is empty".to_string(),
+        );
+        // return Err(ResourceError::NoLinkParts(resource));
+    }
+    let _vec = check_new_posts_threads_parts(providers_link_parts).await;
+    //todo: conversion function before write_error_posts_wrapper
+    //commented before conversion function implementation
+    // if !vec.is_empty() {
+    //     for (provider_kind, result_vec) in vec {
+    //         match result_vec {
+    //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+    //                 let wrong_cases_thread = thread::spawn(move || {
+    //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
+    //                 });
+    //                 match wrong_cases_thread.join() {
+    //                     Ok(_) => {}
+    //                     Err(e) => {
+    //                         print_colorful_message(
+    //                             None,
+    //                             PrintType::Error,
+    //                             file!().to_string(),
+    //                             line!().to_string(),
+    //                             format!("wrong_cases_thread.join() error: {:#?}", e),
+    //                         );
+    //                     }
+    //                 }
+    //             }
+    //             Err(e) => {}
+    //         }
+    //     }
+    // }
 }

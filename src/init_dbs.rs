@@ -22,40 +22,28 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs() {
     let providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>;
-    if !ProviderKind::get_enabled_providers_vec().is_empty() {
-        let (success_hashmap, errors_hashmap) =
-            ProviderKind::get_providers_json_local_data_processed();
-        if !errors_hashmap.is_empty() {
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                format!("providers_json_local_data error {:#?}", errors_hashmap),
-            );
-            return;
-        }
-        if !success_hashmap.is_empty() {
-            print_colorful_message(
-                None,
-                PrintType::Info,
-                file!().to_string(),
-                line!().to_string(),
-                format!("providers_json_local_data success_hashmap is empty"),
-            );
-            return;
-        }
-        providers_json_local_data_hashmap = success_hashmap;
-    } else {
+    let (success_hashmap, errors_hashmap) = ProviderKind::get_providers_json_local_data_processed();
+    if !errors_hashmap.is_empty() {
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!("providers_json_local_data error {:#?}", errors_hashmap),
+        );
+        return;
+    }
+    if !success_hashmap.is_empty() {
         print_colorful_message(
             None,
             PrintType::Info,
             file!().to_string(),
             line!().to_string(),
-            "providers initialization disabled".to_owned(),
+            format!("providers_json_local_data success_hashmap is empty"),
         );
-        return; //remove later
+        return;
     }
+    providers_json_local_data_hashmap = success_hashmap;
 
     if CONFIG.mongo_enable_initialization {
         let result = mongo_insert_data(
