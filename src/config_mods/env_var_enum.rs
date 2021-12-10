@@ -26,6 +26,8 @@ pub enum EnvVar {
     RedditUsername,
     RedditPassword,
 
+    DbsEnableInitialization,
+
     MongoFirstHandleUrlPart,
     MongoSecondHandleUrlPart,
     MongoThirdHandleUrlPart,

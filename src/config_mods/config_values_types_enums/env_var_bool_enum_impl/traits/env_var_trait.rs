@@ -10,6 +10,8 @@ use crate::traits::env_var_trait::EnvVarTrait;
 impl EnvVarTrait for EnvBoolVar {
     fn get_env_name(&self) -> &'static str {
         match &self {
+            Self::DbsEnableInitialization => EnvVar::DbsEnableInitialization.get_env_name(),
+            
             Self::MongoEnableInitialization => EnvVar::MongoEnableInitialization.get_env_name(),
             Self::MongoEnableInitializationForProviders => {
                 EnvVar::MongoEnableInitializationForProviders.get_env_name()

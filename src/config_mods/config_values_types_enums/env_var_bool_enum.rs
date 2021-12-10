@@ -17,6 +17,8 @@ use strum_macros::EnumIter;
     Copy,
 )]
 pub enum EnvBoolVar {
+    DbsEnableInitialization,
+
     MongoEnableInitialization,
     MongoEnableInitializationForProviders,
     MongoEnableInitializationForArxiv,

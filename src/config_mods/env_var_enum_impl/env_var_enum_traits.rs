@@ -19,6 +19,8 @@ impl EnvVarTrait for EnvVar {
             Self::RedditUsername => "REDDIT_USERNAME",
             Self::RedditPassword => "REDDIT_PASSWORD",
 
+            Self::DbsEnableInitialization => "DBS_ENABLE_INITIALIZATION",
+
             Self::MongoFirstHandleUrlPart => "MONGO_FIRST_HANDLE_URL_PART",
             Self::MongoSecondHandleUrlPart => "MONGO_SECOND_HANDLE_URL_PART",
             Self::MongoThirdHandleUrlPart => "MONGO_THIRD_HANDLE_URL_PART",

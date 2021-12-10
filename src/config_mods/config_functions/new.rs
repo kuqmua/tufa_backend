@@ -27,6 +27,8 @@ impl ConfigStruct {
             reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
             reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
 
+            dbs_enable_initialization: bool_vars[&EnvBoolVar::DbsEnableInitialization],
+
             mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
                 .clone(),
             mongo_second_handle_url_part: string_vars[&EnvStringVar::MongoSecondHandleUrlPart]

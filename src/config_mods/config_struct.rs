@@ -11,6 +11,8 @@ pub struct ConfigStruct {
     pub reddit_username: String,
     pub reddit_password: String,
 
+    pub dbs_enable_initialization: bool,
+
     pub mongo_first_handle_url_part: String,
     pub mongo_second_handle_url_part: String,
     pub mongo_third_handle_url_part: String,
