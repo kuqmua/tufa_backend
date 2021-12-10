@@ -1,10 +1,10 @@
 use crate::providers::get_providers_posts::get_providers_posts;
+use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 use std::time::Instant;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
-use crate::config_mods::lazy_static_config::CONFIG;
 
 extern crate num_cpus;
 
@@ -63,6 +63,16 @@ pub fn entry() {
                 );
                 return;
             }
+            if ProviderKind::get_enabled_providers_vec().is_empty() {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    "all providers are disabled, get_providers_posts will not run".to_owned(),
+                );
+                return;
+            };
             runtime.block_on(get_providers_posts());
         }
     }

@@ -67,16 +67,6 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing)]
 pub async fn get_providers_posts() {
-    if ProviderKind::get_enabled_providers_vec().is_empty() {
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
-            "all providers are disabled".to_owned(),
-        );
-        return;
-    };
     let resource = Resource::Mongodb;
     let (providers_link_parts, something) = get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
     if providers_link_parts.is_empty() {
