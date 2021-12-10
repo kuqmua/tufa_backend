@@ -53,7 +53,16 @@ pub fn entry() {
             return;
         }
         Ok(runtime) => {
-            runtime.block_on(init_dbs());
+            if let Err(e) = runtime.block_on(init_dbs()) {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("init dbs error {:#?}", e),
+                );
+                return;
+            }
             runtime.block_on(get_providers_posts());
         }
     }

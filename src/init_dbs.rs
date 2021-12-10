@@ -18,6 +18,7 @@ use crate::providers::get_providers_json_local_data_processed_error::GetProvider
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+#[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
     GetProvidersJsonLocalDataSuccessIsEmpty,
