@@ -106,9 +106,7 @@ impl ProviderKindTrait for ProviderKind {
     fn get_init_local_data_file_path(&self) -> String {
         format!(
             "{}{}_link_parts{}",
-            CONFIG.path_to_provider_link_parts_folder,
-            self,
-            CONFIG.log_file_extension
+            CONFIG.path_to_provider_link_parts_folder, self, CONFIG.log_file_extension
         )
     }
 

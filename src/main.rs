@@ -179,6 +179,7 @@ mod traits {
 }
 mod check_new_posts_threads_parts;
 mod entry;
+mod init_dbs;
 mod providers_new_posts_check;
 mod tokio_wrapper;
 mod write_error_posts_wrapper;
