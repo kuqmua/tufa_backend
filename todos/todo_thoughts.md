@@ -505,4 +505,11 @@ https://blog.erebe.dev/blog/debug-rust-aplication-inside-container/index.html
 read how to write async tests
 https://docs.rs/tokio/1.14.0/tokio/attr.test.html
 <br/>
+  
+### -------------------
+Checking Unused Dependencies in a Rust Project with Github Actions
+https://erayerdin.com/checking-unused-dependencies-in-a-rust-project-with-github-actions-ckwm3yov901cwlvs1h48z54xi
+<br/>
+    
+    
 
