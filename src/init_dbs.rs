@@ -39,49 +39,60 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         return Err(InitDbsError::GetProvidersJsonLocalDataSuccessIsEmpty);
     }
     providers_json_local_data_hashmap = success_hashmap;
-    //todo: make it parrallel
-    if CONFIG.mongo_enable_initialization {
-        match mongo_insert_data(
+    let (
+        mongo_insert_data_option_result,
+        postgres_insert_data_option_result
+    ) = tokio::join!( async {
+        if CONFIG.mongo_enable_initialization {
+            return None;
+        }
+        Some(mongo_insert_data(
             &CONFIG.mongo_providers_logs_db_name,
-            providers_json_local_data_hashmap,
-        )
-        .await
-        {
-            PutDataInMongoResult::Success => (),
-            PutDataInMongoResult::PartialSuccess => {
-                return Err(InitDbsError::MongoInsertDataPartial)
+            providers_json_local_data_hashmap.clone(),//clone coz move in postgres part
+        ).await)
+    },
+        async  {
+            if CONFIG.postgres_enable_initialization {
+                return None;
             }
+            Some(true)
+            //todo
+                // let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
+                // match result_postgres_establish_connection {
+                //     Ok(pg_connection) => {
+                //         let _ = NewPost::insert_into_postgres(
+                //             &pg_connection,
+                //             NewPost {
+                //                 title: "post_title",
+                //                 body: "post_body",
+                //             },
+                //         );
+                //     }
+                //     Err(e) => {
+                //         print_colorful_message(
+                //             None,
+                //             PrintType::WarningHigh,
+                //             file!().to_string(),
+                //             line!().to_string(),
+                //             format!(
+                //                 "PgConnection::establish {} error: {:#?}",
+                //                 &postgres_get_db_url(),
+                //                 e
+                //             ),
+                //         );
+                //     }
+                // }
+        }
+    );
+    if let Some(result) = mongo_insert_data_option_result {
+        match result {
+            PutDataInMongoResult::Success => (),
+            PutDataInMongoResult::PartialSuccess => return Err(InitDbsError::MongoInsertDataPartial),
             PutDataInMongoResult::Failure => return Err(InitDbsError::MongoInsertDataFailure),
         }
     }
-    //todo: make it parrallel
-    if CONFIG.postgres_enable_initialization {
-        //todo
-        // let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
-        // match result_postgres_establish_connection {
-        //     Ok(pg_connection) => {
-        //         let _ = NewPost::insert_into_postgres(
-        //             &pg_connection,
-        //             NewPost {
-        //                 title: "post_title",
-        //                 body: "post_body",
-        //             },
-        //         );
-        //     }
-        //     Err(e) => {
-        //         print_colorful_message(
-        //             None,
-        //             PrintType::WarningHigh,
-        //             file!().to_string(),
-        //             line!().to_string(),
-        //             format!(
-        //                 "PgConnection::establish {} error: {:#?}",
-        //                 &postgres_get_db_url(),
-        //                 e
-        //             ),
-        //         );
-        //     }
-        // }
+    if let Some(_result) = postgres_insert_data_option_result {
+        println!("todo postgres_insert_data_option_result");
     }
     Ok(())
 }
