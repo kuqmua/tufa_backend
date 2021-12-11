@@ -1,3 +1,4 @@
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::get_providers_posts::get_providers_posts;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
@@ -53,15 +54,17 @@ pub fn entry() {
             return;
         }
         Ok(runtime) => {
-            if let Err(e) = runtime.block_on(init_dbs()) {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("init dbs error {:#?}", e),
-                );
-                return;
+            if CONFIG.dbs_enable_initialization {
+                if let Err(e) = runtime.block_on(init_dbs()) {
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!("init dbs error {:#?}", e),
+                    );
+                    return;
+                }
             }
             if ProviderKind::get_enabled_providers_vec().is_empty() {
                 print_colorful_message(
