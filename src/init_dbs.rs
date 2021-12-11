@@ -35,7 +35,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         //todo: maybe add some logic for partial success?
         return Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap));
     }
-    if !success_hashmap.is_empty() {
+    if success_hashmap.is_empty() {
         return Err(InitDbsError::GetProvidersJsonLocalDataSuccessIsEmpty);
     }
     providers_json_local_data_hashmap = success_hashmap;
