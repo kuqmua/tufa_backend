@@ -17,6 +17,9 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
+use crate::postgres_integration::schema::providers_link_parts::dsl::*;
+
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
@@ -54,16 +57,23 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                 PgConnection::establish(&postgres_get_db_url());
             match result_postgres_establish_connection {
                 Ok(pg_connection) => {
-                    let f = InsertableLinkPart::insert_into_postgres(
-                        &pg_connection,
-                        InsertableLinkPart {
-                            link_part: "post_title",
-                        },
-                    );
-                    match f {
-                        Ok(_) => println!("ok"),
-                        Err(e) => println!("rrr {:#?}", e),
-                    }
+                    let results = providers_link_parts
+                        .limit(5)
+                        .load::<QueryableLinkPart>(&pg_connection)
+                        .expect("Error loading providers_link_parts");
+
+                    //
+                    println!("work work {:#?}", results);
+                    // let f = InsertableLinkPart::insert_into_postgres(
+                    //     &pg_connection,
+                    //     InsertableLinkPart {
+                    //         link_part: "post_title",
+                    //     },
+                    // );
+                    // match f {
+                    //     Ok(_) => println!("ok"),
+                    //     Err(e) => println!("rrr {:#?}", e),
+                    // }
                 }
                 Err(e) => {
                     print_colorful_message(
