@@ -1,4 +1,4 @@
-use crate::postgres_integration::models::queryable::post::QueryableLinkPart;
+use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 use crate::postgres_integration::schema::providers_link_parts;
 
 use diesel::pg::PgConnection;

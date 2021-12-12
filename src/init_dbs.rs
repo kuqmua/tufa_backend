@@ -7,7 +7,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::{mongo_insert_data, PutDataInMongoResult};
 
-use crate::postgres_integration::models::insertable::new_post::InsertableLinkPart;
+use crate::postgres_integration::models::insertable::queryable_link_part::InsertableLinkPart;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
