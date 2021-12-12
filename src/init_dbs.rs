@@ -25,7 +25,18 @@ pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
     MongoInsertDataPartial, //todo: add values in here
     MongoInsertDataFailure,
-    //todo: Postgres
+    PostgresLoadingProvidersLinkParts(diesel::result::Error),
+    PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
+    PostgresInsertPosts(diesel::result::Error),
+    PostgresEstablishConnection(ConnectionError),
+}
+
+#[derive(Debug)]
+pub enum PostgresInitDbError {
+    LoadingProvidersLinkParts(diesel::result::Error),
+    ProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
+    InsertPosts(diesel::result::Error),
+    EstablishConnection(ConnectionError),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -56,40 +67,34 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             let result_postgres_establish_connection =
                 PgConnection::establish(&postgres_get_db_url());
             match result_postgres_establish_connection {
+                Err(e) => Some(PostgresInitDbError::EstablishConnection(e)),
                 Ok(pg_connection) => {
-                    let results = providers_link_parts
-                        .limit(5)
-                        .load::<QueryableLinkPart>(&pg_connection)
-                        .expect("Error loading providers_link_parts");
-
-                    //
-                    println!("work work {:#?}", results);
-                    // let f = InsertableLinkPart::insert_into_postgres(
-                    //     &pg_connection,
-                    //     InsertableLinkPart {
-                    //         link_part: "post_title",
-                    //     },
-                    // );
-                    // match f {
-                    //     Ok(_) => println!("ok"),
-                    //     Err(e) => println!("rrr {:#?}", e),
-                    // }
-                }
-                Err(e) => {
-                    print_colorful_message(
-                        None,
-                        PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!(
-                            "PgConnection::establish {} error: {:#?}",
-                            &postgres_get_db_url(),
-                            e
-                        ),
-                    );
+                    let result = providers_link_parts
+                        // .filter()
+                        // .limit(5)
+                        .load::<QueryableLinkPart>(&pg_connection);
+                    match result {
+                        Err(e) => Some(PostgresInitDbError::LoadingProvidersLinkParts(e)),
+                        Ok(vec) => {
+                            if !vec.is_empty() {
+                                return Some(PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(
+                                    vec,
+                                ));
+                            }
+                            let insertion_result = InsertableLinkPart::insert_into_postgres(
+                                &pg_connection,
+                                InsertableLinkPart {
+                                    link_part: "post_title", //todo
+                                },
+                            );
+                            match insertion_result {
+                                Err(e) => Some(PostgresInitDbError::InsertPosts(e)),
+                                Ok(_) => None,
+                            }
+                        }
+                    }
                 }
             }
-            Some(true)
         }
     );
     if let Some(result) = mongo_insert_data_option_result {
@@ -101,8 +106,22 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             PutDataInMongoResult::Failure => return Err(InitDbsError::MongoInsertDataFailure),
         }
     }
-    if let Some(_result) = postgres_insert_data_option_result {
+    if let Some(result) = postgres_insert_data_option_result {
         println!("todo postgres_insert_data_option_result");
+        match result {
+            PostgresInitDbError::LoadingProvidersLinkParts(e) => {
+                return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
+            }
+            PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
+                return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
+            }
+            PostgresInitDbError::InsertPosts(e) => {
+                return Err(InitDbsError::PostgresInsertPosts(e));
+            }
+            PostgresInitDbError::EstablishConnection(e) => {
+                return Err(InitDbsError::PostgresEstablishConnection(e));
+            }
+        }
     }
     Ok(())
 }
