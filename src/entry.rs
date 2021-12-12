@@ -24,7 +24,14 @@ pub fn entry() {
         line!().to_string(),
         format!("We are on a multicore system with {} CPUs", cpus),
     );
-    if cpus <= 0 {
+    if cpus == 0 {
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            file!().to_string(),
+            line!().to_string(),
+            format!("CPU number == {}, aborting", cpus),
+        );
         return;
     }
     if let Err(e) = check_net_wrapper() {
