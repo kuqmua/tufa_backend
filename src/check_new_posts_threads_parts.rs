@@ -16,7 +16,6 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers_new_posts_check::providers_new_posts_check;
 
 use crate::helpers::resource::ResourceError;
-use crate::traits::env_var_bool_trait::EnvVarBoolTrait;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

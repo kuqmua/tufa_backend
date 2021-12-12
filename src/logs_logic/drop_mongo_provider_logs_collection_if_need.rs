@@ -7,14 +7,13 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::lazy_static_config::CONFIG;
-
-use crate::traits::env_var_bool_trait::EnvVarBoolTrait;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
     provider_kind: ProviderKind,
     mongo_url: String,
 ) -> (ProviderKind, Result<(), MongoDropEmptyCollectionError>) {
-    if provider_kind.is_cleaning_warning_logs_db_collections_in_mongo_enabled() {
+    if provider_kind.is_cleaning_warning_logs_directory_enabled() {
         let db_collection_name = &format!(
             "{:#?}{}",
             provider_kind, &CONFIG.mongo_providers_logs_db_collection_handle_second_part

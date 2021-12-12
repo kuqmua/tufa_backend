@@ -12,7 +12,6 @@ use crate::providers::provider_kind_enum::{CleanLogsDirError, ProviderKind, Remo
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
-use crate::traits::env_var_bool_trait::EnvVarBoolTrait;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
@@ -26,6 +25,239 @@ use crate::providers::providers_info::links::generate_twitter_links::generate_tw
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 
 impl ProviderKindTrait for ProviderKind {
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_initialization_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.mongo_enable_initialization_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_initialization_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_initialization_for_github,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_initialization_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.mongo_enable_initialization_for_twitter,
+            ProviderKind::Reddit => CONFIG.mongo_enable_initialization_for_reddit,
+            ProviderKind::Habr => CONFIG.mongo_enable_initialization_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_write_error_logs_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.mongo_enable_write_error_logs_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_write_error_logs_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_write_error_logs_for_github,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_write_error_logs_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.mongo_enable_write_error_logs_for_twitter,
+            ProviderKind::Reddit => CONFIG.mongo_enable_write_error_logs_for_reddit,
+            ProviderKind::Habr => CONFIG.mongo_enable_write_error_logs_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_cleaning_warning_logs_db_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_cleaning_warning_logs_db_for_github,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.mongo_enable_cleaning_warning_logs_db_for_twitter,
+            ProviderKind::Reddit => CONFIG.mongo_enable_cleaning_warning_logs_db_for_reddit,
+            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_cleaning_warning_logs_db_collections_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_arxiv
+            }
+            ProviderKind::Biorxiv => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_biorxiv
+            }
+            ProviderKind::Github => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_github
+            }
+            ProviderKind::Medrxiv => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_medrxiv
+            }
+            ProviderKind::Twitter => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_twitter
+            }
+            ProviderKind::Reddit => {
+                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_reddit
+            }
+            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_mongo_link_parts_randomize_order_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_enable_link_parts_randomize_order_for_github,
+            ProviderKind::Medrxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.mongo_enable_link_parts_randomize_order_for_twitter,
+            ProviderKind::Reddit => CONFIG.mongo_enable_link_parts_randomize_order_for_reddit,
+            ProviderKind::Habr => CONFIG.mongo_enable_link_parts_randomize_order_for_habr,
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_postgres_initialization_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.postgres_enable_initialization_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.postgres_enable_initialization_for_biorxiv,
+            ProviderKind::Github => CONFIG.postgres_enable_initialization_for_github,
+            ProviderKind::Medrxiv => CONFIG.postgres_enable_initialization_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.postgres_enable_initialization_for_twitter,
+            ProviderKind::Reddit => CONFIG.postgres_enable_initialization_for_reddit,
+            ProviderKind::Habr => CONFIG.postgres_enable_initialization_for_habr,
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_write_error_logs_in_local_folder_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_write_error_logs_in_local_folder_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_write_error_logs_in_local_folder_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_write_error_logs_in_local_folder_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_write_error_logs_in_local_folder_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_write_error_logs_in_local_folder_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_write_error_logs_in_local_folder_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_write_error_logs_in_local_folder_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_cleaning_warning_logs_directory_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_cleaning_warning_logs_directory_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_cleaning_warning_logs_directory_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_cleaning_warning_logs_directory_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_cleaning_warning_logs_directory_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_cleaning_warning_logs_directory_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_cleaning_warning_logs_directory_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_cleaning_warning_logs_directory_for_habr,
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_biorxiv,
+            ProviderKind::Github => CONFIG.enable_github,
+            ProviderKind::Medrxiv => CONFIG.enable_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_twitter,
+            ProviderKind::Reddit => CONFIG.enable_reddit,
+            ProviderKind::Habr => CONFIG.enable_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_prints_arxiv, //todo add for
+            ProviderKind::Biorxiv => CONFIG.enable_prints_biorxiv, //todo add for
+            ProviderKind::Github => CONFIG.enable_prints_github, //todo add for
+            ProviderKind::Medrxiv => CONFIG.enable_prints_medrxiv, //todo add for
+            ProviderKind::Twitter => CONFIG.enable_prints_twitter, //todo add for
+            ProviderKind::Reddit => CONFIG.enable_prints_reddit, //todo add for
+            ProviderKind::Habr => CONFIG.enable_prints_habr,   //todo add for
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_warning_high_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_warning_high_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_warning_high_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_warning_high_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_warning_high_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_warning_high_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_warning_high_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_warning_high_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_warning_low_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_warning_low_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_warning_low_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_warning_low_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_warning_low_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_warning_low_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_warning_low_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_warning_low_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_success_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_success_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_success_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_success_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_success_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_success_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_success_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_success_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_partial_success_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_partial_success_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_partial_success_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_partial_success_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_partial_success_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_partial_success_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_partial_success_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_partial_success_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_error_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_error_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_error_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_error_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_error_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_error_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_error_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_error_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_time_measurement_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_time_measurement_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_time_measurement_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_time_measurement_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_time_measurement_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_time_measurement_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_time_measurement_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_time_measurement_prints_for_habr,
+        }
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_info_prints_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_info_prints_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_info_prints_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_info_prints_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_info_prints_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_info_prints_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_info_prints_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_info_prints_for_habr,
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn is_links_limit_enabled(&self) -> bool {
+        match self {
+            ProviderKind::Arxiv => CONFIG.enable_links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.enable_links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.enable_links_limit_for_github,
+            ProviderKind::Medrxiv => CONFIG.enable_links_limit_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.enable_links_limit_for_twitter,
+            ProviderKind::Reddit => CONFIG.enable_links_limit_for_reddit,
+            ProviderKind::Habr => CONFIG.enable_links_limit_for_habr,
+        }
+    }
+    ///
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_check_link(&self) -> &'static str {
         match self {
@@ -67,8 +299,8 @@ impl ProviderKindTrait for ProviderKind {
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
-        if self.is_link_limits_enabled() {
-            if self.is_randomize_order_mongo_link_parts_enabled() {
+        if CONFIG.enable_links_limit {
+            if self.is_mongo_link_parts_randomize_order_enabled() {
                 Some(doc! { "$sample" : {"size": self.get_links_limit_for_provider() }})
             } else {
                 Some(doc! { "$limit" : self.get_links_limit_for_provider() })
@@ -352,7 +584,7 @@ impl ProviderKindTrait for ProviderKind {
         let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
             HashMap::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_cleaning_warning_logs_directory_enable())
+            .filter(|provider_kind| provider_kind.is_cleaning_warning_logs_directory_enabled())
         {
             if let Err(e) = provider_kind.remove_logs_directory() {
                 result_hashmap.insert(provider_kind, e);
