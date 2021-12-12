@@ -137,6 +137,19 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_check_link(&self) -> &'static str {
+        match self {
+            ProviderKind::Arxiv => &CONFIG.arxiv_check_link,
+            ProviderKind::Biorxiv => &CONFIG.biorxiv_check_link,
+            ProviderKind::Github => &CONFIG.github_check_link,
+            ProviderKind::Medrxiv => &CONFIG.medrxiv_check_link,
+            ProviderKind::Twitter => &CONFIG.twitter_check_link,
+            ProviderKind::Reddit => &CONFIG.reddit_check_link,
+            ProviderKind::Habr => &CONFIG.habr_check_link,
+        }
+    }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => CONFIG.enable_arxiv,
@@ -257,18 +270,26 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => CONFIG.enable_links_limit_for_habr,
         }
     }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_links_limit(&self) -> i64 {
+        match self {
+            ProviderKind::Arxiv => CONFIG.links_limit_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.links_limit_for_biorxiv,
+            ProviderKind::Github => CONFIG.links_limit_for_github,
+            ProviderKind::Habr => CONFIG.links_limit_for_habr,
+            ProviderKind::Medrxiv => CONFIG.links_limit_for_medrxiv,
+            ProviderKind::Reddit => CONFIG.links_limit_for_reddit,
+            ProviderKind::Twitter => CONFIG.links_limit_for_twitter,
+        }
+    }
     ///
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_check_link(&self) -> &'static str {
-        match self {
-            ProviderKind::Arxiv => &CONFIG.arxiv_check_link,
-            ProviderKind::Biorxiv => &CONFIG.biorxiv_check_link,
-            ProviderKind::Github => &CONFIG.github_check_link,
-            ProviderKind::Medrxiv => &CONFIG.medrxiv_check_link,
-            ProviderKind::Twitter => &CONFIG.twitter_check_link,
-            ProviderKind::Reddit => &CONFIG.reddit_check_link,
-            ProviderKind::Habr => &CONFIG.habr_check_link,
+    fn into_vec() -> Vec<ProviderKind> {
+        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter() {
+            provider_kind_vec.push(provider_kind);
         }
+        provider_kind_vec
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -285,25 +306,12 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_links_limit_for_provider(&self) -> i64 {
-        match self {
-            ProviderKind::Arxiv => CONFIG.links_limit_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.links_limit_for_biorxiv,
-            ProviderKind::Github => CONFIG.links_limit_for_github,
-            ProviderKind::Habr => CONFIG.links_limit_for_habr,
-            ProviderKind::Medrxiv => CONFIG.links_limit_for_medrxiv,
-            ProviderKind::Reddit => CONFIG.links_limit_for_reddit,
-            ProviderKind::Twitter => CONFIG.links_limit_for_twitter,
-        }
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
         if CONFIG.enable_links_limit {
             if self.is_mongo_link_parts_randomize_order_enabled() {
-                Some(doc! { "$sample" : {"size": self.get_links_limit_for_provider() }})
+                Some(doc! { "$sample" : {"size": self.get_links_limit() }})
             } else {
-                Some(doc! { "$limit" : self.get_links_limit_for_provider() })
+                Some(doc! { "$limit" : self.get_links_limit() })
             }
         } else {
             None
@@ -548,15 +556,6 @@ impl ProviderKindTrait for ProviderKind {
         let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
         for provider_kind in ProviderKind::iter() {
             provider_kind_vec.push((format!("{}", provider_kind), provider_kind));
-        }
-        provider_kind_vec
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_vec() -> Vec<ProviderKind> {
-        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            provider_kind_vec.push(provider_kind);
         }
         provider_kind_vec
     }

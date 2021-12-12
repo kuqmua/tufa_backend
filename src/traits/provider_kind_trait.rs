@@ -18,6 +18,8 @@ pub trait ProviderKindTrait {
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool;
 
+    fn get_check_link(&self) -> &'static str;
+
     fn is_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
     fn is_warning_high_prints_enabled(&self) -> bool;
@@ -29,10 +31,12 @@ pub trait ProviderKindTrait {
     fn is_info_prints_enabled(&self) -> bool;
 
     fn is_links_limit_enabled(&self) -> bool;
+    fn get_links_limit(&self) -> i64;
     ///
-    fn get_check_link(&self) -> &'static str;
+    fn into_vec() -> Vec<Self>
+    where
+        Self: Sized;
     fn get_item_handle(&self) -> Option<&'static str>;
-    fn get_links_limit_for_provider(&self) -> i64;
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document>;
     fn get_mongo_log_collection_name(&self) -> String;
     fn get_path_to_logs_directory(&self) -> String;
@@ -66,9 +70,6 @@ pub trait ProviderKindTrait {
     where
         Self: Sized;
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, Self)>
-    where
-        Self: Sized;
-    fn into_vec() -> Vec<Self>
     where
         Self: Sized;
     fn remove_existing_providers_logs_directories() -> Result<(), HashMap<Self, RemoveDirError>>
