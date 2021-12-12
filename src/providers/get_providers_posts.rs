@@ -14,7 +14,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
 
-use crate::postgres_integration::models::insertable::new_post::NewPost;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::provider_kind_enum::ProviderKind;

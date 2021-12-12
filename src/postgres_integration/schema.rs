@@ -1,8 +1,6 @@
 table! {
-    posts (id) {
+    providers_link_parts (id) {
         id -> Integer,
-        title -> Text,
-        body -> Text,
-        published -> Bool,
+        link_part -> Text,
     }
 }

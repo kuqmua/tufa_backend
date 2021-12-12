@@ -1,7 +1,5 @@
 #[derive(Queryable)]
-pub struct Post {
+pub struct QueryableLinkPart {
     pub id: i32,
-    pub title: String,
-    pub body: String,
-    pub published: bool,
+    pub link_part: String,
 }

@@ -1,22 +1,21 @@
 use std::collections::HashMap;
-// use std::thread;
 
-// use diesel::pg::PgConnection;
-// use diesel::prelude::*;
-// use futures::executor::block_on;
-
-// use crate::helpers::resource::{Resource, ResourceError};
+use diesel::pg::PgConnection;
+use diesel::prelude::*;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::{mongo_insert_data, PutDataInMongoResult};
 
-// use crate::postgres_integration::models::insertable::new_post::NewPost;
-// use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+use crate::postgres_integration::models::insertable::new_post::InsertableLinkPart;
+use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 
 #[derive(Debug)]
 pub enum InitDbsError {
@@ -36,7 +35,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     providers_json_local_data_hashmap = success_hashmap;
     let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
         async {
-            if CONFIG.mongo_enable_initialization {
+            if !CONFIG.mongo_enable_initialization {
                 return None;
             }
             Some(
@@ -48,36 +47,39 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             )
         },
         async {
-            if CONFIG.postgres_enable_initialization {
+            if !CONFIG.postgres_enable_initialization {
                 return None;
             }
+            let result_postgres_establish_connection =
+                PgConnection::establish(&postgres_get_db_url());
+            match result_postgres_establish_connection {
+                Ok(pg_connection) => {
+                    let f = InsertableLinkPart::insert_into_postgres(
+                        &pg_connection,
+                        InsertableLinkPart {
+                            link_part: "post_title",
+                        },
+                    );
+                    match f {
+                        Ok(_) => println!("ok"),
+                        Err(e) => println!("rrr {:#?}", e),
+                    }
+                }
+                Err(e) => {
+                    print_colorful_message(
+                        None,
+                        PrintType::WarningHigh,
+                        file!().to_string(),
+                        line!().to_string(),
+                        format!(
+                            "PgConnection::establish {} error: {:#?}",
+                            &postgres_get_db_url(),
+                            e
+                        ),
+                    );
+                }
+            }
             Some(true)
-            //todo
-            // let result_postgres_establish_connection = PgConnection::establish(&postgres_get_db_url());
-            // match result_postgres_establish_connection {
-            //     Ok(pg_connection) => {
-            //         let _ = NewPost::insert_into_postgres(
-            //             &pg_connection,
-            //             NewPost {
-            //                 title: "post_title",
-            //                 body: "post_body",
-            //             },
-            //         );
-            //     }
-            //     Err(e) => {
-            //         print_colorful_message(
-            //             None,
-            //             PrintType::WarningHigh,
-            //             file!().to_string(),
-            //             line!().to_string(),
-            //             format!(
-            //                 "PgConnection::establish {} error: {:#?}",
-            //                 &postgres_get_db_url(),
-            //                 e
-            //             ),
-            //         );
-            //     }
-            // }
         }
     );
     if let Some(result) = mongo_insert_data_option_result {
