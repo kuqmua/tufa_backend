@@ -31,7 +31,6 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     let providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>;
     let (success_hashmap, errors_hashmap) = ProviderKind::get_providers_json_local_data_processed();
     if !errors_hashmap.is_empty() {
-        //todo: maybe add some logic for partial success?
         return Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap));
     }
     providers_json_local_data_hashmap = success_hashmap;
