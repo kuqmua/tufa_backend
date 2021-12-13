@@ -11,7 +11,7 @@ extern crate num_cpus;
 
 use crate::check_net::check_net_wrapper::check_net_wrapper;
 
-use crate::init_dbs::init_dbs;
+use crate::init_dbs::{init_dbs, InitDbsError};
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
@@ -70,7 +70,15 @@ pub fn entry() {
                         line!().to_string(),
                         format!("init dbs error {:#?}", e),
                     );
-                    return;
+                    match e {
+                        InitDbsError::GetProvidersJsonLocalData(_) => return,
+                        InitDbsError::MongoInsertDataPartial => return,
+                        InitDbsError::MongoInsertDataFailure => return,
+                        InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,
+                        InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(_) => (),
+                        InitDbsError::PostgresInsertPosts(_) => return,
+                        InitDbsError::PostgresEstablishConnection(_) => return,
+                    }
                 }
             }
             if ProviderKind::get_enabled_providers_vec().is_empty() {

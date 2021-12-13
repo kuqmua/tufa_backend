@@ -7,15 +7,12 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_insert_data::{mongo_insert_data, PutDataInMongoResult};
 
-use crate::postgres_integration::models::insertable::queryable_link_part::InsertableLinkPart;
+use crate::postgres_integration::models::insertable::insertable_link_part::InsertableLinkPart;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 use crate::postgres_integration::schema::providers_link_parts::dsl::*;
