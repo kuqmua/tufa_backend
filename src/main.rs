@@ -119,7 +119,7 @@ pub mod mongo_integration {
 pub mod postgres_integration {
     pub mod models {
         pub mod insertable {
-            pub mod queryable_link_part;
+            pub mod insertable_link_part;
         }
         pub mod queryable {
             pub mod queryable_link_part;
