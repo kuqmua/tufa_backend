@@ -5,8 +5,6 @@ use diesel::prelude::*;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
-use crate::mongo_integration::mongo_insert_data::{mongo_insert_data, PutDataInMongoResult};
-
 use crate::postgres_integration::models::insertable::insertable_link_part::InsertableLinkPart;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
@@ -24,9 +22,7 @@ pub enum InitDbsError {
     MongoClientWithOptions(mongodb::error::Error),
     MongoCollectionCountDocuments(mongodb::error::Error),
     MongoCollectionIsNotEmpty((ProviderKind, u64)),
-    
-    MongoInsertDataPartial, //todo: add values in here
-    MongoInsertDataFailure,
+    MongoCollectionInsertMany(mongodb::error::Error),
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
     PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
     PostgresInsertPosts(diesel::result::Error),
@@ -38,7 +34,8 @@ pub enum MongoInitDbError {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
     CollectionCountDocuments(mongodb::error::Error),
-    CollectionIsNotEmpty((ProviderKind, u64))
+    CollectionIsNotEmpty((ProviderKind, u64)),
+    CollectionInsertMany(mongodb::error::Error),
 }
 
 #[derive(Debug)]
@@ -58,9 +55,6 @@ use mongodb::{
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
-pub struct ProviderLinkMongoItem {
-    link_part: String
-}
 ////////////////////////////////
 
 #[deny(clippy::indexing_slicing)]
@@ -76,7 +70,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
         async {
             if !CONFIG.mongo_enable_initialization {
-                return None;
+                return None;//todo: remove option into result
             }
             let client_options_result = ClientOptions::parse(&mongo_get_db_url()).await;
             match client_options_result {
@@ -88,33 +82,34 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                         Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
                         Ok(client) => {
                             let db = client.database(&CONFIG.mongo_providers_logs_db_name);
-                            for (pk, data_vec) in providers_json_local_data_hashmap {
-                                let collection = db.collection::<ProviderLinkMongoItem>(&format!("{}",pk));
+                            for (pk, _) in &providers_json_local_data_hashmap {
+                                let collection = db.collection::<Document>(&format!("{}",pk));
                                 match collection.count_documents(None, None).await {//todo filter
                                     Err(e) => return Some(MongoInitDbError::CollectionCountDocuments(e)),
                                     Ok(documents_number) => {
                                         if documents_number > 0 {
-                                            return Some(MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)));
+                                            return Some(MongoInitDbError::CollectionIsNotEmpty((*pk, documents_number)));
                                         }
                                     },
                                 }
                             }
-                            todo!()
+                            for (pk, data_vec) in providers_json_local_data_hashmap {
+                                let collection = db.collection(&format!("{}",pk));
+                                let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
+                                match collection.insert_many(docs, None).await {
+                                    Err(e) => return Some(MongoInitDbError::CollectionInsertMany(e)),
+                                    Ok(_) => (),
+                                }
+                            }
+                            None//todo: remove option into result
                         },
                     }
                 },
             }
-            // Some(
-            //     mongo_insert_data(
-            //         &CONFIG.mongo_providers_logs_db_name,
-            //         providers_json_local_data_hashmap, //clone coz move in postgres part
-            //     )
-            //     .await,
-            // )
         },
         async {
             if !CONFIG.postgres_enable_initialization {
-                return None;
+                return None;//todo: remove option into result
             }
             match PgConnection::establish(&postgres_get_db_url()) {
                 Err(e) => Some(PostgresInitDbError::EstablishConnection(e)),
@@ -149,7 +144,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                             );
                             match insertion_result {
                                 Err(e) => Some(PostgresInitDbError::InsertPosts(e)),
-                                Ok(_) => None,
+                                Ok(_) => None,//todo: remove option into result
                             }
                         }
                     }
@@ -163,11 +158,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
             MongoInitDbError::CollectionCountDocuments(e) => return Err(InitDbsError::MongoCollectionCountDocuments(e)),
             MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, documents_number))),
-            // PutDataInMongoResult::Success => (),
-            // PutDataInMongoResult::PartialSuccess => {
-            //     return Err(InitDbsError::MongoInsertDataPartial)
-            // }
-            // PutDataInMongoResult::Failure => return Err(InitDbsError::MongoInsertDataFailure),
+            MongoInitDbError::CollectionInsertMany(e) => return Err(InitDbsError::MongoCollectionInsertMany(e))
         }
     }
     if let Some(result) = postgres_insert_data_option_result {
