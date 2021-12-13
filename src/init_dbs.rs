@@ -20,6 +20,8 @@ use crate::postgres_integration::schema::providers_link_parts::dsl::*;
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
+    MongoClientOptionsParse(mongodb::error::Error),
+    MongoClientWithOptions(mongodb::error::Error),
     MongoInsertDataPartial, //todo: add values in here
     MongoInsertDataFailure,
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
@@ -29,12 +31,28 @@ pub enum InitDbsError {
 }
 
 #[derive(Debug)]
+pub enum MongoInitDbError {
+    ClientOptionsParse(mongodb::error::Error),
+    ClientWithOptions(mongodb::error::Error)
+}
+
+#[derive(Debug)]
 pub enum PostgresInitDbError {
     LoadingProvidersLinkParts(diesel::result::Error),
     ProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
     InsertPosts(diesel::result::Error),
     EstablishConnection(ConnectionError),
 }
+
+////////////////////////////////
+use mongodb::{
+    bson::{doc, Document},
+    options::ClientOptions,
+    Client,
+};
+
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+////////////////////////////////
 
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs() -> Result<(), InitDbsError> {
@@ -51,21 +69,38 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             if !CONFIG.mongo_enable_initialization {
                 return None;
             }
-            Some(
-                mongo_insert_data(
-                    &CONFIG.mongo_providers_logs_db_name,
-                    providers_json_local_data_hashmap, //clone coz move in postgres part
-                )
-                .await,
-            )
+            let client_options_result = ClientOptions::parse(&mongo_get_db_url()).await;
+            match client_options_result {
+                Err(e) => {
+                    return Some(MongoInitDbError::ClientOptionsParse(e));
+                },
+                Ok(client_options) => {
+                    match Client::with_options(client_options) {
+                        Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
+                        Ok(client) => {
+                            let db = client.database(&CONFIG.mongo_providers_logs_db_name);
+                            // let collection = db.collection(&format!(
+                            //     "{}{}",
+                            //     provider_kind, CONFIG.mongo_providers_logs_db_collection_handle_second_part
+                            // ));
+                            todo!()
+                        },
+                    }
+                },
+            }
+            // Some(
+            //     mongo_insert_data(
+            //         &CONFIG.mongo_providers_logs_db_name,
+            //         providers_json_local_data_hashmap, //clone coz move in postgres part
+            //     )
+            //     .await,
+            // )
         },
         async {
             if !CONFIG.postgres_enable_initialization {
                 return None;
             }
-            let result_postgres_establish_connection =
-                PgConnection::establish(&postgres_get_db_url());
-            match result_postgres_establish_connection {
+            match PgConnection::establish(&postgres_get_db_url()) {
                 Err(e) => Some(PostgresInitDbError::EstablishConnection(e)),
                 Ok(pg_connection) => {
                     let result = providers_link_parts
@@ -108,11 +143,13 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     );
     if let Some(result) = mongo_insert_data_option_result {
         match result {
-            PutDataInMongoResult::Success => (),
-            PutDataInMongoResult::PartialSuccess => {
-                return Err(InitDbsError::MongoInsertDataPartial)
-            }
-            PutDataInMongoResult::Failure => return Err(InitDbsError::MongoInsertDataFailure),
+            MongoInitDbError::ClientOptionsParse(e) => return Err(InitDbsError::MongoClientOptionsParse(e)),
+            MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
+            // PutDataInMongoResult::Success => (),
+            // PutDataInMongoResult::PartialSuccess => {
+            //     return Err(InitDbsError::MongoInsertDataPartial)
+            // }
+            // PutDataInMongoResult::Failure => return Err(InitDbsError::MongoInsertDataFailure),
         }
     }
     if let Some(result) = postgres_insert_data_option_result {
