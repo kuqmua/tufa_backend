@@ -74,6 +74,8 @@ pub fn entry() {
                         InitDbsError::GetProvidersJsonLocalData(_) => return,
                         InitDbsError::MongoClientOptionsParse(_) => return,
                         InitDbsError::MongoClientWithOptions(_) => return,
+                        InitDbsError::MongoCollectionCountDocuments(_) => return,
+                        InitDbsError::MongoCollectionIsNotEmpty((_, _)) => return,
                         InitDbsError::MongoInsertDataPartial => return,
                         InitDbsError::MongoInsertDataFailure => return,
                         InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,

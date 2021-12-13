@@ -22,6 +22,9 @@ pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
     MongoClientOptionsParse(mongodb::error::Error),
     MongoClientWithOptions(mongodb::error::Error),
+    MongoCollectionCountDocuments(mongodb::error::Error),
+    MongoCollectionIsNotEmpty((ProviderKind, u64)),
+    
     MongoInsertDataPartial, //todo: add values in here
     MongoInsertDataFailure,
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
@@ -33,7 +36,9 @@ pub enum InitDbsError {
 #[derive(Debug)]
 pub enum MongoInitDbError {
     ClientOptionsParse(mongodb::error::Error),
-    ClientWithOptions(mongodb::error::Error)
+    ClientWithOptions(mongodb::error::Error),
+    CollectionCountDocuments(mongodb::error::Error),
+    CollectionIsNotEmpty((ProviderKind, u64))
 }
 
 #[derive(Debug)]
@@ -52,6 +57,10 @@ use mongodb::{
 };
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+
+pub struct ProviderLinkMongoItem {
+    link_part: String
+}
 ////////////////////////////////
 
 #[deny(clippy::indexing_slicing)]
@@ -79,10 +88,17 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                         Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
                         Ok(client) => {
                             let db = client.database(&CONFIG.mongo_providers_logs_db_name);
-                            // let collection = db.collection(&format!(
-                            //     "{}{}",
-                            //     provider_kind, CONFIG.mongo_providers_logs_db_collection_handle_second_part
-                            // ));
+                            for (pk, data_vec) in providers_json_local_data_hashmap {
+                                let collection = db.collection::<ProviderLinkMongoItem>(&format!("{}",pk));
+                                match collection.count_documents(None, None).await {//todo filter
+                                    Err(e) => return Some(MongoInitDbError::CollectionCountDocuments(e)),
+                                    Ok(documents_number) => {
+                                        if documents_number > 0 {
+                                            return Some(MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)));
+                                        }
+                                    },
+                                }
+                            }
                             todo!()
                         },
                     }
@@ -145,6 +161,8 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         match result {
             MongoInitDbError::ClientOptionsParse(e) => return Err(InitDbsError::MongoClientOptionsParse(e)),
             MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
+            MongoInitDbError::CollectionCountDocuments(e) => return Err(InitDbsError::MongoCollectionCountDocuments(e)),
+            MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, documents_number))),
             // PutDataInMongoResult::Success => (),
             // PutDataInMongoResult::PartialSuccess => {
             //     return Err(InitDbsError::MongoInsertDataPartial)
