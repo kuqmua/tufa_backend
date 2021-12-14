@@ -511,5 +511,10 @@ Checking Unused Dependencies in a Rust Project with Github Actions
 https://erayerdin.com/checking-unused-dependencies-in-a-rust-project-with-github-actions-ckwm3yov901cwlvs1h48z54xi
 <br/>
     
+### -------------------
+write aboud dbs, tables in postgres and clusters dbs and collections in mongo
+should i create table for each provider?
+should i create collection for each provider?
+<br/>
     
 
