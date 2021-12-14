@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
+use futures::future::join_all;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -20,9 +21,9 @@ pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
     MongoClientOptionsParse(mongodb::error::Error),
     MongoClientWithOptions(mongodb::error::Error),
-    MongoCollectionCountDocuments(mongodb::error::Error),
+    MongoCollectionCountDocuments((ProviderKind, mongodb::error::Error)),
     MongoCollectionIsNotEmpty((ProviderKind, u64)),
-    MongoCollectionInsertMany(mongodb::error::Error),
+    MongoCollectionInsertMany((ProviderKind, mongodb::error::Error)),
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
     PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
     PostgresInsertPosts(diesel::result::Error),
@@ -33,9 +34,9 @@ pub enum InitDbsError {
 pub enum MongoInitDbError {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
-    CollectionCountDocuments(mongodb::error::Error),
+    CollectionCountDocuments((ProviderKind, mongodb::error::Error)),
     CollectionIsNotEmpty((ProviderKind, u64)),
-    CollectionInsertMany(mongodb::error::Error),
+    CollectionInsertMany((ProviderKind, mongodb::error::Error)),
 }
 
 #[derive(Debug)]
@@ -81,23 +82,38 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     match Client::with_options(client_options) {
                         Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
                         Ok(client) => {
-                            let db = client.database(&CONFIG.mongo_providers_logs_db_name);
+                            let db = client.database(&CONFIG.mongo_providers_logs_db_name);//<- todo this is incorrect name
+                            let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
                             for (pk, _) in &providers_json_local_data_hashmap {
-                                let collection = db.collection::<Document>(&format!("{}",pk));
-                                match collection.count_documents(None, None).await {//todo filter
-                                    Err(e) => return Some(MongoInitDbError::CollectionCountDocuments(e)),
+                                vec_of_futures.push(async {
+                                    let pk_cloned = pk.clone();//todo remove clone
+                                    (pk_cloned, db.collection::<Document>(&format!("{}",pk_cloned.clone())).count_documents(None, None).await)
+                                });
+                            }
+                            let result_vec = join_all(vec_of_futures).await;
+                            for (pk, result) in result_vec {
+                                match result {//todo filter
+                                    Err(e) => return Some(MongoInitDbError::CollectionCountDocuments((pk, e))),
                                     Ok(documents_number) => {
                                         if documents_number > 0 {
-                                            return Some(MongoInitDbError::CollectionIsNotEmpty((*pk, documents_number)));
+                                            return Some(MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)));
                                         }
                                     },
                                 }
                             }
-                            for (pk, data_vec) in providers_json_local_data_hashmap {
-                                let collection = db.collection(&format!("{}",pk));
-                                let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
-                                match collection.insert_many(docs, None).await {
-                                    Err(e) => return Some(MongoInitDbError::CollectionInsertMany(e)),
+                            let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
+                            for (pk, data_vec) in &providers_json_local_data_hashmap {
+                                vec_of_futures.push(async {
+                                    let pk_cloned = pk.clone();
+                                    let collection = db.collection(&format!("{}", pk_cloned));
+                                    let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
+                                    (pk_cloned, collection.insert_many(docs, None).await)
+                                });
+                            }
+                            let result_vec = join_all(vec_of_futures).await;
+                            for (pk, result) in result_vec {
+                                match result {
+                                    Err(e) => return Some(MongoInitDbError::CollectionInsertMany((pk, e))),
                                     Ok(_) => (),
                                 }
                             }
@@ -156,9 +172,9 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         match result {
             MongoInitDbError::ClientOptionsParse(e) => return Err(InitDbsError::MongoClientOptionsParse(e)),
             MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
-            MongoInitDbError::CollectionCountDocuments(e) => return Err(InitDbsError::MongoCollectionCountDocuments(e)),
+            MongoInitDbError::CollectionCountDocuments((pk, e)) => return Err(InitDbsError::MongoCollectionCountDocuments((pk, e))),
             MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, documents_number))),
-            MongoInitDbError::CollectionInsertMany(e) => return Err(InitDbsError::MongoCollectionInsertMany(e))
+            MongoInitDbError::CollectionInsertMany((pk, e)) => return Err(InitDbsError::MongoCollectionInsertMany((pk, e)))
         }
     }
     if let Some(result) = postgres_insert_data_option_result {
@@ -178,4 +194,8 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         }
     }
     Ok(())
+}
+
+pub async fn ddd() {
+
 }
