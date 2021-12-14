@@ -97,6 +97,9 @@ pub mod helpers {
     pub mod write_json_into_file;
     pub mod write_string_into_file;
 }
+pub mod init_dbs {
+    pub mod init_dbs;
+}
 mod logs_logic {
     pub mod async_write_fetch_error_logs_into_mongo_wrapper;
     pub mod drop_mongo_provider_logs_collection_if_need;
@@ -178,7 +181,6 @@ mod traits {
 }
 mod check_new_posts_threads_parts;
 mod entry;
-mod init_dbs;
 mod providers_new_posts_check;
 mod write_error_posts_wrapper;
 

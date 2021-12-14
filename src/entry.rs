@@ -11,7 +11,7 @@ extern crate num_cpus;
 
 use crate::check_net::check_net_wrapper::check_net_wrapper;
 
-use crate::init_dbs::{init_dbs, InitDbsError};
+use crate::init_dbs::init_dbs::{init_dbs, InitDbsError};
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
