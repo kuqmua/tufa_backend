@@ -82,6 +82,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                         Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
                         Ok(client) => {
                             let db = client.database(&CONFIG.mongo_providers_logs_db_name);
+//Todo: make it parallel
                             for (pk, _) in &providers_json_local_data_hashmap {
                                 let collection = db.collection::<Document>(&format!("{}",pk));
                                 match collection.count_documents(None, None).await {//todo filter
@@ -93,6 +94,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                                     },
                                 }
                             }
+//Todo: make it parallel
                             for (pk, data_vec) in providers_json_local_data_hashmap {
                                 let collection = db.collection(&format!("{}",pk));
                                 let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
