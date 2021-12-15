@@ -69,6 +69,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     providers_json_local_data_hashmap = success_hashmap.clone();
     providers_json_local_data_hashmap_clone = success_hashmap;
     let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
+        //todo: remove option coz its just an vec of functions. enable logic can be checked before
         async {
             if !CONFIG.mongo_enable_initialization {
                 return None;//todo: remove option into result
