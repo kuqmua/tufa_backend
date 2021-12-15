@@ -99,6 +99,8 @@ pub mod helpers {
 }
 pub mod init_dbs {
     pub mod init_dbs;
+    pub mod init_mongo;
+    pub mod init_postgres;
 }
 mod logs_logic {
     pub mod async_write_fetch_error_logs_into_mongo_wrapper;

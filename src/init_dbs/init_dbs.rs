@@ -1,20 +1,19 @@
 use std::collections::HashMap;
 
-use diesel::pg::PgConnection;
 use diesel::prelude::*;
-use futures::future::join_all;
 
 use crate::config_mods::lazy_static_config::CONFIG;
-
-use crate::postgres_integration::models::insertable::insertable_link_part::InsertableLinkPart;
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
-use crate::postgres_integration::schema::providers_link_parts::dsl::*;
+
+use crate::init_dbs::init_mongo::init_mongo;
+use crate::init_dbs::init_mongo::MongoInitDbError;
+
+use crate::init_dbs::init_postgres::init_postgres;
+use crate::init_dbs::init_postgres::PostgresInitDbError;
 //
 #[derive(Debug)]
 pub enum InitDbsError {
@@ -30,34 +29,6 @@ pub enum InitDbsError {
     PostgresEstablishConnection(ConnectionError),
 }
 
-#[derive(Debug)]
-pub enum MongoInitDbError {
-    ClientOptionsParse(mongodb::error::Error),
-    ClientWithOptions(mongodb::error::Error),
-    CollectionCountDocuments((ProviderKind, mongodb::error::Error)),
-    CollectionIsNotEmpty((ProviderKind, u64)),
-    CollectionInsertMany((ProviderKind, mongodb::error::Error)),
-}
-
-#[derive(Debug)]
-pub enum PostgresInitDbError {
-    LoadingProvidersLinkParts(diesel::result::Error),
-    ProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
-    InsertPosts(diesel::result::Error),
-    EstablishConnection(ConnectionError),
-}
-
-////////////////////////////////
-use mongodb::{
-    bson::{doc, Document},
-    options::ClientOptions,
-    Client,
-};
-
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-
-////////////////////////////////
-
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs() -> Result<(), InitDbsError> {
     let providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>;
@@ -66,111 +37,24 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     if !errors_hashmap.is_empty() {
         return Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap));
     }
+    // let mut f =  Vec::with_capacity(2);
+    // if !CONFIG.mongo_enable_initialization {
+    //     f.push(asyncinit_mongo(providers_json_local_data_hashmap));
+    // }
+    // if !CONFIG.postgres_enable_initialization {
+    //     f.push(init_postgres(providers_json_local_data_hashmap_clone));
+    // }
     providers_json_local_data_hashmap = success_hashmap.clone();
     providers_json_local_data_hashmap_clone = success_hashmap;
+    
+
     let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
         //todo: remove option coz its just an vec of functions. enable logic can be checked before
-        async {
-            if !CONFIG.mongo_enable_initialization {
-                return None;//todo: remove option into result
-            }
-            let client_options_result = ClientOptions::parse(&mongo_get_db_url()).await;
-            match client_options_result {
-                Err(e) => {
-                    return Some(MongoInitDbError::ClientOptionsParse(e));
-                },
-                Ok(client_options) => {
-                    match Client::with_options(client_options) {
-                        Err(e) => return Some(MongoInitDbError::ClientWithOptions(e)),
-                        Ok(client) => {
-                            let db = client.database(&CONFIG.mongo_providers_logs_db_name);//<- todo this is incorrect name
-                            let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
-                            for (pk, _) in &providers_json_local_data_hashmap {
-                                vec_of_futures.push(async {
-                                    let pk_cloned = pk.clone();//todo remove clone
-                                    (pk_cloned, db.collection::<Document>(&format!("{}",pk_cloned.clone())).count_documents(None, None).await)
-                                });
-                            }
-                            let result_vec = join_all(vec_of_futures).await;
-                            for (pk, result) in result_vec {
-                                match result {//todo filter
-                                    Err(e) => return Some(MongoInitDbError::CollectionCountDocuments((pk, e))),
-                                    Ok(documents_number) => {
-                                        if documents_number > 0 {
-                                            return Some(MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)));
-                                        }
-                                    },
-                                }
-                            }
-                            let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
-                            for (pk, data_vec) in &providers_json_local_data_hashmap {
-                                vec_of_futures.push(async {
-                                    let pk_cloned = pk.clone();
-                                    let collection = db.collection(&format!("{}", pk_cloned));
-                                    let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
-                                    (pk_cloned, collection.insert_many(docs, None).await)
-                                });
-                            }
-                            let result_vec = join_all(vec_of_futures).await;
-                            for (pk, result) in result_vec {
-                                match result {
-                                    Err(e) => return Some(MongoInitDbError::CollectionInsertMany((pk, e))),
-                                    Ok(_) => (),
-                                }
-                            }
-                            None//todo: remove option into result
-                        },
-                    }
-                },
-            }
-        },
-        async {
-            if !CONFIG.postgres_enable_initialization {
-                return None;//todo: remove option into result
-            }
-            match PgConnection::establish(&postgres_get_db_url()) {
-                Err(e) => Some(PostgresInitDbError::EstablishConnection(e)),
-                Ok(pg_connection) => {
-                    let result = providers_link_parts
-                        // .filter()
-                        // .limit(5)
-                        .load::<QueryableLinkPart>(&pg_connection);
-                    match result {
-                        Err(e) => Some(PostgresInitDbError::LoadingProvidersLinkParts(e)),
-                        Ok(vec) => {
-                            if !vec.is_empty() {
-                                return Some(PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(
-                                    vec,
-                                ));
-                            }
-                            let mut posts_vec: Vec<InsertableLinkPart> =
-                                Vec::with_capacity(providers_json_local_data_hashmap_clone.len());
-                            for (provider_kind_handle, data_vec) in
-                                providers_json_local_data_hashmap_clone
-                            {
-                                for data in data_vec {
-                                    posts_vec.push(InsertableLinkPart {
-                                        provider_kind: format!("{}", provider_kind_handle.clone()),
-                                        link_part: data.clone(),
-                                    });
-                                }
-                            }
-                            let insertion_result = InsertableLinkPart::insert_vec_into_postgres(
-                                &pg_connection,
-                                posts_vec,
-                            );
-                            match insertion_result {
-                                Err(e) => Some(PostgresInitDbError::InsertPosts(e)),
-                                Ok(_) => None,//todo: remove option into result
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        init_mongo(providers_json_local_data_hashmap),
+        init_postgres(providers_json_local_data_hashmap_clone)
     );
-    if let Some(result) = mongo_insert_data_option_result {
-        match result {
+    if let Err(err) = mongo_insert_data_option_result {
+        match err {
             MongoInitDbError::ClientOptionsParse(e) => return Err(InitDbsError::MongoClientOptionsParse(e)),
             MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
             MongoInitDbError::CollectionCountDocuments((pk, e)) => return Err(InitDbsError::MongoCollectionCountDocuments((pk, e))),
@@ -178,8 +62,8 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             MongoInitDbError::CollectionInsertMany((pk, e)) => return Err(InitDbsError::MongoCollectionInsertMany((pk, e)))
         }
     }
-    if let Some(result) = postgres_insert_data_option_result {
-        match result {
+    if let Err(err) = postgres_insert_data_option_result {
+        match err {
             PostgresInitDbError::LoadingProvidersLinkParts(e) => {
                 return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
             }
@@ -195,8 +79,4 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         }
     }
     Ok(())
-}
-
-pub async fn ddd() {
-
 }
