@@ -507,10 +507,8 @@ impl ProviderKindTrait for ProviderKind {
             Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
         > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
         //todo: do it async in parallel
-        for provider_kind in ProviderKind::get_enabled_providers_vec() {
-            let result_of_reading_to_string =
-                fs::read_to_string(&provider_kind.get_init_local_data_file_path());
-            match result_of_reading_to_string {
+        for pk in ProviderKind::get_enabled_providers_vec() {
+            match fs::read_to_string(&pk.get_init_local_data_file_path()) {
                 Ok(file_content) => {
                     let file_content_from_str_result: Result<
                         ProvidersInitJsonSchema,
@@ -524,15 +522,15 @@ impl ProviderKindTrait for ProviderKind {
                                 vec_of_link_parts.push(link_part)
                             }
                             vec_of_link_parts_hashmap
-                                .insert(provider_kind, Ok(Ok(vec_of_link_parts)));
+                                .insert(pk, Ok(Ok(vec_of_link_parts)));
                         }
                         Err(e) => {
-                            vec_of_link_parts_hashmap.insert(provider_kind, Ok(Err(e)));
+                            vec_of_link_parts_hashmap.insert(pk, Ok(Err(e)));
                         }
                     }
                 }
                 Err(e) => {
-                    vec_of_link_parts_hashmap.insert(provider_kind, Err(e));
+                    vec_of_link_parts_hashmap.insert(pk, Err(e));
                 }
             }
         }
