@@ -1,7 +1,9 @@
 use std::collections::HashMap;
 use std::fs;
+use std::string::FromUtf8Error;
 
 use diesel::prelude::*;
+use futures::future::join_all;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
@@ -24,7 +26,7 @@ use async_std::prelude::*;
 //
 #[derive(Debug)]
 pub enum InitDbsError {
-    GetProvidersJsonLocalData(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
+    GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
     MongoClientOptionsParse(mongodb::error::Error),
     MongoClientWithOptions(mongodb::error::Error),
     MongoCollectionCountDocuments((ProviderKind, mongodb::error::Error)),
@@ -36,61 +38,80 @@ pub enum InitDbsError {
     PostgresEstablishConnection(ConnectionError),
 }
 
+#[derive(Debug)]
+pub enum ProvidersLocalDataError {
+    FileOpen(std::io::Error),
+    FileReadToEnd(std::io::Error),
+    StringFromUtf8(FromUtf8Error),
+    SerdeJsonFromStr(serde_json::Error),
+}
+
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub async fn testtt(
+    pk: ProviderKind,
+) -> Result<(ProviderKind, Vec<String>), (ProviderKind, ProvidersLocalDataError)> {
+    match File::open(pk.get_init_local_data_file_path()).await {
+        Err(e) => Err((pk, ProvidersLocalDataError::FileOpen(e))),
+        Ok(mut file) => {
+            let mut buf = Vec::new();
+            match file.read_to_end(&mut buf).await {
+                Err(e) => Err((pk, ProvidersLocalDataError::FileReadToEnd(e))),
+                Ok(_) => match String::from_utf8(buf) {
+                    Err(e) => Err((pk, ProvidersLocalDataError::StringFromUtf8(e))),
+                    Ok(file_content) => {
+                        let file_content_from_str_result: Result<
+                            ProvidersInitJsonSchema,
+                            serde_json::Error,
+                        > = serde_json::from_str(&file_content);
+                        match file_content_from_str_result {
+                            Err(e) => Err((pk, ProvidersLocalDataError::SerdeJsonFromStr(e))),
+                            Ok(file_content_as_struct) => {
+                                let mut vev = Vec::new();
+                                for i in file_content_as_struct.data {
+                                    vev.push(i);
+                                }
+                                Ok((pk, vev))
+                            }
+                        }
+                    }
+                },
+            }
+        }
+    }
+}
+
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs() -> Result<(), InitDbsError> {
     let providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>;
     let providers_json_local_data_hashmap_clone: HashMap<ProviderKind, Vec<String>>;
     //
-    // let mut vec_of_link_parts_hashmap: HashMap<
-    //         ProviderKind,
-    //         Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
-    //     > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
-        // //todo: do it async in parallel
-        // let mut futures_vec = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
-        // // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
-        // for pk in ProviderKind::get_enabled_providers_vec() {
-        //     futures_vec.push(task::spawn(async move {
-        //         match File::open(pk.get_init_local_data_file_path()).await {
-        //             Err(e) => {
-        //                 (pk, Err(e))
-        //             }
-        //             Ok(file) => {
-        //                 let mut buf = Vec::new();
-        //                 file.read_to_end(&mut buf).await?;
-        //                 let s = String::from_utf8_lossy(&buf);
-        //                 // let file_content_from_str_result: Result<
-        //                 //     ProvidersInitJsonSchema,
-        //                 //     serde_json::Error,
-        //                 // > = serde_json::from_str(&file_content);
-        //                 // match file_content_from_str_result {
-        //                 //     Ok(file_content_as_struct) => {
-        //                 //         let mut vec_of_link_parts: Vec<String> =
-        //                 //             Vec::with_capacity(file_content_as_struct.data.len());
-        //                 //         for link_part in file_content_as_struct.data {
-        //                 //             vec_of_link_parts.push(link_part)
-        //                 //         }
-        //                 //         (pk, Ok(Ok(vec_of_link_parts)))
-        //                 //     }
-        //                 //     Err(e) => {
-        //                 //         (pk, Ok(Err(e)))
-        //                 //     }
-        //                 // }
-        //             }
-        //         }
-        //     }))
-            
-        // }
-        // // let result_vec = futures_vec.join_all().await;
-        // let result = tokio::join!(futures_vec);
-
-        // // .insert(pk, Ok(Ok(vec_of_link_parts)));
-    //
-    let (success_hashmap, errors_hashmap) = ProviderKind::get_providers_json_local_data_processed();
-    if !errors_hashmap.is_empty() {
-        return Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap));
+    // let mut vec_of_link_parts_hashmap: HashMap<ProviderKind, ProvidersLocalDataError> =
+    //     HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+    //todo: do it async in parallel
+    let mut futures_vec = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+    // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
+    for pk in ProviderKind::get_enabled_providers_vec() {
+        futures_vec.push(testtt(pk))
     }
-    providers_json_local_data_hashmap = success_hashmap.clone();
-    providers_json_local_data_hashmap_clone = success_hashmap;
+    let result_vec = join_all(futures_vec).await;
+    let mut errors_hashmappp: HashMap<ProviderKind, ProvidersLocalDataError> = HashMap::new();
+    let mut success_hashmappp: HashMap<ProviderKind, Vec<String>> =
+        HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+    for result in result_vec {
+        if let Err((pk, e)) = result {
+            errors_hashmappp.insert(pk, e);
+        } else if let Ok((pk, vecc)) = result {
+            success_hashmappp.insert(pk, vecc);
+        }
+    }
+    if !errors_hashmappp.is_empty() {
+        return Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmappp));
+    }
+
+    // let (success_hashmap, errors_hashmap) = ProviderKind::get_providers_json_local_data_processed();
+
+    providers_json_local_data_hashmap = success_hashmappp.clone();
+    providers_json_local_data_hashmap_clone = success_hashmappp;
     let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
         async {
             if CONFIG.mongo_enable_initialization {
@@ -108,11 +129,24 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     if let Some(result) = mongo_insert_data_option_result {
         if let Err(err) = result {
             match err {
-                MongoInitDbError::ClientOptionsParse(e) => return Err(InitDbsError::MongoClientOptionsParse(e)),
-                MongoInitDbError::ClientWithOptions(e) => return Err(InitDbsError::MongoClientWithOptions(e)),
-                MongoInitDbError::CollectionCountDocuments((pk, e)) => return Err(InitDbsError::MongoCollectionCountDocuments((pk, e))),
-                MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, documents_number))),
-                MongoInitDbError::CollectionInsertMany((pk, e)) => return Err(InitDbsError::MongoCollectionInsertMany((pk, e)))
+                MongoInitDbError::ClientOptionsParse(e) => {
+                    return Err(InitDbsError::MongoClientOptionsParse(e))
+                }
+                MongoInitDbError::ClientWithOptions(e) => {
+                    return Err(InitDbsError::MongoClientWithOptions(e))
+                }
+                MongoInitDbError::CollectionCountDocuments((pk, e)) => {
+                    return Err(InitDbsError::MongoCollectionCountDocuments((pk, e)))
+                }
+                MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => {
+                    return Err(InitDbsError::MongoCollectionIsNotEmpty((
+                        pk,
+                        documents_number,
+                    )))
+                }
+                MongoInitDbError::CollectionInsertMany((pk, e)) => {
+                    return Err(InitDbsError::MongoCollectionInsertMany((pk, e)))
+                }
             }
         }
     }
