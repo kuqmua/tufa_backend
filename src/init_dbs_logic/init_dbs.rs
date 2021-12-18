@@ -45,7 +45,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     None
                 },
                 async {
-                    if !CONFIG.postgres_enable_initialization {
+                    if CONFIG.postgres_enable_initialization {
                         return Some(init_postgres(providers_json_local_data_hashmap_clone).await);
                     }
                     None
