@@ -52,12 +52,12 @@ use super::providers_info::get_providers_link_parts::GetLinkPartsError;
 
 #[deny(clippy::indexing_slicing)]
 pub async fn get_providers_posts() {
-    let resource = Resource::Mongodb; //Resource hardcode warning
+    let resource = Resource::PostgreSql; //Resource hardcode warning
     match get_providers_link_parts_as_hashmap(&resource).await {
         Err(e) => match e {
             GetLinkPartsError::Local(_) => todo!(),
             GetLinkPartsError::Mongodb(_) => todo!(),
-            GetLinkPartsError::PostgreSql => todo!(),
+            GetLinkPartsError::PostgreSql(_) => todo!(),
         },
         Ok(providers_link_parts) => {
             let _vec = check_new_posts_threads_parts(providers_link_parts).await;
