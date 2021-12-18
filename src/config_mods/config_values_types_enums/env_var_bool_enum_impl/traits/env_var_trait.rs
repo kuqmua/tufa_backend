@@ -4,7 +4,7 @@ use crate::config_mods::env_var_enum::EnvVar;
 use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVarTrait for EnvBoolVar {
-    fn get_env_name(&self) -> &'static str {
+    fn get_env_name(&self) -> String {
         match &self {
             Self::DbsEnableInitialization => EnvVar::DbsEnableInitialization.get_env_name(),
 
@@ -175,8 +175,8 @@ impl EnvVarTrait for EnvBoolVar {
             Self::EnableWriteErrorLogsInLocalFolder => {
                 EnvVar::EnableWriteErrorLogsInLocalFolder.get_env_name()
             }
-            Self::EnableWriteErrorLogsInLocalFolderForProvider => {
-                EnvVar::EnableWriteErrorLogsInLocalFolderForProvider.get_env_name()
+            Self::EnableWriteErrorLogsInLocalFolderForProviders => {
+                EnvVar::EnableWriteErrorLogsInLocalFolderForProviders.get_env_name()
             }
             Self::EnableWriteErrorLogsInLocalFolderForArxiv => {
                 EnvVar::EnableWriteErrorLogsInLocalFolderForArxiv.get_env_name()

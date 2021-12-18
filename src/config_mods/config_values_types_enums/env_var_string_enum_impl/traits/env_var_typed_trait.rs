@@ -16,12 +16,9 @@ use strum::IntoEnumIterator;
 use dotenv::dotenv;
 
 impl EnvVarTypedTrait for EnvStringVar {
-    fn get_string_from_env_var(
-        &self,
-        was_dotenv_enable: bool,
-    ) -> Result<String, ConfigError<'static>> {
+    fn get_string_from_env_var(&self, was_dotenv_enable: bool) -> Result<String, ConfigError> {
         let string_name = self.get_env_name();
-        match std::env::var(string_name) {
+        match std::env::var(&string_name) {
             Ok(handle) => Ok(handle),
             Err(e) => Err(ConfigError {
                 env_var_name_kind: ConfigEnvVarErrorType::String(*self),
@@ -39,8 +36,7 @@ impl EnvVarTypedTrait for EnvStringVar {
         }
     }
 
-    fn get_env_values_hashmap<T: std::str::FromStr>(
-    ) -> Result<HashMap<Self, T>, ConfigError<'static>> {
+    fn get_env_values_hashmap<T: std::str::FromStr>() -> Result<HashMap<Self, T>, ConfigError> {
         let was_dotenv_enable: bool;
         match dotenv() {
             Ok(_) => {

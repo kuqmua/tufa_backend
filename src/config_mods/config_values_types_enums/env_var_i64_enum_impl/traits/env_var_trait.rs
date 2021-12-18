@@ -5,7 +5,7 @@ use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVarTrait for EnvI64Var {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_env_name(self: &EnvI64Var) -> &'static str {
+    fn get_env_name(self: &EnvI64Var) -> String {
         match self {
             EnvI64Var::CommonProvidersLinksLimit => {
                 EnvVar::CommonProvidersLinksLimit.get_env_name()

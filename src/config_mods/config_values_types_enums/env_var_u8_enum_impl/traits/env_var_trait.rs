@@ -6,7 +6,7 @@ use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVarTrait for EnvU8Var {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_env_name(&self) -> &'static str {
+    fn get_env_name(&self) -> String {
         match self {
             Self::ErrorRed => EnvVar::ErrorRed.get_env_name(),
             Self::ErrorGreen => EnvVar::ErrorGreen.get_env_name(),

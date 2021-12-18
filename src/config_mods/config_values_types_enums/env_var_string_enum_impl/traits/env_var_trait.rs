@@ -5,7 +5,7 @@ use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStrin
 use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVarTrait for EnvStringVar {
-    fn get_env_name(&self) -> &'static str {
+    fn get_env_name(&self) -> String {
         match self {
             Self::GithubName => EnvVar::GithubName.get_env_name(),
             Self::GithubToken => EnvVar::GithubToken.get_env_name(),

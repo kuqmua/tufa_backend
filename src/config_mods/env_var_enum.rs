@@ -124,7 +124,7 @@ pub enum EnvVar {
     LogFileExtension,
 
     EnableWriteErrorLogsInLocalFolder,
-    EnableWriteErrorLogsInLocalFolderForProvider,
+    EnableWriteErrorLogsInLocalFolderForProviders,
     EnableWriteErrorLogsInLocalFolderForArxiv,
     EnableWriteErrorLogsInLocalFolderForBiorxiv,
     EnableWriteErrorLogsInLocalFolderForGithub,

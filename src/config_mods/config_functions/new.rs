@@ -12,7 +12,7 @@ use crate::config_mods::config_struct::ConfigStruct;
 use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
 impl ConfigStruct {
-    pub fn new() -> Result<Self, ConfigError<'static>> {
+    pub fn new() -> Result<Self, ConfigError> {
         let string_vars = EnvStringVar::get_env_values_hashmap::<String>()?;
         let bool_vars: HashMap<EnvBoolVar, bool> = EnvBoolVar::get_env_values_hashmap()?;
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
@@ -291,34 +291,34 @@ impl ConfigStruct {
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
             enable_write_error_logs_in_local_folder_for_provider: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider],
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders],
             enable_write_error_logs_in_local_folder_for_arxiv: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForArxiv],
             enable_write_error_logs_in_local_folder_for_biorxiv: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForBiorxiv],
             enable_write_error_logs_in_local_folder_for_github: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForGithub],
             enable_write_error_logs_in_local_folder_for_habr: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForHabr],
             enable_write_error_logs_in_local_folder_for_medrxiv: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForMedrxiv],
             enable_write_error_logs_in_local_folder_for_reddit: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForReddit],
             enable_write_error_logs_in_local_folder_for_twitter: bool_vars
                 [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProvider]
+                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
                 && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForTwitter],
 
             enable_cleaning_warning_logs_directory: bool_vars

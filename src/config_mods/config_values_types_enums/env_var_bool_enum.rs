@@ -82,7 +82,7 @@ pub enum EnvBoolVar {
     PostgresEnableInitializationForTwitter,
 
     EnableWriteErrorLogsInLocalFolder,
-    EnableWriteErrorLogsInLocalFolderForProvider,
+    EnableWriteErrorLogsInLocalFolderForProviders,
     EnableWriteErrorLogsInLocalFolderForArxiv,
     EnableWriteErrorLogsInLocalFolderForBiorxiv,
     EnableWriteErrorLogsInLocalFolderForGithub,

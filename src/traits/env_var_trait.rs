@@ -1,3 +1,3 @@
 pub trait EnvVarTrait {
-    fn get_env_name(&self) -> &'static str;
+    fn get_env_name(&self) -> String;
 }
