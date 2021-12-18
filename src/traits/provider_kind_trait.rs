@@ -4,8 +4,6 @@ use mongodb::bson::Document;
 
 use crate::providers::provider_kind_enum::{CleanLogsDirError, RemoveDirError};
 
-use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
-
 pub trait ProviderKindTrait {
     fn is_mongo_initialization_enabled(&self) -> bool;
     fn is_mongo_write_error_logs_enabled(&self) -> bool;
@@ -56,16 +54,6 @@ pub trait ProviderKindTrait {
     where
         Self: Sized;
     fn get_mongo_initialization_string_name_vec() -> Vec<String>;
-    fn get_providers_json_local_data_processed() -> (
-        HashMap<Self, Vec<String>>,
-        HashMap<Self, GetProvidersJsonLocalDataProcessedError>,
-    )
-    where
-        Self: Sized;
-    fn get_providers_json_local_data_unprocessed(
-    ) -> HashMap<Self, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
-    where
-        Self: Sized;
     fn into_string_name_and_kind_hashmap() -> HashMap<String, Self>
     where
         Self: Sized;

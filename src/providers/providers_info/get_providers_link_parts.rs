@@ -4,13 +4,14 @@ use crate::helpers::resource::Resource;
 
 use crate::mongo_integration::mongo_get_providers_link_parts_processed::mongo_get_providers_link_parts_processed;
 use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
-use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+
+use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
+use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 #[derive(Debug)]
-pub enum LocalResourceErrorStatus {
-    Local(HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>),
+pub enum GetLinkPartsError {
+    Local(HashMap<ProviderKind, ProvidersLocalDataError>),
     Mongodb(MongoGetProvidersLinkPartsProcessedResult),
     PostgreSql, //todo
 }
@@ -18,27 +19,16 @@ pub enum LocalResourceErrorStatus {
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn get_providers_link_parts_as_hashmap(
     resource: &Resource,
-) -> (HashMap<ProviderKind, Vec<String>>, LocalResourceErrorStatus) {
-    //todo: return different type as errors or success enum
-    //todo: write here converison to common return type
+) -> Result<HashMap<ProviderKind, Vec<String>>, GetLinkPartsError> {
     match resource {
-        Resource::Local => {
-            let (success_hashmap, errors_hashmap) =
-                ProviderKind::get_providers_json_local_data_processed();
-            (
-                success_hashmap,
-                LocalResourceErrorStatus::Local(errors_hashmap),
-            )
-        }
-        // HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>>
-        Resource::Mongodb => {
-            let (success_hashmap, mongo_get_providers_link_part_processed_result) =
-                mongo_get_providers_link_parts_processed().await;
-            (
-                success_hashmap,
-                LocalResourceErrorStatus::Mongodb(mongo_get_providers_link_part_processed_result),
-            )
-        }
+        Resource::Local => match get_all_local_providers_data().await {
+            Err(error_hashmap) => Err(GetLinkPartsError::Local(error_hashmap)),
+            Ok(success_hashmap) => Ok(success_hashmap),
+        },
+        Resource::Mongodb => match mongo_get_providers_link_parts_processed().await {
+            Err(e) => Err(GetLinkPartsError::Mongodb(e)),
+            Ok(success_hashmap) => Ok(success_hashmap),
+        },
         Resource::PostgreSql => {
             todo!()
         }

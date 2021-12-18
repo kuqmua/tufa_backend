@@ -1,24 +1,10 @@
-use std::thread;
-
-use diesel::pg::PgConnection;
-use diesel::prelude::*;
-use futures::executor::block_on;
-
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
-use crate::helpers::resource::{Resource, ResourceError};
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
+use crate::helpers::resource::Resource;
 
-use crate::config_mods::lazy_static_config::CONFIG;
-
-use crate::mongo_integration::mongo_insert_data::mongo_insert_data;
-
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-
-use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+
+use super::providers_info::get_providers_link_parts::GetLinkPartsError;
 
 // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
@@ -66,43 +52,41 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[deny(clippy::indexing_slicing)]
 pub async fn get_providers_posts() {
-    let resource = Resource::Mongodb;
-    let (providers_link_parts, something) = get_providers_link_parts_as_hashmap(&resource).await; //Resource hardcode warning
-    if providers_link_parts.is_empty() {
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
-            "providers_link_parts is empty".to_string(),
-        );
-        // return Err(ResourceError::NoLinkParts(resource));
+    let resource = Resource::Mongodb; //Resource hardcode warning
+    match get_providers_link_parts_as_hashmap(&resource).await {
+        Err(e) => match e {
+            GetLinkPartsError::Local(_) => todo!(),
+            GetLinkPartsError::Mongodb(_) => todo!(),
+            GetLinkPartsError::PostgreSql => todo!(),
+        },
+        Ok(providers_link_parts) => {
+            let _vec = check_new_posts_threads_parts(providers_link_parts).await;
+            //todo: conversion function before write_error_posts_wrapper
+            //commented before conversion function implementation
+            // if !vec.is_empty() {
+            //     for (provider_kind, result_vec) in vec {
+            //         match result_vec {
+            //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+            //                 let wrong_cases_thread = thread::spawn(move || {
+            //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
+            //                 });
+            //                 match wrong_cases_thread.join() {
+            //                     Ok(_) => {}
+            //                     Err(e) => {
+            //                         print_colorful_message(
+            //                             None,
+            //                             PrintType::Error,
+            //                             file!().to_string(),
+            //                             line!().to_string(),
+            //                             format!("wrong_cases_thread.join() error: {:#?}", e),
+            //                         );
+            //                     }
+            //                 }
+            //             }
+            //             Err(e) => {}
+            //         }
+            //     }
+            // }
+        }
     }
-    let _vec = check_new_posts_threads_parts(providers_link_parts).await;
-    //todo: conversion function before write_error_posts_wrapper
-    //commented before conversion function implementation
-    // if !vec.is_empty() {
-    //     for (provider_kind, result_vec) in vec {
-    //         match result_vec {
-    //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
-    //                 let wrong_cases_thread = thread::spawn(move || {
-    //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
-    //                 });
-    //                 match wrong_cases_thread.join() {
-    //                     Ok(_) => {}
-    //                     Err(e) => {
-    //                         print_colorful_message(
-    //                             None,
-    //                             PrintType::Error,
-    //                             file!().to_string(),
-    //                             line!().to_string(),
-    //                             format!("wrong_cases_thread.join() error: {:#?}", e),
-    //                         );
-    //                     }
-    //                 }
-    //             }
-    //             Err(e) => {}
-    //         }
-    //     }
-    // }
 }

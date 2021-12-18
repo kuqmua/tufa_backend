@@ -5,15 +5,13 @@ use std::path::Path;
 use mongodb::bson::{doc, Document};
 use strum::IntoEnumIterator;
 
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_enum::{CleanLogsDirError, ProviderKind, RemoveDirError};
-
 use crate::config_mods::lazy_static_config::CONFIG;
 
-use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::providers::provider_kind_enum::CleanLogsDirError;
+use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_enum::RemoveDirError;
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;
 use crate::providers::providers_info::links::generate_github_links::generate_github_links;
@@ -21,8 +19,6 @@ use crate::providers::providers_info::links::generate_habr_links::generate_habr_
 use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
 use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
-
-use crate::providers::get_providers_json_local_data_processed_error::GetProvidersJsonLocalDataProcessedError;
 
 impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -439,101 +435,6 @@ impl ProviderKindTrait for ProviderKind {
             vec_of_filtered_provider_names.push(format!("{}", provider_kind))
         }
         vec_of_filtered_provider_names
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_providers_json_local_data_processed() -> (
-        HashMap<ProviderKind, Vec<String>>,
-        HashMap<ProviderKind, GetProvidersJsonLocalDataProcessedError>,
-    ) {
-        let unprocessed_hashmap = ProviderKind::get_providers_json_local_data_unprocessed();
-        let mut first_return_handle: HashMap<ProviderKind, Vec<String>> =
-            HashMap::with_capacity(unprocessed_hashmap.len());
-        let mut second_return_handle: HashMap<
-            ProviderKind,
-            GetProvidersJsonLocalDataProcessedError,
-        > = HashMap::with_capacity(unprocessed_hashmap.len());
-        for (provider_kind, result) in unprocessed_hashmap {
-            match result {
-                Ok(second_result) => {
-                    let mut serde_json_error_vec = Vec::<serde_json::Error>::new();
-                    match second_result {
-                        Ok(vec) => {
-                            first_return_handle.insert(provider_kind, vec);
-                        }
-                        Err(e) => {
-                            print_colorful_message(
-                                    Some(&provider_kind),
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
-                                );
-                            serde_json_error_vec.push(e);
-                        }
-                    }
-                    if !serde_json_error_vec.is_empty() {
-                        second_return_handle.insert(
-                            provider_kind,
-                            GetProvidersJsonLocalDataProcessedError::SerdeJsonErrors(
-                                serde_json_error_vec,
-                            ),
-                        );
-                    }
-                }
-                Err(e) => {
-                    print_colorful_message(
-                                    Some(&provider_kind),
-                                    PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
-                                    format!("(todo!)ProviderKind::get_providers_json_local_data_unprocessed ({:#?}), error: {:#?}", provider_kind, e),
-                                );
-                    second_return_handle.insert(
-                        provider_kind,
-                        GetProvidersJsonLocalDataProcessedError::StdIoError(e),
-                    );
-                }
-            }
-        }
-        (first_return_handle, second_return_handle)
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_providers_json_local_data_unprocessed(
-    ) -> HashMap<ProviderKind, Result<Result<Vec<String>, serde_json::Error>, std::io::Error>> {
-        let mut vec_of_link_parts_hashmap: HashMap<
-            ProviderKind,
-            Result<Result<Vec<String>, serde_json::Error>, std::io::Error>,
-        > = HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
-        //todo: do it async in parallel
-        for pk in ProviderKind::get_enabled_providers_vec() {
-            match fs::read_to_string(&pk.get_init_local_data_file_path()) {
-                Ok(file_content) => {
-                    let file_content_from_str_result: Result<
-                        ProvidersInitJsonSchema,
-                        serde_json::Error,
-                    > = serde_json::from_str(&file_content);
-                    match file_content_from_str_result {
-                        Ok(file_content_as_struct) => {
-                            let mut vec_of_link_parts: Vec<String> =
-                                Vec::with_capacity(file_content_as_struct.data.len());
-                            for link_part in file_content_as_struct.data {
-                                vec_of_link_parts.push(link_part)
-                            }
-                            vec_of_link_parts_hashmap.insert(pk, Ok(Ok(vec_of_link_parts)));
-                        }
-                        Err(e) => {
-                            vec_of_link_parts_hashmap.insert(pk, Ok(Err(e)));
-                        }
-                    }
-                }
-                Err(e) => {
-                    vec_of_link_parts_hashmap.insert(pk, Err(e));
-                }
-            }
-        }
-        vec_of_link_parts_hashmap
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
