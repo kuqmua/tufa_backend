@@ -20,7 +20,9 @@ pub enum PostgresInitDbError {
 }
 
 #[deny(clippy::indexing_slicing)]
-pub async fn init_postgres(providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>) -> Result<(), PostgresInitDbError> {
+pub async fn init_postgres(
+    providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
+) -> Result<(), PostgresInitDbError> {
     match PgConnection::establish(&postgres_get_db_url()) {
         Err(e) => Err(PostgresInitDbError::EstablishConnection(e)),
         Ok(pg_connection) => {
@@ -32,15 +34,11 @@ pub async fn init_postgres(providers_json_local_data_hashmap: HashMap<ProviderKi
                 Err(e) => Err(PostgresInitDbError::LoadingProvidersLinkParts(e)),
                 Ok(vec) => {
                     if !vec.is_empty() {
-                        return Err(PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(
-                            vec,
-                        ));
+                        return Err(PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(vec));
                     }
                     let mut posts_vec: Vec<InsertableLinkPart> =
                         Vec::with_capacity(providers_json_local_data_hashmap.len());
-                    for (provider_kind_handle, data_vec) in
-                        providers_json_local_data_hashmap
-                    {
+                    for (provider_kind_handle, data_vec) in providers_json_local_data_hashmap {
                         for data in data_vec {
                             posts_vec.push(InsertableLinkPart {
                                 provider_kind: format!("{}", provider_kind_handle.clone()),
@@ -48,13 +46,11 @@ pub async fn init_postgres(providers_json_local_data_hashmap: HashMap<ProviderKi
                             });
                         }
                     }
-                    let insertion_result = InsertableLinkPart::insert_vec_into_postgres(
-                        &pg_connection,
-                        posts_vec,
-                    );
+                    let insertion_result =
+                        InsertableLinkPart::insert_vec_into_postgres(&pg_connection, posts_vec);
                     if let Err(e) = insertion_result {
                         return Err(PostgresInitDbError::InsertPosts(e));
-                    } 
+                    }
                     Ok(())
                 }
             }

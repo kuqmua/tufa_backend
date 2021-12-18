@@ -19,10 +19,13 @@ pub async fn get_all_local_providers_data(
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
     for result in result_vec {
-        if let Err((pk, e)) = result {
-            errors_hashmap.insert(pk, e);
-        } else if let Ok((pk, vec)) = result {
-            success_hashmap.insert(pk, vec);
+        match result {
+            Err((pk, e)) => {
+                errors_hashmap.insert(pk, e);
+            }
+            Ok((pk, vec)) => {
+                success_hashmap.insert(pk, vec);
+            }
         }
     }
     if !errors_hashmap.is_empty() {

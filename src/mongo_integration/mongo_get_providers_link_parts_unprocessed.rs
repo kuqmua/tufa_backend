@@ -24,6 +24,7 @@ use futures::future::join_all;
 pub async fn mongo_get_providers_link_parts_unprocessed(
 ) -> Result<HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>, mongodb::error::Error>
 {
+    //todo: write without arc - removing unwrap
     let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
     let db = client.database(&CONFIG.mongo_providers_logs_db_name);
