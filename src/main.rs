@@ -97,7 +97,7 @@ pub mod helpers {
     pub mod write_json_into_file;
     pub mod write_string_into_file;
 }
-pub mod init_dbs {
+pub mod init_dbs_logic {
     pub mod init_dbs;
     pub mod init_mongo;
     pub mod init_postgres;

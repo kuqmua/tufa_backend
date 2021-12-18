@@ -9,11 +9,11 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 
-use crate::init_dbs::init_mongo::init_mongo;
-use crate::init_dbs::init_mongo::MongoInitDbError;
+use crate::init_dbs_logic::init_mongo::init_mongo;
+use crate::init_dbs_logic::init_mongo::MongoInitDbError;
 
-use crate::init_dbs::init_postgres::init_postgres;
-use crate::init_dbs::init_postgres::PostgresInitDbError;
+use crate::init_dbs_logic::init_postgres::init_postgres;
+use crate::init_dbs_logic::init_postgres::PostgresInitDbError;
 
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
 
