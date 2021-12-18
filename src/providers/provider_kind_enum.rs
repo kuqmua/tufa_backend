@@ -2,6 +2,7 @@ use strum_macros::EnumIter;
 
 use mongodb::bson::doc;
 
+use procedural_macros_lib::AllVariants;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum_macros::Display;
@@ -30,6 +31,7 @@ impl From<std::io::Error> for CleanLogsDirError {
 }
 
 #[derive(
+    AllVariants,
     EnumVariantCount,
     EnumIter,
     Clone,

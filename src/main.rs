@@ -161,6 +161,7 @@ mod providers {
             pub mod get_local_data;
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
+        pub mod enum_extention;
         pub mod provider_kind_trait;
     }
     pub mod get_providers_json_local_data_processed_error;
