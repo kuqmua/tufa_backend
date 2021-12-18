@@ -10,11 +10,13 @@ use crate::postgres_integration::schema::providers_link_parts::dsl::*;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::enum_extention::EnumExtenstion;
 
 #[derive(Debug)]
 pub enum PostgresGetProviderLinksError {
     LoadingProvidersLinkParts(diesel::result::Error),
     EstablishConnection(ConnectionError),
+    IncorrectProviderNameInsideDb(String),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -31,47 +33,24 @@ pub async fn postgres_get_providers_link_parts(
                 Err(e) => Err(PostgresGetProviderLinksError::LoadingProvidersLinkParts(e)),
                 Ok(vec) => {
                     let mut providers_vec_from_db = Vec::new();
-                    //trashcode warning
+                    let pk_array = ProviderKind::into_array();
                     for i in &vec {
-                        if i.provider_kind == "arxiv"
-                            || i.provider_kind == "biorxiv"
-                            || i.provider_kind == "github"
-                            || i.provider_kind == "habr"
-                            || i.provider_kind == "medrxiv"
-                            || i.provider_kind == "reddit"
-                            || i.provider_kind == "twitter"
-                        {
-                            if i.provider_kind == "arxiv" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Arxiv)) {
-                                    providers_vec_from_db.push(ProviderKind::Arxiv);
+                        let mut is_correct_field = false;
+                        for pk in pk_array {
+                            if i.provider_kind == format!("{}", *pk) {
+                                is_correct_field = true;
+                                if !(providers_vec_from_db.contains(pk)) {
+                                    providers_vec_from_db.push(*pk);
                                 }
-                            } else if i.provider_kind == "biorxiv" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Biorxiv)) {
-                                    providers_vec_from_db.push(ProviderKind::Biorxiv);
-                                }
-                            } else if i.provider_kind == "github" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Github)) {
-                                    providers_vec_from_db.push(ProviderKind::Github);
-                                }
-                            } else if i.provider_kind == "habr" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Habr)) {
-                                    providers_vec_from_db.push(ProviderKind::Habr);
-                                }
-                            } else if i.provider_kind == "medrxiv" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Medrxiv)) {
-                                    providers_vec_from_db.push(ProviderKind::Medrxiv);
-                                }
-                            } else if i.provider_kind == "reddit" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Reddit)) {
-                                    providers_vec_from_db.push(ProviderKind::Reddit);
-                                }
-                            } else if i.provider_kind == "twitter" {
-                                if !(providers_vec_from_db.contains(&ProviderKind::Twitter)) {
-                                    providers_vec_from_db.push(ProviderKind::Twitter);
-                                }
+                                break;
                             }
-                        } else {
-                            todo!()
+                        }
+                        if !is_correct_field {
+                            return Err(
+                                PostgresGetProviderLinksError::IncorrectProviderNameInsideDb(
+                                    i.provider_kind.clone(),
+                                ),
+                            );
                         }
                     }
                     let mut hashmap_to_return: HashMap<ProviderKind, Vec<String>> = HashMap::new(); //todo with capacity
