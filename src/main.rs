@@ -85,6 +85,7 @@ pub mod config_mods {
         pub mod env_var_u8_enum;
     }
     pub mod env_var_enum_impl {
+        pub mod enum_extention_trait;
         pub mod env_var_enum_traits;
     }
     pub mod config_struct;
