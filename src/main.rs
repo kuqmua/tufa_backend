@@ -180,6 +180,7 @@ mod tests {
     }
 }
 mod traits {
+    pub mod enum_extention;
     pub mod env_var_trait;
     pub mod env_var_typed_trait;
     pub mod provider_kind_trait;
