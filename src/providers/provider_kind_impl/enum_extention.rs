@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::traits::enum_extention::EnumExtenstion;
@@ -16,5 +18,22 @@ impl EnumExtenstion for ProviderKind {
             self_vec.push(self_variant);
         }
         self_vec
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_string_name_and_variant_hashmap() -> HashMap<String, Self> {
+        let mut variants_hashmap: HashMap<String, Self> =
+            HashMap::with_capacity(Self::get_length());
+        for variant in Self::iter() {
+            variants_hashmap.insert(format!("{}", variant), variant);
+        }
+        variants_hashmap
+    }
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
+        let mut variants_vec = Vec::with_capacity(Self::get_length());
+        for variant in Self::iter() {
+            variants_vec.push((format!("{}", variant), variant));
+        }
+        variants_vec
     }
 }

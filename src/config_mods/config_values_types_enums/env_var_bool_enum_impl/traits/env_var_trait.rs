@@ -1,7 +1,3 @@
-use std::collections::HashMap;
-
-use strum::IntoEnumIterator;
-
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::config_mods::env_var_enum::EnvVar;
 
@@ -417,25 +413,5 @@ impl EnvVarTrait for EnvBoolVar {
                 EnvVar::EnableCommonProvidersLinksLimit.get_env_name()
             }
         }
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, Self> {
-        let mut config_env_var_name_kind_string_to_enum_struct_hasmap: HashMap<&'static str, Self> =
-            HashMap::with_capacity(Self::get_length());
-        for env_var_name_kind_kind in Self::iter() {
-            config_env_var_name_kind_string_to_enum_struct_hasmap.insert(
-                env_var_name_kind_kind.get_env_name(),
-                env_var_name_kind_kind,
-            );
-        }
-        config_env_var_name_kind_string_to_enum_struct_hasmap
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_string_name_and_kind_tuple_vec() -> Vec<(&'static str, Self)> {
-        let mut env_var_name_kind_vec = Vec::with_capacity(Self::get_length());
-        for env_var_name_kind in Self::iter() {
-            env_var_name_kind_vec.push((env_var_name_kind.get_env_name(), env_var_name_kind));
-        }
-        env_var_name_kind_vec
     }
 }
