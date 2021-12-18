@@ -1,5 +1,6 @@
 use crate::config_mods::env_var_enum::EnvVar;
 
+use crate::traits::enum_extention::EnumExtenstion;
 use crate::traits::env_var_trait::EnvVarTrait;
 
 impl EnvVarTrait for EnvVar {

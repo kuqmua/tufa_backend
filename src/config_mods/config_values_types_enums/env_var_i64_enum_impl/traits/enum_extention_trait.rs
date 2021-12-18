@@ -39,6 +39,6 @@ impl EnumExtenstion for EnvI64Var {
         variants_vec
     }
     fn to_upper_snake_case(&self) -> String {
-        format!("{:?}", self).to_case(Case::Snake)
+        format!("{:?}", self).to_case(Case::Snake).to_uppercase()
     }
 }
