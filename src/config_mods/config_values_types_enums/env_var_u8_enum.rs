@@ -1,6 +1,7 @@
 use procedural_macros_lib::AllVariants;
 use procedural_macros_lib::EnumVariantCount;
 
+use strum_macros::Display;
 use strum_macros::EnumIter;
 
 #[derive(
@@ -15,6 +16,7 @@ use strum_macros::EnumIter;
     Eq,
     Hash,
     Copy,
+    Display,
 )]
 pub enum EnvU8Var {
     ErrorRed,

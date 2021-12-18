@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 
 use crate::traits::enum_extention::EnumExtenstion;
 
@@ -8,7 +8,7 @@ use strum::IntoEnumIterator;
 
 use convert_case::{Case, Casing};
 
-impl EnumExtenstion for ProviderKind {
+impl EnumExtenstion for EnvI64Var {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_array() -> &'static [Self] {
         Self::all_variants()

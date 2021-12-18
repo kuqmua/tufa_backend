@@ -13,4 +13,5 @@ pub trait EnumExtenstion {
     fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)>
     where
         Self: std::marker::Sized;
+    fn to_upper_snake_case(&self) -> String;
 }
