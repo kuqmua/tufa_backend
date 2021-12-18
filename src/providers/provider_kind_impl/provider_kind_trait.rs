@@ -521,8 +521,7 @@ impl ProviderKindTrait for ProviderKind {
                             for link_part in file_content_as_struct.data {
                                 vec_of_link_parts.push(link_part)
                             }
-                            vec_of_link_parts_hashmap
-                                .insert(pk, Ok(Ok(vec_of_link_parts)));
+                            vec_of_link_parts_hashmap.insert(pk, Ok(Ok(vec_of_link_parts)));
                         }
                         Err(e) => {
                             vec_of_link_parts_hashmap.insert(pk, Ok(Err(e)));
