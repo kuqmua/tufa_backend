@@ -150,6 +150,7 @@ mod providers {
             pub mod generate_reddit_links;
             pub mod generate_twitter_links;
         }
+        pub mod get_all_local_providers_data;
         pub mod get_providers_link_parts;
         pub mod get_twitter_provider_name;
         pub mod providers_init_json_schema;
