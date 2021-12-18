@@ -411,10 +411,6 @@ impl EnvVarTrait for EnvVar {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_array() -> &'static [Self] {
-        Self::all_variants()
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_hashmap() -> HashMap<&'static str, Self> {
         let mut config_env_var_name_kind_string_to_enum_struct_hasmap: HashMap<&'static str, Self> =
             HashMap::with_capacity(Self::get_length());
@@ -431,14 +427,6 @@ impl EnvVarTrait for EnvVar {
         let mut env_var_name_kind_vec = Vec::with_capacity(Self::get_length());
         for env_var_name_kind in Self::iter() {
             env_var_name_kind_vec.push((env_var_name_kind.get_env_name(), env_var_name_kind));
-        }
-        env_var_name_kind_vec
-    }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_vec() -> Vec<Self> {
-        let mut env_var_name_kind_vec = Vec::with_capacity(Self::get_length());
-        for env_var_name_kind in Self::iter() {
-            env_var_name_kind_vec.push(env_var_name_kind);
         }
         env_var_name_kind_vec
     }
