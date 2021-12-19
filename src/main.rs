@@ -50,7 +50,6 @@ pub mod config_mods {
         pub mod env_var_bool_enum_impl {
             pub mod traits {
                 pub mod enum_extention_trait;
-                pub mod env_var_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -59,7 +58,6 @@ pub mod config_mods {
         pub mod env_var_i64_enum_impl {
             pub mod traits {
                 pub mod enum_extention_trait;
-                pub mod env_var_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -68,7 +66,6 @@ pub mod config_mods {
         pub mod env_var_string_enum_impl {
             pub mod traits {
                 pub mod enum_extention_trait;
-                pub mod env_var_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -77,7 +74,6 @@ pub mod config_mods {
         pub mod env_var_u8_enum_impl {
             pub mod traits {
                 pub mod enum_extention_trait;
-                pub mod env_var_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -86,7 +82,6 @@ pub mod config_mods {
     }
     pub mod env_var_enum_impl {
         pub mod enum_extention_trait;
-        pub mod env_var_enum_traits;
     }
     pub mod config_struct;
     pub mod env_var_enum;
@@ -187,7 +182,6 @@ mod tests {
 }
 mod traits {
     pub mod enum_extention;
-    pub mod env_var_trait;
     pub mod env_var_typed_trait;
     pub mod provider_kind_trait;
 }

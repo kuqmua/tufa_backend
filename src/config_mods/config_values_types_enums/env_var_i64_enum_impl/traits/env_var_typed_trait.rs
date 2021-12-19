@@ -7,7 +7,7 @@ use crate::config_mods::config_error_mods::config_error::ConfigError;
 // use crate::config_mods::config_error_mods::var_or_int_parse_error_enum::VarOrIntParseError;
 use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
 
-use crate::traits::env_var_trait::EnvVarTrait;
+use crate::traits::enum_extention::EnumExtenstion;
 use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
 use strum::IntoEnumIterator;
@@ -18,7 +18,7 @@ use crate::constants::project_constants::ENV_FILE_NAME;
 
 impl EnvVarTypedTrait for EnvI64Var {
     fn get_string_from_env_var(&self, was_dotenv_enable: bool) -> Result<String, ConfigError> {
-        let string_name = self.get_env_name();
+        let string_name = self.to_upper_snake_case();
         match std::env::var(&string_name) {
             Ok(handle) => Ok(handle),
             Err(e) => Err(ConfigError {
@@ -63,7 +63,7 @@ impl EnvVarTypedTrait for EnvI64Var {
                                 error_option = Some(ConfigError {
                             env_var_name_kind: ConfigEnvVarErrorType::I64(env_var_name_kind),
                             was_dotenv_enable,
-                            env_name: env_var_name_kind.get_env_name(),
+                            env_name: env_var_name_kind.to_upper_snake_case(),
                             // env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(
                             //     VarOrIntParseError::Int(e),
                             // ),
