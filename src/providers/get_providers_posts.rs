@@ -2,7 +2,7 @@ use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
 use crate::helpers::resource::Resource;
 
-use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts_as_hashmap;
+use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 
 use super::providers_info::get_providers_link_parts::GetLinkPartsError;
 
@@ -53,7 +53,7 @@ use super::providers_info::get_providers_link_parts::GetLinkPartsError;
 #[deny(clippy::indexing_slicing)]
 pub async fn get_providers_posts() {
     let resource = Resource::PostgreSql; //Resource hardcode warning
-    match get_providers_link_parts_as_hashmap(&resource).await {
+    match get_providers_link_parts(&resource).await {
         Err(e) => match e {
             GetLinkPartsError::Local(_) => todo!(),
             GetLinkPartsError::Mongodb(_) => todo!(),

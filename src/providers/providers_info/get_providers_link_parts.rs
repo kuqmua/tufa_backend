@@ -20,7 +20,7 @@ pub enum GetLinkPartsError {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn get_providers_link_parts_as_hashmap(
+pub async fn get_providers_link_parts(
     resource: &Resource,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLinkPartsError> {
     match resource {
