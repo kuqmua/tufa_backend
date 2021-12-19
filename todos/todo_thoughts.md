@@ -521,4 +521,9 @@ should i create collection for each provider?
 rust cache github action
 https://github.com/marketplace/actions/rust-cache
 <br/>
+    
+### -------------------
+rust macros book
+https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
+<br/>
 
