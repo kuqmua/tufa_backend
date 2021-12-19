@@ -28,6 +28,8 @@ pub enum EnvStringVar {
     RedditUsername,
     RedditPassword,
 
+    ProvidersLinkPartsSource,
+
     MongoFirstHandleUrlPart,
     MongoSecondHandleUrlPart,
     MongoThirdHandleUrlPart,
