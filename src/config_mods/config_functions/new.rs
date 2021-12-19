@@ -2,6 +2,7 @@ extern crate toml;
 
 use std::collections::HashMap;
 
+use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
@@ -9,7 +10,10 @@ use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStrin
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 use crate::config_mods::config_struct::ConfigStruct;
+use crate::traits::enum_extention::EnumExtenstion;
 use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
+
+use crate::helpers::resource::Resource;
 
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
@@ -17,6 +21,22 @@ impl ConfigStruct {
         let bool_vars: HashMap<EnvBoolVar, bool> = EnvBoolVar::get_env_values_hashmap()?;
         let u8_vars = EnvU8Var::get_env_values_hashmap()?;
         let i64_vars = EnvI64Var::get_env_values_hashmap()?;
+        let providers_link_parts_source_handle: Resource;
+        if string_vars[&EnvStringVar::ProvidersLinkPartsSource] == "local" {
+            providers_link_parts_source_handle = Resource::Local;
+        } else if string_vars[&EnvStringVar::ProvidersLinkPartsSource] == "mongo" {
+            providers_link_parts_source_handle = Resource::Mongodb;
+        } else if string_vars[&EnvStringVar::ProvidersLinkPartsSource] == "postgres" {
+            providers_link_parts_source_handle = Resource::PostgreSql;
+        } else {
+            return Err(ConfigError {
+                env_var_name_kind: ConfigEnvVarErrorType::String(
+                    EnvStringVar::ProvidersLinkPartsSource,
+                ),
+                was_dotenv_enable: false, //its incorrect hardcode, todo
+                env_name: EnvStringVar::ProvidersLinkPartsSource.to_upper_snake_case(),
+            });
+        }
         let handle_config: ConfigStruct = ConfigStruct {
             github_name: string_vars[&EnvStringVar::GithubName].clone(),
             github_token: string_vars[&EnvStringVar::GithubToken].clone(),
@@ -28,8 +48,7 @@ impl ConfigStruct {
             reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
 
             dbs_enable_initialization: bool_vars[&EnvBoolVar::DbsEnableInitialization],
-            providers_link_parts_source: string_vars[&EnvStringVar::ProvidersLinkPartsSource]
-                .clone(),
+            providers_link_parts_source: providers_link_parts_source_handle,
 
             mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
                 .clone(),

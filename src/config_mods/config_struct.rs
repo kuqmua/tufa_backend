@@ -1,6 +1,8 @@
 extern crate toml;
 
-#[derive(Debug, Clone, PartialEq)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
+use crate::helpers::resource::Resource;
+
+#[derive(Debug, Clone)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
@@ -12,7 +14,7 @@ pub struct ConfigStruct {
     pub reddit_password: String,
 
     pub dbs_enable_initialization: bool,
-    pub providers_link_parts_source: String,
+    pub providers_link_parts_source: Resource,
 
     pub mongo_first_handle_url_part: String,
     pub mongo_second_handle_url_part: String,
