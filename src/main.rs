@@ -201,20 +201,8 @@ extern crate dotenv;
 #[macro_use]
 extern crate hello_world_derive;
 
-trait HelloWorld {
-    fn hello_world();
-}
-
-#[derive(HelloWorld)]
-struct FrenchToast;
-
-#[derive(HelloWorld)]
-struct Waffles;
-
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    FrenchToast::hello_world();
-    Waffles::hello_world();
     entry::entry();
 }

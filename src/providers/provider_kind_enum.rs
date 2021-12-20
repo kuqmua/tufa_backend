@@ -2,10 +2,17 @@ use strum_macros::EnumIter;
 
 use mongodb::bson::doc;
 
+use convert_case::{Case, Casing};
+
+use std::collections::HashMap;
+
+use strum_macros::Display;
+use strum::IntoEnumIterator;
+
 use procedural_macros_lib::AllVariants;
 use procedural_macros_lib::EnumVariantCount;
 
-use strum_macros::Display;
+use crate::traits::enum_extention::EnumExtenstion;
 
 #[derive(Debug)]
 pub struct RemoveDirError {
@@ -31,6 +38,7 @@ impl From<std::io::Error> for CleanLogsDirError {
 }
 
 #[derive(
+    EnumExtenstion,
     AllVariants,
     EnumVariantCount,
     EnumIter,
@@ -56,7 +64,7 @@ pub enum ProviderKind {
 }
 
 impl ProviderKind {
-    pub fn get_length() -> usize {
+    pub fn get_length() -> usize {   
         ENUM_LENGTH
     }
 }
