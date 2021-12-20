@@ -11,3 +11,5 @@
 ### Error Lens
 
 ### Tabnine
+
+### Rust Test Explorer
