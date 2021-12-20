@@ -166,7 +166,6 @@ mod providers {
         pub mod enum_extention;
         pub mod provider_kind_trait;
     }
-    pub mod get_providers_json_local_data_processed_error;
     pub mod get_providers_posts;
     pub mod provider_kind_enum;
 }
