@@ -80,9 +80,7 @@ pub mod config_mods {
         }
         pub mod env_var_u8_enum;
     }
-    pub mod env_var_enum_impl {
-        pub mod enum_extention_trait;
-    }
+    pub mod env_var_enum_impl {}
     pub mod config_struct;
     pub mod env_var_enum;
     pub mod lazy_static_bool_hashmap;

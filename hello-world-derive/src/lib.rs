@@ -23,11 +23,6 @@ pub fn hello_world(input: TokenStream) -> TokenStream {
 
 fn impl_hello_world(ast: &syn::DeriveInput) -> quote::Tokens {
     let name = &ast.ident;
-    // impl EnumExtenstion for #name {
-    //     fn hello_world() {
-    //         println!("Hello, World! My name is {}", stringify!(#name));
-    //     }
-    // }
     quote! {
         impl EnumExtenstion for #name {
             #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
