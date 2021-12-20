@@ -49,7 +49,6 @@ pub mod config_mods {
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum_impl {
             pub mod traits {
-                pub mod enum_extention_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -57,7 +56,6 @@ pub mod config_mods {
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum_impl {
             pub mod traits {
-                pub mod enum_extention_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -65,7 +63,6 @@ pub mod config_mods {
         pub mod env_var_i64_enum;
         pub mod env_var_string_enum_impl {
             pub mod traits {
-                pub mod enum_extention_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}
@@ -73,7 +70,6 @@ pub mod config_mods {
         pub mod env_var_string_enum;
         pub mod env_var_u8_enum_impl {
             pub mod traits {
-                pub mod enum_extention_trait;
                 pub mod env_var_typed_trait;
             }
             pub mod functions {}

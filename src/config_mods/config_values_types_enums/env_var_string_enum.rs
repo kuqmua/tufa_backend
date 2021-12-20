@@ -4,9 +4,18 @@ use procedural_macros_lib::EnumVariantCount;
 use strum_macros::Display;
 use strum_macros::EnumIter;
 
+use crate::traits::enum_extention::EnumExtenstion;
+
+use convert_case::{Case, Casing};
+
+use std::collections::HashMap;
+
+use strum::IntoEnumIterator;
+
 #[derive(
     AllVariants,
     EnumVariantCount,
+    EnumExtenstion,
     EnumIter,
     Clone,
     Debug,
