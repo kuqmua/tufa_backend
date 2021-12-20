@@ -130,11 +130,13 @@ pub mod postgres_integration {
             pub mod queryable_link_part;
         }
     }
+    pub mod schemas {
+        pub mod providers_link_parts_schema;
+    }
     pub mod postgres_check_availability;
     pub mod postgres_delete_post;
     pub mod postgres_get_db_url;
     pub mod postgres_get_providers_link_parts;
-    pub mod providers_link_parts_schema;
 }
 pub mod prints {
     pub mod print_colorful_message;
