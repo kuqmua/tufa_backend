@@ -192,7 +192,7 @@ extern crate lazy_static;
 extern crate dotenv;
 
 #[macro_use]
-extern crate hello_world_derive;
+extern crate procedural_macros_lib;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
