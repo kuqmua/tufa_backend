@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use strum_macros::Display;
 use strum::IntoEnumIterator;
 
-use procedural_macros_lib::IntoArray;
+use procedural_macros_lib::EnumIntoArray;
 use procedural_macros_lib::EnumVariantCount;
 
 use crate::traits::enum_extention::EnumExtenstion;
@@ -39,7 +39,7 @@ impl From<std::io::Error> for CleanLogsDirError {
 
 #[derive(
     EnumExtenstion,
-    IntoArray,
+    EnumIntoArray,
     EnumVariantCount,
     EnumIter,
     Clone,

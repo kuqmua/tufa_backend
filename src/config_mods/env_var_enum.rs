@@ -1,4 +1,4 @@
-use procedural_macros_lib::IntoArray;
+use procedural_macros_lib::EnumIntoArray;
 use procedural_macros_lib::EnumVariantCount;
 
 use crate::traits::enum_extention::EnumExtenstion;
@@ -13,7 +13,7 @@ use std::collections::HashMap;
 use strum::IntoEnumIterator;
 
 #[derive(
-    IntoArray,
+    EnumIntoArray,
     EnumVariantCount,
     EnumExtenstion,
     EnumIter,

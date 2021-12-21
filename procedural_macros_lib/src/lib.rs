@@ -15,12 +15,12 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
     expanded.into()
 }
 
-#[proc_macro_derive(IntoArray)]
+#[proc_macro_derive(EnumIntoArray)]
 pub fn derive_into_array(input: TokenStream) -> TokenStream {
     let syn_item: syn::DeriveInput = syn::parse(input).unwrap();
     let variants = match syn_item.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| v.ident),
-        _ => panic!("IntoArray only works on enums"),
+        _ => panic!("EnumIntoArray only works on enums"),
     };
     let enum_name = syn_item.ident;
     let expanded = quote! {
