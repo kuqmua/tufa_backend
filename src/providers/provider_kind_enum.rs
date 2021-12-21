@@ -9,9 +9,6 @@ use std::collections::HashMap;
 use strum_macros::Display;
 use strum::IntoEnumIterator;
 
-use procedural_macros_lib::EnumIntoArray;
-use procedural_macros_lib::EnumVariantCount;
-
 use crate::traits::enum_extention::EnumExtenstion;
 
 #[derive(Debug)]
@@ -39,8 +36,6 @@ impl From<std::io::Error> for CleanLogsDirError {
 
 #[derive(
     EnumExtenstion,
-    EnumIntoArray,
-    EnumVariantCount,
     EnumIter,
     Clone,
     Debug,
@@ -61,10 +56,4 @@ pub enum ProviderKind {
     Medrxiv,
     Reddit,
     Twitter,
-}
-
-impl ProviderKind {
-    pub fn get_length() -> usize {   
-        ENUM_LENGTH
-    }
 }

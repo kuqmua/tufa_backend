@@ -5,6 +5,8 @@ use std::path::Path;
 use mongodb::bson::{doc, Document};
 use strum::IntoEnumIterator;
 
+use crate::traits::enum_extention::EnumExtenstion;
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
@@ -279,14 +281,6 @@ impl ProviderKindTrait for ProviderKind {
         }
     }
     ///
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn into_vec() -> Vec<ProviderKind> {
-        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            provider_kind_vec.push(provider_kind);
-        }
-        provider_kind_vec
-    }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_item_handle(&self) -> Option<&'static str> {

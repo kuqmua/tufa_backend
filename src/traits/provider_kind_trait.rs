@@ -31,9 +31,6 @@ pub trait ProviderKindTrait {
     fn is_links_limit_enabled(&self) -> bool;
     fn get_links_limit(&self) -> i64;
     ///
-    fn into_vec() -> Vec<Self>
-    where
-        Self: Sized;
     fn get_item_handle(&self) -> Option<&'static str>;
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document>;
     fn get_mongo_log_collection_name(&self) -> String;

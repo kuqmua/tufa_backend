@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 pub trait EnumExtenstion {
+    fn get_length() -> usize;
     fn into_array() -> &'static [Self]
     where
         Self: std::marker::Sized;

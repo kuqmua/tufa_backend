@@ -1,6 +1,3 @@
-use procedural_macros_lib::EnumIntoArray;
-use procedural_macros_lib::EnumVariantCount;
-
 use strum_macros::Display;
 use strum_macros::EnumIter;
 
@@ -13,8 +10,6 @@ use std::collections::HashMap;
 use strum::IntoEnumIterator;
 
 #[derive(
-    EnumIntoArray,
-    EnumVariantCount,
     EnumExtenstion,
     EnumIter,
     Clone,
@@ -52,10 +47,4 @@ pub enum EnvU8Var {
     InfoRed,
     InfoGreen,
     InfoBlue,
-}
-
-impl EnvU8Var {
-    pub fn get_length() -> usize {
-        ENUM_LENGTH
-    }
 }
