@@ -1,4 +1,4 @@
-use procedural_macros_lib::AllVariants;
+use procedural_macros_lib::IntoArray;
 use procedural_macros_lib::EnumVariantCount;
 
 use strum_macros::Display;
@@ -13,7 +13,7 @@ use std::collections::HashMap;
 use strum::IntoEnumIterator;
 
 #[derive(
-    AllVariants,
+    IntoArray,
     EnumVariantCount,
     EnumExtenstion,
     EnumIter,
