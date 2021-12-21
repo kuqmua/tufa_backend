@@ -35,16 +35,13 @@ pub fn derive_all_variants(input: TokenStream) -> TokenStream {
     expanded.into()
 }
 
-extern crate proc_macro;
-extern crate quote;
-
 #[proc_macro_derive(EnumExtenstion)]
-pub fn hello_world(input: TokenStream) -> TokenStream {
+pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
-    impl_hello_world(&ast)
+    impl_enum_extension(&ast)
 }
 
-fn impl_hello_world(ast: &syn::DeriveInput) -> TokenStream {
+fn impl_enum_extension(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let gen = quote! {
         impl EnumExtenstion for #name {
