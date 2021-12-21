@@ -18,13 +18,11 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(AllVariants)]
 pub fn derive_all_variants(input: TokenStream) -> TokenStream {
     let syn_item: syn::DeriveInput = syn::parse(input).unwrap();
-
     let variants = match syn_item.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| v.ident),
         _ => panic!("AllVariants only works on enums"),
     };
     let enum_name = syn_item.ident;
-
     let expanded = quote! {
         impl #enum_name {
             pub fn all_variants() -> &'static[#enum_name] {
@@ -37,12 +35,8 @@ pub fn derive_all_variants(input: TokenStream) -> TokenStream {
 
 #[proc_macro_derive(EnumExtenstion)]
 pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
-    let ast = syn::parse(input).unwrap();
-    impl_enum_extension(&ast)
-}
-
-fn impl_enum_extension(ast: &syn::DeriveInput) -> TokenStream {
-    let name = &ast.ident;
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let name= &ast.ident;
     let gen = quote! {
         impl EnumExtenstion for #name {
             #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
