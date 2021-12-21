@@ -373,3 +373,6 @@ wrap blocking diesel function into spawn blocking under tokio runtime
 (rustacean station - tokio ecosystem with alice ryhl) 24:30
 <br/>
 
+### -------------------
+move env var typed trait into procedural macro
+<br/>
