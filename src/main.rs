@@ -188,11 +188,11 @@ mod write_error_posts_wrapper;
 extern crate diesel;
 #[macro_use]
 extern crate lazy_static;
+#[macro_use]
+extern crate enum_extention;
 
 extern crate dotenv;
 
-#[macro_use]
-extern crate procedural_macros_lib;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
