@@ -6,9 +6,12 @@
 /old_code
 /parsing_file_examples
 /postgresql_volume
-/procedural_macros_lib
+/proc_macro_libs/target
+/proc_macro_libs/Cargo.lock
+/proc_macro_libs/*/target
+/proc_macro_libs/*/Cargo.lock
 /target
-/tests_lib
+/vscode
 /todos
 .gitignore
 docker-compose.yml
