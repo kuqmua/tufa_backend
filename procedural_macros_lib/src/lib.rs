@@ -16,7 +16,7 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
 }
 
 #[proc_macro_derive(EnumIntoArray)]
-pub fn derive_into_array(input: TokenStream) -> TokenStream {
+pub fn derive_enum_into_array(input: TokenStream) -> TokenStream {
     let syn_item: syn::DeriveInput = syn::parse(input).unwrap();
     let variants = match syn_item.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| v.ident),
