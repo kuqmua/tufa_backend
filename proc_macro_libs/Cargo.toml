@@ -1,4 +1,5 @@
 [workspace]
 members = [
     "enum_extention",
+    "env_var_typed"
 ]
