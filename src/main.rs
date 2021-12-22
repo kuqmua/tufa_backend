@@ -48,30 +48,22 @@ pub mod config_mods {
     }
     pub mod config_values_types_enums {
         pub mod env_var_bool_enum_impl {
-            pub mod traits {
-                pub mod env_var_typed_trait;
-            }
+            pub mod traits {}
             pub mod functions {}
         }
         pub mod env_var_bool_enum;
         pub mod env_var_i64_enum_impl {
-            pub mod traits {
-                pub mod env_var_typed_trait;
-            }
+            pub mod traits {}
             pub mod functions {}
         }
         pub mod env_var_i64_enum;
         pub mod env_var_string_enum_impl {
-            pub mod traits {
-                pub mod env_var_typed_trait;
-            }
+            pub mod traits {}
             pub mod functions {}
         }
         pub mod env_var_string_enum;
         pub mod env_var_u8_enum_impl {
-            pub mod traits {
-                pub mod env_var_typed_trait;
-            }
+            pub mod traits {}
             pub mod functions {}
         }
         pub mod env_var_u8_enum;
@@ -190,6 +182,8 @@ extern crate diesel;
 extern crate lazy_static;
 #[macro_use]
 extern crate enum_extention;
+#[macro_use]
+extern crate env_var_typed;
 
 extern crate dotenv;
 

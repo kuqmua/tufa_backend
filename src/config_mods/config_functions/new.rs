@@ -30,7 +30,7 @@ impl ConfigStruct {
             providers_link_parts_source_handle = Resource::PostgreSql;
         } else {
             return Err(ConfigError {
-                env_var_name_kind: ConfigEnvVarErrorType::String(
+                env_var_name_kind: ConfigEnvVarErrorType::EnvStringVar(
                     EnvStringVar::ProvidersLinkPartsSource,
                 ),
                 was_dotenv_enable: false, //its incorrect hardcode, todo

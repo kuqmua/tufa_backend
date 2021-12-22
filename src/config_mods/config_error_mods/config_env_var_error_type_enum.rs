@@ -5,8 +5,8 @@ use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 
 #[derive(Debug)]
 pub enum ConfigEnvVarErrorType {
-    Bool(EnvBoolVar),
-    String(EnvStringVar),
-    U8(EnvU8Var),
-    I64(EnvI64Var),
+    EnvBoolVar(EnvBoolVar),
+    EnvStringVar(EnvStringVar),
+    EnvU8Var(EnvU8Var),
+    EnvI64Var(EnvI64Var),
 }
