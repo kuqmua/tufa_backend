@@ -164,7 +164,7 @@ mod tests {
         pub mod ci_check_docker_compose_changes;
         pub mod ci_check_env_file_exists;
         pub mod ci_check_new_env_vars;
-        pub mod ci_check_valid_u8_env_vars;
+        pub mod ci_check_valid_env_vars_type;
     }
 }
 mod traits {
