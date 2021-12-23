@@ -164,6 +164,7 @@ mod tests {
         pub mod ci_check_docker_compose_changes;
         pub mod ci_check_env_file_exists;
         pub mod ci_check_new_env_vars;
+        pub mod ci_check_valid_u8_env_vars;
     }
 }
 mod traits {
@@ -186,7 +187,6 @@ extern crate enum_extention;
 extern crate env_var_typed;
 
 extern crate dotenv;
-
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {

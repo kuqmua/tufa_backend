@@ -6,8 +6,8 @@ use convert_case::{Case, Casing};
 
 use std::collections::HashMap;
 
-use strum_macros::Display;
 use strum::IntoEnumIterator;
+use strum_macros::Display;
 
 use crate::traits::enum_extention::EnumExtenstion;
 

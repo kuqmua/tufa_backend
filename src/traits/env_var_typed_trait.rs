@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-// use dotenv::Error;
-
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 
 pub trait EnvVarTypedTrait {
