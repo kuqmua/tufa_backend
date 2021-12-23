@@ -1,7 +1,5 @@
 extern crate toml;
 
-use std::collections::HashMap;
-
 use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
@@ -18,9 +16,9 @@ use crate::helpers::resource::Resource;
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
         let string_vars = EnvStringVar::get_env_values_hashmap::<String>()?;
-        let bool_vars: HashMap<EnvBoolVar, bool> = EnvBoolVar::get_env_values_hashmap()?;
-        let u8_vars = EnvU8Var::get_env_values_hashmap()?;
-        let i64_vars = EnvI64Var::get_env_values_hashmap()?;
+        let bool_vars = EnvBoolVar::get_env_values_hashmap::<bool>()?;
+        let u8_vars = EnvU8Var::get_env_values_hashmap::<u8>()?;
+        let i64_vars = EnvI64Var::get_env_values_hashmap::<i64>()?;
         let providers_link_parts_source_handle: Resource;
         if string_vars[&EnvStringVar::ProvidersLinkPartsSource] == "local" {
             providers_link_parts_source_handle = Resource::Local;

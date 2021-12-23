@@ -8,5 +8,5 @@ pub trait EnvVarTypedTrait {
     fn get_env_values_hashmap<T: std::str::FromStr>() -> Result<HashMap<Self, T>, ConfigError>
     where
         Self: std::marker::Sized;
-    fn check_valid_typed_env_vars();//<T: std::str::FromStr>
+    fn check_valid_typed_env_vars();
 }
