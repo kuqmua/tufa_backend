@@ -42,14 +42,13 @@ pub fn entry() {
             line!().to_string(),
             format!("check_net_wrapper error: {:#?}", e),
         );
-        //do something with it
         return;
     }
-    let tokio_build_result = tokio::runtime::Builder::new_multi_thread()
+    match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(cpus)
         .enable_all()
-        .build();
-    match tokio_build_result {
+        .build()
+    {
         Err(e) => {
             print_colorful_message(
                 None,
