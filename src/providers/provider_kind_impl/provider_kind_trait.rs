@@ -95,7 +95,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => CONFIG.mongo_enable_link_parts_randomize_order_for_habr,
         }
     }
-
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_postgres_initialization_enabled(&self) -> bool {
         match self {
@@ -108,7 +107,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => CONFIG.postgres_enable_initialization_for_habr,
         }
     }
-
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool {
         match self {
@@ -133,7 +131,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => CONFIG.enable_cleaning_warning_logs_directory_for_habr,
         }
     }
-
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_check_link(&self) -> &'static str {
         match self {
@@ -146,7 +143,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => &CONFIG.habr_check_link,
         }
     }
-
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_enabled(&self) -> bool {
         match self {
@@ -255,7 +251,6 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Habr => CONFIG.enable_info_prints_for_habr,
         }
     }
-
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_links_limit_enabled(&self) -> bool {
         match self {

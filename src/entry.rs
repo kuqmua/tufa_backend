@@ -61,6 +61,16 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if CONFIG.dbs_enable_initialization {
+                if !CONFIG.mongo_enable_initialization && !CONFIG.postgres_enable_initialization {
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        file!().to_string(),
+                        line!().to_string(),
+                        String::from("db initialization for mongo and postgres are disabled"),
+                    );
+                    return;
+                }
                 if let Err(e) = runtime.block_on(init_dbs()) {
                     print_colorful_message(
                         None,
