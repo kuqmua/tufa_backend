@@ -44,6 +44,16 @@ pub fn entry() {
         );
         return;
     }
+    print_colorful_message(
+        None,
+        PrintType::TimeMeasurement,
+        file!().to_string(),
+        line!().to_string(),
+        format!(
+            "preparation done in {} seconds, starting tokio runtime...",
+            time.elapsed().as_secs()
+        ),
+    );
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(cpus)
         .enable_all()
@@ -64,7 +74,7 @@ pub fn entry() {
                 if !CONFIG.mongo_enable_initialization && !CONFIG.postgres_enable_initialization {
                     print_colorful_message(
                         None,
-                        PrintType::Error,
+                        PrintType::WarningLow,
                         file!().to_string(),
                         line!().to_string(),
                         String::from("db initialization for mongo and postgres are disabled"),
@@ -96,7 +106,7 @@ pub fn entry() {
             if ProviderKind::get_enabled_providers_vec().is_empty() {
                 print_colorful_message(
                     None,
-                    PrintType::Error,
+                    PrintType::WarningLow,
                     file!().to_string(),
                     line!().to_string(),
                     "all providers are disabled, get_providers_posts will not run".to_owned(),
