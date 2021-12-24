@@ -32,10 +32,7 @@ pub async fn check_new_posts_threads_parts(
         Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
     let mut threads_vec_checker =
         Vec::<bool>::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
-    let posts_and_errors: Vec<(
-        ProviderKind,
-        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-    )> = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
+    let posts_and_errors = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
     //check if provider_names are unique
     for (provider_kind, link_parts) in providers_link_parts {
@@ -48,19 +45,17 @@ pub async fn check_new_posts_threads_parts(
                 "link_parts.is_empty".to_string(),
             );
         } else {
-            if provider_kind.is_prints_enabled() {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::Info,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!(
-                        "{:#?} elements in {:#?} HashMap",
-                        link_parts.len(),
-                        provider_kind
-                    ),
-                );
-            };
+            print_colorful_message(
+                Some(&provider_kind),
+                PrintType::Info,
+                file!().to_string(),
+                line!().to_string(),
+                format!(
+                    "{:#?} elements in {:#?} HashMap",
+                    link_parts.len(),
+                    provider_kind
+                ),
+            );
             let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
             let vec_of_provider_links = provider_kind.get_provider_links(link_parts.to_vec());
             threads_vec_checker.push(true);

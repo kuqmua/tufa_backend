@@ -72,11 +72,7 @@ pub mod config_mods {
     pub mod env_var_enum_impl {}
     pub mod config_struct;
     pub mod env_var_enum;
-    pub mod lazy_static_bool_hashmap;
     pub mod lazy_static_config;
-    pub mod lazy_static_i64_hashmap;
-    pub mod lazy_static_string_hashmap;
-    pub mod lazy_static_u8_hashmap;
 }
 pub mod helpers {
     pub mod create_dir_if_it_doesnt_exist;
@@ -152,6 +148,7 @@ mod providers {
         }
         pub mod provider_kind_trait;
     }
+    pub mod check_providers_link_parts_on_empty;
     pub mod get_providers_posts;
     pub mod provider_kind_enum;
 }

@@ -2,10 +2,12 @@ use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 
+use super::check_providers_link_parts_on_empty::CheckEmptyError;
 use super::providers_info::get_providers_link_parts::GetLinkPartsError;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
+use crate::providers::check_providers_link_parts_on_empty::check_providers_link_parts_on_empty;
 // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
@@ -59,33 +61,41 @@ pub async fn get_providers_posts() {
             GetLinkPartsError::PostgreSql(_) => todo!(),
         },
         Ok(providers_link_parts) => {
-            let _vec = check_new_posts_threads_parts(providers_link_parts).await;
-            //todo: conversion function before write_error_posts_wrapper
-            //commented before conversion function implementation
-            // if !vec.is_empty() {
-            //     for (provider_kind, result_vec) in vec {
-            //         match result_vec {
-            //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
-            //                 let wrong_cases_thread = thread::spawn(move || {
-            //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
-            //                 });
-            //                 match wrong_cases_thread.join() {
-            //                     Ok(_) => {}
-            //                     Err(e) => {
-            //                         print_colorful_message(
-            //                             None,
-            //                             PrintType::Error,
-            //                             file!().to_string(),
-            //                             line!().to_string(),
-            //                             format!("wrong_cases_thread.join() error: {:#?}", e),
-            //                         );
-            //                     }
-            //                 }
-            //             }
-            //             Err(e) => {}
-            //         }
-            //     }
-            // }
+            match check_providers_link_parts_on_empty(providers_link_parts) {
+                Err(e) => match e {
+                    CheckEmptyError::Full => todo!(),
+                    CheckEmptyError::Partially(_) => todo!(),
+                },
+                Ok(non_empty_providers_link_parts) => {
+                    let _vec = check_new_posts_threads_parts(non_empty_providers_link_parts).await;
+                }
+            }
+            // //todo: conversion function before write_error_posts_wrapper
+            // //commented before conversion function implementation
+            // // if !vec.is_empty() {
+            // //     for (provider_kind, result_vec) in vec {
+            // //         match result_vec {
+            // //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
+            // //                 let wrong_cases_thread = thread::spawn(move || {
+            // //                     block_on(write_error_posts_wrapper(vec_post_error_variants));
+            // //                 });
+            // //                 match wrong_cases_thread.join() {
+            // //                     Ok(_) => {}
+            // //                     Err(e) => {
+            // //                         print_colorful_message(
+            // //                             None,
+            // //                             PrintType::Error,
+            // //                             file!().to_string(),
+            // //                             line!().to_string(),
+            // //                             format!("wrong_cases_thread.join() error: {:#?}", e),
+            // //                         );
+            // //                     }
+            // //                 }
+            // //             }
+            // //             Err(e) => {}
+            // //         }
+            // //     }
+            // // }
         }
     }
 }

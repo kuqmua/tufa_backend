@@ -15,17 +15,12 @@ use std::collections::HashMap;
 
 use strum::IntoEnumIterator;
 
-#[derive(
-    EnumExtenstion,
-    EnumIter,
-    Debug,
-    Display,
-)]
+#[derive(EnumExtenstion, EnumIter, Debug, Display)]
 pub enum CommonEnvVar {
     EnvBoolVar,
     EnvI64Var,
     EnvStringVar,
-    EnvU8Var
+    EnvU8Var,
 }
 
 impl CommonEnvVar {
