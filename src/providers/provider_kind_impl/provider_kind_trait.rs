@@ -364,7 +364,7 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String> {
+    fn generate_provider_links(&self, names_vector: Vec<String>) -> Vec<String> {
         match self {
             ProviderKind::Arxiv => generate_arxiv_links(names_vector),
             ProviderKind::Biorxiv => generate_biorxiv_links(names_vector),

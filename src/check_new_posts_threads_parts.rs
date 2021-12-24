@@ -37,7 +37,7 @@ pub async fn check_new_posts_threads_parts(
     //check if provider_names are unique
     for (provider_kind, link_parts) in providers_link_parts {
         let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
-        let vec_of_provider_links = provider_kind.get_provider_links(link_parts.to_vec());
+        let vec_of_provider_links = provider_kind.generate_provider_links(link_parts.to_vec());
         threads_vec_checker.push(true);
         if vec_of_provider_links.is_empty() {
             print_colorful_message(

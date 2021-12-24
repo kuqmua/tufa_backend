@@ -39,7 +39,7 @@ pub trait ProviderKindTrait {
     fn get_init_local_data_file_path(&self) -> String;
     fn remove_logs_directory(&self) -> Result<(), CleanLogsDirError>;
     fn stringify(&self) -> &'static str;
-    fn get_provider_links(&self, names_vector: Vec<String>) -> Vec<String>;
+    fn generate_provider_links(&self, names_vector: Vec<String>) -> Vec<String>;
     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> HashMap<Self, Vec<String>>
     where
         Self: Sized;
