@@ -36,46 +36,25 @@ pub async fn check_new_posts_threads_parts(
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
     //check if provider_names are unique
     for (provider_kind, link_parts) in providers_link_parts {
-        if link_parts.is_empty() {
+        let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
+        let vec_of_provider_links = provider_kind.get_provider_links(link_parts.to_vec());
+        threads_vec_checker.push(true);
+        if vec_of_provider_links.is_empty() {
             print_colorful_message(
                 Some(&provider_kind),
-                PrintType::Error,
+                PrintType::WarningLow,
                 file!().to_string(),
                 line!().to_string(),
-                "link_parts.is_empty".to_string(),
+                format!("vec_of_provider_links.is_empty for {:?}", provider_kind),
             );
         } else {
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::Info,
-                file!().to_string(),
-                line!().to_string(),
-                format!(
-                    "{:#?} elements in {:#?} HashMap",
-                    link_parts.len(),
-                    provider_kind
-                ),
-            );
-            let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
-            let vec_of_provider_links = provider_kind.get_provider_links(link_parts.to_vec());
-            threads_vec_checker.push(true);
-            if vec_of_provider_links.is_empty() {
-                print_colorful_message(
-                    Some(&provider_kind),
-                    PrintType::WarningLow,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("vec_of_provider_links.is_empty for {:?}", provider_kind),
+            threads_vec.push(thread::spawn(move || {
+                providers_new_posts_check(
+                    provider_kind,
+                    vec_of_provider_links,
+                    posts_and_errors_handle,
                 );
-            } else {
-                threads_vec.push(thread::spawn(move || {
-                    providers_new_posts_check(
-                        provider_kind,
-                        vec_of_provider_links,
-                        posts_and_errors_handle,
-                    );
-                }));
-            }
+            }));
         }
     }
     for (index, thread_vec) in threads_vec.into_iter().enumerate() {
