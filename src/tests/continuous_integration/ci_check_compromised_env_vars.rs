@@ -1,4 +1,4 @@
-use crate::constants::tests_constants::_USER_CREDENTIALS_DUMMY_HANDLE;
+use crate::tests::tests_constants::USER_CREDENTIALS_DUMMY_HANDLE;
 
 use crate::config_mods::config_values_types_enums::env_var_bool_enum::EnvBoolVar;
 use crate::config_mods::config_values_types_enums::env_var_i64_enum::EnvI64Var;
@@ -13,8 +13,8 @@ fn ci_check_compromised_env_vars() {
         Err(e) => panic!("cannot get string env values hashmap, error: {:#?}", e),
         Ok(hashmap) => {
             for (key, value) in hashmap {
-                if value != _USER_CREDENTIALS_DUMMY_HANDLE {
-                    panic!("{:?} is not {}", key, _USER_CREDENTIALS_DUMMY_HANDLE);
+                if value != USER_CREDENTIALS_DUMMY_HANDLE {
+                    panic!("{:?} is not {}", key, USER_CREDENTIALS_DUMMY_HANDLE);
                 }
             }
         }
