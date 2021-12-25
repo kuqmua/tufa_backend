@@ -32,12 +32,20 @@ impl CommonEnvVar {
             CommonEnvVar::EnvU8Var => EnvU8Var::check_valid_typed_env_vars(),
         }
     }
-    // pub fn check_compromised_env_vars(&self) {
-    //     match self {
-    //         CommonEnvVar::EnvBoolVar => EnvBoolVar::check_valid_typed_env_vars(),
-    //         CommonEnvVar::EnvI64Var => EnvI64Var::check_valid_typed_env_vars(),
-    //         CommonEnvVar::EnvStringVar => EnvStringVar::check_valid_typed_env_vars(),
-    //         CommonEnvVar::EnvU8Var => EnvU8Var::check_valid_typed_env_vars(),
-    //     }
-    // }
+    pub fn check_compromised_env_vars(&self, was_dotenv_enable: bool) {
+        match self {
+            CommonEnvVar::EnvBoolVar => {
+                EnvBoolVar::check_compromised_typed_env_vars::<bool>(was_dotenv_enable)
+            }
+            CommonEnvVar::EnvI64Var => {
+                EnvI64Var::check_compromised_typed_env_vars::<i64>(was_dotenv_enable)
+            }
+            CommonEnvVar::EnvStringVar => {
+                EnvStringVar::check_compromised_typed_env_vars::<String>(was_dotenv_enable)
+            }
+            CommonEnvVar::EnvU8Var => {
+                EnvU8Var::check_compromised_typed_env_vars::<u8>(was_dotenv_enable)
+            }
+        }
+    }
 }
