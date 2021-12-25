@@ -165,6 +165,7 @@ mod tests {
 mod traits {
     pub mod enum_extention;
     pub mod env_var_typed_trait;
+    pub mod provider_kind_from_config_trait;
     pub mod provider_kind_trait;
 }
 mod check_new_posts_threads_parts;

@@ -4,7 +4,8 @@ use syn;
 
 #[proc_macro_derive(EnumExtenstion)]
 pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
-    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let ast: syn::DeriveInput =
+        syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
     let len = match ast.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.len(),
         _ => panic!("EnumVariantCount only works on Enums"),
@@ -13,7 +14,7 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| v.ident),
         _ => panic!("EnumIntoArray only works on enums"),
     };
-    let name= &ast.ident;
+    let name = &ast.ident;
     let gen = quote! {
         impl EnumExtenstion for #name {
             fn get_length() -> usize {
