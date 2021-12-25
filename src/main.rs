@@ -181,6 +181,8 @@ extern crate lazy_static;
 extern crate enum_extention;
 #[macro_use]
 extern crate env_var_typed;
+#[macro_use]
+extern crate provider_kind_from_config;
 
 extern crate dotenv;
 

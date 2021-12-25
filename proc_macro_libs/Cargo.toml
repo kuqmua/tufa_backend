@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "enum_extention",
-    "env_var_typed"
+    "env_var_typed",
+    "provider_kind_from_config"
 ]

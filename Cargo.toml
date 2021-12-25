@@ -32,6 +32,7 @@ async-std = "1.10.0"
 convert_case = "0.4.0"
 enum_extention = { path = "./proc_macro_libs/enum_extention" }
 env_var_typed = { path = "./proc_macro_libs/env_var_typed" }
+provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
