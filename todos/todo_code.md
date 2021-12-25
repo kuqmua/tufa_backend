@@ -374,5 +374,22 @@ wrap blocking diesel function into spawn blocking under tokio runtime
 <br/>
 
 ### -------------------
-move env var typed trait into procedural macro
+Write procedural macro to match two enum values
+For example i have enum with 3 elements and 2 elements
+enum enum1 {
+  1,
+  2,
+  3
+}
+fn match_case(enum2){
+  match enum2 {
+    1 => enum2::1,
+    2 => enum2::2
+  }
+}
+<br/>
+
+### -------------------
+Common projects constants as lazy static to reuse
+Them inside parent modules
 <br/>
