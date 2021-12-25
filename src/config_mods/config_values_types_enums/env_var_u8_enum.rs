@@ -15,8 +15,6 @@ use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 use crate::config_mods::config_error_mods::config_env_var_error_type_enum::ConfigEnvVarErrorType;
 use crate::config_mods::config_error_mods::config_error::ConfigError;
 
-use crate::constants::project_constants::ENV_FILE_NAME;
-
 #[derive(
     EnumExtenstion,
     EnvVarTypedTrait,

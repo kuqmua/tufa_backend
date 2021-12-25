@@ -1,7 +1,7 @@
+use crate::syn::Ident;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn;
-use crate::syn::Ident;
 
 #[proc_macro_derive(EnvVarTypedTrait)]
 pub fn derive_env_var_typed(input: TokenStream) -> TokenStream {
@@ -10,17 +10,13 @@ pub fn derive_env_var_typed(input: TokenStream) -> TokenStream {
     let type_for_parsing: Ident;
     if ident == "EnvU8Var" {
         type_for_parsing = syn::Ident::new("u8", ident.span());
-    }
-    else if ident == "EnvI64Var" {
+    } else if ident == "EnvI64Var" {
         type_for_parsing = syn::Ident::new("i64", ident.span());
-    }
-    else if ident == "EnvBoolVar" {
+    } else if ident == "EnvBoolVar" {
         type_for_parsing = syn::Ident::new("bool", ident.span());
-    }
-    else if ident == "EnvStringVar" {
+    } else if ident == "EnvStringVar" {
         type_for_parsing = syn::Ident::new("String", ident.span());
-    }
-    else {
+    } else {
         panic!("Unexpected ident: {:#?}", ident);
     }
     let gen = quote! {
@@ -37,28 +33,15 @@ pub fn derive_env_var_typed(input: TokenStream) -> TokenStream {
                     }),
                 }
             }
-        
+
             fn parse_string<T: std::str::FromStr>(value: String) -> Result<T, T::Err> {
                 match value.parse::<T>() {
                     Ok(handle) => Ok(handle),
                     Err(e) => Err(e),
                 }
             }
-        
-            fn get_env_values_hashmap<T: std::str::FromStr>() -> Result<HashMap<Self, T>, ConfigError> {
-                let was_dotenv_enable: bool;
-                match dotenv() {
-                    Ok(_) => {
-                        was_dotenv_enable = true;
-                    }
-                    Err(e) => {
-                        was_dotenv_enable = false;
-                        println!(
-                            "dotenv() failed, trying without {} error: {:?}",
-                            ENV_FILE_NAME, e
-                        );
-                    }
-                }
+
+            fn get_env_values_hashmap<T: std::str::FromStr>(was_dotenv_enable: bool) -> Result<HashMap<Self, T>, ConfigError> {
                 let mut hmap: HashMap<Self, T> = HashMap::new();
                 let mut error_option: Option<ConfigError> = None;
                 for env_var_name_kind in Self::iter() {

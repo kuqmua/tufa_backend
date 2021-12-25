@@ -13,12 +13,18 @@ use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
 use crate::helpers::resource::Resource;
 
+use dotenv::dotenv;
+
 impl ConfigStruct {
     pub fn new() -> Result<Self, ConfigError> {
-        let string_vars = EnvStringVar::get_env_values_hashmap::<String>()?;
-        let bool_vars = EnvBoolVar::get_env_values_hashmap::<bool>()?;
-        let u8_vars = EnvU8Var::get_env_values_hashmap::<u8>()?;
-        let i64_vars = EnvI64Var::get_env_values_hashmap::<i64>()?;
+        let mut was_dotenv_enable = false;
+        if dotenv().is_ok() {
+            was_dotenv_enable = true;
+        }
+        let string_vars = EnvStringVar::get_env_values_hashmap::<String>(was_dotenv_enable)?;
+        let bool_vars = EnvBoolVar::get_env_values_hashmap::<bool>(was_dotenv_enable)?;
+        let u8_vars = EnvU8Var::get_env_values_hashmap::<u8>(was_dotenv_enable)?;
+        let i64_vars = EnvI64Var::get_env_values_hashmap::<i64>(was_dotenv_enable)?;
         let providers_link_parts_source_handle: Resource;
         if string_vars[&EnvStringVar::ProvidersLinkPartsSource] == "local" {
             providers_link_parts_source_handle = Resource::Local;

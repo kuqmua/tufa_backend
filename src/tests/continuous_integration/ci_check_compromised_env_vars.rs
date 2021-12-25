@@ -6,10 +6,16 @@ use crate::config_mods::config_values_types_enums::env_var_string_enum::EnvStrin
 use crate::config_mods::config_values_types_enums::env_var_u8_enum::EnvU8Var;
 use crate::traits::env_var_typed_trait::EnvVarTypedTrait;
 
+use dotenv::dotenv;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]
 fn ci_check_compromised_env_vars() {
-    match EnvStringVar::get_env_values_hashmap::<String>() {
+    let mut was_dotenv_enable = false;
+    if dotenv().is_ok() {
+        was_dotenv_enable = true;
+    }
+    match EnvStringVar::get_env_values_hashmap::<String>(was_dotenv_enable) {
         Err(e) => panic!("cannot get string env values hashmap, error: {:#?}", e),
         Ok(hashmap) => {
             for (key, value) in hashmap {
@@ -19,7 +25,7 @@ fn ci_check_compromised_env_vars() {
             }
         }
     }
-    match EnvBoolVar::get_env_values_hashmap::<bool>() {
+    match EnvBoolVar::get_env_values_hashmap::<bool>(was_dotenv_enable) {
         Err(e) => panic!("cannot get bool env values hashmap, error: {:#?}", e),
         Ok(hashmap) => {
             for (key, value) in hashmap {
@@ -29,7 +35,7 @@ fn ci_check_compromised_env_vars() {
             }
         }
     }
-    match EnvU8Var::get_env_values_hashmap::<u8>() {
+    match EnvU8Var::get_env_values_hashmap::<u8>(was_dotenv_enable) {
         Err(e) => panic!("cannot get u8 env values hashmap, error: {:#?}", e),
         Ok(hashmap) => {
             for (key, value) in hashmap {
@@ -39,7 +45,7 @@ fn ci_check_compromised_env_vars() {
             }
         }
     }
-    match EnvI64Var::get_env_values_hashmap::<i64>() {
+    match EnvI64Var::get_env_values_hashmap::<i64>(was_dotenv_enable) {
         Err(e) => panic!("cannot get i64 env values hashmap, error: {:#?}", e),
         Ok(hashmap) => {
             for (key, value) in hashmap {
