@@ -3,7 +3,7 @@ use std::fs;
 use strum::IntoEnumIterator;
 
 use crate::constants::tests_constants::_DOCKER_COMPOSE_FILE_NAME;
-use crate::constants::tests_constants::_PATH_TO_ENV_FILE;
+use crate::constants::tests_constants::_PATH_TO_DOCKER_COMPOSE_FILE;
 
 use crate::config_mods::env_var_enum::EnvVar;
 use crate::traits::enum_extention::EnumExtenstion;
@@ -13,13 +13,13 @@ use crate::traits::enum_extention::EnumExtenstion;
 pub fn ci_check_env_var_names_contains_in_docker_compose() {
     let result_of_reading_to_string = fs::read_to_string(&format!(
         "{}{}",
-        _PATH_TO_ENV_FILE, _DOCKER_COMPOSE_FILE_NAME
+        _PATH_TO_DOCKER_COMPOSE_FILE, _DOCKER_COMPOSE_FILE_NAME
     ));
     match result_of_reading_to_string {
         Err(e) => {
             panic!(
                 "cannot read_to_string from file {}{}, reason: {}",
-                _PATH_TO_ENV_FILE, _DOCKER_COMPOSE_FILE_NAME, e
+                _PATH_TO_DOCKER_COMPOSE_FILE, _DOCKER_COMPOSE_FILE_NAME, e
             )
         }
         Ok(file_content) => {
