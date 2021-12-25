@@ -393,3 +393,8 @@ fn match_case(enum2){
 Common projects constants as lazy static to reuse
 Them inside parent modules
 <br/>
+
+### -------------------
+function names, config fields and env var names - same naming for then (except upper case, snake case, camel case)
+for code generation
+<br/>
