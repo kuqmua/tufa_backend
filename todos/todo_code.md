@@ -388,3 +388,8 @@ fn match_case(enum2){
   }
 }
 <br/>
+
+### -------------------
+Common projects constants as lazy static to reuse
+Them inside parent modules
+<br/>
