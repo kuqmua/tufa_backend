@@ -157,8 +157,6 @@ mod tests {
     pub mod continuous_integration {
         pub mod ci_check_compromised_github_auth_info_from_env;
         pub mod ci_check_compromised_github_auth_info_with_config_init;
-        pub mod ci_check_compromised_reddit_auth_info_from_env;
-        pub mod ci_check_compromised_reddit_auth_info_with_config_init;
         pub mod ci_check_docker_compose_changes;
         pub mod ci_check_env_file_exists;
         pub mod ci_check_new_env_vars;
