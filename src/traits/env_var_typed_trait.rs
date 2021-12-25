@@ -11,4 +11,7 @@ pub trait EnvVarTypedTrait {
     where
         Self: std::marker::Sized;
     fn check_valid_typed_env_vars();
+    fn check_compromised_typed_env_vars<T: std::str::FromStr>(was_dotenv_enable: bool)
+    where
+        Self: std::marker::Sized;
 }

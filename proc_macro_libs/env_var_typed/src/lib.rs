@@ -7,14 +7,18 @@ use syn;
 pub fn derive_env_var_typed(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput = syn::parse(input).unwrap();
     let ident: &Ident = &ast.ident;
+    let u8_var_name = "EnvU8Var";
+    let i64_var_name = "EnvI64Var";
+    let bool_var_name = "EnvBoolVar";
+    let string_var_name = "EnvStringVar";
     let type_for_parsing: Ident;
-    if ident == "EnvU8Var" {
+    if ident == u8_var_name {
         type_for_parsing = syn::Ident::new("u8", ident.span());
-    } else if ident == "EnvI64Var" {
+    } else if ident == i64_var_name {
         type_for_parsing = syn::Ident::new("i64", ident.span());
-    } else if ident == "EnvBoolVar" {
+    } else if ident == bool_var_name {
         type_for_parsing = syn::Ident::new("bool", ident.span());
-    } else if ident == "EnvStringVar" {
+    } else if ident == string_var_name {
         type_for_parsing = syn::Ident::new("String", ident.span());
     } else {
         panic!("Unexpected ident: {:#?}", ident);
@@ -92,6 +96,18 @@ pub fn derive_env_var_typed(input: TokenStream) -> TokenStream {
                                     &env_var_name_kind.to_upper_snake_case(),
                                     e
                                 )
+                            }
+                        }
+                    }
+                }
+            }
+            fn check_compromised_typed_env_vars<T: std::str::FromStr>(was_dotenv_enable: bool){
+                match #ident::get_env_values_hashmap::<#type_for_parsing>(was_dotenv_enable) {
+                    Err(e) => panic!("cannot get env values hashmap, error: {:#?}", e),
+                    Ok(hashmap) => {
+                        for (key, value) in hashmap {
+                            if value != #type_for_parsing::default() {
+                                panic!("{:?} is not assigned to default value", key);
                             }
                         }
                     }
