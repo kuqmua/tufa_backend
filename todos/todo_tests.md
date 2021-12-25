@@ -40,14 +40,5 @@ Right test what parse repo code and check what each function returns some type o
 <br/>
 
 ### -------------------
-add test what checks env variable in .env file and docker-compose.yml file
-just for comfort to see all available variables in .env
-<br/>
-
-### -------------------
-check if there is a check in config new for empty string values and other of each fields
-<br/>
-
-### -------------------
 create big json file to test parsing speed as test
 <br/>
