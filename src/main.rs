@@ -186,6 +186,16 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
+// struct Config {
+//     pub something_for_one: bool,
+//     pub something_for_two: bool
+// }
+// #[derive(SomeTrait)]
+// enum Example {
+//     One,
+//     Two
+// }
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
     entry::entry();
