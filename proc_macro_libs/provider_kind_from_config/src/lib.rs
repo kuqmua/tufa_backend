@@ -37,6 +37,12 @@ use crate::syn::Visibility;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn;
+use syn::punctuated::Punctuated;
+use syn::token;
+use syn::token::Token;
+use syn::Fields;
+use syn::Token;
+use syn::Variant;
 #[proc_macro_derive(SomeTrait)]
 pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput = syn::parse(input).unwrap();
@@ -53,7 +59,19 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let generics: &Generics = &ast.generics;
 
     /// Data within the struct or enum.
-    let data: &Data = &ast.data;
+    let data: Data = ast.data;
+    match data {
+        Data::Struct(struct_handle) => panic!("its not fo struct"),
+        Data::Enum(enum_handle) => {
+            // let struct_token: Token![struct] = enum_handle.struct_token;
+            // let fields: Fields = enum_handle.fields;
+            // let semi_token: Option<Token![;]> = enum_handle.semi_token;
+            let enum_token: Token![enum] = enum_handle.enum_token;
+            let brace_token: token::Brace = enum_handle.brace_token;
+            let variants: Punctuated<Variant, Token![,]> = enum_handle.variants;
+        }
+        Data::Union(union_handle) => panic!(""),
+    }
     let gen = quote! {
         impl SomeTrait for #ident {
             fn is_something_enabled(&self, config: Config) -> bool {
