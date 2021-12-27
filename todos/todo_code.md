@@ -398,3 +398,12 @@ Them inside parent modules
 function names, config fields and env var names - same naming for then (except upper case, snake case, camel case)
 for code generation
 <br/>
+  
+### -------------------
+procedural macros for config fields like vec![]. with correct naming require
+without typed enums
+like 
+Config {
+  test_field: from_env!(test_field.to_upper_snake_case()) 
+}
+<br/>
