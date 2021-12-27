@@ -80,6 +80,7 @@ pub mod helpers {
     pub mod write_string_into_file;
 }
 pub mod init_dbs_logic {
+    pub mod dbs_enum;
     pub mod init_dbs;
     pub mod init_mongo;
     pub mod init_postgres;
@@ -185,16 +186,23 @@ extern crate env_var_typed;
 extern crate provider_kind_from_config;
 
 extern crate dotenv;
-
-// struct Config {
-//     pub something_for_one: bool,
-//     pub something_for_two: bool
-// }
 // #[derive(SomeTrait)]
-// enum Example {
-//     One,
-//     Two
-// }
+struct TestStruct {
+    pub one: bool,
+    pub two: bool,
+}
+enum Example {
+    One,
+    Two,
+}
+impl Example {
+    fn test(&self, test: TestStruct) -> bool {
+        match self {
+            Example::One => test.one,
+            Example::Two => test.two,
+        }
+    }
+}
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
