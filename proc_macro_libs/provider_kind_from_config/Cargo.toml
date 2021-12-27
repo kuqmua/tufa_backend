@@ -8,5 +8,6 @@ edition = "2021"
 proc-macro=true
 
 [dependencies]
-syn = "1.0.75" #for procedural macro (get number of enum variants)
+syn = { version = "1.0.75", features = ["extra-traits"]} #for procedural macro (get number of enum variants)
+# remove features later
 quote = "1.0.9" #for procedural macro (get number of enum variants)

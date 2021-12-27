@@ -43,9 +43,53 @@ use syn::token::Token;
 use syn::Fields;
 use syn::Token;
 use syn::Variant;
+
+// DeriveInput {
+//     attrs: [],
+//     vis: Inherited,
+//     ident: Ident {
+//         ident: "Example",
+//         span: #0 bytes(5738..5745),
+//     },
+//     generics: Generics {
+//         lt_token: None,
+//         params: [],
+//         gt_token: None,
+//         where_clause: None,
+//     },
+//     data: Enum(
+//         DataEnum {
+//             enum_token: Enum,
+//             brace_token: Brace,
+//             variants: [
+//                 Variant {
+//                     attrs: [],
+//                     ident: Ident {
+//                         ident: "One",
+//                         span: #0 bytes(5752..5755),
+//                     },
+//                     fields: Unit,
+//                     discriminant: None,
+//                 },
+//                 Comma,
+//                 Variant {
+//                     attrs: [],
+//                     ident: Ident {
+//                         ident: "Two",
+//                         span: #0 bytes(5761..5764),
+//                     },
+//                     fields: Unit,
+//                     discriminant: None,
+//                 },
+//                 Comma,
+//             ],
+//         },
+//     ),
+// }
 #[proc_macro_derive(SomeTrait)]
 pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    println!("rr {:#?}", ast);
     /// Name of the struct or enum.
     let ident: &Ident = &ast.ident;
     // let one_ident = syn::Ident::new("One", ident.span()); //use something else instead?
@@ -74,11 +118,17 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     }
     let gen = quote! {
         impl SomeTrait for #ident {
-            fn is_something_enabled(&self, config: Config) -> bool {
-                match self {
-                    #ident::One => config.something_for_one,//error
-                    #ident::Two => config.something_for_two,
-                }
+            fn is_something_enabled(
+                &self,
+                // config: Config
+            )
+            // -> bool
+             {
+                 println!("ff");
+                // match self {
+                //     #ident::One => config.something_for_one,//error
+                //     #ident::Two => config.something_for_two,
+                // }
             }
         }
     };

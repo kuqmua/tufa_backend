@@ -186,23 +186,28 @@ extern crate env_var_typed;
 extern crate provider_kind_from_config;
 
 extern crate dotenv;
-// #[derive(SomeTrait)]
+
+pub trait SomeTrait {
+    fn is_something_enabled(&self);
+}
+
 struct TestStruct {
     pub one: bool,
     pub two: bool,
 }
+#[derive(SomeTrait)]
 enum Example {
     One,
     Two,
 }
-impl Example {
-    fn test(&self, test: TestStruct) -> bool {
-        match self {
-            Example::One => test.one,
-            Example::Two => test.two,
-        }
-    }
-}
+// impl Example {
+//     fn is_something_enabled(&self, test: TestStruct) -> bool {
+//         match self {
+//             Example::One => test.one,
+//             Example::Two => test.two,
+//         }
+//     }
+// }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
