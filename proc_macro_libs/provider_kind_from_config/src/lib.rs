@@ -115,28 +115,60 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             let brace_token: token::Brace = enum_handle.brace_token;
             let variants: Punctuated<Variant, Token![,]> = enum_handle.variants;
             for i in variants {
-                // vec.push(i);
-                // let concatenated = format!("{:#?}", );
-                vec.push(i.ident);
+                let vvv = i.ident;
+                // let name = vvv.ident;
+                let formatted = format!("{:?}", vvv);
+                let symbol = "ident: \"";
+                match formatted.find(symbol) {
+                    Some(start_index) => {
+                            let cutted = formatted[start_index + symbol.len()..].to_owned();
+                            let second_symbol = "\",";
+                            match cutted.find(second_symbol) {
+                                Some(end_index) => {
+                                    let needed_str = cutted[..end_index].to_owned();
+                                    //////
+                                    let formatted_ident = format!("{:?}", ident);
+                                    match formatted_ident.find(symbol) {
+                                        Some(start_index_ident) => {
+                                                let cutted = formatted_ident[start_index_ident + symbol.len()..].to_owned();
+                                                match cutted.find(second_symbol) {
+                                                    Some(end_index_ident) => {
+                                                        let needed_ident = cutted[..end_index_ident].to_owned();
+                                                        println!("needed_str {}", needed_str);
+                                                        println!("needed_ident {}", needed_ident);
+                                                        let prepare = format!("{}::{} => CONFIG.mongo_enable_initialization_for_{}", needed_ident, needed_str, needed_str.to_lowercase());
+                                                        println!("prepare {}", prepare);
+                                                        // #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv
+                                                        vec.push(quote! { });
+                                                    },
+                                                    None => panic!("cannot find first symbol {}", second_symbol),
+                                                }
+                                       
+                                        }
+                                        _ => panic!("cannot find first symbol {}", symbol)
+                                    }
+                                },
+                                None => panic!("cannot find first symbol {}", second_symbol),
+                            }
+                   
+                    }
+                    _ => panic!("cannot find first symbol {}", symbol)
+                }
+                
             }
             // variants.iter().forEach(|v| vec.push(v.clone()));
             // let first_variant[0] = 
         }
         Data::Union(union_handle) => panic!(""),
     }
-    // let mut second_vec = Vec::new();
-    // for i in vec {
-    //     let concatenated = format!("_{}", ident);
-    //     second_vec.push(syn::Ident::new(&concatenated, ident.span()));
-    // }
     
-    let start_match = quote! {match self };
+    // let start_match = quote! {match self };
     // let fff = quote! { } };
     // let braket_start = token::Bracket;
     // let braket_end = token::Bracket;
     // syn::parse_str::<Expr>("Values::Unteger(val)");
-    let one = quote! { One };
-    let two = quote! { Two };
+    let one = quote! { Arxiv };
+    let two = quote! { Biorxiv };
     // let vec = vec![fff, ddd];
 
     let end = quote! {
@@ -146,7 +178,7 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             )
             -> bool
              {
-                #start_match {
+                match self {
                     #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv,//error
                     #ident::#two => CONFIG.mongo_enable_initialization_for_biorxiv,
                 }

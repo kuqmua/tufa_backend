@@ -199,20 +199,20 @@ pub trait SomeTrait {
 // }
 #[derive(SomeTrait)]
 enum Example {
-    One,
-    Two,
+    Arxiv,
+    Biorxiv,
 }
 // impl Example {
 //     fn is_something_enabled(&self, test: TestStruct) -> bool {
 //         match self {
-//             Example::One => test.one,
-//             Example::Two => test.two,
+//             Example::Arxiv => test.one,
+//             Example::Biorxiv => test.two,
 //         }
 //     }
 // }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    println!("rrr {:#?}", Example::One.is_something_enabled());
+    println!("rrr {:#?}", Example::Arxiv.is_something_enabled());
     entry::entry();
 }
