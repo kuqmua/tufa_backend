@@ -104,6 +104,7 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
 
     /// Data within the struct or enum.
     let data: Data = ast.data;
+    let mut vec = Vec::new();
     match data {
         Data::Struct(struct_handle) => panic!("its not fo struct"),
         Data::Enum(enum_handle) => {
@@ -113,26 +114,46 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             let enum_token: Token![enum] = enum_handle.enum_token;
             let brace_token: token::Brace = enum_handle.brace_token;
             let variants: Punctuated<Variant, Token![,]> = enum_handle.variants;
+            for i in variants {
+                // vec.push(i);
+                // let concatenated = format!("{:#?}", );
+                vec.push(i.ident);
+            }
+            // variants.iter().forEach(|v| vec.push(v.clone()));
+            // let first_variant[0] = 
         }
         Data::Union(union_handle) => panic!(""),
     }
-    let gen = quote! {
+    // let mut second_vec = Vec::new();
+    // for i in vec {
+    //     let concatenated = format!("_{}", ident);
+    //     second_vec.push(syn::Ident::new(&concatenated, ident.span()));
+    // }
+    
+    let start_match = quote! {match self };
+    // let fff = quote! { } };
+    // let braket_start = token::Bracket;
+    // let braket_end = token::Bracket;
+    // syn::parse_str::<Expr>("Values::Unteger(val)");
+    let one = quote! { One };
+    let two = quote! { Two };
+    // let vec = vec![fff, ddd];
+
+    let end = quote! {
         impl SomeTrait for #ident {
             fn is_something_enabled(
-                &self,
-                // config: Config
+                &self
             )
-            // -> bool
+            -> bool
              {
-                 println!("ff");
-                // match self {
-                //     #ident::One => config.something_for_one,//error
-                //     #ident::Two => config.something_for_two,
-                // }
-            }
+                #start_match {
+                    #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv,//error
+                    #ident::#two => CONFIG.mongo_enable_initialization_for_biorxiv,
+                }
+             }
         }
     };
-    gen.into()
+    end.into()
 }
 // fn is_mongo_write_error_logs_enabled(&self) -> bool {
 //                 match self {

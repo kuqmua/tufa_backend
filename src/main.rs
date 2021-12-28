@@ -187,14 +187,16 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 pub trait SomeTrait {
-    fn is_something_enabled(&self);
+    fn is_something_enabled(&self) -> bool;
 }
 
-struct TestStruct {
-    pub one: bool,
-    pub two: bool,
-}
+// struct TestStruct {
+//     pub one: bool,
+//     pub two: bool,
+// }
 #[derive(SomeTrait)]
 enum Example {
     One,
@@ -211,5 +213,6 @@ enum Example {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
+    println!("rrr {:#?}", Example::One.is_something_enabled());
     entry::entry();
 }
