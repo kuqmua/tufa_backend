@@ -35,6 +35,7 @@ use crate::syn::Ident;
 use crate::syn::Visibility;
 
 use proc_macro::TokenStream;
+use quote::format_ident;
 use quote::quote;
 use syn;
 use syn::punctuated::Punctuated;
@@ -137,9 +138,10 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                                                         println!("needed_str {}", needed_str);
                                                         println!("needed_ident {}", needed_ident);
                                                         let prepare = format!("{}::{} => CONFIG.mongo_enable_initialization_for_{}", needed_ident, needed_str, needed_str.to_lowercase());
+                                                        let enum_variant_ident = format_ident!("{}", needed_str);
                                                         println!("prepare {}", prepare);
                                                         // #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv
-                                                        vec.push(quote! { });
+                                                        vec.push(quote! { #ident::#enum_variant_ident => CONFIG.#enum_variant_ident, });
                                                     },
                                                     None => panic!("cannot find first symbol {}", second_symbol),
                                                 }
@@ -161,14 +163,25 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
         }
         Data::Union(union_handle) => panic!(""),
     }
+    ///////
+    /// https://github.com/dtolnay/quote
+//     Repetition
+// Repetition is done using #(...)* or #(...),* similar to macro_rules!. This iterates through the elements of any variable interpolated within the repetition and inserts a copy of the repetition body for each one. The variables in an interpolation may be anything that implements IntoIterator, including Vec or a pre-existing iterator.
+
+// #(#var)* — no separators
+// #(#var),* — the character before the asterisk is used as a separator
+// #( struct #var; )* — the repetition can contain other things
+// #( #k => println!("{}", #v), )* — even multiple interpolations
+// Note that there is a difference between #(#var ,)* and #(#var),*—the latter does not produce a trailing comma. This matches the behavior of delimiters in macro_rules!.
+    ///////
     
     // let start_match = quote! {match self };
     // let fff = quote! { } };
     // let braket_start = token::Bracket;
     // let braket_end = token::Bracket;
     // syn::parse_str::<Expr>("Values::Unteger(val)");
-    let one = quote! { Arxiv };
-    let two = quote! { Biorxiv };
+    let one = quote! { mongo_enable_initialization_for_arxiv };
+    let two = quote! { mongo_enable_initialization_for_biorxiv };
     // let vec = vec![fff, ddd];
 
     let end = quote! {

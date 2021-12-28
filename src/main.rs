@@ -199,8 +199,8 @@ pub trait SomeTrait {
 // }
 #[derive(SomeTrait)]
 enum Example {
-    Arxiv,
-    Biorxiv,
+    mongo_enable_initialization_for_arxiv,
+    mongo_enable_initialization_for_biorxiv,
 }
 // impl Example {
 //     fn is_something_enabled(&self, test: TestStruct) -> bool {
@@ -213,6 +213,6 @@ enum Example {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    println!("rrr {:#?}", Example::Arxiv.is_something_enabled());
+    println!("rrr {:#?}", Example::mongo_enable_initialization_for_arxiv.is_something_enabled());
     entry::entry();
 }
