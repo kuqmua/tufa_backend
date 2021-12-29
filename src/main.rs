@@ -201,6 +201,7 @@ pub trait SomeTrait {
 enum Example {
     mongo_enable_initialization_for_arxiv,
     mongo_enable_initialization_for_biorxiv,
+    mongo_enable_initialization_for_habr,
 }
 // impl Example {
 //     fn is_something_enabled(&self, test: TestStruct) -> bool {

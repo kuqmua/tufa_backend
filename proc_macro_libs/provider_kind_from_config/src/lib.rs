@@ -105,6 +105,8 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
 
     /// Data within the struct or enum.
     let data: Data = ast.data;
+    let mut ident_name = String::from("");
+    let mut vec_string = Vec::new();
     let mut vec = Vec::new();
     match data {
         Data::Struct(struct_handle) => panic!("its not fo struct"),
@@ -137,11 +139,14 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                                                         let needed_ident = cutted[..end_index_ident].to_owned();
                                                         println!("needed_str {}", needed_str);
                                                         println!("needed_ident {}", needed_ident);
-                                                        let prepare = format!("{}::{} => CONFIG.mongo_enable_initialization_for_{}", needed_ident, needed_str, needed_str.to_lowercase());
+                                                        
+                                                        let prepare = format!("{}::{} => CONFIG.{},", needed_ident, needed_str, needed_str.to_lowercase());
+                                                        ident_name = needed_ident;
                                                         let enum_variant_ident = format_ident!("{}", needed_str);
                                                         println!("prepare {}", prepare);
                                                         // #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv
                                                         vec.push(quote! { #ident::#enum_variant_ident => CONFIG.#enum_variant_ident, });
+                                                        vec_string.push(prepare);
                                                     },
                                                     None => panic!("cannot find first symbol {}", second_symbol),
                                                 }
@@ -163,6 +168,9 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
         }
         Data::Union(union_handle) => panic!(""),
     }
+    if ident_name == "" {
+        panic!("ident_name is empty!");
+    }
     ///////
     /// https://github.com/dtolnay/quote
 //     Repetition
@@ -180,25 +188,44 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     // let braket_start = token::Bracket;
     // let braket_end = token::Bracket;
     // syn::parse_str::<Expr>("Values::Unteger(val)");
-    let one = quote! { mongo_enable_initialization_for_arxiv };
-    let two = quote! { mongo_enable_initialization_for_biorxiv };
+    println!("vec_string, {:#?}", vec_string);
+    let mut summary = String::from("");
+    // let mut summary = String::from("match self {");
+    for i in vec_string {
+        summary.push_str(&i);
+    }
+    // summary.push_str("}");
+    println!("summary {}", summary);
+    // let summary_ident = syn::Ident::new(&summary, ident.span());
+    
+    // let one = quote! { mongo_enable_initialization_for_arxiv };
+    // let two = quote! { mongo_enable_initialization_for_biorxiv };
+    // #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv,//error
+    // #ident::#two => CONFIG.mongo_enable_initialization_for_biorxiv,
     // let vec = vec![fff, ddd];
 
-    let end = quote! {
-        impl SomeTrait for #ident {
-            fn is_something_enabled(
-                &self
-            )
-            -> bool
-             {
-                match self {
-                    #ident::#one => CONFIG.mongo_enable_initialization_for_arxiv,//error
-                    #ident::#two => CONFIG.mongo_enable_initialization_for_biorxiv,
-                }
-             }
-        }
-    };
-    end.into()
+    // let end = quote! {
+    //     impl SomeTrait for #ident {
+    //         fn is_something_enabled(&self)-> bool {
+    //             match self {
+                   
+    //                Example::mongo_enable_initialization_for_arxiv => CONFIG.mongo_enable_initialization_for_arxiv,Example::mongo_enable_initialization_for_biorxiv => CONFIG.mongo_enable_initialization_for_biorxiv,
+    //             }
+    //          }
+    //     }
+    // };
+    // end.into()
+    let string_from = format!("
+    impl SomeTrait for {} {{
+        fn is_something_enabled(&self)-> bool {{
+            match self {{
+               
+               {}
+            }}
+         }}
+    }}
+    ", ident_name, summary);
+    string_from.parse().unwrap()
 }
 // fn is_mongo_write_error_logs_enabled(&self) -> bool {
 //                 match self {
