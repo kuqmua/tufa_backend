@@ -15,4 +15,5 @@ pub trait EnumExtenstion {
     where
         Self: std::marker::Sized;
     fn to_upper_snake_case(&self) -> String;
+    fn to_lower_snake_case(&self) -> String;
 }

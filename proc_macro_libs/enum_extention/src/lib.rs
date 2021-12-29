@@ -49,6 +49,9 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
             fn to_upper_snake_case(&self) -> String {
                 format!("{:?}", self).to_case(Case::Snake).to_uppercase()
             }
+            fn to_lower_snake_case(&self) -> String {
+                format!("{:?}", self).to_case(Case::Snake).to_lowercase()
+            }
         }
     };
     gen.into()

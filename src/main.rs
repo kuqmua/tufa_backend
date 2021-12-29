@@ -206,6 +206,8 @@ pub trait SomeTrait {
 // }
 #[derive(SomeTrait, EnumIter, EnumExtenstion, Display, Debug)]
 enum Example {
+    // MongoEnableInitializationForArxiv,
+    // MongoEnableInitializationForBiorxiv,
     mongo_enable_initialization_for_arxiv,
     mongo_enable_initialization_for_biorxiv,
     mongo_enable_initialization_for_habr,
