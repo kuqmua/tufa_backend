@@ -71,6 +71,9 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     if ident_name == "" {
         panic!("ident_name is empty!");
     }
+    if vec_string.is_empty() {
+        panic!("vec_string is empty!");
+    }
     let mut summary = String::from("");
     for i in vec_string {
         summary.push_str(&i);
