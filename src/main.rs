@@ -187,6 +187,13 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
+use traits::enum_extention::EnumExtenstion;
+use std::collections::HashMap;
+use convert_case::{Case, Casing};
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
+use strum_macros::Display;
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 pub trait SomeTrait {
@@ -197,7 +204,7 @@ pub trait SomeTrait {
 //     pub one: bool,
 //     pub two: bool,
 // }
-#[derive(SomeTrait)]
+#[derive(SomeTrait, EnumIter, EnumExtenstion, Display, Debug)]
 enum Example {
     mongo_enable_initialization_for_arxiv,
     mongo_enable_initialization_for_biorxiv,
