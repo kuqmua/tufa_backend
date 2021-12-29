@@ -7,7 +7,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
     provider_kind: ProviderKind,

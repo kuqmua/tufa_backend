@@ -8,7 +8,7 @@ use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_pa
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 //todo: think about naming
 type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);

@@ -146,6 +146,7 @@ mod providers {
             pub mod get_local_data;
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
+        pub mod provider_kind_from_config_trait;
         pub mod provider_kind_trait;
     }
     pub mod check_providers_link_parts_on_empty;
