@@ -200,29 +200,13 @@ pub trait SomeTrait {
     fn is_something_enabled(&self) -> bool;
 }
 
-// struct TestStruct {
-//     pub one: bool,
-//     pub two: bool,
-// }
 #[derive(SomeTrait, EnumIter, EnumExtenstion, Display, Debug)]
 enum Example {
     MongoEnableInitializationForArxiv,
     MongoEnableInitializationForBiorxiv,
-    // mongo_enable_initialization_for_arxiv,
-    // mongo_enable_initialization_for_biorxiv,
-    // mongo_enable_initialization_for_habr,
 }
-// impl Example {
-//     fn is_something_enabled(&self, test: TestStruct) -> bool {
-//         match self {
-//             Example::Arxiv => test.one,
-//             Example::Biorxiv => test.two,
-//         }
-//     }
-// }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    println!("rrr {:#?}", Example::MongoEnableInitializationForArxiv.is_something_enabled());
     entry::entry();
 }
