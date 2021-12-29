@@ -78,7 +78,6 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     for i in vec_string {
         summary.push_str(&i);
     }
-    //todo maybe do something with function name too? just to check naming
     let string_from = format!(
         "
     impl SomeTrait for {} {{

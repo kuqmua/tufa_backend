@@ -407,3 +407,10 @@ Config {
   test_field: from_env!(test_field.to_upper_snake_case()) 
 }
 <br/>
+
+### -------------------
+rename functions/env vars names like function names
+right now its only working with enum variants named like config field names
+for provider kind enum - variant names did not written like config field names - must be 2 vectors with first and second part to add field name between 
+maybe do something with function name too? just to check naming
+<br/>
