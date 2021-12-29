@@ -527,3 +527,6 @@ rust macros book
 https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
 <br/>
 
+### -------------------
+cargo expand - show generated code
+<br/>
