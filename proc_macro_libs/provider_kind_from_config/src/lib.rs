@@ -1,6 +1,8 @@
 use crate::syn::Data;
 use crate::syn::Ident;
 
+use convert_case::Case;
+use convert_case::Casing;
 use proc_macro::TokenStream;
 use quote::format_ident;
 use quote::quote;
@@ -44,11 +46,12 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                                             Some(end_index_ident) => {
                                                 let needed_ident =
                                                     cutted[..end_index_ident].to_owned();
+                                                let lowered_snake_case = needed_str.to_case(Case::Snake).to_lowercase();
                                                 let prepare = format!(
                                                     "{}::{} => CONFIG.{},",
                                                     needed_ident,
                                                     needed_str,
-                                                    needed_str.to_lowercase()
+                                                    lowered_snake_case
                                                 );
                                                 ident_name = needed_ident;
                                                 let enum_variant_ident =
