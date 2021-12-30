@@ -114,7 +114,7 @@ impl ProviderKindFromConfigTrait for ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_check_link(&self) -> &'static str {
+    fn check_link(&self) -> &'static str {
         match self {
             ProviderKind::Arxiv => &CONFIG.arxiv_check_link,
             ProviderKind::Biorxiv => &CONFIG.biorxiv_check_link,
