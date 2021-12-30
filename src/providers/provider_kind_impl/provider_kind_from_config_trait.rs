@@ -80,13 +80,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_postgres_initialization_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.postgres_enable_initialization_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.postgres_enable_initialization_for_biorxiv,
-            ProviderKind::Github => CONFIG.postgres_enable_initialization_for_github,
-            ProviderKind::Medrxiv => CONFIG.postgres_enable_initialization_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.postgres_enable_initialization_for_twitter,
-            ProviderKind::Reddit => CONFIG.postgres_enable_initialization_for_reddit,
-            ProviderKind::Habr => CONFIG.postgres_enable_initialization_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_postgres_initialization_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_postgres_initialization_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.is_postgres_initialization_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.is_postgres_initialization_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_postgres_initialization_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.is_postgres_initialization_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.is_postgres_initialization_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
