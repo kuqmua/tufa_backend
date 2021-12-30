@@ -78,7 +78,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryError {
+    IsCleaningWarningLogsDirectoryEnabledError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -153,7 +153,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryPrintsError {
+    IsCleaningWarningLogsDirectoryEnabledPrintsError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -198,7 +198,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryPrintsForAllProvidersError {
+    IsCleaningWarningLogsDirectoryEnabledPrintsForAllProvidersError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -678,37 +678,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForArxivError {
+    IsCleaningWarningLogsDirectoryEnabledForArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForBiorxivError {
+    IsCleaningWarningLogsDirectoryEnabledForBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForGithubError {
+    IsCleaningWarningLogsDirectoryEnabledForGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForHabrError {
+    IsCleaningWarningLogsDirectoryEnabledForHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForMedrxivError {
+    IsCleaningWarningLogsDirectoryEnabledForMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForRedditError {
+    IsCleaningWarningLogsDirectoryEnabledForRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableCleaningWarningLogsDirectoryForTwitterError {
+    IsCleaningWarningLogsDirectoryEnabledForTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,

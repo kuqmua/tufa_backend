@@ -104,13 +104,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_cleaning_warning_logs_directory_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_cleaning_warning_logs_directory_for_biorxiv,
-            ProviderKind::Github => CONFIG.enable_cleaning_warning_logs_directory_for_github,
-            ProviderKind::Medrxiv => CONFIG.enable_cleaning_warning_logs_directory_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.enable_cleaning_warning_logs_directory_for_twitter,
-            ProviderKind::Reddit => CONFIG.enable_cleaning_warning_logs_directory_for_reddit,
-            ProviderKind::Habr => CONFIG.enable_cleaning_warning_logs_directory_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.is_cleaning_warning_logs_directory_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_cleaning_warning_logs_directory_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.is_cleaning_warning_logs_directory_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.is_cleaning_warning_logs_directory_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
