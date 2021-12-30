@@ -32,37 +32,37 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_cleaning_warning_logs_db_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_biorxiv,
-            ProviderKind::Github => CONFIG.mongo_enable_cleaning_warning_logs_db_for_github,
-            ProviderKind::Medrxiv => CONFIG.mongo_enable_cleaning_warning_logs_db_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.mongo_enable_cleaning_warning_logs_db_for_twitter,
-            ProviderKind::Reddit => CONFIG.mongo_enable_cleaning_warning_logs_db_for_reddit,
-            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.is_mongo_cleaning_warning_logs_db_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_cleaning_warning_logs_db_collections_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_arxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_arxiv
             }
             ProviderKind::Biorxiv => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_biorxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_biorxiv
             }
             ProviderKind::Github => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_github
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_github
             }
             ProviderKind::Medrxiv => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_medrxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_medrxiv
             }
             ProviderKind::Twitter => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_twitter
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_twitter
             }
             ProviderKind::Reddit => {
-                CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_reddit
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_reddit
             }
-            ProviderKind::Habr => CONFIG.mongo_enable_cleaning_warning_logs_db_collections_for_habr,
+            ProviderKind::Habr => CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

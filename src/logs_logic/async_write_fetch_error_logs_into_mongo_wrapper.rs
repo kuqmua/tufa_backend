@@ -78,7 +78,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         }
     }
     let hashmap_len = hashmap_of_provider_vec_of_strings.len();
-    if CONFIG.mongo_enable_cleaning_warning_logs_db {
+    if CONFIG.is_mongo_cleaning_warning_logs_db_enabled {
         /////////////////////////////////////////////////////
         //this error exists only for cloud mongo
         //file: libs/mongo_integration/src/mongo_drop_db.rs:25
@@ -116,7 +116,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     }
     let mut vec_of_failed_collections_drops: Vec<ProviderKind> =
         Vec::with_capacity(vec_of_error_provider_kinds.len());
-    if CONFIG.mongo_enable_cleaning_warning_logs_db_collections {
+    if CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled {
         let mut vec_join = Vec::new();
         for provider_kind_handle in vec_of_error_provider_kinds {
             vec_join.push(drop_mongo_provider_logs_collection_if_need(
