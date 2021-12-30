@@ -39,7 +39,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             let providers_json_local_data_hashmap_clone = success_hashmap;
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
                 async {
-                    if CONFIG.mongo_is_initialization_enabled {
+                    if CONFIG.is_mongo_initialization_enabled {
                         return Some(init_mongo(providers_json_local_data_hashmap).await);
                     }
                     None

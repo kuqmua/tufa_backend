@@ -35,7 +35,7 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
                 }
             }
         }
-    } else if CONFIG.mongo_enable_write_error_logs {
+    } else if CONFIG.is_mongo_write_error_logs_enabled {
         //remove writing logs dublication in different sources coz need to be cloned
         let result = async_write_fetch_error_logs_into_mongo_wrapper(error_posts).await;
         match result {
