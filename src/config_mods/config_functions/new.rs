@@ -312,39 +312,39 @@ impl ConfigStruct {
                 .clone(),
             log_file_extension: string_vars[&EnvStringVar::LogFileExtension].clone(),
 
-            enable_write_error_logs_in_local_folder: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder],
-            enable_write_error_logs_in_local_folder_for_provider: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders],
-            enable_write_error_logs_in_local_folder_for_arxiv: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForArxiv],
-            enable_write_error_logs_in_local_folder_for_biorxiv: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForBiorxiv],
-            enable_write_error_logs_in_local_folder_for_github: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForGithub],
-            enable_write_error_logs_in_local_folder_for_habr: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForHabr],
-            enable_write_error_logs_in_local_folder_for_medrxiv: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForMedrxiv],
-            enable_write_error_logs_in_local_folder_for_reddit: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForReddit],
-            enable_write_error_logs_in_local_folder_for_twitter: bool_vars
-                [&EnvBoolVar::EnableWriteErrorLogsInLocalFolder]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForProviders]
-                && bool_vars[&EnvBoolVar::EnableWriteErrorLogsInLocalFolderForTwitter],
+            is_write_error_logs_in_local_folder_enabled: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled],
+            is_write_error_logs_in_local_folder_enabled_for_provider: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders],
+            is_write_error_logs_in_local_folder_enabled_for_arxiv: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForArxiv],
+            is_write_error_logs_in_local_folder_enabled_for_biorxiv: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForBiorxiv],
+            is_write_error_logs_in_local_folder_enabled_for_github: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForGithub],
+            is_write_error_logs_in_local_folder_enabled_for_habr: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForHabr],
+            is_write_error_logs_in_local_folder_enabled_for_medrxiv: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForMedrxiv],
+            is_write_error_logs_in_local_folder_enabled_for_reddit: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForReddit],
+            is_write_error_logs_in_local_folder_enabled_for_twitter: bool_vars
+                [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForTwitter],
 
             enable_cleaning_warning_logs_directory: bool_vars
                 [&EnvBoolVar::EnableCleaningWarningLogsDirectory],

@@ -92,13 +92,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_write_error_logs_in_local_folder_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_write_error_logs_in_local_folder_for_biorxiv,
-            ProviderKind::Github => CONFIG.enable_write_error_logs_in_local_folder_for_github,
-            ProviderKind::Medrxiv => CONFIG.enable_write_error_logs_in_local_folder_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.enable_write_error_logs_in_local_folder_for_twitter,
-            ProviderKind::Reddit => CONFIG.enable_write_error_logs_in_local_folder_for_reddit,
-            ProviderKind::Habr => CONFIG.enable_write_error_logs_in_local_folder_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.is_write_error_logs_in_local_folder_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_write_error_logs_in_local_folder_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.is_write_error_logs_in_local_folder_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.is_write_error_logs_in_local_folder_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
