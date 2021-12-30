@@ -68,13 +68,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_link_parts_randomize_order_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_biorxiv,
-            ProviderKind::Github => CONFIG.mongo_enable_link_parts_randomize_order_for_github,
-            ProviderKind::Medrxiv => CONFIG.mongo_enable_link_parts_randomize_order_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.mongo_enable_link_parts_randomize_order_for_twitter,
-            ProviderKind::Reddit => CONFIG.mongo_enable_link_parts_randomize_order_for_reddit,
-            ProviderKind::Habr => CONFIG.mongo_enable_link_parts_randomize_order_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.is_mongo_link_parts_randomize_order_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
