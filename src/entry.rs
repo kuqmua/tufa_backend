@@ -71,7 +71,7 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if CONFIG.dbs_enable_initialization {
-                if !CONFIG.mongo_enable_initialization && !CONFIG.postgres_enable_initialization {
+                if !CONFIG.mongo_is_initialization_enabled && !CONFIG.postgres_enable_initialization {
                     print_colorful_message(
                         None,
                         PrintType::WarningLow,

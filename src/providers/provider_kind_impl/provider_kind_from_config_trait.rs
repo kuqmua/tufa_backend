@@ -8,13 +8,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_mongo_initialization_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.mongo_enable_initialization_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.mongo_enable_initialization_for_biorxiv,
-            ProviderKind::Github => CONFIG.mongo_enable_initialization_for_github,
-            ProviderKind::Medrxiv => CONFIG.mongo_enable_initialization_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.mongo_enable_initialization_for_twitter,
-            ProviderKind::Reddit => CONFIG.mongo_enable_initialization_for_reddit,
-            ProviderKind::Habr => CONFIG.mongo_enable_initialization_for_habr,
+            ProviderKind::Arxiv => CONFIG.mongo_is_initialization_enabled_for_arxiv,
+            ProviderKind::Biorxiv => CONFIG.mongo_is_initialization_enabled_for_biorxiv,
+            ProviderKind::Github => CONFIG.mongo_is_initialization_enabled_for_github,
+            ProviderKind::Medrxiv => CONFIG.mongo_is_initialization_enabled_for_medrxiv,
+            ProviderKind::Twitter => CONFIG.mongo_is_initialization_enabled_for_twitter,
+            ProviderKind::Reddit => CONFIG.mongo_is_initialization_enabled_for_reddit,
+            ProviderKind::Habr => CONFIG.mongo_is_initialization_enabled_for_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
