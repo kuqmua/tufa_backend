@@ -506,38 +506,38 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledTwitter],
 
-            enable_partial_success_prints: bool_vars[&EnvBoolVar::EnablePartialSuccessPrints],
-            enable_partial_success_prints_for_providers: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders],
-            enable_partial_success_prints_for_arxiv: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForArxiv],
-            enable_partial_success_prints_for_biorxiv: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForBiorxiv],
-            enable_partial_success_prints_for_github: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForGithub],
-            enable_partial_success_prints_for_habr: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForHabr],
-            enable_partial_success_prints_for_medrxiv: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForMedrxiv],
-            enable_partial_success_prints_for_reddit: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForReddit],
-            enable_partial_success_prints_for_twitter: bool_vars
-                [&EnvBoolVar::EnablePartialSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePartialSuccessPrintsForTwitter],
+            is_partial_success_prints_enabled: bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabled],
+            is_partial_success_prints_enabled_providers: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders],
+            is_partial_success_prints_enabled_arxiv: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledArxiv],
+            is_partial_success_prints_enabled_biorxiv: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledBiorxiv],
+            is_partial_success_prints_enabled_github: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledGithub],
+            is_partial_success_prints_enabled_habr: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledHabr],
+            is_partial_success_prints_enabled_medrxiv: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledMedrxiv],
+            is_partial_success_prints_enabled_reddit: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledReddit],
+            is_partial_success_prints_enabled_twitter: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledTwitter],
 
             enable_error_prints: bool_vars[&EnvBoolVar::EnableErrorPrints],
             enable_error_prints_for_providers: bool_vars[&EnvBoolVar::EnableErrorPrints]
