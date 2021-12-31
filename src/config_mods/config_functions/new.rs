@@ -115,37 +115,37 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledTwitter],
 
             is_mongo_write_error_logs_enabled: bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabled],
-            is_mongo_write_error_logs_enabled_for_providers: bool_vars
+            is_mongo_write_error_logs_enabled_providers: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders],
-            is_mongo_write_error_logs_enabled_for_arxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders],
+            is_mongo_write_error_logs_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForArxiv],
-            is_mongo_write_error_logs_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledArxiv],
+            is_mongo_write_error_logs_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForBiorxiv],
-            is_mongo_write_error_logs_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledBiorxiv],
+            is_mongo_write_error_logs_enabled_github: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForGithub],
-            is_mongo_write_error_logs_enabled_for_habr: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledGithub],
+            is_mongo_write_error_logs_enabled_habr: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForHabr],
-            is_mongo_write_error_logs_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledHabr],
+            is_mongo_write_error_logs_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForMedrxiv],
-            is_mongo_write_error_logs_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledMedrxiv],
+            is_mongo_write_error_logs_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForReddit],
-            is_mongo_write_error_logs_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledReddit],
+            is_mongo_write_error_logs_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsMongoWriteErrorLogsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabledTwitter],
 
             is_mongo_cleaning_warning_logs_db_enabled: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbEnabled],
