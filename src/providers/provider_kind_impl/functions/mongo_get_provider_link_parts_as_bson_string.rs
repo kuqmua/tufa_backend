@@ -47,7 +47,7 @@ impl ProviderKind {
                 let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
                     Document,
                 >;
-                if CONFIG.enable_links_limit_for_providers {
+                if CONFIG.is_links_limit_enabled_providers {
                     if CONFIG.enable_common_providers_links_limit {
                         if CONFIG.is_mongo_link_parts_randomize_order_enabled {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(

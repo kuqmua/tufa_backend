@@ -39,7 +39,7 @@ impl ProviderKindTrait for ProviderKind {
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
-        if CONFIG.enable_links_limit {
+        if CONFIG.is_links_limit_enabled {
             if self.is_mongo_link_parts_randomize_order_enabled() {
                 Some(doc! { "$sample" : {"size": self.get_links_limit() }})
             } else {

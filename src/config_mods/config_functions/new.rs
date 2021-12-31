@@ -622,30 +622,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledTwitter],
 
-            enable_links_limit: bool_vars[&EnvBoolVar::EnableLinksLimit],
-            enable_links_limit_for_providers: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders],
-            enable_links_limit_for_arxiv: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForArxiv],
-            enable_links_limit_for_biorxiv: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForBiorxiv],
-            enable_links_limit_for_github: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForGithub],
-            enable_links_limit_for_habr: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForHabr],
-            enable_links_limit_for_medrxiv: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForMedrxiv],
-            enable_links_limit_for_reddit: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForReddit],
-            enable_links_limit_for_twitter: bool_vars[&EnvBoolVar::EnableLinksLimit]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForProviders]
-                && bool_vars[&EnvBoolVar::EnableLinksLimitForTwitter],
+            is_links_limit_enabled: bool_vars[&EnvBoolVar::IsLinksLimitEnabled],
+            is_links_limit_enabled_providers: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders],
+            is_links_limit_enabled_arxiv: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledArxiv],
+            is_links_limit_enabled_biorxiv: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledBiorxiv],
+            is_links_limit_enabled_github: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledGithub],
+            is_links_limit_enabled_habr: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledHabr],
+            is_links_limit_enabled_medrxiv: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledMedrxiv],
+            is_links_limit_enabled_reddit: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledReddit],
+            is_links_limit_enabled_twitter: bool_vars[&EnvBoolVar::IsLinksLimitEnabled]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsLinksLimitEnabledTwitter],
 
             enable_common_providers_links_limit: bool_vars
                 [&EnvBoolVar::EnableCommonProvidersLinksLimit],

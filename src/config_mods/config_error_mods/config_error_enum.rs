@@ -854,37 +854,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForArxivError {
+    IsLinksLimitEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForBiorxivError {
+    IsLinksLimitEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForGithubError {
+    IsLinksLimitEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForHabrError {
+    IsLinksLimitEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForMedrxivError {
+    IsLinksLimitEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForRedditError {
+    IsLinksLimitEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableLinksLimitForTwitterError {
+    IsLinksLimitEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
