@@ -389,21 +389,21 @@ impl ConfigStruct {
             check_link_reddit: string_vars[&EnvStringVar::CheckLinkReddit].clone(),
             check_link_twitter: string_vars[&EnvStringVar::CheckLinkTwitter].clone(),
 
-            enable_providers: bool_vars[&EnvBoolVar::EnableProviders],
-            enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableArxiv],
-            enable_biorxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableBiorxiv],
-            enable_github: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableGithub],
-            enable_habr: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableHabr],
-            enable_medrxiv: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableMedrxiv],
-            enable_reddit: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableReddit],
-            enable_twitter: bool_vars[&EnvBoolVar::EnableProviders]
-                && bool_vars[&EnvBoolVar::EnableTwitter],
+            is_enabled_providers: bool_vars[&EnvBoolVar::IsEnabledProviders],
+            is_enabled_arxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledArxiv],
+            is_enabled_biorxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledBiorxiv],
+            is_enabled_github: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledGithub],
+            is_enabled_habr: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledHabr],
+            is_enabled_medrxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledMedrxiv],
+            is_enabled_reddit: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledReddit],
+            is_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsEnabledTwitter],
 
             enable_prints: bool_vars[&EnvBoolVar::EnablePrints],
             enable_prints_for_providers: bool_vars[&EnvBoolVar::EnablePrints]

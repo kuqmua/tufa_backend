@@ -17,6 +17,7 @@ pub enum VarOrIntParseError {
 #[must_use]
 #[derive(Debug)]
 pub enum ConfigErrorEnum<'a> {
+    //todo some fields has been renamed
     Message(String),
     GithubNameError {
         was_dotenv_enable: bool,
