@@ -152,13 +152,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_warning_high_prints_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_warning_high_prints_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_warning_high_prints_biorxiv,
-            ProviderKind::Github => CONFIG.enable_warning_high_prints_github,
-            ProviderKind::Medrxiv => CONFIG.enable_warning_high_prints_medrxiv,
-            ProviderKind::Twitter => CONFIG.enable_warning_high_prints_twitter,
-            ProviderKind::Reddit => CONFIG.enable_warning_high_prints_reddit,
-            ProviderKind::Habr => CONFIG.enable_warning_high_prints_habr,
+            ProviderKind::Arxiv => CONFIG.is_warning_high_prints_enabled_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_warning_high_prints_enabled_biorxiv,
+            ProviderKind::Github => CONFIG.is_warning_high_prints_enabled_github,
+            ProviderKind::Medrxiv => CONFIG.is_warning_high_prints_enabled_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_warning_high_prints_enabled_twitter,
+            ProviderKind::Reddit => CONFIG.is_warning_high_prints_enabled_reddit,
+            ProviderKind::Habr => CONFIG.is_warning_high_prints_enabled_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
