@@ -92,25 +92,25 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_biorxiv,
-            ProviderKind::Github => CONFIG.is_write_error_logs_in_local_folder_enabled_for_github,
-            ProviderKind::Medrxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.is_write_error_logs_in_local_folder_enabled_for_twitter,
-            ProviderKind::Reddit => CONFIG.is_write_error_logs_in_local_folder_enabled_for_reddit,
-            ProviderKind::Habr => CONFIG.is_write_error_logs_in_local_folder_enabled_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_biorxiv,
+            ProviderKind::Github => CONFIG.is_write_error_logs_in_local_folder_enabled_github,
+            ProviderKind::Medrxiv => CONFIG.is_write_error_logs_in_local_folder_enabled_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_write_error_logs_in_local_folder_enabled_twitter,
+            ProviderKind::Reddit => CONFIG.is_write_error_logs_in_local_folder_enabled_reddit,
+            ProviderKind::Habr => CONFIG.is_write_error_logs_in_local_folder_enabled_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_biorxiv,
-            ProviderKind::Github => CONFIG.is_cleaning_warning_logs_directory_enabled_for_github,
-            ProviderKind::Medrxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.is_cleaning_warning_logs_directory_enabled_for_twitter,
-            ProviderKind::Reddit => CONFIG.is_cleaning_warning_logs_directory_enabled_for_reddit,
-            ProviderKind::Habr => CONFIG.is_cleaning_warning_logs_directory_enabled_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
+            ProviderKind::Github => CONFIG.is_cleaning_warning_logs_directory_enabled_github,
+            ProviderKind::Medrxiv => CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
+            ProviderKind::Reddit => CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
+            ProviderKind::Habr => CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

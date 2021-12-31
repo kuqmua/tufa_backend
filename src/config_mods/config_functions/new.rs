@@ -314,71 +314,71 @@ impl ConfigStruct {
 
             is_write_error_logs_in_local_folder_enabled: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled],
-            is_write_error_logs_in_local_folder_enabled_for_provider: bool_vars
+            is_write_error_logs_in_local_folder_enabled_provider: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders],
-            is_write_error_logs_in_local_folder_enabled_for_arxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders],
+            is_write_error_logs_in_local_folder_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForArxiv],
-            is_write_error_logs_in_local_folder_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledArxiv],
+            is_write_error_logs_in_local_folder_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForBiorxiv],
-            is_write_error_logs_in_local_folder_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledBiorxiv],
+            is_write_error_logs_in_local_folder_enabled_github: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForGithub],
-            is_write_error_logs_in_local_folder_enabled_for_habr: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledGithub],
+            is_write_error_logs_in_local_folder_enabled_habr: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForHabr],
-            is_write_error_logs_in_local_folder_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledHabr],
+            is_write_error_logs_in_local_folder_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForMedrxiv],
-            is_write_error_logs_in_local_folder_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledMedrxiv],
+            is_write_error_logs_in_local_folder_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForReddit],
-            is_write_error_logs_in_local_folder_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledReddit],
+            is_write_error_logs_in_local_folder_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabled]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWriteErrorLogsInLocalFolderEnabledTwitter],
 
             is_cleaning_warning_logs_directory_enabled: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled],
-            is_cleaning_warning_logs_directory_enabled_for_providers: bool_vars
+            is_cleaning_warning_logs_directory_enabled_providers: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders],
-            is_cleaning_warning_logs_directory_enabled_for_arxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders],
+            is_cleaning_warning_logs_directory_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForArxiv],
-            is_cleaning_warning_logs_directory_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledArxiv],
+            is_cleaning_warning_logs_directory_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForBiorxiv],
-            is_cleaning_warning_logs_directory_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledBiorxiv],
+            is_cleaning_warning_logs_directory_enabled_github: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForGithub],
-            is_cleaning_warning_logs_directory_enabled_for_habr: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledGithub],
+            is_cleaning_warning_logs_directory_enabled_habr: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForHabr],
-            is_cleaning_warning_logs_directory_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledHabr],
+            is_cleaning_warning_logs_directory_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForMedrxiv],
-            is_cleaning_warning_logs_directory_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledMedrxiv],
+            is_cleaning_warning_logs_directory_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForReddit],
-            is_cleaning_warning_logs_directory_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledReddit],
+            is_cleaning_warning_logs_directory_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabled]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledTwitter],
 
             starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
             check_link_for_arxiv: string_vars[&EnvStringVar::CheckLinkForArxiv].clone(),

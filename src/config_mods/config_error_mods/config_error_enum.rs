@@ -678,37 +678,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForArxivError {
+    IsCleaningWarningLogsDirectoryEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForBiorxivError {
+    IsCleaningWarningLogsDirectoryEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForGithubError {
+    IsCleaningWarningLogsDirectoryEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForHabrError {
+    IsCleaningWarningLogsDirectoryEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForMedrxivError {
+    IsCleaningWarningLogsDirectoryEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForRedditError {
+    IsCleaningWarningLogsDirectoryEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    IsCleaningWarningLogsDirectoryEnabledForTwitterError {
+    IsCleaningWarningLogsDirectoryEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
