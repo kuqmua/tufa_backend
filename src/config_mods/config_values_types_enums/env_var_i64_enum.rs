@@ -31,11 +31,11 @@ use crate::config_mods::config_error_mods::config_error::ConfigError;
 )]
 pub enum EnvI64Var {
     CommonProvidersLinksLimit,
-    LinksLimitForArxiv,
-    LinksLimitForBiorxiv,
-    LinksLimitForGithub,
-    LinksLimitForHabr,
-    LinksLimitForMedrxiv,
-    LinksLimitForReddit,
-    LinksLimitForTwitter,
+    LinksLimitArxiv,
+    LinksLimitBiorxiv,
+    LinksLimitGithub,
+    LinksLimitHabr,
+    LinksLimitMedrxiv,
+    LinksLimitReddit,
+    LinksLimitTwitter,
 }

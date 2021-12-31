@@ -889,37 +889,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    LinksLimitForArxivError {
+    LinksLimitArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForBiorxivError {
+    LinksLimitBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForGithubError {
+    LinksLimitGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForHabrError {
+    LinksLimitHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForMedrxivError {
+    LinksLimitMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForRedditError {
+    LinksLimitRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
     },
-    LinksLimitForTwitterError {
+    LinksLimitTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrIntParseError,
