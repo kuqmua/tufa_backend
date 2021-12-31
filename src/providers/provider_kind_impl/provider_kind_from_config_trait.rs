@@ -140,13 +140,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_prints_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_prints_arxiv, //todo add for
-            ProviderKind::Biorxiv => CONFIG.enable_prints_biorxiv, //todo add for
-            ProviderKind::Github => CONFIG.enable_prints_github, //todo add for
-            ProviderKind::Medrxiv => CONFIG.enable_prints_medrxiv, //todo add for
-            ProviderKind::Twitter => CONFIG.enable_prints_twitter, //todo add for
-            ProviderKind::Reddit => CONFIG.enable_prints_reddit, //todo add for
-            ProviderKind::Habr => CONFIG.enable_prints_habr,   //todo add for
+            ProviderKind::Arxiv => CONFIG.is_prints_enabled_arxiv, //todo add for
+            ProviderKind::Biorxiv => CONFIG.is_prints_enabled_biorxiv, //todo add for
+            ProviderKind::Github => CONFIG.is_prints_enabled_github, //todo add for
+            ProviderKind::Medrxiv => CONFIG.is_prints_enabled_medrxiv, //todo add for
+            ProviderKind::Twitter => CONFIG.is_prints_enabled_twitter, //todo add for
+            ProviderKind::Reddit => CONFIG.is_prints_enabled_reddit, //todo add for
+            ProviderKind::Habr => CONFIG.is_prints_enabled_habr,   //todo add for
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

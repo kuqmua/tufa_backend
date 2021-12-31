@@ -119,7 +119,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsError {
+    IsPrintsEnabledError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -469,37 +469,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarError,
     },
-    EnablePrintsArxivError {
+    IsPrintsEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsBiorxivError {
+    IsPrintsEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsGithubError {
+    IsPrintsEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsHabrError {
+    IsPrintsEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsMedrxivError {
+    IsPrintsEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsRedditError {
+    IsPrintsEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnablePrintsTwitterError {
+    IsPrintsEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,

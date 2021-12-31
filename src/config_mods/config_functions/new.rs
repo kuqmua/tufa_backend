@@ -405,30 +405,30 @@ impl ConfigStruct {
             is_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsEnabledTwitter],
 
-            enable_prints: bool_vars[&EnvBoolVar::EnablePrints],
-            enable_prints_for_providers: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders],
-            enable_prints_arxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsArxiv],
-            enable_prints_biorxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsBiorxiv],
-            enable_prints_github: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsGithub],
-            enable_prints_habr: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsHabr],
-            enable_prints_medrxiv: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsMedrxiv],
-            enable_prints_reddit: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsReddit],
-            enable_prints_twitter: bool_vars[&EnvBoolVar::EnablePrints]
-                && bool_vars[&EnvBoolVar::EnablePrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnablePrintsTwitter],
+            enable_prints: bool_vars[&EnvBoolVar::IsPrintsEnabled],
+            is_prints_enabled_for_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders],
+            is_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledArxiv],
+            is_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledBiorxiv],
+            is_prints_enabled_github: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledGithub],
+            is_prints_enabled_habr: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledHabr],
+            is_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledMedrxiv],
+            is_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledReddit],
+            is_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsPrintsEnabledTwitter],
 
             enable_warning_high_prints: bool_vars[&EnvBoolVar::EnableWarningHighPrints],
             enable_warning_high_prints_for_providers: bool_vars
