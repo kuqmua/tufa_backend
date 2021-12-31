@@ -241,7 +241,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
     }
     //todo write some logic around provider_kind
     let results_vec = join_all(vec_of_futures).await;
-    if CONFIG.enable_time_measurement_prints {
+    if CONFIG.is_time_measurement_prints_enabled {
         print_colorful_message(
             None,
             PrintType::TimeMeasurement,

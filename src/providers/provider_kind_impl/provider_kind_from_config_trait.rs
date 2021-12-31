@@ -212,13 +212,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn is_time_measurement_prints_enabled(&self) -> bool {
         match self {
-            ProviderKind::Arxiv => CONFIG.enable_time_measurement_prints_for_arxiv,
-            ProviderKind::Biorxiv => CONFIG.enable_time_measurement_prints_for_biorxiv,
-            ProviderKind::Github => CONFIG.enable_time_measurement_prints_for_github,
-            ProviderKind::Medrxiv => CONFIG.enable_time_measurement_prints_for_medrxiv,
-            ProviderKind::Twitter => CONFIG.enable_time_measurement_prints_for_twitter,
-            ProviderKind::Reddit => CONFIG.enable_time_measurement_prints_for_reddit,
-            ProviderKind::Habr => CONFIG.enable_time_measurement_prints_for_habr,
+            ProviderKind::Arxiv => CONFIG.is_time_measurement_prints_enabled_arxiv,
+            ProviderKind::Biorxiv => CONFIG.is_time_measurement_prints_enabled_biorxiv,
+            ProviderKind::Github => CONFIG.is_time_measurement_prints_enabled_github,
+            ProviderKind::Medrxiv => CONFIG.is_time_measurement_prints_enabled_medrxiv,
+            ProviderKind::Twitter => CONFIG.is_time_measurement_prints_enabled_twitter,
+            ProviderKind::Reddit => CONFIG.is_time_measurement_prints_enabled_reddit,
+            ProviderKind::Habr => CONFIG.is_time_measurement_prints_enabled_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

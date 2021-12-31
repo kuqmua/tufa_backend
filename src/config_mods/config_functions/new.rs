@@ -564,38 +564,38 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledTwitter],
 
-            enable_time_measurement_prints: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints],
-            enable_time_measurement_prints_for_providers: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders],
-            enable_time_measurement_prints_for_arxiv: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForArxiv],
-            enable_time_measurement_prints_for_biorxiv: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForBiorxiv],
-            enable_time_measurement_prints_for_github: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForGithub],
-            enable_time_measurement_prints_for_habr: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForHabr],
-            enable_time_measurement_prints_for_medrxiv: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForMedrxiv],
-            enable_time_measurement_prints_for_reddit: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForReddit],
-            enable_time_measurement_prints_for_twitter: bool_vars
-                [&EnvBoolVar::EnableTimeMeasurementPrints]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableTimeMeasurementPrintsForTwitter],
+            is_time_measurement_prints_enabled: bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabled],
+            is_time_measurement_prints_enabled_providers: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders],
+            is_time_measurement_prints_enabled_arxiv: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledArxiv],
+            is_time_measurement_prints_enabled_biorxiv: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledBiorxiv],
+            is_time_measurement_prints_enabled_github: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledGithub],
+            is_time_measurement_prints_enabled_habr: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledHabr],
+            is_time_measurement_prints_enabled_medrxiv: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledMedrxiv],
+            is_time_measurement_prints_enabled_reddit: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledReddit],
+            is_time_measurement_prints_enabled_twitter: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledTwitter],
 
             enable_info_prints: bool_vars[&EnvBoolVar::EnableInfoPrints],
             enable_info_prints_for_providers: bool_vars[&EnvBoolVar::EnableInfoPrints]

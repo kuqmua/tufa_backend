@@ -23,7 +23,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_arxiv,
                         CONFIG.is_success_prints_enabled_arxiv,
                         CONFIG.is_partial_success_prints_enabled_arxiv,
-                        CONFIG.enable_time_measurement_prints_for_arxiv,
+                        CONFIG.is_time_measurement_prints_enabled_arxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
                         CONFIG.enable_info_prints_for_arxiv,
                         print_type,
@@ -40,7 +40,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_biorxiv,
                         CONFIG.is_success_prints_enabled_biorxiv,
                         CONFIG.is_partial_success_prints_enabled_biorxiv,
-                        CONFIG.enable_time_measurement_prints_for_biorxiv,
+                        CONFIG.is_time_measurement_prints_enabled_biorxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
                         CONFIG.enable_info_prints_for_biorxiv,
                         print_type,
@@ -57,7 +57,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_github,
                         CONFIG.is_success_prints_enabled_github,
                         CONFIG.is_partial_success_prints_enabled_github,
-                        CONFIG.enable_time_measurement_prints_for_github,
+                        CONFIG.is_time_measurement_prints_enabled_github,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_github,
                         CONFIG.enable_info_prints_for_github,
                         print_type,
@@ -74,7 +74,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_habr,
                         CONFIG.is_success_prints_enabled_habr,
                         CONFIG.is_partial_success_prints_enabled_habr,
-                        CONFIG.enable_time_measurement_prints_for_habr,
+                        CONFIG.is_time_measurement_prints_enabled_habr,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
                         CONFIG.enable_info_prints_for_habr,
                         print_type,
@@ -91,7 +91,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_medrxiv,
                         CONFIG.is_success_prints_enabled_medrxiv,
                         CONFIG.is_partial_success_prints_enabled_medrxiv,
-                        CONFIG.enable_time_measurement_prints_for_medrxiv,
+                        CONFIG.is_time_measurement_prints_enabled_medrxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
                         CONFIG.enable_info_prints_for_medrxiv,
                         print_type,
@@ -108,7 +108,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_reddit,
                         CONFIG.is_success_prints_enabled_reddit,
                         CONFIG.is_partial_success_prints_enabled_reddit,
-                        CONFIG.enable_time_measurement_prints_for_reddit,
+                        CONFIG.is_time_measurement_prints_enabled_reddit,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
                         CONFIG.enable_info_prints_for_reddit,
                         print_type,
@@ -125,7 +125,7 @@ pub fn print_colorful_message(
                         CONFIG.is_warning_low_prints_enabled_twitter,
                         CONFIG.is_success_prints_enabled_twitter,
                         CONFIG.is_partial_success_prints_enabled_twitter,
-                        CONFIG.enable_time_measurement_prints_for_twitter,
+                        CONFIG.is_time_measurement_prints_enabled_twitter,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
                         CONFIG.enable_info_prints_for_twitter,
                         print_type,
@@ -219,7 +219,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::TimeMeasurement => {
-                    if CONFIG.enable_time_measurement_prints {
+                    if CONFIG.is_time_measurement_prints_enabled {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.time_measurement_red,
                             CONFIG.time_measurement_green,
@@ -375,7 +375,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::TimeMeasurement => {
-                if CONFIG.enable_time_measurement_prints && enable_provider_time_measurement {
+                if CONFIG.is_time_measurement_prints_enabled && enable_provider_time_measurement {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.time_measurement_red,
                         CONFIG.time_measurement_green,

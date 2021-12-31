@@ -71,7 +71,7 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
         }
     }
     let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
-    if CONFIG.enable_time_measurement_prints {
+    if CONFIG.is_time_measurement_prints_enabled {
         println!(
             "write fetch error logs into files done in {} seconds {} miliseconds",
             time.elapsed().as_secs(),
