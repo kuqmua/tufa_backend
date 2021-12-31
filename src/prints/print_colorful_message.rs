@@ -19,7 +19,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_arxiv,
                         CONFIG.enable_error_prints_for_arxiv,
-                        CONFIG.enable_warning_high_prints_for_arxiv,
+                        CONFIG.enable_warning_high_prints_arxiv,
                         CONFIG.enable_warning_low_prints_for_arxiv,
                         CONFIG.enable_success_prints_for_arxiv,
                         CONFIG.enable_partial_success_prints_for_arxiv,
@@ -36,7 +36,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_biorxiv,
                         CONFIG.enable_error_prints_for_biorxiv,
-                        CONFIG.enable_warning_high_prints_for_biorxiv,
+                        CONFIG.enable_warning_high_prints_biorxiv,
                         CONFIG.enable_warning_low_prints_for_biorxiv,
                         CONFIG.enable_success_prints_for_biorxiv,
                         CONFIG.enable_partial_success_prints_for_biorxiv,
@@ -53,7 +53,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_github,
                         CONFIG.enable_error_prints_for_github,
-                        CONFIG.enable_warning_high_prints_for_github,
+                        CONFIG.enable_warning_high_prints_github,
                         CONFIG.enable_warning_low_prints_for_github,
                         CONFIG.enable_success_prints_for_github,
                         CONFIG.enable_partial_success_prints_for_github,
@@ -70,7 +70,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_habr,
                         CONFIG.enable_error_prints_for_habr,
-                        CONFIG.enable_warning_high_prints_for_habr,
+                        CONFIG.enable_warning_high_prints_habr,
                         CONFIG.enable_warning_low_prints_for_habr,
                         CONFIG.enable_success_prints_for_habr,
                         CONFIG.enable_partial_success_prints_for_habr,
@@ -87,7 +87,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_medrxiv,
                         CONFIG.enable_error_prints_for_medrxiv,
-                        CONFIG.enable_warning_high_prints_for_medrxiv,
+                        CONFIG.enable_warning_high_prints_medrxiv,
                         CONFIG.enable_warning_low_prints_for_medrxiv,
                         CONFIG.enable_success_prints_for_medrxiv,
                         CONFIG.enable_partial_success_prints_for_medrxiv,
@@ -104,7 +104,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_reddit,
                         CONFIG.enable_error_prints_for_reddit,
-                        CONFIG.enable_warning_high_prints_for_reddit,
+                        CONFIG.enable_warning_high_prints_reddit,
                         CONFIG.enable_warning_low_prints_for_reddit,
                         CONFIG.enable_success_prints_for_reddit,
                         CONFIG.enable_partial_success_prints_for_reddit,
@@ -121,7 +121,7 @@ pub fn print_colorful_message(
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_twitter,
                         CONFIG.enable_error_prints_for_twitter,
-                        CONFIG.enable_warning_high_prints_for_twitter,
+                        CONFIG.enable_warning_high_prints_twitter,
                         CONFIG.enable_warning_low_prints_for_twitter,
                         CONFIG.enable_success_prints_for_twitter,
                         CONFIG.enable_partial_success_prints_for_twitter,
@@ -276,7 +276,7 @@ pub fn print_colorful_message(
 fn handle_provider_prints(
     is_prints_enabled_provider: bool,
     enable_error_prints_for_provider: bool,
-    enable_warning_high_prints_for_provider: bool,
+    enable_warning_high_prints_provider: bool,
     enable_warning_low_prints_for_provider: bool,
     enable_success_prints_for_provider: bool,
     enable_partial_success_prints_for_provider: bool,
@@ -305,7 +305,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::WarningHigh => {
-                if CONFIG.enable_warning_high_prints && enable_warning_high_prints_for_provider {
+                if CONFIG.enable_warning_high_prints && enable_warning_high_prints_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.warning_high_red,
                         CONFIG.warning_high_green,

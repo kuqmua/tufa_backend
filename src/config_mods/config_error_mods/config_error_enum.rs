@@ -174,7 +174,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForAllProvidersError {
+    EnableWarningHighPrintsAllProvidersError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -504,37 +504,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForArxivError {
+    EnableWarningHighPrintsArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForBiorxivError {
+    EnableWarningHighPrintsBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForGithubError {
+    EnableWarningHighPrintsGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForHabrError {
+    EnableWarningHighPrintsHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForMedrxivError {
+    EnableWarningHighPrintsMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForRedditError {
+    EnableWarningHighPrintsRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningHighPrintsForTwitterError {
+    EnableWarningHighPrintsTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,

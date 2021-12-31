@@ -431,30 +431,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsPrintsEnabledTwitter],
 
             enable_warning_high_prints: bool_vars[&EnvBoolVar::EnableWarningHighPrints],
-            enable_warning_high_prints_for_providers: bool_vars
+            enable_warning_high_prints_providers: bool_vars
                 [&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders],
-            enable_warning_high_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForArxiv],
-            enable_warning_high_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForBiorxiv],
-            enable_warning_high_prints_for_github: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForGithub],
-            enable_warning_high_prints_for_habr: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForHabr],
-            enable_warning_high_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForMedrxiv],
-            enable_warning_high_prints_for_reddit: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForReddit],
-            enable_warning_high_prints_for_twitter: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsForTwitter],
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders],
+            enable_warning_high_prints_arxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsArxiv],
+            enable_warning_high_prints_biorxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsBiorxiv],
+            enable_warning_high_prints_github: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsGithub],
+            enable_warning_high_prints_habr: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsHabr],
+            enable_warning_high_prints_medrxiv: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsMedrxiv],
+            enable_warning_high_prints_reddit: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsReddit],
+            enable_warning_high_prints_twitter: bool_vars[&EnvBoolVar::EnableWarningHighPrints]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsProviders]
+                && bool_vars[&EnvBoolVar::EnableWarningHighPrintsTwitter],
 
             enable_warning_low_prints: bool_vars[&EnvBoolVar::EnableWarningLowPrints],
             enable_warning_low_prints_for_providers: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
