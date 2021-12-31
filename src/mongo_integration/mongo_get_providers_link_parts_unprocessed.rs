@@ -46,7 +46,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
                 >;
                 if CONFIG.enable_links_limit_for_providers {
                     if CONFIG.enable_common_providers_links_limit {
-                        if CONFIG.is_mongo_link_parts_randomize_order_enabled_for_providers {
+                        if CONFIG.is_mongo_link_parts_randomize_order_enabled_providers {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
                                 doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
                             );

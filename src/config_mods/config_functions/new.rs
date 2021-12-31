@@ -217,37 +217,37 @@ impl ConfigStruct {
 
             is_mongo_link_parts_randomize_order_enabled: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled],
-            is_mongo_link_parts_randomize_order_enabled_for_providers: bool_vars
+            is_mongo_link_parts_randomize_order_enabled_providers: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders],
-            is_mongo_link_parts_randomize_order_enabled_for_arxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders],
+            is_mongo_link_parts_randomize_order_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForArxiv],
-            is_mongo_link_parts_randomize_order_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledArxiv],
+            is_mongo_link_parts_randomize_order_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForBiorxiv],
-            is_mongo_link_parts_randomize_order_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledBiorxiv],
+            is_mongo_link_parts_randomize_order_enabled_github: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForGithub],
-            is_mongo_link_parts_randomize_order_enabled_for_habr: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledGithub],
+            is_mongo_link_parts_randomize_order_enabled_habr: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForHabr],
-            is_mongo_link_parts_randomize_order_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledHabr],
+            is_mongo_link_parts_randomize_order_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForMedrxiv],
-            is_mongo_link_parts_randomize_order_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledMedrxiv],
+            is_mongo_link_parts_randomize_order_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForReddit],
-            is_mongo_link_parts_randomize_order_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledReddit],
+            is_mongo_link_parts_randomize_order_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabledTwitter],
 
             postgres_first_handle_url_part: string_vars[&EnvStringVar::PostgresFirstHandleUrlPart]
                 .clone(),
