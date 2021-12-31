@@ -41,7 +41,6 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
         ("is_info_prints_enabled", "bool"),
         ("is_links_limit_enabled", "bool"),
         ("links_limit", "i64"),
-        ("", ""),
     ]);
 
     match data {
@@ -116,5 +115,14 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     ",
         ident_name, summary
     );
+    
     string_from.parse().unwrap()
 }
+
+// fn generate_function(indent_name: String, function: String) -> Str{
+//     let mut string_to_return = String::from("
+//     impl SomeTrait for {} {{
+//         {}
+//     }}
+//     ", ident_name, function);
+// }
