@@ -12,7 +12,7 @@ pub fn print_colorful_message(
     line: String,
     message: String,
 ) {
-    if CONFIG.enable_prints {
+    if CONFIG.is_prints_enabled {
         match provider_kind {
             Some(provider_kind) => match provider_kind {
                 ProviderKind::Arxiv => {
@@ -21,7 +21,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_arxiv,
                         CONFIG.is_warning_high_prints_enabled_arxiv,
                         CONFIG.is_warning_low_prints_enabled_arxiv,
-                        CONFIG.enable_success_prints_for_arxiv,
+                        CONFIG.is_success_prints_enabled_arxiv,
                         CONFIG.enable_partial_success_prints_for_arxiv,
                         CONFIG.enable_time_measurement_prints_for_arxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
@@ -38,7 +38,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_biorxiv,
                         CONFIG.is_warning_high_prints_enabled_biorxiv,
                         CONFIG.is_warning_low_prints_enabled_biorxiv,
-                        CONFIG.enable_success_prints_for_biorxiv,
+                        CONFIG.is_success_prints_enabled_biorxiv,
                         CONFIG.enable_partial_success_prints_for_biorxiv,
                         CONFIG.enable_time_measurement_prints_for_biorxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
@@ -55,7 +55,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_github,
                         CONFIG.is_warning_high_prints_enabled_github,
                         CONFIG.is_warning_low_prints_enabled_github,
-                        CONFIG.enable_success_prints_for_github,
+                        CONFIG.is_success_prints_enabled_github,
                         CONFIG.enable_partial_success_prints_for_github,
                         CONFIG.enable_time_measurement_prints_for_github,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_github,
@@ -72,7 +72,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_habr,
                         CONFIG.is_warning_high_prints_enabled_habr,
                         CONFIG.is_warning_low_prints_enabled_habr,
-                        CONFIG.enable_success_prints_for_habr,
+                        CONFIG.is_success_prints_enabled_habr,
                         CONFIG.enable_partial_success_prints_for_habr,
                         CONFIG.enable_time_measurement_prints_for_habr,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
@@ -89,7 +89,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_medrxiv,
                         CONFIG.is_warning_high_prints_enabled_medrxiv,
                         CONFIG.is_warning_low_prints_enabled_medrxiv,
-                        CONFIG.enable_success_prints_for_medrxiv,
+                        CONFIG.is_success_prints_enabled_medrxiv,
                         CONFIG.enable_partial_success_prints_for_medrxiv,
                         CONFIG.enable_time_measurement_prints_for_medrxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
@@ -106,7 +106,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_reddit,
                         CONFIG.is_warning_high_prints_enabled_reddit,
                         CONFIG.is_warning_low_prints_enabled_reddit,
-                        CONFIG.enable_success_prints_for_reddit,
+                        CONFIG.is_success_prints_enabled_reddit,
                         CONFIG.enable_partial_success_prints_for_reddit,
                         CONFIG.enable_time_measurement_prints_for_reddit,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
@@ -123,7 +123,7 @@ pub fn print_colorful_message(
                         CONFIG.enable_error_prints_for_twitter,
                         CONFIG.is_warning_high_prints_enabled_twitter,
                         CONFIG.is_warning_low_prints_enabled_twitter,
-                        CONFIG.enable_success_prints_for_twitter,
+                        CONFIG.is_success_prints_enabled_twitter,
                         CONFIG.enable_partial_success_prints_for_twitter,
                         CONFIG.enable_time_measurement_prints_for_twitter,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
@@ -185,7 +185,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::Success => {
-                    if CONFIG.enable_success_prints {
+                    if CONFIG.is_success_prints_enabled {
                         let rgb_color: ansi_term::Colour = RGB(
                             CONFIG.success_red,
                             CONFIG.success_green,
@@ -278,7 +278,7 @@ fn handle_provider_prints(
     enable_error_prints_for_provider: bool,
     is_warning_high_prints_enabled_provider: bool,
     is_warning_low_prints_enabled_provider: bool,
-    enable_success_prints_for_provider: bool,
+    is_success_prints_enabled_provider: bool,
     enable_partial_success_prints_for_provider: bool,
     enable_provider_time_measurement: bool,
     is_cleaning_warning_logs_directory_enabled_provider: bool,
@@ -339,7 +339,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::Success => {
-                if CONFIG.enable_success_prints && enable_success_prints_for_provider {
+                if CONFIG.is_success_prints_enabled && is_success_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.success_red,
                         CONFIG.success_green,

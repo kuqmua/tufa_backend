@@ -139,7 +139,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsError {
+    IsSuccessPrintsEnabledError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -184,7 +184,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForAllProvidersError {
+    IsSuccessPrintsEnabledAllProvidersError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -609,37 +609,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForArxivError {
+    IsSuccessPrintsEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForBiorxivError {
+    IsSuccessPrintsEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForGithubError {
+    IsSuccessPrintsEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForHabrError {
+    IsSuccessPrintsEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForMedrxivError {
+    IsSuccessPrintsEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForRedditError {
+    IsSuccessPrintsEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableSuccessPrintsForTwitterError {
+    IsSuccessPrintsEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,

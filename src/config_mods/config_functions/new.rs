@@ -405,7 +405,7 @@ impl ConfigStruct {
             is_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsEnabledTwitter],
 
-            enable_prints: bool_vars[&EnvBoolVar::IsPrintsEnabled],
+            is_prints_enabled: bool_vars[&EnvBoolVar::IsPrintsEnabled],
             is_prints_enabled_for_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders],
             is_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsPrintsEnabled]
@@ -481,30 +481,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledTwitter],
 
-            enable_success_prints: bool_vars[&EnvBoolVar::EnableSuccessPrints],
-            enable_success_prints_for_providers: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders],
-            enable_success_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForArxiv],
-            enable_success_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForBiorxiv],
-            enable_success_prints_for_github: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForGithub],
-            enable_success_prints_for_habr: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForHabr],
-            enable_success_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForMedrxiv],
-            enable_success_prints_for_reddit: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForReddit],
-            enable_success_prints_for_twitter: bool_vars[&EnvBoolVar::EnableSuccessPrints]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableSuccessPrintsForTwitter],
+            is_success_prints_enabled: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled],
+            is_success_prints_enabled_providers: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders],
+            is_success_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledArxiv],
+            is_success_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledBiorxiv],
+            is_success_prints_enabled_github: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledGithub],
+            is_success_prints_enabled_habr: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledHabr],
+            is_success_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledMedrxiv],
+            is_success_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledReddit],
+            is_success_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsSuccessPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledTwitter],
 
             enable_partial_success_prints: bool_vars[&EnvBoolVar::EnablePartialSuccessPrints],
             enable_partial_success_prints_for_providers: bool_vars
