@@ -647,8 +647,8 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsLinksLimitEnabledTwitter],
 
-            enable_common_providers_links_limit: bool_vars
-                [&EnvBoolVar::EnableCommonProvidersLinksLimit],
+            is_links_limit_providers_enabled: bool_vars
+                [&EnvBoolVar::IsLinksLimitProvidersEnabled],
             common_providers_links_limit: i64_vars[&EnvI64Var::CommonProvidersLinksLimit],
             links_limit_arxiv: i64_vars[&EnvI64Var::LinksLimitArxiv],
             links_limit_biorxiv: i64_vars[&EnvI64Var::LinksLimitBiorxiv],

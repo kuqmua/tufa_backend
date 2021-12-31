@@ -237,7 +237,7 @@ pub struct ConfigStruct {
     pub is_links_limit_enabled_reddit: bool,
     pub is_links_limit_enabled_twitter: bool,
 
-    pub enable_common_providers_links_limit: bool,
+    pub is_links_limit_providers_enabled: bool,
     pub common_providers_links_limit: i64,
     pub links_limit_arxiv: i64,
     pub links_limit_biorxiv: i64,

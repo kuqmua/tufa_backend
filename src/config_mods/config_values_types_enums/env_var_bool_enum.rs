@@ -210,6 +210,6 @@ pub enum EnvBoolVar {
     IsLinksLimitEnabledMedrxiv,
     IsLinksLimitEnabledReddit,
     IsLinksLimitEnabledTwitter,
-
-    EnableCommonProvidersLinksLimit,
+    
+    IsLinksLimitProvidersEnabled,
 }
