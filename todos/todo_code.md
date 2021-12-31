@@ -414,3 +414,8 @@ right now its only working with enum variants named like config field names
 for provider kind enum - variant names did not written like config field names - must be 2 vectors with first and second part to add field name between 
 maybe do something with function name too? just to check naming
 <br/>
+
+### -------------------
+reuse files with functions and constants using #[path=""] instead of module system
+its maybe bad practice but must work
+<br/>
