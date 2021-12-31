@@ -246,7 +246,7 @@ impl ProviderKindFromConfigTrait for ProviderKind {
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_links_limit(&self) -> i64 {
+    fn links_limit(&self) -> i64 {
         match self {
             ProviderKind::Arxiv => CONFIG.links_limit_for_arxiv,
             ProviderKind::Biorxiv => CONFIG.links_limit_for_biorxiv,

@@ -23,5 +23,5 @@ pub trait ProviderKindFromConfigTrait {
     fn is_info_prints_enabled(&self) -> bool;
 
     fn is_links_limit_enabled(&self) -> bool;
-    fn get_links_limit(&self) -> i64;
+    fn links_limit(&self) -> i64;
 }

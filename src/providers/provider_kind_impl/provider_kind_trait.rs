@@ -41,9 +41,9 @@ impl ProviderKindTrait for ProviderKind {
     fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
         if CONFIG.is_links_limit_enabled {
             if self.is_mongo_link_parts_randomize_order_enabled() {
-                Some(doc! { "$sample" : {"size": self.get_links_limit() }})
+                Some(doc! { "$sample" : {"size": self.links_limit() }})
             } else {
-                Some(doc! { "$limit" : self.get_links_limit() })
+                Some(doc! { "$limit" : self.links_limit() })
             }
         } else {
             None
