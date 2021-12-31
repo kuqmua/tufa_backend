@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use convert_case::Case;
 use convert_case::Casing;
 
@@ -18,6 +20,30 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let data: Data = ast.data;
     let mut ident_name = String::from("");
     let mut vec_string = Vec::new();
+    let mut function_hashmap = HashMap::from([
+        ("is_mongo_initialization_enabled", "bool"),
+        ("is_mongo_write_error_logs_enabled", "bool"),
+        ("is_mongo_cleaning_warning_logs_db_enabled", "bool"),
+        ("is_mongo_cleaning_warning_logs_db_collections_enabled", "bool"),
+        ("is_mongo_link_parts_randomize_order_enabled", "bool"),
+        ("is_postgres_initialization_enabled", "bool"),
+        ("is_write_error_logs_in_local_folder_enabled", "bool"),
+        ("is_cleaning_warning_logs_directory_enabled", "bool"),
+        ("check_link", "&'static str"),
+        ("is_enabled", "bool"),
+        ("is_prints_enabled", "bool"),
+        ("is_warning_high_prints_enabled", "bool"),
+        ("is_warning_low_prints_enabled", "bool"),
+        ("is_success_prints_enabled", "bool"),
+        ("is_partial_success_prints_enabled", "bool"),
+        ("is_error_prints_enabled", "bool"),
+        ("is_time_measurement_prints_enabled", "bool"),
+        ("is_info_prints_enabled", "bool"),
+        ("is_links_limit_enabled", "bool"),
+        ("links_limit", "i64"),
+        ("", ""),
+    ]);
+
     match data {
         Data::Struct(_) => panic!("no implementation for Struct"),
         Data::Union(_) => panic!("no implementation for Union"),
