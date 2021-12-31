@@ -146,9 +146,9 @@ pub struct ConfigStruct {
     pub is_enabled_medrxiv: bool,
     pub is_enabled_reddit: bool,
     pub is_enabled_twitter: bool,
-
+    
     pub is_prints_enabled: bool,
-    pub is_prints_enabled_for_providers: bool,
+    pub is_prints_enabled_providers: bool,
     pub is_prints_enabled_arxiv: bool,
     pub is_prints_enabled_biorxiv: bool,
     pub is_prints_enabled_github: bool,

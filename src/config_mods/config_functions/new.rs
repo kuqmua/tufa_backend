@@ -406,7 +406,7 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsEnabledTwitter],
 
             is_prints_enabled: bool_vars[&EnvBoolVar::IsPrintsEnabled],
-            is_prints_enabled_for_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]
+            is_prints_enabled_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders],
             is_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsPrintsEnabledProviders]
