@@ -116,13 +116,13 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn check_link(&self) -> &'static str {
         match self {
-            ProviderKind::Arxiv => &CONFIG.check_link_for_arxiv,
-            ProviderKind::Biorxiv => &CONFIG.check_link_for_biorxiv,
-            ProviderKind::Github => &CONFIG.check_link_for_github,
-            ProviderKind::Medrxiv => &CONFIG.check_link_for_medrxiv,
-            ProviderKind::Twitter => &CONFIG.check_link_for_twitter,
-            ProviderKind::Reddit => &CONFIG.check_link_for_reddit,
-            ProviderKind::Habr => &CONFIG.check_link_for_habr,
+            ProviderKind::Arxiv => &CONFIG.check_link_arxiv,
+            ProviderKind::Biorxiv => &CONFIG.check_link_biorxiv,
+            ProviderKind::Github => &CONFIG.check_link_github,
+            ProviderKind::Medrxiv => &CONFIG.check_link_medrxiv,
+            ProviderKind::Twitter => &CONFIG.check_link_twitter,
+            ProviderKind::Reddit => &CONFIG.check_link_reddit,
+            ProviderKind::Habr => &CONFIG.check_link_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

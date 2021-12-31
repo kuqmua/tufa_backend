@@ -381,13 +381,13 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsCleaningWarningLogsDirectoryEnabledTwitter],
 
             starting_check_link: string_vars[&EnvStringVar::StartingCheckLink].clone(),
-            check_link_for_arxiv: string_vars[&EnvStringVar::CheckLinkForArxiv].clone(),
-            check_link_for_biorxiv: string_vars[&EnvStringVar::CheckLinkForBiorxiv].clone(),
-            check_link_for_github: string_vars[&EnvStringVar::CheckLinkForGithub].clone(),
-            check_link_for_habr: string_vars[&EnvStringVar::CheckLinkForHabr].clone(),
-            check_link_for_medrxiv: string_vars[&EnvStringVar::CheckLinkForMedrxiv].clone(),
-            check_link_for_reddit: string_vars[&EnvStringVar::CheckLinkForReddit].clone(),
-            check_link_for_twitter: string_vars[&EnvStringVar::CheckLinkForTwitter].clone(),
+            check_link_arxiv: string_vars[&EnvStringVar::CheckLinkArxiv].clone(),
+            check_link_biorxiv: string_vars[&EnvStringVar::CheckLinkBiorxiv].clone(),
+            check_link_github: string_vars[&EnvStringVar::CheckLinkGithub].clone(),
+            check_link_habr: string_vars[&EnvStringVar::CheckLinkHabr].clone(),
+            check_link_medrxiv: string_vars[&EnvStringVar::CheckLinkMedrxiv].clone(),
+            check_link_reddit: string_vars[&EnvStringVar::CheckLinkReddit].clone(),
+            check_link_twitter: string_vars[&EnvStringVar::CheckLinkTwitter].clone(),
 
             enable_providers: bool_vars[&EnvBoolVar::EnableProviders],
             enable_arxiv: bool_vars[&EnvBoolVar::EnableProviders]

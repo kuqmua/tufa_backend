@@ -75,11 +75,11 @@ pub enum EnvStringVar {
     LogFileExtension,
 
     StartingCheckLink,
-    CheckLinkForArxiv,
-    CheckLinkForBiorxiv,
-    CheckLinkForGithub,
-    CheckLinkForHabr,
-    CheckLinkForMedrxiv,
-    CheckLinkForReddit,
-    CheckLinkForTwitter,
+    CheckLinkArxiv,
+    CheckLinkBiorxiv,
+    CheckLinkGithub,
+    CheckLinkHabr,
+    CheckLinkMedrxiv,
+    CheckLinkReddit,
+    CheckLinkTwitter,
 }
