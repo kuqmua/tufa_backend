@@ -187,9 +187,9 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if config_handle.params.common_providers_links_limit > 0 {
+        // if config_handle.params.links_limit_providers > 0 {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //         "common_providers_links_limit <= 0".to_string(),
+        //         "links_limit_providers <= 0".to_string(),
         //     ));
         //     drop(error);
         // }

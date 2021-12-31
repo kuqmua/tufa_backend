@@ -51,11 +51,11 @@ impl ProviderKind {
                     if CONFIG.is_links_limit_providers_enabled {
                         if CONFIG.is_mongo_link_parts_randomize_order_enabled {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit = Some(
-                                doc! { "$sample" : {"size": CONFIG.common_providers_links_limit }},
+                                doc! { "$sample" : {"size": CONFIG.links_limit_providers }},
                             );
                         } else {
                             option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                Some(doc! { "$limit" :  CONFIG.common_providers_links_limit });
+                                Some(doc! { "$limit" :  CONFIG.links_limit_providers });
                         }
                     } else {
                         option_aggregation_stage_1_get_docs_in_random_order_with_limit =

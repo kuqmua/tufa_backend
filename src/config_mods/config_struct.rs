@@ -238,7 +238,7 @@ pub struct ConfigStruct {
     pub is_links_limit_enabled_twitter: bool,
 
     pub is_links_limit_providers_enabled: bool,
-    pub common_providers_links_limit: i64,
+    pub links_limit_providers: i64,//override links limit for providers. this value applied for each provider
     pub links_limit_arxiv: i64,
     pub links_limit_biorxiv: i64,
     pub links_limit_github: i64,

@@ -27,7 +27,7 @@ pub async fn postgres_get_providers_link_parts(
         Ok(pg_connection) => {
             let result = providers_link_parts
                 // .filter()//todo for all providers use limits from config
-                .limit(CONFIG.common_providers_links_limit)
+                .limit(CONFIG.links_limit_providers)
                 .load::<QueryableLinkPart>(&pg_connection);
             match result {
                 Err(e) => Err(PostgresGetProviderLinksError::LoadingProvidersLinkParts(e)),

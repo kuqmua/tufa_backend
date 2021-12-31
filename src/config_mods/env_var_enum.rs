@@ -257,7 +257,7 @@ pub enum EnvVar {
     IsLinksLimitEnabledTwitter,
 
     IsLinksLimitProvidersEnabled,
-    CommonProvidersLinksLimit,
+    LinksLimitProviders,
     LinksLimitArxiv,
     LinksLimitBiorxiv,
     LinksLimitGithub,

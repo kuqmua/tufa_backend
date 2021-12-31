@@ -649,7 +649,7 @@ impl ConfigStruct {
 
             is_links_limit_providers_enabled: bool_vars
                 [&EnvBoolVar::IsLinksLimitProvidersEnabled],
-            common_providers_links_limit: i64_vars[&EnvI64Var::CommonProvidersLinksLimit],
+            links_limit_providers: i64_vars[&EnvI64Var::LinksLimitProviders],
             links_limit_arxiv: i64_vars[&EnvI64Var::LinksLimitArxiv],
             links_limit_biorxiv: i64_vars[&EnvI64Var::LinksLimitBiorxiv],
             links_limit_github: i64_vars[&EnvI64Var::LinksLimitGithub],
