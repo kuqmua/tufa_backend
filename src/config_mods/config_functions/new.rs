@@ -597,30 +597,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledTwitter],
 
-            enable_info_prints: bool_vars[&EnvBoolVar::EnableInfoPrints],
-            enable_info_prints_for_providers: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders],
-            enable_info_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForArxiv],
-            enable_info_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForBiorxiv],
-            enable_info_prints_for_github: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForGithub],
-            enable_info_prints_for_habr: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForHabr],
-            enable_info_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForReddit],
-            enable_info_prints_for_reddit: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForReddit],
-            enable_info_prints_for_twitter: bool_vars[&EnvBoolVar::EnableInfoPrints]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableInfoPrintsForTwitter],
+            is_info_prints_enabled: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled],
+            is_info_prints_enabled_providers: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders],
+            is_info_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledArxiv],
+            is_info_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledBiorxiv],
+            is_info_prints_enabled_github: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledGithub],
+            is_info_prints_enabled_habr: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledHabr],
+            is_info_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledReddit],
+            is_info_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledReddit],
+            is_info_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsInfoPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsInfoPrintsEnabledTwitter],
 
             enable_links_limit: bool_vars[&EnvBoolVar::EnableLinksLimit],
             enable_links_limit_for_providers: bool_vars[&EnvBoolVar::EnableLinksLimit]

@@ -25,7 +25,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_arxiv,
                         CONFIG.is_time_measurement_prints_enabled_arxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
-                        CONFIG.enable_info_prints_for_arxiv,
+                        CONFIG.is_info_prints_enabled_arxiv,
                         print_type,
                         file,
                         line,
@@ -42,7 +42,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_biorxiv,
                         CONFIG.is_time_measurement_prints_enabled_biorxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
-                        CONFIG.enable_info_prints_for_biorxiv,
+                        CONFIG.is_info_prints_enabled_biorxiv,
                         print_type,
                         file,
                         line,
@@ -59,7 +59,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_github,
                         CONFIG.is_time_measurement_prints_enabled_github,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_github,
-                        CONFIG.enable_info_prints_for_github,
+                        CONFIG.is_info_prints_enabled_github,
                         print_type,
                         file,
                         line,
@@ -76,7 +76,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_habr,
                         CONFIG.is_time_measurement_prints_enabled_habr,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
-                        CONFIG.enable_info_prints_for_habr,
+                        CONFIG.is_info_prints_enabled_habr,
                         print_type,
                         file,
                         line,
@@ -93,7 +93,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_medrxiv,
                         CONFIG.is_time_measurement_prints_enabled_medrxiv,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
-                        CONFIG.enable_info_prints_for_medrxiv,
+                        CONFIG.is_info_prints_enabled_medrxiv,
                         print_type,
                         file,
                         line,
@@ -110,7 +110,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_reddit,
                         CONFIG.is_time_measurement_prints_enabled_reddit,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
-                        CONFIG.enable_info_prints_for_reddit,
+                        CONFIG.is_info_prints_enabled_reddit,
                         print_type,
                         file,
                         line,
@@ -127,7 +127,7 @@ pub fn print_colorful_message(
                         CONFIG.is_partial_success_prints_enabled_twitter,
                         CONFIG.is_time_measurement_prints_enabled_twitter,
                         CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
-                        CONFIG.enable_info_prints_for_twitter,
+                        CONFIG.is_info_prints_enabled_twitter,
                         print_type,
                         file,
                         line,
@@ -253,7 +253,7 @@ pub fn print_colorful_message(
                     }
                 }
                 PrintType::Info => {
-                    if CONFIG.enable_info_prints {
+                    if CONFIG.is_info_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
                         eprintln!(
@@ -282,7 +282,7 @@ fn handle_provider_prints(
     is_partial_success_prints_enabled_provider: bool,
     enable_provider_time_measurement: bool,
     is_cleaning_warning_logs_directory_enabled_provider: bool,
-    enable_info_prints_for_provider: bool,
+    is_info_prints_enabled_provider: bool,
     print_type: PrintType,
     file: String,
     line: String,
@@ -411,7 +411,7 @@ fn handle_provider_prints(
                 }
             }
             PrintType::Info => {
-                if CONFIG.enable_info_prints && enable_info_prints_for_provider {
+                if CONFIG.is_info_prints_enabled && is_info_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.cleaning_red,
                         CONFIG.cleaning_green,
