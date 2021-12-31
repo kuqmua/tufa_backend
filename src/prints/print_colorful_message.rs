@@ -18,7 +18,7 @@ pub fn print_colorful_message(
                 ProviderKind::Arxiv => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_arxiv,
-                        CONFIG.enable_error_prints_for_arxiv,
+                        CONFIG.is_error_prints_enabled_arxiv,
                         CONFIG.is_warning_high_prints_enabled_arxiv,
                         CONFIG.is_warning_low_prints_enabled_arxiv,
                         CONFIG.is_success_prints_enabled_arxiv,
@@ -35,7 +35,7 @@ pub fn print_colorful_message(
                 ProviderKind::Biorxiv => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_biorxiv,
-                        CONFIG.enable_error_prints_for_biorxiv,
+                        CONFIG.is_error_prints_enabled_biorxiv,
                         CONFIG.is_warning_high_prints_enabled_biorxiv,
                         CONFIG.is_warning_low_prints_enabled_biorxiv,
                         CONFIG.is_success_prints_enabled_biorxiv,
@@ -52,7 +52,7 @@ pub fn print_colorful_message(
                 ProviderKind::Github => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_github,
-                        CONFIG.enable_error_prints_for_github,
+                        CONFIG.is_error_prints_enabled_github,
                         CONFIG.is_warning_high_prints_enabled_github,
                         CONFIG.is_warning_low_prints_enabled_github,
                         CONFIG.is_success_prints_enabled_github,
@@ -69,7 +69,7 @@ pub fn print_colorful_message(
                 ProviderKind::Habr => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_habr,
-                        CONFIG.enable_error_prints_for_habr,
+                        CONFIG.is_error_prints_enabled_habr,
                         CONFIG.is_warning_high_prints_enabled_habr,
                         CONFIG.is_warning_low_prints_enabled_habr,
                         CONFIG.is_success_prints_enabled_habr,
@@ -86,7 +86,7 @@ pub fn print_colorful_message(
                 ProviderKind::Medrxiv => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_medrxiv,
-                        CONFIG.enable_error_prints_for_medrxiv,
+                        CONFIG.is_error_prints_enabled_medrxiv,
                         CONFIG.is_warning_high_prints_enabled_medrxiv,
                         CONFIG.is_warning_low_prints_enabled_medrxiv,
                         CONFIG.is_success_prints_enabled_medrxiv,
@@ -103,7 +103,7 @@ pub fn print_colorful_message(
                 ProviderKind::Reddit => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_reddit,
-                        CONFIG.enable_error_prints_for_reddit,
+                        CONFIG.is_error_prints_enabled_reddit,
                         CONFIG.is_warning_high_prints_enabled_reddit,
                         CONFIG.is_warning_low_prints_enabled_reddit,
                         CONFIG.is_success_prints_enabled_reddit,
@@ -120,7 +120,7 @@ pub fn print_colorful_message(
                 ProviderKind::Twitter => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_twitter,
-                        CONFIG.enable_error_prints_for_twitter,
+                        CONFIG.is_error_prints_enabled_twitter,
                         CONFIG.is_warning_high_prints_enabled_twitter,
                         CONFIG.is_warning_low_prints_enabled_twitter,
                         CONFIG.is_success_prints_enabled_twitter,
@@ -137,7 +137,7 @@ pub fn print_colorful_message(
             },
             None => match print_type {
                 PrintType::Error => {
-                    if CONFIG.enable_error_prints {
+                    if CONFIG.is_error_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                         eprintln!(
@@ -275,7 +275,7 @@ pub fn print_colorful_message(
 #[allow(clippy::too_many_arguments)]
 fn handle_provider_prints(
     is_prints_enabled_provider: bool,
-    enable_error_prints_for_provider: bool,
+    is_error_prints_enabled_provider: bool,
     is_warning_high_prints_enabled_provider: bool,
     is_warning_low_prints_enabled_provider: bool,
     is_success_prints_enabled_provider: bool,
@@ -291,7 +291,7 @@ fn handle_provider_prints(
     if is_prints_enabled_provider {
         match print_type {
             PrintType::Error => {
-                if CONFIG.enable_error_prints && enable_error_prints_for_provider {
+                if CONFIG.is_error_prints_enabled && is_error_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour =
                         RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                     eprintln!(

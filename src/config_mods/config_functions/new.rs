@@ -539,30 +539,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledTwitter],
 
-            enable_error_prints: bool_vars[&EnvBoolVar::EnableErrorPrints],
-            enable_error_prints_for_providers: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders],
-            enable_error_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForArxiv],
-            enable_error_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForBiorxiv],
-            enable_error_prints_for_github: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForGithub],
-            enable_error_prints_for_habr: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForHabr],
-            enable_error_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForMedrxiv],
-            enable_error_prints_for_reddit: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForReddit],
-            enable_error_prints_for_twitter: bool_vars[&EnvBoolVar::EnableErrorPrints]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableErrorPrintsForTwitter],
+            is_error_prints_enabled: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled],
+            is_error_prints_enabled_providers: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders],
+            is_error_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledArxiv],
+            is_error_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledBiorxiv],
+            is_error_prints_enabled_github: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledGithub],
+            is_error_prints_enabled_habr: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledHabr],
+            is_error_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledMedrxiv],
+            is_error_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledReddit],
+            is_error_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsErrorPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledTwitter],
 
             enable_time_measurement_prints: bool_vars[&EnvBoolVar::EnableTimeMeasurementPrints],
             enable_time_measurement_prints_for_providers: bool_vars

@@ -124,7 +124,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsError {
+    IsErrorPrintsEnabledError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -169,7 +169,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForAllProvidersError {
+    IsErrorPrintsEnabledAllProvidersError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -574,37 +574,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForArxivError {
+    IsErrorPrintsEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForBiorxivError {
+    IsErrorPrintsEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForGithubError {
+    IsErrorPrintsEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForHabrError {
+    IsErrorPrintsEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForMedrxivError {
+    IsErrorPrintsEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForRedditError {
+    IsErrorPrintsEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableErrorPrintsForTwitterError {
+    IsErrorPrintsEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
