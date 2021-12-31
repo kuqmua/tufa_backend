@@ -183,37 +183,37 @@ impl ConfigStruct {
 
             is_mongo_cleaning_warning_logs_db_collections_enabled: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_providers: bool_vars
+            is_mongo_cleaning_warning_logs_db_collections_enabled_providers: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_arxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForArxiv],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledArxiv],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForBiorxiv],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledBiorxiv],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_github: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForGithub],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_habr: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledGithub],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_habr: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForHabr],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledHabr],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForMedrxiv],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledMedrxiv],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForReddit],
-            is_mongo_cleaning_warning_logs_db_collections_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledReddit],
+            is_mongo_cleaning_warning_logs_db_collections_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoCleaningWarningLogsDbCollectionsEnabledTwitter],
 
             is_mongo_link_parts_randomize_order_enabled: bool_vars
                 [&EnvBoolVar::IsMongoLinkPartsRandomizeOrderEnabled],

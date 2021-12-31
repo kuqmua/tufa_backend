@@ -45,24 +45,24 @@ impl ProviderKindFromConfigTrait for ProviderKind {
     fn is_mongo_cleaning_warning_logs_db_collections_enabled(&self) -> bool {
         match self {
             ProviderKind::Arxiv => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_arxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_arxiv
             }
             ProviderKind::Biorxiv => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_biorxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_biorxiv
             }
             ProviderKind::Github => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_github
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_github
             }
             ProviderKind::Medrxiv => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_medrxiv
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_medrxiv
             }
             ProviderKind::Twitter => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_twitter
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_twitter
             }
             ProviderKind::Reddit => {
-                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_reddit
+                CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_reddit
             }
-            ProviderKind::Habr => CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_for_habr,
+            ProviderKind::Habr => CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled_habr,
         }
     }
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
