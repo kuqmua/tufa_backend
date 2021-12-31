@@ -82,37 +82,37 @@ impl ConfigStruct {
 
             is_mongo_initialization_enabled: bool_vars[&EnvBoolVar::DbsEnableInitialization]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabled],
-            is_mongo_initialization_enabled_for_providers: bool_vars
+            is_mongo_initialization_enabled_providers: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders],
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders],
 
-            is_mongo_initialization_enabled_for_arxiv: bool_vars
+            is_mongo_initialization_enabled_arxiv: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForArxiv],
-            is_mongo_initialization_enabled_for_biorxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledArxiv],
+            is_mongo_initialization_enabled_biorxiv: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForBiorxiv],
-            is_mongo_initialization_enabled_for_github: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledBiorxiv],
+            is_mongo_initialization_enabled_github: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForGithub],
-            is_mongo_initialization_enabled_for_habr: bool_vars[&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForHabr],
-            is_mongo_initialization_enabled_for_medrxiv: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledGithub],
+            is_mongo_initialization_enabled_habr: bool_vars[&EnvBoolVar::IsMongoInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledHabr],
+            is_mongo_initialization_enabled_medrxiv: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForMedrxiv],
-            is_mongo_initialization_enabled_for_reddit: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledMedrxiv],
+            is_mongo_initialization_enabled_reddit: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForReddit],
-            is_mongo_initialization_enabled_for_twitter: bool_vars
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledReddit],
+            is_mongo_initialization_enabled_twitter: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForProviders]
-                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledForTwitter],
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledTwitter],
 
             is_mongo_write_error_logs_enabled: bool_vars[&EnvBoolVar::IsMongoWriteErrorLogsEnabled],
             is_mongo_write_error_logs_enabled_for_providers: bool_vars
