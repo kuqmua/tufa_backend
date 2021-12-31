@@ -456,30 +456,30 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledTwitter],
 
-            enable_warning_low_prints: bool_vars[&EnvBoolVar::EnableWarningLowPrints],
-            enable_warning_low_prints_for_providers: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders],
-            enable_warning_low_prints_for_arxiv: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForArxiv],
-            enable_warning_low_prints_for_biorxiv: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForBiorxiv],
-            enable_warning_low_prints_for_github: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForGithub],
-            enable_warning_low_prints_for_habr: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForHabr],
-            enable_warning_low_prints_for_medrxiv: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForMedrxiv],
-            enable_warning_low_prints_for_reddit: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForReddit],
-            enable_warning_low_prints_for_twitter: bool_vars[&EnvBoolVar::EnableWarningLowPrints]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForProviders]
-                && bool_vars[&EnvBoolVar::EnableWarningLowPrintsForTwitter],
+            is_warning_low_prints_enabled: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled],
+            is_warning_low_prints_enabled_providers: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders],
+            is_warning_low_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledArxiv],
+            is_warning_low_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledBiorxiv],
+            is_warning_low_prints_enabled_github: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledGithub],
+            is_warning_low_prints_enabled_habr: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledHabr],
+            is_warning_low_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledMedrxiv],
+            is_warning_low_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledReddit],
+            is_warning_low_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledTwitter],
 
             enable_success_prints: bool_vars[&EnvBoolVar::EnableSuccessPrints],
             enable_success_prints_for_providers: bool_vars[&EnvBoolVar::EnableSuccessPrints]

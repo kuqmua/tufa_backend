@@ -134,7 +134,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsError {
+    IsWarningLowPrintsEnabledError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -179,7 +179,7 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForAllProvidersError {
+    IsWarningLowPrintsEnabledAllProvidersError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
@@ -539,37 +539,37 @@ pub enum ConfigErrorEnum<'a> {
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForArxivError {
+    IsWarningLowPrintsEnabledArxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForBiorxivError {
+    IsWarningLowPrintsEnabledBiorxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForGithubError {
+    IsWarningLowPrintsEnabledGithubError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForHabrError {
+    IsWarningLowPrintsEnabledHabrError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForMedrxivError {
+    IsWarningLowPrintsEnabledMedrxivError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForRedditError {
+    IsWarningLowPrintsEnabledRedditError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
     },
-    EnableWarningLowPrintsForTwitterError {
+    IsWarningLowPrintsEnabledTwitterError {
         was_dotenv_enable: bool,
         env_name: &'a str,
         env_error: VarOrBoolParseError,
