@@ -530,3 +530,8 @@ https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
 ### -------------------
 cargo expand - show generated code
 <br/>
+
+### -------------------
+There are struct fields inside proc_macro_derive ast 
+maybe rewrite logic without creating enum
+<br/>
