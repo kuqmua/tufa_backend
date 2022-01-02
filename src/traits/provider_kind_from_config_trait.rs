@@ -1,3 +1,4 @@
+//do not comment any code in this file coz it will be parsed iside proc_macro
 pub trait ProviderKindFromConfigTrait {
     fn is_mongo_initialization_enabled(&self) -> bool;
     fn is_mongo_write_error_logs_enabled(&self) -> bool;
@@ -10,7 +11,7 @@ pub trait ProviderKindFromConfigTrait {
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool;
 
-    fn check_link(&self) -> &'static str;
+    //here was check_link(&self) -> &'static str function but it was removed coz "&'static str is not a valid identifier" error. coz i need to borrow config value (for bool values - no need)
 
     fn is_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;

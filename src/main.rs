@@ -146,7 +146,6 @@ mod providers {
             pub mod get_local_data;
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
-        pub mod provider_kind_from_config_trait;
         pub mod provider_kind_trait;
     }
     pub mod check_providers_link_parts_on_empty;
@@ -188,27 +187,7 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
-use convert_case::{Case, Casing};
-use std::collections::HashMap;
-use strum::IntoEnumIterator;
-use strum_macros::Display;
-use strum_macros::EnumIter;
-use traits::enum_extention::EnumExtenstion;
-
-use crate::config_mods::lazy_static_config::CONFIG;
-
-pub trait SomeTrait {
-    fn is_something_enabled(&self) -> bool;
-}
-
-#[derive(SomeTrait, EnumIter, EnumExtenstion, Display, Debug)]
-enum Example {
-    IsMongoInitializationEnabledArxiv,
-    IsMongoInitializationEnabledBiorxiv,
-}
-
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 fn main() {
-    println!("___{}__", Example::IsMongoInitializationEnabledArxiv);
     entry::entry();
 }
