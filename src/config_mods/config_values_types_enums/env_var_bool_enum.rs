@@ -41,7 +41,7 @@ pub enum EnvBoolVar {
     IsMongoInitializationEnabledMedrxiv,
     IsMongoInitializationEnabledReddit,
     IsMongoInitializationEnabledTwitter,
-    
+
     IsMongoWriteErrorLogsEnabled,
     IsMongoWriteErrorLogsEnabledProviders,
     IsMongoWriteErrorLogsEnabledArxiv,
@@ -130,7 +130,7 @@ pub enum EnvBoolVar {
     IsPrintsEnabledMedrxiv,
     IsPrintsEnabledReddit,
     IsPrintsEnabledTwitter,
-    
+
     IsWarningHighPrintsEnabled,
     IsWarningHighPrintsEnabledProviders,
     IsWarningHighPrintsEnabledArxiv,
@@ -160,7 +160,7 @@ pub enum EnvBoolVar {
     IsSuccessPrintsEnabledMedrxiv,
     IsSuccessPrintsEnabledReddit,
     IsSuccessPrintsEnabledTwitter,
-    
+
     IsPartialSuccessPrintsEnabled,
     IsPartialSuccessPrintsEnabledProviders,
     IsPartialSuccessPrintsEnabledArxiv,
@@ -210,6 +210,6 @@ pub enum EnvBoolVar {
     IsLinksLimitEnabledMedrxiv,
     IsLinksLimitEnabledReddit,
     IsLinksLimitEnabledTwitter,
-    
+
     IsLinksLimitProvidersEnabled,
 }

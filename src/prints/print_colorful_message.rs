@@ -305,7 +305,8 @@ fn handle_provider_prints(
                 }
             }
             PrintType::WarningHigh => {
-                if CONFIG.is_warning_high_prints_enabled && is_warning_high_prints_enabled_provider {
+                if CONFIG.is_warning_high_prints_enabled && is_warning_high_prints_enabled_provider
+                {
                     let rgb_color: ansi_term::Colour = RGB(
                         CONFIG.warning_high_red,
                         CONFIG.warning_high_green,

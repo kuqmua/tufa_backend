@@ -98,7 +98,8 @@ impl ConfigStruct {
                 [&EnvBoolVar::IsMongoInitializationEnabled]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledGithub],
-            is_mongo_initialization_enabled_habr: bool_vars[&EnvBoolVar::IsMongoInitializationEnabled]
+            is_mongo_initialization_enabled_habr: bool_vars
+                [&EnvBoolVar::IsMongoInitializationEnabled]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabledHabr],
             is_mongo_initialization_enabled_medrxiv: bool_vars
@@ -434,35 +435,43 @@ impl ConfigStruct {
             is_warning_high_prints_enabled_providers: bool_vars
                 [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders],
-            is_warning_high_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_arxiv: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledArxiv],
-            is_warning_high_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_biorxiv: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledBiorxiv],
-            is_warning_high_prints_enabled_github: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_github: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledGithub],
             is_warning_high_prints_enabled_habr: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledHabr],
-            is_warning_high_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_medrxiv: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledMedrxiv],
-            is_warning_high_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_reddit: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledReddit],
-            is_warning_high_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabled]
+            is_warning_high_prints_enabled_twitter: bool_vars
+                [&EnvBoolVar::IsWarningHighPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningHighPrintsEnabledTwitter],
 
             is_warning_low_prints_enabled: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled],
-            is_warning_low_prints_enabled_providers: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+            is_warning_low_prints_enabled_providers: bool_vars
+                [&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders],
             is_warning_low_prints_enabled_arxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledArxiv],
-            is_warning_low_prints_enabled_biorxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+            is_warning_low_prints_enabled_biorxiv: bool_vars
+                [&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledBiorxiv],
             is_warning_low_prints_enabled_github: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
@@ -471,13 +480,15 @@ impl ConfigStruct {
             is_warning_low_prints_enabled_habr: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledHabr],
-            is_warning_low_prints_enabled_medrxiv: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+            is_warning_low_prints_enabled_medrxiv: bool_vars
+                [&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledMedrxiv],
             is_warning_low_prints_enabled_reddit: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledReddit],
-            is_warning_low_prints_enabled_twitter: bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabled]
+            is_warning_low_prints_enabled_twitter: bool_vars
+                [&EnvBoolVar::IsWarningLowPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsWarningLowPrintsEnabledTwitter],
 
@@ -506,7 +517,8 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsSuccessPrintsEnabledTwitter],
 
-            is_partial_success_prints_enabled: bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabled],
+            is_partial_success_prints_enabled: bool_vars
+                [&EnvBoolVar::IsPartialSuccessPrintsEnabled],
             is_partial_success_prints_enabled_providers: bool_vars
                 [&EnvBoolVar::IsPartialSuccessPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsPartialSuccessPrintsEnabledProviders],
@@ -564,7 +576,8 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsErrorPrintsEnabledTwitter],
 
-            is_time_measurement_prints_enabled: bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabled],
+            is_time_measurement_prints_enabled: bool_vars
+                [&EnvBoolVar::IsTimeMeasurementPrintsEnabled],
             is_time_measurement_prints_enabled_providers: bool_vars
                 [&EnvBoolVar::IsTimeMeasurementPrintsEnabled]
                 && bool_vars[&EnvBoolVar::IsTimeMeasurementPrintsEnabledProviders],
@@ -647,8 +660,7 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsLinksLimitEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsLinksLimitEnabledTwitter],
 
-            is_links_limit_providers_enabled: bool_vars
-                [&EnvBoolVar::IsLinksLimitProvidersEnabled],
+            is_links_limit_providers_enabled: bool_vars[&EnvBoolVar::IsLinksLimitProvidersEnabled],
             links_limit_providers: i64_vars[&EnvI64Var::LinksLimitProviders],
             links_limit_arxiv: i64_vars[&EnvI64Var::LinksLimitArxiv],
             links_limit_biorxiv: i64_vars[&EnvI64Var::LinksLimitBiorxiv],
