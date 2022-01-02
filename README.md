@@ -190,3 +190,7 @@ You are probably missing cargo in your %PATH%.
 First, Open a new and fresh shell and try there. The %PATH% variable is only loaded when the terminal starts.
 If that did not work, you can execute rustup.exe again and re-install the rust toolchain
 Or you can edit the PATH variable by hand in the computers settings.
+
+### install cargo expand
+cargo install cargo-expand
+(for procedural macros dev debug)
