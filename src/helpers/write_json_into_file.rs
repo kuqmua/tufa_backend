@@ -4,20 +4,22 @@ use serde_json::Value;
 
 use crate::helpers::write_string_into_file::write_string_into_file;
 
-#[derive(Debug)]
+use thiserror::Error;
+
+#[derive(Debug, Error)]
 pub enum WriteJsonIntoFileError {
-    SerdeJsonError(serde_json::Error),
-    StdIoError(std::io::Error),
-}
-impl From<serde_json::Error> for WriteJsonIntoFileError {
-    fn from(e: serde_json::Error) -> Self {
-        WriteJsonIntoFileError::SerdeJsonError(e)
-    }
-}
-impl From<std::io::Error> for WriteJsonIntoFileError {
-    fn from(e: std::io::Error) -> Self {
-        WriteJsonIntoFileError::StdIoError(e)
-    }
+    #[error("SerdeJsonError message")]
+    SerdeJsonError(
+        #[from]
+        #[source]
+        serde_json::Error,
+    ),
+    #[error("StdIoError message")]
+    StdIoError(
+        #[from]
+        #[source]
+        std::io::Error,
+    ),
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
