@@ -6,12 +6,12 @@ use reqwest::StatusCode;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_net_availability(link: &str) -> Result<(), Box<CheckNetError>> {
     match check_link_status_code(link) {
-        Err(e) => Err(Box::new(CheckNetError::ReqwestError { error: e })),
+        Err(e) => Err(Box::new(CheckNetError::ReqwestError(e))),
         Ok(status_code) => {
             if !StatusCode::is_success(&status_code) {
-                return Err(Box::new(CheckNetError::StartingLinkCode {
-                    status_code: Box::new(status_code),
-                }));
+                return Err(Box::new(CheckNetError::StartingLinkCode(Box::new(
+                    status_code,
+                ))));
             }
             Ok(())
         }

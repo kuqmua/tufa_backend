@@ -4,10 +4,10 @@ use reqwest::StatusCode;
 
 #[derive(Debug)]
 pub enum CheckNetError {
-    StartingLinkCode { status_code: Box<StatusCode> },
-    ReqwestError { error: Box<reqwest::Error> },
-    Postgres { error: Box<ConnectionError> },
-    Mongo { error: Box<mongodb::error::Error> },
+    StartingLinkCode(Box<StatusCode>),
+    ReqwestError(Box<reqwest::Error>),
+    Postgres(Box<ConnectionError>),
+    Mongo(Box<mongodb::error::Error>),
 }
 // impl From<Box<mongodb::error::Error>> for CheckNetError {
 //     fn from(e: Box<mongodb::error::Error>) -> Self {
