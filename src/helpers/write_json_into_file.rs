@@ -6,13 +6,13 @@ use crate::helpers::write_string_into_file::write_string_into_file;
 
 #[derive(thiserror::Error, displaydoc::Display, Debug)]
 pub enum WriteJsonIntoFileError {
-    ///serde_json::to_string_pretty serde_json::Error error: {0}.
+    ///serde_json::to_string_pretty serde_json::Error error: `{0}`.
     SerdeJsonError(
         #[from]
         #[source]
         serde_json::Error,
     ),
-    ///write_string_into_file std::io::Error error: {0}
+    ///write_string_into_file std::io::Error error: `{0}`.
     StdIoError(
         #[from]
         #[source]
