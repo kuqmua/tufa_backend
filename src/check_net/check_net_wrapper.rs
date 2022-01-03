@@ -10,7 +10,7 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_net_wrapper() -> Result<(), CheckNetError> {
+pub fn check_net_wrapper() -> Result<(), Box<CheckNetError>> {
     check_net_availability(&CONFIG.starting_check_link)?;
     postgres_check_availability(&postgres_get_db_url())?;
     mongo_check_availability(&mongo_get_db_url())?;
