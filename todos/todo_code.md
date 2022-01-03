@@ -391,3 +391,8 @@ Config {
 reuse files with functions and constants using #[path=""] instead of module system
 its maybe bad practice but must work
 <br/>
+
+### -------------------
+try SNAFU as error handling crate 
+https://crates.io/crates/snafu
+<br/>
