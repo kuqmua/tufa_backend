@@ -1,88 +1,82 @@
-use std::collections::HashMap;
 use std::fs;
 
 use convert_case::Case;
 use convert_case::Casing;
 
 use quote::quote;
+
 use syn;
+use syn::ReturnType;
+use syn::TraitItem;
 
 use proc_macro::TokenStream;
 
-use crate::syn::Data;
-use crate::syn::Ident;
+use syn::Data;
+use syn::Ident;
 
 #[proc_macro_derive(ProviderKindFromConfigTraitDerive)]
 pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
-    let ast: syn::DeriveInput = syn::parse(input).unwrap(); //if need to print ast use syn = { version = "1.0.75", features = ["extra-traits"]} instead of syn="1.0.75"
+    let ast: syn::DeriveInput =
+        syn::parse(input).expect("cannot parse input into syn::DeriveInput"); //if need to print ast use syn = { version = "1.0.75", features = ["extra-traits"]} instead of syn="1.0.75"
     let ident: &Ident = &ast.ident;
     let data: Data = ast.data;
-    let mut function_hashmap = HashMap::new();
+    let trait_name: Ident;
+    let function_vec_idents: Vec<(Ident, ReturnType)>;
     match fs::read_to_string("./src/traits/provider_kind_from_config_trait.rs") {
         Err(e) => panic!("file:  error: {}", e),
         Ok(file) => {
-            //todo parse into TokenStream
-            let mut string_to_parse = file;
-            let start_symbol = "fn ";
-            let end_symbol = ";";
-            let end_function_name_symbol = "(&self) -> ";
-            while string_to_parse.contains(start_symbol) && string_to_parse.contains(end_symbol) {
-                if let Some(start_index) = string_to_parse.find(start_symbol) {
-                    if let Some(end_index) = string_to_parse.find(end_symbol) {
-                        if end_index > start_index {
-                            let function_string = string_to_parse
-                                [start_index + start_symbol.len()..end_index]
-                                .to_string();
-                            match function_string.find(end_function_name_symbol) {
-                                Some(end_function_name_index) => {
-                                    if end_function_name_index + end_function_name_symbol.len()
-                                        >= end_index
-                                    {
-                                        panic!("end_function_name_index + end_function_name_symbol.len() >= end_index");
-                                    }
-                                    let function_name =
-                                        function_string[..end_function_name_index].to_string();
-                                    let function_return_type = function_string
-                                        [end_function_name_index
-                                            + end_function_name_symbol.len()..]
-                                        .to_string();
-                                    function_hashmap.insert(function_name, function_return_type);
-                                }
-                                None => panic!("no end_function_name_symbol"),
-                            }
-                            string_to_parse =
-                                string_to_parse[end_index + end_symbol.len()..].to_string();
-                        } else {
-                            panic!("end_index > start_index");
-                        }
-                    }
-                }
-            }
+            let token_stream: proc_macro::TokenStream = file
+                .parse()
+                .expect("cannot parse file into proc_macro::TokenStream");
+            let trait_ast: syn::ItemTrait = syn::parse(token_stream)
+                .expect("cannot parse token_stream from file into syn::ItemTrait");
+            trait_name = trait_ast.ident;
+            function_vec_idents = trait_ast
+                .items
+                .iter()
+                .filter_map(|trait_item| match trait_item {
+                    TraitItem::Method(trait_item_method) => Some((
+                        trait_item_method.sig.ident.clone(),
+                        trait_item_method.sig.output.clone(),
+                    )),
+                    _ => None,
+                })
+                .collect();
         }
     }
     let variants = if let syn::Data::Enum(syn::DataEnum { variants, .. }) = data {
         variants
     } else {
-        unimplemented!();
+        panic!("not a valid data type for this proc macro");
     };
-    let mut function_quote_vec = Vec::new();
-    for (name, return_type) in function_hashmap {
-        let function_name_ident = syn::Ident::new(
-            &name.to_string().to_case(Case::Snake).to_lowercase(),
-            ident.span(),
-        );
-        let variants_for_quote = variants.iter().map(|f| {
-            let variant_name = &f.ident;
+    let mut function_quote_vec_ident = Vec::with_capacity(function_vec_idents.len());
+    for (function_name_ident, output) in function_vec_idents {
+        let mut is_str = false;
+        if let syn::ReturnType::Type(_, box_type) = &output {
+            if let syn::Type::Reference(type_reference) = &**box_type {
+                if let syn::Type::Path(reference_type_path) = &*type_reference.elem {
+                    for i in &reference_type_path.path.segments {
+                        if i.ident.to_string() == "str" {
+                            is_str = true;
+                        }
+                    }
+                }
+            }
+        }
+        let variants_for_quote = variants.iter().map(|variant| {
+            let variant_name = &variant.ident;
             let config_field_name = syn::Ident::new(
                 &format!(
                     "{}_{}",
-                    name.to_string().to_case(Case::Snake).to_lowercase(),
+                    function_name_ident
+                        .to_string()
+                        .to_case(Case::Snake)
+                        .to_lowercase(),
                     variant_name.to_string().to_case(Case::Snake).to_lowercase()
                 ),
                 variant_name.span(),
             );
-            if return_type == "&'static str" {
-                //coz "&'static str is not a valid identifier"
+            if is_str {
                 quote! {
                     #ident::#variant_name => &CONFIG.#config_field_name
                 }
@@ -92,30 +86,17 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                 }
             }
         });
-        let function_quote;
-        if return_type == "&'static str" {
-            function_quote = quote! {
-                fn #function_name_ident(&self) -> &'static str {
-                    match self {
-                       #(#variants_for_quote,)*
-                    }
+        function_quote_vec_ident.push(quote! {
+            fn #function_name_ident(&self) #output {
+                match self {
+                   #(#variants_for_quote,)*
                 }
-            };
-        } else {
-            let function_return_type_ident = syn::Ident::new(&return_type, ident.span());
-            function_quote = quote! {
-                fn #function_name_ident(&self) -> #function_return_type_ident {
-                    match self {
-                       #(#variants_for_quote,)*
-                    }
-                }
-            };
-        }
-        function_quote_vec.push(function_quote);
+            }
+        });
     }
     let generated = quote! {
-        impl ProviderKindFromConfigTrait for #ident {
-            #(#function_quote_vec)*
+        impl #trait_name for #ident {
+            #(#function_quote_vec_ident)*
         }
     };
     generated.into()
