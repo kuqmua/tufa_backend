@@ -30,6 +30,7 @@ strum_macros = "0.21"
 itertools = "0.10.1"
 async-std = "1.10.0"
 convert_case = "0.4.0"
+thiserror = "1.0.30"
 enum_extention = { path = "./proc_macro_libs/enum_extention" }
 env_var_typed = { path = "./proc_macro_libs/env_var_typed" }
 provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }

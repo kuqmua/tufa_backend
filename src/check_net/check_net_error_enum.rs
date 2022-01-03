@@ -2,11 +2,17 @@ use diesel::prelude::ConnectionError;
 
 use reqwest::StatusCode;
 
-#[derive(Debug)]
+use thiserror::Error;
+
+#[derive(Error, Debug)]
 pub enum CheckNetError {
+    #[error("starting link code")]
     StartingLinkCode(Box<StatusCode>),
+    #[error("reqwest error")]
     ReqwestError(Box<reqwest::Error>),
+    #[error("postgres")]
     Postgres(Box<ConnectionError>),
+    #[error("mongo")]
     Mongo(Box<mongodb::error::Error>),
 }
 // impl From<Box<mongodb::error::Error>> for CheckNetError {
