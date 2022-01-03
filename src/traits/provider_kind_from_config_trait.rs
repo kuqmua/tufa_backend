@@ -11,7 +11,7 @@ pub trait ProviderKindFromConfigTrait {
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool;
 
-    fn check_link(&self) -> String;
+    fn check_link(&self) -> &'static str;
 
     fn is_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;

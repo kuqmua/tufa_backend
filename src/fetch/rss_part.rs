@@ -37,7 +37,7 @@ pub fn rss_part(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> (ProviderKind, Result<SuccessErrorTuple, RssPartError>) {
-    let check_link_result = check_link_status_code(&provider_kind.check_link());
+    let check_link_result = check_link_status_code(provider_kind.check_link());
     match check_link_result {
         Ok(status_code) => {
             if !StatusCode::is_success(&status_code) {

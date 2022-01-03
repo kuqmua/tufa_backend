@@ -71,7 +71,6 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             &name.to_string().to_case(Case::Snake).to_lowercase(),
             ident.span(),
         );
-        let function_return_type_ident = syn::Ident::new(&return_type, ident.span());
         let variants_for_quote = variants.iter().map(|f| {
             let variant_name = &f.ident;
             let config_field_name = syn::Ident::new(
@@ -82,24 +81,36 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                 ),
                 variant_name.span(),
             );
-            if function_return_type_ident == "String" {
+            if return_type == "&'static str" {
                 //coz "&'static str is not a valid identifier"
                 quote! {
-                    #ident::#variant_name => CONFIG.#config_field_name.clone()
+                    #ident::#variant_name => &CONFIG.#config_field_name
                 }
             } else {
                 quote! {
-                    #ident::#variant_name => CONFIG.#config_field_name
+                        #ident::#variant_name => CONFIG.#config_field_name
                 }
             }
         });
-        let function_quote = quote! {
-            fn #function_name_ident(&self) -> #function_return_type_ident {
-                match self {
-                   #(#variants_for_quote,)*
+        let function_quote;
+        if return_type == "&'static str" {
+            function_quote = quote! {
+                fn #function_name_ident(&self) -> &'static str {
+                    match self {
+                       #(#variants_for_quote,)*
+                    }
                 }
-            }
-        };
+            };
+        } else {
+            let function_return_type_ident = syn::Ident::new(&return_type, ident.span());
+            function_quote = quote! {
+                fn #function_name_ident(&self) -> #function_return_type_ident {
+                    match self {
+                       #(#variants_for_quote,)*
+                    }
+                }
+            };
+        }
         function_quote_vec.push(function_quote);
     }
     let generated = quote! {
