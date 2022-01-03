@@ -82,8 +82,15 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
                 ),
                 variant_name.span(),
             );
-            quote! {
-                #ident::#variant_name => CONFIG.#config_field_name
+            if function_return_type_ident == "String" {
+                //coz "&'static str is not a valid identifier"
+                quote! {
+                    #ident::#variant_name => CONFIG.#config_field_name.clone()
+                }
+            } else {
+                quote! {
+                    #ident::#variant_name => CONFIG.#config_field_name
+                }
             }
         });
         let function_quote = quote! {

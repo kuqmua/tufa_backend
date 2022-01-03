@@ -11,7 +11,7 @@ pub trait ProviderKindFromConfigTrait {
     fn is_write_error_logs_in_local_folder_enabled(&self) -> bool;
     fn is_cleaning_warning_logs_directory_enabled(&self) -> bool;
 
-    //here was check_link(&self) -> &'static str function but it was removed coz "&'static str is not a valid identifier" error. coz i need to borrow config value (for bool values - no need)
+    fn check_link(&self) -> String;
 
     fn is_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
