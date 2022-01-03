@@ -15,7 +15,7 @@ type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
 #[derive(Debug)]
 pub enum RssPartError {
-    ReqwestError(reqwest::Error),
+    ReqwestError(Box<reqwest::Error>),
     StatusCode(StatusCode),
 }
 // impl From<reqwest::Error> for RssPartError {
