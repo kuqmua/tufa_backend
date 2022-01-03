@@ -374,29 +374,8 @@ wrap blocking diesel function into spawn blocking under tokio runtime
 <br/>
 
 ### -------------------
-Write procedural macro to match two enum values
-For example i have enum with 3 elements and 2 elements
-enum enum1 {
-  1,
-  2,
-  3
-}
-fn match_case(enum2){
-  match enum2 {
-    1 => enum2::1,
-    2 => enum2::2
-  }
-}
-<br/>
-
-### -------------------
 Common projects constants as lazy static to reuse
 Them inside parent modules
-<br/>
-
-### -------------------
-function names, config fields and env var names - same naming for then (except upper case, snake case, camel case)
-for code generation
 <br/>
   
 ### -------------------
@@ -406,13 +385,6 @@ like
 Config {
   test_field: from_env!(test_field.to_upper_snake_case()) 
 }
-<br/>
-
-### -------------------
-rename functions/env vars names like function names
-right now its only working with enum variants named like config field names
-for provider kind enum - variant names did not written like config field names - must be 2 vectors with first and second part to add field name between 
-maybe do something with function name too? just to check naming
 <br/>
 
 ### -------------------
