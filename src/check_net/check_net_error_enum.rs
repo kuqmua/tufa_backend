@@ -9,24 +9,9 @@ pub enum CheckNetError {
     #[error("starting link code")]
     StartingLinkCode(Box<StatusCode>),
     #[error("reqwest error")]
-    ReqwestError(Box<reqwest::Error>),
-    #[error("postgres")]
+    ReqwestError(#[from] Box<reqwest::Error>),
+    #[error("CheckNetError: postgres connection error: {0:?}")]
     Postgres(Box<ConnectionError>),
     #[error("mongo")]
-    Mongo(Box<mongodb::error::Error>),
+    Mongo(#[from] Box<mongodb::error::Error>),
 }
-// impl From<Box<mongodb::error::Error>> for CheckNetError {
-//     fn from(e: Box<mongodb::error::Error>) -> Self {
-//         CheckNetError::Mongo { error: e }
-//     }
-// }
-// impl From<Box<ConnectionError>> for CheckNetError {
-//     fn from(e: Box<ConnectionError>) -> Self {
-//         CheckNetError::Postgres { error: e }
-//     }
-// }
-// impl From<Box<reqwest::Error>> for CheckNetError {
-//     fn from(e: Box<reqwest::Error>) -> Self {
-//         CheckNetError::ReqwestError { error: e }
-//     }
-// }

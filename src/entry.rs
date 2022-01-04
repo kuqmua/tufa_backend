@@ -40,7 +40,7 @@ pub fn entry() {
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
-            format!("check_net_wrapper error: {:#?}", e),
+            e.to_string(),
         );
         return;
     }
