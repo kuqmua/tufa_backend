@@ -32,6 +32,7 @@ async-std = "1.10.0"
 convert_case = "0.4.0"
 thiserror = "1.0.30"
 displaydoc = "0.2.3"
+box_err_from_err = { path = "./proc_macro_libs/box_err_from_err" }
 enum_extention = { path = "./proc_macro_libs/enum_extention" }
 env_var_typed = { path = "./proc_macro_libs/env_var_typed" }
 provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }
