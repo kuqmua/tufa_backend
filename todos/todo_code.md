@@ -396,3 +396,8 @@ its maybe bad practice but must work
 try SNAFU as error handling crate 
 https://crates.io/crates/snafu
 <br/>
+
+### -------------------
+how to write proc macro argument?
+for derive_box_err_from_err
+<br/>
