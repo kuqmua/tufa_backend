@@ -4,14 +4,14 @@ use reqwest::StatusCode;
 
 use thiserror::Error;
 
-#[derive(Error, Debug)]
+#[derive(Error, displaydoc::Display, Debug)]
 pub enum CheckNetError {
-    #[error("starting link code")]
+    ///starting link code
     StartingLinkCode(Box<StatusCode>),
-    #[error("reqwest error")]
+    ///reqwest error
     ReqwestError(#[from] Box<reqwest::Error>),
-    #[error("CheckNetError: postgres connection error: {0:?}")]
+    ///CheckNetError: postgres connection error: {0:?}"
     Postgres(Box<ConnectionError>),
-    #[error("mongo")]
+    ///mongo
     Mongo(#[from] Box<mongodb::error::Error>),
 }
