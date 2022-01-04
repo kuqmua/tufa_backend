@@ -4,15 +4,15 @@ use serde_json::Value;
 
 use crate::helpers::write_string_into_file::write_string_into_file;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[derive(thiserror::Error, Debug)]
 pub enum WriteJsonIntoFileError {
-    ///serde_json::to_string_pretty serde_json::Error error: `{0}`.
+    #[error("serde_json::to_string_pretty serde_json::Error error: `{0}`.")]
     SerdeJsonError(
         #[from]
         #[source]
         serde_json::Error,
     ),
-    ///write_string_into_file std::io::Error error: `{0}`.
+    #[error("write_string_into_file std::io::Error error: `{0}`.")]
     StdIoError(
         #[from]
         #[source]
