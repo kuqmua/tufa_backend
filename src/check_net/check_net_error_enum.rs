@@ -6,12 +6,12 @@ use thiserror::Error;
 
 #[derive(Error, displaydoc::Display, Debug)]
 pub enum CheckNetError {
-    ///starting link code
+    ///CheckNetError: StartingLinkCode: {0:?}
     StartingLinkCode(Box<StatusCode>),
-    ///reqwest error
+    ///CheckNetError: reqwest: {0:?}
     ReqwestError(#[from] Box<reqwest::Error>),
-    ///CheckNetError: postgres connection error: {0:?}"
+    ///CheckNetError: Postgres: {0:?}
     Postgres(Box<ConnectionError>),
-    ///mongo
+    ///CheckNetError: Mongo: {0:?}
     Mongo(#[from] Box<mongodb::error::Error>),
 }
