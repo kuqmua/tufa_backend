@@ -12,8 +12,16 @@ use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_net_wrapper() -> Result<(), Box<CheckNetError>> {
     //todo to it in parallel?
-    check_net_availability(&CONFIG.starting_check_link)?;
-    postgres_check_availability(&postgres_get_db_url())?;
-    mongo_check_availability(&mongo_get_db_url())?;
+    if let Err(e) = check_net_availability(&CONFIG.starting_check_link) {
+        return Err(Box::new(CheckNetError::CheckNetAvailabilityError {
+            source: e,
+        }));
+    }
+    if let Err(e) = postgres_check_availability(&postgres_get_db_url()) {
+        return Err(Box::new(CheckNetError::Postgres { source: e }));
+    }
+    if let Err(e) = mongo_check_availability(&mongo_get_db_url()) {
+        return Err(Box::new(CheckNetError::Mongo { source: e }));
+    }
     Ok(())
 }
