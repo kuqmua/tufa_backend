@@ -531,3 +531,28 @@ https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
 There are struct fields inside proc_macro_derive ast 
 maybe rewrite logic without creating enum
 <br/>
+
+
+### -------------------
+how to do error handling:
+
+pub struct Error(Box<ErrorImpl>);
+
+enum ErrorImpl {
+     EverythingWentBad,
+     Aaaaaaaaaaa,
+}
+
+if size_of::<ErrorImpl>() > size_of::<usize>() - its rare
+and it is assumed that errors are rare 
+and it is assumed that with such an error T inside Result<T, Error> 
+if this return true
+size_of::<ErrorImpl>() > size_of::<T>()... 
+then do Box<>
+
+example from serde_json
+https://github.com/serde-rs/json/blob/3f459308f5055e9a4b1b611a77dad07132011e8d/src/error.rs#L16-L19
+
+https://rust-lang.github.io/rust-clippy/master/index.html#large_enum_variant 
+linter for it big error enums
+<br/>
