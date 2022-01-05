@@ -3,5 +3,6 @@ members = [
     "box_err_from_err",
     "enum_extention",
     "env_var_typed",
+    "impl_display",
     "provider_kind_from_config"
 ]
