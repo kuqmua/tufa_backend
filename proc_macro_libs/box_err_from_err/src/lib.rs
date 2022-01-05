@@ -7,9 +7,8 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
     let ident = &ast.ident;
-    let data = &ast.data;
     let error_type_ident: Ident;
-    match data {
+    match &ast.data {
         syn::Data::Struct(data_struct) => match &data_struct.fields {
             syn::Fields::Unnamed(unnamed_field) => {
                 if unnamed_field.unnamed.len() != 1 {
@@ -18,8 +17,7 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                         unnamed_field.unnamed.len()
                     );
                 }
-                let field = &unnamed_field.unnamed[0];
-                match &field.ty {
+                match &unnamed_field.unnamed[0].ty {
                     syn::Type::Path(type_path) => {
                         if type_path.path.segments.len() != 1 {
                             panic!(
@@ -27,8 +25,7 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                                 type_path.path.segments.len()
                             );
                         }
-                        let path_segment = &type_path.path.segments[0];
-                        match &path_segment.arguments {
+                        match &type_path.path.segments[0].arguments {
                             syn::PathArguments::AngleBracketed(angle_bracketed_generic_arguments) => {
                                 if angle_bracketed_generic_arguments.args.len() != 1 {
                                     panic!(
@@ -36,8 +33,7 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                                         angle_bracketed_generic_arguments.args.len()
                                     );
                                 }
-                                let generic_argument = &angle_bracketed_generic_arguments.args[0];
-                                match generic_argument {
+                                match &angle_bracketed_generic_arguments.args[0] {
                                     syn::GenericArgument::Type(type_handle) => {
                                         match type_handle {
                                             syn::Type::Path(type_path) => {
