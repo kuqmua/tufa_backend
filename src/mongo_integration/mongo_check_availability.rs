@@ -6,7 +6,7 @@ use std::fmt;
 
 use mongodb::error::Error;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct MongoCheckAvailabilityError {
     /// mongo check availability error `{0}`
     #[source]

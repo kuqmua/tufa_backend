@@ -62,12 +62,6 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
         _ => panic!("data is not a Struct!"),
     }
     let gen = quote! {
-        impl fmt::Display for #ident {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                write!(f, "{}", self.source)
-            }
-        }
-
         impl From<#error_type_ident> for #ident {
             fn from(error: #error_type_ident) -> Self {
                 #ident {
