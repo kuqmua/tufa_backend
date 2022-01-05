@@ -556,3 +556,17 @@ https://github.com/serde-rs/json/blob/3f459308f5055e9a4b1b611a77dad07132011e8d/s
 https://rust-lang.github.io/rust-clippy/master/index.html#large_enum_variant 
 linter for it big error enums
 <br/>
+
+### -------------------
+while using Result<SomeType, SomeError>
+if size_of::<SomeError> > size_of::<Box<SomeError>> (i think its == usize (32 or 64))
+then using Box version will be allocation on runtime.
+so if errors will be inside loop or multiple parallel tasks
+program can allocate on runtime...
+the question IS: how many allocations program must do on runtime to slow down the program?
+what the difference between 
+*1 a little less stack size on runtime with possible allocations( with what % of execution time)
+*2 a bigger stack size without possible allocations on runtime
+so we need to implement 2 versions inside program
+and switch between them watching error allocation statistics
+<br/>
