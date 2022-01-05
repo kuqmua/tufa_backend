@@ -2,24 +2,10 @@ use std::fmt;
 
 use reqwest::Error;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct CheckLinkStatusCodeError {
     /// check link status code error `{0}`
     pub source: Box<Error>,
-}
-
-impl fmt::Display for CheckLinkStatusCodeError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-
-impl From<Error> for CheckLinkStatusCodeError {
-    fn from(error: Error) -> Self {
-        CheckLinkStatusCodeError {
-            source: Box::new(error),
-        }
-    }
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

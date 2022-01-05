@@ -1,24 +1,10 @@
 use reqwest::StatusCode;
 use std::fmt;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, ImplDisplayDerive)]
 pub struct StatusCodeError {
     /// check status code error `{0}`
     source: Box<StatusCodeWrapper>,
-}
-
-impl fmt::Display for StatusCodeError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-
-impl From<StatusCodeWrapper> for StatusCodeError {
-    fn from(error: StatusCodeWrapper) -> Self {
-        StatusCodeError {
-            source: Box::new(error),
-        }
-    }
 }
 
 #[derive(thiserror::Error, displaydoc::Display, Debug)]
