@@ -40,7 +40,7 @@ pub fn entry() {
             PrintType::WarningHigh,
             file!().to_string(),
             line!().to_string(),
-            e.to_string(),
+            format!("{:?}", e),
         );
         return;
     }
