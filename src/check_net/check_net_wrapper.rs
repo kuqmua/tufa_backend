@@ -14,29 +14,58 @@ use crate::check_net::check_net_availability::NetCheckAvailabilityError;
 
 use std::fmt;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive)]
-pub struct CheckNetWrapperError(Box<CheckNetError>);
+#[derive(thiserror::Error, displaydoc::Display, Debug)]
+pub struct CheckNetWrapperError {
+    /// check net wrapper error {var:?}
+    #[source]
+    pub source: Box<CheckNetError>,
+}
 
-#[derive(Debug)]
-enum CheckNetError {
-    CheckNetAvailabilityError(NetCheckAvailabilityError),
-    Postgres(PostgresCheckAvailabilityError),
-    Mongo(MongoCheckAvailabilityError),
+impl fmt::Display for CheckNetWrapperError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.source)
+    }
+}
+
+impl From<NetCheckAvailabilityError> for CheckNetWrapperError {
+    fn from(error: NetCheckAvailabilityError) -> Self {
+        CheckNetWrapperError {
+            source: Box::new(CheckNetError::NetCheckAvailabilityError(error)),
+        }
+    }
+}
+
+impl From<PostgresCheckAvailabilityError> for CheckNetWrapperError {
+    fn from(error: PostgresCheckAvailabilityError) -> Self {
+        CheckNetWrapperError {
+            source: Box::new(CheckNetError::PostgresCheckAvailabilityError(error)),
+        }
+    }
+}
+
+impl From<MongoCheckAvailabilityError> for CheckNetWrapperError {
+    fn from(error: MongoCheckAvailabilityError) -> Self {
+        CheckNetWrapperError {
+            source: Box::new(CheckNetError::MongoCheckAvailabilityError(error)),
+        }
+    }
+}
+
+#[derive(thiserror::Error, displaydoc::Display, Debug)]
+pub enum CheckNetError {
+    /// net check availability error {0:?}
+    NetCheckAvailabilityError(NetCheckAvailabilityError),
+    /// postgres check availability error {0:?}
+    PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
+    /// mongo check availability error {0:?}
+    MongoCheckAvailabilityError(MongoCheckAvailabilityError),
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
     //todo to it in parallel?
-    if let Err(e) = check_net_availability(&CONFIG.starting_check_link) {
-        return Err(CheckNetWrapperError(Box::new(
-            CheckNetError::CheckNetAvailabilityError(e),
-        )));
-    }
-    if let Err(e) = postgres_check_availability(&postgres_get_db_url()) {
-        return Err(CheckNetWrapperError(Box::new(CheckNetError::Postgres(e))));
-    }
-    if let Err(e) = mongo_check_availability(&mongo_get_db_url()) {
-        return Err(CheckNetWrapperError(Box::new(CheckNetError::Mongo(e))));
-    }
+    check_net_availability(&CONFIG.starting_check_link)?;
+    postgres_check_availability(&postgres_get_db_url())?;
+    mongo_check_availability(&mongo_get_db_url())?;
     Ok(())
 }
