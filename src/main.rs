@@ -1,4 +1,5 @@
 mod check_net {
+    pub mod check_is_status_code_successfull;
     pub mod check_link_status_code;
     pub mod check_net_availability;
     pub mod check_net_wrapper;
