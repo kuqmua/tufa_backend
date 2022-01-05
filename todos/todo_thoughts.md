@@ -569,4 +569,11 @@ what the difference between
 *2 a bigger stack size without possible allocations on runtime
 so we need to implement 2 versions inside program
 and switch between them watching error allocation statistics
+
+...also write different error types for allocation trottling cases
+and unefficiency stack-based version.
+like 
+big error version for lower allocation statistics
+small error (yeah with less info about error) version for high allocation statistics
+(in small version still allocate big error version from time to time - for more info)
 <br/>
