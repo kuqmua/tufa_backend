@@ -6,25 +6,11 @@ use std::fmt;
 
 use mongodb::error::Error;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive)]
 pub struct MongoCheckAvailabilityError {
     /// mongo check availability error `{0}`
     #[source]
     source: Box<Error>,
-}
-
-impl fmt::Display for MongoCheckAvailabilityError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.source)
-    }
-}
-
-impl From<mongodb::error::Error> for MongoCheckAvailabilityError {
-    fn from(error: mongodb::error::Error) -> Self {
-        MongoCheckAvailabilityError {
-            source: Box::new(error),
-        }
-    }
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

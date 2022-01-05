@@ -10,14 +10,14 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
     let error_type_ident: Ident;
     match &ast.data {
         syn::Data::Struct(data_struct) => match &data_struct.fields {
-            syn::Fields::Unnamed(unnamed_field) => {
-                if unnamed_field.unnamed.len() != 1 {
+            syn::Fields::Named(fields_named) => {
+                if fields_named.named.len() != 1 {
                     panic!(
-                        "unnamed_field.unnamed != 1, length is {}",
-                        unnamed_field.unnamed.len()
+                        "fields_named.named != 1, length is {}",
+                        fields_named.named.len()
                     );
                 }
-                match &unnamed_field.unnamed[0].ty {
+                match &fields_named.named[0].ty {
                     syn::Type::Path(type_path) => {
                         if type_path.path.segments.len() != 1 {
                             panic!(
@@ -26,14 +26,14 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                             );
                         }
                         match &type_path.path.segments[0].arguments {
-                            syn::PathArguments::AngleBracketed(angle_bracketed_generic_arguments) => {
-                                if angle_bracketed_generic_arguments.args.len() != 1 {
+                            syn::PathArguments::AngleBracketed(abga) => {
+                                if abga.args.len() != 1 {
                                     panic!(
-                                        "angle_bracketed_generic_arguments.args != 1, length is {}",
-                                        angle_bracketed_generic_arguments.args.len()
+                                        "abga.args != 1, length is {}",
+                                        abga.args.len()
                                     );
                                 }
-                                match &angle_bracketed_generic_arguments.args[0] {
+                                match &abga.args[0] {
                                     syn::GenericArgument::Type(type_handle) => {
                                         match type_handle {
                                             syn::Type::Path(type_path) => {
@@ -48,16 +48,16 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                                             _ => panic!("type_handle is not a syn::Type::Path!"),
                                         }
                                     },
-                                    _ => panic!("generic_argument is not a syn::GenericArgument::Type!"),
+                                    _ => panic!("abga.args[0] is not a syn::GenericArgument::Type!"),
                                 }
                             },
-                            _ => panic!("path_segment.arguments is not a syn::PathArguments::AngleBracketed!"),
+                            _ => panic!("type_path.path.segments[0].arguments is not a syn::PathArguments::AngleBracketed!"),
                         }
                     }
-                    _ => panic!("field.ty is not a syn::Type::Path!"),
+                    _ => panic!("fields_named.named[0].ty is not a syn::Type::Path!"),
                 }
             }
-            _ => panic!("data_struct.fields is not a syn::Fields::Unnamed!"),
+            _ => panic!("data_struct.fields is not a syn::Fields::Named!"),
         },
         _ => panic!("data is not a Struct!"),
     }
@@ -70,7 +70,9 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
 
         impl From<#error_type_ident> for #ident {
             fn from(error: #error_type_ident) -> Self {
-                #ident(Box::new(error))
+                #ident {
+                    source: Box::new(error),
+                }
             }
         }
     };
