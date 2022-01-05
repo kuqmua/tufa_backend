@@ -1,7 +1,11 @@
 use reqwest::StatusCode;
+use std::fmt;
 
-#[derive(Debug)]
-pub struct StatusCodeError(Box<StatusCode>);
+#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive)]
+pub struct StatusCodeError(
+    /// check link status code error `{0}`
+    Box<StatusCode>,
+);
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_is_status_code_successfull(status_code: StatusCode) -> Result<(), StatusCodeError> {
