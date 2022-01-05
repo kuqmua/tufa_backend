@@ -1,6 +1,7 @@
 use reqwest::StatusCode;
 
 use crate::check_net::check_link_status_code::check_link_status_code;
+use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_fetch_and_parse_provider_data::rss_fetch_and_parse_provider_data;
@@ -15,7 +16,7 @@ type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
 #[derive(Debug)]
 pub enum RssPartError {
-    ReqwestError(Box<reqwest::Error>),
+    CheckLinkStatusCode(CheckLinkStatusCodeError),
     StatusCode(StatusCode),
 }
 // impl From<reqwest::Error> for RssPartError {
@@ -51,6 +52,6 @@ pub fn rss_part(
                 )),
             )
         }
-        Err(e) => (provider_kind, Err(RssPartError::ReqwestError(e))),
+        Err(e) => (provider_kind, Err(RssPartError::CheckLinkStatusCode(e))),
     }
 }

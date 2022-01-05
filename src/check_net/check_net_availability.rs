@@ -1,43 +1,31 @@
 use std::fmt;
 
 use crate::check_net::check_link_status_code::check_link_status_code;
+use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 
-use reqwest::StatusCode;
+use crate::check_net::check_is_status_code_successfull::check_is_status_code_successfull;
+use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
-pub enum CheckNetAvailabilityError {
-    ///CheckNetAvailabilityError: reqwest: {source:?}
-    ReqwestError { source: Box<reqwest::Error> },
-    ///CheckNetAvailabilityError: StatusCode: {source:?}
-    StatusCode { source: StatusCodeError },
-}
+#[derive(displaydoc::Display, Debug, BoxErrFromErrDerive)]
+pub struct NetCheckAvailabilityError(Box<CheckNetAvailabilityError>);
 
 #[derive(Debug)]
-pub struct StatusCodeError {
-    pub status_code: StatusCode,
-}
-
-impl std::error::Error for StatusCodeError {}
-
-impl fmt::Display for StatusCodeError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "StatusCodeError error")
-    }
+enum CheckNetAvailabilityError {
+    ReqwestError(CheckLinkStatusCodeError),
+    StatusCode(StatusCodeError),
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityError>> {
+pub fn check_net_availability(link: &str) -> Result<(), NetCheckAvailabilityError> {
     match check_link_status_code(link) {
-        Err(e) => Err(Box::new(CheckNetAvailabilityError::ReqwestError {
-            source: e,
-        })),
-        Ok(status_code) => {
-            if !StatusCode::is_success(&status_code) {
-                return Err(Box::new(CheckNetAvailabilityError::StatusCode {
-                    source: StatusCodeError { status_code },
-                }));
-            }
-            Ok(())
-        }
+        Err(e) => Err(NetCheckAvailabilityError(Box::new(
+            CheckNetAvailabilityError::ReqwestError(e),
+        ))),
+        Ok(status_code) => match check_is_status_code_successfull(status_code) {
+            Err(e) => Err(NetCheckAvailabilityError(Box::new(
+                CheckNetAvailabilityError::StatusCode(e),
+            ))),
+            Ok(_) => Ok(()),
+        },
     }
 }
