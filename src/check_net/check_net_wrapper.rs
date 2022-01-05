@@ -16,9 +16,9 @@ use std::fmt;
 
 #[derive(thiserror::Error, displaydoc::Display, Debug)]
 pub struct CheckNetWrapperError {
-    /// check net wrapper error {var:?}
+    /// check net wrapper error {source:?}
     #[source]
-    pub source: Box<CheckNetError>,
+    pub source: Box<CheckNetWrapperErrorEnum>,
 }
 
 impl fmt::Display for CheckNetWrapperError {
@@ -30,7 +30,7 @@ impl fmt::Display for CheckNetWrapperError {
 impl From<NetCheckAvailabilityError> for CheckNetWrapperError {
     fn from(error: NetCheckAvailabilityError) -> Self {
         CheckNetWrapperError {
-            source: Box::new(CheckNetError::NetCheckAvailabilityError(error)),
+            source: Box::new(CheckNetWrapperErrorEnum::NetCheckAvailabilityError(error)),
         }
     }
 }
@@ -38,7 +38,9 @@ impl From<NetCheckAvailabilityError> for CheckNetWrapperError {
 impl From<PostgresCheckAvailabilityError> for CheckNetWrapperError {
     fn from(error: PostgresCheckAvailabilityError) -> Self {
         CheckNetWrapperError {
-            source: Box::new(CheckNetError::PostgresCheckAvailabilityError(error)),
+            source: Box::new(CheckNetWrapperErrorEnum::PostgresCheckAvailabilityError(
+                error,
+            )),
         }
     }
 }
@@ -46,13 +48,13 @@ impl From<PostgresCheckAvailabilityError> for CheckNetWrapperError {
 impl From<MongoCheckAvailabilityError> for CheckNetWrapperError {
     fn from(error: MongoCheckAvailabilityError) -> Self {
         CheckNetWrapperError {
-            source: Box::new(CheckNetError::MongoCheckAvailabilityError(error)),
+            source: Box::new(CheckNetWrapperErrorEnum::MongoCheckAvailabilityError(error)),
         }
     }
 }
 
 #[derive(thiserror::Error, displaydoc::Display, Debug)]
-pub enum CheckNetError {
+pub enum CheckNetWrapperErrorEnum {
     /// net check availability error {0:?}
     NetCheckAvailabilityError(NetCheckAvailabilityError),
     /// postgres check availability error {0:?}

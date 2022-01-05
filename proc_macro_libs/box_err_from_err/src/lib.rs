@@ -64,7 +64,7 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
     let gen = quote! {
         impl fmt::Display for #ident {
             fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                write!(f, "dont know what to write inside impl fmt::Display")
+                write!(f, "{}", self.source)
             }
         }
 
