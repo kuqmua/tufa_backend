@@ -3,7 +3,7 @@ use std::fmt;
 
 #[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive)]
 pub struct StatusCodeError(
-    /// check link status code error `{0}`
+    /// check status code error `{0}`
     Box<StatusCode>,
 );
 
