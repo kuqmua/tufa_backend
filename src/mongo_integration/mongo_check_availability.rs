@@ -1,10 +1,9 @@
+use mongodb::error::Error;
 use mongodb::{options::ClientOptions, Client};
-
-use crate::config_mods::lazy_static_config::CONFIG;
 
 use std::fmt;
 
-use mongodb::error::Error;
+use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct MongoCheckAvailabilityError {
