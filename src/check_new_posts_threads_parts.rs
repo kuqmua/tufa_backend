@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::thread;
-use std::thread::JoinHandle;
 
 use std::sync::{Arc, Mutex};
 
@@ -15,10 +14,16 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
-use crate::helpers::resource::ResourceError;
+use crate::helpers::resource::Resource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[derive(Debug)]
+pub enum ResourceError {
+    NoLinkParts(Resource),
+    Other,
+}
+
+#[deny(clippy::indexing_slicing)]
 pub async fn check_new_posts_threads_parts(
     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<
@@ -28,17 +33,13 @@ pub async fn check_new_posts_threads_parts(
     )>,
     ResourceError,
 > {
-    let mut threads_vec: Vec<JoinHandle<()>> =
-        Vec::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
-    let mut threads_vec_checker =
-        Vec::<bool>::with_capacity(ProviderKind::get_enabled_string_name_vec().len());
-    let posts_and_errors = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len()); //todo: with_capacity
+    let mut threads_vec = Vec::with_capacity(providers_link_parts.len());
+    let posts_and_errors = Vec::with_capacity(providers_link_parts.len()); //todo: with_capacity
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
     //check if provider_names are unique
     for (provider_kind, link_parts) in providers_link_parts {
         let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
         let vec_of_provider_links = provider_kind.generate_provider_links(link_parts.to_vec());
-        threads_vec_checker.push(true);
         if vec_of_provider_links.is_empty() {
             print_colorful_message(
                 Some(&provider_kind),
@@ -57,63 +58,32 @@ pub async fn check_new_posts_threads_parts(
             }));
         }
     }
-    for (index, thread_vec) in threads_vec.into_iter().enumerate() {
-        match thread_vec.join() {
-            Ok(_) => {}
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("thread_vec.join() error: {:#?}", e),
-                );
-                let option_element = threads_vec_checker.get_mut(index);
-                match option_element {
-                    Some(element) => {
-                        *element = false;
-                    }
-                    None => {
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
-                            "threads_vec_checker.get_mut(index) is None".to_string(),
-                        );
-                    }
-                }
-            }
+    for thread_vec in threads_vec {
+        thread_vec.join().unwrap();
+    }
+    let posts_and_errors_to_return: Vec<(
+        ProviderKind,
+        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+    )>;
+    // let error_posts_done: Vec<PostErrorVariant>;
+    match posts_and_errors_arc_mutex.lock() {
+        Ok(mut ok_posts_and_errors) => {
+            posts_and_errors_to_return = ok_posts_and_errors.drain(..).collect();
+        }
+        Err(e) => {
+            posts_and_errors_to_return = Vec::new(); //todo - why we need this?
+            print_colorful_message(
+                None,
+                PrintType::Error,
+                file!().to_string(),
+                line!().to_string(),
+                format!("posts.lock() error: {:#?}", e),
+            );
         }
     }
-    let is_all_elelements_false = &threads_vec_checker.iter().all(|&item| !item);
-    if *is_all_elelements_false {
-        Ok(Vec::new())
+    if posts_and_errors_to_return.is_empty() {
+        Ok(Vec::new()) //todo - it must be not an option
     } else {
-        let posts_and_errors_to_return: Vec<(
-            ProviderKind,
-            Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-        )>;
-        // let error_posts_done: Vec<PostErrorVariant>;
-        match posts_and_errors_arc_mutex.lock() {
-            Ok(mut ok_posts_and_errors) => {
-                posts_and_errors_to_return = ok_posts_and_errors.drain(..).collect();
-            }
-            Err(e) => {
-                posts_and_errors_to_return = Vec::new(); //todo - why we need this?
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("posts.lock() error: {:#?}", e),
-                );
-            }
-        }
-        if posts_and_errors_to_return.is_empty() {
-            Ok(Vec::new()) //todo - it must be not an option
-        } else {
-            Ok(posts_and_errors_to_return)
-        }
+        Ok(posts_and_errors_to_return)
     }
 }
