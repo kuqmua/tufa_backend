@@ -1,6 +1,9 @@
+use std::fmt;
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::check_net::check_net_availability::check_net_availability;
+use crate::check_net::check_net_availability::CheckNetAvailabilityError;
 
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
@@ -10,10 +13,6 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
-use crate::check_net::check_net_availability::CheckNetAvailabilityError;
-
-use std::fmt;
-
 #[derive(thiserror::Error, displaydoc::Display, Debug, ImplDisplayDerive)]
 pub struct CheckNetWrapperError {
     /// check net wrapper error {source:?}
@@ -21,36 +20,11 @@ pub struct CheckNetWrapperError {
     pub source: Box<CheckNetWrapperErrorEnum>,
 }
 
-impl From<CheckNetAvailabilityError> for CheckNetWrapperError {
-    fn from(error: CheckNetAvailabilityError) -> Self {
-        CheckNetWrapperError {
-            source: Box::new(CheckNetWrapperErrorEnum::NetCheckAvailabilityError(error)),
-        }
-    }
-}
-
-impl From<PostgresCheckAvailabilityError> for CheckNetWrapperError {
-    fn from(error: PostgresCheckAvailabilityError) -> Self {
-        CheckNetWrapperError {
-            source: Box::new(CheckNetWrapperErrorEnum::PostgresCheckAvailabilityError(
-                error,
-            )),
-        }
-    }
-}
-
-impl From<MongoCheckAvailabilityError> for CheckNetWrapperError {
-    fn from(error: MongoCheckAvailabilityError) -> Self {
-        CheckNetWrapperError {
-            source: Box::new(CheckNetWrapperErrorEnum::MongoCheckAvailabilityError(error)),
-        }
-    }
-}
-
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[allow(clippy::enum_variant_names)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, ImplFromForUpperStruct)]
 pub enum CheckNetWrapperErrorEnum {
     /// net check availability error {0:?}
-    NetCheckAvailabilityError(CheckNetAvailabilityError),
+    CheckNetAvailabilityError(CheckNetAvailabilityError),
     /// postgres check availability error {0:?}
     PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
     /// mongo check availability error {0:?}
