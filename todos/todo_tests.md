@@ -42,3 +42,8 @@ Right test what parse repo code and check what each function returns some type o
 ### -------------------
 create big json file to test parsing speed as test
 <br/>
+
+
+### -------------------
+test for all env var to working and usage
+<br/>
