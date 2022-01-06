@@ -26,18 +26,25 @@ pub enum RssPartErrorEnum {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn rss_part(
+pub async fn rss_part(
     provider_kind: ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> Result<SuccessErrorTuple, RssPartError> {
-    let status_code = check_link_status_code(provider_kind.check_link())?;
-    if !StatusCode::is_success(&status_code) {
-        return Err(RssPartError {
-            source: Box::new(RssPartErrorEnum::StatusCode(status_code)),
-        });
+    // let status_code = check_link_status_code(provider_kind.check_link())?;
+    let result = reqwest::get("https://www.rust-lang.org").await;
+    match result {
+        Err(_) => todo!(),
+        Ok(response) => {
+            let status_code = response.status();
+            if !StatusCode::is_success(&status_code) {
+                return Err(RssPartError {
+                    source: Box::new(RssPartErrorEnum::StatusCode(status_code)),
+                });
+            }
+            Ok(rss_filter_fetched_and_parsed_posts(
+                rss_fetch_and_parse_provider_data(vec_of_provider_links, provider_kind),
+                provider_kind,
+            ))
+        }
     }
-    Ok(rss_filter_fetched_and_parsed_posts(
-        rss_fetch_and_parse_provider_data(vec_of_provider_links, provider_kind),
-        provider_kind,
-    ))
 }

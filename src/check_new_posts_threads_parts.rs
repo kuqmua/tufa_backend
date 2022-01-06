@@ -44,7 +44,8 @@ pub async fn check_new_posts_threads_parts(
                     provider_kind,
                     vec_of_provider_links,
                     posts_and_errors_handle_arc,
-                );
+                )
+                .await;
             }));
         }
     }
