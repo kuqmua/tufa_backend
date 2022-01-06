@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt;
 
 use futures::future::join_all;
 
@@ -14,8 +15,14 @@ use mongodb::{
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
+#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+pub struct InitMongoError {
+    /// check link status code error `{0}`
+    pub source: Box<InitMongoErrorEnum>,
+}
+
 #[derive(Debug)]
-pub enum MongoInitDbError {
+pub enum InitMongoErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
     CollectionCountDocuments((ProviderKind, mongodb::error::Error)),
@@ -26,13 +33,17 @@ pub enum MongoInitDbError {
 #[deny(clippy::indexing_slicing)]
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), MongoInitDbError> {
+) -> Result<(), InitMongoError> {
     let client_options_result = ClientOptions::parse(&mongo_get_db_url()).await;
     match client_options_result {
-        Err(e) => Err(MongoInitDbError::ClientOptionsParse(e)),
+        Err(e) => Err(InitMongoError {
+            source: Box::new(InitMongoErrorEnum::ClientOptionsParse(e)),
+        }),
         Ok(client_options) => {
             match Client::with_options(client_options) {
-                Err(e) => Err(MongoInitDbError::ClientWithOptions(e)),
+                Err(e) => Err(InitMongoError {
+                    source: Box::new(InitMongoErrorEnum::ClientWithOptions(e)),
+                }),
                 Ok(client) => {
                     let db = client.database(&CONFIG.mongo_providers_logs_db_name); //<- todo this is incorrect name
                     let mut vec_of_futures =
@@ -52,14 +63,19 @@ pub async fn init_mongo(
                         match result {
                             //todo filter
                             Err(e) => {
-                                return Err(MongoInitDbError::CollectionCountDocuments((pk, e)))
+                                return Err(InitMongoError {
+                                    source: Box::new(InitMongoErrorEnum::CollectionCountDocuments(
+                                        (pk, e),
+                                    )),
+                                })
                             }
                             Ok(documents_number) => {
                                 if documents_number > 0 {
-                                    return Err(MongoInitDbError::CollectionIsNotEmpty((
-                                        pk,
-                                        documents_number,
-                                    )));
+                                    return Err(InitMongoError {
+                                        source: Box::new(InitMongoErrorEnum::CollectionIsNotEmpty(
+                                            (pk, documents_number),
+                                        )),
+                                    });
                                 }
                             }
                         }
@@ -78,7 +94,9 @@ pub async fn init_mongo(
                     //todo: db partially initialized, print some warning
                     for (pk, result) in result_vec {
                         if let Err(e) = result {
-                            return Err(MongoInitDbError::CollectionInsertMany((pk, e)));
+                            return Err(InitMongoError {
+                                source: Box::new(InitMongoErrorEnum::CollectionInsertMany((pk, e))),
+                            });
                         }
                     }
                     Ok(())

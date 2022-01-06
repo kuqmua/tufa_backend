@@ -7,7 +7,8 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 
 use crate::init_dbs_logic::init_mongo::init_mongo;
-use crate::init_dbs_logic::init_mongo::MongoInitDbError;
+// use crate::init_dbs_logic::init_mongo::InitMongoError;
+use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitDbError;
@@ -52,24 +53,22 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                 }
             );
             if let Some(Err(err)) = mongo_insert_data_option_result {
-                match err {
-                    MongoInitDbError::ClientOptionsParse(e) => {
-                        return Err(InitDbsError::MongoClientOptionsParse(e))
+                let source = err.source;
+                match *source {
+                    InitMongoErrorEnum::ClientOptionsParse(mongo_err) => {
+                        return Err(InitDbsError::MongoClientOptionsParse(mongo_err));
                     }
-                    MongoInitDbError::ClientWithOptions(e) => {
-                        return Err(InitDbsError::MongoClientWithOptions(e))
+                    InitMongoErrorEnum::ClientWithOptions(mongo_err) => {
+                        return Err(InitDbsError::MongoClientWithOptions(mongo_err));
                     }
-                    MongoInitDbError::CollectionCountDocuments((pk, e)) => {
-                        return Err(InitDbsError::MongoCollectionCountDocuments((pk, e)))
+                    InitMongoErrorEnum::CollectionCountDocuments((pk, mongo_err)) => {
+                        return Err(InitDbsError::MongoCollectionCountDocuments((pk, mongo_err)));
                     }
-                    MongoInitDbError::CollectionIsNotEmpty((pk, documents_number)) => {
-                        return Err(InitDbsError::MongoCollectionIsNotEmpty((
-                            pk,
-                            documents_number,
-                        )))
+                    InitMongoErrorEnum::CollectionIsNotEmpty((pk, length)) => {
+                        return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, length)));
                     }
-                    MongoInitDbError::CollectionInsertMany((pk, e)) => {
-                        return Err(InitDbsError::MongoCollectionInsertMany((pk, e)))
+                    InitMongoErrorEnum::CollectionInsertMany((pk, mongo_err)) => {
+                        return Err(InitDbsError::MongoCollectionInsertMany((pk, mongo_err)));
                     }
                 }
             }
