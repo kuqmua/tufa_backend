@@ -14,7 +14,7 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 //todo: think about naming
 type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
-#[derive(displaydoc::Display, Debug, BoxErrFromErrDerive)]
+#[derive(Debug, BoxErrFromErrDerive)]
 pub struct RssPartError {
     pub source: Box<RssPartErrorEnum>,
 }

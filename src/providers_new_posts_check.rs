@@ -1,10 +1,8 @@
-use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
-use crate::fetch::rss_part::{rss_part, RssPartError};
-
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-// use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
+use crate::fetch::rss_part::{rss_part, RssPartError};
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

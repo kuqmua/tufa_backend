@@ -4,7 +4,7 @@ use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 use crate::check_net::check_is_status_code_successfull::check_is_status_code_successfull;
 use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 
-#[derive(displaydoc::Display, Debug, BoxErrFromErrDerive)]
+#[derive(Debug, BoxErrFromErrDerive)]
 pub struct CheckNetAvailabilityError {
     pub source: Box<CheckNetAvailabilityErrorEnum>,
 }
