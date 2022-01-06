@@ -36,15 +36,4 @@ pub fn check_net_availability(link: &str) -> Result<(), NetCheckAvailabilityErro
     let status_code = check_link_status_code(link)?;
     check_is_status_code_successfull(status_code)?;
     Ok(())
-    // match check_link_status_code(link) {
-    //     Err(e) => Err(NetCheckAvailabilityError {
-    //         source: Box::new(CheckNetAvailabilityError::CheckLinkStatusCodeError(e)),
-    //     }),
-    //     Ok(status_code) => match check_is_status_code_successfull(status_code) {
-    //         Err(e) => Err(NetCheckAvailabilityError {
-    //             source: Box::new(CheckNetAvailabilityError::StatusCodeError(e)),
-    //         }),
-    //         Ok(_) => Ok(()),
-    //     },
-    // }
 }

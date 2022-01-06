@@ -14,17 +14,11 @@ use crate::check_net::check_net_availability::NetCheckAvailabilityError;
 
 use std::fmt;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug)]
+#[derive(thiserror::Error, displaydoc::Display, Debug, ImplDisplayDerive)]
 pub struct CheckNetWrapperError {
     /// check net wrapper error {source:?}
     #[source]
     pub source: Box<CheckNetWrapperErrorEnum>,
-}
-
-impl fmt::Display for CheckNetWrapperError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.source)
-    }
 }
 
 impl From<NetCheckAvailabilityError> for CheckNetWrapperError {

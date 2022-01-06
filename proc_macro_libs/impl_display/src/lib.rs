@@ -9,7 +9,7 @@ pub fn derive_impl_display(input: TokenStream) -> TokenStream {
     let gen = quote! {
         impl fmt::Display for #ident {
             fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                write!(f, "{:?}", self.source)
+                write!(f, "{:?}", self)
             }
         }
     };
