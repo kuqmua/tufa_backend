@@ -34,26 +34,6 @@ pub fn entry() {
         );
         return;
     }
-    if let Err(e) = check_net_wrapper() {
-        print_colorful_message(
-            None,
-            PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
-            format!("{}", e),
-        );
-        return;
-    }
-    print_colorful_message(
-        None,
-        PrintType::TimeMeasurement,
-        file!().to_string(),
-        line!().to_string(),
-        format!(
-            "preparation done in {} seconds, starting tokio runtime...",
-            time.elapsed().as_secs()
-        ),
-    );
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(cpus)
         .enable_all()
@@ -70,6 +50,23 @@ pub fn entry() {
             return;
         }
         Ok(runtime) => {
+            if let Err(e) = runtime.block_on(check_net_wrapper()) {
+                print_colorful_message(
+                    None,
+                    PrintType::WarningHigh,
+                    file!().to_string(),
+                    line!().to_string(),
+                    format!("{}", e),
+                );
+                return;
+            }
+            print_colorful_message(
+                None,
+                PrintType::TimeMeasurement,
+                file!().to_string(),
+                line!().to_string(),
+                format!("preparation done in {} seconds", time.elapsed().as_secs()),
+            );
             if CONFIG.dbs_enable_initialization {
                 if !CONFIG.is_mongo_initialization_enabled
                     && !CONFIG.is_postgres_initialization_enabled

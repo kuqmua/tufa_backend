@@ -9,7 +9,9 @@ pub struct CheckLinkStatusCodeError {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_link_status_code(link: &str) -> Result<reqwest::StatusCode, CheckLinkStatusCodeError> {
-    let res = reqwest::blocking::Client::head(&reqwest::blocking::Client::new(), link).send()?;
+pub async fn check_link_status_code(
+    link: &str,
+) -> Result<reqwest::StatusCode, CheckLinkStatusCodeError> {
+    let res = reqwest::get(link).await?;
     Ok(res.status())
 }

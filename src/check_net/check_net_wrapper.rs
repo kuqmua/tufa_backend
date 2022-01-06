@@ -35,9 +35,9 @@ pub enum CheckNetWrapperErrorEnum {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
+pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
     //todo to it in parallel? no point for this yet coz dont know what db to use
-    check_net_availability(&CONFIG.starting_check_link)?;
+    check_net_availability(&CONFIG.starting_check_link).await?;
     print_colorful_message(
         None,
         PrintType::Info,
@@ -53,6 +53,6 @@ pub fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
         line!().to_string(),
         "starting check mongo availability... ".to_owned(),
     );
-    mongo_check_availability(&mongo_get_db_url())?;
+    mongo_check_availability(&mongo_get_db_url()).await?;
     Ok(())
 }

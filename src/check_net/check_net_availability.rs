@@ -16,8 +16,8 @@ pub enum CheckNetAvailabilityErrorEnum {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_net_availability(link: &str) -> Result<(), CheckNetAvailabilityError> {
-    let status_code = check_link_status_code(link)?;
+pub async fn check_net_availability(link: &str) -> Result<(), CheckNetAvailabilityError> {
+    let status_code = check_link_status_code(link).await?;
     check_is_status_code_successfull(status_code)?;
     Ok(())
 }
