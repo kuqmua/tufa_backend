@@ -25,7 +25,7 @@ pub fn providers_new_posts_check(
     >,
 ) {
     let result = rss_part(provider_kind, vec_of_provider_links);
-    match result.1 {
+    match result {
         Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
             //maybe do it in parrallel? success and error posts
             //todo: try to lock few times

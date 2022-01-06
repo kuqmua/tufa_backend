@@ -36,7 +36,7 @@ pub enum CheckNetWrapperErrorEnum {
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
-    //todo to it in parallel?
+    //todo to it in parallel? no point for this yet coz dont know what db to use
     check_net_availability(&CONFIG.starting_check_link)?;
     print_colorful_message(
         None,
