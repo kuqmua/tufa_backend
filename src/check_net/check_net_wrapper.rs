@@ -10,7 +10,7 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
-use crate::check_net::check_net_availability::NetCheckAvailabilityError;
+use crate::check_net::check_net_availability::CheckNetAvailabilityError;
 
 use std::fmt;
 
@@ -21,8 +21,8 @@ pub struct CheckNetWrapperError {
     pub source: Box<CheckNetWrapperErrorEnum>,
 }
 
-impl From<NetCheckAvailabilityError> for CheckNetWrapperError {
-    fn from(error: NetCheckAvailabilityError) -> Self {
+impl From<CheckNetAvailabilityError> for CheckNetWrapperError {
+    fn from(error: CheckNetAvailabilityError) -> Self {
         CheckNetWrapperError {
             source: Box::new(CheckNetWrapperErrorEnum::NetCheckAvailabilityError(error)),
         }
@@ -50,7 +50,7 @@ impl From<MongoCheckAvailabilityError> for CheckNetWrapperError {
 #[derive(thiserror::Error, displaydoc::Display, Debug)]
 pub enum CheckNetWrapperErrorEnum {
     /// net check availability error {0:?}
-    NetCheckAvailabilityError(NetCheckAvailabilityError),
+    NetCheckAvailabilityError(CheckNetAvailabilityError),
     /// postgres check availability error {0:?}
     PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
     /// mongo check availability error {0:?}
