@@ -38,22 +38,14 @@ pub async fn check_new_posts_threads_parts(
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
     //check if provider_names are unique
     for (provider_kind, link_parts) in providers_link_parts {
-        let posts_and_errors_handle = Arc::clone(&posts_and_errors_arc_mutex);
-        let vec_of_provider_links = provider_kind.generate_provider_links(link_parts.to_vec());
-        if vec_of_provider_links.is_empty() {
-            print_colorful_message(
-                Some(&provider_kind),
-                PrintType::WarningLow,
-                file!().to_string(),
-                line!().to_string(),
-                format!("vec_of_provider_links.is_empty for {:?}", provider_kind),
-            );
-        } else {
+        if !link_parts.is_empty() {
+            let posts_and_errors_handle_arc = Arc::clone(&posts_and_errors_arc_mutex);
+            let vec_of_provider_links = provider_kind.generate_provider_links(link_parts);
             threads_vec.push(thread::spawn(move || {
                 providers_new_posts_check(
                     provider_kind,
                     vec_of_provider_links,
-                    posts_and_errors_handle,
+                    posts_and_errors_handle_arc,
                 );
             }));
         }
@@ -61,29 +53,10 @@ pub async fn check_new_posts_threads_parts(
     for thread_vec in threads_vec {
         thread_vec.join().unwrap();
     }
-    let posts_and_errors_to_return: Vec<(
-        ProviderKind,
-        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
-    )>;
-    // let error_posts_done: Vec<PostErrorVariant>;
-    match posts_and_errors_arc_mutex.lock() {
-        Ok(mut ok_posts_and_errors) => {
-            posts_and_errors_to_return = ok_posts_and_errors.drain(..).collect();
-        }
-        Err(e) => {
-            posts_and_errors_to_return = Vec::new(); //todo - why we need this?
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
-                format!("posts.lock() error: {:#?}", e),
-            );
-        }
-    }
-    if posts_and_errors_to_return.is_empty() {
-        Ok(Vec::new()) //todo - it must be not an option
-    } else {
-        Ok(posts_and_errors_to_return)
-    }
+    let posts_and_errors_to_return = posts_and_errors_arc_mutex
+        .lock()
+        .unwrap()
+        .drain(..)
+        .collect();
+    Ok(posts_and_errors_to_return)
 }
