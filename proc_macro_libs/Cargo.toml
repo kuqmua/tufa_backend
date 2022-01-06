@@ -4,5 +4,6 @@ members = [
     "enum_extention",
     "env_var_typed",
     "impl_display",
+    "impl_from_for_upper_struct",
     "provider_kind_from_config"
 ]
