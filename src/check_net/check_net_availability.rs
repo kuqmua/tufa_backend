@@ -9,25 +9,7 @@ pub struct CheckNetAvailabilityError {
     pub source: Box<CheckNetAvailabilityErrorEnum>,
 }
 
-impl From<CheckLinkStatusCodeError> for CheckNetAvailabilityError {
-    fn from(error: CheckLinkStatusCodeError) -> Self {
-        CheckNetAvailabilityError {
-            source: Box::new(CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError(
-                error,
-            )),
-        }
-    }
-}
-
-impl From<StatusCodeError> for CheckNetAvailabilityError {
-    fn from(error: StatusCodeError) -> Self {
-        CheckNetAvailabilityError {
-            source: Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError(error)),
-        }
-    }
-}
-
-#[derive(Debug)]
+#[derive(Debug, ImplFromForUpperStruct)]
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError(CheckLinkStatusCodeError),
     StatusCodeError(StatusCodeError),
