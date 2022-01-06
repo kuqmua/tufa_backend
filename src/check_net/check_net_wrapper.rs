@@ -13,6 +13,9 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
+
 #[derive(thiserror::Error, displaydoc::Display, Debug, ImplDisplayDerive)]
 pub struct CheckNetWrapperError {
     /// check net wrapper error {source:?}
@@ -35,7 +38,21 @@ pub enum CheckNetWrapperErrorEnum {
 pub fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
     //todo to it in parallel?
     check_net_availability(&CONFIG.starting_check_link)?;
+    print_colorful_message(
+        None,
+        PrintType::Info,
+        file!().to_string(),
+        line!().to_string(),
+        "starting check postgres availability... ".to_owned(),
+    );
     postgres_check_availability(&postgres_get_db_url())?;
+    print_colorful_message(
+        None,
+        PrintType::Info,
+        file!().to_string(),
+        line!().to_string(),
+        "starting check mongo availability... ".to_owned(),
+    );
     mongo_check_availability(&mongo_get_db_url())?;
     Ok(())
 }
