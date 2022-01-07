@@ -9,13 +9,13 @@ use crate::{
     config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
 };
 
-use crate::providers::provider_kind_enum::ProviderKind;
-
 use mongodb::{
     bson::{doc, Document},
     options::ClientOptions,
     Client,
 };
+
+use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
@@ -81,6 +81,7 @@ pub async fn init_mongo(
             )),
         });
     }
+    drop(error_vec_count_documents);
     let vec_of_futures_insert_many = providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
                             let collection = db.collection(&pk.get_db_tag());
                             let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
@@ -97,5 +98,6 @@ pub async fn init_mongo(
             source: Box::new(InitMongoErrorEnum::InsertManyError(error_vec_insert_many)),
         });
     }
+    drop(error_vec_insert_many);
     Ok(())
 }
