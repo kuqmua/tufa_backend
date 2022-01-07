@@ -3,16 +3,15 @@ use std::fmt;
 
 use futures::future::join_all;
 
-use mongodb::error::Error;
+use mongodb::{
+    bson::{doc, Document},
+    error::Error,
+    options::ClientOptions,
+    Client,
+};
 
 use crate::{
     config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
-};
-
-use mongodb::{
-    bson::{doc, Document},
-    options::ClientOptions,
-    Client,
 };
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -21,25 +20,25 @@ use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct InitMongoError {
-    /// check link status code error `{0}`
     pub source: Box<InitMongoErrorEnum>,
 }
 
 //its needed for ImplDisplayDerive to work coz i dont implement some logic inside for HashMap type
-type CountDocumentsErrorHashMap = HashMap<ProviderKind, CountDocumentsError>;
+type CollectionCountDocumentsOrIsNotEmptyHashMap =
+    HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>;
 type InsertManyErrorHashMap = HashMap<ProviderKind, Error>;
 
 #[derive(Debug, ImplFromForUpperStruct)]
 pub enum InitMongoErrorEnum {
     Client(Error),
-    CountDocumentsError(CountDocumentsErrorHashMap),
+    CollectionCountDocumentsOrIsNotEmpty(CollectionCountDocumentsOrIsNotEmptyHashMap),
     InsertManyError(InsertManyErrorHashMap),
 }
 
 #[derive(Debug)]
-pub enum CountDocumentsError {
-    CollectionOperation(Error),
-    CollectionIsNotEmpty(u64),
+pub enum CollectionCountDocumentsOrIsNotEmpty {
+    CountDocuments(Error),
+    IsNotEmpty(u64),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -48,7 +47,7 @@ pub async fn init_mongo(
 ) -> Result<(), InitMongoError> {
     let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name); //<- todo this is incorrect name
+    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
     let vec_of_futures_count_documents = providers_json_local_data_hashmap.keys().map(|pk| async {
         (
             *pk,
@@ -57,18 +56,19 @@ pub async fn init_mongo(
                 .await,
         )
     });
-    let mut error_vec_count_documents: HashMap<ProviderKind, CountDocumentsError> = HashMap::new();
+    let mut error_vec_count_documents: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty> =
+        HashMap::new();
     for (pk, result) in join_all(vec_of_futures_count_documents).await {
         match result {
-            //todo filter
             Err(e) => {
-                error_vec_count_documents.insert(pk, CountDocumentsError::CollectionOperation(e));
+                error_vec_count_documents
+                    .insert(pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e));
             }
             Ok(documents_number) => {
                 if documents_number > 0 {
                     error_vec_count_documents.insert(
                         pk,
-                        CountDocumentsError::CollectionIsNotEmpty(documents_number),
+                        CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(documents_number),
                     );
                 }
             }
@@ -76,7 +76,7 @@ pub async fn init_mongo(
     }
     if !error_vec_count_documents.is_empty() {
         return Err(InitMongoError {
-            source: Box::new(InitMongoErrorEnum::CountDocumentsError(
+            source: Box::new(InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
                 error_vec_count_documents,
             )),
         });

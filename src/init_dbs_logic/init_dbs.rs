@@ -17,13 +17,15 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
-use super::init_mongo::CountDocumentsError;
+use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
     MongoClient(mongodb::error::Error),
-    MongoCountDocumentsError(HashMap<ProviderKind, CountDocumentsError>),
+    MongoCollectionCountDocumentsOrIsNotEmpty(
+        HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
+    ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
     PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
@@ -58,8 +60,10 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     InitMongoErrorEnum::Client(mongo_err) => {
                         return Err(InitDbsError::MongoClient(mongo_err));
                     }
-                    InitMongoErrorEnum::CountDocumentsError(hashmap) => {
-                        return Err(InitDbsError::MongoCountDocumentsError(hashmap));
+                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(hashmap) => {
+                        return Err(InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(
+                            hashmap,
+                        ));
                     }
                     InitMongoErrorEnum::InsertManyError(hashmap) => {
                         return Err(InitDbsError::MongoInsertManyError(hashmap));

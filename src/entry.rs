@@ -91,7 +91,7 @@ pub fn entry() {
                     match e {
                         InitDbsError::GetProvidersJsonLocalData(_) => return,
                         InitDbsError::MongoClient(_) => return,
-                        InitDbsError::MongoCountDocumentsError(_) => return,
+                        InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(_) => return,
                         InitDbsError::MongoInsertManyError(_) => return,
                         InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,
                         InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(_) => (),
