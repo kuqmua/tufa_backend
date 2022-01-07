@@ -25,17 +25,21 @@ pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
 }
 
+//its needed for ImplDisplayDerive to work coz i dont implement some logic inside for HashMap type
+type CountDocumentsErrorHashMap = HashMap<ProviderKind, CountDocumentsError>;
+type InsertManyErrorHashMap = HashMap<ProviderKind, Error>;
+
 #[derive(Debug, ImplFromForUpperStruct)]
 pub enum InitMongoErrorEnum {
     Client(Error),
-    CollectionOperation((ProviderKind, Error)),
-    CollectionIsNotEmpty((ProviderKind, u64)),
-    // Providers((ProviderKind, i32)),
+    CountDocumentsError(CountDocumentsErrorHashMap),
+    InsertManyError(InsertManyErrorHashMap),
 }
 
 #[derive(Debug)]
-pub enum CollectionOperationWrapper {
-    Someting((ProviderKind, Error)),
+pub enum CountDocumentsError {
+    CollectionOperation(Error),
+    CollectionIsNotEmpty(u64),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -45,7 +49,7 @@ pub async fn init_mongo(
     let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
     let db = client.database(&CONFIG.mongo_providers_logs_db_name); //<- todo this is incorrect name
-    let vec_of_futures = providers_json_local_data_hashmap.keys().map(|pk| async {
+    let vec_of_futures_count_documents = providers_json_local_data_hashmap.keys().map(|pk| async {
         (
             *pk,
             db.collection::<Document>(&pk.get_db_tag())
@@ -53,43 +57,45 @@ pub async fn init_mongo(
                 .await,
         )
     });
-    for (pk, result) in join_all(vec_of_futures).await {
+    let mut error_vec_count_documents: HashMap<ProviderKind, CountDocumentsError> = HashMap::new();
+    for (pk, result) in join_all(vec_of_futures_count_documents).await {
         match result {
             //todo filter
             Err(e) => {
-                return Err(InitMongoError {
-                    source: Box::new(InitMongoErrorEnum::CollectionOperation((pk, e))),
-                })
+                error_vec_count_documents.insert(pk, CountDocumentsError::CollectionOperation(e));
             }
             Ok(documents_number) => {
                 if documents_number > 0 {
-                    return Err(InitMongoError {
-                        source: Box::new(InitMongoErrorEnum::CollectionIsNotEmpty((
-                            pk,
-                            documents_number,
-                        ))),
-                    });
+                    error_vec_count_documents.insert(
+                        pk,
+                        CountDocumentsError::CollectionIsNotEmpty(documents_number),
+                    );
                 }
             }
         }
     }
-    let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
-    for (pk, data_vec) in &providers_json_local_data_hashmap {
-        vec_of_futures.push(async {
-                            let pk_cloned = *pk;
-                            let collection = db.collection(&format!("{}", pk_cloned));
-                            let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
-                            (pk_cloned, collection.insert_many(docs, None).await)
-                        });
+    if !error_vec_count_documents.is_empty() {
+        return Err(InitMongoError {
+            source: Box::new(InitMongoErrorEnum::CountDocumentsError(
+                error_vec_count_documents,
+            )),
+        });
     }
-    let result_vec = join_all(vec_of_futures).await;
-    //todo: db partially initialized, print some warning
-    for (pk, result) in result_vec {
+    let vec_of_futures_insert_many = providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
+                            let collection = db.collection(&pk.get_db_tag());
+                            let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
+                            (*pk, collection.insert_many(docs, None).await)
+                        });
+    let mut error_vec_insert_many: HashMap<ProviderKind, Error> = HashMap::new();
+    for (pk, result) in join_all(vec_of_futures_insert_many).await {
         if let Err(e) = result {
-            return Err(InitMongoError {
-                source: Box::new(InitMongoErrorEnum::CollectionOperation((pk, e))),
-            });
+            error_vec_insert_many.insert(pk, e);
         }
+    }
+    if !error_vec_insert_many.is_empty() {
+        return Err(InitMongoError {
+            source: Box::new(InitMongoErrorEnum::InsertManyError(error_vec_insert_many)),
+        });
     }
     Ok(())
 }
