@@ -3,6 +3,7 @@ use quote::quote;
 
 use syn;
 use syn::Ident;
+use syn::TypeTuple;
 
 /// struct and enum names must be like this
 /// pub struct StructNameError {
@@ -23,8 +24,12 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
     };
     let ident = &ast.ident;
     let generated = variants.into_iter().map(|v| {
+        enum HandleEnum {
+            IdentHandle(Ident),
+            TypeTupleHandle(TypeTuple),
+        }
         let variant = v.ident;
-        let inner_enum_type: &Ident;
+        let inner_enum_type: HandleEnum;
         match &v.fields {
             syn::Fields::Unnamed(fields_unnamed) => {
                 if fields_unnamed.unnamed.len() != 1 {
@@ -41,7 +46,11 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
                                 type_path.path.segments.len()
                             );
                         }
-                        inner_enum_type = &type_path.path.segments[0].ident;
+                        inner_enum_type =
+                            HandleEnum::IdentHandle(type_path.path.segments[0].ident.clone());
+                    }
+                    syn::Type::Tuple(type_tuple) => {
+                        inner_enum_type = HandleEnum::TypeTupleHandle(type_tuple.clone());
                     }
                     _ => panic!("fields_unnamed.unnamed[0].ty is not syn::Type::Path"),
                 }
@@ -57,16 +66,29 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
             ),
             Some(index) => {
                 let struct_ident = syn::Ident::new(&&string_ident[..index], ident.span());
-                quote! {
-                    impl From<#inner_enum_type> for #struct_ident {
-                        fn from(error: #inner_enum_type) -> Self {
-                            #struct_ident {
-                                source: Box::new(#ident::#variant(
-                                    error,
-                                )),
+                match inner_enum_type {
+                    HandleEnum::IdentHandle(inner_ident) => quote! {
+                        impl From<#inner_ident> for #struct_ident {
+                            fn from(error: #inner_ident) -> Self {
+                                #struct_ident {
+                                    source: Box::new(#ident::#variant(
+                                        error,
+                                    )),
+                                }
                             }
                         }
-                    }
+                    },
+                    HandleEnum::TypeTupleHandle(inner_type_tuple) => quote! {
+                        impl From<#inner_type_tuple> for #struct_ident {
+                            fn from(error: #inner_type_tuple) -> Self {
+                                #struct_ident {
+                                    source: Box::new(#ident::#variant(
+                                        error,
+                                    )),
+                                }
+                            }
+                        }
+                    },
                 }
             }
         }
