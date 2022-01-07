@@ -28,6 +28,12 @@ pub enum InitMongoErrorEnum {
     Client(Error),
     CollectionOperation((ProviderKind, Error)),
     CollectionIsNotEmpty((ProviderKind, u64)),
+    // Providers((ProviderKind, i32)),
+}
+
+#[derive(Debug)]
+pub enum CollectionOperationWrapper {
+    Someting((ProviderKind, Error)),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -37,19 +43,15 @@ pub async fn init_mongo(
     let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
     let db = client.database(&CONFIG.mongo_providers_logs_db_name); //<- todo this is incorrect name
-    let mut vec_of_futures = Vec::with_capacity(providers_json_local_data_hashmap.len());
-    for pk in providers_json_local_data_hashmap.keys() {
-        vec_of_futures.push(async {
-            (
-                *pk,
-                db.collection::<Document>(&format!("{}", *pk))
-                    .count_documents(None, None)
-                    .await,
-            )
-        });
-    }
-    let result_vec = join_all(vec_of_futures).await;
-    for (pk, result) in result_vec {
+    let vec_of_futures = providers_json_local_data_hashmap.keys().map(|pk| async {
+        (
+            *pk,
+            db.collection::<Document>(&format!("{}", *pk))
+                .count_documents(None, None)
+                .await,
+        )
+    });
+    for (pk, result) in join_all(vec_of_futures).await {
         match result {
             //todo filter
             Err(e) => {

@@ -61,7 +61,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     }
                     InitMongoErrorEnum::CollectionIsNotEmpty((pk, length)) => {
                         return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, length)));
-                    }
+                    } // InitMongoErrorEnum::Providers(_) => todo!(),
                 }
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
