@@ -20,11 +20,9 @@ use crate::providers::providers_info::get_all_local_providers_data::get_all_loca
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
-    MongoClientOptionsParse(mongodb::error::Error),
-    MongoClientWithOptions(mongodb::error::Error),
-    MongoCollectionCountDocuments((ProviderKind, mongodb::error::Error)),
+    MongoClient(mongodb::error::Error),
+    MongoCollectionOperation((ProviderKind, mongodb::error::Error)),
     MongoCollectionIsNotEmpty((ProviderKind, u64)),
-    MongoCollectionInsertMany((ProviderKind, mongodb::error::Error)),
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
     PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
     PostgresInsertPosts(diesel::result::Error),
@@ -55,20 +53,14 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             if let Some(Err(err)) = mongo_insert_data_option_result {
                 let source = err.source;
                 match *source {
-                    InitMongoErrorEnum::ClientOptionsParse(mongo_err) => {
-                        return Err(InitDbsError::MongoClientOptionsParse(mongo_err));
+                    InitMongoErrorEnum::Client(mongo_err) => {
+                        return Err(InitDbsError::MongoClient(mongo_err));
                     }
-                    InitMongoErrorEnum::ClientWithOptions(mongo_err) => {
-                        return Err(InitDbsError::MongoClientWithOptions(mongo_err));
-                    }
-                    InitMongoErrorEnum::CollectionCountDocuments((pk, mongo_err)) => {
-                        return Err(InitDbsError::MongoCollectionCountDocuments((pk, mongo_err)));
+                    InitMongoErrorEnum::CollectionOperation((pk, mongo_err)) => {
+                        return Err(InitDbsError::MongoCollectionOperation((pk, mongo_err)));
                     }
                     InitMongoErrorEnum::CollectionIsNotEmpty((pk, length)) => {
                         return Err(InitDbsError::MongoCollectionIsNotEmpty((pk, length)));
-                    }
-                    InitMongoErrorEnum::CollectionInsertMany((pk, mongo_err)) => {
-                        return Err(InitDbsError::MongoCollectionInsertMany((pk, mongo_err)));
                     }
                 }
             }

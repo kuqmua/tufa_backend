@@ -3,6 +3,8 @@ use std::fmt;
 
 use futures::future::join_all;
 
+use mongodb::error::Error;
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -21,13 +23,11 @@ pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplFromForUpperStruct)]
 pub enum InitMongoErrorEnum {
-    ClientOptionsParse(mongodb::error::Error),
-    ClientWithOptions(mongodb::error::Error),
-    CollectionCountDocuments((ProviderKind, mongodb::error::Error)),
+    Client(Error),
+    CollectionOperation((ProviderKind, Error)),
     CollectionIsNotEmpty((ProviderKind, u64)),
-    CollectionInsertMany((ProviderKind, mongodb::error::Error)),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -37,12 +37,12 @@ pub async fn init_mongo(
     let client_options_result = ClientOptions::parse(&mongo_get_db_url()).await;
     match client_options_result {
         Err(e) => Err(InitMongoError {
-            source: Box::new(InitMongoErrorEnum::ClientOptionsParse(e)),
+            source: Box::new(InitMongoErrorEnum::Client(e)),
         }),
         Ok(client_options) => {
             match Client::with_options(client_options) {
                 Err(e) => Err(InitMongoError {
-                    source: Box::new(InitMongoErrorEnum::ClientWithOptions(e)),
+                    source: Box::new(InitMongoErrorEnum::Client(e)),
                 }),
                 Ok(client) => {
                     let db = client.database(&CONFIG.mongo_providers_logs_db_name); //<- todo this is incorrect name
@@ -64,9 +64,9 @@ pub async fn init_mongo(
                             //todo filter
                             Err(e) => {
                                 return Err(InitMongoError {
-                                    source: Box::new(InitMongoErrorEnum::CollectionCountDocuments(
-                                        (pk, e),
-                                    )),
+                                    source: Box::new(InitMongoErrorEnum::CollectionOperation((
+                                        pk, e,
+                                    ))),
                                 })
                             }
                             Ok(documents_number) => {
@@ -95,7 +95,7 @@ pub async fn init_mongo(
                     for (pk, result) in result_vec {
                         if let Err(e) = result {
                             return Err(InitMongoError {
-                                source: Box::new(InitMongoErrorEnum::CollectionInsertMany((pk, e))),
+                                source: Box::new(InitMongoErrorEnum::CollectionOperation((pk, e))),
                             });
                         }
                     }
