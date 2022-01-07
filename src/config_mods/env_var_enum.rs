@@ -47,6 +47,7 @@ pub enum EnvVar {
     MongoPort,
     MongoParams,
 
+    MongoProvidersLinkPartsDbName,
     MongoProvidersLogsDbName,
     MongoProvidersLogsDbCollectionHandleSecondPart,
     MongoProvidersLogsDbCollectionDocumentFieldNameHandle,

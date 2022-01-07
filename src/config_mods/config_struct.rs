@@ -28,6 +28,7 @@ pub struct ConfigStruct {
     pub mongo_port: String,
     pub mongo_params: String,
 
+    pub mongo_providers_link_parts_db_name: String,
     pub mongo_providers_logs_db_name: String,
     pub mongo_providers_logs_db_collection_handle_second_part: String,
     pub mongo_providers_logs_db_collection_document_field_name_handle: String,

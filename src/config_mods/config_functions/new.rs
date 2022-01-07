@@ -71,6 +71,9 @@ impl ConfigStruct {
             mongo_port: string_vars[&EnvStringVar::MongoPort].clone(),
             mongo_params: string_vars[&EnvStringVar::MongoParams].clone(),
 
+            mongo_providers_link_parts_db_name: string_vars
+                [&EnvStringVar::MongoProvidersLinkPartsDbName]
+                .clone(),
             mongo_providers_logs_db_name: string_vars[&EnvStringVar::MongoProvidersLogsDbName]
                 .clone(),
             mongo_providers_logs_db_collection_handle_second_part: string_vars

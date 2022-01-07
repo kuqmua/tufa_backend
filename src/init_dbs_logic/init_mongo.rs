@@ -48,7 +48,7 @@ pub async fn init_mongo(
 ) -> Result<(), InitMongoError> {
     let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.mongo_providers_logs_db_name); //<- todo this is incorrect name
+    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name); //<- todo this is incorrect name
     let vec_of_futures_count_documents = providers_json_local_data_hashmap.keys().map(|pk| async {
         (
             *pk,
