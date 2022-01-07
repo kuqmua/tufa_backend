@@ -5,7 +5,9 @@ use futures::future::join_all;
 
 use mongodb::error::Error;
 
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::{
+    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
+};
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -46,7 +48,7 @@ pub async fn init_mongo(
     let vec_of_futures = providers_json_local_data_hashmap.keys().map(|pk| async {
         (
             *pk,
-            db.collection::<Document>(&format!("{}", *pk))
+            db.collection::<Document>(&pk.get_db_tag())
                 .count_documents(None, None)
                 .await,
         )

@@ -37,4 +37,7 @@ pub trait ProviderKindTrait {
     fn remove_providers_logs_directories() -> Result<(), HashMap<Self, CleanLogsDirError>>
     where
         Self: Sized;
+    fn get_db_tag(&self) -> String
+    where
+        Self: Sized;
 }

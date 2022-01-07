@@ -229,4 +229,9 @@ impl ProviderKindTrait for ProviderKind {
             Err(result_hashmap)
         }
     }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_db_tag(&self) -> String {
+        format!("{}", self)
+    }
 }
