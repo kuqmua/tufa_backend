@@ -23,16 +23,13 @@ pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
 }
 
-//its needed for ImplDisplayDerive to work coz i dont implement some logic inside for HashMap type
-type CollectionCountDocumentsOrIsNotEmptyHashMap =
-    HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>;
-type InsertManyErrorHashMap = HashMap<ProviderKind, Error>;
-
 #[derive(Debug, ImplFromForUpperStruct)]
 pub enum InitMongoErrorEnum {
     Client(Error),
-    CollectionCountDocumentsOrIsNotEmpty(CollectionCountDocumentsOrIsNotEmptyHashMap),
-    InsertManyError(InsertManyErrorHashMap),
+    CollectionCountDocumentsOrIsNotEmpty(
+        HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
+    ),
+    InsertManyError(HashMap<ProviderKind, Error>),
 }
 
 #[derive(Debug)]
