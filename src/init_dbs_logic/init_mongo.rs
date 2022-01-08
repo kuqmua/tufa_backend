@@ -45,32 +45,30 @@ pub async fn init_mongo(
     let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
     let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
-    let vec_of_futures_count_documents = providers_json_local_data_hashmap.keys().map(|pk| async {
-        (
-            *pk,
-            db.collection::<Document>(&pk.get_db_tag())
-                .count_documents(None, None)
-                .await,
-        )
-    });
-    let mut error_vec_count_documents: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty> =
-        HashMap::new();
-    for (pk, result) in join_all(vec_of_futures_count_documents).await {
-        match result {
-            Err(e) => {
-                error_vec_count_documents
-                    .insert(pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e));
-            }
+    let error_vec_count_documents =
+        join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
+            (
+                *pk,
+                db.collection::<Document>(&pk.get_db_tag())
+                    .count_documents(None, None)
+                    .await,
+            )
+        }))
+        .await
+        .into_iter()
+        .filter_map(|(pk, result)| match result {
+            Err(e) => Some((pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e))),
             Ok(documents_number) => {
                 if documents_number > 0 {
-                    error_vec_count_documents.insert(
+                    return Some((
                         pk,
                         CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(documents_number),
-                    );
+                    ));
                 }
+                None
             }
-        }
-    }
+        })
+        .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
     if !error_vec_count_documents.is_empty() {
         return Err(InitMongoError {
             source: Box::new(InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
