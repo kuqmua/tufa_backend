@@ -46,9 +46,10 @@ pub async fn init_postgres(
                             });
                         }
                     }
-                    let insertion_result =
-                        InsertableLinkPart::insert_vec_into_postgres(&pg_connection, posts_vec);
-                    if let Err(e) = insertion_result {
+                    if let Err(e) = diesel::insert_into(providers_link_parts)
+                        .values(&posts_vec)
+                        .get_result::<QueryableLinkPart>(&pg_connection)
+                    {
                         return Err(PostgresInitError::InsertPosts(e));
                     }
                     Ok(())
