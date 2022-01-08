@@ -9,7 +9,7 @@ use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
-use crate::postgres_integration::schemas::providers_link_parts_schema::providers_link_parts::dsl::*;
+use crate::postgres_integration::schemas::providers_link_parts_schema::providers_link_parts::dsl::providers_link_parts;
 
 #[derive(Debug)]
 pub enum PostgresInitError {

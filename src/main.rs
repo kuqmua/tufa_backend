@@ -114,7 +114,14 @@ pub mod postgres_integration {
         }
     }
     pub mod schemas {
+        pub mod arxiv_link_parts_schema;
+        pub mod biorxiv_link_parts_schema;
+        pub mod github_link_parts_schema;
+        pub mod habr_link_parts_schema;
+        pub mod medrxiv_link_parts_schema;
         pub mod providers_link_parts_schema;
+        pub mod reddit_link_parts_schema;
+        pub mod twitter_link_parts_schema;
     }
     pub mod postgres_check_availability;
     pub mod postgres_delete_post;

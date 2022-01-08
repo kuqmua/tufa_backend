@@ -2,7 +2,10 @@ use std::collections::HashMap;
 
 use mongodb::bson::Document;
 
-use crate::providers::provider_kind_enum::{CleanLogsDirError, RemoveDirError};
+use crate::providers::{
+    provider_kind_enum::{CleanLogsDirError, RemoveDirError},
+    provider_kind_impl::provider_kind_trait::ProviderTables,
+};
 
 pub trait ProviderKindTrait {
     fn get_item_handle(&self) -> Option<&'static str>;
@@ -38,6 +41,9 @@ pub trait ProviderKindTrait {
     where
         Self: Sized;
     fn get_db_tag(&self) -> String
+    where
+        Self: Sized;
+    fn get_postgres_table(&self) -> ProviderTables
     where
         Self: Sized;
 }
