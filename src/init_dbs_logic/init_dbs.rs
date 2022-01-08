@@ -4,8 +4,6 @@ use diesel::prelude::*;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
-use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
-
 use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 
@@ -27,7 +25,7 @@ pub enum InitDbsError {
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     PostgresLoadingProvidersLinkParts(diesel::result::Error),
-    PostgresProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
+    PostgresProvidersLinkPartsIsNotEmpty(i64),
     PostgresInsertPosts(diesel::result::Error),
     PostgresEstablishConnection(ConnectionError),
 }

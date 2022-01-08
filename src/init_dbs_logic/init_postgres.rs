@@ -14,7 +14,7 @@ use crate::postgres_integration::schemas::providers_link_parts_schema::providers
 #[derive(Debug)]
 pub enum PostgresInitError {
     LoadingProvidersLinkParts(diesel::result::Error),
-    ProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
+    ProvidersLinkPartsIsNotEmpty(i64),
     InsertPosts(diesel::result::Error),
     EstablishConnection(ConnectionError),
 }
@@ -26,15 +26,17 @@ pub async fn init_postgres(
     match PgConnection::establish(&postgres_get_db_url()) {
         Err(e) => Err(PostgresInitError::EstablishConnection(e)),
         Ok(pg_connection) => {
-            let result = providers_link_parts
-                // .filter()
-                // .limit(5)
-                .load::<QueryableLinkPart>(&pg_connection);
+            //todo: maybe its not i64?
+            let result: Result<Vec<i64>, diesel::result::Error> =
+                providers_link_parts.count().load(&pg_connection);
             match result {
                 Err(e) => Err(PostgresInitError::LoadingProvidersLinkParts(e)),
                 Ok(vec) => {
-                    if !vec.is_empty() {
-                        return Err(PostgresInitError::ProvidersLinkPartsIsNotEmpty(vec));
+                    if vec.len() != 1 {
+                        panic!("find out why providers_link_parts.count().load vec.len() is not 1");
+                    }
+                    if vec[0] > 0 {
+                        return Err(PostgresInitError::ProvidersLinkPartsIsNotEmpty(vec[0]));
                     }
                     let mut posts_vec: Vec<InsertableLinkPart> =
                         Vec::with_capacity(providers_json_local_data_hashmap.len());
