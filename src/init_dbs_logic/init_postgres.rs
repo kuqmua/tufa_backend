@@ -12,7 +12,7 @@ use crate::postgres_integration::models::queryable::queryable_link_part::Queryab
 use crate::postgres_integration::schemas::providers_link_parts_schema::providers_link_parts::dsl::*;
 
 #[derive(Debug)]
-pub enum PostgresInitDbError {
+pub enum PostgresInitError {
     LoadingProvidersLinkParts(diesel::result::Error),
     ProvidersLinkPartsIsNotEmpty(Vec<QueryableLinkPart>),
     InsertPosts(diesel::result::Error),
@@ -22,19 +22,19 @@ pub enum PostgresInitDbError {
 #[deny(clippy::indexing_slicing)]
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), PostgresInitDbError> {
+) -> Result<(), PostgresInitError> {
     match PgConnection::establish(&postgres_get_db_url()) {
-        Err(e) => Err(PostgresInitDbError::EstablishConnection(e)),
+        Err(e) => Err(PostgresInitError::EstablishConnection(e)),
         Ok(pg_connection) => {
             let result = providers_link_parts
                 // .filter()
                 // .limit(5)
                 .load::<QueryableLinkPart>(&pg_connection);
             match result {
-                Err(e) => Err(PostgresInitDbError::LoadingProvidersLinkParts(e)),
+                Err(e) => Err(PostgresInitError::LoadingProvidersLinkParts(e)),
                 Ok(vec) => {
                     if !vec.is_empty() {
-                        return Err(PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(vec));
+                        return Err(PostgresInitError::ProvidersLinkPartsIsNotEmpty(vec));
                     }
                     let mut posts_vec: Vec<InsertableLinkPart> =
                         Vec::with_capacity(providers_json_local_data_hashmap.len());
@@ -49,7 +49,7 @@ pub async fn init_postgres(
                     let insertion_result =
                         InsertableLinkPart::insert_vec_into_postgres(&pg_connection, posts_vec);
                     if let Err(e) = insertion_result {
-                        return Err(PostgresInitDbError::InsertPosts(e));
+                        return Err(PostgresInitError::InsertPosts(e));
                     }
                     Ok(())
                 }

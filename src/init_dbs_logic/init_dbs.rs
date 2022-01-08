@@ -10,7 +10,7 @@ use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 
 use crate::init_dbs_logic::init_postgres::init_postgres;
-use crate::init_dbs_logic::init_postgres::PostgresInitDbError;
+use crate::init_dbs_logic::init_postgres::PostgresInitError;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
@@ -70,16 +70,16 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match err {
-                    PostgresInitDbError::LoadingProvidersLinkParts(e) => {
+                    PostgresInitError::LoadingProvidersLinkParts(e) => {
                         return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
                     }
-                    PostgresInitDbError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
+                    PostgresInitError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
                         return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
                     }
-                    PostgresInitDbError::InsertPosts(e) => {
+                    PostgresInitError::InsertPosts(e) => {
                         return Err(InitDbsError::PostgresInsertPosts(e));
                     }
-                    PostgresInitDbError::EstablishConnection(e) => {
+                    PostgresInitError::EstablishConnection(e) => {
                         return Err(InitDbsError::PostgresEstablishConnection(e));
                     }
                 }
