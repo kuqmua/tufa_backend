@@ -35,8 +35,13 @@ pub async fn init_postgres(
                     if vec.len() != 1 {
                         panic!("find out why providers_link_parts.count().load vec.len() is not 1");
                     }
-                    if vec[0] > 0 {
-                        return Err(PostgresInitError::ProvidersLinkPartsIsNotEmpty(vec[0]));
+                    match vec.get(0) {
+                        Some(size) => {
+                            if *size > 0 {
+                                return Err(PostgresInitError::ProvidersLinkPartsIsNotEmpty(*size));
+                            }
+                        }
+                        _ => panic!("no first element"),
                     }
                     let mut posts_vec: Vec<InsertableLinkPart> =
                         Vec::with_capacity(providers_json_local_data_hashmap.len());
