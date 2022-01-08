@@ -7,7 +7,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 
 use crate::init_dbs_logic::init_mongo::init_mongo;
-// use crate::init_dbs_logic::init_mongo::InitMongoError;
 use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 
 use crate::init_dbs_logic::init_postgres::init_postgres;
@@ -55,8 +54,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                 }
             );
             if let Some(Err(err)) = mongo_insert_data_option_result {
-                let source = err.source;
-                match *source {
+                match *err.source {
                     InitMongoErrorEnum::Client(mongo_err) => {
                         return Err(InitDbsError::MongoClient(mongo_err));
                     }
