@@ -83,9 +83,8 @@ pub async fn init_mongo(
     }
     drop(error_vec_count_documents);
     let vec_of_futures_insert_many = providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
-                            let collection = db.collection(&pk.get_db_tag());
                             let docs: Vec<Document> = data_vec.iter().map(|data| doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }).collect();
-                            (*pk, collection.insert_many(docs, None).await)
+                            (*pk, db.collection(&pk.get_db_tag()).insert_many(docs, None).await)
                         });
     let mut error_vec_insert_many: HashMap<ProviderKind, Error> = HashMap::new();
     for (pk, result) in join_all(vec_of_futures_insert_many).await {
