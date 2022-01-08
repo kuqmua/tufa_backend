@@ -2,9 +2,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 
 use syn;
-use syn::Ident;
-use syn::PathSegment;
-use syn::TypeTuple;
+use syn::Type;
 
 /// struct and enum names must be like this
 /// pub struct StructNameError {
@@ -25,13 +23,8 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
     };
     let ident = &ast.ident;
     let generated = variants.into_iter().map(|v| {
-        enum HandleEnum {
-            IdentHandle(Ident),
-            TypeTupleHandle(TypeTuple),
-            PathSegmentHandle(PathSegment)
-        }
         let variant = v.ident;
-        let inner_enum_type: HandleEnum;
+        let inner_enum_type: Type;
         match &v.fields {
             syn::Fields::Unnamed(fields_unnamed) => {
                 if fields_unnamed.unnamed.len() != 1 {
@@ -40,28 +33,7 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
                         fields_unnamed.unnamed.len()
                     );
                 }
-                match &fields_unnamed.unnamed[0].ty {
-                    syn::Type::Path(type_path) => {
-                        if type_path.path.segments.len() != 1 {
-                            panic!(
-                                "type_path.path.segments != 1, length is {}",
-                                type_path.path.segments.len()
-                            );
-                        }
-                        match &type_path.path.segments[0].arguments {
-                            syn::PathArguments::None => inner_enum_type =
-                            HandleEnum::IdentHandle(type_path.path.segments[0].ident.clone()),
-                            syn::PathArguments::AngleBracketed(abga) => {
-                                inner_enum_type = HandleEnum::PathSegmentHandle(type_path.path.segments[0].clone())
-                            },
-                            syn::PathArguments::Parenthesized(_) => panic!("type_path.path.segments[0].arguments for syn::PathArguments::Parenthesized is not implemented"),
-                        }
-                    }
-                    syn::Type::Tuple(type_tuple) => {
-                        inner_enum_type = HandleEnum::TypeTupleHandle(type_tuple.clone());
-                    }
-                    _ => panic!("fields_unnamed.unnamed[0].ty is not syn::Type::Path"),
-                }
+                inner_enum_type = fields_unnamed.unnamed[0].ty.clone();
             }
             _ => panic!("v.fields is not syn::Fields::Unnamed"),
         }
@@ -74,40 +46,16 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
             ),
             Some(index) => {
                 let struct_ident = syn::Ident::new(&&string_ident[..index], ident.span());
-                match inner_enum_type {
-                    HandleEnum::IdentHandle(inner_ident) => quote! {
-                        impl From<#inner_ident> for #struct_ident {
-                            fn from(error: #inner_ident) -> Self {
-                                #struct_ident {
-                                    source: Box::new(#ident::#variant(
-                                        error,
-                                    )),
-                                }
+                quote! {
+                    impl From<#inner_enum_type> for #struct_ident {
+                        fn from(error: #inner_enum_type) -> Self {
+                            #struct_ident {
+                                source: Box::new(#ident::#variant(
+                                    error,
+                                )),
                             }
                         }
-                    },
-                    HandleEnum::TypeTupleHandle(inner_type_tuple) => quote! {
-                        impl From<#inner_type_tuple> for #struct_ident {
-                            fn from(error: #inner_type_tuple) -> Self {
-                                #struct_ident {
-                                    source: Box::new(#ident::#variant(
-                                        error,
-                                    )),
-                                }
-                            }
-                        }
-                    },
-                    HandleEnum::PathSegmentHandle(path_segment) => quote! {
-                        impl From<#path_segment> for #struct_ident {
-                            fn from(error: #path_segment) -> Self {
-                                #struct_ident {
-                                    source: Box::new(#ident::#variant(
-                                        error,
-                                    )),
-                                }
-                            }
-                        }
-                    },
+                    }
                 }
             }
         }
