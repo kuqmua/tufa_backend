@@ -119,7 +119,6 @@ pub mod postgres_integration {
         pub mod github_link_parts_schema;
         pub mod habr_link_parts_schema;
         pub mod medrxiv_link_parts_schema;
-        pub mod providers_link_parts_schema;
         pub mod reddit_link_parts_schema;
         pub mod twitter_link_parts_schema;
     }
@@ -150,6 +149,7 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
+            pub mod get_initialization_postgres_tables_vec_from_keys;
             pub mod get_local_data;
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
