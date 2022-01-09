@@ -407,8 +407,11 @@ EXISTS INSIDE AST!!!
 LINKS_LIMIT_PROVIDERS not working now. fix it
 <br/>
 
-
 ### -------------------
 parameter db initialization provider link parts source must be
 different than PROVIDERS_LINK_PARTS_SOURCE 
+<br/>
+
+### -------------------
+divide and move outside postgres and mongo methods from provider_kind_trait 
 <br/>
