@@ -46,4 +46,8 @@ pub trait ProviderKindTrait {
     fn get_postgres_table(&self) -> ProviderTables
     where
         Self: Sized;
+    fn get_postgres_initialization_provider_kind_vec() -> Vec<Self>
+    where
+        Self: std::marker::Sized;
+    fn get_initialization_postgres_tables_vec() -> Vec<ProviderTables>;
 }

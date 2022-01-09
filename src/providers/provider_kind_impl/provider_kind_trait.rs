@@ -255,6 +255,48 @@ impl ProviderKindTrait for ProviderKind {
             ProviderKind::Twitter => ProviderTables::Twitter(twitter_link_parts),
         }
     }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_postgres_initialization_provider_kind_vec() -> Vec<ProviderKind> {
+        let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
+            Vec::with_capacity(ProviderKind::get_length());
+        for provider_kind in ProviderKind::iter()
+            .filter(|provider_kind| provider_kind.is_postgres_initialization_enabled())
+        {
+            vec_of_filtered_provider_names.push(provider_kind)
+        }
+        vec_of_filtered_provider_names
+    }
+
+    fn get_initialization_postgres_tables_vec() -> Vec<ProviderTables> {
+        let mut postgres_tables_vec = Vec::new();
+        for pk in ProviderKind::get_postgres_initialization_provider_kind_vec() {
+            match pk {
+                ProviderKind::Arxiv => {
+                    postgres_tables_vec.push(ProviderTables::Arxiv(arxiv_link_parts))
+                }
+                ProviderKind::Biorxiv => {
+                    postgres_tables_vec.push(ProviderTables::Biorxiv(biorxiv_link_parts))
+                }
+                ProviderKind::Github => {
+                    postgres_tables_vec.push(ProviderTables::Github(github_link_parts))
+                }
+                ProviderKind::Habr => {
+                    postgres_tables_vec.push(ProviderTables::Habr(habr_link_parts))
+                }
+                ProviderKind::Medrxiv => {
+                    postgres_tables_vec.push(ProviderTables::Medrxiv(medrxiv_link_parts))
+                }
+                ProviderKind::Reddit => {
+                    postgres_tables_vec.push(ProviderTables::Reddit(reddit_link_parts))
+                }
+                ProviderKind::Twitter => {
+                    postgres_tables_vec.push(ProviderTables::Twitter(twitter_link_parts))
+                }
+            }
+        }
+        postgres_tables_vec
+    }
 }
 
 pub enum ProviderTables {
