@@ -36,6 +36,7 @@ pub async fn init_postgres(
     match PgConnection::establish(&postgres_get_db_url()) {
         Err(e) => Err(PostgresInitError::EstablishConnection(e)),
         Ok(pg_connection) => {
+            // Todo: all tables initialization as one transaction?
             for (pk, data_vec) in providers_json_local_data_hashmap {
                 match pk {
                     ProviderKind::Arxiv => {
