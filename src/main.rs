@@ -107,7 +107,13 @@ pub mod mongo_integration {
 pub mod postgres_integration {
     pub mod models {
         pub mod insertable {
-            pub mod insertable_link_part;
+            pub mod insertable_arxiv_link_part;
+            pub mod insertable_biorxiv_link_part;
+            pub mod insertable_github_link_part;
+            pub mod insertable_habr_link_part;
+            pub mod insertable_medrxiv_link_part;
+            pub mod insertable_reddit_link_part;
+            pub mod insertable_twitter_link_part;
         }
         pub mod queryable {
             pub mod queryable_link_part;
