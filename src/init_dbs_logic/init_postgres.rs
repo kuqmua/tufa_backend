@@ -49,11 +49,8 @@ pub async fn init_postgres(
                         let result: Result<Vec<i64>, diesel::result::Error> =
                             arxiv_link_parts.count().load(&pg_connection);
                         match result {
-                            Err(e) =>
+                            Err(e) => (),
                             // Err(PostgresInitError::LoadingProvidersLinkParts(e))
-                            {
-                                ()
-                            }
                             Ok(vec) => {
                                 if vec.len() != 1 {
                                     panic!("find out why table.count().load vec.len() is not 1");
@@ -83,7 +80,6 @@ pub async fn init_postgres(
                                 {
                                     // return Err(PostgresInitError::InsertPosts(e));
                                 }
-                                // Ok(())
                             }
                         }
                     }
@@ -97,5 +93,20 @@ pub async fn init_postgres(
             }
             Ok(())
         }
+    }
+}   
+
+impl ProviderKind {
+    pub fn get_link_parts_count(&self, pg_connection: &PgConnection) -> Result<Vec<i64>, diesel::result::Error> {
+        match self {
+            ProviderKind::Arxiv => arxiv_link_parts.count().load(pg_connection),
+            ProviderKind::Biorxiv => biorxiv_link_parts.count().load(pg_connection),
+            ProviderKind::Github => github_link_parts.count().load(pg_connection),
+            ProviderKind::Habr => habr_link_parts.count().load(pg_connection),
+            ProviderKind::Medrxiv => medrxiv_link_parts.count().load(pg_connection),
+            ProviderKind::Reddit => reddit_link_parts.count().load(pg_connection),
+            ProviderKind::Twitter => twitter_link_parts.count().load(pg_connection),
+        }
+
     }
 }
