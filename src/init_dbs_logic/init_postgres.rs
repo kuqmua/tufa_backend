@@ -3,7 +3,13 @@ use std::collections::HashMap;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 
-use crate::postgres_integration::models::insertable::insertable_link_part::InsertableLinkPart;
+use crate::postgres_integration::models::insertable::insertable_arxiv_link_part::InsertableArxivLinkPart;
+use crate::postgres_integration::models::insertable::insertable_biorxiv_link_part::InsertableBiorxivLinkPart;
+use crate::postgres_integration::models::insertable::insertable_github_link_part::InsertableGithubLinkPart;
+use crate::postgres_integration::models::insertable::insertable_habr_link_part::InsertableHabrLinkPart;
+use crate::postgres_integration::models::insertable::insertable_medrxiv_link_part::InsertableMedrxivLinkPart;
+use crate::postgres_integration::models::insertable::insertable_reddit_link_part::InsertableRedditLinkPart;
+use crate::postgres_integration::models::insertable::insertable_twitter_link_part::InsertableTwitterLinkPart;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -64,11 +70,10 @@ pub async fn init_postgres(
                                     }
                                     _ => panic!("no first element"),
                                 }
-                                let mut posts_vec: Vec<InsertableLinkPart> =
+                                let mut posts_vec: Vec<InsertableArxivLinkPart> =
                                     Vec::with_capacity(data_vec.len());
                                 for data in data_vec {
-                                    posts_vec.push(InsertableLinkPart {
-                                        provider_kind: format!("{}", pk.clone()),
+                                    posts_vec.push(InsertableArxivLinkPart {
                                         link_part: data.clone(),
                                     });
                                 }

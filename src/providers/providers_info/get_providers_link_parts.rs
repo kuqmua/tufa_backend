@@ -5,8 +5,8 @@ use crate::helpers::resource::Resource;
 use crate::mongo_integration::mongo_get_providers_link_parts_processed::mongo_get_providers_link_parts_processed;
 use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
 
-use crate::postgres_integration::postgres_get_providers_link_parts::postgres_get_providers_link_parts;
-use crate::postgres_integration::postgres_get_providers_link_parts::PostgresGetProviderLinksError;
+// use crate::postgres_integration::postgres_get_providers_link_parts::postgres_get_providers_link_parts;
+// use crate::postgres_integration::postgres_get_providers_link_parts::PostgresGetProviderLinksError;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
@@ -16,7 +16,8 @@ use crate::providers::providers_info::get_all_local_providers_data::get_all_loca
 pub enum GetLinkPartsError {
     Local(HashMap<ProviderKind, ProvidersLocalDataError>),
     Mongodb(MongoGetProvidersLinkPartsProcessedResult),
-    PostgreSql(PostgresGetProviderLinksError),
+    // PostgreSql(PostgresGetProviderLinksError),
+    PostgreSql,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -32,9 +33,10 @@ pub async fn get_providers_link_parts(
             Err(e) => Err(GetLinkPartsError::Mongodb(e)),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
-        Resource::PostgreSql => match postgres_get_providers_link_parts().await {
-            Err(e) => Err(GetLinkPartsError::PostgreSql(e)),
-            Ok(success_hashmap) => Ok(success_hashmap),
-        },
+        // Resource::PostgreSql => match postgres_get_providers_link_parts().await {
+        //     Err(e) => Err(GetLinkPartsError::PostgreSql(e)),
+        //     Ok(success_hashmap) => Ok(success_hashmap),
+        // },
+        Resource::PostgreSql => todo!(),
     }
 }

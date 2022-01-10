@@ -58,7 +58,8 @@ pub async fn get_providers_posts() {
         Err(e) => match e {
             GetLinkPartsError::Local(_) => todo!(),
             GetLinkPartsError::Mongodb(_) => todo!(),
-            GetLinkPartsError::PostgreSql(_) => todo!(),
+            // GetLinkPartsError::PostgreSql(_) => todo!(),
+            GetLinkPartsError::PostgreSql => todo!(),
         },
         Ok(providers_link_parts) => {
             match check_providers_link_parts_on_empty(providers_link_parts) {
