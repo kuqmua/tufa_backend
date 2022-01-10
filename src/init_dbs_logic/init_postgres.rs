@@ -46,9 +46,7 @@ pub async fn init_postgres(
             for (pk, data_vec) in providers_json_local_data_hashmap {
                 match pk {
                     ProviderKind::Arxiv => {
-                        let result: Result<Vec<i64>, diesel::result::Error> =
-                            arxiv_link_parts.count().load(&pg_connection);
-                        match result {
+                        match pk.get_link_parts_count(&pg_connection) {
                             Err(e) => (),
                             // Err(PostgresInitError::LoadingProvidersLinkParts(e))
                             Ok(vec) => {
@@ -67,13 +65,11 @@ pub async fn init_postgres(
                                     }
                                     _ => panic!("no first element"),
                                 }
-                                let mut posts_vec: Vec<InsertableArxivLinkPart> =
-                                    Vec::with_capacity(data_vec.len());
-                                for data in data_vec {
-                                    posts_vec.push(InsertableArxivLinkPart {
-                                        link_part: data.clone(),
-                                    });
-                                }
+                                let posts_vec = data_vec.into_iter().map(|data|{
+                                    InsertableArxivLinkPart {
+                                        link_part: data,
+                                    }
+                                }).collect::<Vec<InsertableArxivLinkPart>>();
                                 if let Err(e) = diesel::insert_into(arxiv_link_parts)
                                     .values(&posts_vec)
                                     .get_result::<QueryableLinkPart>(&pg_connection)
@@ -107,6 +103,18 @@ impl ProviderKind {
             ProviderKind::Reddit => reddit_link_parts.count().load(pg_connection),
             ProviderKind::Twitter => twitter_link_parts.count().load(pg_connection),
         }
-
     }
+    // pub fn insert_provider_links_into_postgres(&self, pg_connection: &PgConnection) -> Result<(), diesel::result::Error> {
+    //     match self {
+    //         ProviderKind::Arxiv => diesel::insert_into(arxiv_link_parts)
+    //         .values(&posts_vec)
+    //         .get_result::<QueryableLinkPart>(&pg_connection),
+    //         ProviderKind::Biorxiv => biorxiv_link_parts.count().load(pg_connection),
+    //         ProviderKind::Github => github_link_parts.count().load(pg_connection),
+    //         ProviderKind::Habr => habr_link_parts.count().load(pg_connection),
+    //         ProviderKind::Medrxiv => medrxiv_link_parts.count().load(pg_connection),
+    //         ProviderKind::Reddit => reddit_link_parts.count().load(pg_connection),
+    //         ProviderKind::Twitter => twitter_link_parts.count().load(pg_connection),
+    //     }
+    // }
 }
