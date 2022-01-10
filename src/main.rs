@@ -129,7 +129,15 @@ pub mod postgres_integration {
         pub mod twitter_link_parts_schema;
     }
     pub mod postgres_check_availability;
-    pub mod postgres_delete_post;
+    pub mod deletion {
+        pub mod postgres_arxiv_delete_post;
+        pub mod postgres_biorxiv_delete_post;
+        pub mod postgres_github_delete_post;
+        pub mod postgres_habr_delete_post;
+        pub mod postgres_medrxiv_delete_post;
+        pub mod postgres_reddit_delete_post;
+        pub mod postgres_twitter_delete_post;
+    }
     pub mod postgres_get_db_url;
     pub mod postgres_get_providers_link_parts;
 }
