@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use diesel::prelude::*;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -24,10 +23,10 @@ pub enum InitDbsError {
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
-    PostgresLoadingProvidersLinkParts(diesel::result::Error),
+    // PostgresLoadingProvidersLinkParts(diesel::result::Error),
     PostgresProvidersLinkPartsIsNotEmpty(i64),
-    PostgresInsertPosts(diesel::result::Error),
-    PostgresEstablishConnection(ConnectionError),
+    // PostgresInsertPosts(diesel::result::Error),
+    // PostgresEstablishConnection(ConnectionError),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -68,18 +67,18 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match err {
-                    PostgresInitError::LoadingProvidersLinkParts(e) => {
-                        return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
-                    }
+                    // PostgresInitError::LoadingProvidersLinkParts(e) => {
+                    //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
+                    // }
                     PostgresInitError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
                         return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
                     }
-                    PostgresInitError::InsertPosts(e) => {
-                        return Err(InitDbsError::PostgresInsertPosts(e));
-                    }
-                    PostgresInitError::EstablishConnection(e) => {
-                        return Err(InitDbsError::PostgresEstablishConnection(e));
-                    }
+                    // PostgresInitError::InsertPosts(e) => {
+                    //     return Err(InitDbsError::PostgresInsertPosts(e));
+                    // }
+                    // PostgresInitError::EstablishConnection(e) => {
+                    //     return Err(InitDbsError::PostgresEstablishConnection(e));
+                    // }
                 }
             }
             Ok(())

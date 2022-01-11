@@ -105,39 +105,7 @@ pub mod mongo_integration {
     pub mod mongo_insert_docs_in_empty_collection;
 }
 pub mod postgres_integration {
-    pub mod models {
-        pub mod insertable {
-            pub mod insertable_arxiv_link_part;
-            pub mod insertable_biorxiv_link_part;
-            pub mod insertable_github_link_part;
-            pub mod insertable_habr_link_part;
-            pub mod insertable_medrxiv_link_part;
-            pub mod insertable_reddit_link_part;
-            pub mod insertable_twitter_link_part;
-        }
-        pub mod queryable {
-            pub mod queryable_link_part;
-        }
-    }
-    pub mod schemas {
-        pub mod arxiv_link_parts_schema;
-        pub mod biorxiv_link_parts_schema;
-        pub mod github_link_parts_schema;
-        pub mod habr_link_parts_schema;
-        pub mod medrxiv_link_parts_schema;
-        pub mod reddit_link_parts_schema;
-        pub mod twitter_link_parts_schema;
-    }
     pub mod postgres_check_availability;
-    pub mod deletion {
-        pub mod postgres_arxiv_delete_post;
-        pub mod postgres_biorxiv_delete_post;
-        pub mod postgres_github_delete_post;
-        pub mod postgres_habr_delete_post;
-        pub mod postgres_medrxiv_delete_post;
-        pub mod postgres_reddit_delete_post;
-        pub mod postgres_twitter_delete_post;
-    }
     pub mod postgres_get_db_url;
     pub mod postgres_get_providers_link_parts;
 }
@@ -194,8 +162,6 @@ mod entry;
 mod providers_new_posts_check;
 mod write_error_posts_wrapper;
 
-#[macro_use]
-extern crate diesel;
 #[macro_use]
 extern crate lazy_static;
 

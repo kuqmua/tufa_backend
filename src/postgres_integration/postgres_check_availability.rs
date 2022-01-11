@@ -1,18 +1,16 @@
-use std::fmt;
+// use std::fmt;
 
-use diesel::pg::PgConnection;
-use diesel::prelude::*;
+// #[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+// pub struct PostgresCheckAvailabilityError {
+//     /// postgres check availability error `{0}`
+//     pub source: Box<TodoError>,
+// }
 
-#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
-pub struct PostgresCheckAvailabilityError {
-    /// postgres check availability error `{0}`
-    pub source: Box<ConnectionError>,
-}
+// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+// pub fn postgres_check_availability(
+//     postgres_url: &str,
+// ) -> Result<(), TodoError> {
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn postgres_check_availability(
-    postgres_url: &str,
-) -> Result<(), PostgresCheckAvailabilityError> {
-    PgConnection::establish(postgres_url)?;
-    Ok(())
-}
+//     // Ok(())
+//     todo()
+// }

@@ -22,7 +22,7 @@ num_cpus = "1.0"
 toml = "0.5"
 html_parser = "0.6.2"
 regex = "1.5"
-diesel = { version = "1.4.8", features = ["postgres"] }#there is a new versions
+sqlx = { version = "0.5", features = [ "runtime-tokio-native-tls" , "postgres" ] }
 dotenv = "0.15.0"
 lazy_static = "1.4"
 strum = "0.21"

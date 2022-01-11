@@ -93,10 +93,10 @@ pub fn entry() {
                         InitDbsError::MongoClient(_) => return,
                         InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(_) => return,
                         InitDbsError::MongoInsertManyError(_) => return,
-                        InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,
+                        // InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,
                         InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(_) => (),
-                        InitDbsError::PostgresInsertPosts(_) => return,
-                        InitDbsError::PostgresEstablishConnection(_) => return,
+                        // InitDbsError::PostgresInsertPosts(_) => return,
+                        // InitDbsError::PostgresEstablishConnection(_) => return,
                     }
                 }
             }

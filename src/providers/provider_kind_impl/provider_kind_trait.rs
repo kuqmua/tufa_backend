@@ -5,7 +5,6 @@ use std::path::Path;
 use mongodb::bson::{doc, Document};
 use strum::IntoEnumIterator;
 
-use crate::postgres_integration;
 use crate::traits::enum_extention::EnumExtenstion;
 
 use crate::config_mods::lazy_static_config::CONFIG;
@@ -23,14 +22,6 @@ use crate::providers::providers_info::links::generate_habr_links::generate_habr_
 use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
 use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
-
-use crate::postgres_integration::schemas::arxiv_link_parts_schema::arxiv_link_parts::dsl::arxiv_link_parts;
-use crate::postgres_integration::schemas::biorxiv_link_parts_schema::biorxiv_link_parts::dsl::biorxiv_link_parts;
-use crate::postgres_integration::schemas::github_link_parts_schema::github_link_parts::dsl::github_link_parts;
-use crate::postgres_integration::schemas::habr_link_parts_schema::habr_link_parts::dsl::habr_link_parts;
-use crate::postgres_integration::schemas::medrxiv_link_parts_schema::medrxiv_link_parts::dsl::medrxiv_link_parts;
-use crate::postgres_integration::schemas::reddit_link_parts_schema::reddit_link_parts::dsl::reddit_link_parts;
-use crate::postgres_integration::schemas::twitter_link_parts_schema::twitter_link_parts::dsl::twitter_link_parts;
 
 impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -243,68 +234,4 @@ impl ProviderKindTrait for ProviderKind {
     fn get_db_tag(&self) -> String {
         format!("{}", self)
     }
-
-    fn get_postgres_table(&self) -> ProviderTables {
-        match self {
-            ProviderKind::Arxiv => ProviderTables::Arxiv(arxiv_link_parts),
-            ProviderKind::Biorxiv => ProviderTables::Biorxiv(biorxiv_link_parts),
-            ProviderKind::Github => ProviderTables::Github(github_link_parts),
-            ProviderKind::Habr => ProviderTables::Habr(habr_link_parts),
-            ProviderKind::Medrxiv => ProviderTables::Medrxiv(medrxiv_link_parts),
-            ProviderKind::Reddit => ProviderTables::Reddit(reddit_link_parts),
-            ProviderKind::Twitter => ProviderTables::Twitter(twitter_link_parts),
-        }
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_postgres_initialization_provider_kind_vec() -> Vec<ProviderKind> {
-        let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
-            Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_postgres_initialization_enabled())
-        {
-            vec_of_filtered_provider_names.push(provider_kind)
-        }
-        vec_of_filtered_provider_names
-    }
-
-    fn get_initialization_postgres_tables_vec() -> Vec<ProviderTables> {
-        let mut postgres_tables_vec = Vec::new();
-        for pk in ProviderKind::get_postgres_initialization_provider_kind_vec() {
-            match pk {
-                ProviderKind::Arxiv => {
-                    postgres_tables_vec.push(ProviderTables::Arxiv(arxiv_link_parts))
-                }
-                ProviderKind::Biorxiv => {
-                    postgres_tables_vec.push(ProviderTables::Biorxiv(biorxiv_link_parts))
-                }
-                ProviderKind::Github => {
-                    postgres_tables_vec.push(ProviderTables::Github(github_link_parts))
-                }
-                ProviderKind::Habr => {
-                    postgres_tables_vec.push(ProviderTables::Habr(habr_link_parts))
-                }
-                ProviderKind::Medrxiv => {
-                    postgres_tables_vec.push(ProviderTables::Medrxiv(medrxiv_link_parts))
-                }
-                ProviderKind::Reddit => {
-                    postgres_tables_vec.push(ProviderTables::Reddit(reddit_link_parts))
-                }
-                ProviderKind::Twitter => {
-                    postgres_tables_vec.push(ProviderTables::Twitter(twitter_link_parts))
-                }
-            }
-        }
-        postgres_tables_vec
-    }
-}
-
-pub enum ProviderTables {
-    Arxiv(postgres_integration::schemas::arxiv_link_parts_schema::arxiv_link_parts::table),
-    Biorxiv(postgres_integration::schemas::biorxiv_link_parts_schema::biorxiv_link_parts::table),
-    Github(postgres_integration::schemas::github_link_parts_schema::github_link_parts::table),
-    Habr(postgres_integration::schemas::habr_link_parts_schema::habr_link_parts::table),
-    Medrxiv(postgres_integration::schemas::medrxiv_link_parts_schema::medrxiv_link_parts::table),
-    Reddit(postgres_integration::schemas::reddit_link_parts_schema::reddit_link_parts::table),
-    Twitter(postgres_integration::schemas::twitter_link_parts_schema::twitter_link_parts::table),
 }
