@@ -1,16 +1,20 @@
-// use std::fmt;
+use std::fmt;
 
-// #[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
-// pub struct PostgresCheckAvailabilityError {
-//     /// postgres check availability error `{0}`
-//     pub source: Box<TodoError>,
-// }
+use sqlx::postgres::PgPoolOptions;
+use sqlx::Error;
 
-// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-// pub fn postgres_check_availability(
-//     postgres_url: &str,
-// ) -> Result<(), TodoError> {
+#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+pub struct PostgresCheckAvailabilityError {
+    /// postgres check availability error `{0}`
+    pub source: Box<Error>,
+}
 
-//     // Ok(())
-//     todo()
-// }
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+pub async fn postgres_check_availability(
+    postgres_url: &str,
+) -> Result<(), PostgresCheckAvailabilityError> {
+    PgPoolOptions::new()
+        .max_connections(1)
+        .connect(postgres_url).await?;
+    Ok(())
+}

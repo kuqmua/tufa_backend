@@ -9,8 +9,8 @@ use crate::mongo_integration::mongo_check_availability::mongo_check_availability
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
-// use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
-// use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
+use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
+use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -28,8 +28,8 @@ pub struct CheckNetWrapperError {
 pub enum CheckNetWrapperErrorEnum {
     /// net check availability error {0:?}
     CheckNetAvailabilityError(CheckNetAvailabilityError),
-    // postgres check availability error {0:?}
-    // PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
+    /// postgres check availability error {0:?}
+    PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
     /// mongo check availability error {0:?}
     MongoCheckAvailabilityError(MongoCheckAvailabilityError),
 }
@@ -45,7 +45,7 @@ pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
         line!().to_string(),
         "starting check postgres availability... ".to_owned(),
     );
-    // postgres_check_availability(&postgres_get_db_url())?;
+    postgres_check_availability(&postgres_get_db_url()).await?;
     print_colorful_message(
         None,
         PrintType::Info,

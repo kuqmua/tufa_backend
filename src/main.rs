@@ -164,7 +164,6 @@ mod write_error_posts_wrapper;
 
 #[macro_use]
 extern crate lazy_static;
-
 #[macro_use]
 extern crate box_err_from_err;
 #[macro_use]
