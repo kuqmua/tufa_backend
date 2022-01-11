@@ -7,7 +7,7 @@ use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 
 use crate::init_dbs_logic::init_postgres::init_postgres;
-use crate::init_dbs_logic::init_postgres::PostgresInitError;
+use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
@@ -24,9 +24,9 @@ pub enum InitDbsError {
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     // PostgresLoadingProvidersLinkParts(diesel::result::Error),
-    PostgresProvidersLinkPartsIsNotEmpty(i64),
+    // PostgresProvidersLinkPartsIsNotEmpty(i64),
     // PostgresInsertPosts(diesel::result::Error),
-    // PostgresEstablishConnection(ConnectionError),
+    PostgresEstablishConnection(sqlx::Error),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -66,19 +66,19 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                 }
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
-                match err {
+                match *err.source {
                     // PostgresInitError::LoadingProvidersLinkParts(e) => {
                     //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
                     // }
-                    PostgresInitError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
-                        return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
-                    }
+                    // PostgresInitError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
+                    //     return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
+                    // }
                     // PostgresInitError::InsertPosts(e) => {
                     //     return Err(InitDbsError::PostgresInsertPosts(e));
                     // }
-                    // PostgresInitError::EstablishConnection(e) => {
-                    //     return Err(InitDbsError::PostgresEstablishConnection(e));
-                    // }
+                    PostgresInitErrorEnum::EstablishConnection(e) => {
+                        return Err(InitDbsError::PostgresEstablishConnection(e));
+                    }
                 }
             }
             Ok(())
