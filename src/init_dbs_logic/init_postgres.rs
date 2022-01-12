@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::time::Duration;
 use std::fmt;
 
+use sqlx::{Pool, Postgres};
 use sqlx::postgres::PgPoolOptions;
 
 use futures::future::join_all;
@@ -21,10 +22,13 @@ pub enum PostgresInitErrorEnum {
     // LoadingProvidersLinkParts(diesel::result::Error),
     // ProvidersLinkPartsIsNotEmpty(i64),
     // InsertPosts(diesel::result::Error),
-    InsertQueries(HashMap<ProviderKind, sqlx::Error>),
+    CreateTableQueries(PostgresCreateProvidersDbsError),
+    InsertQueries(InsertQueriesHashmap),
     EstablishConnection(sqlx::Error),
 }
 
+pub type CreateTableQueriesHashmap = HashMap<ProviderKind, sqlx::Error>;//for wroking logic for now. todo: move into different function
+pub type InsertQueriesHashmap = HashMap<ProviderKind, sqlx::Error>;//for wroking logic for now. todo: move into different function
 #[deny(clippy::indexing_slicing)]
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
@@ -33,13 +37,9 @@ pub async fn init_postgres(
     .max_connections(providers_json_local_data_hashmap.len() as u32)
     .connect_timeout(Duration::from_millis(1000))//todo add timeout constant or env var
     .connect(&postgres_get_db_url()).await?;
-    match sqlx::query("CREATE TABLE IF NOT EXISTS arxiv_link_parts (i integer NOT NULL, link_part text, PRIMARY KEY (i));").execute(&db).await {
-        Err(e) => {
-            println!("R{:#?}R", e);
-        },
-        Ok(t) => println!("T{:#?}T", t),
-    }
-    let tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
+    postgres_create_providers_dbs(&providers_json_local_data_hashmap, &db).await?;
+    //
+    let insertion_tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
         async {
             let mut values_string = String::from("");
             for link_part in string_vec.clone() {
@@ -52,15 +52,38 @@ pub async fn init_postgres(
             (*pk, sqlx::query(&query_string).execute(&db).await)
             }
     });
-    let result_vec = join_all(tasks_vec).await; //todo: add state of success/unsuccess
-    let error_hashmap = result_vec.into_iter().filter_map(|(pk, result)| {
+    let insertion_error_hashmap = join_all(insertion_tasks_vec).await.into_iter().filter_map(|(pk, result)| {
         if let Err(e) = result {
             return Some((pk, e));
         }
         None
     }).collect::<HashMap<ProviderKind, sqlx::Error>>();
-    if !error_hashmap.is_empty() {
-        return Err(PostgresInitError { source: Box::new(PostgresInitErrorEnum::InsertQueries(error_hashmap))})
+    if !insertion_error_hashmap.is_empty() {
+        return Err(PostgresInitError { source: Box::new(PostgresInitErrorEnum::InsertQueries(insertion_error_hashmap))})
     }
     Ok(())
 }   
+
+#[derive(Debug)]
+pub struct PostgresCreateProvidersDbsError {
+    pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
+}
+
+pub async fn postgres_create_providers_dbs(providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>, db: &Pool<Postgres>) -> Result<(), PostgresCreateProvidersDbsError> {
+    let table_creation_tasks_vec = providers_json_local_data_hashmap.keys().map(|pk|{
+        async {
+            let query_string = format!("CREATE TABLE IF NOT EXISTS {} (i integer NOT NULL, link_part text, PRIMARY KEY (i));", pk.get_postgres_table_name());
+                (*pk, sqlx::query(&query_string).execute(db).await)
+            }
+    });
+    let table_creation_error_hashmap = join_all(table_creation_tasks_vec).await.into_iter().filter_map(|(pk, result)| {
+        if let Err(e) = result {
+            return Some((pk, e));
+        }
+        None
+    }).collect::<HashMap<ProviderKind, sqlx::Error>>();
+    if !table_creation_error_hashmap.is_empty() {
+        return Err(PostgresCreateProvidersDbsError { source: Box::new(table_creation_error_hashmap)})
+    }
+    Ok(())
+}

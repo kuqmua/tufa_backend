@@ -14,6 +14,7 @@ use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLo
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
+use super::init_postgres::PostgresCreateProvidersDbsError;
 
 #[derive(Debug)]
 pub enum InitDbsError {
@@ -25,6 +26,7 @@ pub enum InitDbsError {
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     // PostgresLoadingProvidersLinkParts(diesel::result::Error),
     // PostgresProvidersLinkPartsIsNotEmpty(i64),
+    PostgresCreateTableQueries(PostgresCreateProvidersDbsError),
     PostgresInsertQueries(HashMap<ProviderKind, sqlx::Error>),
     PostgresEstablishConnection(sqlx::Error),
 }
@@ -73,6 +75,9 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     // PostgresInitErrorEnum::ProvidersLinkPartsIsNotEmpty(e_vec) => {
                     //     return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
                     // }
+                    PostgresInitErrorEnum::CreateTableQueries(e) => {
+                        return Err(InitDbsError::PostgresCreateTableQueries(e));
+                    }
                     PostgresInitErrorEnum::InsertQueries(e) => {
                         return Err(InitDbsError::PostgresInsertQueries(e));
                     }
