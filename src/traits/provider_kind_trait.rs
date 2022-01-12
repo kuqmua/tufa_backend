@@ -42,4 +42,6 @@ pub trait ProviderKindTrait {
     fn get_db_tag(&self) -> String
     where
         Self: Sized;
+    fn get_postgres_table_name(&self) -> String where
+        Self: Sized;
 }

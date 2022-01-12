@@ -234,4 +234,9 @@ impl ProviderKindTrait for ProviderKind {
     fn get_db_tag(&self) -> String {
         format!("{}", self)
     }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_postgres_table_name(&self) -> String {
+        format!("{}_link_parts", self.to_lower_snake_case())
+    }
 }
