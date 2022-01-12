@@ -25,7 +25,7 @@ pub enum InitDbsError {
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     // PostgresLoadingProvidersLinkParts(diesel::result::Error),
     // PostgresProvidersLinkPartsIsNotEmpty(i64),
-    // PostgresInsertPosts(diesel::result::Error),
+    PostgresInsertQueries(HashMap<ProviderKind, sqlx::Error>),
     PostgresEstablishConnection(sqlx::Error),
 }
 
@@ -67,15 +67,15 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
-                    // PostgresInitError::LoadingProvidersLinkParts(e) => {
+                    // PostgresInitErrorEnum::LoadingProvidersLinkParts(e) => {
                     //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
                     // }
-                    // PostgresInitError::ProvidersLinkPartsIsNotEmpty(e_vec) => {
+                    // PostgresInitErrorEnum::ProvidersLinkPartsIsNotEmpty(e_vec) => {
                     //     return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
                     // }
-                    // PostgresInitError::InsertPosts(e) => {
-                    //     return Err(InitDbsError::PostgresInsertPosts(e));
-                    // }
+                    PostgresInitErrorEnum::InsertQueries(e) => {
+                        return Err(InitDbsError::PostgresInsertQueries(e));
+                    }
                     PostgresInitErrorEnum::EstablishConnection(e) => {
                         return Err(InitDbsError::PostgresEstablishConnection(e));
                     }
