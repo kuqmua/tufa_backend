@@ -53,12 +53,12 @@ pub async fn init_postgres(
             }
     });
     let result_vec = join_all(tasks_vec).await; //todo: add state of success/unsuccess
-    let mut error_hashmap = HashMap::new();
-    for (pk, result) in result_vec {
+    let error_hashmap = result_vec.into_iter().filter_map(|(pk, result)| {
         if let Err(e) = result {
-            error_hashmap.insert(pk, e);
+            return Some((pk, e));
         }
-    }
+        None
+    }).collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !error_hashmap.is_empty() {
         return Err(PostgresInitError { source: Box::new(PostgresInitErrorEnum::InsertQueries(error_hashmap))})
     }
