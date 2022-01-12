@@ -577,3 +577,10 @@ big error version for lower allocation statistics
 small error (yeah with less info about error) version for high allocation statistics
 (in small version still allocate big error version from time to time - for more info)
 <br/>
+    
+    
+### -------------------
+rust zero to production book 
+https://github.com/LukeMathWalker/zero-to-production
+<br/>
+ 
