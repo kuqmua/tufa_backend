@@ -9,6 +9,7 @@ use futures::future::join_all;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct PostgresInitError {
@@ -32,7 +33,12 @@ pub async fn init_postgres(
     .max_connections(providers_json_local_data_hashmap.len() as u32)
     .connect_timeout(Duration::from_millis(1000))//todo add timeout constant or env var
     .connect(&postgres_get_db_url()).await?;
-    // let mut tasks_vec = Vec::with_capacity(providers_json_local_data_hashmap.len());
+    match sqlx::query("CREATE TABLE IF NOT EXISTS arxiv_link_parts (i integer NOT NULL, link_part text, PRIMARY KEY (i));").execute(&db).await {
+        Err(e) => {
+            println!("R{:#?}R", e);
+        },
+        Ok(t) => println!("T{:#?}T", t),
+    }
     let tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
         async {
             let mut values_string = String::from("");
@@ -42,7 +48,7 @@ pub async fn init_postgres(
             if !values_string.is_empty() {
                 values_string.pop();
             }
-            let query_string = format!("INSERT INTO providers_link_parts (link_part) VALUES {};", values_string);
+            let query_string = format!("INSERT INTO {} (link_part) VALUES {};", pk.get_postgres_table_name(), values_string);
             (*pk, sqlx::query(&query_string).execute(&db).await)
             }
     });
