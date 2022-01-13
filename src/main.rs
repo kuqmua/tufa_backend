@@ -108,6 +108,7 @@ pub mod postgres_integration {
     pub mod postgres_check_availability;
     pub mod postgres_get_db_url;
     pub mod postgres_get_providers_link_parts;
+    pub mod postgres_create_providers_tables;
 }
 pub mod prints {
     pub mod print_colorful_message;
