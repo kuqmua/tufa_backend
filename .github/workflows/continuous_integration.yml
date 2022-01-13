@@ -46,9 +46,6 @@ jobs:
 
       - name: cargo test ci -- --show-output
         run: cargo test ci -- --show-output
-      
-      - name: cargo install cargo-audit
-        run: cargo install cargo-audit
 
       - name: cargo audit
         run: cargo audit
