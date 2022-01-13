@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::init_dbs_logic::init_mongo::init_mongo;
@@ -27,7 +26,9 @@ pub enum InitDbsError {
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     // PostgresLoadingProvidersLinkParts(diesel::result::Error),
-    PostgresCheckProvidersLinkPartsTablesEmptyError(PostgresCheckProvidersLinkPartsTablesEmptyError),
+    PostgresCheckProvidersLinkPartsTablesEmptyError(
+        PostgresCheckProvidersLinkPartsTablesEmptyError,
+    ),
     PostgresCreateTableQueries(PostgresCreateProvidersDbsError),
     PostgresInsertQueries(HashMap<ProviderKind, sqlx::Error>),
     PostgresEstablishConnection(sqlx::Error),
@@ -75,7 +76,9 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
                     // }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
-                        return Err(InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(e));
+                        return Err(
+                            InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(e),
+                        );
                     }
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
                         return Err(InitDbsError::PostgresCreateTableQueries(e));

@@ -17,6 +17,7 @@ pub async fn postgres_check_availability(
     PgPoolOptions::new()
         .max_connections(1)
         .connect_timeout(Duration::from_millis(1000))
-        .connect(postgres_url).await?;
+        .connect(postgres_url)
+        .await?;
     Ok(())
 }
