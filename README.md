@@ -203,5 +203,7 @@ cargo install cargo-tarpaulin
 usage:
 cargo tarpaulin --ignore-tests
 
-
+# how to tune rustfmt
+You can tune rustfmt for a project with a configuration file, rustfmt.toml. Details can be found in
+rustfmt’s https://github.com/rust-lang/rustfmt#configuring-rustfmt
 
