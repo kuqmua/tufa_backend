@@ -199,6 +199,7 @@ cargo expand some_mod::some_inner_mod::some::inner_inner_mod
 
 
 # install cargo code Coverage
+installation:
 cargo install cargo-tarpaulin
 usage:
 cargo tarpaulin --ignore-tests
@@ -207,3 +208,10 @@ cargo tarpaulin --ignore-tests
 You can tune rustfmt for a project with a configuration file, rustfmt.toml. Details can be found in
 rustfmt’s https://github.com/rust-lang/rustfmt#configuring-rustfmt
 
+# check vulnerabilities in project
+cargo-audit, a convenient cargo sub-command to check if vulnerabilities have
+been reported for any of the crates in the dependency tree of your project.
+installation:
+cargo install cargo-audit
+usage:
+cargo audit
