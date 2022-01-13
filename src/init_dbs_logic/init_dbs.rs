@@ -16,6 +16,8 @@ use crate::providers::providers_info::get_all_local_providers_data::get_all_loca
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 
+use crate::init_dbs_logic::init_postgres::PostgresCheckProvidersLinkPartsTablesEmptyError;
+
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
@@ -25,7 +27,7 @@ pub enum InitDbsError {
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
     // PostgresLoadingProvidersLinkParts(diesel::result::Error),
-    // PostgresProvidersLinkPartsIsNotEmpty(i64),
+    PostgresCheckProvidersLinkPartsTablesEmptyError(PostgresCheckProvidersLinkPartsTablesEmptyError),
     PostgresCreateTableQueries(PostgresCreateProvidersDbsError),
     PostgresInsertQueries(HashMap<ProviderKind, sqlx::Error>),
     PostgresEstablishConnection(sqlx::Error),
@@ -72,9 +74,9 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     // PostgresInitErrorEnum::LoadingProvidersLinkParts(e) => {
                     //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
                     // }
-                    // PostgresInitErrorEnum::ProvidersLinkPartsIsNotEmpty(e_vec) => {
-                    //     return Err(InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(e_vec));
-                    // }
+                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
+                        return Err(InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(e));
+                    }
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
                         return Err(InitDbsError::PostgresCreateTableQueries(e));
                     }

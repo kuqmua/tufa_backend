@@ -24,6 +24,7 @@ pub enum PostgresInitErrorEnum {
     // LoadingProvidersLinkParts(diesel::result::Error),
     // ProvidersLinkPartsIsNotEmpty(i64),
     // InsertPosts(diesel::result::Error),
+    CheckProviderLinksTablesAreEmpty(PostgresCheckProvidersLinkPartsTablesEmptyError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
     InsertQueries(InsertQueriesHashmap),
     EstablishConnection(sqlx::Error),
@@ -35,13 +36,13 @@ pub type InsertQueriesHashmap = HashMap<ProviderKind, sqlx::Error>;//for wroking
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), PostgresInitError> {
-    println!("providers_json_local_data_hashmap {:#?}", providers_json_local_data_hashmap);
     let db = PgPoolOptions::new()
     .max_connections(providers_json_local_data_hashmap.len() as u32)
     .connect_timeout(Duration::from_millis(10000))//todo add timeout constant or env var
     .connect(&postgres_get_db_url()).await?;
     postgres_create_providers_tables_if_not_exists(&providers_json_local_data_hashmap, &db).await?;
-    postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await;
+    println!("providers_json_local_data_hashmap {:#?}", providers_json_local_data_hashmap);
+    postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await?;
     // let insertion_tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
     //     async {
     //         let mut values_string = String::from("");
@@ -75,27 +76,38 @@ pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
 #[derive(Debug)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     SelectCount(HashMap<ProviderKind, sqlx::Error>),
-    EstablishConnection(sqlx::Error),
+    NotEmpty(HashMap<ProviderKind, i64>),
 }
 
 pub async fn postgres_check_provider_links_tables_are_empty(providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>, db: &Pool<Postgres>) -> Result<(), PostgresCheckProvidersLinkPartsTablesEmptyError> {
     let count_provider_links_tables_tasks_vec = providers_json_local_data_hashmap.keys().map(|pk|{
         async {
             let query_string = format!("SELECT count(*) AS exact_count FROM {};", pk.get_postgres_table_name());
-            let (count,): (i64,) = sqlx::query_as(&query_string).fetch_one(db).await.unwrap();
-                (*pk, count)
+                (*pk, sqlx::query_as(&query_string).fetch_one(db).await)
             }
     });
-    let count_provider_links_tables_error_hashmap = join_all(count_provider_links_tables_tasks_vec).await;
-    // .into_iter().map(|(pk, result)| {
-    //     if let Err(e) = result {
-    //         return Some((pk, e));
-    //     }
-    //     None
-    // }).collect::<HashMap<ProviderKind, sqlx::Error>>();
-    println!("count_provider_links_tables_error_hashmap {:#?}", count_provider_links_tables_error_hashmap);
-    // if !count_provider_links_tables_error_hashmap.is_empty() {
-    //     return Err(PostgresCheckProvidersLinkPartsTablesEmptyError { source: Box::new(count_provider_links_tables_error_hashmap)})
-    // }
+    let count_provider_links_tables_error_vec: Vec<(ProviderKind, Result<(i64, ), sqlx::Error>)> = join_all(count_provider_links_tables_tasks_vec).await;
+    let mut count_provider_links_tables_error_hashmap: HashMap<ProviderKind, sqlx::Error> = HashMap::new();
+    let mut provider_links_tables_not_empty_error_hashmap: HashMap<ProviderKind, i64> = HashMap::new();
+    for (pk, result) in count_provider_links_tables_error_vec{
+        match result {
+            Err(e) => {count_provider_links_tables_error_hashmap.insert(pk, e);},
+            Ok((count, )) => {
+                if count > 0 {
+                    provider_links_tables_not_empty_error_hashmap.insert(pk, count);
+                }
+            },
+        }
+    }
+    if !count_provider_links_tables_error_hashmap.is_empty() {
+        return Err(PostgresCheckProvidersLinkPartsTablesEmptyError { source: Box::new(
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(count_provider_links_tables_error_hashmap)
+        )})
+    }
+    if !provider_links_tables_not_empty_error_hashmap.is_empty() {
+        return Err(PostgresCheckProvidersLinkPartsTablesEmptyError { source: Box::new(
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(provider_links_tables_not_empty_error_hashmap)
+        )})
+    }
     Ok(())
 }
