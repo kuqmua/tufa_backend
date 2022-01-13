@@ -14,7 +14,7 @@ use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLo
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
-use crate::postgres_integration::postgres_create_providers_tables::PostgresCreateProvidersDbsError;
+use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 
 #[derive(Debug)]
 pub enum InitDbsError {

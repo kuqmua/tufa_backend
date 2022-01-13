@@ -11,8 +11,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-use crate::postgres_integration::postgres_create_providers_tables::PostgresCreateProvidersDbsError;
-use crate::postgres_integration::postgres_create_providers_tables::postgres_create_providers_tables;
+use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
+use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct PostgresInitError {
@@ -40,7 +40,7 @@ pub async fn init_postgres(
     .max_connections(providers_json_local_data_hashmap.len() as u32)
     .connect_timeout(Duration::from_millis(10000))//todo add timeout constant or env var
     .connect(&postgres_get_db_url()).await?;
-    postgres_create_providers_tables(&providers_json_local_data_hashmap, &db).await?;
+    postgres_create_providers_tables_if_not_exists(&providers_json_local_data_hashmap, &db).await?;
     postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await;
     // let insertion_tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
     //     async {

@@ -12,7 +12,7 @@ pub struct PostgresCreateProvidersDbsError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
 }
 
-pub async fn postgres_create_providers_tables(providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>, db: &Pool<Postgres>) -> Result<(), PostgresCreateProvidersDbsError> {
+pub async fn postgres_create_providers_tables_if_not_exists(providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>, db: &Pool<Postgres>) -> Result<(), PostgresCreateProvidersDbsError> {
     let table_creation_tasks_vec = providers_json_local_data_hashmap.keys().map(|pk|{
         async {
             let query_string = format!("CREATE TABLE IF NOT EXISTS {} (i integer NOT NULL, link_part text, PRIMARY KEY (i));", pk.get_postgres_table_name());
