@@ -415,3 +415,11 @@ different than PROVIDERS_LINK_PARTS_SOURCE
 ### -------------------
 divide and move outside postgres and mongo methods from provider_kind_trait 
 <br/>
+  
+### -------------------
+rewrite prints like this
+let person = get_person();
+// ...
+println!("Hello, {person}!"); // captures the local `person`
+<br/>
+  
