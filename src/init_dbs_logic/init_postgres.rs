@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fmt;
 use std::time::Duration;
 
+use futures::future::join_all;
 use sqlx::postgres::PgPoolOptions;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -11,6 +12,7 @@ use crate::postgres_integration::postgres_check_provider_links_tables_are_empty:
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct PostgresInitError {
@@ -45,27 +47,40 @@ pub async fn init_postgres(
         providers_json_local_data_hashmap
     );
     postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await?;
-    // let insertion_tasks_vec = providers_json_local_data_hashmap.iter().map(|(pk, string_vec)|{
-    //     async {
-    //         let mut values_string = String::from("");
-    //         for link_part in string_vec.clone() {
-    //             values_string.push_str(&format!("('{}'),", link_part));
-    //         }
-    //         if !values_string.is_empty() {
-    //             values_string.pop();
-    //         }
-    //         let query_string = format!("INSERT INTO {} (link_part) VALUES {};", pk.get_postgres_table_name(), values_string);
-    //         (*pk, sqlx::query(&query_string).execute(&db).await)
-    //         }
-    // });
-    // let insertion_error_hashmap = join_all(insertion_tasks_vec).await.into_iter().filter_map(|(pk, result)| {
-    //     if let Err(e) = result {
-    //         return Some((pk, e));
-    //     }
-    //     None
-    // }).collect::<HashMap<ProviderKind, sqlx::Error>>();
-    // if !insertion_error_hashmap.is_empty() {
-    //     return Err(PostgresInitError { source: Box::new(PostgresInitErrorEnum::InsertQueries(insertion_error_hashmap))})
-    // }
+    let insertion_tasks_vec =
+        providers_json_local_data_hashmap
+            .iter()
+            .map(|(pk, string_vec)| async {
+                let mut values_string = String::from("");
+                for link_part in string_vec.clone() {
+                    values_string.push_str(&format!("('{}'),", link_part));
+                }
+                if !values_string.is_empty() {
+                    values_string.pop();
+                }
+                let query_string = format!(
+                    "INSERT INTO {} (link_part) VALUES {};",
+                    pk.get_postgres_table_name(),
+                    values_string
+                );
+                (*pk, sqlx::query(&query_string).execute(&db).await)
+            });
+    let insertion_error_hashmap = join_all(insertion_tasks_vec)
+        .await
+        .into_iter()
+        .filter_map(|(pk, result)| {
+            if let Err(e) = result {
+                return Some((pk, e));
+            }
+            None
+        })
+        .collect::<HashMap<ProviderKind, sqlx::Error>>();
+    if !insertion_error_hashmap.is_empty() {
+        return Err(PostgresInitError {
+            source: Box::new(PostgresInitErrorEnum::InsertQueries(
+                insertion_error_hashmap,
+            )),
+        });
+    }
     Ok(())
 }
