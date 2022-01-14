@@ -18,7 +18,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
 ) -> Result<(), PostgresCreateProvidersDbsError> {
     let table_creation_tasks_vec = providers_json_local_data_hashmap.keys().map(|pk| async {
         let query_string = format!(
-            "CREATE TABLE IF NOT EXISTS {} (i integer NOT NULL, link_part text, PRIMARY KEY (i));",
+            "CREATE TABLE IF NOT EXISTS {} (id integer GENERATED ALWAYS AS IDENTITY NOT NULL, link_part text, PRIMARY KEY (id));",
             pk.get_postgres_table_name()
         );
         (*pk, sqlx::query(&query_string).execute(db).await)
