@@ -94,7 +94,7 @@ pub fn entry() {
                         InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(_) => return,
                         InitDbsError::MongoInsertManyError(_) => return,
                         // InitDbsError::PostgresLoadingProvidersLinkParts(_) => return,
-                        // InitDbsError::PostgresProvidersLinkPartsIsNotEmpty(_) => (),
+                        InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(_) => return,
                         InitDbsError::PostgresCreateTableQueries(_) => return,
                         InitDbsError::PostgresInsertQueries(_) => return,
                         InitDbsError::PostgresEstablishConnection(_) => return,
