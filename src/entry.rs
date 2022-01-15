@@ -96,7 +96,7 @@ pub fn entry() {
                         InitDbsError::PostgresDeleteAllFromProvidersTables(_) => return,
                         InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(_) => return,
                         InitDbsError::PostgresCreateTableQueries(_) => return,
-                        InitDbsError::PostgresInsertQueries(_) => return,
+                        InitDbsError::PostgresInsertLinkPartsIntoProvidersTables(_) => return,
                         InitDbsError::PostgresEstablishConnection(_) => return,
                     }
                 }

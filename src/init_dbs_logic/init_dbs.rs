@@ -16,6 +16,7 @@ use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_delete_all_from_providers_tables::PostgresDeleteAllFromProvidersTablesError;
+use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 
 #[derive(Debug)]
 pub enum InitDbsError {
@@ -30,7 +31,7 @@ pub enum InitDbsError {
         PostgresCheckProvidersLinkPartsTablesEmptyError,
     ),
     PostgresCreateTableQueries(PostgresCreateProvidersDbsError),
-    PostgresInsertQueries(HashMap<ProviderKind, sqlx::Error>),
+    PostgresInsertLinkPartsIntoProvidersTables(PostgresInsertLinkPartsIntoProvidersTablesError),
     PostgresEstablishConnection(sqlx::Error),
 }
 
@@ -83,8 +84,8 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
                         return Err(InitDbsError::PostgresCreateTableQueries(e));
                     }
-                    PostgresInitErrorEnum::InsertQueries(e) => {
-                        return Err(InitDbsError::PostgresInsertQueries(e));
+                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => {
+                        return Err(InitDbsError::PostgresInsertLinkPartsIntoProvidersTables(e));
                     }
                     PostgresInitErrorEnum::EstablishConnection(e) => {
                         return Err(InitDbsError::PostgresEstablishConnection(e));
