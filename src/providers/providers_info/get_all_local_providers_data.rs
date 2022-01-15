@@ -10,6 +10,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[deny(clippy::indexing_slicing)]
 pub async fn get_all_local_providers_data(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, HashMap<ProviderKind, ProviderGetLocalDataError>> {
+    //todo: get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add additional vars into env file
     let futures_vec = ProviderKind::get_enabled_providers_vec()
         .into_iter()
         .map(|pk| async move { (pk, ProviderKind::get_local_data(pk).await) });

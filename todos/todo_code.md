@@ -427,3 +427,7 @@ println!("Hello, {person}!"); // captures the local `person`
 fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async
 <br/>
   
+### -------------------
+inside get_all_local_providers_data
+get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add additional vars into env file
+<br/>
