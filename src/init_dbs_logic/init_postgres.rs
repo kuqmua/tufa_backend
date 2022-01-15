@@ -45,10 +45,6 @@ pub async fn init_postgres(
         .connect(&postgres_get_db_url())
         .await?;
     postgres_create_providers_tables_if_not_exists(&providers_json_local_data_hashmap, &db).await?;
-    println!(
-        "providers_json_local_data_hashmap {:#?}",
-        providers_json_local_data_hashmap
-    );
     postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await?;
     postgres_delete_all_from_providers_tables(&providers_json_local_data_hashmap, &db).await?;
     let insertion_tasks_vec =

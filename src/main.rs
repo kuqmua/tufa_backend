@@ -111,6 +111,7 @@ pub mod postgres_integration {
     pub mod postgres_delete_all_from_providers_tables;
     pub mod postgres_get_db_url;
     pub mod postgres_get_providers_link_parts;
+    pub mod postgres_insert_link_parts_into_providers_tables;
 }
 pub mod prints {
     pub mod print_colorful_message;
