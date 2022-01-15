@@ -5,6 +5,8 @@ use std::time::Duration;
 use futures::future::join_all;
 use sqlx::postgres::PgPoolOptions;
 
+use crate::postgres_integration::postgres_delete_all_from_providers_tables::postgres_delete_all_from_providers_tables;
+use crate::postgres_integration::postgres_delete_all_from_providers_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::postgres_check_provider_links_tables_are_empty;
@@ -24,6 +26,7 @@ pub enum PostgresInitErrorEnum {
     // LoadingProvidersLinkParts(diesel::result::Error),
     // ProvidersLinkPartsIsNotEmpty(i64),
     // InsertPosts(diesel::result::Error),
+    DeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
     CheckProviderLinksTablesAreEmpty(PostgresCheckProvidersLinkPartsTablesEmptyError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
     InsertQueries(InsertQueriesHashmap),
@@ -47,6 +50,7 @@ pub async fn init_postgres(
         providers_json_local_data_hashmap
     );
     postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &db).await?;
+    postgres_delete_all_from_providers_tables(&providers_json_local_data_hashmap, &db).await?;
     let insertion_tasks_vec =
         providers_json_local_data_hashmap
             .iter()

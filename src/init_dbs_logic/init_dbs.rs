@@ -4,7 +4,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
-
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 
@@ -13,9 +12,10 @@ use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLo
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
-use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 
 use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
+use crate::postgres_integration::postgres_delete_all_from_providers_tables::PostgresDeleteAllFromProvidersTablesError;
 
 #[derive(Debug)]
 pub enum InitDbsError {
@@ -25,7 +25,7 @@ pub enum InitDbsError {
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
-    // PostgresLoadingProvidersLinkParts(diesel::result::Error),
+    PostgresDeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
     PostgresCheckProvidersLinkPartsTablesEmptyError(
         PostgresCheckProvidersLinkPartsTablesEmptyError,
     ),
@@ -72,9 +72,9 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
-                    // PostgresInitErrorEnum::LoadingProvidersLinkParts(e) => {
-                    //     return Err(InitDbsError::PostgresLoadingProvidersLinkParts(e));
-                    // }
+                    PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
+                        return Err(InitDbsError::PostgresDeleteAllFromProvidersTables(e));
+                    }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
                         return Err(
                             InitDbsError::PostgresCheckProvidersLinkPartsTablesEmptyError(e),
