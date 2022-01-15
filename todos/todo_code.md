@@ -423,3 +423,7 @@ let person = get_person();
 println!("Hello, {person}!"); // captures the local `person`
 <br/>
   
+### -------------------
+fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async
+<br/>
+  
