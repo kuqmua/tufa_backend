@@ -12,7 +12,7 @@ pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
 }
 
-pub async fn postgres_delete_all_from_providers_tables(
+pub async fn postgres_delete_all_from_providers_link_parts_tables(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     pool: &Pool<Postgres>,
 ) -> Result<(), PostgresDeleteAllFromProvidersTablesError> {
