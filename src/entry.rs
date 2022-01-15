@@ -90,7 +90,6 @@ pub fn entry() {
                     );
                     match e {
                         InitDbsError::GetProvidersJsonLocalData(_) => return,
-                        InitDbsError::NoProvidersInsideLocalProvidersData => return,
                         InitDbsError::MongoClient(_) => return,
                         InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(_) => return,
                         InitDbsError::MongoInsertManyError(_) => return,
