@@ -10,8 +10,8 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::postgres_check_provider_links_tables_are_empty;
-use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
@@ -43,7 +43,7 @@ pub async fn init_postgres(
         .await?;
     postgres_create_providers_tables_if_not_exists(&providers_json_local_data_hashmap, &pool)
         .await?;
-    postgres_check_provider_links_tables_are_empty(&providers_json_local_data_hashmap, &pool)
+    postgres_check_providers_link_parts_tables_are_empty(&providers_json_local_data_hashmap, &pool)
         .await?;
     postgres_delete_all_from_providers_link_parts_tables(&providers_json_local_data_hashmap, &pool)
         .await?;

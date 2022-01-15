@@ -13,7 +13,7 @@ use crate::providers::providers_info::get_all_local_providers_data::get_all_loca
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 
-use crate::postgres_integration::postgres_check_provider_links_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;

@@ -18,7 +18,7 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     NotEmpty(HashMap<ProviderKind, i64>),
 }
 
-pub async fn postgres_check_provider_links_tables_are_empty(
+pub async fn postgres_check_providers_link_parts_tables_are_empty(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
 ) -> Result<(), PostgresCheckProvidersLinkPartsTablesEmptyError> {

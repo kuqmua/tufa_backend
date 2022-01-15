@@ -106,7 +106,7 @@ pub mod mongo_integration {
 }
 pub mod postgres_integration {
     pub mod postgres_check_availability;
-    pub mod postgres_check_provider_links_tables_are_empty;
+    pub mod postgres_check_providers_link_parts_tables_are_empty;
     pub mod postgres_create_providers_tables_if_not_exists;
     pub mod postgres_delete_all_from_providers_link_parts_tables;
     pub mod postgres_get_db_url;
