@@ -22,6 +22,7 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 #[derive(Debug)]
 pub enum InitDbsError {
     GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
+    NoProvidersInsideLocalProvidersData,
     MongoClient(mongodb::error::Error),
     MongoCollectionCountDocumentsOrIsNotEmpty(
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
@@ -43,9 +44,11 @@ pub enum InitDbsError {
 pub async fn init_dbs() -> Result<(), InitDbsError> {
     match get_all_local_providers_data().await {
         Err(errors_hashmap) => Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap)),
-        Ok(success_hashmap) => {
-            let providers_json_local_data_hashmap = success_hashmap.clone();
-            let providers_json_local_data_hashmap_clone = success_hashmap;
+        Ok(providers_json_local_data_hashmap) => {
+            if providers_json_local_data_hashmap.is_empty() {
+                return Err(InitDbsError::NoProvidersInsideLocalProvidersData);
+            }
+            let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
                 async {
                     if CONFIG.is_mongo_initialization_enabled {
