@@ -7,6 +7,7 @@ use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 
+use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
@@ -26,6 +27,9 @@ pub enum InitDbsError {
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
     ),
     MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
+    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(
+        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
+    ),
     PostgresDeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
     PostgresCheckProvidersLinkPartsTablesEmptyError(
         PostgresCheckProvidersLinkPartsTablesEmptyError,
@@ -73,6 +77,11 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
+                    //
+                    PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
+                        return Err(InitDbsError::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e));
+                    }
+                    //
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
                         return Err(InitDbsError::PostgresDeleteAllFromProvidersTables(e));
                     }
