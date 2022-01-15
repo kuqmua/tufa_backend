@@ -9,7 +9,7 @@ use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
+use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGetLocalDataError;
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
@@ -21,7 +21,7 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 
 #[derive(Debug)]
 pub enum InitDbsError {
-    GetProvidersJsonLocalData(HashMap<ProviderKind, ProvidersLocalDataError>),
+    GetProvidersJsonLocalData(HashMap<ProviderKind, ProviderGetLocalDataError>),
     MongoClient(mongodb::error::Error),
     MongoCollectionCountDocumentsOrIsNotEmpty(
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,

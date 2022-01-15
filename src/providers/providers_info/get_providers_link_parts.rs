@@ -9,12 +9,12 @@ use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGet
 // use crate::postgres_integration::postgres_get_providers_link_parts::PostgresGetProviderLinksError;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_local_data::ProvidersLocalDataError;
+use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGetLocalDataError;
 use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
 
 #[derive(Debug)]
 pub enum GetLinkPartsError {
-    Local(HashMap<ProviderKind, ProvidersLocalDataError>),
+    Local(HashMap<ProviderKind, ProviderGetLocalDataError>),
     Mongodb(MongoGetProvidersLinkPartsProcessedResult),
     // PostgreSql(PostgresGetProviderLinksError),
     PostgreSql,
