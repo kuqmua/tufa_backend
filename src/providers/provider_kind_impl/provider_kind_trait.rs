@@ -88,7 +88,7 @@ impl ProviderKindTrait for ProviderKind {
         if !Path::new(&path).is_dir() {
             return Err(CleanLogsDirError::PathIsNotDir { path });
         }
-        fs::remove_dir_all(&path)?;
+        fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async
         Ok(())
     }
 
