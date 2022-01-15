@@ -30,8 +30,6 @@ pub enum PostgresInitErrorEnum {
     EstablishConnection(sqlx::Error),
 }
 
-pub type CreateTableQueriesHashmap = HashMap<ProviderKind, sqlx::Error>; //for wroking logic for now. todo: move into different function
-pub type InsertQueriesHashmap = HashMap<ProviderKind, sqlx::Error>; //for wroking logic for now. todo: move into different function
 #[deny(clippy::indexing_slicing)]
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
