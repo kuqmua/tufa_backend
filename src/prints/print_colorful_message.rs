@@ -256,7 +256,7 @@ pub fn print_colorful_message(
                     if CONFIG.is_info_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
-                        eprintln!(
+                        println!(
                             "{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
@@ -418,7 +418,7 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    eprintln!(
+                    println!(
                         "{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
