@@ -136,7 +136,7 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
-            pub mod get_local_data;
+            pub mod get_link_parts_from_local_file;
             pub mod mongo_get_provider_link_parts_as_bson_string;
         }
         pub mod provider_kind_trait;

@@ -30,7 +30,9 @@ pub struct ProviderGetLocalDataTokioIoAsyncReadExtReadBufErrorStruct {
 
 impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub async fn get_local_data(self) -> Result<Vec<String>, ProviderGetLocalDataError> {
+    pub async fn get_link_parts_from_local_file(
+        self,
+    ) -> Result<Vec<String>, ProviderGetLocalDataError> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
             Err(e) => Err(ProviderGetLocalDataError {
                 source: Box::new(ProviderGetLocalDataErrorEnum::TokioFsFileOpen(

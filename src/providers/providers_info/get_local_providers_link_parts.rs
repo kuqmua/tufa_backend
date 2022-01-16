@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use futures::future::join_all;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGetLocalDataError;
+use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_file::ProviderGetLocalDataError;
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
@@ -32,7 +32,7 @@ pub async fn get_local_providers_link_parts(
     }
     let futures_vec = enabled_providers_vec
         .into_iter()
-        .map(|pk| async move { (pk, ProviderKind::get_local_data(pk).await) });
+        .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_file(pk).await) });
     let result_vec = join_all(futures_vec).await;
     let mut errors_hashmap: HashMap<ProviderKind, ProviderGetLocalDataError> = HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
