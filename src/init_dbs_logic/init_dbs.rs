@@ -10,7 +10,7 @@ use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGetLocalDataError;
-use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
+use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 
@@ -41,7 +41,7 @@ pub enum InitDbsError {
 
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs() -> Result<(), InitDbsError> {
-    match get_all_local_providers_data().await {
+    match get_local_providers_link_parts().await {
         Err(errors_hashmap) => Err(InitDbsError::GetProvidersJsonLocalData(errors_hashmap)),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();

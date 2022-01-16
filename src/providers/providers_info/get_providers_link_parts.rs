@@ -10,7 +10,7 @@ use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGet
 
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGetLocalDataError;
-use crate::providers::providers_info::get_all_local_providers_data::get_all_local_providers_data;
+use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 
 #[derive(Debug)]
 pub enum GetLinkPartsError {
@@ -25,7 +25,7 @@ pub async fn get_providers_link_parts(
     resource: &Resource,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLinkPartsError> {
     match resource {
-        Resource::Local => match get_all_local_providers_data().await {
+        Resource::Local => match get_local_providers_link_parts().await {
             Err(error_hashmap) => Err(GetLinkPartsError::Local(error_hashmap)),
             Ok(success_hashmap) => Ok(success_hashmap),
         },

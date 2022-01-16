@@ -7,10 +7,32 @@ use crate::providers::provider_kind_impl::functions::get_local_data::ProviderGet
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+// use std::fmt;
+// use std::string::FromUtf8Error;
+
+// use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
+
+// #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+// pub struct ProviderGetLocalDataError {
+//     pub source: Box<ProviderGetLocalDataErrorEnum>,
+// }
+
+// #[derive(Debug)] //, ImplFromForUpperStruct
+// pub enum ProviderGetLocalDataErrorEnum {
+//     TokioFsFileOpen(ProviderGetLocalDataTokioFsFileOpenErrorStruct),
+//     TokioIoAsyncReadExtReadBuf(ProviderGetLocalDataTokioIoAsyncReadExtReadBufErrorStruct),
+//     StringFromUtf8(FromUtf8Error),
+//     SerdeJsonFromStr(serde_json::Error),
+// }
+
 #[deny(clippy::indexing_slicing)]
-pub async fn get_all_local_providers_data(
+pub async fn get_local_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, HashMap<ProviderKind, ProviderGetLocalDataError>> {
     //todo: get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add additional vars into env file
+    let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
+    if enabled_providers_vec.is_empty() {
+        return Err(todo!());
+    }
     let futures_vec = ProviderKind::get_enabled_providers_vec()
         .into_iter()
         .map(|pk| async move { (pk, ProviderKind::get_local_data(pk).await) });
