@@ -89,7 +89,7 @@ pub fn entry() {
                         format!("init dbs error {:#?}", e),
                     );
                     match e {
-                        InitDbsError::GetProvidersJsonLocalData(_) => return,
+                        InitDbsError::GetLocalProvidersLinkParts(_) => return,
                         InitDbsError::MongoClient(_) => return,
                         InitDbsError::MongoCollectionCountDocumentsOrIsNotEmpty(_) => return,
                         InitDbsError::MongoInsertManyError(_) => return,
