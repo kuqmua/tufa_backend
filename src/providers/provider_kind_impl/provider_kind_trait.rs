@@ -136,92 +136,86 @@ impl ProviderKindTrait for ProviderKind {
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_string_name_vec() -> Vec<String> {
-        let mut string_name_vec: Vec<String> = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter().filter(|element| element.is_enabled()) {
-            string_name_vec.push(format!("{}", provider_kind));
-        }
-        string_name_vec
+        ProviderKind::iter()
+            .filter_map(|pk| {
+                if pk.is_enabled() {
+                    return Some(format!("{}", pk));
+                }
+                None
+            })
+            .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_provider_kind_vec() -> Vec<ProviderKind> {
-        let mut vec_of_filtered_provider_names: Vec<ProviderKind> =
-            Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter()
+        ProviderKind::iter()
             .filter(|provider_kind| provider_kind.is_mongo_initialization_enabled())
-        {
-            vec_of_filtered_provider_names.push(provider_kind)
-        }
-        vec_of_filtered_provider_names
+            .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_string_name_vec() -> Vec<String> {
-        let mut vec_of_filtered_provider_names: Vec<String> =
-            Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_mongo_initialization_enabled())
-        {
-            vec_of_filtered_provider_names.push(format!("{}", provider_kind))
-        }
-        vec_of_filtered_provider_names
+        ProviderKind::iter()
+            .filter_map(|provider_kind| {
+                if provider_kind.is_mongo_initialization_enabled() {
+                    return Some(format!("{}", provider_kind));
+                }
+                None
+            })
+            .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
-        //its String coz legacy
-        let mut config_provider_string_to_enum_struct_hasmap: HashMap<String, ProviderKind> =
-            HashMap::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            config_provider_string_to_enum_struct_hasmap
-                .insert(format!("{}", provider_kind), provider_kind);
-        }
-        config_provider_string_to_enum_struct_hasmap
+        ProviderKind::iter()
+            .map(|pk| (format!("{}", pk), pk))
+            .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, ProviderKind)> {
-        let mut provider_kind_vec = Vec::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter() {
-            provider_kind_vec.push((format!("{}", provider_kind), provider_kind));
-        }
-        provider_kind_vec
+        ProviderKind::iter()
+            .map(|pk| (format!("{}", pk), pk))
+            .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn remove_existing_providers_logs_directories(
     ) -> Result<(), HashMap<ProviderKind, RemoveDirError>> {
         if let Err(error_hashmap) = ProviderKind::remove_providers_logs_directories() {
-            let mut return_hashmap = HashMap::with_capacity(error_hashmap.len());
-            for (provider_kind, error) in error_hashmap {
-                if let CleanLogsDirError::CannotRemoveDir { error: e } = error {
-                    return_hashmap.insert(provider_kind, e);
-                }
+            let return_hashmap = error_hashmap
+                .into_iter()
+                .filter_map(|(pk, error)| {
+                    if let CleanLogsDirError::CannotRemoveDir { error: e } = error {
+                        return Some((pk, e));
+                    }
+                    None
+                })
+                .collect::<HashMap<ProviderKind, RemoveDirError>>();
+            if !return_hashmap.is_empty() {
+                return Err(return_hashmap);
             }
-            if return_hashmap.is_empty() {
-                return Ok(());
-            }
-            return Err(return_hashmap);
+            return Ok(());
         }
         Ok(())
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn remove_providers_logs_directories() -> Result<(), HashMap<ProviderKind, CleanLogsDirError>> {
-        let mut result_hashmap: HashMap<ProviderKind, CleanLogsDirError> =
-            HashMap::with_capacity(ProviderKind::get_length());
-        for provider_kind in ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_cleaning_warning_logs_directory_enabled())
-        {
-            if let Err(e) = provider_kind.remove_logs_directory() {
-                result_hashmap.insert(provider_kind, e);
-            }
-        }
-        if result_hashmap.is_empty() {
-            Ok(())
-        } else {
-            Err(result_hashmap)
-        }
+        let result_hashmap = ProviderKind::iter()
+            .filter_map(|pk| {
+                if pk.is_cleaning_warning_logs_directory_enabled() {
+                    if let Err(e) = pk.remove_logs_directory() {
+                        return Some((pk, e));
+                    }
+                }
+                None
+            })
+            .collect::<HashMap<ProviderKind, CleanLogsDirError>>();
+        if !result_hashmap.is_empty() {
+            return Err(result_hashmap);
+        } 
+        Ok(())
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
