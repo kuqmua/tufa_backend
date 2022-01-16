@@ -43,6 +43,7 @@ pub async fn get_local_providers_link_parts(
                 errors_hashmap.insert(pk, e);
             }
             Ok(vec) => {
+                //todo check vec on empty
                 success_hashmap.insert(pk, vec);
             }
         }
