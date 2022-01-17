@@ -32,21 +32,11 @@ impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub async fn mongo_get_provider_link_parts(
         pk: ProviderKind,
-    ) -> Result<Option<Vec<String>>, MongoGetProviderLinkPartsError> {
+    ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
         //todo maybe option vec string
-        let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
-        let client = Client::with_options(client_options)?;
         //declare db name. there is no create db method in mongo
-        let db = client.database(&CONFIG.mongo_providers_logs_db_name);
-        let mut needed_db_collection: Option<String> = None;
-        //todo do it in parallel
-        for collection_name in db.list_collection_names(None).await? {
-            if collection_name == pk.get_mongo_log_collection_name() {
-                needed_db_collection = Some(collection_name);
-            }
-        }
-        if let Some(collection_name) = needed_db_collection {
-            let collection = db.collection(&collection_name);
+        let db = Client::with_options(ClientOptions::parse(mongo_get_db_url()).await?)?.database(&CONFIG.mongo_providers_logs_db_name);
+        let collection = db.collection::<Document>(&pk.get_mongo_log_collection_name());
             let documents_number = collection.count_documents(None, None).await?;
             if documents_number > 0 {
                 //rewrite as PrintType::Info or something
@@ -85,10 +75,8 @@ impl ProviderKind {
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit,
                 )
                 .await?;
-                //todo remove option
-                return Ok(Some(vec_of_strings));
+                return Ok(vec_of_strings);
             }
-        }
-        Ok(None)
+            Ok(Vec::new())
     }
 }
