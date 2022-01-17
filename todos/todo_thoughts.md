@@ -583,4 +583,10 @@ small error (yeah with less info about error) version for high allocation statis
 rust zero to production book 
 https://github.com/LukeMathWalker/zero-to-production
 <br/>
+    
+### -------------------
+tokio::fs::metadata
+check path exists in file system
+<br/>
+    
  
