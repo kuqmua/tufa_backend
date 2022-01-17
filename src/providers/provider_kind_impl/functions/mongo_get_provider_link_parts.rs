@@ -1,3 +1,5 @@
+use std::fmt;
+
 use mongodb::{
     bson::{doc, Document},
     options::ClientOptions,
@@ -15,20 +17,31 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
+#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+pub struct MongoGetProviderLinkPartsError {
+    pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
+}
+
+#[derive(Debug, ImplFromForUpperStruct)]
+pub enum MongoGetProviderLinkPartsErrorEnum {
+    ClientOptionsParse(mongodb::error::Error),
+}
+
 impl ProviderKind {
     //rust does not support async traits yet (end of 2021). only with  third party crate
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    pub async fn mongo_get_provider_link_parts_as_bson_string(
-        provider_kind: ProviderKind,
-    ) -> Result<Option<Vec<String>>, mongodb::error::Error> {
+    pub async fn mongo_get_provider_link_parts(
+        pk: ProviderKind,
+    ) -> Result<Option<Vec<String>>, MongoGetProviderLinkPartsError> {
         //todo maybe option vec string
         let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
         let client = Client::with_options(client_options)?;
         //declare db name. there is no create db method in mongo
         let db = client.database(&CONFIG.mongo_providers_logs_db_name);
         let mut needed_db_collection: Option<String> = None;
+        //todo do it in parallel
         for collection_name in db.list_collection_names(None).await? {
-            if collection_name == provider_kind.get_mongo_log_collection_name() {
+            if collection_name == pk.get_mongo_log_collection_name() {
                 needed_db_collection = Some(collection_name);
             }
         }
@@ -58,7 +71,7 @@ impl ProviderKind {
                         }
                     } else {
                         option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                            provider_kind.get_mongo_doc_randomization_aggregation();
+                            pk.get_mongo_doc_randomization_aggregation();
                     }
                 } else {
                     option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
