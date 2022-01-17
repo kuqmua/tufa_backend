@@ -6,16 +6,17 @@ use mongodb::{
     Client,
 };
 
-use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::{
-    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
+    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait, mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError,
 };
+
+use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 
 use crate::{
     mongo_integration::mongo_get_db_url::mongo_get_db_url,
-    prints::{print_colorful_message::print_colorful_message, print_type_enum::PrintType},
     providers::provider_kind_enum::ProviderKind,
 };
+use mongodb::Database;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct MongoGetProviderLinkPartsError {
@@ -24,7 +25,25 @@ pub struct MongoGetProviderLinkPartsError {
 
 #[derive(Debug, ImplFromForUpperStruct)]
 pub enum MongoGetProviderLinkPartsErrorEnum {
-    ClientOptionsParse(mongodb::error::Error),
+    ClientOptionsParse(ClientOptionsParseError),
+    ClientWithOptions(ClientWithOptionsError),
+    CountDocuments(CountDocumentsError),
+    MongoGetDocumentsAsStringVector(MongoGetDocumentsAsStringVectorError),
+}
+
+#[derive(Debug)]
+pub struct ClientOptionsParseError {
+    pub source: Box<mongodb::error::Error>,
+}
+
+#[derive(Debug)]
+pub struct ClientWithOptionsError {
+    pub source: Box<mongodb::error::Error>,
+}
+
+#[derive(Debug)]
+pub struct CountDocumentsError {
+    pub source: Box<mongodb::error::Error>,
 }
 
 impl ProviderKind {
@@ -35,19 +54,51 @@ impl ProviderKind {
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
         //todo maybe option vec string
         //declare db name. there is no create db method in mongo
-        let db = Client::with_options(ClientOptions::parse(mongo_get_db_url()).await?)?
-            .database(&CONFIG.mongo_providers_logs_db_name);
+        let client_options: ClientOptions;
+        match ClientOptions::parse(mongo_get_db_url()).await {
+            Err(e) => {return Err(MongoGetProviderLinkPartsError {
+                source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError{
+                        source: Box::new(e)
+                    }
+                ))
+            })},
+            Ok(client_options_handle) => {client_options = client_options_handle;},
+        }
+        let db: Database;
+        match Client::with_options(client_options) {
+            Err(e) => {return Err(
+                MongoGetProviderLinkPartsError {
+                    source: Box::new(
+                        MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
+                            ClientWithOptionsError{
+                                source: Box::new(e)
+                            }
+                        )
+                    )
+                }
+            );},
+            Ok(client) => {db = client.database(&CONFIG.mongo_providers_logs_db_name);},
+        } 
         let collection = db.collection::<Document>(&pk.get_mongo_log_collection_name());
-        let documents_number = collection.count_documents(None, None).await?;
+        let documents_number: u64;
+        match collection.count_documents(None, None).await {
+            Err(e) => {
+                return Err(
+                    MongoGetProviderLinkPartsError {
+                        source: Box::new(
+                            MongoGetProviderLinkPartsErrorEnum::CountDocuments(
+                                CountDocumentsError{
+                                    source: Box::new(e)
+                                }
+                            )
+                        )
+                    }
+                );
+            },
+            Ok(number) => {documents_number = number;},
+        }
         if documents_number > 0 {
-            //rewrite as PrintType::Info or something
-            print_colorful_message(
-                None,
-                PrintType::Success,
-                file!().to_string(),
-                line!().to_string(),
-                format!("collection.count_documents {}", documents_number),
-            );
             let aggregation: Option<Document>;
             if CONFIG.is_links_limit_enabled_providers {
                 if CONFIG.is_links_limit_providers_enabled {
@@ -65,9 +116,6 @@ impl ProviderKind {
             } else {
                 aggregation = None;
             }
-            // let aggregation_stage_1_get_docs_in_random_order_with_limit =
-            //     doc! { "$sample" : {"size": 5 }};
-            // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
             let vec_of_strings = mongo_get_documents_as_string_vector(
                 collection,
                 &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
