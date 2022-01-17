@@ -48,22 +48,22 @@ impl ProviderKind {
                 line!().to_string(),
                 format!("collection.count_documents {}", documents_number),
             );
-            let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
+            let aggregation: Option<Document>;
             if CONFIG.is_links_limit_enabled_providers {
                 if CONFIG.is_links_limit_providers_enabled {
                     if CONFIG.is_mongo_link_parts_randomize_order_enabled {
-                        option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                        aggregation =
                             Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
                     } else {
-                        option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                        aggregation =
                             Some(doc! { "$limit" :  CONFIG.links_limit_providers });
                     }
                 } else {
-                    option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                    aggregation =
                         pk.get_mongo_doc_randomization_aggregation();
                 }
             } else {
-                option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
+                aggregation = None;
             }
             // let aggregation_stage_1_get_docs_in_random_order_with_limit =
             //     doc! { "$sample" : {"size": 5 }};
@@ -71,7 +71,7 @@ impl ProviderKind {
             let vec_of_strings = mongo_get_documents_as_string_vector(
                 collection,
                 &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+                aggregation,
             )
             .await?;
             return Ok(vec_of_strings);
