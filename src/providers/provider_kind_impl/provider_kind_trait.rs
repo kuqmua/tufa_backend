@@ -214,7 +214,7 @@ impl ProviderKindTrait for ProviderKind {
             .collect::<HashMap<ProviderKind, CleanLogsDirError>>();
         if !result_hashmap.is_empty() {
             return Err(result_hashmap);
-        } 
+        }
         Ok(())
     }
 

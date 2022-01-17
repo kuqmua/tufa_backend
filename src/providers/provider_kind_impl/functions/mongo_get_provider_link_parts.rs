@@ -35,48 +35,47 @@ impl ProviderKind {
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
         //todo maybe option vec string
         //declare db name. there is no create db method in mongo
-        let db = Client::with_options(ClientOptions::parse(mongo_get_db_url()).await?)?.database(&CONFIG.mongo_providers_logs_db_name);
+        let db = Client::with_options(ClientOptions::parse(mongo_get_db_url()).await?)?
+            .database(&CONFIG.mongo_providers_logs_db_name);
         let collection = db.collection::<Document>(&pk.get_mongo_log_collection_name());
-            let documents_number = collection.count_documents(None, None).await?;
-            if documents_number > 0 {
-                //rewrite as PrintType::Info or something
-                print_colorful_message(
-                    None,
-                    PrintType::Success,
-                    file!().to_string(),
-                    line!().to_string(),
-                    format!("collection.count_documents {}", documents_number),
-                );
-                let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
-                    Document,
-                >;
-                if CONFIG.is_links_limit_enabled_providers {
-                    if CONFIG.is_links_limit_providers_enabled {
-                        if CONFIG.is_mongo_link_parts_randomize_order_enabled {
-                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
-                        } else {
-                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                Some(doc! { "$limit" :  CONFIG.links_limit_providers });
-                        }
+        let documents_number = collection.count_documents(None, None).await?;
+        if documents_number > 0 {
+            //rewrite as PrintType::Info or something
+            print_colorful_message(
+                None,
+                PrintType::Success,
+                file!().to_string(),
+                line!().to_string(),
+                format!("collection.count_documents {}", documents_number),
+            );
+            let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<Document>;
+            if CONFIG.is_links_limit_enabled_providers {
+                if CONFIG.is_links_limit_providers_enabled {
+                    if CONFIG.is_mongo_link_parts_randomize_order_enabled {
+                        option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                            Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
                     } else {
                         option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                            pk.get_mongo_doc_randomization_aggregation();
+                            Some(doc! { "$limit" :  CONFIG.links_limit_providers });
                     }
                 } else {
-                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
+                    option_aggregation_stage_1_get_docs_in_random_order_with_limit =
+                        pk.get_mongo_doc_randomization_aggregation();
                 }
-                // let aggregation_stage_1_get_docs_in_random_order_with_limit =
-                //     doc! { "$sample" : {"size": 5 }};
-                // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
-                let vec_of_strings = mongo_get_documents_as_string_vector(
-                    collection,
-                    &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                    option_aggregation_stage_1_get_docs_in_random_order_with_limit,
-                )
-                .await?;
-                return Ok(vec_of_strings);
+            } else {
+                option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
             }
-            Ok(Vec::new())
+            // let aggregation_stage_1_get_docs_in_random_order_with_limit =
+            //     doc! { "$sample" : {"size": 5 }};
+            // let aggregation_stage_2_get_docs_with_limit = doc! { "$limit": 5 };
+            let vec_of_strings = mongo_get_documents_as_string_vector(
+                collection,
+                &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
+                option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+            )
+            .await?;
+            return Ok(vec_of_strings);
+        }
+        Ok(Vec::new())
     }
 }
