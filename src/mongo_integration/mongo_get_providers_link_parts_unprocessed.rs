@@ -29,7 +29,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     //todo: write without arc - removing unwrap
     let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
     let client = Client::with_options(client_options)?;
-    let db = client.database(&CONFIG.mongo_providers_logs_db_name);
+    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
     let vec_collection_names = db.list_collection_names(None).await?;
     let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
         ProviderKind,
