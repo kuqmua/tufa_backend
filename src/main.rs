@@ -136,6 +136,7 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
+            pub mod get_mongo_provider_link_parts_aggregation;
             pub mod get_link_parts_from_local_file;
             pub mod mongo_get_provider_link_parts;
         }
