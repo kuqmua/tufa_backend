@@ -4,9 +4,11 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_providers_link_parts_unprocessed::mongo_get_providers_link_parts_unprocessed;
 
+use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
+
 #[derive(Debug)]
 pub enum MongoGetProvidersLinkPartsProcessedResult {
-    MongoAgregationOrCursorTryNext(HashMap<ProviderKind, mongodb::error::Error>),
+    MongoAgregationOrCursorTryNext(HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>),
     MongoConnection(mongodb::error::Error),
 }
 
@@ -20,7 +22,7 @@ pub async fn mongo_get_providers_link_parts_processed(
         Ok(unprocessed_hashmap) => {
             let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
                 HashMap::with_capacity(unprocessed_hashmap.len());
-            let mut error_hashmap: HashMap<ProviderKind, mongodb::error::Error> =
+            let mut error_hashmap: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError> =
                 HashMap::with_capacity(unprocessed_hashmap.len());
             for (provider_kind, result_vec) in unprocessed_hashmap {
                 match result_vec {
