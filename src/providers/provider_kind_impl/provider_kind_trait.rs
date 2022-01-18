@@ -38,18 +38,6 @@ impl ProviderKindTrait for ProviderKind {
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-    fn get_mongo_doc_randomization_aggregation(&self) -> Option<Document> {
-        if CONFIG.is_links_limit_enabled {
-            if self.is_mongo_link_parts_randomize_order_enabled() {
-                return Some(doc! { "$sample" : {"size": self.links_limit() }});
-            } else {
-                return Some(doc! { "$limit" : self.links_limit() });
-            }
-        } 
-        None
-    }
-
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_log_collection_name(&self) -> String {
         format!(
             "{}{}",
