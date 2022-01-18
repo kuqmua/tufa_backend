@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mongodb::{
-    bson::{doc, Document},
+    bson::{Document},
     options::ClientOptions,
     Client,
 };
@@ -20,9 +20,11 @@ use std::sync::{Arc, Mutex};
 
 use futures::future::join_all;
 
+use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
+
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 pub async fn mongo_get_providers_link_parts_unprocessed(
-) -> Result<HashMap<ProviderKind, Result<Vec<String>, mongodb::error::Error>>, mongodb::error::Error>
+) -> Result<HashMap<ProviderKind, Result<Vec<String>, MongoGetDocumentsAsStringVectorError>>, mongodb::error::Error>
 {
     //todo: write without arc - removing unwrap
     let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
@@ -31,7 +33,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     let vec_collection_names = db.list_collection_names(None).await?;
     let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
         ProviderKind,
-        Result<Vec<String>, mongodb::error::Error>,
+        Result<Vec<String>, MongoGetDocumentsAsStringVectorError>,
     >::new()));
     let mut vec_of_tasks = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
     for provider_kind in ProviderKind::get_enabled_providers_vec() {
@@ -75,6 +77,7 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     let vec_provider_kind_with_collection_names = vec_provider_kind_with_collection_names_under_arc
         .lock()
         .unwrap()
-        .clone();
+        .drain()
+        .collect();
     Ok(vec_provider_kind_with_collection_names)
 }
