@@ -41,29 +41,10 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
         let collection = db.collection::<Document>(&collection_name);
         if vec_collection_names.contains(&collection_name) {
             vec_of_tasks.push(tokio::task::spawn(async move {
-                let option_aggregation_stage_1_get_docs_in_random_order_with_limit: Option<
-                    Document,
-                >;
-                if CONFIG.is_links_limit_enabled_providers {
-                    if CONFIG.is_links_limit_providers_enabled {
-                        if CONFIG.is_mongo_link_parts_randomize_order_enabled_providers {
-                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
-                        } else {
-                            option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                                Some(doc! { "$limit" :  CONFIG.links_limit_providers });
-                        }
-                    } else {
-                        option_aggregation_stage_1_get_docs_in_random_order_with_limit =
-                            provider_kind.get_mongo_doc_randomization_aggregation();
-                    }
-                } else {
-                    option_aggregation_stage_1_get_docs_in_random_order_with_limit = None;
-                }
                 let result_vec_of_strings = mongo_get_documents_as_string_vector(
                     collection,
                     &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                    option_aggregation_stage_1_get_docs_in_random_order_with_limit,
+                    ProviderKind::get_mongo_provider_link_parts_aggregation(&provider_kind),
                 )
                 .await;
                 let mut vec_provider_kind_with_collection_names_under_arc_handle_locked =
