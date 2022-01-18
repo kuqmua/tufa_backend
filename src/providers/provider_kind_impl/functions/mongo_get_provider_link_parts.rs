@@ -99,27 +99,10 @@ impl ProviderKind {
             Ok(number) => {documents_number = number;},
         }
         if documents_number > 0 {
-            let aggregation: Option<Document>;
-            if CONFIG.is_links_limit_enabled_providers {
-                if CONFIG.is_links_limit_providers_enabled {
-                    if CONFIG.is_mongo_link_parts_randomize_order_enabled {
-                        aggregation =
-                            Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
-                    } else {
-                        aggregation =
-                            Some(doc! { "$limit" :  CONFIG.links_limit_providers });
-                    }
-                } else {
-                    aggregation =
-                        pk.get_mongo_doc_randomization_aggregation();
-                }
-            } else {
-                aggregation = None;
-            }
             let vec_of_strings = mongo_get_documents_as_string_vector(
                 collection,
                 &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                aggregation,
+                ProviderKind::get_mongo_provider_link_parts_aggregation(&pk),
             )
             .await?;
             return Ok(vec_of_strings);
