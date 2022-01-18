@@ -1,7 +1,7 @@
 use std::fmt;
 
 use mongodb::{
-    bson::{doc, Document},
+    bson::Document,
     options::ClientOptions,
     Client,
 };
