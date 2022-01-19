@@ -18,12 +18,12 @@ use futures::future::join_all;
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
 
 #[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
-pub struct MongoGetProvidersLinkPartsUnprocessedError {
-    pub source: Box<MongoGetProvidersLinkPartsUnprocessedErrorEnum>,
+pub struct MongoGetProvidersLinkPartsError {
+    pub source: Box<MongoGetProvidersLinkPartsErrorEnum>,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
-pub enum MongoGetProvidersLinkPartsUnprocessedErrorEnum {
+pub enum MongoGetProvidersLinkPartsErrorEnum {
     ClientOptionsParse(ClientOptionsParseError),
     ClientWithOptions(ClientWithOptionsError),
     ListCollectionNames(ListCollectionNamesError),
@@ -47,15 +47,14 @@ pub struct ListCollectionNamesError {
 }
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
-pub async fn mongo_get_providers_link_parts_unprocessed(
-) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsUnprocessedError> {
-    //todo: write without arc - removing unwrap
+pub async fn mongo_get_providers_link_parts(
+) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
     let client_options: ClientOptions;
     match ClientOptions::parse(mongo_get_db_url()).await {
         Err(e) => {
-            return Err(MongoGetProvidersLinkPartsUnprocessedError {
+            return Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(
-                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ClientOptionsParse(
+                    MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError { source: e },
                     ),
                 ),
@@ -66,9 +65,9 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     let client: Client;
     match Client::with_options(client_options) {
         Err(e) => {
-            return Err(MongoGetProvidersLinkPartsUnprocessedError {
+            return Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(
-                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ClientWithOptions(
+                    MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
                         ClientWithOptionsError { source: e },
                     ),
                 ),
@@ -81,9 +80,9 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     //todo ProviderKind::get_enabled_providers_vec as filter
     match db.list_collection_names(None).await {
         Err(e) => {
-            return Err(MongoGetProvidersLinkPartsUnprocessedError {
+            return Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(
-                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ListCollectionNames(
+                    MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
                         ListCollectionNamesError { source: e },
                     ),
                 ),
@@ -102,9 +101,9 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
         })
         .collect::<HashMap<ProviderKind, String>>();
     if !no_collection_error_hashmap.is_empty() {
-        return Err(MongoGetProvidersLinkPartsUnprocessedError {
+        return Err(MongoGetProvidersLinkPartsError {
             source: Box::new(
-                MongoGetProvidersLinkPartsUnprocessedErrorEnum::NoSuchCollections(
+                MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
                     no_collection_error_hashmap,
                 ),
             ),
@@ -127,9 +126,9 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
     let get_documents_error_hashmap: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError> =
         HashMap::new();
     if !get_documents_error_hashmap.is_empty() {
-        return Err(MongoGetProvidersLinkPartsUnprocessedError {
+        return Err(MongoGetProvidersLinkPartsError {
             source: Box::new(
-                MongoGetProvidersLinkPartsUnprocessedErrorEnum::GetDocuments(
+                MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
                     get_documents_error_hashmap,
                 ),
             ),
