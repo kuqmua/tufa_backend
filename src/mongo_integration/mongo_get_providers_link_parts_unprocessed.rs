@@ -13,8 +13,6 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
-use std::sync::{Arc, Mutex};
-
 use futures::future::join_all;
 
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;

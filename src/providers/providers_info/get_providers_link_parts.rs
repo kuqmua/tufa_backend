@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use crate::helpers::resource::Resource;
 
-use crate::mongo_integration::mongo_get_providers_link_parts_processed::mongo_get_providers_link_parts_processed;
-use crate::mongo_integration::mongo_get_providers_link_parts_processed::MongoGetProvidersLinkPartsProcessedResult;
+use crate::mongo_integration::mongo_get_providers_link_parts_unprocessed::mongo_get_providers_link_parts_unprocessed;
+use crate::mongo_integration::mongo_get_providers_link_parts_unprocessed::MongoGetProvidersLinkPartsUnprocessedError;
 
 // use crate::postgres_integration::postgres_get_providers_link_parts::postgres_get_providers_link_parts;
 // use crate::postgres_integration::postgres_get_providers_link_parts::PostgresGetProviderLinksError;
@@ -15,7 +15,7 @@ use crate::providers::providers_info::get_local_providers_link_parts::GetLocalPr
 #[derive(Debug)]
 pub enum GetLinkPartsError {
     Local(GetLocalProvidersLinkPartsError),
-    Mongodb(MongoGetProvidersLinkPartsProcessedResult),
+    Mongodb(MongoGetProvidersLinkPartsUnprocessedError),
     // PostgreSql(PostgresGetProviderLinksError),
     PostgreSql,
 }
@@ -29,7 +29,7 @@ pub async fn get_providers_link_parts(
             Err(error_hashmap) => Err(GetLinkPartsError::Local(error_hashmap)),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
-        Resource::Mongodb => match mongo_get_providers_link_parts_processed().await {
+        Resource::Mongodb => match mongo_get_providers_link_parts_unprocessed().await {
             Err(e) => Err(GetLinkPartsError::Mongodb(e)),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
