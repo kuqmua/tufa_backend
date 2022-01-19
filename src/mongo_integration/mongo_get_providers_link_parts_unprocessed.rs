@@ -1,3 +1,4 @@
+use std::fmt;
 use std::collections::HashMap;
 
 use mongodb::{
@@ -22,15 +23,104 @@ use futures::future::join_all;
 
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
 
+#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+pub struct MongoGetProvidersLinkPartsUnprocessedError {
+    pub source: Box<MongoGetProvidersLinkPartsUnprocessedErrorEnum>,
+}
+
+#[derive(Debug, ImplFromForUpperStruct)]
+pub enum MongoGetProvidersLinkPartsUnprocessedErrorEnum {
+    ClientOptionsParse(ClientOptionsParseError),
+    ClientWithOptions(ClientWithOptionsError),
+    ListCollectionNames(ListCollectionNamesError),
+    NoSuchCollections(HashMap<ProviderKind, String>)
+}
+
+#[derive(Debug)]
+pub struct ClientOptionsParseError {
+    pub source: mongodb::error::Error,
+}
+
+#[derive(Debug)]
+pub struct ClientWithOptionsError {
+    pub source: mongodb::error::Error,
+}
+
+#[derive(Debug)]
+pub struct ListCollectionNamesError {
+    pub source: mongodb::error::Error,
+}
+
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 pub async fn mongo_get_providers_link_parts_unprocessed(
-) -> Result<HashMap<ProviderKind, Result<Vec<String>, MongoGetDocumentsAsStringVectorError>>, mongodb::error::Error>
+) -> Result<HashMap<ProviderKind, Result<Vec<String>, MongoGetDocumentsAsStringVectorError>>, MongoGetProvidersLinkPartsUnprocessedError>
 {
     //todo: write without arc - removing unwrap
-    let client_options = ClientOptions::parse(mongo_get_db_url()).await?;
-    let client = Client::with_options(client_options)?;
+    let client_options: ClientOptions;
+    match ClientOptions::parse(mongo_get_db_url()).await {
+        Err(e) => return Err(
+            MongoGetProvidersLinkPartsUnprocessedError {
+                source: Box::new(
+                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ClientOptionsParse(
+                        ClientOptionsParseError{
+                            source: e
+                        }
+                    )
+                )
+            }
+        ),
+        Ok(cl) => client_options = cl,
+    }
+    let client: Client;
+    match Client::with_options(client_options) {
+        Err(e) => return Err(
+            MongoGetProvidersLinkPartsUnprocessedError {
+                source: Box::new(
+                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError{
+                            source: e
+                        }
+                    )
+                )
+            }
+        ),
+        Ok(c) => client = c,
+    }
     let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
-    let vec_collection_names = db.list_collection_names(None).await?;
+    let vec_collection_names: Vec<String>;
+    //todo ProviderKind::get_enabled_providers_vec as filter
+    match db.list_collection_names(None).await {
+        Err(e) => return Err(
+            MongoGetProvidersLinkPartsUnprocessedError {
+                source: Box::new(
+                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::ListCollectionNames(
+                        ListCollectionNamesError{
+                            source: e
+                        }
+                    )
+                )
+            }
+        ),
+        Ok(vcn) => vec_collection_names = vcn,
+    }
+    let no_collection_error_hashmap = ProviderKind::get_enabled_providers_vec().into_iter().filter_map(|pk|{
+        let collection_name = pk.get_mongo_log_collection_name();
+        if !vec_collection_names.contains(&collection_name) {
+            return Some((pk, collection_name));
+        }
+        None
+    }).collect::<HashMap<ProviderKind, String>>();
+    if !no_collection_error_hashmap.is_empty() {
+        return Err(
+            MongoGetProvidersLinkPartsUnprocessedError {
+                source: Box::new(
+                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::NoSuchCollections(
+                        no_collection_error_hashmap
+                    )
+                )
+            }
+        );
+    }
     let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
         ProviderKind,
         Result<Vec<String>, MongoGetDocumentsAsStringVectorError>,
