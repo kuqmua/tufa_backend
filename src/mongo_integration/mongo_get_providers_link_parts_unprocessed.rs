@@ -33,7 +33,8 @@ pub enum MongoGetProvidersLinkPartsUnprocessedErrorEnum {
     ClientOptionsParse(ClientOptionsParseError),
     ClientWithOptions(ClientWithOptionsError),
     ListCollectionNames(ListCollectionNamesError),
-    NoSuchCollections(HashMap<ProviderKind, String>)
+    NoSuchCollections(HashMap<ProviderKind, String>),
+    GetDocuments(HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>)
 }
 
 #[derive(Debug)]
@@ -53,7 +54,7 @@ pub struct ListCollectionNamesError {
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 pub async fn mongo_get_providers_link_parts_unprocessed(
-) -> Result<HashMap<ProviderKind, Result<Vec<String>, MongoGetDocumentsAsStringVectorError>>, MongoGetProvidersLinkPartsUnprocessedError>
+) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsUnprocessedError>
 {
     //todo: write without arc - removing unwrap
     let client_options: ClientOptions;
@@ -121,53 +122,36 @@ pub async fn mongo_get_providers_link_parts_unprocessed(
             }
         );
     }
-    let vec_provider_kind_with_collection_names_under_arc = Arc::new(Mutex::new(HashMap::<
-        ProviderKind,
-        Result<Vec<String>, MongoGetDocumentsAsStringVectorError>,
-    >::new()));
-    let mut vec_of_tasks = Vec::with_capacity(ProviderKind::get_enabled_providers_vec().len());
-    for provider_kind in ProviderKind::get_enabled_providers_vec() {
-        let vec_provider_kind_with_collection_names_under_arc_handle =
-            Arc::clone(&vec_provider_kind_with_collection_names_under_arc);
-        let collection_name = provider_kind.get_mongo_log_collection_name();
-        let collection = db.collection::<Document>(&collection_name);
-        if vec_collection_names.contains(&collection_name) {
-            vec_of_tasks.push(tokio::task::spawn(async move {
-                let result_vec_of_strings = mongo_get_documents_as_string_vector(
-                    collection,
-                    &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                    ProviderKind::get_mongo_provider_link_parts_aggregation(&provider_kind),
+    let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
+    let result_get_documents_hashmap = join_all(enabled_providers_vec.iter().map(|pk| 
+        async {
+            let pk_cloned = pk.clone();
+            (pk_cloned, mongo_get_documents_as_string_vector(
+                db.collection::<Document>(&pk.get_mongo_log_collection_name()),
+            &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
+            ProviderKind::get_mongo_provider_link_parts_aggregation(&pk_cloned),
+        ).await)}
+    )).await;
+    let get_documents_error_hashmap: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError> = HashMap::new();
+    if !get_documents_error_hashmap.is_empty() {
+        return Err(
+            MongoGetProvidersLinkPartsUnprocessedError {
+                source: Box::new(
+                    MongoGetProvidersLinkPartsUnprocessedErrorEnum::GetDocuments(
+                        get_documents_error_hashmap
+                    )
                 )
-                .await;
-                let mut vec_provider_kind_with_collection_names_under_arc_handle_locked =
-                    vec_provider_kind_with_collection_names_under_arc_handle
-                        .lock()
-                        .unwrap();
-                match result_vec_of_strings {
-                    Ok(vec_of_strings) => {
-                        vec_provider_kind_with_collection_names_under_arc_handle_locked
-                            .insert(provider_kind, Ok(vec_of_strings));
-                    }
-                    Err(e) => {
-                        vec_provider_kind_with_collection_names_under_arc_handle_locked
-                            .insert(provider_kind, Err(e));
-                    }
-                }
-            }));
-        } else {
-            let mut vec_provider_kind_with_collection_names_under_arc_handle_locked =
-                vec_provider_kind_with_collection_names_under_arc_handle
-                    .lock()
-                    .unwrap();
-            vec_provider_kind_with_collection_names_under_arc_handle_locked
-                .insert(provider_kind, Ok(Vec::<String>::new()));
-        }
+            }
+        );
     }
-    let _ = join_all(vec_of_tasks).await;
-    let vec_provider_kind_with_collection_names = vec_provider_kind_with_collection_names_under_arc
-        .lock()
-        .unwrap()
-        .drain()
-        .collect();
-    Ok(vec_provider_kind_with_collection_names)
+
+    Ok(
+        result_get_documents_hashmap.into_iter().filter_map(|(pk, result)| 
+        {
+            if let Ok(vec) = result {
+                return Some((pk, vec));
+            }
+            None
+        }
+    ).collect())
 }
