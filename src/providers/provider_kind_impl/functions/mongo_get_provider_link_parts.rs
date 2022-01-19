@@ -1,13 +1,11 @@
 use std::fmt;
 
-use mongodb::{
-    bson::Document,
-    options::ClientOptions,
-    Client,
-};
+use mongodb::{bson::Document, options::ClientOptions, Client};
 
 use crate::{
-    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait, mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError,
+    config_mods::lazy_static_config::CONFIG,
+    mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError,
+    traits::provider_kind_trait::ProviderKindTrait,
 };
 
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
@@ -56,47 +54,49 @@ impl ProviderKind {
         //declare db name. there is no create db method in mongo
         let client_options: ClientOptions;
         match ClientOptions::parse(mongo_get_db_url()).await {
-            Err(e) => {return Err(MongoGetProviderLinkPartsError {
-                source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError{
-                        source: Box::new(e)
-                    }
-                ))
-            })},
-            Ok(client_options_handle) => {client_options = client_options_handle;},
+            Err(e) => {
+                return Err(MongoGetProviderLinkPartsError {
+                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
+                        ClientOptionsParseError {
+                            source: Box::new(e),
+                        },
+                    )),
+                })
+            }
+            Ok(client_options_handle) => {
+                client_options = client_options_handle;
+            }
         }
         let db: Database;
         match Client::with_options(client_options) {
-            Err(e) => {return Err(
-                MongoGetProviderLinkPartsError {
-                    source: Box::new(
-                        MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError{
-                                source: Box::new(e)
-                            }
-                        )
-                    )
-                }
-            );},
-            Ok(client) => {db = client.database(&CONFIG.mongo_providers_logs_db_name);},
-        } 
+            Err(e) => {
+                return Err(MongoGetProviderLinkPartsError {
+                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError {
+                            source: Box::new(e),
+                        },
+                    )),
+                });
+            }
+            Ok(client) => {
+                db = client.database(&CONFIG.mongo_providers_logs_db_name);
+            }
+        }
         let collection = db.collection::<Document>(&pk.get_mongo_log_collection_name());
         let documents_number: u64;
         match collection.count_documents(None, None).await {
             Err(e) => {
-                return Err(
-                    MongoGetProviderLinkPartsError {
-                        source: Box::new(
-                            MongoGetProviderLinkPartsErrorEnum::CountDocuments(
-                                CountDocumentsError{
-                                    source: Box::new(e)
-                                }
-                            )
-                        )
-                    }
-                );
-            },
-            Ok(number) => {documents_number = number;},
+                return Err(MongoGetProviderLinkPartsError {
+                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::CountDocuments(
+                        CountDocumentsError {
+                            source: Box::new(e),
+                        },
+                    )),
+                });
+            }
+            Ok(number) => {
+                documents_number = number;
+            }
         }
         if documents_number > 0 {
             let vec_of_strings = mongo_get_documents_as_string_vector(
