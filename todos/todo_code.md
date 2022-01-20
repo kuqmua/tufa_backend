@@ -425,6 +425,7 @@ println!("Hello, {person}!"); // captures the local `person`
   
 ### -------------------
 fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async
+also its has vulnerability https://blog.rust-lang.org/2022/01/20/cve-2022-21658.html
 <br/>
   
 ### -------------------

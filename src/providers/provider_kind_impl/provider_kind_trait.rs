@@ -74,7 +74,7 @@ impl ProviderKindTrait for ProviderKind {
         if !Path::new(&path).is_dir() {
             return Err(CleanLogsDirError::PathIsNotDir { path });
         }
-        fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async
+        fs::remove_dir_all(&path)?; //todo: its blocking, rewrite to async //update: also its has vulnerability https://blog.rust-lang.org/2022/01/20/cve-2022-21658.html
         Ok(())
     }
 
