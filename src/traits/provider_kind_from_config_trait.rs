@@ -14,6 +14,7 @@ pub trait ProviderKindFromConfigTrait {
     fn check_link(&self) -> &'static str;
 
     fn is_enabled(&self) -> bool;
+    fn is_dbs_initialization_enabled(&self) -> bool;
     fn is_prints_enabled(&self) -> bool;
     fn is_warning_high_prints_enabled(&self) -> bool;
     fn is_warning_low_prints_enabled(&self) -> bool;
