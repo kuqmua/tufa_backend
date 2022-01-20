@@ -13,7 +13,6 @@ pub struct ConfigStruct {
     pub reddit_username: String,
     pub reddit_password: String,
 
-    pub dbs_enable_initialization: bool,
     pub providers_link_parts_source: Resource,
 
     pub mongo_first_handle_url_part: String,
@@ -147,6 +146,16 @@ pub struct ConfigStruct {
     pub is_enabled_medrxiv: bool,
     pub is_enabled_reddit: bool,
     pub is_enabled_twitter: bool,
+
+    pub is_dbs_initialization_enabled: bool,
+    pub is_dbs_initialization_enabled_providers: bool,
+    pub is_dbs_initialization_enabled_arxiv: bool,
+    pub is_dbs_initialization_enabled_biorxiv: bool,
+    pub is_dbs_initialization_enabled_github: bool,
+    pub is_dbs_initialization_enabled_habr: bool,
+    pub is_dbs_initialization_enabled_medrxiv: bool,
+    pub is_dbs_initialization_enabled_reddit: bool,
+    pub is_dbs_initialization_enabled_twitter: bool,
 
     pub is_prints_enabled: bool,
     pub is_prints_enabled_providers: bool,

@@ -51,7 +51,6 @@ impl ConfigStruct {
             reddit_username: string_vars[&EnvStringVar::RedditUsername].clone(),
             reddit_password: string_vars[&EnvStringVar::RedditPassword].clone(),
 
-            dbs_enable_initialization: bool_vars[&EnvBoolVar::DbsEnableInitialization],
             providers_link_parts_source: providers_link_parts_source_handle,
 
             mongo_first_handle_url_part: string_vars[&EnvStringVar::MongoFirstHandleUrlPart]
@@ -83,7 +82,7 @@ impl ConfigStruct {
                 [&EnvStringVar::MongoProvidersLogsDbCollectionDocumentFieldNameHandle]
                 .clone(),
 
-            is_mongo_initialization_enabled: bool_vars[&EnvBoolVar::DbsEnableInitialization]
+            is_mongo_initialization_enabled: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
                 && bool_vars[&EnvBoolVar::IsMongoInitializationEnabled],
             is_mongo_initialization_enabled_providers: bool_vars
                 [&EnvBoolVar::IsMongoInitializationEnabled]
@@ -272,7 +271,7 @@ impl ConfigStruct {
             postgres_port: string_vars[&EnvStringVar::PostgresPort].clone(),
             postgres_db: string_vars[&EnvStringVar::PostgresDb].clone(),
 
-            is_postgres_initialization_enabled: bool_vars[&EnvBoolVar::DbsEnableInitialization]
+            is_postgres_initialization_enabled: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
                 && bool_vars[&EnvBoolVar::IsPostgresInitializationEnabled],
             is_postgres_initialization_enabled_providers: bool_vars
                 [&EnvBoolVar::IsPostgresInitializationEnabled]
@@ -408,6 +407,31 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsEnabledReddit],
             is_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsEnabledTwitter],
+            
+            is_dbs_initialization_enabled: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled],
+            is_dbs_initialization_enabled_providers: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders],
+            is_dbs_initialization_enabled_arxiv: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledArxiv],
+            is_dbs_initialization_enabled_biorxiv: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledBiorxiv],
+            is_dbs_initialization_enabled_github: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledGithub],
+            is_dbs_initialization_enabled_habr: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledHabr],
+            is_dbs_initialization_enabled_medrxiv: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledMedrxiv],
+            is_dbs_initialization_enabled_reddit: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledReddit],
+            is_dbs_initialization_enabled_twitter: bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledTwitter],
 
             is_prints_enabled: bool_vars[&EnvBoolVar::IsPrintsEnabled],
             is_prints_enabled_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]

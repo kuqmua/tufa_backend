@@ -30,8 +30,6 @@ use crate::config_mods::config_error_mods::config_error::ConfigError;
     Display,
 )]
 pub enum EnvBoolVar {
-    DbsEnableInitialization,
-
     IsMongoInitializationEnabled,
     IsMongoInitializationEnabledProviders,
     IsMongoInitializationEnabledArxiv,
@@ -120,6 +118,16 @@ pub enum EnvBoolVar {
     IsEnabledMedrxiv,
     IsEnabledReddit,
     IsEnabledTwitter,
+
+    IsDbsInitializationEnabled,
+    IsDbsInitializationEnabledProviders,
+    IsDbsInitializationEnabledArxiv,
+    IsDbsInitializationEnabledBiorxiv,
+    IsDbsInitializationEnabledGithub,
+    IsDbsInitializationEnabledHabr,
+    IsDbsInitializationEnabledMedrxiv,
+    IsDbsInitializationEnabledReddit,
+    IsDbsInitializationEnabledTwitter,
 
     IsPrintsEnabled,
     IsPrintsEnabledProviders,

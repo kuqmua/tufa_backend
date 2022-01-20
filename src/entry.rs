@@ -67,7 +67,7 @@ pub fn entry() {
                 line!().to_string(),
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
-            if CONFIG.dbs_enable_initialization {
+            if CONFIG.is_dbs_initialization_enabled {
                 if !CONFIG.is_mongo_initialization_enabled
                     && !CONFIG.is_postgres_initialization_enabled
                 {
