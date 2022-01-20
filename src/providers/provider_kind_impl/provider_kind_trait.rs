@@ -213,4 +213,11 @@ impl ProviderKindTrait for ProviderKind {
     fn get_postgres_table_name(&self) -> String {
         format!("{}_link_parts", self.to_lower_snake_case())
     }
+
+    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    fn get_dbs_initialization_enabled_vec() -> Vec<ProviderKind> {
+        ProviderKind::iter()
+            .filter(|pk| pk.is_dbs_initialization_enabled())
+            .collect()
+    }
 }
