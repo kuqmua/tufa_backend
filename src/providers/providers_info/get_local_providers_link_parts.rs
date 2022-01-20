@@ -23,8 +23,7 @@ pub enum GetLocalProvidersLinkPartsErrorEnum {
 #[deny(clippy::indexing_slicing)]
 pub async fn get_local_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
-    //todo: get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add additional vars into env file
-    let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
+    let enabled_providers_vec = ProviderKind::get_dbs_initialization_enabled_vec();
     if enabled_providers_vec.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
             source: Box::new(GetLocalProvidersLinkPartsErrorEnum::EnabledProvidersVecIsEmpty),
@@ -36,7 +35,7 @@ pub async fn get_local_providers_link_parts(
     let result_vec = join_all(futures_vec).await;
     let mut errors_hashmap: HashMap<ProviderKind, ProviderGetLocalDataError> = HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
-        HashMap::with_capacity(ProviderKind::get_enabled_providers_vec().len());
+        HashMap::with_capacity(result_vec.len());
     for (pk, result) in result_vec {
         match result {
             Err(e) => {
