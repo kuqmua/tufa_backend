@@ -223,7 +223,6 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
                 }
             }
         }
-        ///////
     }
     let mut vec_of_futures = Vec::with_capacity(hashmap_of_provider_vec_of_strings.len());
     for element in hashmap_of_provider_vec_of_strings {
