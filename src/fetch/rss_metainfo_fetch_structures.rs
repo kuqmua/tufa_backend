@@ -25,7 +25,7 @@ impl NoItemsError {
     pub fn into_json_with_link_and_provider_kind(
         link: &str,
         no_items_error: &NoItemsError,
-        provider_kind: &ProviderKind,
+        pk: &ProviderKind,
     ) -> Value {
         match no_items_error {
             NoItemsError::ThereIsTag(tag) => {
@@ -33,7 +33,7 @@ impl NoItemsError {
                     "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                     "link": link,
                     "tag": tag,
-                    "part_of": format!("{}", provider_kind),
+                    "part_of": format!("{}", pk),
                     "date": Local::now().to_string()
                 })
             }
@@ -42,14 +42,14 @@ impl NoItemsError {
                 "link": link,
                 "string": string,
                 "error": error,
-                "part_of": format!("{}", provider_kind),
+                "part_of": format!("{}", pk),
                 "date": Local::now().to_string()
             }),
             NoItemsError::NoTag(tag) => json!({
                 "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                 "link": link,
                 "tag": tag,
-                "part_of": format!("{}", provider_kind),
+                "part_of": format!("{}", pk),
                 "date": Local::now().to_string()
             }),
         }

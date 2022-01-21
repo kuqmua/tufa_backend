@@ -11,7 +11,7 @@ use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn providers_new_posts_check(
-    provider_kind: ProviderKind,
+    pk: ProviderKind,
     vec_of_provider_links: Vec<String>,
     posts_and_errors_arc_mutex: Arc<
         Mutex<
@@ -22,7 +22,7 @@ pub async fn providers_new_posts_check(
         >,
     >,
 ) {
-    let result = rss_part(provider_kind, vec_of_provider_links).await;
+    let result = rss_part(pk, vec_of_provider_links).await;
     match result {
         Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
             //maybe do it in parrallel? success and error posts
@@ -32,7 +32,7 @@ pub async fn providers_new_posts_check(
                 match posts_and_errors_arc_mutex.lock() {
                     Ok(mut posts_handle_locked) => {
                         posts_handle_locked.push((
-                            provider_kind,
+                            pk,
                             Ok((vec_common_rss_post_structs, vec_post_error_variants)),
                         ));
                     }
@@ -50,7 +50,7 @@ pub async fn providers_new_posts_check(
         }
         Err(e) => match posts_and_errors_arc_mutex.lock() {
             Ok(mut posts_handle_locked) => {
-                posts_handle_locked.push((provider_kind, Err(e)));
+                posts_handle_locked.push((pk, Err(e)));
             }
             Err(e) => {
                 print_colorful_message(

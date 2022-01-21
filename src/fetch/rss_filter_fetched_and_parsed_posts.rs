@@ -30,7 +30,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
             (String, ProviderKind, RssFetchLinkError),
         >,
     >, //it must be enum
-    provider_kind: ProviderKind,
+    pk: ProviderKind,
 ) -> FilterParsedSuccessErrorTuple {
     let mut unhandled_success_handled_success_are_there_items_yep_posts: Vec<CommonRssPostStruct> =
         Vec::with_capacity(unfiltered_posts_hashmap_after_fetch_and_parse.len());
@@ -49,7 +49,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
                             some_error_posts.push(PostErrorVariant::NoItems {
                                 link,
                                 no_items_error: NoItemsError::ThereIsTag(fetch_result_string),
-                                provider_kind,
+                                provider_kind: pk,
                             });
                         }
                         NoItemsError::ConversionFromStrError(fetch_result_string, error) => {
@@ -59,23 +59,23 @@ pub fn rss_filter_fetched_and_parsed_posts(
                                     fetch_result_string,
                                     error,
                                 ),
-                                provider_kind,
+                                provider_kind: pk,
                             });
                         }
                         NoItemsError::NoTag(tag) => {
                             some_error_posts.push(PostErrorVariant::NoItems {
                                 link,
                                 no_items_error: NoItemsError::NoTag(tag),
-                                provider_kind,
+                                provider_kind: pk,
                             });
                         }
                     }
                 }
             },
-            Err((link, provider_kind, string_error)) => {
+            Err((link, pk, string_error)) => {
                 some_error_posts.push(PostErrorVariant::RssFetchAndParseProviderDataError {
                     link,
-                    provider_kind,
+                    provider_kind: pk,
                     error: string_error,
                 }) //rewrite this error coz it must not be string. dont know to to clone error between threads
             }

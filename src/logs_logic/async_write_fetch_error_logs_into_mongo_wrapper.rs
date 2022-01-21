@@ -118,9 +118,9 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         Vec::with_capacity(vec_of_error_provider_kinds.len());
     if CONFIG.is_mongo_cleaning_warning_logs_db_collections_enabled {
         let mut vec_join = Vec::new();
-        for provider_kind_handle in vec_of_error_provider_kinds {
+        for pk in vec_of_error_provider_kinds {
             vec_join.push(drop_mongo_provider_logs_collection_if_need(
-                provider_kind_handle,
+                pk,
                 mongo_get_db_url(),
             ))
         }
@@ -128,7 +128,7 @@ pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
         vec_of_failed_collections_drops = result_vec
             .into_iter()
             .filter(|(_, result)| result.is_err())
-            .map(|(provider_kind, _)| -> ProviderKind { provider_kind }) //todo: handle error
+            .map(|(pk, _)| -> ProviderKind { pk }) //todo: handle error
             .collect();
     }
     ////(link, are_there_items, provider_kind)

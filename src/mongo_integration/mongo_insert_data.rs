@@ -22,12 +22,12 @@ pub async fn mongo_insert_data(
 ) -> PutDataInMongoResult {
     let mut vec_of_futures = Vec::with_capacity(vec_of_link_parts_hashmap.len());
     //todo: add case add in non empty collection
-    for (provider_kind, vec_of_link_parts) in vec_of_link_parts_hashmap {
+    for (pk, vec_of_link_parts) in vec_of_link_parts_hashmap {
         let future_inserting_docs = mongo_insert_docs_in_empty_collection(
             db_name_handle,
             format!(
                 "{}{}",
-                provider_kind, CONFIG.mongo_providers_logs_db_collection_handle_second_part
+                pk, CONFIG.mongo_providers_logs_db_collection_handle_second_part
             ),
             vec_of_link_parts,
         )

@@ -6,15 +6,15 @@ use crate::prints::print_type_enum::PrintType;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn print_colorful_message(
-    provider_kind: Option<&ProviderKind>,
+    pk: Option<&ProviderKind>,
     print_type: PrintType,
     file: String,
     line: String,
     message: String,
 ) {
     if CONFIG.is_prints_enabled {
-        match provider_kind {
-            Some(provider_kind) => match provider_kind {
+        match pk {
+            Some(pk) => match pk {
                 ProviderKind::Arxiv => {
                     handle_provider_prints(
                         CONFIG.is_prints_enabled_arxiv,

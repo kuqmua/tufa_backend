@@ -73,7 +73,7 @@ pub async fn get_providers_posts() {
             // //todo: conversion function before write_error_posts_wrapper
             // //commented before conversion function implementation
             // // if !vec.is_empty() {
-            // //     for (provider_kind, result_vec) in vec {
+            // //     for (pk, result_vec) in vec {
             // //         match result_vec {
             // //             Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
             // //                 let wrong_cases_thread = thread::spawn(move || {

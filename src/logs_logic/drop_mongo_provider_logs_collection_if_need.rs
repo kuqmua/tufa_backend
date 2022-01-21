@@ -10,13 +10,13 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
-    provider_kind: ProviderKind,
+    pk: ProviderKind,
     mongo_url: String,
 ) -> (ProviderKind, Result<(), MongoDropEmptyCollectionError>) {
-    if provider_kind.is_cleaning_warning_logs_directory_enabled() {
+    if pk.is_cleaning_warning_logs_directory_enabled() {
         let db_collection_name = &format!(
             "{:#?}{}",
-            provider_kind, &CONFIG.mongo_providers_logs_db_collection_handle_second_part
+            pk, &CONFIG.mongo_providers_logs_db_collection_handle_second_part
         );
         //using different (old) tokio runtime 0.2.25
         let future_possible_drop_collection = mongo_drop_empty_collection(
@@ -26,19 +26,19 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         )
         .await;
         match future_possible_drop_collection {
-            Ok(()) => (provider_kind, Ok(())),
+            Ok(()) => (pk, Ok(())),
             Err(e) => {
                 print_colorful_message(
-                    Some(&provider_kind),
+                    Some(&pk),
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
                     format!("drop fail with error {:#?}", e),
                 );
-                (provider_kind, Err(e))
+                (pk, Err(e))
             }
         }
     } else {
-        (provider_kind, Ok(()))
+        (pk, Ok(()))
     }
 }

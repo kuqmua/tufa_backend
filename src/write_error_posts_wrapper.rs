@@ -24,13 +24,13 @@ pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
                 rss_async_write_fetch_error_logs_into_files_wrapper(error_posts);
             }
             Err(error_hashmap) => {
-                for (provider_kind, error) in error_hashmap {
+                for (pk, error) in error_hashmap {
                     print_colorful_message(
-                                    Some(&provider_kind),
+                                    Some(&pk),
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("ProviderKind::remove_providers_logs_directories() failed for {:#?} (todo2) error: {:#?}", provider_kind, error),
+                                    format!("ProviderKind::remove_providers_logs_directories() failed for {:#?} (todo2) error: {:#?}", pk, error),
                                 );
                 }
             }

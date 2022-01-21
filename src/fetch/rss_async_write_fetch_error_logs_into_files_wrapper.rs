@@ -20,51 +20,51 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
             PostErrorVariant::NoItems {
                 link,
                 no_items_error,
-                provider_kind,
+                provider_kind: pk,
             } => {
                 let json_object = NoItemsError::into_json_with_link_and_provider_kind(
                     &link,
                     &no_items_error,
-                    &provider_kind,
+                    &pk,
                 );
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.warning_logs_directory_name,
-                    provider_kind,
+                    pk,
                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    provider_kind,
+                    pk,
                     replaced_link
                 ); //add save function what convert string into save path
                 vec_of_write_into_files_futures.push(write_provider_json_into_file(
                     json_object,
-                    provider_kind,
+                    pk,
                     path_to_file, //todo: if it will be std::path::Path - value does not live long enough
                 ));
             }
             PostErrorVariant::RssFetchAndParseProviderDataError {
                 link,
-                provider_kind,
+                provider_kind: pk,
                 error,
             } => {
                 let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                 let path_to_file = format!(
                     "logs/{}/{}/{}/{}-{}.json",
                     &CONFIG.warning_logs_directory_name,
-                    provider_kind,
+                    pk,
                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    provider_kind,
+                    pk,
                     replaced_link
                 ); //add save function what convert string into save path
                 let json_object = json!({
                     "link": link,
                     "stringified_error": error.to_string(),
-                    "part_of": format!("{}",provider_kind),
+                    "part_of": format!("{}",pk),
                     "date": Local::now().to_string()
                 });
                 vec_of_write_into_files_futures.push(write_provider_json_into_file(
                     json_object,
-                    provider_kind,
+                    pk,
                     path_to_file, //todo: if it will be std::path::Path - value does not live long enough
                 ));
             }

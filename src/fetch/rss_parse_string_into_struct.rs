@@ -49,14 +49,14 @@ use regex::Regex;
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,
-    provider_kind: ProviderKind,
+    pk: ProviderKind,
 ) -> Result<CommonRssPostStruct, NoItemsError> {
-    match provider_kind.get_item_handle() {
+    match pk.get_item_handle() {
         Some(what_should_find_in_fetch_result_string) => {
             match fetch_result_string.find(what_should_find_in_fetch_result_string) {
                 Some(_) => {
                     //preparation
-                    match provider_kind {
+                    match pk {
                         ProviderKind::Twitter => {
                             match fetch_result_string.find("<channel>") {
                                 Some(find_item_position_start) => {
@@ -73,7 +73,7 @@ pub fn rss_parse_string_into_struct(
                                                 value
                                             );
                                             print_colorful_message(
-                                                Some(&provider_kind),
+                                                Some(&pk),
                                                 PrintType::WarningLow,
                                                 file!().to_string(),
                                                 line!().to_string(),
@@ -86,7 +86,7 @@ pub fn rss_parse_string_into_struct(
                                     let warning_message: String =
                                         format!("no <channel> in response link: {}", value);
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::WarningLow,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -180,7 +180,7 @@ pub fn rss_parse_string_into_struct(
                         ProviderKind::Reddit => {}
                     }
                     //preparation
-                    match provider_kind {
+                    match pk {
                         ProviderKind::Arxiv => {
                             let rss_struct_from_str_result: Result<
                                 ArxivStructForParsing,
@@ -199,8 +199,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].link.clone(),
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -291,7 +291,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -323,8 +323,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].link.clone(),
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     rss_struct.items[count].date.clone(),
                                                     rss_struct.items[count].identifier.clone(),
@@ -417,7 +417,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -456,8 +456,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.entries[count].link.clone(),
                                                     Some("fff".to_string()), //todo: content is html now, need parsing
                                                     rss_struct.entries[count].author.name.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -548,7 +548,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -580,8 +580,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].link.clone(),
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -672,7 +672,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -704,8 +704,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].link.clone(),
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -798,7 +798,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -833,8 +833,8 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.items[count].link.clone(),
                                                     rss_struct.items[count].description.clone(),
                                                     rss_struct.items[count].creator.clone(),
-                                                    // provider_kind.get_message().unwrap().to_string(),
-                                                    provider_kind,
+                                                    // pk.get_message().unwrap().to_string(),
+                                                    pk,
                                                     //biorxiv specific
                                                     None,
                                                     None,
@@ -925,7 +925,7 @@ pub fn rss_parse_string_into_struct(
                                 }
                                 Err(e) => {
                                     print_colorful_message(
-                                        Some(&provider_kind),
+                                        Some(&pk),
                                         PrintType::Error,
                                         file!().to_string(),
                                         line!().to_string(),
@@ -943,10 +943,10 @@ pub fn rss_parse_string_into_struct(
                 None => {
                     let warning_message = format!(
                         "cannot find {} for {:#?} in fetch_result_string",
-                        what_should_find_in_fetch_result_string, provider_kind
+                        what_should_find_in_fetch_result_string, pk
                     );
                     print_colorful_message(
-                        Some(&provider_kind),
+                        Some(&pk),
                         PrintType::WarningLow,
                         file!().to_string(),
                         line!().to_string(),
@@ -978,8 +978,8 @@ pub fn rss_parse_string_into_struct(
                                     rss_struct.data.children[count].data.url.clone(),
                                     rss_struct.data.children[count].data.selftext.clone(),
                                     rss_struct.data.children[count].data.author.clone(),
-                                    // provider_kind.get_message().unwrap().to_string(),
-                                    provider_kind,
+                                    // pk.get_message().unwrap().to_string(),
+                                    pk,
                                     //biorxiv specific
                                     None,
                                     None,
@@ -1073,7 +1073,7 @@ pub fn rss_parse_string_into_struct(
                 }
                 Err(e) => {
                     print_colorful_message(
-                        Some(&provider_kind),
+                        Some(&pk),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),

@@ -35,13 +35,13 @@ pub async fn check_new_posts_threads_parts(
     let posts_and_errors = Vec::with_capacity(providers_link_parts.len());
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
     //check if provider_names are unique
-    for (provider_kind, link_parts) in providers_link_parts {
+    for (pk, link_parts) in providers_link_parts {
         if !link_parts.is_empty() {
             let posts_and_errors_handle_arc = Arc::clone(&posts_and_errors_arc_mutex);
-            let vec_of_provider_links = provider_kind.generate_provider_links(link_parts);
+            let vec_of_provider_links = pk.generate_provider_links(link_parts);
             tasks_vec.push(tokio::task::spawn(async move {
                 providers_new_posts_check(
-                    provider_kind,
+                    pk,
                     vec_of_provider_links,
                     posts_and_errors_handle_arc,
                 )

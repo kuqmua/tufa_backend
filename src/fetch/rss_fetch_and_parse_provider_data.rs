@@ -16,7 +16,7 @@ use crate::prints::print_type_enum::PrintType;
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn rss_fetch_and_parse_provider_data(
     links: Vec<String>,
-    provider_kind: ProviderKind,
+    pk: ProviderKind,
 ) -> Vec<
     Result<
         Result<CommonRssPostStruct, (NoItemsError, String)>,
@@ -34,12 +34,12 @@ pub fn rss_fetch_and_parse_provider_data(
     let mut thread_vector = Vec::with_capacity(links.len());
     for link in &mut links.into_iter() {
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
-        let provider_kind_clone = provider_kind;
+        let pk_clone = pk;
         let handle = thread::spawn(move || {
             let fetch_result = rss_fetch_link(&link, time);
             match fetch_result {
                 Ok(response_text) => {
-                    match rss_parse_string_into_struct(response_text, &link, provider_kind) {
+                    match rss_parse_string_into_struct(response_text, &link, pk) {
                         Ok(post_struct) => {
                             let mut hashmap_to_return_handle_locked =
                                 hashmap_to_return_handle.lock().unwrap();
@@ -54,7 +54,7 @@ pub fn rss_fetch_and_parse_provider_data(
                 }
                 Err(e) => {
                     print_colorful_message(
-                        Some(&provider_kind_clone),
+                        Some(&pk_clone),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
@@ -62,7 +62,7 @@ pub fn rss_fetch_and_parse_provider_data(
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
-                    hashmap_to_return_handle_locked.push(Err((link, provider_kind_clone, e)));
+                    hashmap_to_return_handle_locked.push(Err((link, pk_clone, e)));
                 }
             }
         });

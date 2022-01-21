@@ -116,7 +116,7 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_providers_vec() -> Vec<ProviderKind> {
         ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_enabled())
+            .filter(|pk| pk.is_enabled())
             .collect()
     }
 
@@ -135,16 +135,16 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_provider_kind_vec() -> Vec<ProviderKind> {
         ProviderKind::iter()
-            .filter(|provider_kind| provider_kind.is_mongo_initialization_enabled())
+            .filter(|pk| pk.is_mongo_initialization_enabled())
             .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_initialization_string_name_vec() -> Vec<String> {
         ProviderKind::iter()
-            .filter_map(|provider_kind| {
-                if provider_kind.is_mongo_initialization_enabled() {
-                    return Some(format!("{}", provider_kind));
+            .filter_map(|pk| {
+                if pk.is_mongo_initialization_enabled() {
+                    return Some(format!("{}", pk));
                 }
                 None
             })
