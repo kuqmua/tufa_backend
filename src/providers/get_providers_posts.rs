@@ -3,7 +3,7 @@ use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 
 use super::check_providers_link_parts_on_empty::CheckEmptyError;
-use super::providers_info::get_providers_link_parts::GetLinkPartsError;
+use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -55,11 +55,10 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 #[deny(clippy::indexing_slicing)]
 pub async fn get_providers_posts() {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
-        Err(e) => match e {
-            GetLinkPartsError::Local(_) => todo!(),
-            GetLinkPartsError::Mongodb(_) => todo!(),
-            // GetLinkPartsError::PostgreSql(_) => todo!(),
-            GetLinkPartsError::PostgreSql => todo!(),
+        Err(e) => match *e.source {
+            GetProvidersLinkPartsErrorEnum::Local(_) => todo!(),
+            GetProvidersLinkPartsErrorEnum::Mongodb(_) => todo!(),
+            GetProvidersLinkPartsErrorEnum::PostgreSql => todo!(),
         },
         Ok(providers_link_parts) => {
             match check_providers_link_parts_on_empty(providers_link_parts) {
