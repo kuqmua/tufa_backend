@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -19,8 +20,13 @@ use crate::postgres_integration::postgres_create_providers_tables_if_not_exists:
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 
+#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+pub struct InitDbsProvidersLinkPartsError {
+    pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
+}
+
 #[derive(Debug)]
-pub enum InitDbsProvidersLinkPartsError {
+pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
     MongoClient(mongodb::error::Error),
     MongoCollectionCountDocumentsOrIsNotEmpty(
@@ -42,7 +48,9 @@ pub enum InitDbsProvidersLinkPartsError {
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProvidersLinkPartsError> {
     match get_local_providers_link_parts().await {
-        Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError::GetLocalProvidersLinkParts(errors_hashmap)),
+        Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError{
+            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap))
+        }),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
@@ -62,39 +70,53 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             if let Some(Err(err)) = mongo_insert_data_option_result {
                 match *err.source {
                     InitMongoErrorEnum::Client(mongo_err) => {
-                        return Err(InitDbsProvidersLinkPartsError::MongoClient(mongo_err));
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(mongo_err))
+                        });
                     }
-                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(hashmap) => {
-                        return Err(InitDbsProvidersLinkPartsError::MongoCollectionCountDocumentsOrIsNotEmpty(
-                            hashmap,
-                        ));
+                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty(errors_hashmap))
+                        });
                     }
-                    InitMongoErrorEnum::InsertManyError(hashmap) => {
-                        return Err(InitDbsProvidersLinkPartsError::MongoInsertManyError(hashmap));
+                    InitMongoErrorEnum::InsertManyError(errors_hashmap) => {
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(errors_hashmap))
+                        });
                     }
                 }
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
-                        return Err(InitDbsProvidersLinkPartsError::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e));
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e))
+                        });
                     }
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
-                        return Err(InitDbsProvidersLinkPartsError::PostgresDeleteAllFromProvidersTables(e));
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables(e))
+                        });
                     }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
-                        return Err(
-                            InitDbsProvidersLinkPartsError::PostgresCheckProvidersLinkPartsTablesEmptyError(e),
-                        );
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError(e))
+                        });
                     }
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
-                        return Err(InitDbsProvidersLinkPartsError::PostgresCreateTableQueries(e));
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries(e))
+                        });
                     }
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => {
-                        return Err(InitDbsProvidersLinkPartsError::PostgresInsertLinkPartsIntoProvidersTables(e));
+                        return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables(e))
+                        });
                     }
                     PostgresInitErrorEnum::EstablishConnection(e) => {
-                        return Err(InitDbsProvidersLinkPartsError::PostgresEstablishConnection(e));
+                       return Err(InitDbsProvidersLinkPartsError{
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection(e))
+                        });
                     }
                 }
             }
