@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fmt;
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -20,7 +19,7 @@ use crate::postgres_integration::postgres_create_providers_tables_if_not_exists:
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct InitDbsProvidersLinkPartsError {
     pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
 }
