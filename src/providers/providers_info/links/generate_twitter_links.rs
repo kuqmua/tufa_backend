@@ -6,16 +6,14 @@ use crate::providers::providers_info::get_twitter_provider_name::get_twitter_pro
 
 pub fn generate_twitter_links(twitter_subs_names: Vec<String>) -> Vec<String> {
     //example https://nitter.pussthecat.org/Tom_McGurl/rss
-    let mut twitter_sections_links: Vec<String> = Vec::with_capacity(twitter_subs_names.len());
-    for sub_name in twitter_subs_names {
-        twitter_sections_links.push(format!(
+    twitter_subs_names.iter().map(|name| 
+        format!(
             "{}{}{}{}{}",
             TWITTER_LINK_FIRST_PART,
             get_twitter_provider_name(),
             TWITTER_LINK_SECOND_PART,
-            sub_name,
+            name,
             TWITTER_LINK_THIRD_PART
-        ));
-    }
-    twitter_sections_links //maybe change structure for memory effective reasons
+        )
+    ).collect()
 }
