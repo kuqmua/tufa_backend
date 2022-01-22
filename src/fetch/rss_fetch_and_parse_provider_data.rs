@@ -36,7 +36,19 @@ pub fn rss_fetch_and_parse_provider_data(
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let pk_clone = pk;
         let handle = thread::spawn(move || {
-            let fetch_result = blocking_fetch_link(&link, time);
+            let fetch_result = blocking_fetch_link(&link);
+            print_colorful_message(
+                None,
+                PrintType::TimeMeasurement,
+                file!().to_string(),
+                line!().to_string(),
+                format!(
+                    "fetch {} in {}.{}ms",
+                    link,
+                    time.elapsed().as_secs(),
+                    time.elapsed().as_millis() / 10,
+                ),
+            );
             match fetch_result {
                 Ok(response_text) => {
                     match rss_parse_string_into_struct(response_text, &link, pk) {
