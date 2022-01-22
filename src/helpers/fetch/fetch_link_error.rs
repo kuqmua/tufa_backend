@@ -1,13 +1,15 @@
+use std::fmt;
+
 use strum_macros::Display;
 
-#[derive(Debug, Display)] //Debug only for prints
-pub enum FetchLinkError {
-    ReqwestBlockingGet(reqwest::Error),
-    StatusCode(reqwest::StatusCode),
+#[derive(Debug, ImplDisplayDerive)]
+pub struct FetchLinkError {
+    pub source: Box<FetchLinkErrorEnum>,
 }
 
-impl From<reqwest::Error> for FetchLinkError {
-    fn from(e: reqwest::Error) -> Self {
-        FetchLinkError::ReqwestBlockingGet(e)
-    }
+#[derive(Debug, Display)] //Debug only for prints
+pub enum FetchLinkErrorEnum {
+    ReqwestBlockingGet(reqwest::Error),
+    StatusCode(reqwest::StatusCode),
+    ResponseText(reqwest::Error),
 }
