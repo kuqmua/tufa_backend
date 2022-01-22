@@ -1,9 +1,12 @@
 use std::time::Instant;
 
+use futures::future::join_all;
+
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
+
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
 use crate::helpers::fetch::fetch_link_error::{FetchLinkError, FetchLinkErrorEnum};
 
@@ -11,8 +14,6 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
-use futures::future::join_all;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn rss_fetch_and_parse_provider_data(
