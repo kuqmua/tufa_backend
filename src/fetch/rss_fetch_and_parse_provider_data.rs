@@ -3,7 +3,7 @@ use std::thread;
 use std::time::Instant;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::blocking_fetch_link::blocking_fetch_link;
+use crate::helpers::fetch::blocking_fetch_link::blocking_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;

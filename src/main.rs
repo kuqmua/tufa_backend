@@ -11,8 +11,6 @@ mod fetch {
     pub mod parse_github_html;
     pub mod rss_async_write_fetch_error_logs_into_files_wrapper;
     pub mod rss_fetch_and_parse_provider_data;
-    pub mod blocking_fetch_link;
-    pub mod async_fetch_link;
     pub mod rss_filter_fetched_and_parsed_posts;
     pub mod rss_handle_error_status_code;
     pub mod rss_metainfo_fetch_structures;
@@ -78,6 +76,10 @@ pub mod helpers {
     pub mod resource;
     pub mod write_json_into_file;
     pub mod write_string_into_file;
+    pub mod fetch {
+        pub mod blocking_fetch_link;
+        pub mod async_fetch_link;
+    }
 }
 pub mod init_dbs_logic {
     pub mod dbs_enum;
