@@ -37,7 +37,7 @@ pub async fn rss_part(
         });
     }
     Ok(rss_filter_fetched_and_parsed_posts(
-        rss_fetch_and_parse_provider_data(vec_of_provider_links, pk),
+        rss_fetch_and_parse_provider_data(vec_of_provider_links, pk).await,
         pk,
     ))
 }
