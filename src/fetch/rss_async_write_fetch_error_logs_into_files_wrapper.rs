@@ -1,6 +1,6 @@
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::fetch::write_provider_json_into_file::write_provider_json_into_file;
+use crate::helpers::write_json_into_file::{write_json_into_file};
 use chrono::Local;
 use futures::future::join_all;
 use serde_json::json;
@@ -14,63 +14,56 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
     error_posts: Vec<PostErrorVariant>,
 ) {
     let time = Instant::now();
-    let mut vec_of_write_into_files_futures = Vec::with_capacity(error_posts.len());
-    for post_error_variant in error_posts {
-        match post_error_variant {
-            PostErrorVariant::NoItems {
-                link,
-                no_items_error,
-                provider_kind: pk,
-            } => {
-                let json_object = NoItemsError::into_json_with_link_and_provider_kind(
-                    &link,
-                    &no_items_error,
-                    &pk,
-                );
-                let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                let path_to_file = format!(
-                    "logs/{}/{}/{}/{}-{}.json",
-                    &CONFIG.warning_logs_directory_name,
-                    pk,
-                    &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    pk,
-                    replaced_link
-                ); //add save function what convert string into save path
-                vec_of_write_into_files_futures.push(write_provider_json_into_file(
-                    json_object,
-                    pk,
-                    path_to_file, //todo: if it will be std::path::Path - value does not live long enough
-                ));
+    let _ = join_all(
+        error_posts.into_iter().map(|post_error_variant| async{
+            match post_error_variant {
+                PostErrorVariant::NoItems {
+                    link,
+                    no_items_error,
+                    provider_kind: pk,
+                } => {
+                    let json_object = NoItemsError::into_json_with_link_and_provider_kind(
+                        &link,
+                        &no_items_error,
+                        &pk,
+                    );
+                    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
+                    let path_to_file = format!(
+                        "logs/{}/{}/{}/{}-{}.json",
+                        &CONFIG.warning_logs_directory_name,
+                        pk,
+                        &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                        pk,
+                        replaced_link
+                    ); //add save function what convert string into save path
+                    (pk, write_json_into_file(std::path::Path::new(&path_to_file), json_object).await)
+                    
+                }
+                PostErrorVariant::RssFetchAndParseProviderDataError {
+                    link,
+                    provider_kind: pk,
+                    error,
+                } => {
+                    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
+                    let path_to_file = format!(
+                        "logs/{}/{}/{}/{}-{}.json",
+                        &CONFIG.warning_logs_directory_name,
+                        pk,
+                        &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
+                        pk,
+                        replaced_link
+                    ); //add save function what convert string into save path
+                    let json_object = json!({
+                        "link": link,
+                        "stringified_error": error.to_string(),
+                        "part_of": format!("{}",pk),
+                        "date": Local::now().to_string()
+                    });
+                    (pk, write_json_into_file(std::path::Path::new(&path_to_file), json_object).await)
+                }
             }
-            PostErrorVariant::RssFetchAndParseProviderDataError {
-                link,
-                provider_kind: pk,
-                error,
-            } => {
-                let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                let path_to_file = format!(
-                    "logs/{}/{}/{}/{}-{}.json",
-                    &CONFIG.warning_logs_directory_name,
-                    pk,
-                    &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
-                    pk,
-                    replaced_link
-                ); //add save function what convert string into save path
-                let json_object = json!({
-                    "link": link,
-                    "stringified_error": error.to_string(),
-                    "part_of": format!("{}",pk),
-                    "date": Local::now().to_string()
-                });
-                vec_of_write_into_files_futures.push(write_provider_json_into_file(
-                    json_object,
-                    pk,
-                    path_to_file, //todo: if it will be std::path::Path - value does not live long enough
-                ));
-            }
-        }
-    }
-    let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
+        })
+    ).await; //todo: add state of success/unsuccess
     if CONFIG.is_time_measurement_prints_enabled {
         println!(
             "write fetch error logs into files done in {} seconds {} miliseconds",
