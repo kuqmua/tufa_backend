@@ -22,8 +22,7 @@ pub async fn providers_new_posts_check(
         >,
     >,
 ) {
-    let result = rss_part(pk, vec_of_provider_links).await;
-    match result {
+    match rss_part(pk, vec_of_provider_links).await {
         Ok((vec_common_rss_post_structs, vec_post_error_variants)) => {
             //maybe do it in parrallel? success and error posts
             //todo: try to lock few times

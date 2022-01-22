@@ -22,12 +22,12 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     no_items_error,
                     provider_kind: pk,
                 } => {
+                    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                     let json_object = NoItemsError::into_json_with_link_and_provider_kind(
                         &link,
                         &no_items_error,
                         &pk,
                     );
-                    let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
                     let path_to_file_string = format!(
                         "logs/{}/{}/{}/{}-{}.json",
                         &CONFIG.warning_logs_directory_name,
