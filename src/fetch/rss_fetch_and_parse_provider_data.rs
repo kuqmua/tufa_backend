@@ -3,7 +3,7 @@ use std::thread;
 use std::time::Instant;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_fetch_link::rss_fetch_link;
+use crate::fetch::blocking_fetch_link::blocking_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
@@ -36,7 +36,7 @@ pub fn rss_fetch_and_parse_provider_data(
         let hashmap_to_return_handle = Arc::clone(&hashmap_to_return);
         let pk_clone = pk;
         let handle = thread::spawn(move || {
-            let fetch_result = rss_fetch_link(&link, time);
+            let fetch_result = blocking_fetch_link(&link, time);
             match fetch_result {
                 Ok(response_text) => {
                     match rss_parse_string_into_struct(response_text, &link, pk) {
