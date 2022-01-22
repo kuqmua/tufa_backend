@@ -2,6 +2,7 @@ use reqwest::StatusCode;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bool {
+    //cannot write match for error_status_code coz it has unsafe inside
     // println!(" handle_error_status_code {}", error_status_code)
     if error_status_code == reqwest::StatusCode::CONTINUE {
         println!("status 100(Continue) link: {}", link);
