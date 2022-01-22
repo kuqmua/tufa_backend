@@ -1,6 +1,6 @@
+use std::fmt;
 use std::path::Path;
 use std::{fs::File, io::Write};
-use std::fmt;
 
 use tokio::io::AsyncWriteExt;
 
@@ -14,8 +14,6 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
     log_file.sync_all()?;
     Ok(())
 }
-
-
 
 //
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
@@ -47,7 +45,10 @@ pub struct FileWriteAllStruct {
 
 //
 ///
-pub async fn write_string_into_file_with_tokio(path: &Path, stringified_json: String) -> Result<(), WriteStringIntoFileWithTokioError> {
+pub async fn write_string_into_file_with_tokio(
+    path: &Path,
+    stringified_json: String,
+) -> Result<(), WriteStringIntoFileWithTokioError> {
     if let Some(prefix) = path.parent() {
         if let Err(e) = std::fs::create_dir_all(prefix) {
             return Err(WriteStringIntoFileWithTokioError {
@@ -66,13 +67,9 @@ pub async fn write_string_into_file_with_tokio(path: &Path, stringified_json: St
         Ok(mut file) => {
             if let Err(e) = file.write_all(stringified_json.as_bytes()).await {
                 return Err(WriteStringIntoFileWithTokioError {
-                    source: Box::new(
-                        WriteStringIntoFileWithTokioErrorEnum::FileWriteAll(
-                            FileWriteAllStruct {
-                                source: e,
-                            },
-                        ),
-                    ),
+                    source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll(
+                        FileWriteAllStruct { source: e },
+                    )),
                 });
             }
             Ok(())

@@ -24,11 +24,13 @@ pub async fn mongo_get_documents_as_string_vector(
     let mut vec_of_strings: Vec<String> = Vec::new();
     while let Some(document) = cursor.try_next().await? {
         match document.get(db_collection_document_field_name_handle) {
-            None => return Err(MongoGetDocumentsAsStringVectorError {
-                source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument(
-                    db_collection_document_field_name_handle.to_string(),
-                )),
-            }),
+            None => {
+                return Err(MongoGetDocumentsAsStringVectorError {
+                    source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument(
+                        db_collection_document_field_name_handle.to_string(),
+                    )),
+                })
+            }
             Some(bson_handle) => match bson_handle {
                 mongodb::bson::Bson::String(value) => {
                     vec_of_strings.push(value.to_string());

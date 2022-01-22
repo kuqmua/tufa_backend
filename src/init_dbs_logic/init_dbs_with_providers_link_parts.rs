@@ -47,8 +47,10 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
 #[deny(clippy::indexing_slicing)]
 pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProvidersLinkPartsError> {
     match get_local_providers_link_parts().await {
-        Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError{
-            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap))
+        Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError {
+            source: Box::new(
+                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap),
+            ),
         }),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
@@ -69,8 +71,10 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             if let Some(Err(err)) = mongo_insert_data_option_result {
                 match *err.source {
                     InitMongoErrorEnum::Client(mongo_err) => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(mongo_err))
+                        return Err(InitDbsProvidersLinkPartsError {
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(
+                                mongo_err,
+                            )),
                         });
                     }
                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
@@ -79,8 +83,12 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                         });
                     }
                     InitMongoErrorEnum::InsertManyError(errors_hashmap) => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(errors_hashmap))
+                        return Err(InitDbsProvidersLinkPartsError {
+                            source: Box::new(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(
+                                    errors_hashmap,
+                                ),
+                            ),
                         });
                     }
                 }

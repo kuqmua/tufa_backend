@@ -407,47 +407,47 @@ impl ConfigStruct {
                 && bool_vars[&EnvBoolVar::IsEnabledReddit],
             is_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
                 && bool_vars[&EnvBoolVar::IsEnabledTwitter],
-            
+
             is_dbs_initialization_enabled: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled],
-            is_dbs_initialization_enabled_providers:  bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders],
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled],
+            is_dbs_initialization_enabled_providers: bool_vars[&EnvBoolVar::IsEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders],
             is_dbs_initialization_enabled_arxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledArxiv]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledArxiv],
+                && bool_vars[&EnvBoolVar::IsEnabledArxiv]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledArxiv],
             is_dbs_initialization_enabled_biorxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledBiorxiv]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledBiorxiv],
+                && bool_vars[&EnvBoolVar::IsEnabledBiorxiv]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledBiorxiv],
             is_dbs_initialization_enabled_github: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledGithub]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledGithub],
+                && bool_vars[&EnvBoolVar::IsEnabledGithub]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledGithub],
             is_dbs_initialization_enabled_habr: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledHabr]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledHabr],
+                && bool_vars[&EnvBoolVar::IsEnabledHabr]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledHabr],
             is_dbs_initialization_enabled_medrxiv: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledMedrxiv]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledMedrxiv],
+                && bool_vars[&EnvBoolVar::IsEnabledMedrxiv]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledMedrxiv],
             is_dbs_initialization_enabled_reddit: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledReddit]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledReddit],
+                && bool_vars[&EnvBoolVar::IsEnabledReddit]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledReddit],
             is_dbs_initialization_enabled_twitter: bool_vars[&EnvBoolVar::IsEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsEnabledTwitter]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
-            && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledTwitter],
+                && bool_vars[&EnvBoolVar::IsEnabledTwitter]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabled]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledProviders]
+                && bool_vars[&EnvBoolVar::IsDbsInitializationEnabledTwitter],
 
             is_prints_enabled: bool_vars[&EnvBoolVar::IsPrintsEnabled],
             is_prints_enabled_providers: bool_vars[&EnvBoolVar::IsPrintsEnabled]

@@ -29,9 +29,12 @@ pub async fn get_local_providers_link_parts(
             source: Box::new(GetLocalProvidersLinkPartsErrorEnum::EnabledProvidersVecIsEmpty),
         });
     }
-    let result_vec = join_all(enabled_providers_vec
-        .into_iter()
-        .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_file(pk).await) })).await;
+    let result_vec = join_all(
+        enabled_providers_vec
+            .into_iter()
+            .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_file(pk).await) }),
+    )
+    .await;
     let mut errors_hashmap: HashMap<ProviderKind, ProviderGetLocalDataError> = HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());

@@ -32,19 +32,19 @@ pub async fn get_providers_link_parts(
     match resource {
         Resource::Local => match get_local_providers_link_parts().await {
             Err(error_hashmap) => Err(GetProvidersLinkPartsError {
-                source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap))
+                source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         Resource::Mongodb => match mongo_get_providers_link_parts().await {
             Err(e) => Err(GetProvidersLinkPartsError {
-                source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e))
+                source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         // Resource::PostgreSql => match postgres_get_providers_link_parts().await {
         //     Err(e) => Err(GetProvidersLinkPartsError {
-            // source: Box::new(GetProvidersLinkPartsError::PostgreSql(e))
+        // source: Box::new(GetProvidersLinkPartsError::PostgreSql(e))
         // }),
         //     Ok(success_hashmap) => Ok(success_hashmap),
         // },

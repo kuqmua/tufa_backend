@@ -22,7 +22,10 @@ pub enum WriteJsonIntoFileError {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn write_json_into_file(path: &Path, json_object: Value) -> Result<(), WriteJsonIntoFileError> {
+pub async fn write_json_into_file(
+    path: &Path,
+    json_object: Value,
+) -> Result<(), WriteJsonIntoFileError> {
     let stringified_json = serde_json::to_string_pretty(&json_object)?;
     Ok(write_string_into_file_with_tokio(path, stringified_json).await?)
 }

@@ -115,9 +115,7 @@ impl ProviderKindTrait for ProviderKind {
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_enabled_providers_vec() -> Vec<ProviderKind> {
-        ProviderKind::iter()
-            .filter(|pk| pk.is_enabled())
-            .collect()
+        ProviderKind::iter().filter(|pk| pk.is_enabled()).collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

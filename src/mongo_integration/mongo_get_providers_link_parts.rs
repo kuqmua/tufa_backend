@@ -53,11 +53,9 @@ pub async fn mongo_get_providers_link_parts(
     match ClientOptions::parse(mongo_get_db_url()).await {
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(
-                    MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError { source: e },
+                )),
             })
         }
         Ok(cl) => client_options = cl,
@@ -66,11 +64,9 @@ pub async fn mongo_get_providers_link_parts(
     match Client::with_options(client_options) {
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(
-                    MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
+                    ClientWithOptionsError { source: e },
+                )),
             })
         }
         Ok(c) => client = c,
@@ -81,11 +77,9 @@ pub async fn mongo_get_providers_link_parts(
     match db.list_collection_names(None).await {
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(
-                    MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
-                        ListCollectionNamesError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
+                    ListCollectionNamesError { source: e },
+                )),
             })
         }
         Ok(vcn) => vec_collection_names = vcn,
@@ -102,11 +96,9 @@ pub async fn mongo_get_providers_link_parts(
         .collect::<HashMap<ProviderKind, String>>();
     if !no_collection_error_hashmap.is_empty() {
         return Err(MongoGetProvidersLinkPartsError {
-            source: Box::new(
-                MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
-                    no_collection_error_hashmap,
-                ),
-            ),
+            source: Box::new(MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
+                no_collection_error_hashmap,
+            )),
         });
     }
     let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
@@ -127,11 +119,9 @@ pub async fn mongo_get_providers_link_parts(
         HashMap::new();
     if !get_documents_error_hashmap.is_empty() {
         return Err(MongoGetProvidersLinkPartsError {
-            source: Box::new(
-                MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
-                    get_documents_error_hashmap,
-                ),
-            ),
+            source: Box::new(MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
+                get_documents_error_hashmap,
+            )),
         });
     }
 
