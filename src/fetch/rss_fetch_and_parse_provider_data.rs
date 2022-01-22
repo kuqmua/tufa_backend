@@ -7,6 +7,7 @@ use crate::helpers::fetch::blocking_fetch_link::blocking_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
+use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -53,12 +54,15 @@ pub fn rss_fetch_and_parse_provider_data(
                     }
                 }
                 Err(e) => {
+                    if let RssFetchLinkError::StatusCode(status_code) = e {
+                        handle_error_status_code(status_code, &link);
+                    }
                     print_colorful_message(
                         Some(&pk_clone),
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
-                        format!("RssFetchLinkError {:#?}", e),
+                        format!("link: {} RssFetchLinkError {:#?}", link, e),
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
