@@ -1,6 +1,5 @@
 use chrono::Local;
 use serde_json::{json, Value};
-use strum_macros::Display;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -53,17 +52,5 @@ impl NoItemsError {
                 "date": Local::now().to_string()
             }),
         }
-    }
-}
-
-#[derive(Debug, Display)] //Debug only for prints
-pub enum RssFetchLinkError {
-    ReqwestBlockingGet(reqwest::Error),
-    StatusCode(reqwest::StatusCode),
-}
-
-impl From<reqwest::Error> for RssFetchLinkError {
-    fn from(e: reqwest::Error) -> Self {
-        RssFetchLinkError::ReqwestBlockingGet(e)
     }
 }

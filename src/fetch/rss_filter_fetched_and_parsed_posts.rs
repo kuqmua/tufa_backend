@@ -3,7 +3,7 @@ use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use super::rss_metainfo_fetch_structures::RssFetchLinkError;
+use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 
 #[derive(Debug)]
 pub enum PostErrorVariant {
@@ -16,7 +16,7 @@ pub enum PostErrorVariant {
     RssFetchAndParseProviderDataError {
         link: String,
         provider_kind: ProviderKind,
-        error: RssFetchLinkError,
+        error: FetchLinkError,
     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
 }
 
@@ -27,7 +27,7 @@ pub fn rss_filter_fetched_and_parsed_posts(
     unfiltered_posts_hashmap_after_fetch_and_parse: Vec<
         Result<
             Result<CommonRssPostStruct, (NoItemsError, String)>,
-            (String, ProviderKind, RssFetchLinkError),
+            (String, ProviderKind, FetchLinkError),
         >,
     >, //it must be enum
     pk: ProviderKind,

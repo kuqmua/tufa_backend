@@ -5,7 +5,7 @@ use std::time::Instant;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::helpers::fetch::blocking_fetch_link::blocking_fetch_link;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::fetch::rss_metainfo_fetch_structures::RssFetchLinkError;
+use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 
@@ -21,15 +21,14 @@ pub fn rss_fetch_and_parse_provider_data(
 ) -> Vec<
     Result<
         Result<CommonRssPostStruct, (NoItemsError, String)>,
-        (String, ProviderKind, RssFetchLinkError),
+        (String, ProviderKind, FetchLinkError),
     >,
 > {
-    //RssFetchLinkError
     let time = Instant::now();
     let hashmap_to_return = Arc::new(Mutex::new(Vec::<
         Result<
             Result<CommonRssPostStruct, (NoItemsError, String)>,
-            (String, ProviderKind, RssFetchLinkError),
+            (String, ProviderKind, FetchLinkError),
         >,
     >::with_capacity(links.len())));
     let mut thread_vector = Vec::with_capacity(links.len());
@@ -54,7 +53,7 @@ pub fn rss_fetch_and_parse_provider_data(
                     }
                 }
                 Err(e) => {
-                    if let RssFetchLinkError::StatusCode(status_code) = e {
+                    if let FetchLinkError::StatusCode(status_code) = e {
                         handle_error_status_code(status_code, &link);
                     }
                     print_colorful_message(
@@ -62,7 +61,7 @@ pub fn rss_fetch_and_parse_provider_data(
                         PrintType::Error,
                         file!().to_string(),
                         line!().to_string(),
-                        format!("link: {} RssFetchLinkError {:#?}", link, e),
+                        format!("link: {} FetchLinkError {:#?}", link, e),
                     );
                     let mut hashmap_to_return_handle_locked =
                         hashmap_to_return_handle.lock().unwrap();
