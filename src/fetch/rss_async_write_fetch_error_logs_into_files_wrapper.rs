@@ -28,15 +28,16 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                         &pk,
                     );
                     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                    let path_to_file = format!(
+                    let path_to_file_string = format!(
                         "logs/{}/{}/{}/{}-{}.json",
                         &CONFIG.warning_logs_directory_name,
                         pk,
                         &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         pk,
                         replaced_link
-                    ); //add save function what convert string into save path
-                    (pk, write_json_into_file(std::path::Path::new(&path_to_file), json_object).await)
+                    );
+                    let path_to_file = std::path::Path::new(&path_to_file_string);
+                    (pk, write_json_into_file(path_to_file, json_object).await)
                     
                 }
                 PostErrorVariant::RssFetchAndParseProviderDataError {
@@ -45,21 +46,22 @@ pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
                     error,
                 } => {
                     let replaced_link = link.replace("/", "-").replace(":", "-").replace(".", "-");
-                    let path_to_file = format!(
+                    let path_to_file_string = format!(
                         "logs/{}/{}/{}/{}-{}.json",
                         &CONFIG.warning_logs_directory_name,
                         pk,
                         &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir,
                         pk,
                         replaced_link
-                    ); //add save function what convert string into save path
+                    );
+                    let path_to_file = std::path::Path::new(&path_to_file_string);
                     let json_object = json!({
                         "link": link,
                         "stringified_error": error.to_string(),
                         "part_of": format!("{}",pk),
                         "date": Local::now().to_string()
                     });
-                    (pk, write_json_into_file(std::path::Path::new(&path_to_file), json_object).await)
+                    (pk, write_json_into_file(path_to_file, json_object).await)
                 }
             }
         })
