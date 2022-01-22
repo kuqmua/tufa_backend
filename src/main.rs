@@ -17,7 +17,6 @@ mod fetch {
     pub mod rss_metainfo_fetch_structures;
     pub mod rss_parse_string_into_struct;
     pub mod rss_part;
-    pub mod write_provider_json_into_file;
     pub mod info_structures {
         pub mod structs_for_parsing {
             pub mod arxiv_struct_for_parsing;
