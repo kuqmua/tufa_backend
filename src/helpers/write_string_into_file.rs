@@ -1,5 +1,6 @@
 use std::path::Path;
 use std::{fs::File, io::Write};
+use std::fmt;
 
 use tokio::io::AsyncWriteExt;
 
@@ -17,12 +18,12 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
 
 
 //
-#[derive(Debug)]
+#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
 }
 
-#[derive(Debug)] //, ImplFromForUpperStruct
+#[derive(thiserror::Error, Debug, ImplDisplayDerive)] //, ImplFromForUpperStruct
 pub enum WriteStringIntoFileWithTokioErrorEnum {
     StdFsCreateDirAll(StdFsCreateDirAllStruct),
     TokioFsFileOpen(TokioFsFileOpenStruct),
