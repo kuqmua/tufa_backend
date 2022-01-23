@@ -43,7 +43,10 @@ Right test what parse repo code and check what each function returns some type o
 create big json file to test parsing speed as test
 <br/>
 
-
 ### -------------------
 test for all env var to working and usage
+<br/>
+
+### -------------------
+is there some test implementation that checks all your rust project functions (with result return type) on difference between return type in case of ok and error? i mean for cases where size of ok must be >= size of error. if otherwise im going to use Box(Error) in case of error. i think it can be done with big proc macro that expand test.
 <br/>
