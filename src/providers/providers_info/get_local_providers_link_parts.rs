@@ -7,30 +7,16 @@ use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_j
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
-use std::fmt;
-
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
-pub struct GetLocalProvidersLinkPartsError {
-    pub source: Box<GetLocalProvidersLinkPartsErrorEnum>,
-}
-
 #[derive(Debug)]
-pub enum GetLocalProvidersLinkPartsErrorEnum {
-    EnabledProvidersVecIsEmpty,
-    GetProvidersLinkPartsFromFile(HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>),
+pub struct GetLocalProvidersLinkPartsError {
+    pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>>,
 }
 
 #[deny(clippy::indexing_slicing)]
 pub async fn get_local_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
-    let enabled_providers_vec = ProviderKind::get_dbs_initialization_enabled_vec();
-    if enabled_providers_vec.is_empty() {
-        return Err(GetLocalProvidersLinkPartsError {
-            source: Box::new(GetLocalProvidersLinkPartsErrorEnum::EnabledProvidersVecIsEmpty),
-        });
-    }
     let result_vec = join_all(
-        enabled_providers_vec
+        ProviderKind::get_dbs_initialization_enabled_vec()
             .into_iter()
             .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_json_file(pk).await) }),
     )
@@ -44,15 +30,14 @@ pub async fn get_local_providers_link_parts(
                 errors_hashmap.insert(pk, e);
             }
             Ok(vec) => {
-                //todo check vec on empty
                 success_hashmap.insert(pk, vec);
             }
         }
     }
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
-            source: Box::new(
-                GetLocalProvidersLinkPartsErrorEnum::GetProvidersLinkPartsFromFile(errors_hashmap),
+            source: Box::new(errors_hashmap
+               
             ),
         });
     }
