@@ -600,4 +600,5 @@ race - wait for first output, return early on error
 join - wait for all ouputs, continue on error
 try_join - wait for all outputs, return early on error
 try race - wait for first output, continue on error
+https://www.youtube.com/watch?v=QlPDI9IsSXU&list=WL&index=99
 <br/>
