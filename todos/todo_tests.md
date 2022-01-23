@@ -50,3 +50,7 @@ test for all env var to working and usage
 ### -------------------
 is there some test implementation that checks all your rust project functions (with result return type) on difference between return type in case of ok and error? i mean for cases where size of ok must be >= size of error. if otherwise im going to use Box(Error) in case of error. i think it can be done with big proc macro that expand test.
 <br/>
+
+### -------------------
+test or proc macro to name error function type like function but with CamelCase and ErrorStruct on the end
+<br/>
