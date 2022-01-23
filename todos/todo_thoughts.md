@@ -595,4 +595,9 @@ let b = async { 11 };
 try using race for different dbs or local files.
 for example get provider link parts from mongo postgres local using race
 assert_eq!(a.race(b).await, 11);
+
+race - wait for first output, return early on error
+join - wait for all ouputs, continue on error
+try_join - wait for all outputs, return early on error
+try race - wait for first output, continue on error
 <br/>
