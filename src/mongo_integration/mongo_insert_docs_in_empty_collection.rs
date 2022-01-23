@@ -13,7 +13,7 @@ use crate::prints::print_type_enum::PrintType;
 
 #[derive(Debug)]
 pub struct MongoInsertDocsInEmptyCollectionError {
-    pub source: Box<MongoInsertDocsInEmptyCollectionErrorEnum>
+    pub source: Box<MongoInsertDocsInEmptyCollectionErrorEnum>,
 }
 
 #[derive(Debug)]
@@ -56,9 +56,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
     match ClientOptions::parse(mongo_get_db_url()).await {
         Err(e) => {
             return Err(MongoInsertDocsInEmptyCollectionError {
-                source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e },
-                )),
+                source: Box::new(
+                    MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse(
+                        ClientOptionsParseError { source: e },
+                    ),
+                ),
             })
         }
         Ok(cl) => client_options = cl,
@@ -67,9 +69,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
     match Client::with_options(client_options) {
         Err(e) => {
             return Err(MongoInsertDocsInEmptyCollectionError {
-                source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions(
-                    ClientWithOptionsError { source: e },
-                )),
+                source: Box::new(
+                    MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    ),
+                ),
             })
         }
         Ok(c) => client = c,
@@ -78,11 +82,13 @@ pub async fn mongo_insert_docs_in_empty_collection(
     let collection = db.collection(&db_collection_handle);
     let documents_number: u64;
     match collection.count_documents(None, None).await {
-        Err(e) => return Err(MongoInsertDocsInEmptyCollectionError {
-            source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments(
-                CountDocumentsError { source: e },
-            )),
-        }),
+        Err(e) => {
+            return Err(MongoInsertDocsInEmptyCollectionError {
+                source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments(
+                    CountDocumentsError { source: e },
+                )),
+            })
+        }
         Ok(dn) => documents_number = dn,
     }
     if documents_number > 0 {
@@ -94,11 +100,10 @@ pub async fn mongo_insert_docs_in_empty_collection(
             "collection is not empty, docs did not inserted".to_string(),
         );
         Err(MongoInsertDocsInEmptyCollectionError {
-            source: Box::new(
-                MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty(documents_number)
-            )
-        }
-        )
+            source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty(
+                documents_number,
+            )),
+        })
     } else {
         let mut docs: Vec<Document> = Vec::with_capacity(vec_of_values.len());
         for value in &vec_of_values {
@@ -106,9 +111,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
         }
         if let Err(e) = collection.insert_many(docs, None).await {
             return Err(MongoInsertDocsInEmptyCollectionError {
-                source: Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany(
-                    CollectionInsertManyError { source: e },
-                )),
+                source: Box::new(
+                    MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany(
+                        CollectionInsertManyError { source: e },
+                    ),
+                ),
             });
         }
         Ok(())

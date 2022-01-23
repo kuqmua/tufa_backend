@@ -18,10 +18,16 @@ pub async fn get_local_providers_link_parts(
     let result_vec = join_all(
         ProviderKind::get_dbs_initialization_enabled_vec()
             .into_iter()
-            .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_json_file(pk).await) }),
+            .map(|pk| async move {
+                (
+                    pk,
+                    ProviderKind::get_link_parts_from_local_json_file(pk).await,
+                )
+            }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> = HashMap::new();
+    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> =
+        HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
     for (pk, result) in result_vec {
@@ -36,9 +42,7 @@ pub async fn get_local_providers_link_parts(
     }
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
-            source: Box::new(errors_hashmap
-               
-            ),
+            source: Box::new(errors_hashmap),
         });
     }
     Ok(success_hashmap)
