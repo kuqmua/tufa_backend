@@ -589,4 +589,10 @@ tokio::fs::metadata
 check path exists in file system
 <br/>
     
- 
+ ### -------------------
+let a = async { 10 }.delay(Duration::from_secs(10));
+let b = async { 11 };
+try using race for different dbs or local files.
+for example get provider link parts from mongo postgres local using race
+assert_eq!(a.race(b).await, 11);
+<br/>
