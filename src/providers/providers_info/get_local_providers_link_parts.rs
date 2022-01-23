@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use futures::future::join_all;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_json_file::ProviderGetLocalDataError;
+use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
@@ -17,7 +17,7 @@ pub struct GetLocalProvidersLinkPartsError {
 #[derive(Debug)]
 pub enum GetLocalProvidersLinkPartsErrorEnum {
     EnabledProvidersVecIsEmpty,
-    GetProvidersLinkPartsFromFile(HashMap<ProviderKind, ProviderGetLocalDataError>),
+    GetProvidersLinkPartsFromFile(HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>),
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -35,7 +35,7 @@ pub async fn get_local_providers_link_parts(
             .map(|pk| async move { (pk, ProviderKind::get_link_parts_from_local_json_file(pk).await) }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, ProviderGetLocalDataError> = HashMap::new();
+    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> = HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
     for (pk, result) in result_vec {
