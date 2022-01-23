@@ -432,3 +432,7 @@ also its has vulnerability https://blog.rust-lang.org/2022/01/20/cve-2022-21658.
 inside get_all_local_providers_data
 get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add additional vars into env file
 <br/>
+
+### -------------------
+docker build image inside ci pipeline
+<br/>
