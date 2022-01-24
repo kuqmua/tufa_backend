@@ -1,14 +1,12 @@
-use std::fmt;
-
 use futures::stream::TryStreamExt;
 use mongodb::{bson::Document, Collection};
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct MongoGetDocumentsAsStringVectorError {
     pub source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
 }
 
-#[derive(Debug, ImplFromForUpperStruct)]
+#[derive(Debug)]
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {
     CollectionAggregate(CollectionAggregateError),
     CursorTryNext(CursorTryNextError),
