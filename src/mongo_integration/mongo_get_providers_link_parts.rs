@@ -49,7 +49,6 @@ pub struct ListCollectionNamesError {
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
-    let client_options: ClientOptions;
     match ClientOptions::parse(mongo_get_db_url()).await {
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
@@ -58,80 +57,91 @@ pub async fn mongo_get_providers_link_parts(
                 )),
             })
         }
-        Ok(cl) => client_options = cl,
-    }
-    let client: Client;
-    match Client::with_options(client_options) {
-        Err(e) => {
-            return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
-                    ClientWithOptionsError { source: e },
-                )),
-            })
-        }
-        Ok(c) => client = c,
-    }
-    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
-    let vec_collection_names: Vec<String>;
-    //todo ProviderKind::get_enabled_providers_vec as filter
-    match db.list_collection_names(None).await {
-        Err(e) => {
-            return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
-                    ListCollectionNamesError { source: e },
-                )),
-            })
-        }
-        Ok(vcn) => vec_collection_names = vcn,
-    }
-    let no_collection_error_hashmap = ProviderKind::get_enabled_providers_vec()
-        .into_iter()
-        .filter_map(|pk| {
-            let collection_name = pk.get_mongo_log_collection_name();
-            if !vec_collection_names.contains(&collection_name) {
-                return Some((pk, collection_name));
-            }
-            None
-        })
-        .collect::<HashMap<ProviderKind, String>>();
-    if !no_collection_error_hashmap.is_empty() {
-        return Err(MongoGetProvidersLinkPartsError {
-            source: Box::new(MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
-                no_collection_error_hashmap,
-            )),
-        });
-    }
-    let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
-    let result_get_documents_hashmap = join_all(enabled_providers_vec.iter().map(|pk| async {
-        let pk_cloned = pk.clone();
-        (
-            pk_cloned,
-            mongo_get_documents_as_string_vector(
-                db.collection::<Document>(&pk.get_mongo_log_collection_name()),
-                &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                ProviderKind::get_mongo_provider_link_parts_aggregation(&pk_cloned),
-            )
-            .await,
-        )
-    }))
-    .await;
-    let get_documents_error_hashmap: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError> =
-        HashMap::new();
-    if !get_documents_error_hashmap.is_empty() {
-        return Err(MongoGetProvidersLinkPartsError {
-            source: Box::new(MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
-                get_documents_error_hashmap,
-            )),
-        });
-    }
+        Ok(client_options) => {
+            match Client::with_options(client_options) {
+                Err(e) => {
+                    return Err(MongoGetProvidersLinkPartsError {
+                        source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
+                            ClientWithOptionsError { source: e },
+                        )),
+                    })
+                }
+                Ok(client) => {
+                    let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
+                    //todo ProviderKind::get_enabled_providers_vec as filter
+                    match db.list_collection_names(None).await {
+                        Err(e) => {
+                            return Err(MongoGetProvidersLinkPartsError {
+                                source: Box::new(
+                                    MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
+                                        ListCollectionNamesError { source: e },
+                                    ),
+                                ),
+                            })
+                        }
+                        Ok(vec_collection_names) => {
+                            let no_collection_error_hashmap =
+                                ProviderKind::get_enabled_providers_vec()
+                                    .into_iter()
+                                    .filter_map(|pk| {
+                                        let collection_name = pk.get_mongo_log_collection_name();
+                                        if !vec_collection_names.contains(&collection_name) {
+                                            return Some((pk, collection_name));
+                                        }
+                                        None
+                                    })
+                                    .collect::<HashMap<ProviderKind, String>>();
+                            if !no_collection_error_hashmap.is_empty() {
+                                return Err(MongoGetProvidersLinkPartsError {
+                                    source: Box::new(
+                                        MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
+                                            no_collection_error_hashmap,
+                                        ),
+                                    ),
+                                });
+                            }
+                            let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
+                            let result_get_documents_hashmap =
+                                join_all(enabled_providers_vec.iter().map(|pk| async {
+                                    let pk_cloned = pk.clone();
+                                    (
+                                        pk_cloned,
+                                        mongo_get_documents_as_string_vector(
+                                            db.collection::<Document>(&pk.get_mongo_log_collection_name()),
+                                            &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
+                                            ProviderKind::get_mongo_provider_link_parts_aggregation(&pk_cloned),
+                                        )
+                                        .await,
+                                    )
+                                }))
+                                .await;
+                            let get_documents_error_hashmap: HashMap<
+                                ProviderKind,
+                                MongoGetDocumentsAsStringVectorError,
+                            > = HashMap::new();
+                            if !get_documents_error_hashmap.is_empty() {
+                                return Err(MongoGetProvidersLinkPartsError {
+                                    source: Box::new(
+                                        MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
+                                            get_documents_error_hashmap,
+                                        ),
+                                    ),
+                                });
+                            }
 
-    Ok(result_get_documents_hashmap
-        .into_iter()
-        .filter_map(|(pk, result)| {
-            if let Ok(vec) = result {
-                return Some((pk, vec));
+                            Ok(result_get_documents_hashmap
+                                .into_iter()
+                                .filter_map(|(pk, result)| {
+                                    if let Ok(vec) = result {
+                                        return Some((pk, vec));
+                                    }
+                                    None
+                                })
+                                .collect())
+                        }
+                    }
+                }
             }
-            None
-        })
-        .collect())
+        }
+    }
 }

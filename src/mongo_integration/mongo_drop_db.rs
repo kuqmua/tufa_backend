@@ -37,25 +37,23 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                 )),
             })
         }
-        Ok(client_options) => {
-            match Client::with_options(client_options) {
-                Err(e) => {
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => {
+                return Err(MongoDropDbError {
+                    source: Box::new(MongoDropDbErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
+                })
+            }
+            Ok(client) => {
+                if let Err(e) = client.database(db_name).drop(None).await {
                     return Err(MongoDropDbError {
-                        source: Box::new(MongoDropDbErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e },
-                        )),
-                    })
+                        source: Box::new(MongoDropDbErrorEnum::DatabaseDrop(DatabaseDropError {
+                            source: e,
+                        })),
+                    });
                 }
-                Ok(client) => {
-                    if let Err(e) = client.database(db_name).drop(None).await {
-                        return Err(MongoDropDbError {
-                            source: Box::new(MongoDropDbErrorEnum::DatabaseDrop(
-                                DatabaseDropError { source: e },
-                            )),
-                        });
-                    }
-                    Ok(())
-                },
+                Ok(())
             }
         },
     }

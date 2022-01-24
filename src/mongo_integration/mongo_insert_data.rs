@@ -38,16 +38,19 @@ pub async fn mongo_insert_data(
                 )
             });
     let result_vec = join_all(error_hashmap).await;
-    let error_hashmap = result_vec.into_iter().filter_map(|(pk, result)| {
-        if let Err(e) = result {
-            return Some((pk, e));
-        }
-        None
-    }).collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
+    let error_hashmap = result_vec
+        .into_iter()
+        .filter_map(|(pk, result)| {
+            if let Err(e) = result {
+                return Some((pk, e));
+            }
+            None
+        })
+        .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
     if !error_hashmap.is_empty() {
         return Err(MongoInsertDataError {
-            source: Box::new(error_hashmap)
-        })
+            source: Box::new(error_hashmap),
+        });
     }
     Ok(())
 }
