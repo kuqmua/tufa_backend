@@ -38,30 +38,29 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
                     ClientOptionsParseError { source: e },
                 )),
             });
-        },
-        Ok(client_options) => {
-            match Client::with_options(client_options) {
-                Err(e) => {
+        }
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => {
+                return Err(MongoCheckAvailabilityError {
+                    source: Box::new(MongoCheckAvailabilityErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
+                });
+            }
+            Ok(client) => {
+                if let Err(e) = client
+                    .database(&CONFIG.mongo_providers_logs_db_name)
+                    .list_collection_names(None)
+                    .await
+                {
                     return Err(MongoCheckAvailabilityError {
-                        source: Box::new(MongoCheckAvailabilityErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e },
+                        source: Box::new(MongoCheckAvailabilityErrorEnum::ListCollectionNames(
+                            ListCollectionNamesError { source: e },
                         )),
                     });
-                },
-                Ok(client) => {
-                    if let Err(e) = client.database(&CONFIG.mongo_providers_logs_db_name)
-                    .list_collection_names(None)
-                    .await {
-                        return Err(MongoCheckAvailabilityError {
-                            source: Box::new(MongoCheckAvailabilityErrorEnum::ListCollectionNames(
-                                ListCollectionNamesError { source: e },
-                            )),
-                        });
-                    }
-                    Ok(())
-                },
+                }
+                Ok(())
             }
         },
     }
-    
 }

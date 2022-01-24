@@ -20,25 +20,23 @@ pub async fn mongo_insert_data(
     db_name_handle: &str,
     vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), MongoInsertDataError> {
-    let error_hashmap =
-        vec_of_link_parts_hashmap
-            .into_iter()
-            .map(|(pk, vec_of_link_parts)| async move {
-                (
-                    pk,
-                    mongo_insert_docs_in_empty_collection(
-                        db_name_handle,
-                        format!(
-                            "{}{}",
-                            pk, CONFIG.mongo_providers_logs_db_collection_handle_second_part
-                        ),
-                        vec_of_link_parts,
-                    )
-                    .await,
+    let error_hashmap = join_all(vec_of_link_parts_hashmap
+        .into_iter()
+        .map(|(pk, vec_of_link_parts)| async move {
+            (
+                pk,
+                mongo_insert_docs_in_empty_collection(
+                    db_name_handle,
+                    format!(
+                        "{}{}",
+                        pk, CONFIG.mongo_providers_logs_db_collection_handle_second_part
+                    ),
+                    vec_of_link_parts,
                 )
-            });
-    let result_vec = join_all(error_hashmap).await;
-    let error_hashmap = result_vec
+                .await,
+            )
+        }))
+        .await
         .into_iter()
         .filter_map(|(pk, result)| {
             if let Err(e) = result {
