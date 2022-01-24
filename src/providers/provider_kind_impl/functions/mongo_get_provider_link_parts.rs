@@ -47,9 +47,7 @@ impl ProviderKind {
             Err(e) => {
                 return Err(MongoGetProviderLinkPartsError {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError {
-                            source: e,
-                        },
+                        ClientOptionsParseError { source: e },
                     )),
                 })
             }
@@ -57,9 +55,7 @@ impl ProviderKind {
                 Err(e) => {
                     return Err(MongoGetProviderLinkPartsError {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError {
-                                source: e,
-                            },
+                            ClientWithOptionsError { source: e },
                         )),
                     });
                 }

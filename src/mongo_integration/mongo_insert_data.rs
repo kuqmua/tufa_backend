@@ -20,9 +20,8 @@ pub async fn mongo_insert_data(
     db_name_handle: &str,
     vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), MongoInsertDataError> {
-    let error_hashmap = join_all(vec_of_link_parts_hashmap
-        .into_iter()
-        .map(|(pk, vec_of_link_parts)| async move {
+    let error_hashmap = join_all(vec_of_link_parts_hashmap.into_iter().map(
+        |(pk, vec_of_link_parts)| async move {
             (
                 pk,
                 mongo_insert_docs_in_empty_collection(
@@ -35,16 +34,17 @@ pub async fn mongo_insert_data(
                 )
                 .await,
             )
-        }))
-        .await
-        .into_iter()
-        .filter_map(|(pk, result)| {
-            if let Err(e) = result {
-                return Some((pk, e));
-            }
-            None
-        })
-        .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
+        },
+    ))
+    .await
+    .into_iter()
+    .filter_map(|(pk, result)| {
+        if let Err(e) = result {
+            return Some((pk, e));
+        }
+        None
+    })
+    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
     if !error_hashmap.is_empty() {
         return Err(MongoInsertDataError {
             source: Box::new(error_hashmap),

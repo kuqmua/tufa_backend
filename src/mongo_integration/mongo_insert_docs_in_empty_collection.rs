@@ -69,7 +69,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 })
             }
             Ok(client) => {
-                let collection = client.database(db_name_handle).collection(&db_collection_handle);
+                let collection = client
+                    .database(db_name_handle)
+                    .collection(&db_collection_handle);
                 match collection.count_documents(None, None).await {
                     Err(e) => {
                         return Err(MongoInsertDocsInEmptyCollectionError {
@@ -91,8 +93,10 @@ pub async fn mongo_insert_docs_in_empty_collection(
                             });
                         } else {
                             if let Err(e) = collection.insert_many(
-                                vec_of_values.iter().map(|value|doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: value }).collect::<Vec<Document>>()
-                                , None).await {
+                                vec_of_values.iter()
+                                .map(|value|doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: value })
+                                .collect::<Vec<Document>>(), 
+                                None).await {
                                 return Err(MongoInsertDocsInEmptyCollectionError {
                                     source: Box::new(
                                         MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany(
