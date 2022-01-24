@@ -69,8 +69,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 })
             }
             Ok(client) => {
-                let db = client.database(db_name_handle);
-                let collection = db.collection(&db_collection_handle);
+                let collection = client.database(db_name_handle).collection(&db_collection_handle);
                 match collection.count_documents(None, None).await {
                     Err(e) => {
                         return Err(MongoInsertDocsInEmptyCollectionError {
