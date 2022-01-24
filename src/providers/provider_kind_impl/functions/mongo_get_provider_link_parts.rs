@@ -29,12 +29,12 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
-    pub source: Box<mongodb::error::Error>,
+    pub source: mongodb::error::Error,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
-    pub source: Box<mongodb::error::Error>,
+    pub source: mongodb::error::Error,
 }
 
 impl ProviderKind {
@@ -48,7 +48,7 @@ impl ProviderKind {
                 return Err(MongoGetProviderLinkPartsError {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError {
-                            source: Box::new(e),
+                            source: e,
                         },
                     )),
                 })
@@ -58,7 +58,7 @@ impl ProviderKind {
                     return Err(MongoGetProviderLinkPartsError {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
                             ClientWithOptionsError {
-                                source: Box::new(e),
+                                source: e,
                             },
                         )),
                     });
