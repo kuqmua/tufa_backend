@@ -69,24 +69,28 @@ pub async fn mongo_drop_empty_db(
                                 ListCollectionNamesError { source: e },
                             )),
                         })
-                    },
+                    }
                     Ok(collections_names_list) => {
                         if !collections_names_list.is_empty() {
                             return Err(MongoDropEmptyDbError {
-                                source: Box::new(MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty(
-                                    CollectionNamesListIsEmptyError { source: db_name.to_string() },
-                                )),
-                            })
+                                source: Box::new(
+                                    MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty(
+                                        CollectionNamesListIsEmptyError {
+                                            source: db_name.to_string(),
+                                        },
+                                    ),
+                                ),
+                            });
                         }
-                        if let Err(e) =  db.drop(None).await {
+                        if let Err(e) = db.drop(None).await {
                             return Err(MongoDropEmptyDbError {
-                                source: Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop(DatabaseDropError {
-                                    source: e,
-                                })),
-                            })
+                                source: Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop(
+                                    DatabaseDropError { source: e },
+                                )),
+                            });
                         }
                         Ok(())
-                    },
+                    }
                 }
             }
         },

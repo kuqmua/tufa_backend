@@ -17,10 +17,10 @@ pub enum MongoGetDocumentsAsStringVectorErrorEnum {
 //not a good solution, rewrite later
 impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
     fn from(e: mongodb::error::Error) -> Self {
-        MongoGetDocumentsAsStringVectorError { 
-            source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext(CursorTryNextError{
-                source: e
-            })) 
+        MongoGetDocumentsAsStringVectorError {
+            source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext(
+                CursorTryNextError { source: e },
+            )),
         }
     }
 }
@@ -43,11 +43,13 @@ pub async fn mongo_get_documents_as_string_vector(
     match collection.aggregate(option_aggregation, None).await {
         Err(e) => {
             return Err(MongoGetDocumentsAsStringVectorError {
-                source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate(
-                    CollectionAggregateError { source: e }
-                )),
+                source: Box::new(
+                    MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate(
+                        CollectionAggregateError { source: e },
+                    ),
+                ),
             });
-        },
+        }
         Ok(mut cursor) => {
             let mut vec_of_strings: Vec<String> = Vec::new();
             //dont know yet how to convert this expression into for explicit way
@@ -55,9 +57,11 @@ pub async fn mongo_get_documents_as_string_vector(
                 match document.get(db_collection_document_field_name_handle) {
                     None => {
                         return Err(MongoGetDocumentsAsStringVectorError {
-                            source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument(
-                                db_collection_document_field_name_handle.to_string(),
-                            )),
+                            source: Box::new(
+                                MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument(
+                                    db_collection_document_field_name_handle.to_string(),
+                                ),
+                            ),
                         })
                     }
                     Some(bson_handle) => match bson_handle {
@@ -66,15 +70,17 @@ pub async fn mongo_get_documents_as_string_vector(
                         }
                         other_bson_type => {
                             return Err(MongoGetDocumentsAsStringVectorError {
-                                source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType(
-                                    other_bson_type.clone(),
-                                )),
+                                source: Box::new(
+                                    MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType(
+                                        other_bson_type.clone(),
+                                    ),
+                                ),
                             });
                         }
                     },
                 }
             }
             Ok(vec_of_strings)
-        },
+        }
     }
 }
