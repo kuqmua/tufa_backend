@@ -602,3 +602,10 @@ try_join - wait for all outputs, return early on error
 try race - wait for first output, continue on error
 https://www.youtube.com/watch?v=QlPDI9IsSXU&list=WL&index=99
 <br/>
+    
+### -------------------
+Overriding Rust Dependencies
+https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
+<br/>
+    
+    
