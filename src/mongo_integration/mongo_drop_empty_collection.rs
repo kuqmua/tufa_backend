@@ -2,7 +2,6 @@ use mongodb::Collection;
 use mongodb::bson::Document;
 use mongodb::{options::ClientOptions, Client};
 
-//
 #[derive(Debug)]
 pub struct MongoDropEmptyCollectionError {
     pub source: Box<MongoDropEmptyCollectionErrorEnum>,
@@ -43,7 +42,6 @@ pub async fn mongo_drop_empty_collection(
     db_name: &str,
     db_collection_name: &str,
 ) -> Result<(), MongoDropEmptyCollectionError> {
-    //
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoDropEmptyCollectionError {
