@@ -68,7 +68,6 @@ pub async fn mongo_get_providers_link_parts(
                 }
                 Ok(client) => {
                     let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
-                    //todo ProviderKind::get_enabled_providers_vec as filter
                     match db.list_collection_names(None).await {
                         Err(e) => {
                             return Err(MongoGetProvidersLinkPartsError {
@@ -100,9 +99,8 @@ pub async fn mongo_get_providers_link_parts(
                                     ),
                                 });
                             }
-                            let enabled_providers_vec = ProviderKind::get_enabled_providers_vec();
                             let result_get_documents_hashmap =
-                                join_all(enabled_providers_vec.iter().map(|pk| async {
+                                join_all(ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
                                     let pk_cloned = pk.clone();
                                     (
                                         pk_cloned,
@@ -113,31 +111,37 @@ pub async fn mongo_get_providers_link_parts(
                                         )
                                         .await,
                                     )
-                                }))
-                                .await;
-                            let get_documents_error_hashmap: HashMap<
+                                }
+                            ))
+                            .await;
+                            let mut success_hashmap: HashMap<
+                                ProviderKind,
+                                Vec<String>,
+                            > = HashMap::new();
+                            let mut error_hashmap: HashMap<
                                 ProviderKind,
                                 MongoGetDocumentsAsStringVectorError,
                             > = HashMap::new();
-                            if !get_documents_error_hashmap.is_empty() {
+                            for (pk, result) in result_get_documents_hashmap.into_iter() {
+                                match result {
+                                    Err(e) => {
+                                        error_hashmap.insert(pk, e);
+                                    }
+                                    Ok(vec) => {
+                                        success_hashmap.insert(pk, vec);
+                                    }
+                                }
+                            }
+                            if !error_hashmap.is_empty() {
                                 return Err(MongoGetProvidersLinkPartsError {
                                     source: Box::new(
                                         MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
-                                            get_documents_error_hashmap,
+                                            error_hashmap,
                                         ),
                                     ),
                                 });
                             }
-
-                            Ok(result_get_documents_hashmap
-                                .into_iter()
-                                .filter_map(|(pk, result)| {
-                                    if let Ok(vec) = result {
-                                        return Some((pk, vec));
-                                    }
-                                    None
-                                })
-                                .collect())
+                            Ok(success_hashmap)
                         }
                     }
                 }
