@@ -38,47 +38,42 @@ pub async fn mongo_check_collection_is_empty(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoCheckCollectionIsEmptyError {
-                source: Box::new(
-                    MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError { source: e },
+                )),
             })
         }
-        Ok(client_options) => {
-            match Client::with_options(client_options) {
-                Err(e) => {
-                    return Err(MongoCheckCollectionIsEmptyError {
-                        source: Box::new(
-                            MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
-                                ClientWithOptionsError { source: e },
-                            ),
-                        ),
-                    })
-                }
-                Ok(client) => {
-                    match client.database(db_name).collection::<Document>(db_collection_name).count_documents(None, None).await {
-                        Err(e) => {
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => {
+                return Err(MongoCheckCollectionIsEmptyError {
+                    source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
+                })
+            }
+            Ok(client) => {
+                match client
+                    .database(db_name)
+                    .collection::<Document>(db_collection_name)
+                    .count_documents(None, None)
+                    .await
+                {
+                    Err(e) => {
+                        return Err(MongoCheckCollectionIsEmptyError {
+                            source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
+                                CountDocumentsError { source: e },
+                            )),
+                        })
+                    }
+                    Ok(documents_number) => {
+                        if documents_number > 0 {
                             return Err(MongoCheckCollectionIsEmptyError {
-                                source: Box::new(
-                                    MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
-                                        CountDocumentsError { source: e },
-                                    ),
-                                ),
-                            })
-                        },
-                        Ok(documents_number) => {
-                            if documents_number > 0 {
-                                return Err(MongoCheckCollectionIsEmptyError {
-                                    source: Box::new(
-                                        MongoCheckCollectionIsEmptyErrorEnum::NotEmpty(
-                                            documents_number,
-                                        ),
-                                    ),
-                                });
-                            }
-                            Ok(())
-                        },
+                                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty(
+                                    documents_number,
+                                )),
+                            });
+                        }
+                        Ok(())
                     }
                 }
             }

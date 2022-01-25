@@ -1,5 +1,5 @@
-use mongodb::Collection;
 use mongodb::bson::Document;
+use mongodb::Collection;
 use mongodb::{options::ClientOptions, Client};
 
 #[derive(Debug)]
@@ -38,35 +38,30 @@ pub async fn mongo_drop_collection(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoDropCollectionError {
-                source: Box::new(
-                    MongoDropCollectionErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError { source: e },
+                )),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoDropCollectionError {
-                    source: Box::new(
-                        MongoDropCollectionErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e },
-                        ),
-                    ),
+                    source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
                 })
             }
             Ok(client) => {
-                let collection: Collection<Document> = client
-                    .database(db_name)
-                    .collection(&db_collection_name);
-                    if let Err(e) = collection.drop(None).await {
-                        return Err(MongoDropCollectionError {
-                            source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(
-                                DatabaseDropError { source: e },
-                            )),
-                        });
-                    }
-                    Ok(())
+                let collection: Collection<Document> =
+                    client.database(db_name).collection(&db_collection_name);
+                if let Err(e) = collection.drop(None).await {
+                    return Err(MongoDropCollectionError {
+                        source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(
+                            DatabaseDropError { source: e },
+                        )),
+                    });
+                }
+                Ok(())
             }
         },
     }

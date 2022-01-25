@@ -42,48 +42,38 @@ pub async fn mongo_check_db_is_empty(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoCheckDbIsEmptyError {
-                source: Box::new(
-                    MongoCheckDbIsEmptyErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError { source: e },
+                )),
             })
         }
-        Ok(client_options) => {
-            match Client::with_options(client_options) {
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => {
+                return Err(MongoCheckDbIsEmptyError {
+                    source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
+                })
+            }
+            Ok(client) => match client.database(db_name).list_collection_names(None).await {
                 Err(e) => {
                     return Err(MongoCheckDbIsEmptyError {
-                        source: Box::new(
-                            MongoCheckDbIsEmptyErrorEnum::ClientWithOptions(
-                                ClientWithOptionsError { source: e },
-                            ),
-                        ),
+                        source: Box::new(MongoCheckDbIsEmptyErrorEnum::ListCollectionNames(
+                            ListCollectionNamesError { source: e },
+                        )),
                     })
                 }
-                Ok(client) => {
-                    match client.database(db_name).list_collection_names(None).await {
-                        Err(e) => {
-                            return Err(MongoCheckDbIsEmptyError {
-                                source: Box::new(
-                                    MongoCheckDbIsEmptyErrorEnum::ListCollectionNames(
-                                        ListCollectionNamesError { source: e },
-                                    ),
-                                ),
-                            })
-                        },
-                        Ok(documents_number) => {
-                            if !documents_number.is_empty() {
-                                return Err(MongoCheckDbIsEmptyError {
-                                    source: Box::new(
-                                        MongoCheckDbIsEmptyErrorEnum::NotEmpty(documents_number.len()),
-                                    ),
-                                });
-                            }
-                            Ok(())
-                        },
+                Ok(documents_number) => {
+                    if !documents_number.is_empty() {
+                        return Err(MongoCheckDbIsEmptyError {
+                            source: Box::new(MongoCheckDbIsEmptyErrorEnum::NotEmpty(
+                                documents_number.len(),
+                            )),
+                        });
                     }
+                    Ok(())
                 }
-            }
+            },
         },
     }
 }

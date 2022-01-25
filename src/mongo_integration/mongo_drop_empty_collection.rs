@@ -1,5 +1,5 @@
-use mongodb::Collection;
 use mongodb::bson::Document;
+use mongodb::Collection;
 use mongodb::{options::ClientOptions, Client};
 
 #[derive(Debug)]
@@ -45,52 +45,45 @@ pub async fn mongo_drop_empty_collection(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoDropEmptyCollectionError {
-                source: Box::new(
-                    MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e },
-                    ),
-                ),
+                source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError { source: e },
+                )),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoDropEmptyCollectionError {
-                    source: Box::new(
-                        MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e },
-                        ),
-                    ),
+                    source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError { source: e },
+                    )),
                 })
             }
             Ok(client) => {
-                let collection: Collection<Document> = client
-                    .database(db_name)
-                    .collection(&db_collection_name);
+                let collection: Collection<Document> =
+                    client.database(db_name).collection(&db_collection_name);
                 match collection.count_documents(None, None).await {
                     Err(e) => {
                         return Err(MongoDropEmptyCollectionError {
-                            source: Box::new(
-                                MongoDropEmptyCollectionErrorEnum::CountDocuments(
-                                    CountDocumentsError { source: e },
-                                ),
-                            ),
+                            source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
+                                CountDocumentsError { source: e },
+                            )),
                         })
                     }
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             return Err(MongoDropEmptyCollectionError {
-                                source: Box::new(
-                                    MongoDropEmptyCollectionErrorEnum::NotEmpty(
-                                        documents_number,
-                                    ),
-                                ),
+                                source: Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty(
+                                    documents_number,
+                                )),
                             });
                         } else {
                             if let Err(e) = collection.drop(None).await {
                                 return Err(MongoDropEmptyCollectionError {
-                                    source: Box::new(MongoDropEmptyCollectionErrorEnum::DatabaseDrop(
-                                        DatabaseDropError { source: e },
-                                    )),
+                                    source: Box::new(
+                                        MongoDropEmptyCollectionErrorEnum::DatabaseDrop(
+                                            DatabaseDropError { source: e },
+                                        ),
+                                    ),
                                 });
                             }
                             Ok(())
