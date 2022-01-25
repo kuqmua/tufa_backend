@@ -39,7 +39,6 @@ pub async fn mongo_check_db_is_empty(
     mongo_url: &str,
     db_name: &str,
 ) -> Result<(), MongoCheckDbIsEmptyError> {
-    //
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             return Err(MongoCheckDbIsEmptyError {
