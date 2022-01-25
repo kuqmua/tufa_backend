@@ -25,12 +25,12 @@ pub struct ClientWithOptionsError {
 }
 
 #[derive(Debug)]
-pub struct DatabaseDropError {
+pub struct ListCollectionNamesError {
     pub source: mongodb::error::Error,
 }
 
 #[derive(Debug)]
-pub struct ListCollectionNamesError {
+pub struct DatabaseDropError {
     pub source: mongodb::error::Error,
 }
 

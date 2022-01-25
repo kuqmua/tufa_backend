@@ -25,11 +25,6 @@ pub struct ClientWithOptionsError {
 }
 
 #[derive(Debug)]
-pub struct DatabaseDropError {
-    pub source: mongodb::error::Error,
-}
-
-#[derive(Debug)]
 pub struct ListCollectionNamesError {
     pub source: mongodb::error::Error,
 }
@@ -37,6 +32,11 @@ pub struct ListCollectionNamesError {
 #[derive(Debug)]
 pub struct CollectionNamesListIsEmptyError {
     pub source: String,
+}
+
+#[derive(Debug)]
+pub struct DatabaseDropError {
+    pub source: mongodb::error::Error,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
