@@ -13,46 +13,81 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
-#[derive(thiserror::Error, displaydoc::Display, Debug, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct CheckNetWrapperError {
-    /// check net wrapper error {source:?}
-    #[source]
     pub source: Box<CheckNetWrapperErrorEnum>,
 }
 
 #[allow(clippy::enum_variant_names)]
-#[derive(thiserror::Error, displaydoc::Display, Debug, ImplFromForUpperStruct)]
+#[derive(Debug, ImplDisplayDerive)]
 pub enum CheckNetWrapperErrorEnum {
-    /// net check availability error {0:?}
-    CheckNetAvailabilityError(CheckNetAvailabilityError),
-    /// postgres check availability error {0:?}
-    PostgresCheckAvailabilityError(PostgresCheckAvailabilityError),
-    /// mongo check availability error {0:?}
-    MongoCheckAvailabilityError(MongoCheckAvailabilityError),
+    NetAndPostgresAndMongo {
+        net: CheckNetAvailabilityError,
+        postgres: PostgresCheckAvailabilityError,
+        mongo: MongoCheckAvailabilityError,
+    },
+    NetAndPostgres {
+        net: CheckNetAvailabilityError,
+        postgres: PostgresCheckAvailabilityError,
+    },
+    NetAndMongo {
+        net: CheckNetAvailabilityError,
+        mongo: MongoCheckAvailabilityError,
+    },
+    PostgresAndMongo {
+        postgres: PostgresCheckAvailabilityError,
+        mongo: MongoCheckAvailabilityError,
+    },
+    Net(CheckNetAvailabilityError),
+    Postgres(PostgresCheckAvailabilityError),
+    Mongo(MongoCheckAvailabilityError),
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
-    //todo to it in parallel? no point for this yet coz dont know what db to use
-    check_net_availability(&CONFIG.starting_check_link).await?;
-    print_colorful_message(
-        None,
-        PrintType::Info,
-        file!().to_string(),
-        line!().to_string(),
-        "starting check postgres availability... ".to_owned(),
+    let starting_url = &CONFIG.starting_check_link;
+    let postgres_url = &postgres_get_db_url();
+    let mongo_url = &mongo_get_db_url();
+    let result = tokio::join!(
+        check_net_availability(starting_url),
+        postgres_check_availability(postgres_url),
+        mongo_check_availability(mongo_url),
     );
-    postgres_check_availability(&postgres_get_db_url()).await?;
-    print_colorful_message(
-        None,
-        PrintType::Info,
-        file!().to_string(),
-        line!().to_string(),
-        "starting check mongo availability... ".to_owned(),
-    );
-    mongo_check_availability(&mongo_get_db_url()).await?;
-    Ok(())
+    match result {
+        (Err(net_e), Err(postgres_e), Err(mongo_e)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::NetAndPostgresAndMongo{
+                net: net_e,
+                postgres: postgres_e,
+                mongo: mongo_e,
+            })
+        }),
+        (Err(net_e), Err(postgres_e), Ok(_)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::NetAndPostgres{
+                net: net_e,
+                postgres: postgres_e,
+            })
+        }),
+        (Err(net_e), Ok(_), Err(mongo_e)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::NetAndMongo{
+                net: net_e,
+                mongo: mongo_e,
+            })
+        }),
+        (Ok(_), Err(postgres_e), Err(mongo_e)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::PostgresAndMongo{
+                postgres: postgres_e,
+                mongo: mongo_e,
+            })
+        }),
+        (Err(e), Ok(_), Ok(_)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::Net(e))
+        }),
+        (Ok(_), Err(e), Ok(_)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::Postgres(e))
+        }),
+        (Ok(_), Ok(_), Err(e)) => return Err(CheckNetWrapperError{
+            source: Box::new(CheckNetWrapperErrorEnum::Mongo(e))
+        }),
+        (Ok(_), Ok(_), Ok(_)) => Ok(()),
+    }
 }

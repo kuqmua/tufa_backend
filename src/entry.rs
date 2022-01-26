@@ -56,7 +56,7 @@ pub fn entry() {
                     PrintType::WarningHigh,
                     file!().to_string(),
                     line!().to_string(),
-                    format!("{}", e),
+                    format!("{:#?}", e),
                 );
                 return;
             }
