@@ -1,8 +1,5 @@
-use std::fmt;
-
-#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug, BoxErrFromErrDerive)]
 pub struct CheckLinkStatusCodeError {
-    /// check link status code error `{0}`
     pub source: Box<reqwest::Error>,
 }
 
