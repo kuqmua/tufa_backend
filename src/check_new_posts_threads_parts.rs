@@ -37,9 +37,12 @@ pub async fn check_new_posts_threads_parts(
     for (pk, link_parts) in providers_link_parts {
         if !link_parts.is_empty() {
             let posts_and_errors_handle_arc = Arc::clone(&posts_and_errors_arc_mutex);
-            let vec_of_provider_links = pk.generate_provider_links(link_parts);
             tasks_vec.push(tokio::task::spawn(async move {
-                providers_new_posts_check(pk, vec_of_provider_links, posts_and_errors_handle_arc)
+                providers_new_posts_check(
+                    pk, 
+                    pk.generate_provider_links(link_parts), 
+                    posts_and_errors_handle_arc
+                )
                     .await;
             }));
         }
