@@ -32,8 +32,7 @@ pub async fn check_new_posts_threads_parts(
     ResourceError,
 > {
     let mut tasks_vec = Vec::with_capacity(providers_link_parts.len());
-    let posts_and_errors = Vec::with_capacity(providers_link_parts.len());
-    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(posts_and_errors));
+    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(Vec::with_capacity(providers_link_parts.len())));
     //check if provider_names are unique
     for (pk, link_parts) in providers_link_parts {
         if !link_parts.is_empty() {
