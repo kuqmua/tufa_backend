@@ -1,10 +1,8 @@
-use std::fmt;
-
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct GetLinkPartsFromLocalJsonFileError {
     pub source: Box<GetLinkPartsFromLocalJsonFileErrorEnum>,
 }

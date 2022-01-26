@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fmt;
 
 use futures::future::join_all;
 
@@ -18,7 +17,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
 }

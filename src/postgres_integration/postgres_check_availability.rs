@@ -1,13 +1,10 @@
-use std::fmt;
 use std::time::Duration;
 
 use sqlx::postgres::PgPoolOptions;
-use sqlx::Error;
 
-#[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug, BoxErrFromErrDerive)]
 pub struct PostgresCheckAvailabilityError {
-    /// postgres check availability error `{0}`
-    pub source: Box<Error>,
+    pub source: Box<sqlx::Error>,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

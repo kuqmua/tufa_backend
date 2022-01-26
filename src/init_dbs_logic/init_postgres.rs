@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fmt;
 use std::time::Duration;
 
 use sqlx::postgres::PgPoolOptions;
@@ -18,7 +17,7 @@ use crate::postgres_integration::postgres_create_providers_tables_if_not_exists:
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct PostgresInitError {
     pub source: Box<PostgresInitErrorEnum>,
 }

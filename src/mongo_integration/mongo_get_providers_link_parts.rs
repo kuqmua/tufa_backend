@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::fmt;
 
 use mongodb::{bson::Document, options::ClientOptions, Client};
 
@@ -17,7 +16,7 @@ use futures::future::join_all;
 
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct MongoGetProvidersLinkPartsError {
     pub source: Box<MongoGetProvidersLinkPartsErrorEnum>,
 }

@@ -1,13 +1,13 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{self, Ident};
+use syn::{self, TypePath};
 
 #[proc_macro_derive(BoxErrFromErrDerive)]
 pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
     let ident = &ast.ident;
-    let error_type_ident: Ident;
+    let error_type_ident: TypePath;
     match &ast.data {
         syn::Data::Struct(data_struct) => match &data_struct.fields {
             syn::Fields::Named(fields_named) => {
@@ -37,13 +37,7 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
                                     syn::GenericArgument::Type(type_handle) => {
                                         match type_handle {
                                             syn::Type::Path(type_path) => {
-                                                if type_path.path.segments.len() != 1 {
-                                                    panic!(
-                                                        "type_path.path.segments != 1, length is {}",
-                                                        type_path.path.segments.len()
-                                                    );
-                                                }
-                                                error_type_ident = type_path.path.segments[0].ident.clone();
+                                                error_type_ident = type_path.clone();
                                             },
                                             _ => panic!("type_handle is not a syn::Type::Path!"),
                                         }

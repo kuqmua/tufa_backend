@@ -1,5 +1,3 @@
-use std::fmt;
-
 use mongodb::{bson::Document, options::ClientOptions, Client};
 
 use crate::{
@@ -15,7 +13,7 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
-#[derive(Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
+#[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
 }

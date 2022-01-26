@@ -1,11 +1,9 @@
 use std::fmt;
 
-use reqwest::Error;
-
 #[derive(thiserror::Error, displaydoc::Display, Debug, BoxErrFromErrDerive, ImplDisplayDerive)]
 pub struct CheckLinkStatusCodeError {
     /// check link status code error `{0}`
-    pub source: Box<Error>,
+    pub source: Box<reqwest::Error>,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
