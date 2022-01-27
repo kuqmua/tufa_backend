@@ -4,6 +4,7 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoCheckCollectionIsEmptyError {
     pub source: Box<MongoCheckCollectionIsEmptyErrorEnum>,
+    line: String
 }
 
 #[derive(Debug)]
@@ -17,16 +18,19 @@ pub enum MongoCheckCollectionIsEmptyErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
+    line: String
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
+    line: String
 }
 
 #[derive(Debug)]
 pub struct CountDocumentsError {
     pub source: mongodb::error::Error,
+    line: String
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -39,16 +43,18 @@ pub async fn mongo_check_collection_is_empty(
         Err(e) => {
             return Err(MongoCheckCollectionIsEmptyError {
                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e },
+                    ClientOptionsParseError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
                 )),
+                line: format!("{} {}", line!().to_string(), file!().to_string())
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoCheckCollectionIsEmptyError {
                     source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e },
+                        ClientWithOptionsError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
                     )),
+                    line: format!("{} {}", line!().to_string(), file!().to_string())
                 })
             }
             Ok(client) => {
@@ -61,8 +67,12 @@ pub async fn mongo_check_collection_is_empty(
                     Err(e) => {
                         return Err(MongoCheckCollectionIsEmptyError {
                             source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
-                                CountDocumentsError { source: e },
+                                CountDocumentsError { 
+                                    source: e, 
+                                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                                 },
                             )),
+                            line: format!("{} {}", line!().to_string(), file!().to_string())
                         })
                     }
                     Ok(documents_number) => {
@@ -71,6 +81,7 @@ pub async fn mongo_check_collection_is_empty(
                                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty(
                                     documents_number,
                                 )),
+                                line: format!("{} {}", line!().to_string(), file!().to_string())
                             });
                         }
                         Ok(())
