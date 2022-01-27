@@ -611,3 +611,16 @@ https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
 ### -------------------
 add commit number inside error like source but different field
 <br/>
+    
+### -------------------
+add tracing::error? https://crates.io/crates/tracing-error
+<br/>
+
+### -------------------
+find about rust type erasure. write some examples
+<br/>
+
+### -------------------
+rust error handling from zero to prod rust author https://www.youtube.com/watch?v=yLGLKKFFc3g  
+<br/>
+    
