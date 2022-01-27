@@ -5,6 +5,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 #[derive(Debug)]
 pub struct MongoCheckAvailabilityError {
     source: Box<MongoCheckAvailabilityErrorEnum>,
+    line: String
 }
 
 #[derive(Debug)]
@@ -17,11 +18,13 @@ pub enum MongoCheckAvailabilityErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
+    line: String
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
+    line: String
 }
 
 #[derive(Debug)]
@@ -36,16 +39,24 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
         Err(e) => {
             return Err(MongoCheckAvailabilityError {
                 source: Box::new(MongoCheckAvailabilityErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e },
+                    ClientOptionsParseError { 
+                        source: e,
+                        line: format!("{} {}", line!().to_string(), file!().to_string())
+                     },
                 )),
+                line: format!("{} {}", line!().to_string(), file!().to_string())
             });
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoCheckAvailabilityError {
                     source: Box::new(MongoCheckAvailabilityErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e },
+                        ClientWithOptionsError { 
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string())
+                         },
                     )),
+                    line: format!("{} {}", line!().to_string(), file!().to_string())
                 });
             }
             Ok(client) => {
@@ -61,6 +72,7 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
                                 line: format!("{}:{}:{}", file!(), line!(), column!())
                              },
                         )),
+                        line: format!("{} {}", line!().to_string(), file!().to_string())
                     });
                 }
                 Ok(())
