@@ -11,6 +11,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
     pub source:
         Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
+        line: String
 }
 
 #[derive(Debug)]
@@ -81,6 +82,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     count_provider_links_tables_error_hashmap,
                 ),
             ),
+            line: format!("{} {}", line!().to_string(), file!().to_string())
         });
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
@@ -90,6 +92,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     provider_links_tables_rows_length_not_equal_error_hashmap,
                 ),
             ),
+            line: format!("{} {}", line!().to_string(), file!().to_string())
         });
     }
     Ok(())
