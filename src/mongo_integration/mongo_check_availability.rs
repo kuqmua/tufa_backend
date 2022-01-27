@@ -27,6 +27,7 @@ pub struct ClientWithOptionsError {
 #[derive(Debug)]
 pub struct ListCollectionNamesError {
     pub source: mongodb::error::Error,
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -55,7 +56,10 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
                 {
                     return Err(MongoCheckAvailabilityError {
                         source: Box::new(MongoCheckAvailabilityErrorEnum::ListCollectionNames(
-                            ListCollectionNamesError { source: e },
+                            ListCollectionNamesError { 
+                                source: e,
+                                line: format!("{}:{}:{}", file!(), line!(), column!())
+                             },
                         )),
                     });
                 }
