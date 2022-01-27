@@ -10,6 +10,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresCreateProvidersDbsError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
+    line: String
 }
 
 pub async fn postgres_create_providers_tables_if_not_exists(
@@ -36,6 +37,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
     if !table_creation_error_hashmap.is_empty() {
         return Err(PostgresCreateProvidersDbsError {
             source: Box::new(table_creation_error_hashmap),
+            line: format!("{} {}", line!().to_string(), file!().to_string())
         });
     }
     Ok(())
