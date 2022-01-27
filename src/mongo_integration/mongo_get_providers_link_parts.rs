@@ -34,16 +34,19 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ListCollectionNamesError {
     pub source: mongodb::error::Error,
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
@@ -53,7 +56,7 @@ pub async fn mongo_get_providers_link_parts(
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e },
+                    ClientOptionsParseError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
                 )),
                 line: format!("{} {}", line!().to_string(), file!().to_string())
             })
@@ -62,7 +65,7 @@ pub async fn mongo_get_providers_link_parts(
             Err(e) => {
                 return Err(MongoGetProvidersLinkPartsError {
                     source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e },
+                        ClientWithOptionsError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
                     )),
                     line: format!("{} {}", line!().to_string(), file!().to_string())
                 })
@@ -74,7 +77,7 @@ pub async fn mongo_get_providers_link_parts(
                         return Err(MongoGetProvidersLinkPartsError {
                             source: Box::new(
                                 MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
-                                    ListCollectionNamesError { source: e },
+                                    ListCollectionNamesError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
                                 ),
                             ),
                             line: format!("{} {}", line!().to_string(), file!().to_string())
