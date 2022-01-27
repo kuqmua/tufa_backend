@@ -11,7 +11,7 @@ use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 #[derive(Debug)]
 pub struct MongoInsertDocsInEmptyCollectionError {
     pub source: Box<MongoInsertDocsInEmptyCollectionErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
@@ -26,25 +26,25 @@ pub enum MongoInsertDocsInEmptyCollectionErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct CountDocumentsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct CollectionInsertManyError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -58,10 +58,13 @@ pub async fn mongo_insert_docs_in_empty_collection(
             return Err(MongoInsertDocsInEmptyCollectionError {
                 source: Box::new(
                     MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                        ClientOptionsParseError {
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        },
                     ),
                 ),
-                line: format!("{} {}", line!().to_string(), file!().to_string())
+                line: format!("{} {}", line!().to_string(), file!().to_string()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -69,10 +72,13 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 return Err(MongoInsertDocsInEmptyCollectionError {
                     source: Box::new(
                         MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                            ClientWithOptionsError {
+                                source: e,
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            },
                         ),
                     ),
-                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                    line: format!("{} {}", line!().to_string(), file!().to_string()),
                 })
             }
             Ok(client) => {
@@ -84,10 +90,17 @@ pub async fn mongo_insert_docs_in_empty_collection(
                         return Err(MongoInsertDocsInEmptyCollectionError {
                             source: Box::new(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments(
-                                    CountDocumentsError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                                    CountDocumentsError {
+                                        source: e,
+                                        line: format!(
+                                            "{} {}",
+                                            line!().to_string(),
+                                            file!().to_string()
+                                        ),
+                                    },
                                 ),
                             ),
-                            line: format!("{} {}", line!().to_string(), file!().to_string())
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
                         })
                     }
                     Ok(documents_number) => {
@@ -98,7 +111,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                         documents_number,
                                     ),
                                 ),
-                                line: format!("{} {}", line!().to_string(), file!().to_string())
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
                             });
                         } else {
                             if let Err(e) = collection.insert_many(

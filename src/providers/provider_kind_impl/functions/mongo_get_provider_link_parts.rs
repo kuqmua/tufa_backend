@@ -16,7 +16,7 @@ use crate::{
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -29,13 +29,13 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 impl ProviderKind {
@@ -48,18 +48,24 @@ impl ProviderKind {
             Err(e) => {
                 return Err(MongoGetProviderLinkPartsError {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                        ClientOptionsParseError {
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                    line: format!("{} {}", line!().to_string(), file!().to_string()),
                 })
             }
             Ok(client_options) => match Client::with_options(client_options) {
                 Err(e) => {
                     return Err(MongoGetProviderLinkPartsError {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                            ClientWithOptionsError {
+                                source: e,
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            },
                         )),
-                        line: format!("{} {}", line!().to_string(), file!().to_string())
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
                     });
                 }
                 Ok(client) => {

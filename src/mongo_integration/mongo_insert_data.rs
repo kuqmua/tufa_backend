@@ -13,7 +13,7 @@ use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollecti
 #[derive(Debug)]
 pub struct MongoInsertDataError {
     pub source: Box<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>,
-    line: String
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -49,7 +49,7 @@ pub async fn mongo_insert_data(
     if !error_hashmap.is_empty() {
         return Err(MongoInsertDataError {
             source: Box::new(error_hashmap),
-            line: format!("{} {}", line!().to_string(), file!().to_string())
+            line: format!("{} {}", line!().to_string(), file!().to_string()),
         });
     }
     Ok(())

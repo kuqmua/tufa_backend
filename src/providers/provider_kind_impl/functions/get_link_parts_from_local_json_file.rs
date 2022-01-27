@@ -5,7 +5,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct GetLinkPartsFromLocalJsonFileError {
     pub source: Box<GetLinkPartsFromLocalJsonFileErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
@@ -18,13 +18,13 @@ pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
 #[derive(Debug)]
 pub struct TokioFsFileOpenErrorStruct {
     source: std::io::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct TokioIoAsyncReadExtReadToEndErrorStruct {
     source: std::io::Error,
-    line: String
+    line: String,
 }
 
 impl ProviderKind {
@@ -35,9 +35,12 @@ impl ProviderKind {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
             Err(e) => Err(GetLinkPartsFromLocalJsonFileError {
                 source: Box::new(GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(
-                    TokioFsFileOpenErrorStruct { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                    TokioFsFileOpenErrorStruct {
+                        source: e,
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string())
+                line: format!("{} {}", line!().to_string(), file!().to_string()),
             }),
             Ok(mut file) => {
                 let mut content = Vec::new();
@@ -46,10 +49,17 @@ impl ProviderKind {
                     return Err(GetLinkPartsFromLocalJsonFileError {
                         source: Box::new(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(
-                                TokioIoAsyncReadExtReadToEndErrorStruct { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                                TokioIoAsyncReadExtReadToEndErrorStruct {
+                                    source: e,
+                                    line: format!(
+                                        "{} {}",
+                                        line!().to_string(),
+                                        file!().to_string()
+                                    ),
+                                },
                             ),
                         ),
-                        line: format!("{} {}", line!().to_string(), file!().to_string())
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
                     });
                 }
                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
@@ -57,7 +67,7 @@ impl ProviderKind {
                         source: Box::new(
                             GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                         ),
-                        line: format!("{} {}", line!().to_string(), file!().to_string())
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
                     }),
                     Ok(file_content_as_struct) => Ok(file_content_as_struct.data),
                 }

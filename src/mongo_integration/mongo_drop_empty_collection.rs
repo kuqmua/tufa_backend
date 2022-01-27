@@ -5,7 +5,7 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoDropEmptyCollectionError {
     pub source: Box<MongoDropEmptyCollectionErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
@@ -20,25 +20,25 @@ pub enum MongoDropEmptyCollectionErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct CountDocumentsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct DatabaseDropError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -51,18 +51,24 @@ pub async fn mongo_drop_empty_collection(
         Err(e) => {
             return Err(MongoDropEmptyCollectionError {
                 source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                    ClientOptionsParseError {
+                        source: e,
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string())
+                line: format!("{} {}", line!().to_string(), file!().to_string()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoDropEmptyCollectionError {
                     source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                        ClientWithOptionsError {
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                    line: format!("{} {}", line!().to_string(), file!().to_string()),
                 })
             }
             Ok(client) => {
@@ -72,9 +78,16 @@ pub async fn mongo_drop_empty_collection(
                     Err(e) => {
                         return Err(MongoDropEmptyCollectionError {
                             source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
-                                CountDocumentsError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                                CountDocumentsError {
+                                    source: e,
+                                    line: format!(
+                                        "{} {}",
+                                        line!().to_string(),
+                                        file!().to_string()
+                                    ),
+                                },
                             )),
-                            line: format!("{} {}", line!().to_string(), file!().to_string())
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
                         })
                     }
                     Ok(documents_number) => {
@@ -83,17 +96,28 @@ pub async fn mongo_drop_empty_collection(
                                 source: Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty(
                                     documents_number,
                                 )),
-                                line: format!("{} {}", line!().to_string(), file!().to_string())
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
                             });
                         } else {
                             if let Err(e) = collection.drop(None).await {
                                 return Err(MongoDropEmptyCollectionError {
                                     source: Box::new(
                                         MongoDropEmptyCollectionErrorEnum::DatabaseDrop(
-                                            DatabaseDropError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                                            DatabaseDropError {
+                                                source: e,
+                                                line: format!(
+                                                    "{} {}",
+                                                    line!().to_string(),
+                                                    file!().to_string()
+                                                ),
+                                            },
                                         ),
                                     ),
-                                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                                    line: format!(
+                                        "{} {}",
+                                        line!().to_string(),
+                                        file!().to_string()
+                                    ),
                                 });
                             }
                             Ok(())

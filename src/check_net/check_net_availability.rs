@@ -7,7 +7,7 @@ use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 #[derive(Debug)]
 pub struct CheckNetAvailabilityError {
     pub source: Box<CheckNetAvailabilityErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]

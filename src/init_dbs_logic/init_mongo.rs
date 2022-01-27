@@ -20,7 +20,7 @@ use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 #[derive(Debug)]
 pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -74,7 +74,7 @@ pub async fn init_mongo(
             source: Box::new(InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
                 error_vec_count_documents,
             )),
-            line: format!("{} {}", line!().to_string(), file!().to_string())
+            line: format!("{} {}", line!().to_string(), file!().to_string()),
         });
     }
     drop(error_vec_count_documents);
@@ -93,7 +93,7 @@ pub async fn init_mongo(
     if !error_vec_insert_many.is_empty() {
         return Err(InitMongoError {
             source: Box::new(InitMongoErrorEnum::InsertManyError(error_vec_insert_many)),
-            line: format!("{} {}", line!().to_string(), file!().to_string())
+            line: format!("{} {}", line!().to_string(), file!().to_string()),
         });
     }
     Ok(())

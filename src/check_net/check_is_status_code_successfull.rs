@@ -11,7 +11,7 @@ pub fn check_is_status_code_successfull(status_code: StatusCode) -> Result<(), S
     if !StatusCode::is_success(&status_code) {
         return Err(StatusCodeError {
             source: Box::new(status_code),
-            line: format!("{} {}", line!().to_string(), file!().to_string())
+            line: format!("{} {}", line!().to_string(), file!().to_string()),
         });
     }
     Ok(())

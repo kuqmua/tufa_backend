@@ -4,7 +4,7 @@ use mongodb::{bson::Document, Collection};
 #[derive(Debug)]
 pub struct MongoGetDocumentsAsStringVectorError {
     pub source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
@@ -20,9 +20,12 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
     fn from(e: mongodb::error::Error) -> Self {
         MongoGetDocumentsAsStringVectorError {
             source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext(
-                CursorTryNextError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                CursorTryNextError {
+                    source: e,
+                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                },
             )),
-            line: format!("{} {}", line!().to_string(), file!().to_string())
+            line: format!("{} {}", line!().to_string(), file!().to_string()),
         }
     }
 }
@@ -30,13 +33,13 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
 #[derive(Debug)]
 pub struct CollectionAggregateError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct CursorTryNextError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 pub async fn mongo_get_documents_as_string_vector(
@@ -49,10 +52,13 @@ pub async fn mongo_get_documents_as_string_vector(
             return Err(MongoGetDocumentsAsStringVectorError {
                 source: Box::new(
                     MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate(
-                        CollectionAggregateError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                        CollectionAggregateError {
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        },
                     ),
                 ),
-                line: format!("{} {}", line!().to_string(), file!().to_string())
+                line: format!("{} {}", line!().to_string(), file!().to_string()),
             });
         }
         Ok(mut cursor) => {
@@ -67,7 +73,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                     db_collection_document_field_name_handle.to_string(),
                                 ),
                             ),
-                            line: format!("{} {}", line!().to_string(), file!().to_string())
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
                         })
                     }
                     Some(bson_handle) => match bson_handle {
@@ -81,7 +87,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                         other_bson_type.clone(),
                                     ),
                                 ),
-                                line: format!("{} {}", line!().to_string(), file!().to_string())
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
                             });
                         }
                     },

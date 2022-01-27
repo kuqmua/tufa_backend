@@ -5,7 +5,7 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoDropCollectionError {
     pub source: Box<MongoDropCollectionErrorEnum>,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
@@ -18,19 +18,19 @@ pub enum MongoDropCollectionErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[derive(Debug)]
 pub struct DatabaseDropError {
     pub source: mongodb::error::Error,
-    line: String
+    line: String,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -43,18 +43,24 @@ pub async fn mongo_drop_collection(
         Err(e) => {
             return Err(MongoDropCollectionError {
                 source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                    ClientOptionsParseError {
+                        source: e,
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string())
+                line: format!("{} {}", line!().to_string(), file!().to_string()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoDropCollectionError {
                     source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError { source: e,line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                        ClientWithOptionsError {
+                            source: e,
+                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                    line: format!("{} {}", line!().to_string(), file!().to_string()),
                 })
             }
             Ok(client) => {
@@ -63,9 +69,12 @@ pub async fn mongo_drop_collection(
                 if let Err(e) = collection.drop(None).await {
                     return Err(MongoDropCollectionError {
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(
-                            DatabaseDropError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                            DatabaseDropError {
+                                source: e,
+                                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            },
                         )),
-                        line: format!("{} {}", line!().to_string(), file!().to_string())
+                        line: format!("{} {}", line!().to_string(), file!().to_string()),
                     });
                 }
                 Ok(())
