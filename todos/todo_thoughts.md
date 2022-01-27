@@ -619,3 +619,8 @@ add tracing::error? https://crates.io/crates/tracing-error
 ### -------------------
 find about rust type erasure. write some examples
 <br/>
+
+### -------------------
+rust error handling from zero to prod rust author https://www.youtube.com/watch?v=yLGLKKFFc3g  
+<br/>
+    
