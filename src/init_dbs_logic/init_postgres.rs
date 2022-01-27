@@ -20,6 +20,7 @@ use crate::postgres_integration::postgres_check_providers_links_tables_length_ro
 #[derive(Debug)]
 pub struct PostgresInitError {
     pub source: Box<PostgresInitErrorEnum>,
+    line: String
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -47,11 +48,11 @@ pub async fn init_postgres(
         .await?;
     postgres_check_providers_link_parts_tables_are_empty(&providers_json_local_data_hashmap, &pool)
         .await?;
-    postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
-        &providers_json_local_data_hashmap,
-        &pool,
-    )
-    .await?;
+    // postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+    //     &providers_json_local_data_hashmap,
+    //     &pool,
+    // )
+    // .await?;
     postgres_delete_all_from_providers_link_parts_tables(&providers_json_local_data_hashmap, &pool)
         .await?;
     postgres_insert_link_parts_into_providers_tables(&providers_json_local_data_hashmap, &pool)

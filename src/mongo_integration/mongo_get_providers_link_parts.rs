@@ -19,6 +19,7 @@ use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVector
 #[derive(Debug)]
 pub struct MongoGetProvidersLinkPartsError {
     pub source: Box<MongoGetProvidersLinkPartsErrorEnum>,
+    line: String,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -54,6 +55,7 @@ pub async fn mongo_get_providers_link_parts(
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError { source: e },
                 )),
+                line: format!("{} {}", line!().to_string(), file!().to_string())
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -62,6 +64,7 @@ pub async fn mongo_get_providers_link_parts(
                     source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
                         ClientWithOptionsError { source: e },
                     )),
+                    line: format!("{} {}", line!().to_string(), file!().to_string())
                 })
             }
             Ok(client) => {
@@ -74,6 +77,7 @@ pub async fn mongo_get_providers_link_parts(
                                     ListCollectionNamesError { source: e },
                                 ),
                             ),
+                            line: format!("{} {}", line!().to_string(), file!().to_string())
                         })
                     }
                     Ok(vec_collection_names) => {
@@ -94,6 +98,7 @@ pub async fn mongo_get_providers_link_parts(
                                         no_collection_error_hashmap,
                                     ),
                                 ),
+                                line: format!("{} {}", line!().to_string(), file!().to_string())
                             });
                         }
                         let result_get_documents_hashmap =
@@ -134,6 +139,7 @@ pub async fn mongo_get_providers_link_parts(
                                         error_hashmap,
                                     ),
                                 ),
+                                line: format!("{} {}", line!().to_string(), file!().to_string())
                             });
                         }
                         Ok(success_hashmap)
