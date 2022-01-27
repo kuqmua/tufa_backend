@@ -10,6 +10,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresInsertLinkPartsIntoProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
+    line: String
 }
 
 pub async fn postgres_insert_link_parts_into_providers_tables(
@@ -47,6 +48,7 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     if !insertion_error_hashmap.is_empty() {
         return Err(PostgresInsertLinkPartsIntoProvidersTablesError {
             source: Box::new(insertion_error_hashmap),
+            line: format!("{} {}", line!().to_string(), file!().to_string())
         });
     }
     Ok(())
