@@ -615,3 +615,7 @@ add commit number inside error like source but different field
 ### -------------------
 add tracing::error? https://crates.io/crates/tracing-error
 <br/>
+
+### -------------------
+find about rust type erasure. write some examples
+<br/>
