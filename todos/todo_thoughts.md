@@ -610,6 +610,9 @@ https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
    
 ### -------------------
 add commit number inside error like source but different field
+inside project folder from
+.git/ORIG_HEAD   - commit id, token, hash
+.git/COMMIT_EDITMSG - commit name
 <br/>
     
 ### -------------------
