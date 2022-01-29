@@ -13,6 +13,8 @@ use crate::check_net::check_net_wrapper::check_net_wrapper;
 
 use crate::init_dbs_logic::init_dbs::{init_dbs, InitDbsErrorEnum};
 
+use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
@@ -81,15 +83,101 @@ pub fn entry() {
                     return;
                 }
                 if let Err(e) = runtime.block_on(init_dbs()) {
-                    print_colorful_message(
-                        None,
-                        PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
-                        format!("init dbs error {:#?}", e),
-                    );
                     match *e.source {
-                        InitDbsErrorEnum::InitDbsProvidersLinkParts(_) => return,
+                        //its only one variant for now. later going to add more
+                        InitDbsErrorEnum::InitDbsProvidersLinkParts(e) => match *e.source {
+                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClient(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection(e) => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", e),
+                                );
+                            },
+                        },
                     }
                 }
             }
