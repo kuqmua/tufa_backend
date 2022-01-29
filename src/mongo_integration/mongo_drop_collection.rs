@@ -65,7 +65,7 @@ pub async fn mongo_drop_collection(
             }
             Ok(client) => {
                 let collection: Collection<Document> =
-                    client.database(db_name).collection(&db_collection_name);
+                    client.database(db_name).collection(db_collection_name);
                 if let Err(e) = collection.drop(None).await {
                     return Err(MongoDropCollectionError {
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(

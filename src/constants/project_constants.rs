@@ -1,5 +1,3 @@
-pub const ENV_FILE_NAME: &str = ".env";
-
 pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
 
 // pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";

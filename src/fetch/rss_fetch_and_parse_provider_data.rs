@@ -42,12 +42,8 @@ pub async fn rss_fetch_and_parse_provider_data(
         );
         match fetch_result {
             Ok(response_text) => match rss_parse_string_into_struct(response_text, &link, pk) {
-                Ok(post_struct) => {
-                    return Ok(Ok(post_struct));
-                }
-                Err(e) => {
-                    return Ok(Err((e, link)));
-                }
+                Ok(post_struct) => Ok(Ok(post_struct)),
+                Err(e) => Ok(Err((e, link))),
             },
             Err(e) => {
                 if let FetchLinkErrorEnum::StatusCode(status_code) = *e.source {
@@ -60,7 +56,7 @@ pub async fn rss_fetch_and_parse_provider_data(
                     line!().to_string(),
                     format!("link: {} FetchLinkError {:#?}", link, e),
                 );
-                return Err((link, pk, e));
+                Err((link, pk, e))
             }
         }
     }))

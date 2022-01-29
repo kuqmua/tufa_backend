@@ -73,7 +73,7 @@ pub async fn mongo_drop_empty_collection(
             }
             Ok(client) => {
                 let collection: Collection<Document> =
-                    client.database(db_name).collection(&db_collection_name);
+                    client.database(db_name).collection(db_collection_name);
                 match collection.count_documents(None, None).await {
                     Err(e) => {
                         return Err(MongoDropEmptyCollectionError {
@@ -102,9 +102,10 @@ pub async fn mongo_drop_empty_collection(
                                             DatabaseDropError {
                                                 source: e,
                                                 line: format!(
-                                                    "{} {}",
-                                                    line!().to_string(),
-                                                    file!().to_string()
+                                                    "{}:{}:{}",
+                                                    line!(),
+                                                    file!(),
+                                                    column!()
                                                 ),
                                             },
                                         ),

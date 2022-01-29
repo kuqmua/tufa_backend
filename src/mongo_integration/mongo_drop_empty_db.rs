@@ -95,11 +95,7 @@ pub async fn mongo_drop_empty_db(
                                     MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty(
                                         CollectionNamesListIsEmptyError {
                                             source: db_name.to_string(),
-                                            line: format!(
-                                                "{} {}",
-                                                line!().to_string(),
-                                                file!().to_string()
-                                            ),
+                                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                                         },
                                     ),
                                 ),

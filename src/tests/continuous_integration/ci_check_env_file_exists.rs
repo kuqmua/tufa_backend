@@ -1,7 +1,6 @@
 use std::fs::File;
 
-use crate::constants::project_constants::ENV_FILE_NAME;
-
+use crate::tests::tests_constants::ENV_FILE_NAME;
 use crate::tests::tests_constants::PATH_TO_ENV_FILE;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
