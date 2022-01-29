@@ -1,3 +1,8 @@
+use std::fs::File;
+use std::io::prelude::*;
+use std::io::BufReader;
+use std::path::Path;
+
 use reqwest::StatusCode;
 
 use crate::check_net::check_link_status_code::check_link_status_code;
@@ -9,12 +14,13 @@ use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_pa
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 //todo: think about naming
 type SuccessErrorTuple = (Vec<CommonRssPostStruct>, Vec<PostErrorVariant>);
 
-#[derive(Debug)]
+#[derive(Debug, GitInfoDerive)]
 pub struct RssPartError {
     pub source: Box<RssPartErrorEnum>,
     line: String,

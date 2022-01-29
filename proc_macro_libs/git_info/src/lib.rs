@@ -1,8 +1,3 @@
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::BufReader;
-use std::path::Path;
-
 use proc_macro::TokenStream;
 use quote::quote;
 
@@ -16,7 +11,7 @@ pub fn derive_git_info(input: TokenStream) -> TokenStream {
     //todo: make it parallel or async
     let gen = quote! {
         impl GitInfo for #ident {
-            fn get_git_info() -> String {
+            fn get_git_info(&self) -> String {
                 let mut git_info = String::new();
                 let commit_editmsg_string_path = ".git/COMMIT_EDITMSG";
                 let commit_editmsg_path = Path::new(commit_editmsg_string_path);
