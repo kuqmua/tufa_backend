@@ -37,10 +37,10 @@ impl ProviderKind {
                 source: Box::new(GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(
                     TokioFsFileOpenErrorStruct {
                         source: e,
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     },
                 )),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             }),
             Ok(mut file) => {
                 let mut content = Vec::new();
@@ -51,11 +51,11 @@ impl ProviderKind {
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(
                                 TokioIoAsyncReadExtReadToEndErrorStruct {
                                     source: e,
-                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                                 },
                             ),
                         ),
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     });
                 }
                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
@@ -63,7 +63,7 @@ impl ProviderKind {
                         source: Box::new(
                             GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                         ),
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     }),
                     Ok(file_content_as_struct) => Ok(file_content_as_struct.data),
                 }

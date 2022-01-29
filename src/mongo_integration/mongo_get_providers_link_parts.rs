@@ -58,10 +58,10 @@ pub async fn mongo_get_providers_link_parts(
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     },
                 )),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -70,10 +70,10 @@ pub async fn mongo_get_providers_link_parts(
                     source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     )),
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client) => {
@@ -85,11 +85,11 @@ pub async fn mongo_get_providers_link_parts(
                                 MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
                                     ListCollectionNamesError {
                                         source: e,
-                                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                                     },
                                 ),
                             ),
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Ok(vec_collection_names) => {
@@ -110,7 +110,7 @@ pub async fn mongo_get_providers_link_parts(
                                         no_collection_error_hashmap,
                                     ),
                                 ),
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                         let result_get_documents_hashmap =
@@ -150,7 +150,7 @@ pub async fn mongo_get_providers_link_parts(
                                         error_hashmap,
                                     ),
                                 ),
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                         Ok(success_hashmap)

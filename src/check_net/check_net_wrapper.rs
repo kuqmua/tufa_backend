@@ -62,7 +62,7 @@ pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
                     postgres: postgres_e,
                     mongo: mongo_e,
                 }),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Err(net_e), Err(postgres_e), Ok(_)) => {
@@ -71,7 +71,7 @@ pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
                     net: net_e,
                     postgres: postgres_e,
                 }),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Err(net_e), Ok(_), Err(mongo_e)) => {
@@ -80,7 +80,7 @@ pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
                     net: net_e,
                     mongo: mongo_e,
                 }),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Ok(_), Err(postgres_e), Err(mongo_e)) => {
@@ -89,25 +89,25 @@ pub async fn check_net_wrapper() -> Result<(), CheckNetWrapperError> {
                     postgres: postgres_e,
                     mongo: mongo_e,
                 }),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Err(e), Ok(_), Ok(_)) => {
             return Err(CheckNetWrapperError {
                 source: Box::new(CheckNetWrapperErrorEnum::Net(e)),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Ok(_), Err(e), Ok(_)) => {
             return Err(CheckNetWrapperError {
                 source: Box::new(CheckNetWrapperErrorEnum::Postgres(e)),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Ok(_), Ok(_), Err(e)) => {
             return Err(CheckNetWrapperError {
                 source: Box::new(CheckNetWrapperErrorEnum::Mongo(e)),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         (Ok(_), Ok(_), Ok(_)) => Ok(()),

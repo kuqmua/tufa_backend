@@ -74,7 +74,7 @@ pub async fn init_mongo(
             source: Box::new(InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
                 error_vec_count_documents,
             )),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     drop(error_vec_count_documents);
@@ -93,7 +93,7 @@ pub async fn init_mongo(
     if !error_vec_insert_many.is_empty() {
         return Err(InitMongoError {
             source: Box::new(InitMongoErrorEnum::InsertManyError(error_vec_insert_many)),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     Ok(())

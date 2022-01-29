@@ -34,7 +34,7 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
     if !delete_from_tables_error_hashmap.is_empty() {
         return Err(PostgresDeleteAllFromProvidersTablesError {
             source: Box::new(delete_from_tables_error_hashmap),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     Ok(())

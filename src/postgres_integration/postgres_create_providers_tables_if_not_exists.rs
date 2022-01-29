@@ -37,7 +37,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
     if !table_creation_error_hashmap.is_empty() {
         return Err(PostgresCreateProvidersDbsError {
             source: Box::new(table_creation_error_hashmap),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     Ok(())

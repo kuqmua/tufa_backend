@@ -16,7 +16,7 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
     match init_dbs_with_providers_link_parts().await {
         Err(e) => Err(InitDbsError {
             source: Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts(e)),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         }),
         Ok(_) => Ok(()),
     }

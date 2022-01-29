@@ -82,7 +82,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     count_provider_links_tables_error_hashmap,
                 ),
             ),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
@@ -92,7 +92,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     provider_links_tables_rows_length_not_equal_error_hashmap,
                 ),
             ),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         });
     }
     Ok(())

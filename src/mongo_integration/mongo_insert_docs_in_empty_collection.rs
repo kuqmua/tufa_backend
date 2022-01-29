@@ -60,11 +60,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
                     MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     ),
                 ),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -74,11 +74,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
                         MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions(
                             ClientWithOptionsError {
                                 source: e,
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             },
                         ),
                     ),
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client) => {
@@ -92,11 +92,11 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments(
                                     CountDocumentsError {
                                         source: e,
-                                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                                     },
                                 ),
                             ),
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Ok(documents_number) => {
@@ -107,7 +107,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                         documents_number,
                                     ),
                                 ),
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         } else {
                             if let Err(e) = collection.insert_many(
@@ -118,10 +118,10 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 return Err(MongoInsertDocsInEmptyCollectionError {
                                     source: Box::new(
                                         MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany(
-                                            CollectionInsertManyError { source: e, line: format!("{}:{}:{}", line!(), file!(), column!()), },
+                                            CollectionInsertManyError { source: e, line: format!("{}:{}:{}", file!(), line!(), column!()), },
                                         ),
                                     ),
-                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                                 });
                             }
                             Ok(())

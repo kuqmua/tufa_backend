@@ -45,10 +45,10 @@ pub async fn mongo_drop_collection(
                 source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     },
                 )),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -57,10 +57,10 @@ pub async fn mongo_drop_collection(
                     source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     )),
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client) => {
@@ -71,10 +71,10 @@ pub async fn mongo_drop_collection(
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(
                             DatabaseDropError {
                                 source: e,
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             },
                         )),
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     });
                 }
                 Ok(())

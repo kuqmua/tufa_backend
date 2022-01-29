@@ -50,10 +50,10 @@ impl ProviderKind {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     )),
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client_options) => match Client::with_options(client_options) {
@@ -62,10 +62,10 @@ impl ProviderKind {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
                             ClientWithOptionsError {
                                 source: e,
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             },
                         )),
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     });
                 }
                 Ok(client) => {
@@ -83,7 +83,7 @@ impl ProviderKind {
                                     source: Box::new(
                                         MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(e),
                                     ),
-                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                                 });
                         }
                         Ok(vec_of_strings) => Ok(vec_of_strings),

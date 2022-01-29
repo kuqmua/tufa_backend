@@ -53,10 +53,10 @@ pub async fn mongo_drop_empty_collection(
                 source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{}:{}:{}", line!(), file!(), column!()),
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     },
                 )),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -65,10 +65,10 @@ pub async fn mongo_drop_empty_collection(
                     source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     )),
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client) => {
@@ -80,10 +80,10 @@ pub async fn mongo_drop_empty_collection(
                             source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
                                 CountDocumentsError {
                                     source: e,
-                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                                 },
                             )),
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Ok(documents_number) => {
@@ -92,7 +92,7 @@ pub async fn mongo_drop_empty_collection(
                                 source: Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty(
                                     documents_number,
                                 )),
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         } else {
                             if let Err(e) = collection.drop(None).await {
@@ -110,7 +110,7 @@ pub async fn mongo_drop_empty_collection(
                                             },
                                         ),
                                     ),
-                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                                 });
                             }
                             Ok(())

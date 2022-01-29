@@ -22,10 +22,10 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
             source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext(
                 CursorTryNextError {
                     source: e,
-                    line: format!("{}:{}:{}", line!(), file!(), column!()),
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 },
             )),
-            line: format!("{}:{}:{}", line!(), file!(), column!()),
+            line: format!("{}:{}:{}", file!(), line!(), column!()),
         }
     }
 }
@@ -54,11 +54,11 @@ pub async fn mongo_get_documents_as_string_vector(
                     MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate(
                         CollectionAggregateError {
                             source: e,
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     ),
                 ),
-                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
             });
         }
         Ok(mut cursor) => {
@@ -73,7 +73,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                     db_collection_document_field_name_handle.to_string(),
                                 ),
                             ),
-                            line: format!("{}:{}:{}", line!(), file!(), column!()),
+                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Some(bson_handle) => match bson_handle {
@@ -87,7 +87,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                         other_bson_type.clone(),
                                     ),
                                 ),
-                                line: format!("{}:{}:{}", line!(), file!(), column!()),
+                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                     },
