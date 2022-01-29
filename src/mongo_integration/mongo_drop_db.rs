@@ -39,10 +39,10 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                 source: Box::new(MongoDropDbErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                line: format!("{}:{}:{}", line!(), file!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -51,10 +51,10 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                     source: Box::new(MongoDropDbErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                 })
             }
             Ok(client) => {
@@ -62,9 +62,9 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                     return Err(MongoDropDbError {
                         source: Box::new(MongoDropDbErrorEnum::DatabaseDrop(DatabaseDropError {
                             source: e,
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         })),
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     });
                 }
                 Ok(())

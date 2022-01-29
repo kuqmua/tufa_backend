@@ -48,7 +48,7 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     if !insertion_error_hashmap.is_empty() {
         return Err(PostgresInsertLinkPartsIntoProvidersTablesError {
             source: Box::new(insertion_error_hashmap),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         });
     }
     Ok(())

@@ -59,10 +59,10 @@ pub async fn write_string_into_file_with_tokio(
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll(
                     StdFsCreateDirAllStruct {
                         source: e,
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                line: format!("{}:{}:{}", line!(), file!(), column!()),
             });
         }
     }
@@ -71,10 +71,10 @@ pub async fn write_string_into_file_with_tokio(
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen(
                 TokioFsFileOpenStruct {
                     source: e,
-                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                 },
             )),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         }),
         Ok(mut file) => {
             if let Err(e) = file.write_all(stringified_json.as_bytes()).await {
@@ -82,10 +82,10 @@ pub async fn write_string_into_file_with_tokio(
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll(
                         FileWriteAllStruct {
                             source: e,
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                 });
             }
             Ok(())

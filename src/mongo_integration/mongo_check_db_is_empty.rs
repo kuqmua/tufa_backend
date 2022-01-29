@@ -50,10 +50,10 @@ pub async fn mongo_check_db_is_empty(
                 source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                line: format!("{}:{}:{}", line!(), file!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -62,10 +62,10 @@ pub async fn mongo_check_db_is_empty(
                     source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                 })
             }
             Ok(client) => match client.database(db_name).list_collection_names(None).await {
@@ -74,10 +74,10 @@ pub async fn mongo_check_db_is_empty(
                         source: Box::new(MongoCheckDbIsEmptyErrorEnum::ListCollectionNames(
                             ListCollectionNamesError {
                                 source: e,
-                                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                                line: format!("{}:{}:{}", line!(), file!(), column!()),
                             },
                         )),
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     })
                 }
                 Ok(documents_number) => {
@@ -86,7 +86,7 @@ pub async fn mongo_check_db_is_empty(
                             source: Box::new(MongoCheckDbIsEmptyErrorEnum::NotEmpty(
                                 documents_number.len(),
                             )),
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         });
                     }
                     Ok(())

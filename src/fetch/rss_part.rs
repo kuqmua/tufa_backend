@@ -35,7 +35,7 @@ pub async fn rss_part(
     if !StatusCode::is_success(&status_code) {
         return Err(RssPartError {
             source: Box::new(RssPartErrorEnum::StatusCode(status_code)),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         });
     }
     Ok(rss_filter_fetched_and_parsed_posts(

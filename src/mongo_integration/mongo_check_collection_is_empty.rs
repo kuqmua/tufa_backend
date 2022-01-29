@@ -45,10 +45,10 @@ pub async fn mongo_check_collection_is_empty(
                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{} {}", line!().to_string(), file!().to_string()),
+                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                     },
                 )),
-                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                line: format!("{}:{}:{}", line!(), file!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -57,10 +57,10 @@ pub async fn mongo_check_collection_is_empty(
                     source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         },
                     )),
-                    line: format!("{} {}", line!().to_string(), file!().to_string()),
+                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                 })
             }
             Ok(client) => {
@@ -82,7 +82,7 @@ pub async fn mongo_check_collection_is_empty(
                                     ),
                                 },
                             )),
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         })
                     }
                     Ok(documents_number) => {
@@ -91,7 +91,7 @@ pub async fn mongo_check_collection_is_empty(
                                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty(
                                     documents_number,
                                 )),
-                                line: format!("{} {}", line!().to_string(), file!().to_string()),
+                                line: format!("{}:{}:{}", line!(), file!(), column!()),
                             });
                         }
                         Ok(())

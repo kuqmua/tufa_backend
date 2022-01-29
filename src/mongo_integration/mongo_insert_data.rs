@@ -49,7 +49,7 @@ pub async fn mongo_insert_data(
     if !error_hashmap.is_empty() {
         return Err(MongoInsertDataError {
             source: Box::new(error_hashmap),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         });
     }
     Ok(())

@@ -52,7 +52,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             source: Box::new(
                 InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap),
             ),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         }),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
@@ -77,7 +77,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(
                                 mongo_err,
                             )),
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         });
                     }
                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
@@ -93,7 +93,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                     errors_hashmap,
                                 ),
                             ),
-                            line: format!("{} {}", line!().to_string(), file!().to_string()),
+                            line: format!("{}:{}:{}", line!(), file!(), column!()),
                         });
                     }
                 }

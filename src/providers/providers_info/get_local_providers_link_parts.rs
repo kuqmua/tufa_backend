@@ -44,7 +44,7 @@ pub async fn get_local_providers_link_parts(
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
             source: Box::new(errors_hashmap),
-            line: format!("{} {}", line!().to_string(), file!().to_string()),
+            line: format!("{}:{}:{}", line!(), file!(), column!()),
         });
     }
     Ok(success_hashmap)
