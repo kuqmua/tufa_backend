@@ -83,7 +83,7 @@ impl ProviderKind {
                                     source: Box::new(
                                         MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(e),
                                     ),
-                                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 });
                         }
                         Ok(vec_of_strings) => Ok(vec_of_strings),

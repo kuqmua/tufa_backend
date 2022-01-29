@@ -122,10 +122,10 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 return Err(MongoInsertDocsInEmptyCollectionError {
                                     source: Box::new(
                                         MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany(
-                                            CollectionInsertManyError { source: e, line: format!("{} {}", line!().to_string(), file!().to_string()) },
+                                            CollectionInsertManyError { source: e, line: format!("{}:{}:{}", line!(), file!(), column!()), },
                                         ),
                                     ),
-                                    line: format!("{} {}", line!().to_string(), file!().to_string())
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 });
                             }
                             Ok(())

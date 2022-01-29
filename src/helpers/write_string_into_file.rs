@@ -47,8 +47,6 @@ pub struct FileWriteAllStruct {
     line: String,
 }
 
-//
-///
 pub async fn write_string_into_file_with_tokio(
     path: &Path,
     stringified_json: String,
