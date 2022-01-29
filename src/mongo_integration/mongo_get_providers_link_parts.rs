@@ -85,11 +85,7 @@ pub async fn mongo_get_providers_link_parts(
                                 MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
                                     ListCollectionNamesError {
                                         source: e,
-                                        line: format!(
-                                            "{} {}",
-                                            line!().to_string(),
-                                            file!().to_string()
-                                        ),
+                                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                                     },
                                 ),
                             ),

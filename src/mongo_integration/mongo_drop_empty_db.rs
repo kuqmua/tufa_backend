@@ -111,11 +111,7 @@ pub async fn mongo_drop_empty_db(
                                 source: Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop(
                                     DatabaseDropError {
                                         source: e,
-                                        line: format!(
-                                            "{} {}",
-                                            line!().to_string(),
-                                            file!().to_string()
-                                        ),
+                                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                                     },
                                 )),
                                 line: format!("{}:{}:{}", line!(), file!(), column!()),

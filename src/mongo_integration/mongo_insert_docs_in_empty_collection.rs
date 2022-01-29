@@ -92,11 +92,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments(
                                     CountDocumentsError {
                                         source: e,
-                                        line: format!(
-                                            "{} {}",
-                                            line!().to_string(),
-                                            file!().to_string()
-                                        ),
+                                        line: format!("{}:{}:{}", line!(), file!(), column!()),
                                     },
                                 ),
                             ),
