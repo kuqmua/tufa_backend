@@ -75,11 +75,7 @@ pub async fn mongo_check_collection_is_empty(
                             source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
                                 CountDocumentsError {
                                     source: e,
-                                    line: format!(
-                                        "{} {}",
-                                        line!().to_string(),
-                                        file!().to_string()
-                                    ),
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 },
                             )),
                             line: format!("{}:{}:{}", line!(), file!(), column!()),

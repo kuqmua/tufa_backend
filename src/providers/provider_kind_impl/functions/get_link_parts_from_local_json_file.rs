@@ -51,11 +51,7 @@ impl ProviderKind {
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(
                                 TokioIoAsyncReadExtReadToEndErrorStruct {
                                     source: e,
-                                    line: format!(
-                                        "{} {}",
-                                        line!().to_string(),
-                                        file!().to_string()
-                                    ),
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 },
                             ),
                         ),

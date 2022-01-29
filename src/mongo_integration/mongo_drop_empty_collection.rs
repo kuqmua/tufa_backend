@@ -80,11 +80,7 @@ pub async fn mongo_drop_empty_collection(
                             source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
                                 CountDocumentsError {
                                     source: e,
-                                    line: format!(
-                                        "{} {}",
-                                        line!().to_string(),
-                                        file!().to_string()
-                                    ),
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 },
                             )),
                             line: format!("{}:{}:{}", line!(), file!(), column!()),
@@ -113,11 +109,7 @@ pub async fn mongo_drop_empty_collection(
                                             },
                                         ),
                                     ),
-                                    line: format!(
-                                        "{} {}",
-                                        line!().to_string(),
-                                        file!().to_string()
-                                    ),
+                                    line: format!("{}:{}:{}", line!(), file!(), column!()),
                                 });
                             }
                             Ok(())
