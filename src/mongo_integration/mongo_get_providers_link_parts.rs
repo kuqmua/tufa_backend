@@ -119,13 +119,12 @@ pub async fn mongo_get_providers_link_parts(
                         }
                         let result_get_documents_hashmap =
                                 join_all(ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
-                                    let pk_cloned = pk.clone();
                                     (
-                                        pk_cloned,
+                                        *pk,
                                         mongo_get_documents_as_string_vector(
                                             db.collection::<Document>(&pk.get_mongo_log_collection_name()),
                                             &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                                            ProviderKind::get_mongo_provider_link_parts_aggregation(&pk_cloned),
+                                            ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
                                         )
                                         .await,
                                     )
