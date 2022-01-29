@@ -182,6 +182,8 @@ extern crate enum_extention;
 #[macro_use]
 extern crate env_var_typed;
 #[macro_use]
+extern crate git_info;
+#[macro_use]
 extern crate impl_display;
 #[macro_use]
 extern crate impl_from_for_upper_struct;

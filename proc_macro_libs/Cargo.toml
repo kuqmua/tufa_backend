@@ -3,6 +3,7 @@ members = [
     "box_err_from_err",
     "enum_extention",
     "env_var_typed",
+    "git_info",
     "impl_display",
     "impl_from_for_upper_struct",
     "provider_kind_from_config"
