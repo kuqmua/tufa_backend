@@ -4,7 +4,10 @@ use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 use crate::check_net::check_is_status_code_successfull::check_is_status_code_successfull;
 use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 
-#[derive(Debug)]
+use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::traits::git_info_trait::GitInfo;
+
+#[derive(Debug, GitInfoDerive)]
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: CheckLinkStatusCodeError,

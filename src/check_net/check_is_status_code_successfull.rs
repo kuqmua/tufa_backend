@@ -1,6 +1,9 @@
 use reqwest::StatusCode;
 
-#[derive(Debug)]
+use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::traits::git_info_trait::GitInfo;
+
+#[derive(Debug, GitInfoDerive)]
 pub struct StatusCodeError {
     source: StatusCode,
     line: String,
