@@ -5,9 +5,6 @@ use crate::check_net::check_is_status_code_successfull::check_is_status_code_suc
 use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 
 #[derive(Debug)]
-pub struct CheckNetAvailabilityError(Box<CheckNetAvailabilityErrorEnum>);
-
-#[derive(Debug)] //, ImplFromForUpperStruct
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: CheckLinkStatusCodeError,
@@ -20,9 +17,9 @@ pub enum CheckNetAvailabilityErrorEnum {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub async fn check_net_availability(link: &str) -> Result<(), CheckNetAvailabilityError> {
+pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityErrorEnum>> {
     match check_link_status_code(link).await {
-        Err(e) => Err(CheckNetAvailabilityError(
+        Err(e) => Err(Box::new(
             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
                 source: e,
                 line: format!("{}:{}:{}", file!(), line!(), column!()),
@@ -30,12 +27,10 @@ pub async fn check_net_availability(link: &str) -> Result<(), CheckNetAvailabili
         )),
         Ok(status_code) => {
             if let Err(e) = check_is_status_code_successfull(status_code) {
-                return Err(CheckNetAvailabilityError(
-                    CheckNetAvailabilityErrorEnum::StatusCodeError {
-                        source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
-                    },
-                ));
+                return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
+                    source: e,
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                }));
             }
             Ok(())
         }
