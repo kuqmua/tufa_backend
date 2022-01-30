@@ -10,9 +10,12 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 
-#[derive(Debug)]
+use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::traits::git_info_trait::GitInfo;
+
+#[derive(Debug, GitInfoDerive)]
 pub struct MongoInsertDataError {
-    pub source: Box<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>>,
+    pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
     line: String,
 }
 
@@ -20,7 +23,7 @@ pub struct MongoInsertDataError {
 pub async fn mongo_insert_data(
     db_name_handle: &str,
     vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), MongoInsertDataError> {
+) -> Result<(), Box<MongoInsertDataError>> {
     let error_hashmap = join_all(vec_of_link_parts_hashmap.into_iter().map(
         |(pk, vec_of_link_parts)| async move {
             (
@@ -47,10 +50,10 @@ pub async fn mongo_insert_data(
     })
     .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>>();
     if !error_hashmap.is_empty() {
-        return Err(MongoInsertDataError {
-            source: Box::new(error_hashmap),
+        return Err(Box::new(MongoInsertDataError {
+            source: error_hashmap,
             line: format!("{}:{}:{}", file!(), line!(), column!()),
-        });
+        }));
     }
     Ok(())
 }
