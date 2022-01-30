@@ -4,42 +4,38 @@ use mongodb::{bson::Document, Collection};
 #[derive(Debug)]
 pub struct MongoGetDocumentsAsStringVectorError {
     pub source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
-    line: String,
 }
 
 #[derive(Debug)]
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {
-    CollectionAggregate(CollectionAggregateError),
-    CursorTryNext(CursorTryNextError),
-    WrongBsonType(mongodb::bson::Bson),
-    NoKeyInDocument(String),
+    CollectionAggregate {
+        source: mongodb::error::Error,
+        line: String,
+    },
+    CursorTryNext {
+        source: mongodb::error::Error,
+        line: String,
+    },
+    WrongBsonType {
+        source: mongodb::bson::Bson,
+        line: String,
+    },
+    NoKeyInDocument {
+        source: String,
+        line: String,
+    },
 }
 
 //not a good solution, rewrite later
 impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
     fn from(e: mongodb::error::Error) -> Self {
         MongoGetDocumentsAsStringVectorError {
-            source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext(
-                CursorTryNextError {
-                    source: e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
-                },
-            )),
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+            source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
+                source: e,
+                line: format!("{}:{}:{}", file!(), line!(), column!()),
+            }),
         }
     }
-}
-
-#[derive(Debug)]
-pub struct CollectionAggregateError {
-    pub source: mongodb::error::Error,
-    line: String,
-}
-
-#[derive(Debug)]
-pub struct CursorTryNextError {
-    pub source: mongodb::error::Error,
-    line: String,
 }
 
 pub async fn mongo_get_documents_as_string_vector(
@@ -51,14 +47,11 @@ pub async fn mongo_get_documents_as_string_vector(
         Err(e) => {
             return Err(MongoGetDocumentsAsStringVectorError {
                 source: Box::new(
-                    MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate(
-                        CollectionAggregateError {
-                            source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
-                        },
-                    ),
+                    MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
+                        source: e,
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    },
                 ),
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
             });
         }
         Ok(mut cursor) => {
@@ -69,11 +62,11 @@ pub async fn mongo_get_documents_as_string_vector(
                     None => {
                         return Err(MongoGetDocumentsAsStringVectorError {
                             source: Box::new(
-                                MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument(
-                                    db_collection_document_field_name_handle.to_string(),
-                                ),
+                                MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
+                                    source: db_collection_document_field_name_handle.to_string(),
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                },
                             ),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Some(bson_handle) => match bson_handle {
@@ -83,11 +76,11 @@ pub async fn mongo_get_documents_as_string_vector(
                         other_bson_type => {
                             return Err(MongoGetDocumentsAsStringVectorError {
                                 source: Box::new(
-                                    MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType(
-                                        other_bson_type.clone(),
-                                    ),
+                                    MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
+                                        source: other_bson_type.clone(),
+                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    },
                                 ),
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                     },
