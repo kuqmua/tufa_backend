@@ -8,11 +8,11 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionError;
+use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 
 #[derive(Debug)]
 pub struct MongoInsertDataError {
-    pub source: Box<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>,
+    pub source: Box<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>>,
     line: String,
 }
 
@@ -41,11 +41,11 @@ pub async fn mongo_insert_data(
     .into_iter()
     .filter_map(|(pk, result)| {
         if let Err(e) = result {
-            return Some((pk, e));
+            return Some((pk, *e));
         }
         None
     })
-    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
+    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>>();
     if !error_hashmap.is_empty() {
         return Err(MongoInsertDataError {
             source: Box::new(error_hashmap),
