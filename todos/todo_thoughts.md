@@ -607,13 +607,6 @@ https://www.youtube.com/watch?v=QlPDI9IsSXU&list=WL&index=99
 Overriding Rust Dependencies
 https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
 <br/>
-   
-### -------------------
-add commit number inside error like source but different field
-inside project folder from
-.git/ORIG_HEAD   - commit id, token, hash
-.git/COMMIT_EDITMSG - commit name
-<br/>
     
 ### -------------------
 add tracing::error? https://crates.io/crates/tracing-error
