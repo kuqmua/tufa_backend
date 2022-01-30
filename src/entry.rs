@@ -95,7 +95,6 @@ pub fn entry() {
                                     format!("{:#?}", e),
                                 );
                             },
-                            
                             InitDbsProvidersLinkPartsErrorEnum::MongoClient(e) => {
                                 print_colorful_message(
                                     None,
