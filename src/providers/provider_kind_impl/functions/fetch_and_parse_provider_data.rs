@@ -40,7 +40,7 @@ impl ProviderKind {
         let time = Instant::now();
         let capacity = links.len();
         let vec_to_return = join_all(links.iter().map(|link| async move {
-            let result = async_fetch_link(&link).await;
+            let result = async_fetch_link(link).await;
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
@@ -72,7 +72,7 @@ impl ProviderKind {
             //todo: maybe not all links must return Ok ?
             for (link, e) in &async_fetch_links_error_vec {
                 if let FetchLinkErrorEnum::StatusCode(status_code) = *e.source {
-                    handle_error_status_code(status_code, &link);
+                    handle_error_status_code(status_code, link);
                 }
             }
             return Err(Box::new(
@@ -85,7 +85,7 @@ impl ProviderKind {
         let mut success_vec = Vec::with_capacity(capacity);
         let mut no_items_error_vec = Vec::new();
         for (link, response_text) in half_success_vec {
-            match rss_parse_string_into_struct(response_text, &link, self) {
+            match rss_parse_string_into_struct(response_text, link, self) {
                 Err(e) => no_items_error_vec.push((link.to_string(), e)),
                 Ok(post_struct) => {
                     success_vec.push(post_struct); //todo maybe add link here?
