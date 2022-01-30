@@ -2,7 +2,9 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_part::{rss_part, RssPartErrorEnum};
+
+use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
+use crate::providers::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

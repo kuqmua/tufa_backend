@@ -5,7 +5,7 @@ use std::sync::{Arc, Mutex};
 use futures::future::join_all;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_part::RssPartErrorEnum;
+use crate::providers::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

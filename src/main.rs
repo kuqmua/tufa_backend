@@ -13,7 +13,6 @@ mod fetch {
     pub mod rss_handle_error_status_code;
     pub mod rss_metainfo_fetch_structures;
     pub mod rss_parse_string_into_struct;
-    pub mod rss_part;
     pub mod info_structures {
         pub mod structs_for_parsing {
             pub mod arxiv_struct_for_parsing;
@@ -143,6 +142,7 @@ mod providers {
             pub mod get_link_parts_from_local_json_file;
             pub mod get_mongo_provider_link_parts_aggregation;
             pub mod mongo_get_provider_link_parts;
+            pub mod rss_part;
         }
         pub mod provider_kind_trait;
     }
