@@ -3,7 +3,6 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoDropDbError {
     pub source: Box<MongoDropDbErrorEnum>,
-    line: String,
 }
 
 #[derive(Debug)]
@@ -42,7 +41,6 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                         line: format!("{}:{}:{}", file!(), line!(), column!()),
                     },
                 )),
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -54,7 +52,6 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                             line: format!("{}:{}:{}", file!(), line!(), column!()),
                         },
                     )),
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
                 })
             }
             Ok(client) => {
@@ -64,7 +61,6 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                             source: e,
                             line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })),
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
                     });
                 }
                 Ok(())
