@@ -3,13 +3,13 @@ use std::collections::HashMap;
 use futures::future::join_all;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
+use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileErrorEnum;
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
-    pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>>,
+    pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
     line: String,
 }
 
@@ -27,14 +27,14 @@ pub async fn get_local_providers_link_parts(
             }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> =
+    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum> =
         HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
     for (pk, result) in result_vec {
         match result {
             Err(e) => {
-                errors_hashmap.insert(pk, e);
+                errors_hashmap.insert(pk, *e);
             }
             Ok(vec) => {
                 success_hashmap.insert(pk, vec);
