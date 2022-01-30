@@ -28,7 +28,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
         Ok(status_code) => {
             if let Err(e) = check_is_status_code_successfull(status_code) {
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
-                    source: e,
+                    source: *e,
                     line: format!("{}:{}:{}", file!(), line!(), column!()),
                 }));
             }
