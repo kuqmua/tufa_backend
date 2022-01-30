@@ -3,8 +3,8 @@ use reqwest::StatusCode;
 use crate::check_net::check_link_status_code::check_link_status_code;
 use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 
+use crate::fetch::fetch_and_parse_provider_data::fetch_and_parse_provider_data;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_fetch_and_parse_provider_data::fetch_and_parse_provider_data;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::rss_filter_fetched_and_parsed_posts;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 
