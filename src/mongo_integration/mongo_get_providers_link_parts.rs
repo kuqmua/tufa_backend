@@ -19,61 +19,51 @@ use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVector
 #[derive(Debug)]
 pub struct MongoGetProvidersLinkPartsError {
     pub source: Box<MongoGetProvidersLinkPartsErrorEnum>,
-    line: String,
 }
 
-#[derive(Debug, ImplFromForUpperStruct)]
+#[derive(Debug)]
 pub enum MongoGetProvidersLinkPartsErrorEnum {
-    ClientOptionsParse(ClientOptionsParseError),
-    ClientWithOptions(ClientWithOptionsError),
-    ListCollectionNames(ListCollectionNamesError),
-    NoSuchCollections(HashMap<ProviderKind, String>),
-    GetDocuments(HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>),
+    ClientOptionsParse {
+        source: mongodb::error::Error,
+        line: String,
+    },
+    ClientWithOptions {
+        source: mongodb::error::Error,
+        line: String,
+    },
+    ListCollectionNames {
+        source: mongodb::error::Error,
+        line: String,
+    },
+    NoSuchCollections {
+        source: HashMap<ProviderKind, String>,
+        line: String,
+    },
+    GetDocuments {
+        source: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>,
+        line: String,
+    },
 }
 
-#[derive(Debug)]
-pub struct ClientOptionsParseError {
-    pub source: mongodb::error::Error,
-    line: String,
-}
-
-#[derive(Debug)]
-pub struct ClientWithOptionsError {
-    pub source: mongodb::error::Error,
-    line: String,
-}
-
-#[derive(Debug)]
-pub struct ListCollectionNamesError {
-    pub source: mongodb::error::Error,
-    line: String,
-}
-
-#[deny(clippy::indexing_slicing)] //, clippy::unwrap_used
+#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
     match ClientOptions::parse(mongo_get_db_url()).await {
         Err(e) => {
             return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError {
-                        source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
-                    },
-                )),
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
+                    source: e,
+                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                }),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => {
                 return Err(MongoGetProvidersLinkPartsError {
-                    source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError {
-                            source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
-                        },
-                    )),
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
+                        source: e,
+                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    }),
                 })
             }
             Ok(client) => {
@@ -82,14 +72,11 @@ pub async fn mongo_get_providers_link_parts(
                     Err(e) => {
                         return Err(MongoGetProvidersLinkPartsError {
                             source: Box::new(
-                                MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames(
-                                    ListCollectionNamesError {
-                                        source: e,
-                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
-                                    },
-                                ),
+                                MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
+                                    source: e,
+                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                },
                             ),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
                         })
                     }
                     Ok(vec_collection_names) => {
@@ -106,11 +93,11 @@ pub async fn mongo_get_providers_link_parts(
                         if !no_collection_error_hashmap.is_empty() {
                             return Err(MongoGetProvidersLinkPartsError {
                                 source: Box::new(
-                                    MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections(
-                                        no_collection_error_hashmap,
-                                    ),
+                                    MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
+                                        source: no_collection_error_hashmap,
+                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    },
                                 ),
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                         let result_get_documents_hashmap =
@@ -146,11 +133,11 @@ pub async fn mongo_get_providers_link_parts(
                         if !error_hashmap.is_empty() {
                             return Err(MongoGetProvidersLinkPartsError {
                                 source: Box::new(
-                                    MongoGetProvidersLinkPartsErrorEnum::GetDocuments(
-                                        error_hashmap,
-                                    ),
+                                    MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
+                                        source: error_hashmap,
+                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    },
                                 ),
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
                             });
                         }
                         Ok(success_hashmap)
