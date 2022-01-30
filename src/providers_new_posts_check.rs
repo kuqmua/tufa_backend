@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
-use crate::fetch::rss_part::{rss_part, RssPartError};
+use crate::fetch::rss_part::{rss_part, RssPartErrorEnum};
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -17,7 +17,7 @@ pub async fn providers_new_posts_check(
         Mutex<
             Vec<(
                 ProviderKind,
-                Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartError>,
+                Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartErrorEnum>,
             )>,
         >,
     >,
@@ -49,7 +49,7 @@ pub async fn providers_new_posts_check(
         }
         Err(e) => match posts_and_errors_arc_mutex.lock() {
             Ok(mut posts_handle_locked) => {
-                posts_handle_locked.push((pk, Err(e)));
+                posts_handle_locked.push((pk, Err(*e)));
             }
             Err(e) => {
                 print_colorful_message(
