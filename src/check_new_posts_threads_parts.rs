@@ -5,7 +5,6 @@ use std::sync::{Arc, Mutex};
 use futures::future::join_all;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 use crate::fetch::rss_part::RssPartErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -29,7 +28,7 @@ pub async fn check_new_posts_threads_parts(
 ) -> Result<
     Vec<(
         ProviderKind,
-        Result<(Vec<CommonRssPostStruct>, Vec<PostErrorVariant>), RssPartErrorEnum>,
+        Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>,
     )>,
     ResourceError,
 > {
