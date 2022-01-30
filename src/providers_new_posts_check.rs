@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
@@ -13,12 +14,7 @@ pub async fn providers_new_posts_check(
     pk: ProviderKind,
     vec_of_provider_links: Vec<String>,
     posts_and_errors_arc_mutex: Arc<
-        Mutex<
-            Vec<(
-                ProviderKind,
-                Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>,
-            )>,
-        >,
+        Mutex<HashMap<ProviderKind, Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>>>,
     >,
 ) {
     match rss_part(pk, vec_of_provider_links).await {
@@ -29,7 +25,7 @@ pub async fn providers_new_posts_check(
                 //must check on empty coz lock it for nothing is bad
                 match posts_and_errors_arc_mutex.lock() {
                     Ok(mut posts_handle_locked) => {
-                        posts_handle_locked.push((pk, Ok(posts_vec)));
+                        posts_handle_locked.insert(pk, Ok(posts_vec));
                     }
                     Err(e) => {
                         print_colorful_message(
@@ -45,7 +41,7 @@ pub async fn providers_new_posts_check(
         }
         Err(e) => match posts_and_errors_arc_mutex.lock() {
             Ok(mut posts_handle_locked) => {
-                posts_handle_locked.push((pk, Err(*e)));
+                posts_handle_locked.insert(pk, Err(*e));
             }
             Err(e) => {
                 print_colorful_message(
