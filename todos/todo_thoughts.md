@@ -633,3 +633,12 @@ show github link to code repo from error
 ### -------------------
 add field how_to_fix  error into error  
 <br/>
+
+### -------------------
+async runtime error handling state for write/dont write/partially write into console error info
+for example in case then error repeats
+first time write all error 
+then write partially.
+or maybe write only error increment
+or make more time between function exection that can return this error
+<br/>
