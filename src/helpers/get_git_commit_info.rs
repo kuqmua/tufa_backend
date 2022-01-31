@@ -10,7 +10,7 @@ pub struct GitCommitInfo {
     pub repo_link: String,
 }
 
-pub fn get_git_info() -> GitCommitInfo {
+pub fn get_git_commit_info() -> GitCommitInfo {
     //must not panic
     //todo: write a message on start in case of error get config info
     //todo: make it parallel or async

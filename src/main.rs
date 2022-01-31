@@ -70,7 +70,7 @@ pub mod config_mods {
 }
 pub mod helpers {
     pub mod create_dir_if_it_doesnt_exist;
-    pub mod get_git_info;
+    pub mod get_git_commit_info;
     pub mod lazy_static_git_info;
     pub mod resource;
     pub mod write_json_into_file;
