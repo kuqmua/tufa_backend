@@ -629,3 +629,7 @@ https://crates.io/crates/sqlx
 ### -------------------
 show github link to code repo from error  
 <br/>
+    
+### -------------------
+add field how_to_fix  error into error  
+<br/>
