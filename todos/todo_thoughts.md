@@ -619,4 +619,9 @@ find about rust type erasure. write some examples
 ### -------------------
 rust error handling from zero to prod rust author https://www.youtube.com/watch?v=yLGLKKFFc3g  
 <br/>
-    
+   
+### -------------------
+find out difference between sqlx and tokio-postgres
+https://crates.io/crates/tokio-postgres
+https://crates.io/crates/sqlx
+<br/>
