@@ -642,3 +642,9 @@ then write partially.
 or maybe write only error increment
 or make more time between function exection that can return this error
 <br/>
+    
+### -------------------
+config flags:
+enabled github link to code inside error or not.
+enabled git commit name id and brach inside error or not
+<br/>
