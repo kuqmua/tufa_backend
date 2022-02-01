@@ -648,3 +648,7 @@ config flags:
 enabled github link to code inside error or not.
 enabled git commit name id and brach inside error or not
 <br/>
+
+### -------------------
+Github link code line with # symbol
+<br/>
