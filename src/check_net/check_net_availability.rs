@@ -1,8 +1,8 @@
 use crate::check_net::check_link_status_code::check_link_status_code;
 use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 
-use crate::check_net::check_is_status_code_successfull::check_is_status_code_successfull;
-use crate::check_net::check_is_status_code_successfull::StatusCodeError;
+use crate::check_net::check_status_code::check_status_code;
+use crate::check_net::check_status_code::StatusCodeError;
 
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
@@ -29,7 +29,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
             },
         )),
         Ok(status_code) => {
-            if let Err(e) = check_is_status_code_successfull(status_code) {
+            if let Err(e) = check_status_code(status_code) {
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
                     source: *e,
                     line: format!("{}:{}:{}", file!(), line!(), column!()),

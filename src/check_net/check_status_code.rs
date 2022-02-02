@@ -12,9 +12,7 @@ pub struct StatusCodeError {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_is_status_code_successfull(
-    status_code: StatusCode,
-) -> Result<(), Box<StatusCodeError>> {
+pub fn check_status_code(status_code: StatusCode) -> Result<(), Box<StatusCodeError>> {
     if !StatusCode::is_success(&status_code) {
         return Err(Box::new(StatusCodeError {
             source: status_code,
