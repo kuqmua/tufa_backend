@@ -10,25 +10,25 @@ pub struct MongoGetDocumentsAsStringVectorError {
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {
     CollectionAggregate {
         source: mongodb::error::Error,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     CursorTryNext {
         source: mongodb::error::Error,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     WrongBsonType {
         source: mongodb::bson::Bson,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     NoKeyInDocument {
         source: String,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },

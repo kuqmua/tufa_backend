@@ -15,9 +15,9 @@ use crate::providers::providers_info::get_local_providers_link_parts::GetLocalPr
 #[derive(Debug)]
 pub struct GetProvidersLinkPartsError {
     pub source: Box<GetProvidersLinkPartsErrorEnum>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(Debug)]
@@ -36,18 +36,18 @@ pub async fn get_providers_link_parts(
         Resource::Local => match get_local_providers_link_parts().await {
             Err(error_hashmap) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
-                            file: file!(),
-            line: line!(),
-            column: column!(),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         Resource::Mongodb => match mongo_get_providers_link_parts().await {
             Err(e) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
-                            file: file!(),
-            line: line!(),
-            column: column!(),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },

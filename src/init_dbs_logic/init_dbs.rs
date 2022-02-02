@@ -4,9 +4,9 @@ use super::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 #[derive(Debug)]
 pub struct InitDbsError {
     pub source: Box<InitDbsErrorEnum>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 #[derive(Debug)]
 pub enum InitDbsErrorEnum {

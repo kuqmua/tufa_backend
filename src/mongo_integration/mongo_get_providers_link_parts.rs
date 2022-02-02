@@ -25,31 +25,31 @@ pub struct MongoGetProvidersLinkPartsError {
 pub enum MongoGetProvidersLinkPartsErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     ListCollectionNames {
         source: mongodb::error::Error,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     NoSuchCollections {
         source: HashMap<ProviderKind, String>,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
     GetDocuments {
         source: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>,
-                file: &'static str,
+        file: &'static str,
         line: u32,
         column: u32,
     },
@@ -63,9 +63,9 @@ pub async fn mongo_get_providers_link_parts(
             return Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                     source: e,
-                                file: file!(),
-            line: line!(),
-            column: column!(),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 }),
             })
         }
@@ -74,9 +74,9 @@ pub async fn mongo_get_providers_link_parts(
                 return Err(MongoGetProvidersLinkPartsError {
                     source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
                         source: e,
-                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     }),
                 })
             }
@@ -88,9 +88,9 @@ pub async fn mongo_get_providers_link_parts(
                             source: Box::new(
                                 MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
                                     source: e,
-                                                file: file!(),
-            line: line!(),
-            column: column!(),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
                             ),
                         })
@@ -111,9 +111,9 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
                                         source: no_collection_error_hashmap,
-                                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                                        file: file!(),
+                                        line: line!(),
+                                        column: column!(),
                                     },
                                 ),
                             });
@@ -153,9 +153,9 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
                                         source: error_hashmap,
-                                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                                        file: file!(),
+                                        line: line!(),
+                                        column: column!(),
                                     },
                                 ),
                             });

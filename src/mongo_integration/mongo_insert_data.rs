@@ -17,9 +17,9 @@ use crate::traits::git_info_trait::GitInfo;
 #[derive(Debug, GitInfoDerive)]
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -55,7 +55,7 @@ pub async fn mongo_insert_data(
     if !error_hashmap.is_empty() {
         return Err(Box::new(MongoInsertDataError {
             source: error_hashmap,
-                        file: file!(),
+            file: file!(),
             line: line!(),
             column: column!(),
         }));

@@ -16,9 +16,9 @@ use crate::{
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -31,17 +31,17 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 impl ProviderKind {
@@ -56,14 +56,14 @@ impl ProviderKind {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError {
                             source: e,
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
                         },
                     )),
-                                file: file!(),
-            line: line!(),
-            column: column!(),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 })
             }
             Ok(client_options) => match Client::with_options(client_options) {
@@ -72,14 +72,14 @@ impl ProviderKind {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
                             ClientWithOptionsError {
                                 source: e,
-                                            file: file!(),
-            line: line!(),
-            column: column!(),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
                             },
                         )),
-                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     });
                 }
                 Ok(client) => {

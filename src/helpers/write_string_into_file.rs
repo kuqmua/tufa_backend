@@ -19,9 +19,9 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)] //, ImplFromForUpperStruct
@@ -34,25 +34,25 @@ pub enum WriteStringIntoFileWithTokioErrorEnum {
 #[derive(Debug)]
 pub struct StdFsCreateDirAllStruct {
     source: std::io::Error,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(Debug)]
 pub struct TokioFsFileOpenStruct {
     source: std::io::Error,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[derive(Debug)]
 pub struct FileWriteAllStruct {
     source: std::io::Error,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 pub async fn write_string_into_file_with_tokio(
@@ -65,14 +65,14 @@ pub async fn write_string_into_file_with_tokio(
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll(
                     StdFsCreateDirAllStruct {
                         source: e,
-                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     },
                 )),
-                            file: file!(),
-            line: line!(),
-            column: column!(),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             });
         }
     }
@@ -81,12 +81,12 @@ pub async fn write_string_into_file_with_tokio(
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen(
                 TokioFsFileOpenStruct {
                     source: e,
-                                file: file!(),
-            line: line!(),
-            column: column!(),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
             )),
-                        file: file!(),
+            file: file!(),
             line: line!(),
             column: column!(),
         }),
@@ -96,14 +96,14 @@ pub async fn write_string_into_file_with_tokio(
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll(
                         FileWriteAllStruct {
                             source: e,
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
                         },
                     )),
-                                file: file!(),
-            line: line!(),
-            column: column!(),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 });
             }
             Ok(())

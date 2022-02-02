@@ -10,9 +10,9 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -46,7 +46,7 @@ pub async fn get_local_providers_link_parts(
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
             source: Box::new(errors_hashmap),
-                        file: file!(),
+            file: file!(),
             line: line!(),
             column: column!(),
         });

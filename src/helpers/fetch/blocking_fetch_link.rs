@@ -7,27 +7,27 @@ pub fn blocking_fetch_link(link: &str) -> Result<String, FetchLinkError> {
         Err(e) => {
             return Err(FetchLinkError {
                 source: Box::new(FetchLinkErrorEnum::ReqwestBlockingGet(e)),
-                            file: file!(),
-            line: line!(),
-            column: column!(),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             })
         }
         Ok(res) => {
             if res.status() != reqwest::StatusCode::OK {
                 return Err(FetchLinkError {
                     source: Box::new(FetchLinkErrorEnum::StatusCode(res.status())),
-                                file: file!(),
-            line: line!(),
-            column: column!(),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 });
             }
             match res.text() {
                 Err(e) => {
                     return Err(FetchLinkError {
                         source: Box::new(FetchLinkErrorEnum::ResponseText(e)),
-                                    file: file!(),
-            line: line!(),
-            column: column!(),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     })
                 }
                 Ok(text) => Ok(text),

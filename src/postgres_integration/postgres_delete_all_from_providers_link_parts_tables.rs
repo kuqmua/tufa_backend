@@ -10,9 +10,9 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
-            file: &'static str,
-        line: u32,
-        column: u32,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 pub async fn postgres_delete_all_from_providers_link_parts_tables(
@@ -36,7 +36,7 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
     if !delete_from_tables_error_hashmap.is_empty() {
         return Err(PostgresDeleteAllFromProvidersTablesError {
             source: Box::new(delete_from_tables_error_hashmap),
-                        file: file!(),
+            file: file!(),
             line: line!(),
             column: column!(),
         });
