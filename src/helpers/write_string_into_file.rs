@@ -19,7 +19,7 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
-    file: &'static str,
+pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -34,7 +34,7 @@ pub enum WriteStringIntoFileWithTokioErrorEnum {
 #[derive(Debug)]
 pub struct StdFsCreateDirAllStruct {
     source: std::io::Error,
-    file: &'static str,
+pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -42,7 +42,7 @@ pub struct StdFsCreateDirAllStruct {
 #[derive(Debug)]
 pub struct TokioFsFileOpenStruct {
     source: std::io::Error,
-    file: &'static str,
+pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -50,7 +50,7 @@ pub struct TokioFsFileOpenStruct {
 #[derive(Debug)]
 pub struct FileWriteAllStruct {
     source: std::io::Error,
-    file: &'static str,
+pub file: &'static str,
     line: u32,
     column: u32,
 }

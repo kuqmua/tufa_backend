@@ -4,7 +4,7 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoCheckCollectionIsEmptyError {
     pub source: Box<MongoCheckCollectionIsEmptyErrorEnum>,
-    file: &'static str,
+pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }
@@ -20,7 +20,7 @@ pub enum MongoCheckCollectionIsEmptyErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    file: &'static str,
+pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }
@@ -28,7 +28,7 @@ pub struct ClientOptionsParseError {
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    file: &'static str,
+pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }
@@ -36,7 +36,7 @@ pub struct ClientWithOptionsError {
 #[derive(Debug)]
 pub struct CountDocumentsError {
     pub source: mongodb::error::Error,
-    file: &'static str,
+pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }

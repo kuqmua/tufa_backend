@@ -10,7 +10,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
-    file: &'static str,
+pub file: &'static str,
     line: u32,
     column: u32,
 }

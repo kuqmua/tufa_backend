@@ -20,7 +20,7 @@ use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 #[derive(Debug)]
 pub struct InitMongoError {
     pub source: Box<InitMongoErrorEnum>,
-    file: &'static str,
+    pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }

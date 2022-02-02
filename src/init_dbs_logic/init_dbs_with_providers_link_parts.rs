@@ -22,7 +22,7 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 #[derive(Debug)]
 pub struct InitDbsProvidersLinkPartsError {
     pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
-    file: &'static str,
+pub file: &'static str,
     pub line: u32,
     pub column: u32,
 }
