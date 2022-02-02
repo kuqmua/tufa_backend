@@ -58,3 +58,7 @@ test or proc macro to name error function type like function but with CamelCase 
 ### -------------------
 check all files names to not contain ":" symbol. its needed to correct parsing line
 <br/>
+
+### -------------------
+check all files name be equal to his inner struct/function
+<br/>
