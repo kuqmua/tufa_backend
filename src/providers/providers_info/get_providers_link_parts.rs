@@ -15,7 +15,7 @@ use crate::providers::providers_info::get_local_providers_link_parts::GetLocalPr
 #[derive(Debug)]
 pub struct GetProvidersLinkPartsError {
     pub source: Box<GetProvidersLinkPartsErrorEnum>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }

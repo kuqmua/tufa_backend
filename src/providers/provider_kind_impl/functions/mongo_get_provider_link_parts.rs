@@ -16,7 +16,7 @@ use crate::{
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -31,7 +31,7 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -39,7 +39,7 @@ pub file: &'static str,
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }

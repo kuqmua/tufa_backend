@@ -5,7 +5,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 #[derive(Debug)]
 pub struct MongoCheckAvailabilityError {
     source: Box<MongoCheckAvailabilityErrorEnum>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -20,7 +20,7 @@ pub enum MongoCheckAvailabilityErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -28,7 +28,7 @@ pub file: &'static str,
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
@@ -36,7 +36,7 @@ pub file: &'static str,
 #[derive(Debug)]
 pub struct ListCollectionNamesError {
     pub source: mongodb::error::Error,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }

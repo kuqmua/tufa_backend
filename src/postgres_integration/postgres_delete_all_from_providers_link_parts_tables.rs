@@ -10,7 +10,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }

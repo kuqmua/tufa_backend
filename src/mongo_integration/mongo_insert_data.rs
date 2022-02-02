@@ -17,7 +17,7 @@ use crate::traits::git_info_trait::GitInfo;
 #[derive(Debug, GitInfoDerive)]
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }

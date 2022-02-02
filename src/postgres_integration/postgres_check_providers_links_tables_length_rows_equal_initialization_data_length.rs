@@ -11,7 +11,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
     pub source:
         Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
-pub file: &'static str,
+    pub file: &'static str,
     line: u32,
     column: u32,
 }
