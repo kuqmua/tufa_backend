@@ -8,8 +8,8 @@ pub fn derive_git_info(input: TokenStream) -> TokenStream {
     let ident = &ast.ident;
     let gen = quote! {
         impl GitInfo for #ident {
-            fn get_git_info(&self) -> &GIT_INFO {
-                &GIT_INFO
+            fn git_info(&self) -> String {
+                get_git_commit_string()
             }
         }
     };

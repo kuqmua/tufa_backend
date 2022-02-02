@@ -1,6 +1,6 @@
 use reqwest::StatusCode;
 
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
 #[derive(Debug, GitInfoDerive)]

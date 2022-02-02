@@ -11,8 +11,9 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::providers_new_posts_check::providers_new_posts_check;
 
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::resource::Resource;
+
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 

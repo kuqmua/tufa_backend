@@ -4,7 +4,7 @@ use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 use crate::check_net::check_is_status_code_successfull::check_is_status_code_successfull;
 use crate::check_net::check_is_status_code_successfull::StatusCodeError;
 
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
 #[derive(Debug, GitInfoDerive)]

@@ -10,7 +10,7 @@ use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
 use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 

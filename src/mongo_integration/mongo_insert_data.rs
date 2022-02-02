@@ -10,7 +10,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 
 use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
+
 use crate::traits::git_info_trait::GitInfo;
 
 #[derive(Debug, GitInfoDerive)]

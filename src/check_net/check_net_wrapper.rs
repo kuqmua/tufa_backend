@@ -11,7 +11,7 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
 #[allow(clippy::enum_variant_names)]
