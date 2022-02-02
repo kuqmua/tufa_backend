@@ -17,8 +17,8 @@ use crate::{
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -32,16 +32,16 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 impl ProviderKind {
@@ -51,10 +51,23 @@ impl ProviderKind {
         pk: ProviderKind,
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
         match ClientOptions::parse(mongo_get_db_url()).await {
-            Err(e) => {
-                return Err(MongoGetProviderLinkPartsError {
-                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
-                        ClientOptionsParseError {
+            Err(e) => Err(MongoGetProviderLinkPartsError {
+                source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
+                    ClientOptionsParseError {
+                        source: e,
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                )),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
+            Ok(client_options) => match Client::with_options(client_options) {
+                Err(e) => Err(MongoGetProviderLinkPartsError {
+                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
+                        ClientWithOptionsError {
                             source: e,
                             file: file!(),
                             line: line!(),
@@ -64,24 +77,7 @@ impl ProviderKind {
                     file: file!(),
                     line: line!(),
                     column: column!(),
-                })
-            }
-            Ok(client_options) => match Client::with_options(client_options) {
-                Err(e) => {
-                    return Err(MongoGetProviderLinkPartsError {
-                        source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
-                            ClientWithOptionsError {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        )),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    });
-                }
+                }),
                 Ok(client) => {
                     match mongo_get_documents_as_string_vector(
                         client
@@ -92,16 +88,16 @@ impl ProviderKind {
                     )
                     .await
                     {
-                        Err(e) => {
-                            return Err(MongoGetProviderLinkPartsError {
-                                    source: Box::new(
-                                        MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(e),
-                                    ),
-                                                file: file!(),
-            line: line!(),
-            column: column!(),
-                                });
-                        }
+                        Err(e) => Err(MongoGetProviderLinkPartsError {
+                            source: Box::new(
+                                MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(
+                                    e,
+                                ),
+                            ),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
                         Ok(vec_of_strings) => Ok(vec_of_strings),
                     }
                 }

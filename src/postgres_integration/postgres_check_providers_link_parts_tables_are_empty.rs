@@ -11,8 +11,8 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]

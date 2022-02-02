@@ -6,8 +6,8 @@ use mongodb::{options::ClientOptions, Client};
 pub struct MongoDropCollectionError {
     pub source: Box<MongoDropCollectionErrorEnum>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
@@ -21,24 +21,24 @@ pub enum MongoDropCollectionErrorEnum {
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
 pub struct DatabaseDropError {
     pub source: mongodb::error::Error,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -48,10 +48,23 @@ pub async fn mongo_drop_collection(
     db_collection_name: &str,
 ) -> Result<(), MongoDropCollectionError> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => {
-            return Err(MongoDropCollectionError {
-                source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError {
+        Err(e) => Err(MongoDropCollectionError {
+            source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
+                ClientOptionsParseError {
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+            )),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        }),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(MongoDropCollectionError {
+                source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
+                    ClientWithOptionsError {
                         source: e,
                         file: file!(),
                         line: line!(),
@@ -61,24 +74,7 @@ pub async fn mongo_drop_collection(
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            })
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(MongoDropCollectionError {
-                    source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError {
-                            source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    )),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                })
-            }
+            }),
             Ok(client) => {
                 let collection: Collection<Document> =
                     client.database(db_name).collection(db_collection_name);

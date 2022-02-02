@@ -59,42 +59,36 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
     match ClientOptions::parse(mongo_get_db_url()).await {
-        Err(e) => {
-            return Err(MongoGetProvidersLinkPartsError {
-                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
+        Err(e) => Err(MongoGetProvidersLinkPartsError {
+            source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
+        }),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(MongoGetProvidersLinkPartsError {
+                source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
                     source: e,
                     file: file!(),
                     line: line!(),
                     column: column!(),
                 }),
-            })
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(MongoGetProvidersLinkPartsError {
-                    source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    }),
-                })
-            }
+            }),
             Ok(client) => {
                 let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
                 match db.list_collection_names(None).await {
-                    Err(e) => {
-                        return Err(MongoGetProvidersLinkPartsError {
-                            source: Box::new(
-                                MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
-                                    source: e,
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
-                            ),
-                        })
-                    }
+                    Err(e) => Err(MongoGetProvidersLinkPartsError {
+                        source: Box::new(
+                            MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        ),
+                    }),
                     Ok(vec_collection_names) => {
                         let no_collection_error_hashmap = ProviderKind::get_enabled_providers_vec()
                             .into_iter()

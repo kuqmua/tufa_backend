@@ -11,8 +11,8 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresCreateProvidersDbsError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 pub async fn postgres_create_providers_tables_if_not_exists(

@@ -12,8 +12,8 @@ pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLen
     pub source:
         Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
@@ -26,8 +26,8 @@ pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengt
 
 #[derive(Debug)]
 pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
-    table_rows_length: i64,
-    initialization_data_length: usize,
+    pub table_rows_length: i64,
+    pub initialization_data_length: usize,
 }
 
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(

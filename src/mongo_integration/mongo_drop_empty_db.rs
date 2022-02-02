@@ -45,40 +45,34 @@ pub async fn mongo_drop_empty_db(
     db_name: &str,
 ) -> Result<(), MongoDropEmptyDbError> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => {
-            return Err(MongoDropEmptyDbError {
-                source: Box::new(MongoDropEmptyDbErrorEnum::ClientOptionsParse {
+        Err(e) => Err(MongoDropEmptyDbError {
+            source: Box::new(MongoDropEmptyDbErrorEnum::ClientOptionsParse {
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
+        }),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(MongoDropEmptyDbError {
+                source: Box::new(MongoDropEmptyDbErrorEnum::ClientWithOptions {
                     source: e,
                     file: file!(),
                     line: line!(),
                     column: column!(),
                 }),
-            })
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(MongoDropEmptyDbError {
-                    source: Box::new(MongoDropEmptyDbErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    }),
-                })
-            }
+            }),
             Ok(client) => {
                 let db = client.database(db_name);
                 match db.list_collection_names(None).await {
-                    Err(e) => {
-                        return Err(MongoDropEmptyDbError {
-                            source: Box::new(MongoDropEmptyDbErrorEnum::ListCollectionNames {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            }),
-                        })
-                    }
+                    Err(e) => Err(MongoDropEmptyDbError {
+                        source: Box::new(MongoDropEmptyDbErrorEnum::ListCollectionNames {
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
+                    }),
                     Ok(collections_names_list) => {
                         if !collections_names_list.is_empty() {
                             return Err(MongoDropEmptyDbError {

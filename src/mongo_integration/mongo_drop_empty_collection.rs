@@ -58,10 +58,23 @@ pub async fn mongo_drop_empty_collection(
     db_collection_name: &str,
 ) -> Result<(), MongoDropEmptyCollectionError> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => {
-            return Err(MongoDropEmptyCollectionError {
-                source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError {
+        Err(e) => Err(MongoDropEmptyCollectionError {
+            source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse(
+                ClientOptionsParseError {
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+            )),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        }),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(MongoDropEmptyCollectionError {
+                source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
+                    ClientWithOptionsError {
                         source: e,
                         file: file!(),
                         line: line!(),
@@ -71,53 +84,34 @@ pub async fn mongo_drop_empty_collection(
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            })
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(MongoDropEmptyCollectionError {
-                    source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError {
-                            source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    )),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                })
-            }
+            }),
             Ok(client) => {
                 let collection: Collection<Document> =
                     client.database(db_name).collection(db_collection_name);
                 match collection.count_documents(None, None).await {
-                    Err(e) => {
-                        return Err(MongoDropEmptyCollectionError {
-                            source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
-                                CountDocumentsError {
-                                    source: e,
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
-                            )),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        })
-                    }
+                    Err(e) => Err(MongoDropEmptyCollectionError {
+                        source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments(
+                            CountDocumentsError {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        )),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    }),
                     Ok(documents_number) => {
                         if documents_number > 0 {
-                            return Err(MongoDropEmptyCollectionError {
+                            Err(MongoDropEmptyCollectionError {
                                 source: Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty(
                                     documents_number,
                                 )),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
-                            });
+                            })
                         } else {
                             if let Err(e) = collection.drop(None).await {
                                 return Err(MongoDropEmptyCollectionError {

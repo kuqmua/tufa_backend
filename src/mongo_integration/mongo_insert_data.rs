@@ -18,8 +18,8 @@ use crate::traits::git_info_trait::GitInfo;
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]

@@ -54,18 +54,16 @@ pub async fn mongo_get_documents_as_string_vector(
     option_aggregation: Option<Document>,
 ) -> Result<Vec<String>, MongoGetDocumentsAsStringVectorError> {
     match collection.aggregate(option_aggregation, None).await {
-        Err(e) => {
-            return Err(MongoGetDocumentsAsStringVectorError {
-                source: Box::new(
-                    MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
-            });
-        }
+        Err(e) => Err(MongoGetDocumentsAsStringVectorError {
+            source: Box::new(
+                MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+            ),
+        }),
         Ok(mut cursor) => {
             let mut vec_of_strings: Vec<String> = Vec::new();
             //dont know yet how to convert this expression into for explicit way

@@ -190,7 +190,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.items.len() {
                                             rss_page_struct.items.push(
@@ -313,7 +313,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.items.len() {
                                             rss_page_struct.items.push(
@@ -439,7 +439,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.entries.len() {
                                             // if count == 0 {
@@ -570,7 +570,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.items.len() {
                                             rss_page_struct.items.push(
@@ -694,7 +694,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.items.len() {
                                             rss_page_struct.items.push(
@@ -823,7 +823,7 @@ pub fn rss_parse_string_into_struct(
                                 Ok(rss_struct) => {
                                     let mut count = 0;
                                     let mut rss_page_struct: CommonRssPostStruct =
-                                        CommonRssPostStruct::new();
+                                        CommonRssPostStruct::default();
                                     loop {
                                         if count < rss_struct.items.len() {
                                             rss_page_struct.items.push(
@@ -966,8 +966,8 @@ pub fn rss_parse_string_into_struct(
             match rss_struct_from_str_result {
                 Ok(rss_struct) => {
                     let mut count = 0;
-                    let mut rss_page_struct: CommonRssPostStruct = CommonRssPostStruct::new(); //todo: add expected number of posts in with_capacity
-                                                                                               //todo: rewrite into functional way
+                    let mut rss_page_struct: CommonRssPostStruct = CommonRssPostStruct::default(); //todo: add expected number of posts in with_capacity
+                                                                                                   //todo: rewrite into functional way
                     loop {
                         if count < rss_struct.data.children.len() {
                             rss_page_struct

@@ -78,7 +78,7 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
     );
     match result {
         (Err(net_e), Err(postgres_e), Err(mongo_e)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgresAndMongo {
+            Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgresAndMongo {
                 net: *net_e,
                 postgres: postgres_e,
                 mongo: mongo_e,
@@ -88,7 +88,7 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
             }))
         }
         (Err(net_e), Err(postgres_e), Ok(_)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgres {
+            Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgres {
                 net: *net_e,
                 postgres: postgres_e,
                 file: file!(),
@@ -96,48 +96,40 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
                 column: column!(),
             }))
         }
-        (Err(net_e), Ok(_), Err(mongo_e)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::NetAndMongo {
-                net: *net_e,
-                mongo: mongo_e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            }));
-        }
+        (Err(net_e), Ok(_), Err(mongo_e)) => Err(Box::new(CheckNetWrapperErrorEnum::NetAndMongo {
+            net: *net_e,
+            mongo: mongo_e,
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        })),
         (Ok(_), Err(postgres_e), Err(mongo_e)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::PostgresAndMongo {
+            Err(Box::new(CheckNetWrapperErrorEnum::PostgresAndMongo {
                 postgres: postgres_e,
                 mongo: mongo_e,
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            }));
+            }))
         }
-        (Err(e), Ok(_), Ok(_)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::Net {
-                source: *e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            }));
-        }
-        (Ok(_), Err(e), Ok(_)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::Postgres {
-                source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            }));
-        }
-        (Ok(_), Ok(_), Err(e)) => {
-            return Err(Box::new(CheckNetWrapperErrorEnum::Mongo {
-                source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            }));
-        }
+        (Err(e), Ok(_), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Net {
+            source: *e,
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        })),
+        (Ok(_), Err(e), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Postgres {
+            source: e,
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        })),
+        (Ok(_), Ok(_), Err(e)) => Err(Box::new(CheckNetWrapperErrorEnum::Mongo {
+            source: e,
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        })),
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
     }
 }

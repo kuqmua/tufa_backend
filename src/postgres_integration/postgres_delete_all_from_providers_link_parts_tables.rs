@@ -11,8 +11,8 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
     pub file: &'static str,
-    line: u32,
-    column: u32,
+    pub line: u32,
+    pub column: u32,
 }
 
 pub async fn postgres_delete_all_from_providers_link_parts_tables(

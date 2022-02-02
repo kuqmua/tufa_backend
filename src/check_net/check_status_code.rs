@@ -5,7 +5,7 @@ use crate::traits::git_info_trait::GitInfo;
 
 #[derive(Debug, GitInfoDerive)]
 pub struct CheckStatusCodeError {
-    source: StatusCode,
+    pub source: StatusCode,
     pub file: &'static str,
     pub line: u32,
     pub column: u32,

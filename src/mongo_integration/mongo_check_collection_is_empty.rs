@@ -48,10 +48,23 @@ pub async fn mongo_check_collection_is_empty(
     db_collection_name: &str,
 ) -> Result<(), MongoCheckCollectionIsEmptyError> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => {
-            return Err(MongoCheckCollectionIsEmptyError {
-                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError {
+        Err(e) => Err(MongoCheckCollectionIsEmptyError {
+            source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(
+                ClientOptionsParseError {
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+            )),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        }),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(MongoCheckCollectionIsEmptyError {
+                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
+                    ClientWithOptionsError {
                         source: e,
                         file: file!(),
                         line: line!(),
@@ -61,24 +74,7 @@ pub async fn mongo_check_collection_is_empty(
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            })
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(MongoCheckCollectionIsEmptyError {
-                    source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError {
-                            source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    )),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                })
-            }
+            }),
             Ok(client) => {
                 match client
                     .database(db_name)
@@ -86,21 +82,19 @@ pub async fn mongo_check_collection_is_empty(
                     .count_documents(None, None)
                     .await
                 {
-                    Err(e) => {
-                        return Err(MongoCheckCollectionIsEmptyError {
-                            source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
-                                CountDocumentsError {
-                                    source: e,
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
-                            )),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        })
-                    }
+                    Err(e) => Err(MongoCheckCollectionIsEmptyError {
+                        source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(
+                            CountDocumentsError {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        )),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    }),
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             return Err(MongoCheckCollectionIsEmptyError {

@@ -49,52 +49,46 @@ pub async fn mongo_insert_docs_in_empty_collection(
     vec_of_values: Vec<String>,
 ) -> Result<(), Box<MongoInsertDocsInEmptyCollectionErrorEnum>> {
     match ClientOptions::parse(mongo_get_db_url()).await {
-        Err(e) => {
-            return Err(Box::new(
-                MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
+        Err(e) => Err(Box::new(
+            MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        )),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(Box::new(
+                MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions {
                     source: e,
                     file: file!(),
                     line: line!(),
                     column: column!(),
                 },
-            ));
-        }
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                return Err(Box::new(
-                    MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ));
-            }
+            )),
             Ok(client) => {
                 let collection = client
                     .database(db_name_handle)
                     .collection(&db_collection_handle);
                 match collection.count_documents(None, None).await {
-                    Err(e) => {
-                        return Err(Box::new(
-                            MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        ));
-                    }
+                    Err(e) => Err(Box::new(
+                        MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments {
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                    )),
                     Ok(documents_number) => {
                         if documents_number > 0 {
-                            return Err(Box::new(
+                            Err(Box::new(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty {
                                     source: documents_number,
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
                                 },
-                            ));
+                            ))
                         } else {
                             if let Err(e) = collection.insert_many(
                                 vec_of_values.iter()
