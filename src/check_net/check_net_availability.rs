@@ -2,7 +2,7 @@ use crate::check_net::check_link_status_code::check_link_status_code;
 use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
 
 use crate::check_net::check_status_code::check_status_code;
-use crate::check_net::check_status_code::StatusCodeError;
+use crate::check_net::check_status_code::CheckStatusCodeError;
 
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
@@ -14,7 +14,7 @@ pub enum CheckNetAvailabilityErrorEnum {
         line: String,
     },
     StatusCodeError {
-        source: StatusCodeError,
+        source: CheckStatusCodeError,
         line: String,
     },
 }

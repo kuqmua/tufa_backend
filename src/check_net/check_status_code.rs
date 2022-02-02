@@ -4,7 +4,7 @@ use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
 #[derive(Debug, GitInfoDerive)]
-pub struct StatusCodeError {
+pub struct CheckStatusCodeError {
     source: StatusCode,
     file: &'static str,
     line: u32,
@@ -12,9 +12,9 @@ pub struct StatusCodeError {
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-pub fn check_status_code(status_code: StatusCode) -> Result<(), Box<StatusCodeError>> {
+pub fn check_status_code(status_code: StatusCode) -> Result<(), Box<CheckStatusCodeError>> {
     if !StatusCode::is_success(&status_code) {
-        return Err(Box::new(StatusCodeError {
+        return Err(Box::new(CheckStatusCodeError {
             source: status_code,
             file: file!(),
             line: line!(),
