@@ -6,7 +6,9 @@ use crate::traits::git_info_trait::GitInfo;
 #[derive(Debug, GitInfoDerive)]
 pub struct StatusCodeError {
     source: StatusCode,
-    line: String,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -16,7 +18,9 @@ pub fn check_is_status_code_successfull(
     if !StatusCode::is_success(&status_code) {
         return Err(Box::new(StatusCodeError {
             source: status_code,
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+            file: file!(),
+            line: line!(),
+            column: column!(),
         }));
     }
     Ok(())
