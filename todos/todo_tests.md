@@ -54,3 +54,7 @@ is there some test implementation that checks all your rust project functions (w
 ### -------------------
 test or proc macro to name error function type like function but with CamelCase and ErrorStruct on the end
 <br/>
+
+### -------------------
+check all files names to not contain ":" symbol. its needed to correct parsing line
+<br/>
