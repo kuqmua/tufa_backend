@@ -75,8 +75,14 @@ impl ProviderKind {
         if !async_fetch_links_error_vec.is_empty() {
             //todo: maybe not all links must return Ok ?
             for (link, e) in &async_fetch_links_error_vec {
-                if let FetchLinkErrorEnum::StatusCode(status_code) = *e.source {
-                    handle_error_status_code(status_code, link);
+                if let FetchLinkErrorEnum::StatusCode {
+                    source,
+                    file: _,
+                    line: _,
+                    column: _,
+                } = *e.source
+                {
+                    handle_error_status_code(source, link);
                 }
             }
             return Err(Box::new(

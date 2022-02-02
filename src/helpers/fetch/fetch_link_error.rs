@@ -3,14 +3,26 @@ use std::fmt;
 #[derive(Debug, ImplDisplayDerive)]
 pub struct FetchLinkError {
     pub source: Box<FetchLinkErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
 
 #[derive(Debug)]
 pub enum FetchLinkErrorEnum {
-    ReqwestBlockingGet(reqwest::Error),
-    StatusCode(reqwest::StatusCode),
-    ResponseText(reqwest::Error),
+    ReqwestBlockingGet {
+        source: reqwest::Error,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    StatusCode {
+        source: reqwest::StatusCode,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    ResponseText {
+        source: reqwest::Error,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
 }
