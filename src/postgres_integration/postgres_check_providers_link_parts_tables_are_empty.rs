@@ -10,7 +10,9 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
@@ -56,7 +58,9 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
                     count_provider_links_tables_error_hashmap,
                 ),
             ),
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+            line: line!(),
+            column: column!(),
         });
     }
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
@@ -66,7 +70,9 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
                     provider_links_tables_not_empty_error_hashmap,
                 ),
             ),
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+            line: line!(),
+            column: column!(),
         });
     }
     Ok(())

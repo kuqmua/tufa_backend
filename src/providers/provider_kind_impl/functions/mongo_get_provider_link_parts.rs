@@ -16,7 +16,9 @@ use crate::{
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]
@@ -29,13 +31,17 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 impl ProviderKind {
@@ -50,10 +56,14 @@ impl ProviderKind {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
                         ClientOptionsParseError {
                             source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         },
                     )),
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 })
             }
             Ok(client_options) => match Client::with_options(client_options) {
@@ -62,10 +72,14 @@ impl ProviderKind {
                         source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
                             ClientWithOptionsError {
                                 source: e,
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                            file: file!(),
+            line: line!(),
+            column: column!(),
                             },
                         )),
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    file: file!(),
+            line: line!(),
+            column: column!(),
                     });
                 }
                 Ok(client) => {
@@ -83,7 +97,9 @@ impl ProviderKind {
                                     source: Box::new(
                                         MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(e),
                                     ),
-                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                                file: file!(),
+            line: line!(),
+            column: column!(),
                                 });
                         }
                         Ok(vec_of_strings) => Ok(vec_of_strings),

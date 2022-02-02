@@ -17,15 +17,21 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
         source: CheckLinkStatusCodeError,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     StatusCode {
         source: StatusCode,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     FetchAndParseProviderData {
         source: FetchAndParseProviderDataErrorEnum,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -37,19 +43,25 @@ pub async fn rss_part(
     match check_link_status_code(pk.check_link()).await {
         Err(e) => Err(Box::new(RssPartErrorEnum::CheckLinkStatusCodeError {
             source: e,
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+            line: line!(),
+            column: column!(),
         })),
         Ok(status_code) => {
             if !StatusCode::is_success(&status_code) {
                 return Err(Box::new(RssPartErrorEnum::StatusCode {
                     source: status_code,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 }));
             }
             match ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
                 Err(e) => Err(Box::new(RssPartErrorEnum::FetchAndParseProviderData {
                     source: *e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 })),
                 Ok(vec) => Ok(vec),
             }

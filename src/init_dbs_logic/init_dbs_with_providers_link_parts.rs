@@ -22,7 +22,9 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 #[derive(Debug)]
 pub struct InitDbsProvidersLinkPartsError {
     pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
-    line: String,
+    file: &'static str,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]
@@ -52,7 +54,9 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             source: Box::new(
                 InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap),
             ),
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+            file: file!(),
+            line: line!(),
+            column: column!(),
         }),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
@@ -77,13 +81,17 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(
                                 mongo_err,
                             )),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
                         });
                     }
                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty(errors_hashmap)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     InitMongoErrorEnum::InsertManyError(errors_hashmap) => {
@@ -93,7 +101,9 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                     errors_hashmap,
                                 ),
                             ),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
                         });
                     }
                 }
@@ -103,37 +113,49 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                     PostgresInitErrorEnum::EstablishConnection(e) => {
                        return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection(e)),
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         });
                     }
                 }

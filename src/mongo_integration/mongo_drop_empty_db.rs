@@ -9,23 +9,33 @@ pub struct MongoDropEmptyDbError {
 pub enum MongoDropEmptyDbErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     ListCollectionNames {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     CollectionNamesListIsEmpty {
         source: String,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     DatabaseDrop {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -39,7 +49,9 @@ pub async fn mongo_drop_empty_db(
             return Err(MongoDropEmptyDbError {
                 source: Box::new(MongoDropEmptyDbErrorEnum::ClientOptionsParse {
                     source: e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 }),
             })
         }
@@ -48,7 +60,9 @@ pub async fn mongo_drop_empty_db(
                 return Err(MongoDropEmptyDbError {
                     source: Box::new(MongoDropEmptyDbErrorEnum::ClientWithOptions {
                         source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    file: file!(),
+            line: line!(),
+            column: column!(),
                     }),
                 })
             }
@@ -59,7 +73,9 @@ pub async fn mongo_drop_empty_db(
                         return Err(MongoDropEmptyDbError {
                             source: Box::new(MongoDropEmptyDbErrorEnum::ListCollectionNames {
                                 source: e,
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                            file: file!(),
+            line: line!(),
+            column: column!(),
                             }),
                         })
                     }
@@ -69,7 +85,9 @@ pub async fn mongo_drop_empty_db(
                                 source: Box::new(
                                     MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty {
                                         source: db_name.to_string(),
-                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                                    file: file!(),
+            line: line!(),
+            column: column!(),
                                     },
                                 ),
                             });
@@ -78,7 +96,9 @@ pub async fn mongo_drop_empty_db(
                             return Err(MongoDropEmptyDbError {
                                 source: Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop {
                                     source: e,
-                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                                file: file!(),
+            line: line!(),
+            column: column!(),
                                 }),
                             });
                         }

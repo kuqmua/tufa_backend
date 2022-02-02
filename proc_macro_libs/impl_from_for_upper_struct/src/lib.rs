@@ -47,17 +47,19 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
             Some(index) => {
                 let struct_ident = syn::Ident::new(&&string_ident[..index], ident.span());
                 quote! {
-                    impl From<#inner_enum_type> for #struct_ident {
-                        fn from(error: #inner_enum_type) -> Self {
-                            #struct_ident {
-                                source: Box::new(#ident::#variant(
-                                    error,
-                                )),
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        impl From<#inner_enum_type> for #struct_ident {
+                            fn from(error: #inner_enum_type) -> Self {
+                                #struct_ident {
+                                    source: Box::new(#ident::#variant(
+                                        error,
+                                    )),
+                                                file: file!(),
+                line: line!(),
+                column: column!(),
+                                }
                             }
                         }
                     }
-                }
             }
         }
     });

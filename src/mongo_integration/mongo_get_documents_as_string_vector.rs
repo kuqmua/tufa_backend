@@ -10,19 +10,27 @@ pub struct MongoGetDocumentsAsStringVectorError {
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {
     CollectionAggregate {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     CursorTryNext {
         source: mongodb::error::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     WrongBsonType {
         source: mongodb::bson::Bson,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     NoKeyInDocument {
         source: String,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -32,7 +40,9 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
         MongoGetDocumentsAsStringVectorError {
             source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                 source: e,
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             }),
         }
     }
@@ -49,7 +59,9 @@ pub async fn mongo_get_documents_as_string_vector(
                 source: Box::new(
                     MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
                         source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     },
                 ),
             });
@@ -64,7 +76,9 @@ pub async fn mongo_get_documents_as_string_vector(
                             source: Box::new(
                                 MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
                                     source: db_collection_document_field_name_handle.to_string(),
-                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
                             ),
                         })
@@ -78,7 +92,9 @@ pub async fn mongo_get_documents_as_string_vector(
                                 source: Box::new(
                                     MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                         source: other_bson_type.clone(),
-                                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+                                        line: line!(),
+                                        column: column!(),
                                     },
                                 ),
                             });

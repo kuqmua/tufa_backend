@@ -3,7 +3,9 @@ use std::fmt;
 #[derive(Debug, ImplDisplayDerive)]
 pub struct FetchLinkError {
     pub source: Box<FetchLinkErrorEnum>,
-    pub line: String,
+    pub file: &'static str,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug)]

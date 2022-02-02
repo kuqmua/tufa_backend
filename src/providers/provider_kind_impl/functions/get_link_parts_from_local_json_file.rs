@@ -6,15 +6,21 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen {
         source: std::io::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     TokioIoAsyncReadExtReadToEnd {
         source: std::io::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
     SerdeJsonFromSlice {
         source: serde_json::Error,
-        line: String,
+                file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -27,7 +33,9 @@ impl ProviderKind {
             Err(e) => Err(Box::new(
                 GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
                     source: e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 },
             )),
             Ok(mut file) => {
@@ -37,7 +45,9 @@ impl ProviderKind {
                     return Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd {
                             source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         },
                     ));
                 }
@@ -45,7 +55,9 @@ impl ProviderKind {
                     Err(e) => Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice {
                             source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         },
                     )),
                     Ok(file_content_as_struct) => Ok(file_content_as_struct.data),

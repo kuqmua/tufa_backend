@@ -11,11 +11,15 @@ use crate::traits::git_info_trait::GitInfo;
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: CheckLinkStatusCodeError,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     StatusCodeError {
         source: CheckStatusCodeError,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -25,14 +29,18 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
         Err(e) => Err(Box::new(
             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
                 source: e,
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             },
         )),
         Ok(status_code) => {
             if let Err(e) = check_status_code(status_code) {
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
                     source: *e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 }));
             }
             Ok(())

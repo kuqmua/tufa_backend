@@ -19,7 +19,9 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)] //, ImplFromForUpperStruct
@@ -32,19 +34,25 @@ pub enum WriteStringIntoFileWithTokioErrorEnum {
 #[derive(Debug)]
 pub struct StdFsCreateDirAllStruct {
     source: std::io::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
 pub struct TokioFsFileOpenStruct {
     source: std::io::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
 pub struct FileWriteAllStruct {
     source: std::io::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 pub async fn write_string_into_file_with_tokio(
@@ -57,10 +65,14 @@ pub async fn write_string_into_file_with_tokio(
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll(
                     StdFsCreateDirAllStruct {
                         source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    file: file!(),
+            line: line!(),
+            column: column!(),
                     },
                 )),
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                            file: file!(),
+            line: line!(),
+            column: column!(),
             });
         }
     }
@@ -69,10 +81,14 @@ pub async fn write_string_into_file_with_tokio(
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen(
                 TokioFsFileOpenStruct {
                     source: e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 },
             )),
-            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+            line: line!(),
+            column: column!(),
         }),
         Ok(mut file) => {
             if let Err(e) = file.write_all(stringified_json.as_bytes()).await {
@@ -80,10 +96,14 @@ pub async fn write_string_into_file_with_tokio(
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll(
                         FileWriteAllStruct {
                             source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                        file: file!(),
+            line: line!(),
+            column: column!(),
                         },
                     )),
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+            line: line!(),
+            column: column!(),
                 });
             }
             Ok(())

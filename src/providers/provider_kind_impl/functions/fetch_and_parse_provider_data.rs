@@ -23,11 +23,15 @@ use crate::traits::git_info_trait::GitInfo;
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
         source: Vec<(String, FetchLinkError)>, //link, error
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     NoItems {
         source: Vec<(String, NoItemsError)>, //link, error
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -78,7 +82,9 @@ impl ProviderKind {
             return Err(Box::new(
                 FetchAndParseProviderDataErrorEnum::AsyncFetchLinks {
                     source: async_fetch_links_error_vec,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
             ));
         }
@@ -95,7 +101,9 @@ impl ProviderKind {
         if !no_items_error_vec.is_empty() {
             return Err(Box::new(FetchAndParseProviderDataErrorEnum::NoItems {
                 source: no_items_error_vec,
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             }));
         }
         Ok(success_vec)

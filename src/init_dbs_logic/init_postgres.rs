@@ -20,7 +20,9 @@ use crate::postgres_integration::postgres_check_providers_links_tables_length_ro
 #[derive(Debug)]
 pub struct PostgresInitError {
     pub source: Box<PostgresInitErrorEnum>,
-    line: String,
+    file: &'static str,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug, ImplFromForUpperStruct)]

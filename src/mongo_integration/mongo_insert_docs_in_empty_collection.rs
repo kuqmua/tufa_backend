@@ -12,23 +12,33 @@ use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 pub enum MongoInsertDocsInEmptyCollectionErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     CountDocuments {
         source: mongodb::error::Error,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     NotEmpty {
         source: u64,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
     CollectionInsertMany {
         source: mongodb::error::Error,
-        line: String,
+        file: &'static str,
+        line: u32,
+        column: u32,
     },
 }
 
@@ -43,7 +53,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
             return Err(Box::new(
                 MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
                     source: e,
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
             ));
         }
@@ -52,7 +64,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 return Err(Box::new(
                     MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions {
                         source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     },
                 ));
             }
@@ -65,7 +79,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                         return Err(Box::new(
                             MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments {
                                 source: e,
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
                             },
                         ));
                     }
@@ -74,7 +90,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                             return Err(Box::new(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty {
                                     source: documents_number,
-                                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
                             ));
                         } else {
@@ -86,7 +104,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 return Err(
                                     Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany {
                                 source: e,
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                            file: file!(),
+            line: line!(),
+            column: column!(),
                             }),
                             );
                             }

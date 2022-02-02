@@ -5,7 +5,9 @@ use mongodb::{options::ClientOptions, Client};
 #[derive(Debug)]
 pub struct MongoDropCollectionError {
     pub source: Box<MongoDropCollectionErrorEnum>,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
@@ -18,19 +20,25 @@ pub enum MongoDropCollectionErrorEnum {
 #[derive(Debug)]
 pub struct ClientOptionsParseError {
     pub source: mongodb::error::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
 pub struct ClientWithOptionsError {
     pub source: mongodb::error::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[derive(Debug)]
 pub struct DatabaseDropError {
     pub source: mongodb::error::Error,
-    line: String,
+            file: &'static str,
+        line: u32,
+        column: u32,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -45,10 +53,14 @@ pub async fn mongo_drop_collection(
                 source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse(
                     ClientOptionsParseError {
                         source: e,
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     },
                 )),
-                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                file: file!(),
+                line: line!(),
+                column: column!(),
             })
         }
         Ok(client_options) => match Client::with_options(client_options) {
@@ -57,10 +69,14 @@ pub async fn mongo_drop_collection(
                     source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions(
                         ClientWithOptionsError {
                             source: e,
-                            line: format!("{}:{}:{}", file!(), line!(), column!()),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
                         },
                     )),
-                    line: format!("{}:{}:{}", file!(), line!(), column!()),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 })
             }
             Ok(client) => {
@@ -71,10 +87,14 @@ pub async fn mongo_drop_collection(
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop(
                             DatabaseDropError {
                                 source: e,
-                                line: format!("{}:{}:{}", file!(), line!(), column!()),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
                             },
                         )),
-                        line: format!("{}:{}:{}", file!(), line!(), column!()),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
                     });
                 }
                 Ok(())
