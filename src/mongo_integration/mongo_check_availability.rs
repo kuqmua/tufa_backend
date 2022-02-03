@@ -15,7 +15,7 @@ pub enum MongoCheckAvailabilityErrorEnum {
         line: u32,
         column: u32,
     },
-        ClientWithOptions {
+    ClientWithOptions {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
@@ -34,22 +34,20 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(MongoCheckAvailabilityError {
             source: Box::new(MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
-                    source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            ),
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoCheckAvailabilityError {
                 source: Box::new(MongoCheckAvailabilityErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             }),
             Ok(client) => {
                 if let Err(e) = client
@@ -59,12 +57,11 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
                 {
                     return Err(MongoCheckAvailabilityError {
                         source: Box::new(MongoCheckAvailabilityErrorEnum::ListCollectionNames {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        ),
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
                     });
                 }
                 Ok(())

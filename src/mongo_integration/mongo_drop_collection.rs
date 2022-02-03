@@ -9,7 +9,7 @@ pub struct MongoDropCollectionError {
 
 #[derive(Debug)]
 pub enum MongoDropCollectionErrorEnum {
-        ClientOptionsParse {
+    ClientOptionsParse {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
@@ -26,7 +26,7 @@ pub enum MongoDropCollectionErrorEnum {
         file: &'static str,
         line: u32,
         column: u32,
-    }
+    },
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -38,22 +38,20 @@ pub async fn mongo_drop_collection(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(MongoDropCollectionError {
             source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse {
-                    source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            ),
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoDropCollectionError {
                 source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-            ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             }),
             Ok(client) => {
                 let collection: Collection<Document> =
@@ -61,12 +59,11 @@ pub async fn mongo_drop_collection(
                 if let Err(e) = collection.drop(None).await {
                     return Err(MongoDropCollectionError {
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        ),
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
                     });
                 }
                 Ok(())

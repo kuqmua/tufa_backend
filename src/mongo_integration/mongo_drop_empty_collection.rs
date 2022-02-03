@@ -38,7 +38,7 @@ pub enum MongoDropEmptyCollectionErrorEnum {
         file: &'static str,
         line: u32,
         column: u32,
-    }
+    },
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -50,22 +50,20 @@ pub async fn mongo_drop_empty_collection(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(MongoDropEmptyCollectionError {
             source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
-                    source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            ),
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoDropEmptyCollectionError {
                 source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             }),
             Ok(client) => {
                 let collection: Collection<Document> =
@@ -73,12 +71,11 @@ pub async fn mongo_drop_empty_collection(
                 match collection.count_documents(None, None).await {
                     Err(e) => Err(MongoDropEmptyCollectionError {
                         source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        ),
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
                     }),
                     Ok(documents_number) => {
                         if documents_number > 0 {
@@ -95,11 +92,11 @@ pub async fn mongo_drop_empty_collection(
                                 return Err(MongoDropEmptyCollectionError {
                                     source: Box::new(
                                         MongoDropEmptyCollectionErrorEnum::DatabaseDrop {
-                                                source: e,
-                                                file: file!(),
-                                                line: line!(),
-                                                column: column!(),
-                                            },
+                                            source: e,
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     ),
                                 });
                             }

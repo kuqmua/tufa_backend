@@ -20,13 +20,13 @@ pub struct MongoGetProviderLinkPartsError {
 
 #[derive(Debug)]
 pub enum MongoGetProviderLinkPartsErrorEnum {
-        ClientOptionsParse {
+    ClientOptionsParse {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
         column: u32,
     },
-        ClientWithOptions {
+    ClientWithOptions {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
@@ -49,22 +49,20 @@ impl ProviderKind {
         match ClientOptions::parse(mongo_get_db_url()).await {
             Err(e) => Err(MongoGetProviderLinkPartsError {
                 source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             }),
             Ok(client_options) => match Client::with_options(client_options) {
                 Err(e) => Err(MongoGetProviderLinkPartsError {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions {
-                            source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    ),
+                        source: e,
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    }),
                 }),
                 Ok(client) => {
                     match mongo_get_documents_as_string_vector(
@@ -83,10 +81,7 @@ impl ProviderKind {
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
-                            
-                        })
-
-                        }),
+                        })}),
                         Ok(vec_of_strings) => Ok(vec_of_strings),
                     }
                 }

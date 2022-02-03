@@ -8,7 +8,7 @@ pub struct MongoCheckCollectionIsEmptyError {
 
 #[derive(Debug)]
 pub enum MongoCheckCollectionIsEmptyErrorEnum {
-        ClientOptionsParse {
+    ClientOptionsParse {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
@@ -27,7 +27,7 @@ pub enum MongoCheckCollectionIsEmptyErrorEnum {
         column: u32,
     },
     NotEmpty {
-        source:  u64, 
+        source: u64,
         file: &'static str,
         line: u32,
         column: u32,
@@ -43,22 +43,20 @@ pub async fn mongo_check_collection_is_empty(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(MongoCheckCollectionIsEmptyError {
             source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse {
-                    source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            ),
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoCheckCollectionIsEmptyError {
                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             }),
             Ok(client) => {
                 match client
@@ -69,17 +67,16 @@ pub async fn mongo_check_collection_is_empty(
                 {
                     Err(e) => Err(MongoCheckCollectionIsEmptyError {
                         source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments {
-                                source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        ),
+                            source: e,
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        }),
                     }),
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             return Err(MongoCheckCollectionIsEmptyError {
-                                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty{
+                                source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty {
                                     source: documents_number,
                                     file: file!(),
                                     line: line!(),
