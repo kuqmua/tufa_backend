@@ -85,7 +85,7 @@ pub fn entry() {
                 if let Err(e) = runtime.block_on(init_dbs()) {
                     match *e.source {
                         //its only one variant for now. later going to add more
-                        InitDbsErrorEnum::InitDbsProvidersLinkParts(e) => match *e.source {
+                        InitDbsErrorEnum::InitDbsProvidersLinkParts { source, file, line, column } => match *source.source {
                             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
