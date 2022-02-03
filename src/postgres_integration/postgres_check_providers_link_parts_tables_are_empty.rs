@@ -10,15 +10,22 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 #[derive(Debug)]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
 
 #[derive(Debug)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
-    SelectCount(HashMap<ProviderKind, sqlx::Error>),
-    NotEmpty(HashMap<ProviderKind, i64>),
+    SelectCount {
+        source: HashMap<ProviderKind, sqlx::Error>,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    NotEmpty {
+        source: HashMap<ProviderKind, i64>,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    }
 }
 
 pub async fn postgres_check_providers_link_parts_tables_are_empty(
@@ -54,25 +61,25 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(PostgresCheckProvidersLinkPartsTablesEmptyError {
             source: Box::new(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(
-                    count_provider_links_tables_error_hashmap,
-                ),
+                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount {
+                    source: count_provider_links_tables_error_hashmap,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             ),
-            file: file!(),
-            line: line!(),
-            column: column!(),
         });
     }
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
         return Err(PostgresCheckProvidersLinkPartsTablesEmptyError {
             source: Box::new(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(
-                    provider_links_tables_not_empty_error_hashmap,
-                ),
+                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty {
+                    source: provider_links_tables_not_empty_error_hashmap,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             ),
-            file: file!(),
-            line: line!(),
-            column: column!(),
         });
     }
     Ok(())
