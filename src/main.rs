@@ -76,6 +76,7 @@ pub mod helpers {
     pub mod lazy_static_git_info;
     pub mod resource;
     pub mod write_json_into_file;
+    pub mod write_string_into_file_with_tokio;
     pub mod write_string_into_file;
     pub mod fetch {
         pub mod async_fetch_link;
