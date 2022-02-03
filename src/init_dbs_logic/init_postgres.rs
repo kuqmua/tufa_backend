@@ -28,19 +28,19 @@ pub enum PostgresInitErrorEnum {
         source: sqlx::Error,
         file: &'static str,
         line: u32,
-        column: u32, 
+        column: u32,
     },
     CreateTableQueries {
         source: PostgresCreateProvidersDbsError,
         file: &'static str,
         line: u32,
-        column: u32, 
+        column: u32,
     },
     CheckProviderLinksTablesAreEmpty {
         source: PostgresCheckProvidersLinkPartsTablesEmptyError,
         file: &'static str,
         line: u32,
-        column: u32, 
+        column: u32,
     },
     DeleteAllFromProvidersTables {
         source: PostgresDeleteAllFromProvidersTablesError,
@@ -49,16 +49,16 @@ pub enum PostgresInitErrorEnum {
         column: u32,
     },
     CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
-        source:  PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
+        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
         file: &'static str,
         line: u32,
-        column: u32, 
+        column: u32,
     },
     InsertLinkPartsIntoProvidersTables {
         source: PostgresInsertLinkPartsIntoProvidersTablesError,
         file: &'static str,
         line: u32,
-        column: u32, 
+        column: u32,
     },
 }
 
@@ -67,50 +67,63 @@ pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), PostgresInitError> {
     match PgPoolOptions::new()
-    .max_connections(providers_json_local_data_hashmap.len() as u32)
-    .connect_timeout(Duration::from_millis(10000)) //todo add timeout constant or env var
-    .connect(&postgres_get_db_url())
-    .await {
-        Err(e) => Err(PostgresInitError{
-            source: Box::new(PostgresInitErrorEnum::EstablishConnection{
+        .max_connections(providers_json_local_data_hashmap.len() as u32)
+        .connect_timeout(Duration::from_millis(10000)) //todo add timeout constant or env var
+        .connect(&postgres_get_db_url())
+        .await
+    {
+        Err(e) => Err(PostgresInitError {
+            source: Box::new(PostgresInitErrorEnum::EstablishConnection {
                 source: e,
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            })
+            }),
         }),
         Ok(pool) => {
-            if let Err(e) = postgres_create_providers_tables_if_not_exists(&providers_json_local_data_hashmap, &pool)
-            .await {
-                return Err(PostgresInitError{
-                    source: Box::new(PostgresInitErrorEnum::CreateTableQueries{
+            if let Err(e) = postgres_create_providers_tables_if_not_exists(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(PostgresInitError {
+                    source: Box::new(PostgresInitErrorEnum::CreateTableQueries {
                         source: e,
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    })
+                    }),
                 });
             }
-            if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(&providers_json_local_data_hashmap, &pool)
-            .await {
-                return Err(PostgresInitError{
-                    source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty{
+            if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(PostgresInitError {
+                    source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
                         source: e,
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    })
+                    }),
                 });
             }
-            if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(&providers_json_local_data_hashmap, &pool)
-            .await {
-                return Err(PostgresInitError{
-                    source: Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables{
+            if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(PostgresInitError {
+                    source: Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables {
                         source: e,
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    })
+                    }),
                 });
             }
             // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
@@ -127,17 +140,22 @@ pub async fn init_postgres(
             //         })
             //     });
             // }
-            if let Err(e) = postgres_insert_link_parts_into_providers_tables(&providers_json_local_data_hashmap, &pool).await {
-                return Err(PostgresInitError{
-                    source: Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables{
+            if let Err(e) = postgres_insert_link_parts_into_providers_tables(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(PostgresInitError {
+                    source: Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
                         source: e,
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    })
+                    }),
                 });
             }
-        Ok(())
-        },
+            Ok(())
+        }
     }
 }

@@ -19,7 +19,7 @@ pub enum InitDbsErrorEnum {
 pub async fn init_dbs() -> Result<(), InitDbsError> {
     if let Err(e) = init_dbs_with_providers_link_parts().await {
         return Err(InitDbsError {
-            source: Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts{
+            source: Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts {
                 source: e,
                 file: file!(),
                 line: line!(),

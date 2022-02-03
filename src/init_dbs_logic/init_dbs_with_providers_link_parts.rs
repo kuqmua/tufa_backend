@@ -128,27 +128,46 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             );
             if let Some(Err(err)) = mongo_insert_data_option_result {
                 match *err.source {
-                    InitMongoErrorEnum::ClientOptionsParse { source, file, line, column } => {
+                    InitMongoErrorEnum::ClientOptionsParse {
+                        source,
+                        file,
+                        line,
+                        column,
+                    } => {
                         return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
-                                source,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            }),
+                            source: Box::new(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
+                                    source,
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                            ),
                         });
                     }
-                    InitMongoErrorEnum::ClientWithOptions { source, file, line, column } => {
+                    InitMongoErrorEnum::ClientWithOptions {
+                        source,
+                        file,
+                        line,
+                        column,
+                    } => {
                         return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
-                                source,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            }),
+                            source: Box::new(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
+                                    source,
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                            ),
                         });
                     }
-                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty { source, file, line, column } => {
+                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
+                        source,
+                        file,
+                        line,
+                        column,
+                    } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
                                 source,
@@ -158,7 +177,12 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             }),
                         });
                     }
-                    InitMongoErrorEnum::InsertManyError { source, file, line, column } => {
+                    InitMongoErrorEnum::InsertManyError {
+                        source,
+                        file,
+                        line,
+                        column,
+                    } => {
                         return Err(InitDbsProvidersLinkPartsError {
                             source: Box::new(
                                 InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {

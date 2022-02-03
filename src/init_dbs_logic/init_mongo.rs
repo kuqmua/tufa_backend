@@ -94,12 +94,16 @@ pub async fn init_mongo(
                     .await
                     .into_iter()
                     .filter_map(|(pk, result)| match result {
-                        Err(e) => Some((pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e))),
+                        Err(e) => {
+                            Some((pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e)))
+                        }
                         Ok(documents_number) => {
                             if documents_number > 0 {
                                 return Some((
                                     pk,
-                                    CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(documents_number),
+                                    CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(
+                                        documents_number,
+                                    ),
                                 ));
                             }
                             None
@@ -108,12 +112,14 @@ pub async fn init_mongo(
                     .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
                 if !error_vec_count_documents.is_empty() {
                     return Err(InitMongoError {
-                        source: Box::new(InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty{
-                            source: error_vec_count_documents,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                    }),
+                        source: Box::new(
+                            InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
+                                source: error_vec_count_documents,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        ),
                     });
                 }
                 drop(error_vec_count_documents);
@@ -132,7 +138,7 @@ pub async fn init_mongo(
                 if !error_vec_insert_many.is_empty() {
                     return Err(InitMongoError {
                         source: Box::new(InitMongoErrorEnum::InsertManyError {
-                            source: error_vec_insert_many, 
+                            source: error_vec_insert_many,
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -144,5 +150,4 @@ pub async fn init_mongo(
         },
     }
     //
-
 }
