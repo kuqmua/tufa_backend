@@ -174,60 +174,60 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
-                    PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
+                    PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
+                    PostgresInitErrorEnum::DeleteAllFromProvidersTables { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
+                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    PostgresInitErrorEnum::CreateTableQueries(e) => {
+                    PostgresInitErrorEnum::CreateTableQueries { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => {
+                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    PostgresInitErrorEnum::EstablishConnection(e) => {
+                    PostgresInitErrorEnum::EstablishConnection { source, file, line, column } => {
                        return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection {
-                                source: e,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
