@@ -86,94 +86,94 @@ pub fn entry() {
                     match *e.source {
                         //its only one variant for now. later going to add more
                         InitDbsErrorEnum::InitDbsProvidersLinkParts(e) => match *e.source {
-                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClient(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClient { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection(e) => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     file!().to_string(),
                                     line!().to_string(),
-                                    format!("{:#?}", e),
+                                    format!("{:#?}", source),
                                 );
                             },
                         },

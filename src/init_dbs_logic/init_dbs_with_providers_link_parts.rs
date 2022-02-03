@@ -22,29 +22,77 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 #[derive(Debug)]
 pub struct InitDbsProvidersLinkPartsError {
     pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
+
 
 #[derive(Debug)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
-    GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
-    MongoClient(mongodb::error::Error),
-    MongoCollectionCountDocumentsOrIsNotEmpty(
+    GetLocalProvidersLinkParts {
+        source: GetLocalProvidersLinkPartsError,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    MongoClient{
+        source: mongodb::error::Error,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    MongoCollectionCountDocumentsOrIsNotEmpty{
+        source: 
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-    ),
-    MongoInsertManyError(HashMap<ProviderKind, mongodb::error::Error>),
-    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(
+    
+file: &'static str,
+line: u32,
+column: u32,
+},
+    MongoInsertManyError{
+        source: HashMap<ProviderKind, mongodb::error::Error>,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength{
+        source: 
         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
-    ),
-    PostgresDeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
-    PostgresCheckProvidersLinkPartsTablesEmptyError(
+    
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresDeleteAllFromProvidersTables{
+        source: PostgresDeleteAllFromProvidersTablesError,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresCheckProvidersLinkPartsTablesEmptyError{
+        source: 
         PostgresCheckProvidersLinkPartsTablesEmptyError,
-    ),
-    PostgresCreateTableQueries(PostgresCreateProvidersDbsError),
-    PostgresInsertLinkPartsIntoProvidersTables(PostgresInsertLinkPartsIntoProvidersTablesError),
-    PostgresEstablishConnection(sqlx::Error),
+    
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresCreateTableQueries{
+        source: PostgresCreateProvidersDbsError,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresInsertLinkPartsIntoProvidersTables{
+        source: PostgresInsertLinkPartsIntoProvidersTablesError,
+file: &'static str,
+line: u32,
+column: u32,
+},
+    PostgresEstablishConnection{
+        source: sqlx::Error,
+file: &'static str,
+line: u32,
+column: u32,
+},
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -52,11 +100,13 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
     match get_local_providers_link_parts().await {
         Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError {
             source: Box::new(
-                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(errors_hashmap),
+                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
+                    source: errors_hashmap,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             ),
-            file: file!(),
-            line: line!(),
-            column: column!(),
         }),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
@@ -78,32 +128,35 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                 match *err.source {
                     InitMongoErrorEnum::Client(mongo_err) => {
                         return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient(
-                                mongo_err,
-                            )),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient {
+                                source: mongo_err,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty(errors_hashmap)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
+                                source: errors_hashmap,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     InitMongoErrorEnum::InsertManyError(errors_hashmap) => {
                         return Err(InitDbsProvidersLinkPartsError {
                             source: Box::new(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError(
-                                    errors_hashmap,
-                                ),
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
+                                    source: errors_hashmap,
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             ),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+
                         });
                     }
                 }
@@ -112,50 +165,62 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                 match *err.source {
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
+                                source: e, 
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     PostgresInitErrorEnum::CreateTableQueries(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                     PostgresInitErrorEnum::EstablishConnection(e) => {
                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection(e)),
-                                        file: file!(),
-            line: line!(),
-            column: column!(),
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection {
+                                source: e,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
                         });
                     }
                 }
