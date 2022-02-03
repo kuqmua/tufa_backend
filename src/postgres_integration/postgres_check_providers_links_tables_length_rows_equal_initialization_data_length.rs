@@ -11,17 +11,22 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
     pub source:
         Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
 
 #[derive(Debug)]
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum {
-    SelectCount(HashMap<ProviderKind, sqlx::Error>),
-    ProviderLinksTablesRowsLengthNotEqual(
-        HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
-    ),
+    SelectCount {
+        source: HashMap<ProviderKind, sqlx::Error>,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    ProviderLinksTablesRowsLengthNotEqual {
+        source: HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
 }
 
 #[derive(Debug)]
@@ -80,25 +85,25 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
             source: Box::new(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(
-                    count_provider_links_tables_error_hashmap,
-                ),
+                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount {
+                    source: count_provider_links_tables_error_hashmap,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             ),
-                        file: file!(),
-            line: line!(),
-            column: column!(),
         });
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
         return Err(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
             source: Box::new(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(
-                    provider_links_tables_rows_length_not_equal_error_hashmap,
-                ),
+                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual {
+                    source: provider_links_tables_rows_length_not_equal_error_hashmap,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             ),
-                        file: file!(),
-            line: line!(),
-            column: column!(),
         });
     }
     Ok(())
