@@ -16,32 +16,28 @@ use crate::{
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
 
-#[derive(Debug, ImplFromForUpperStruct)]
+#[derive(Debug)]
 pub enum MongoGetProviderLinkPartsErrorEnum {
-    ClientOptionsParse(ClientOptionsParseError),
-    ClientWithOptions(ClientWithOptionsError),
-    MongoGetDocumentsAsStringVector(MongoGetDocumentsAsStringVectorError),
-}
-
-#[derive(Debug)]
-pub struct ClientOptionsParseError {
-    pub source: mongodb::error::Error,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
-}
-
-#[derive(Debug)]
-pub struct ClientWithOptionsError {
-    pub source: mongodb::error::Error,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+        ClientOptionsParse {
+        source: mongodb::error::Error,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+        ClientWithOptions {
+        source: mongodb::error::Error,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    MongoGetDocumentsAsStringVector {
+        source: MongoGetDocumentsAsStringVectorError,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
 }
 
 impl ProviderKind {
@@ -52,31 +48,23 @@ impl ProviderKind {
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
         match ClientOptions::parse(mongo_get_db_url()).await {
             Err(e) => Err(MongoGetProviderLinkPartsError {
-                source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse(
-                    ClientOptionsParseError {
+                source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
                         source: e,
                         file: file!(),
                         line: line!(),
                         column: column!(),
                     },
-                )),
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                ),
             }),
             Ok(client_options) => match Client::with_options(client_options) {
                 Err(e) => Err(MongoGetProviderLinkPartsError {
-                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions(
-                        ClientWithOptionsError {
+                    source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions {
                             source: e,
                             file: file!(),
                             line: line!(),
                             column: column!(),
                         },
-                    )),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    ),
                 }),
                 Ok(client) => {
                     match mongo_get_documents_as_string_vector(
@@ -90,13 +78,14 @@ impl ProviderKind {
                     {
                         Err(e) => Err(MongoGetProviderLinkPartsError {
                             source: Box::new(
-                                MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector(
-                                    e,
-                                ),
-                            ),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                                MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector {
+                                    source: e,
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                            
+                        })
+
                         }),
                         Ok(vec_of_strings) => Ok(vec_of_strings),
                     }
