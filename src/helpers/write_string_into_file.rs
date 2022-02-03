@@ -19,9 +19,6 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
 }
 
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)] //, ImplFromForUpperStruct
@@ -70,9 +67,6 @@ pub async fn write_string_into_file_with_tokio(
                         column: column!(),
                     },
                 )),
-                file: file!(),
-                line: line!(),
-                column: column!(),
             });
         }
     }
@@ -86,9 +80,6 @@ pub async fn write_string_into_file_with_tokio(
                     column: column!(),
                 },
             )),
-            file: file!(),
-            line: line!(),
-            column: column!(),
         }),
         Ok(mut file) => {
             if let Err(e) = file.write_all(stringified_json.as_bytes()).await {
@@ -101,9 +92,6 @@ pub async fn write_string_into_file_with_tokio(
                             column: column!(),
                         },
                     )),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
                 });
             }
             Ok(())
