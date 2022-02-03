@@ -2,8 +2,8 @@ use std::path::Path;
 
 use serde_json::Value;
 
-use crate::helpers::write_string_into_file::write_string_into_file_with_tokio;
-use crate::helpers::write_string_into_file::WriteStringIntoFileWithTokioError;
+use crate::helpers::write_string_into_file_with_tokio::write_string_into_file_with_tokio;
+use crate::helpers::write_string_into_file_with_tokio::WriteStringIntoFileWithTokioError;
 
 #[derive(thiserror::Error, Debug)]
 pub enum WriteJsonIntoFileError {
