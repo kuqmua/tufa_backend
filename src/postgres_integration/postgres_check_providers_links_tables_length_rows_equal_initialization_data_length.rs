@@ -22,7 +22,8 @@ pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengt
         column: u32,
     },
     ProviderLinksTablesRowsLengthNotEqual {
-        source: HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
+        source:
+            HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
         file: &'static str,
         line: u32,
         column: u32,

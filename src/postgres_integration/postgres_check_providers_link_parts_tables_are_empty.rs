@@ -25,7 +25,7 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
         file: &'static str,
         line: u32,
         column: u32,
-    }
+    },
 }
 
 pub async fn postgres_check_providers_link_parts_tables_are_empty(

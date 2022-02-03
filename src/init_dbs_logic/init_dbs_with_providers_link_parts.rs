@@ -24,75 +24,71 @@ pub struct InitDbsProvidersLinkPartsError {
     pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
 }
 
-
 #[derive(Debug)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts {
         source: GetLocalProvidersLinkPartsError,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    MongoClient{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    MongoClient {
         source: mongodb::error::Error,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    MongoCollectionCountDocumentsOrIsNotEmpty{
-        source: 
-        HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-    
-file: &'static str,
-line: u32,
-column: u32,
-},
-    MongoInsertManyError{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    MongoCollectionCountDocumentsOrIsNotEmpty {
+        source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
+
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    MongoInsertManyError {
         source: HashMap<ProviderKind, mongodb::error::Error>,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength{
-        source: 
-        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
-    
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresDeleteAllFromProvidersTables{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
+        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
+
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresDeleteAllFromProvidersTables {
         source: PostgresDeleteAllFromProvidersTablesError,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresCheckProvidersLinkPartsTablesEmptyError{
-        source: 
-        PostgresCheckProvidersLinkPartsTablesEmptyError,
-    
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresCreateTableQueries{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresCheckProvidersLinkPartsTablesEmptyError {
+        source: PostgresCheckProvidersLinkPartsTablesEmptyError,
+
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresCreateTableQueries {
         source: PostgresCreateProvidersDbsError,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresInsertLinkPartsIntoProvidersTables{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresInsertLinkPartsIntoProvidersTables {
         source: PostgresInsertLinkPartsIntoProvidersTablesError,
-file: &'static str,
-line: u32,
-column: u32,
-},
-    PostgresEstablishConnection{
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    PostgresEstablishConnection {
         source: sqlx::Error,
-file: &'static str,
-line: u32,
-column: u32,
-},
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -156,7 +152,6 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                     column: column!(),
                                 },
                             ),
-
                         });
                     }
                 }
@@ -166,7 +161,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
-                                source: e, 
+                                source: e,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
