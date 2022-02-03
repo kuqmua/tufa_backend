@@ -95,7 +95,16 @@ pub fn entry() {
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClient { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, file, line, column } => {
+                                print_colorful_message(
+                                    None,
+                                    PrintType::Error,
+                                    file!().to_string(),
+                                    line!().to_string(),
+                                    format!("{:#?}", source),
+                                );
+                            },
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, file, line, column } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,

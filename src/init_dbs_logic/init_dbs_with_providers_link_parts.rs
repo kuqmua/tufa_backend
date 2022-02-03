@@ -32,7 +32,13 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
         line: u32,
         column: u32,
     },
-    MongoClient {
+    MongoClientOptionsParse {
+        source: mongodb::error::Error,
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+    MongoClientWithOptions {
         source: mongodb::error::Error,
         file: &'static str,
         line: u32,
@@ -122,31 +128,41 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
             );
             if let Some(Err(err)) = mongo_insert_data_option_result {
                 match *err.source {
-                    InitMongoErrorEnum::Client(mongo_err) => {
+                    InitMongoErrorEnum::ClientOptionsParse { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClient {
-                                source: mongo_err,
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(errors_hashmap) => {
+                    InitMongoErrorEnum::ClientWithOptions { source, file, line, column } => {
+                        return Err(InitDbsProvidersLinkPartsError {
+                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
+                                source,
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            }),
+                        });
+                    }
+                    InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError{
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
-                                source: errors_hashmap,
+                                source,
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
                             }),
                         });
                     }
-                    InitMongoErrorEnum::InsertManyError(errors_hashmap) => {
+                    InitMongoErrorEnum::InsertManyError { source, file, line, column } => {
                         return Err(InitDbsProvidersLinkPartsError {
                             source: Box::new(
                                 InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
-                                    source: errors_hashmap,
+                                    source,
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
