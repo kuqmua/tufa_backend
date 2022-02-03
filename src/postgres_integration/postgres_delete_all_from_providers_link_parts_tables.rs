@@ -19,11 +19,10 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     pool: &Pool<Postgres>,
 ) -> Result<(), PostgresDeleteAllFromProvidersTablesError> {
-    let delete_from_tables_tasks_vec = providers_json_local_data_hashmap.keys().map(|pk| async {
+    let delete_from_tables_error_hashmap = join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
         let query_string = format!("DELETE FROM {} ;", pk.get_postgres_table_name());
         (*pk, sqlx::query(&query_string).execute(pool).await)
-    });
-    let delete_from_tables_error_hashmap = join_all(delete_from_tables_tasks_vec)
+    }))
         .await
         .into_iter()
         .filter_map(|(pk, result)| {
