@@ -6,5 +6,6 @@ members = [
     "git_info",
     "impl_display",
     "impl_from_for_upper_struct",
+    "init_from_env",
     "provider_kind_from_config"
 ]

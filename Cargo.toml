@@ -38,6 +38,7 @@ env_var_typed = { path = "./proc_macro_libs/env_var_typed" }
 git_info = { path = "./proc_macro_libs/git_info" }
 impl_display = { path = "./proc_macro_libs/impl_display" }
 impl_from_for_upper_struct = { path = "./proc_macro_libs/impl_from_for_upper_struct" }
+init_from_env = { path = "./proc_macro_libs/init_from_env" }
 provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good

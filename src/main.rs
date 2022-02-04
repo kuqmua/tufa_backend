@@ -190,6 +190,8 @@ extern crate impl_display;
 #[macro_use]
 extern crate impl_from_for_upper_struct;
 #[macro_use]
+extern crate init_from_env;
+#[macro_use]
 extern crate provider_kind_from_config;
 
 extern crate dotenv;
