@@ -1,8 +1,5 @@
 use reqwest::StatusCode;
 
-use crate::check_net::check_link_status_code::check_link_status_code;
-use crate::check_net::check_link_status_code::CheckLinkStatusCodeError;
-
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -16,7 +13,7 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 #[derive(Debug, GitInfoDerive)]
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
-        source: CheckLinkStatusCodeError,
+        source: reqwest::Error,
         file: &'static str,
         line: u32,
         column: u32,
@@ -40,14 +37,15 @@ pub async fn rss_part(
     pk: ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> Result<Vec<CommonRssPostStruct>, Box<RssPartErrorEnum>> {
-    match check_link_status_code(pk.check_link()).await {
+    match reqwest::get(pk.check_link()).await {
         Err(e) => Err(Box::new(RssPartErrorEnum::CheckLinkStatusCodeError {
             source: e,
             file: file!(),
             line: line!(),
             column: column!(),
         })),
-        Ok(status_code) => {
+        Ok(res) => {
+            let status_code = res.status();
             if !StatusCode::is_success(&status_code) {
                 return Err(Box::new(RssPartErrorEnum::StatusCode {
                     source: status_code,
