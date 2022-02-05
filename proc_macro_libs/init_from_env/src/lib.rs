@@ -57,8 +57,14 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                     }
                 };
                 // let enum_variant_type_as_string: String;
-                let enum_variant_type = match field.ty.clone() {
-                    syn::Type::Path(type_path) => type_path.path,
+                let enum_variant_type: Path;
+                let enum_variant_type_as_string: LitStr;
+                match field.ty.clone() {
+                    syn::Type::Path(type_path) => {
+                        enum_variant_type = type_path.path.clone();
+                        //todo: remove :? later
+                        enum_variant_type_as_string = syn::LitStr::new(&format!("{:?}", type_path), ident.span());
+                    },
                     _ => panic!("field.ty is not a syn::Type::Path!"),
                 };
                 let enum_variant_ident_value = syn::Ident::new(
@@ -96,7 +102,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                             source: Box::new(
                                                 #error_enum_ident::#enum_variant_ident_pascal_case {
                                                     env_var_name: #env_var_name_as_snake_case_string,
-                                                    expected_env_var_type: String::from("test"),
+                                                    expected_env_var_type: #enum_variant_type_as_string,
                                                     file: "test",
                                                     line: 32,
                                                     column: 32,
@@ -117,7 +123,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                 source: Box::new(
                                     #error_enum_ident::#enum_variant_ident_pascal_case {
                                         env_var_name: #env_var_name_as_snake_case_string,
-                                        expected_env_var_type:  String::from("test"),
+                                        expected_env_var_type: #enum_variant_type_as_string,
                                         file: "test",
                                         line: 32,
                                         column: 32,
@@ -153,7 +159,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 quote! {
                     #enum_variant_ident {
                         env_var_name: &'static str,
-                        expected_env_var_type: String,
+                        expected_env_var_type: &'static str,
                         file: &'static str,
                         line: u32,
                         column: u32,
