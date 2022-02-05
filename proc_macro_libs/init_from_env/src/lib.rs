@@ -9,6 +9,7 @@ use proc_macro::TokenStream;
 
 use quote::quote;
 use syn::Ident;
+use syn::LitStr;
 use syn::Path;
 
 #[proc_macro_derive(InitFromEnv)]
@@ -55,36 +56,38 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             syn::Ident::new(&format!("{}", field_ident), ident.span());
                     }
                 };
-                let enum_variant_type: Path;
                 // let enum_variant_type_as_string: String;
-                match field.ty.clone() {
-                    syn::Type::Path(type_path) => {
-                        enum_variant_type = type_path.path.clone();
-                        // enum_variant_type_as_string = format!("{:?}", type_path.path.segments);
-                    }
+                let enum_variant_type = match field.ty.clone() {
+                    syn::Type::Path(type_path) => type_path.path,
                     _ => panic!("field.ty is not a syn::Type::Path!"),
                 };
                 let enum_variant_ident_value = syn::Ident::new(
                     &format!("{}_value", enum_variant_ident_snake_case),
                     ident.span(),
                 );
-                let env_var_name = match field.ident {
+                let env_var_name: Ident;
+                let env_var_name_as_snake_case_string: LitStr;
+                match field.ident {
                     None => panic!("field.ident is None"),
-                    Some(field_ident) => syn::Ident::new(
-                        &format!("{}", field_ident)
-                            .to_case(Case::Snake)
-                            .to_uppercase(),
-                        ident.span(),
-                    ),
+                    Some(field_ident) => {
+                        env_var_name = syn::Ident::new(
+                            &format!("{}", field_ident)
+                                .to_case(Case::Snake)
+                                .to_uppercase(),
+                            ident.span(),
+                        );
+                        env_var_name_as_snake_case_string =
+                            syn::LitStr::new(&format!("{}", field_ident), ident.span());
+                    }
                 };
 
-                let env_var_name_as_string =
+                let env_var_name_as_screaming_snake_case_string =
                     syn::LitStr::new(&format!("{}", env_var_name), ident.span());
 
                 println!("{}", env_var_name);
                 quote! {
                     let #enum_variant_ident_value: #enum_variant_type;
-                    match std::env::var(#env_var_name_as_string) {
+                    match std::env::var(#env_var_name_as_screaming_snake_case_string) {
                         Ok(string_handle) => {
                             match string_handle.parse::<#enum_variant_type>() {
                                 Err(e) => {
@@ -92,6 +95,8 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                         #error_ident {
                                             source: Box::new(
                                                 #error_enum_ident::#enum_variant_ident_pascal_case {
+                                                    env_var_name: #env_var_name_as_snake_case_string,
+                                                    expected_env_var_type: String::from("test"),
                                                     file: "test",
                                                     line: 32,
                                                     column: 32,
@@ -111,9 +116,11 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             #error_ident {
                                 source: Box::new(
                                     #error_enum_ident::#enum_variant_ident_pascal_case {
-                                         file: "test",
-                                         line: 32,
-                                         column: 32,
+                                        env_var_name: #env_var_name_as_snake_case_string,
+                                        expected_env_var_type:  String::from("test"),
+                                        file: "test",
+                                        line: 32,
+                                        column: 32,
                                     }
                                 ),
                                 was_dotenv_enable,
@@ -141,10 +148,12 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 //     syn::Type::Path(type_path) => type_path.path,
                 //     _ => panic!("field.ty is not a syn::Type::Path!"),
                 // };
-                // expected_env_var_type: String,
-                // env_var_name: String,
+                // ,
+                //
                 quote! {
                     #enum_variant_ident {
+                        env_var_name: &'static str,
+                        expected_env_var_type: String,
                         file: &'static str,
                         line: u32,
                         column: u32,
