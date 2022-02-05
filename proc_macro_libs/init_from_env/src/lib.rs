@@ -14,7 +14,30 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_init_from_env syn::parse(input) failed");
     let ident = &ast.ident;
-    let generated = match ast.data {
+    // let generated_enum_variants = match ast.data.clone() {
+    //     syn::Data::Struct(datastruct) => {
+    //         let generated = datastruct.fields.into_iter().map(|field| {
+    //             let enum_variant_ident = match field.ident {
+    //                 None => panic!("field.ident is None"),
+    //                 Some(field_ident) => syn::Ident::new(
+    //                     &format!("{}", field_ident).to_case(Case::Pascal),
+    //                     ident.span(),
+    //                 ),
+    //             };
+    //             let enum_variant_type = match field.ty {
+    //                 syn::Type::Path(type_path) => type_path.path,
+    //                 _ => panic!("field.ty is not a syn::Type::Path!"),
+    //             };
+
+    //             quote! {
+    //                 #enum_variant_ident(#enum_variant_type),
+    //             }
+    //         });
+    //         generated
+    //     }
+    //     _ => panic!("GenEnum only works on Struct"),
+    // };
+    let generated_functions = match ast.data.clone() {
         syn::Data::Struct(datastruct) => {
             let generated = datastruct.fields.into_iter().map(|field| {
                 let enum_variant_ident = match field.ident {
@@ -36,13 +59,71 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-    let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
+    //
+    let generated_enum_error_variants = match ast.data {
+        syn::Data::Struct(datastruct) => {
+            let generated = datastruct.fields.into_iter().map(|field| {
+                let enum_variant_ident = match field.ident {
+                    None => panic!("field.ident is None"),
+                    Some(field_ident) => syn::Ident::new(
+                        &format!("{}", field_ident).to_case(Case::Pascal),
+                        ident.span(),
+                    ),
+                };
+                // let enum_variant_type = match field.ty {
+                //     syn::Type::Path(type_path) => type_path.path,
+                //     _ => panic!("field.ty is not a syn::Type::Path!"),
+                // };
+                quote! {
+                    #enum_variant_ident {
+                        env_var_name: String,
+                        expected_env_var_type: String,
+                        file: &'static str,
+                        line: u32,
+                        column: u32,
+                    },
+                }
+            });
+            generated
+        }
+        _ => panic!("GenEnum only works on Struct"),
+    };
+    //
+    // let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
+    let error_ident = syn::Ident::new(&format!("{}Error", ident), ident.span());
+    let error_enum_ident = syn::Ident::new(&format!("{}ErrorEnum", ident), ident.span());
     // #[derive(Debug)]
+    //     pub enum #enum_ident {
+    //     #(#generated_enum_variants)*
+    // }
+    // env_var_name: String
     let gen = quote! {
-        pub enum #enum_ident {
-            #(#generated)*
+        pub struct #error_ident {
+            pub source: Box<#error_enum_ident>,
+            pub was_dotenv_enable: bool,
+        }
+        pub enum #error_enum_ident {
+            #(#generated_enum_error_variants)*
+        }
+        impl #ident {
+            fn new() -> Result<Self, #error_ident> {
+                Ok(
+                    Self {
+                        providers_link_parts_source: Resource::Local,
+                        github_name: String::from("f"),
+                        is_prints_enabled: true,
+                        links_limit_twitter: 64,
+                        error_red: 8,
+                    }
+                )
+            }
         }
     };
+
+    //     pub struct #error_ident {
+    //     pub source: Box<#error_enum_ident>,
+    // }
+
     gen.into()
 }
 
