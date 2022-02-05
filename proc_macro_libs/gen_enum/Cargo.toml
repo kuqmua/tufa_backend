@@ -8,7 +8,6 @@ edition = "2021"
 proc-macro=true
 
 [dependencies]
-# syn = { version = "1.0.75", features=["full"] }
 syn = "1.0.75"
 quote = "1.0.9"
 convert_case = "0.4.0"

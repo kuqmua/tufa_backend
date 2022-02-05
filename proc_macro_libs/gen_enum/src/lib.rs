@@ -1,18 +1,19 @@
-use proc_macro::TokenStream;
-use quote::quote;
 use syn;
-
-use convert_case::Case;
-use convert_case::Casing;
 use syn::Ident;
 use syn::Path;
 
-#[proc_macro_derive(GenEnum)]
+use convert_case::Case;
+use convert_case::Casing;
+
+use proc_macro::TokenStream;
+
+use quote::quote;
+
+#[proc_macro_derive(GenEnumDerive)]
 pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_gen_enum syn::parse(input) failed");
     let ident = &ast.ident;
-    // println!("ast ddta {:#?}", ast.data);
     let generated = match ast.data {
         syn::Data::Struct(datastruct) => {
             let generated = datastruct.fields.into_iter().map(|field| {
@@ -33,22 +34,15 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
                     }
                     _ => panic!("field.ty is not a syn::Type::Path!"),
                 }
-                println!("enum_variant_ident {:#?}", enum_variant_ident);
                 quote! {
                     #enum_variant_ident(#enum_variant_type),
                 }
             });
-            // println!("GEN {:#?}", generated);
             generated
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-
-    println!("/////");
-    println!("{}", ident);
-    println!("/////");
     let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
-    println!("{}", enum_ident);
     // #[derive(Debug)]
     let gen = quote! {
         pub enum #enum_ident {
@@ -57,9 +51,3 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
     };
     gen.into()
 }
-
-// impl EnumExtenstion for #name {
-//     fn get_length() -> usize {
-//         #len
-//     }
-// }
