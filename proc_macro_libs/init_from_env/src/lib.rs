@@ -1,6 +1,7 @@
 use syn;
-// use syn::Ident;
-// use syn::Path;
+use syn::Ident;
+use syn::LitStr;
+use syn::Path;
 
 use convert_case::Case;
 use convert_case::Casing;
@@ -8,9 +9,6 @@ use convert_case::Casing;
 use proc_macro::TokenStream;
 
 use quote::quote;
-use syn::Ident;
-use syn::LitStr;
-use syn::Path;
 
 #[proc_macro_derive(InitFromEnv)]
 pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
@@ -56,7 +54,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             syn::Ident::new(&format!("{}", field_ident), ident.span());
                     }
                 };
-                // let enum_variant_type_as_string: String;
                 let enum_variant_type: Path;
                 let enum_variant_type_as_string: LitStr;
                 match field.ty.clone() {
@@ -86,11 +83,8 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             syn::LitStr::new(&format!("{}", field_ident), ident.span());
                     }
                 };
-
                 let env_var_name_as_screaming_snake_case_string =
                     syn::LitStr::new(&format!("{}", env_var_name), ident.span());
-
-                println!("{}", env_var_name);
                 quote! {
                     let #enum_variant_ident_value: #enum_variant_type;
                     match std::env::var(#env_var_name_as_screaming_snake_case_string) {
@@ -139,7 +133,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-    //
     let generated_enum_error_variants = match ast.data {
         syn::Data::Struct(datastruct) => {
             let generated = datastruct.fields.into_iter().map(|field| {
@@ -150,12 +143,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                         ident.span(),
                     ),
                 };
-                // let enum_variant_type = match field.ty {
-                //     syn::Type::Path(type_path) => type_path.path,
-                //     _ => panic!("field.ty is not a syn::Type::Path!"),
-                // };
-                // ,
-                //
                 quote! {
                     #enum_variant_ident {
                         env_var_name: &'static str,
@@ -170,7 +157,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-    // #(#generated_functions)*
     let gen = quote! {
         pub struct #error_ident {
             pub source: Box<#error_enum_ident>,
@@ -191,88 +177,5 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             }
         }
     };
-    //     providers_link_parts_source: Resource::Local,
-    // github_name: String::from("f"),
-    // is_prints_enabled: true,
-    // links_limit_twitter: 64,
-    // error_red: 8,
     gen.into()
 }
-
-// fn get_string_from_env_var(&self, was_dotenv_enable: bool) -> Result<String, ConfigError> {
-//     let env_name = self.to_upper_snake_case();
-// match std::env::var(&env_name) {
-//     Ok(handle) => Ok(handle),
-//     Err(e) => Err(ConfigError {
-//         env_var_name_kind: ConfigEnvVarErrorType::#ident(*self),
-//         was_dotenv_enable,
-//         env_name,
-//         // env_error: ConfigErrorInnerType::VarErrorHandle(e),
-//     }),
-// }
-// }
-
-// fn get_env_values_hashmap<T: std::str::FromStr>(was_dotenv_enable: bool) -> Result<HashMap<Self, T>, ConfigError> {
-//     for env_var_name_kind in Self::iter() {
-//         match env_var_name_kind.get_string_from_env_var(was_dotenv_enable) {
-//             Ok(env_var_string) => match #ident::parse_string::<T>(env_var_string) {
-//                 Ok(handle) => {
-//                     hmap.insert(env_var_name_kind, handle);
-//                 },
-//                 Err(e) => {
-//                             error_option = Some(ConfigError {
-//                         env_var_name_kind: ConfigEnvVarErrorType::#ident(env_var_name_kind),
-//                         was_dotenv_enable,
-//                         env_name: env_var_name_kind.to_upper_snake_case(),
-//                         // env_error: ConfigErrorInnerType::VarOrIntParseErrorErrorHandle(
-//                         //     VarOrIntParseError::Int(e),
-//                         // ),
-//                     });
-//                     break;
-//                 },
-//             },
-//             Err(e) => {
-//                 error_option = Some(e);
-//                 break;
-//             }
-//         }
-//     }
-//     Ok(hmap)
-// }
-
-// fn check_valid_typed_env_vars() {
-//     if let Err(e) = dotenv() {
-//         panic!("dotenv() failed, error: {:?}", e);
-//     }
-//     for env_var_name_kind in #ident::iter() {
-//         match std::env::var(&env_var_name_kind.to_upper_snake_case()) {
-//             Err(e) => panic!(
-//                 "no such env name {} error: {:#?}",
-//                 &env_var_name_kind.to_upper_snake_case(),
-//                 e
-//             ),
-//             Ok(handle) => {
-//                 if let Err(e) = #ident::parse_string::<#type_for_parsing>(handle) {
-//                     panic!(
-//                         "parse env var {} error: {:#?}",
-//                         &env_var_name_kind.to_upper_snake_case(),
-//                         e
-//                     )
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// fn check_compromised_typed_env_vars<T: std::str::FromStr>(was_dotenv_enable: bool){
-//     match #ident::get_env_values_hashmap::<#type_for_parsing>(was_dotenv_enable) {
-//         Err(e) => panic!("cannot get env values hashmap, error: {:#?}", e),
-//         Ok(hashmap) => {
-//             for (key, value) in hashmap {
-//                 if value != #type_for_parsing::default() {
-//                     panic!("{:?} is not assigned to default value", key);
-//                 }
-//             }
-//         }
-//     }
-// }
