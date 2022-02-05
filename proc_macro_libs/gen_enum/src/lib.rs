@@ -1,9 +1,7 @@
-use syn;
-use syn::Ident;
-use syn::Path;
-
 use convert_case::Case;
 use convert_case::Casing;
+
+use syn;
 
 use proc_macro::TokenStream;
 
@@ -17,23 +15,18 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
     let generated = match ast.data {
         syn::Data::Struct(datastruct) => {
             let generated = datastruct.fields.into_iter().map(|field| {
-                let enum_variant_ident: Ident;
-                let enum_variant_type: Path;
-                match field.ident {
+                let enum_variant_ident = match field.ident {
                     None => panic!("field.ident is None"),
-                    Some(field_ident) => {
-                        enum_variant_ident = syn::Ident::new(
-                            &format!("{}", field_ident).to_case(Case::Pascal),
-                            ident.span(),
-                        );
-                    }
-                }
-                match field.ty {
-                    syn::Type::Path(type_path) => {
-                        enum_variant_type = type_path.path;
-                    }
+                    Some(field_ident) => syn::Ident::new(
+                        &format!("{}", field_ident).to_case(Case::Pascal),
+                        ident.span(),
+                    ),
+                };
+                let enum_variant_type = match field.ty {
+                    syn::Type::Path(type_path) => type_path.path,
                     _ => panic!("field.ty is not a syn::Type::Path!"),
-                }
+                };
+
                 quote! {
                     #enum_variant_ident(#enum_variant_type),
                 }
