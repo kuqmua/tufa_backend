@@ -4,26 +4,42 @@ use syn;
 
 use convert_case::Case;
 use convert_case::Casing;
+use syn::Ident;
+use syn::Path;
 
 #[proc_macro_derive(GenEnum)]
 pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_gen_enum syn::parse(input) failed");
     let ident = &ast.ident;
-    let len = match ast.data {
+    // println!("ast ddta {:#?}", ast.data);
+    let generated = match ast.data {
         syn::Data::Struct(datastruct) => {
-            for field in datastruct.fields {
+            let generated = datastruct.fields.into_iter().map(|field| {
+                let enum_variant_ident: Ident;
+                let enum_variant_type: Path;
                 match field.ident {
                     None => panic!("field.ident is None"),
                     Some(field_ident) => {
-                        let enum_variant_ident = syn::Ident::new(
+                        enum_variant_ident = syn::Ident::new(
                             &format!("{}", field_ident).to_case(Case::Pascal),
                             ident.span(),
                         );
-                        println!("enum_variant_ident {:#?}", enum_variant_ident);
                     }
                 }
-            }
+                match field.ty {
+                    syn::Type::Path(type_path) => {
+                        enum_variant_type = type_path.path;
+                    }
+                    _ => panic!("field.ty is not a syn::Type::Path!"),
+                }
+                println!("enum_variant_ident {:#?}", enum_variant_ident);
+                quote! {
+                    #enum_variant_ident(#enum_variant_type),
+                }
+            });
+            // println!("GEN {:#?}", generated);
+            generated
         }
         _ => panic!("GenEnum only works on Struct"),
     };
@@ -36,8 +52,7 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
     // #[derive(Debug)]
     let gen = quote! {
         pub enum #enum_ident {
-            One,
-            Two
+            #(#generated)*
         }
     };
     gen.into()
