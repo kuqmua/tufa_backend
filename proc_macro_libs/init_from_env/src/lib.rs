@@ -18,25 +18,22 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
     let error_ident = syn::Ident::new(&format!("{}Error", ident), ident.span());
     let error_enum_ident = syn::Ident::new(&format!("{}ErrorEnum", ident), ident.span());
     let generated_init_struct_fields = match ast.data.clone() {
-        syn::Data::Struct(datastruct) => {
-            let generated = datastruct.fields.into_iter().map(|field| {
-                let enum_variant_ident: Ident;
-                let enum_variant_ident_value: Ident;
-                match field.ident {
-                    None => panic!("field.ident is None"),
-                    Some(field_ident) => {
-                        enum_variant_ident = field_ident.clone();
-                        enum_variant_ident_value =
-                            syn::Ident::new(&format!("{}_value", field_ident), ident.span());
-                    }
-                };
-                quote! {
-                    #enum_variant_ident: #enum_variant_ident_value,
+        syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
+            let enum_variant_ident: Ident;
+            let enum_variant_ident_value: Ident;
+            match field.ident {
+                None => panic!("field.ident is None"),
+                Some(field_ident) => {
+                    enum_variant_ident = field_ident.clone();
+                    enum_variant_ident_value =
+                        syn::Ident::new(&format!("{}_value", field_ident), ident.span());
                 }
-            });
-            generated
-        }
-        _ => panic!("GenEnum only works on Struct"),
+            };
+            quote! {
+                #enum_variant_ident: #enum_variant_ident_value,
+            }
+        }),
+        _ => panic!("InitFromEnv only works on Struct"),
     };
     let generated_functions = match ast.data.clone() {
         syn::Data::Struct(datastruct) => {
