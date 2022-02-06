@@ -105,7 +105,8 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                     #error_enum_ident::#error_std_env_var_ident(
                                         #error_std_env_var_enum_ident::#enum_variant_ident_pascal_case {
                                             source: e,
-                                            env_var_name: #env_var_name_as_snake_case_string,
+                                            env_var_name: #env_var_name_as_screaming_snake_case_string,
+                                            field_name: #env_var_name_as_snake_case_string,
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),
@@ -124,7 +125,8 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                         source: Box::new(
                                             #error_enum_ident::#error_parse_ident(
                                                 #error_parse_enum_ident::#enum_variant_ident_pascal_case {
-                                                    env_var_name: #env_var_name_as_snake_case_string,
+                                                    env_var_name: #env_var_name_as_screaming_snake_case_string,
+                                                    field_name: #env_var_name_as_snake_case_string,
                                                     expected_env_var_type: #enum_variant_type_as_string,
                                                     file: file!(),
                                                     line: line!(),
@@ -159,6 +161,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 #enum_variant_ident {
                     source: std::env::VarError,
                     env_var_name: &'static str,
+                    field_name:  &'static str,
                     file: &'static str,
                     line: u32,
                     column: u32,
@@ -167,7 +170,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
         }),
         _ => panic!("InitFromEnv only works on Struct"),
     };
-    //
     let generated_enum_error_parse_variants = match ast.data {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
             let enum_variant_ident = match field.ident.clone() {
@@ -180,6 +182,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             quote! {
                 #enum_variant_ident {
                     env_var_name: &'static str,
+                    field_name:  &'static str,
                     expected_env_var_type: &'static str,
                     file: &'static str,
                     line: u32,
