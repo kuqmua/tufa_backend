@@ -11,7 +11,6 @@ use proc_macro::TokenStream;
 use quote::quote;
 
 ///require this
-///use crate::helpers::resource::Resource;
 ///use dotenv::dotenv;
 
 #[proc_macro_derive(InitFromEnv)]
