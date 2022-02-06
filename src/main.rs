@@ -38,30 +38,7 @@ pub mod config_mods {
         pub mod check_valid_i64_providers_links_limits_for_mongo;
         // pub mod wrap_config_checks;//stay
     }
-    // pub mod config_values_types_enums {
-    //     pub mod env_var_bool_enum_impl {
-    //         pub mod traits {}
-    //         pub mod functions {}
-    //     }
-    //     pub mod env_var_bool_enum;
-    //     pub mod env_var_i64_enum_impl {
-    //         pub mod traits {}
-    //         pub mod functions {}
-    //     }
-    //     pub mod env_var_i64_enum;
-    //     pub mod env_var_string_enum_impl {
-    //         pub mod traits {}
-    //         pub mod functions {}
-    //     }
-    //     pub mod env_var_string_enum;
-    //     pub mod env_var_u8_enum_impl {
-    //         pub mod traits {}
-    //         pub mod functions {}
-    //     }
-    //     pub mod env_var_u8_enum;
-    // }
     // pub mod common_env_var_enum;//stay
-    // pub mod env_var_enum_impl {}
     pub mod config_struct;
     pub mod env_var_enum;
     pub mod lazy_static_config;
