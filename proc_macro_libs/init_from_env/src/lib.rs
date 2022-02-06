@@ -68,11 +68,22 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             let enum_variant_type: Path;
             let enum_variant_type_as_string: LitStr;
             match field.ty.clone() {
+                //todo: add different types support
                 syn::Type::Path(type_path) => {
                     enum_variant_type = type_path.path.clone();
-                    //todo: remove :? later
-                    enum_variant_type_as_string =
-                        syn::LitStr::new(&format!("{:?}", type_path), ident.span());
+                    let mut string_handle = String::from("");
+                    if type_path.path.segments.len() == 1 {
+                        string_handle = format!("{}", type_path.path.segments[0].ident);
+                    } else {
+                        for seg in type_path.path.segments.clone() {
+                            string_handle.push_str(&format!("{}:", seg.ident));
+                        }
+                        if string_handle.len() > 0 {
+                            string_handle.pop();
+                        }
+                    }
+                    println!("string_handle {}", string_handle);
+                    enum_variant_type_as_string = syn::LitStr::new(&string_handle, ident.span());
                 }
                 _ => panic!("field.ty is not a syn::Type::Path!"),
             };
