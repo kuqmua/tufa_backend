@@ -26,43 +26,43 @@ mod fetch {
     }
 }
 pub mod config_mods {
-    pub mod config_error_mods {
-        pub mod config_env_var_error_type_enum;
-        pub mod config_error;
-        pub mod config_error_enum;
-        pub mod config_error_inner_type_enum;
-        pub mod var_or_bool_parse_error_enum;
-        pub mod var_or_int_parse_error_enum;
-    }
+    // pub mod config_error_mods {
+    //     pub mod config_env_var_error_type_enum;
+    //     pub mod config_error;
+    //     pub mod config_error_enum;
+    //     pub mod config_error_inner_type_enum;
+    //     pub mod var_or_bool_parse_error_enum;
+    //     pub mod var_or_int_parse_error_enum;
+    // }
     pub mod config_functions {
         pub mod check_valid_i64_providers_links_limits_for_mongo;
-        pub mod new;
-        pub mod wrap_config_checks;
+        // pub mod new;
+        // pub mod wrap_config_checks;//stay
     }
-    pub mod config_values_types_enums {
-        pub mod env_var_bool_enum_impl {
-            pub mod traits {}
-            pub mod functions {}
-        }
-        pub mod env_var_bool_enum;
-        pub mod env_var_i64_enum_impl {
-            pub mod traits {}
-            pub mod functions {}
-        }
-        pub mod env_var_i64_enum;
-        pub mod env_var_string_enum_impl {
-            pub mod traits {}
-            pub mod functions {}
-        }
-        pub mod env_var_string_enum;
-        pub mod env_var_u8_enum_impl {
-            pub mod traits {}
-            pub mod functions {}
-        }
-        pub mod env_var_u8_enum;
-    }
-    pub mod common_env_var_enum;
-    pub mod env_var_enum_impl {}
+    // pub mod config_values_types_enums {
+    //     pub mod env_var_bool_enum_impl {
+    //         pub mod traits {}
+    //         pub mod functions {}
+    //     }
+    //     pub mod env_var_bool_enum;
+    //     pub mod env_var_i64_enum_impl {
+    //         pub mod traits {}
+    //         pub mod functions {}
+    //     }
+    //     pub mod env_var_i64_enum;
+    //     pub mod env_var_string_enum_impl {
+    //         pub mod traits {}
+    //         pub mod functions {}
+    //     }
+    //     pub mod env_var_string_enum;
+    //     pub mod env_var_u8_enum_impl {
+    //         pub mod traits {}
+    //         pub mod functions {}
+    //     }
+    //     pub mod env_var_u8_enum;
+    // }
+    // pub mod common_env_var_enum;//stay
+    // pub mod env_var_enum_impl {}
     pub mod config_struct;
     pub mod env_var_enum;
     pub mod lazy_static_config;
@@ -156,16 +156,15 @@ mod providers {
 mod tests {
     pub mod tests_constants;
     pub mod continuous_integration {
-        pub mod ci_check_compromised_env_vars;
-        pub mod ci_check_docker_compose_file_exists;
-        pub mod ci_check_env_file_exists;
-        pub mod ci_check_env_var_names_contains_in_docker_compose;
-        pub mod ci_check_valid_env_vars_type;
+        // pub mod ci_check_compromised_env_vars;
+        // pub mod ci_check_docker_compose_file_exists;
+        // pub mod ci_check_env_file_exists;
+        // pub mod ci_check_env_var_names_contains_in_docker_compose;
+        // pub mod ci_check_valid_env_vars_type;
     }
 }
 mod traits {
     pub mod enum_extention;
-    pub mod env_var_typed_trait;
     pub mod git_info_trait;
     pub mod provider_kind_from_config_trait;
     pub mod provider_kind_trait;
@@ -181,8 +180,6 @@ extern crate lazy_static;
 extern crate box_err_from_err;
 #[macro_use]
 extern crate enum_extention;
-#[macro_use]
-extern crate env_var_typed;
 #[macro_use]
 extern crate gen_enum;
 #[macro_use]
