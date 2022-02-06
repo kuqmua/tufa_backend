@@ -87,7 +87,6 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             string_handle.pop();
                         }
                     }
-                    println!("string_handle {}", string_handle);
                     enum_variant_type_as_string = syn::LitStr::new(&string_handle, ident.span());
                 }
                 _ => panic!("field.ty is not a syn::Type::Path!"),
