@@ -92,7 +92,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             };
             let env_var_name_as_screaming_snake_case_string =
                 syn::LitStr::new(&format!("{}", env_var_name), ident.span());
-            //todo: add parsing error and env var error
+            //todo: add parsing error
             quote! {
                 let #enum_variant_ident_value: #enum_variant_type;
                 match std::env::var(#env_var_name_as_screaming_snake_case_string) {
