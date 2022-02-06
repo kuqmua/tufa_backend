@@ -193,22 +193,26 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
         _ => panic!("InitFromEnv only works on Struct"),
     };
     let gen = quote! {
+        #[derive(Debug)]
         pub struct #error_ident {
             pub source: Box<#error_enum_ident>,
             pub was_dotenv_enable: bool,
         }
+        #[derive(Debug)]
         pub enum #error_enum_ident {
             #error_std_env_var_ident(#error_std_env_var_enum_ident),
             #error_parse_ident(#error_parse_enum_ident),
         }
+        #[derive(Debug)]
         pub enum #error_std_env_var_enum_ident {
             #(#generated_enum_error_std_env_var_variants)*
         }
+        #[derive(Debug)]
         pub enum #error_parse_enum_ident {
             #(#generated_enum_error_parse_variants)*
         }
         impl #ident {
-            fn new() -> Result<Self, #error_ident> {
+            pub fn new() -> Result<Self, #error_ident> {
                 let was_dotenv_enable = dotenv().is_ok();
                 #(#generated_functions)*
                 Ok(

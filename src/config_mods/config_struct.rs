@@ -1,8 +1,10 @@
 extern crate toml;
 
+use dotenv::dotenv;
+
 use crate::helpers::resource::Resource;
 
-#[derive(Debug, Clone)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
+#[derive(Debug, Clone, InitFromEnv)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
@@ -110,7 +112,7 @@ pub struct ConfigStruct {
     pub log_file_extension: String,
 
     pub is_write_error_logs_in_local_folder_enabled: bool,
-    pub is_write_error_logs_in_local_folder_enabled_provider: bool,
+    pub is_write_error_logs_in_local_folder_enabled_providers: bool,
     pub is_write_error_logs_in_local_folder_enabled_arxiv: bool,
     pub is_write_error_logs_in_local_folder_enabled_biorxiv: bool,
     pub is_write_error_logs_in_local_folder_enabled_github: bool,
