@@ -21,6 +21,11 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
     let ident = &ast.ident;
     let error_ident = syn::Ident::new(&format!("{}Error", ident), ident.span());
     let error_enum_ident = syn::Ident::new(&format!("{}ErrorEnum", ident), ident.span());
+    let error_std_env_var_ident = syn::Ident::new(&format!("{}StdEnvVar", ident), ident.span());
+    let error_std_env_var_enum_ident =
+        syn::Ident::new(&format!("{}ErrorStdEnvEnum", ident), ident.span());
+    let error_parse_ident = syn::Ident::new(&format!("{}Parse", ident), ident.span());
+    let error_parse_enum_ident = syn::Ident::new(&format!("{}ErrorParseEnum", ident), ident.span());
     let value_suffix = "_value";
     let generated_init_struct_fields = match ast.data.clone() {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
@@ -93,19 +98,39 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             quote! {
                 let #enum_variant_ident_value: #enum_variant_type;
                 match std::env::var(#env_var_name_as_screaming_snake_case_string) {
+                    Err(e) => {
+                        return Err(
+                            #error_ident {
+                                source: Box::new(
+                                    #error_enum_ident::#error_std_env_var_ident(
+                                        #error_std_env_var_enum_ident::#enum_variant_ident_pascal_case {
+                                            source: e,
+                                            env_var_name: #env_var_name_as_snake_case_string,
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        }
+                                    )
+                                ),
+                                was_dotenv_enable,
+                            }
+                        );
+                    },
                     Ok(string_handle) => {
                         match string_handle.parse::<#enum_variant_type>() {
                             Err(e) => {
                                 return Err(
                                     #error_ident {
                                         source: Box::new(
-                                            #error_enum_ident::#enum_variant_ident_pascal_case {
-                                                env_var_name: #env_var_name_as_snake_case_string,
-                                                expected_env_var_type: #enum_variant_type_as_string,
-                                                file: file!(),
-                                                line: line!(),
-                                                column: column!(),
-                                            }
+                                            #error_enum_ident::#error_parse_ident(
+                                                #error_parse_enum_ident::#enum_variant_ident_pascal_case {
+                                                    env_var_name: #env_var_name_as_snake_case_string,
+                                                    expected_env_var_type: #enum_variant_type_as_string,
+                                                    file: file!(),
+                                                    line: line!(),
+                                                    column: column!(),
+                                                }
+                                            )
                                         ),
                                         was_dotenv_enable,
                                     }
@@ -116,28 +141,34 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                             },
                         }
                     },
-                    Err(e) => {
-                        return Err(
-                            #error_ident {
-                                source: Box::new(
-                                    #error_enum_ident::#enum_variant_ident_pascal_case {
-                                        env_var_name: #env_var_name_as_snake_case_string,
-                                        expected_env_var_type: #enum_variant_type_as_string,
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
-                                    }
-                                ),
-                                was_dotenv_enable,
-                            }
-                        );
-                    },
                 }
             }
         }),
         _ => panic!("InitFromEnv only works on Struct"),
     };
-    let generated_enum_error_variants = match ast.data {
+    let generated_enum_error_std_env_var_variants = match ast.data.clone() {
+        syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
+            let enum_variant_ident = match field.ident.clone() {
+                None => panic!("field.ident is None"),
+                Some(field_ident) => syn::Ident::new(
+                    &format!("{}", field_ident).to_case(Case::Pascal),
+                    ident.span(),
+                ),
+            };
+            quote! {
+                #enum_variant_ident {
+                    source: std::env::VarError,
+                    env_var_name: &'static str,
+                    file: &'static str,
+                    line: u32,
+                    column: u32,
+                },
+            }
+        }),
+        _ => panic!("InitFromEnv only works on Struct"),
+    };
+    //
+    let generated_enum_error_parse_variants = match ast.data {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
             let enum_variant_ident = match field.ident.clone() {
                 None => panic!("field.ident is None"),
@@ -164,7 +195,14 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             pub was_dotenv_enable: bool,
         }
         pub enum #error_enum_ident {
-            #(#generated_enum_error_variants)*
+            #error_std_env_var_ident(#error_std_env_var_enum_ident),
+            #error_parse_ident(#error_parse_enum_ident),
+        }
+        pub enum #error_std_env_var_enum_ident {
+            #(#generated_enum_error_std_env_var_variants)*
+        }
+        pub enum #error_parse_enum_ident {
+            #(#generated_enum_error_parse_variants)*
         }
         impl #ident {
             fn new() -> Result<Self, #error_ident> {
