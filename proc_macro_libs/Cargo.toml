@@ -2,6 +2,8 @@
 members = [
     "box_err_from_err",
     "enum_extention",
+    "gen_enum",
+    "gen_enum_without_values",
     "env_var_typed",
     "git_info",
     "impl_display",

@@ -35,6 +35,7 @@ displaydoc = "0.2.3"
 box_err_from_err = { path = "./proc_macro_libs/box_err_from_err" }
 enum_extention = { path = "./proc_macro_libs/enum_extention" }
 gen_enum = { path = "./proc_macro_libs/gen_enum" }
+gen_enum_without_values = { path = "./proc_macro_libs/gen_enum_without_values" }
 git_info = { path = "./proc_macro_libs/git_info" }
 impl_display = { path = "./proc_macro_libs/impl_display" }
 impl_from_for_upper_struct = { path = "./proc_macro_libs/impl_from_for_upper_struct" }
