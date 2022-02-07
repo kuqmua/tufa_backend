@@ -4,6 +4,7 @@ use syn;
 
 #[proc_macro_derive(EnumExtenstion)]
 pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
+    //it only supported for enums without values
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
     let len = match ast.data.clone() {
