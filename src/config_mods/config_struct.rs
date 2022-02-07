@@ -1,10 +1,23 @@
+use std::collections::HashMap;
+
 extern crate toml;
 
 use dotenv::dotenv;
 
 use crate::helpers::resource::Resource;
 
-#[derive(Debug, Clone, InitFromEnv)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
+use crate::traits::enum_extention::EnumExtenstion;
+
+use gen_enum_without_values::GenEnumWithoutValuesDerive;
+
+use strum_macros::EnumIter;
+
+use convert_case::Case;
+use convert_case::Casing;
+
+use strum::IntoEnumIterator;
+
+#[derive(Debug, Clone, InitFromEnv, GenEnumWithoutValuesDerive)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
