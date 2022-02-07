@@ -32,7 +32,6 @@ pub mod config_mods {
     }
     // pub mod common_env_var_enum;//stay
     pub mod config_struct;
-    pub mod env_var_enum;
     pub mod lazy_static_config;
 }
 pub mod helpers {

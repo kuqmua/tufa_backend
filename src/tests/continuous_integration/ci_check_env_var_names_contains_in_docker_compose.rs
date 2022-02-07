@@ -5,7 +5,7 @@ use strum::IntoEnumIterator;
 use crate::tests::tests_constants::DOCKER_COMPOSE_FILE_NAME;
 use crate::tests::tests_constants::PATH_TO_DOCKER_COMPOSE_FILE;
 
-use crate::config_mods::env_var_enum::EnvVar;
+use crate::config_mods::config_struct::ConfigStructEnum;
 use crate::traits::enum_extention::EnumExtenstion;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -23,8 +23,8 @@ pub fn ci_check_env_var_names_contains_in_docker_compose() {
             )
         }
         Ok(file_content) => {
-            let mut vec = Vec::with_capacity(EnvVar::get_length());
-            for i in EnvVar::iter() {
+            let mut vec = Vec::with_capacity(ConfigStructEnum::get_length());
+            for i in ConfigStructEnum::iter() {
                 let env_name = i.to_upper_snake_case();
                 if !file_content.contains(&env_name) {
                     vec.push(env_name);
