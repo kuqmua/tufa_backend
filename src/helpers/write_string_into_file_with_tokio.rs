@@ -10,7 +10,7 @@ pub struct WriteStringIntoFileWithTokioError {
 
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub enum WriteStringIntoFileWithTokioErrorEnum {
-    StdFsCreateDirAll{
+    StdFsCreateDirAll {
         source: std::io::Error,
         file: &'static str,
         line: u32,
@@ -38,35 +38,32 @@ pub async fn write_string_into_file_with_tokio(
         if let Err(e) = std::fs::create_dir_all(prefix) {
             return Err(WriteStringIntoFileWithTokioError {
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll {
-                        source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                ),
+                    source: e,
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                }),
             });
         }
     }
     match tokio::fs::File::open(path).await {
         Err(e) => Err(WriteStringIntoFileWithTokioError {
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen {
-                    source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            ),
+                source: e,
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }),
         }),
         Ok(mut file) => {
             if let Err(e) = file.write_all(stringified_json.as_bytes()).await {
                 return Err(WriteStringIntoFileWithTokioError {
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll {
-                            source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    ),
+                        source: e,
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    }),
                 });
             }
             Ok(())
