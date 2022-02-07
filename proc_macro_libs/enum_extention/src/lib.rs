@@ -7,12 +7,32 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
     //it only supported for enums without values
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
+    //todo to implement into_array() and into_vec - must implement Default for all inner variant types
     let len = match ast.data.clone() {
-        syn::Data::Enum(enum_item) => enum_item.variants.len(),
+        syn::Data::Enum(enum_item) => {
+            // println!("{:#?}", enum_item.variants);
+            enum_item.variants.len()
+        },
         _ => panic!("EnumVariantCount only works on Enums"),
     };
     let variants = match ast.data {
-        syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| v.ident),
+        syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
+            // let variant_ident = v.ident;
+            match v.fields {
+                syn::Fields::Named(_) => todo!(),
+                syn::Fields::Unnamed(_fields_unnamed) => {
+                    todo!()
+                    // if fields_unnamed.unnamed.len() != 1 {
+                    //     panic!("fields_unnamed.unnamed.len() != 1");
+                    // }
+
+                    // quote! {
+
+                    // }
+                },
+                syn::Fields::Unit => v.ident,
+            }
+        }),
         _ => panic!("EnumIntoArray only works on enums"),
     };
     let name = &ast.ident;
