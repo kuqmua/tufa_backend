@@ -32,7 +32,7 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
             match v.fields {
                 syn::Fields::Named(_) => todo!(),
                 syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
-                syn::Fields::Unit => quote! { #variant_ident, },
+                syn::Fields::Unit => quote! { #variant_ident },
             }
         }),
         _ => panic!("EnumIntoArray only works on enums"),
