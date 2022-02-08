@@ -20,7 +20,7 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
             let variant_ident = v.ident;
             match v.fields {
                 syn::Fields::Named(_) => todo!(),
-                syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()), },
+                syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
                 syn::Fields::Unit => quote! { #variant_ident, },
             }
         }),
