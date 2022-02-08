@@ -3,10 +3,9 @@ use std::collections::HashMap;
 extern crate toml;
 
 use dotenv::dotenv;
+use init_from_env::InitFromEnv;
 
 use crate::helpers::resource::Resource;
-
-use gen_enum_without_values::GenEnumWithoutValuesDerive;
 
 use strum_macros::EnumIter;
 
@@ -15,7 +14,7 @@ use convert_case::Casing;
 
 use strum::IntoEnumIterator;
 
-#[derive(Debug, Clone, InitFromEnv, GenEnumWithoutValuesDerive)] //Default,//serde_derive::Serialize, serde_derive::Deserialize
+#[derive(Debug, Clone, InitFromEnv, GenEnumDerive)]
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
