@@ -9,7 +9,6 @@ use std::collections::HashMap;
 use strum::IntoEnumIterator;
 use strum_macros::Display;
 
-use crate::traits::enum_extention::EnumExtenstion;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 use crate::config_mods::lazy_static_config::CONFIG;

@@ -6,7 +6,6 @@ use crate::tests::tests_constants::DOCKER_COMPOSE_FILE_NAME;
 use crate::tests::tests_constants::PATH_TO_DOCKER_COMPOSE_FILE;
 
 use crate::config_mods::config_struct::ConfigStructEnum;
-use crate::traits::enum_extention::EnumExtenstion;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 #[test]

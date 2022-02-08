@@ -4,8 +4,6 @@ use std::path::Path;
 
 use strum::IntoEnumIterator;
 
-use crate::traits::enum_extention::EnumExtenstion;
-
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;

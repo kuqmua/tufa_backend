@@ -6,8 +6,6 @@ use dotenv::dotenv;
 
 use crate::helpers::resource::Resource;
 
-use crate::traits::enum_extention::EnumExtenstion;
-
 use gen_enum_without_values::GenEnumWithoutValuesDerive;
 
 use strum_macros::EnumIter;
