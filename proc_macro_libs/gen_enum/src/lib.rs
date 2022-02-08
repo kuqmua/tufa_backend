@@ -36,9 +36,8 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
         _ => panic!("GenEnum only works on Struct"),
     };
     let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
-    // , EnumExtenstion
     let gen = quote! {
-         #[derive(Debug)]
+        #[derive(Debug, EnumIter, strum_macros::Display, EnumExtenstion)]
         pub enum #enum_ident {
             #(#generated)*
         }
