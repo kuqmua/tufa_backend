@@ -40,20 +40,20 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
     let name = &ast.ident;
     let gen = quote! {
         impl #name {
-            fn get_length() -> usize {
+            pub fn get_length() -> usize {
                 #len
             }
-            fn into_array() -> [#name; #len] {
+            pub fn into_array() -> [#name; #len] {
                 [ #(#name::#variants),* ]
             }
-            fn into_vec() -> Vec<Self> {
+            pub fn into_vec() -> Vec<Self> {
                 let mut self_vec = Vec::with_capacity(Self::get_length());
                 for self_variant in Self::iter() {
                     self_vec.push(self_variant);
                 }
                 self_vec
             }
-            fn into_string_name_and_variant_hashmap() -> HashMap<String, Self> {
+            pub fn into_string_name_and_variant_hashmap() -> HashMap<String, Self> {
                 let mut variants_hashmap: HashMap<String, Self> =
                     HashMap::with_capacity(Self::get_length());
                 for variant in Self::iter() {
@@ -62,17 +62,17 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
                 variants_hashmap
             }
             #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
-            fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
+            pub fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
                 let mut variants_vec = Vec::with_capacity(Self::get_length());
                 for variant in Self::iter() {
                     variants_vec.push((format!("{}", variant), variant));
                 }
                 variants_vec
             }
-            fn to_upper_snake_case(&self) -> String {
+            pub fn to_upper_snake_case(&self) -> String {
                 format!("{:?}", self).to_case(Case::Snake).to_uppercase()
             }
-            fn to_lower_snake_case(&self) -> String {
+            pub fn to_lower_snake_case(&self) -> String {
                 format!("{:?}", self).to_case(Case::Snake).to_lowercase()
             }
         }
