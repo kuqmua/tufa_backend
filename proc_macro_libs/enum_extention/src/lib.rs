@@ -2,6 +2,17 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn;
 
+/// require this
+/// use std::collections::HashMap;
+
+/// use convert_case::Casing;
+/// use convert_case::Case;
+
+/// use strum::IntoEnumIterator;
+
+/// use strum_macros::Display;
+/// use strum_macros::EnumIter;
+
 #[proc_macro_derive(EnumExtenstion)]
 pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
     //it only supported for enums without values
