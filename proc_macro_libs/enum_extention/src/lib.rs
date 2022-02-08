@@ -41,8 +41,8 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
             fn get_length() -> usize {
                 #len
             }
-            fn into_array() -> &'static[#name] {
-                &[ #(#name::#variants),* ]
+            fn into_array() -> [#name; #len] {
+                [ #(#name::#variants),* ]
             }
             fn into_vec() -> Vec<Self> {
                 let mut self_vec = Vec::with_capacity(Self::get_length());
