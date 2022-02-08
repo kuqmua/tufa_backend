@@ -7,6 +7,12 @@ pub enum Resource {
     PostgreSql,
 }
 
+impl Default for Resource {
+    fn default() -> Self {
+        Self::Local
+    }
+}
+
 pub struct ParseResourceError {
     incorrect_str: String,
 }
