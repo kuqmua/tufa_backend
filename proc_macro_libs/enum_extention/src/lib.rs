@@ -17,20 +17,11 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
     };
     let variants = match ast.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
-            // let variant_ident = v.ident;
+            let variant_ident = v.ident;
             match v.fields {
                 syn::Fields::Named(_) => todo!(),
-                syn::Fields::Unnamed(_fields_unnamed) => {
-                    todo!()
-                    // if fields_unnamed.unnamed.len() != 1 {
-                    //     panic!("fields_unnamed.unnamed.len() != 1");
-                    // }
-
-                    // quote! {
-
-                    // }
-                },
-                syn::Fields::Unit => v.ident,
+                syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
+                syn::Fields::Unit => quote! { #variant_ident, },
             }
         }),
         _ => panic!("EnumIntoArray only works on enums"),
