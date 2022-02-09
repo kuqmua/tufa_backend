@@ -14,7 +14,7 @@ use convert_case::Casing;
 
 use strum::IntoEnumIterator;
 
-#[derive(Debug, Clone, InitFromEnv, GenEnumDerive)]
+#[derive(Debug, Clone, InitFromEnv, GenEnumDerive, Default, PartialEq)]
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
