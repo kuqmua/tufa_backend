@@ -1,11 +1,25 @@
 extern crate toml;
 
-use crate::config_mods::config_error_mods::config_error::ConfigError;
-
 use crate::config_mods::config_struct::ConfigStruct;
 
+#[derive(Debug)]
+pub struct WrapConfigChecksError {
+    pub source: Box<WrapConfigChecksErrorEnum>,
+}
+
+#[derive(Debug)]
+pub enum WrapConfigChecksErrorEnum {
+    //todo
+    Somthing {
+        source: bool,//temp
+        file: &'static str,
+        line: u32,
+        column: u32,
+    },
+}
+
 impl ConfigStruct {
-    pub fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, ConfigError> {
+    pub fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, WrapConfigChecksError> {
         // if !config_handle.github_authorization.github_name.is_empty() {
         //     let error: Result<ConfigStruct, ConfigError> =
         //         Err(ConfigError::Message("github_name is not valid".to_string()));
