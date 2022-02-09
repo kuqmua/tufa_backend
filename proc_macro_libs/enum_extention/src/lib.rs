@@ -20,10 +20,7 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
         syn::parse(input).expect("derive_enum_extension syn::parse(input) failed");
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
     let len = match ast.data.clone() {
-        syn::Data::Enum(enum_item) => {
-            // println!("{:#?}", enum_item.variants);
-            enum_item.variants.len()
-        },
+        syn::Data::Enum(enum_item) => enum_item.variants.len(),
         _ => panic!("EnumVariantCount only works on Enums"),
     };
     let variants = match ast.data {
