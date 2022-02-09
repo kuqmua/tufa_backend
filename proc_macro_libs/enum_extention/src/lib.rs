@@ -30,7 +30,17 @@ pub fn derive_enum_extension(input: TokenStream) -> TokenStream {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
             let variant_ident = v.ident;
             match v.fields {
-                syn::Fields::Named(_) => todo!(),
+                syn::Fields::Named(fields_named) => {
+                    let generated = fields_named.named.into_iter().map(|field| {
+                        let field_ident = field.ident;
+                        quote! { #field_ident: Default::default() }
+                    });
+                    quote! { 
+                        #variant_ident {
+                            #(#generated),*
+                        }
+                     }
+                },
                 syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
                 syn::Fields::Unit => quote! { #variant_ident },
             }
