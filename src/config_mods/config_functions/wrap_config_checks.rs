@@ -1,5 +1,7 @@
 extern crate toml;
 
+use crate::traits::wrap_config_checks_trait::WrapConfigChecks;
+
 use crate::config_mods::config_struct::ConfigStruct;
 
 #[derive(Debug)]
@@ -18,20 +20,20 @@ pub enum WrapConfigChecksErrorEnum {
     },
 }
 
-impl ConfigStruct {
-    pub fn wrap_config_checks(config_handle: ConfigStruct) -> Result<Self, WrapConfigChecksError> {
-        // if !config_handle.github_authorization.github_name.is_empty() {
+impl WrapConfigChecks for ConfigStruct {
+    fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
+        // if !config.github_authorization.github_name.is_empty() {
         //     let error: Result<ConfigStruct, ConfigError> =
         //         Err(ConfigError::Message("github_name is not valid".to_string()));
         //     drop(error);
         // }
-        // if !config_handle.github_authorization.github_token.is_empty() {
+        // if !config.github_authorization.github_token.is_empty() {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
         //         "github_token is not valid".to_string(),
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .reddit_authorization
         //     .reddit_user_agent
         //     .is_empty()
@@ -41,7 +43,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .reddit_authorization
         //     .reddit_client_id
         //     .is_empty()
@@ -51,7 +53,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .reddit_authorization
         //     .reddit_client_secret
         //     .is_empty()
@@ -61,7 +63,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .reddit_authorization
         //     .reddit_username
         //     .is_empty()
@@ -71,7 +73,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .reddit_authorization
         //     .reddit_password
         //     .is_empty()
@@ -81,7 +83,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         //     .mongo_params.mongo_authorization
         //     .mongo_login
         //     .is_empty()
@@ -91,7 +93,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         // .mongo_params
         //     .mongo_authorization
         //     .mongo_password
@@ -102,7 +104,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         // .mongo_params
         //     .mongo_authorization
         //     .mongo_ip
@@ -113,7 +115,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         // .mongo_params
         //     .mongo_authorization
         //     .mongo_port
@@ -124,7 +126,7 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if !config_handle
+        // if !config
         // .mongo_params
         //     .mongo_authorization
         //     .mongo_params
@@ -136,13 +138,13 @@ impl ConfigStruct {
         //     drop(error);
         // }
         // //
-        // if config_handle.mongo_params.log_file_extension.is_empty() {
+        // if config.mongo_params.log_file_extension.is_empty() {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
         //         "log_file_extension is not empty".to_string(),
         //     ));
         //     drop(error);
         // }
-        // if config_handle
+        // if config
         //     .mongo_params
         //     .path_to_provider_link_parts_folder
         //     .is_empty()
@@ -153,66 +155,66 @@ impl ConfigStruct {
         //     ));
         //     drop(error);
         // }
-        // if config_handle
+        // if config
         //     .mongo_params
-        //     .providers_db_collection_document_field_name_handle
+        //     .providers_db_collection_document_field_name
         //     .is_empty()
         // {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //         "db_collection_document_field_name_handle is empty"
+        //         "db_collection_document_field_name is empty"
         //             .to_string(),
         //     ));
         //     drop(error);
         // }
-        // if config_handle
+        // if config
         //     .mongo_params
-        //     .providers_db_collection_handle_second_part
+        //     .providers_db_collection_second_part
         //     .is_empty()
         // {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //         "db_collection_handle_second_part is empty"
+        //         "db_collection_second_part is empty"
         //             .to_string(),
         //     ));
         //     drop(error);
         // }
-        // if config_handle
+        // if config
         //     .mongo_params
-        //     .providers_db_name_handle
+        //     .providers_db_name
         //     .is_empty()
         // {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //         "db_name_handle is empty".to_string(),
+        //         "db_name is empty".to_string(),
         //     ));
         //     drop(error);
         // }
-        // if config_handle
+        // if config
         //     .params
-        //     .unhandled_success_handled_success_are_there_items_initialized_posts_dir
+        //     .unhandled_successd_success_are_there_items_initialized_posts_dir
         //     .is_empty()
         // {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
-        //             "unhandled_success_handled_success_are_there_items_initialized_posts_dir is empty".to_string(),
+        //             "unhandled_successd_success_are_there_items_initialized_posts_dir is empty".to_string(),
         //         ));
         //     drop(error);
         // }
-        // if config_handle.params.warning_logs_directory_name.is_empty() {
+        // if config.params.warning_logs_directory_name.is_empty() {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
         //         "warning_logs_directory_name is empty".to_string(),
         //     ));
         //     drop(error);
         // }
-        // if config_handle.params.links_limit_providers > 0 {
+        // if config.params.links_limit_providers > 0 {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
         //         "links_limit_providers <= 0".to_string(),
         //     ));
         //     drop(error);
         // }
-        // if !ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config_handle) {
+        // if !ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&config) {
         //     let error: Result<ConfigStruct, ConfigError> = Err(ConfigError::Message(
         //         "providers_links_limits are not valid".to_string(),
         //     ));
         //     drop(error);
         // }
-        Ok(config_handle)
+        Ok(self)
     }
 }
