@@ -111,6 +111,7 @@ pub enum WrapConfigChecksErrorEnum {
 
 impl WrapConfigChecks for ConfigStruct {
     fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
+        //todo: check ip pattern. check port pattern
         if !self.github_name.is_empty() {
                 return Err(WrapConfigChecksError {
                     source: Box::new(WrapConfigChecksErrorEnum::GithubName {
