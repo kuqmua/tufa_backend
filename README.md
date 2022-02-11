@@ -113,6 +113,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 ### how to install rust in wsl2
+sudo apt install curl
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh <br/>
 sudo apt install build-essential <br/>
 source $HOME/.cargo/env <br/>
