@@ -125,10 +125,12 @@ source $HOME/.cargo/env <br/>
 source ~/.profile <br/>
 
 ### how to add ssh key on wsl2
-cd ~/.ssh
-ls
-ssh-keygen -o
-cat ~/.ssh/id_rsa.pub
+ssh-keygen  <br/>
+eval "$(ssh-agent -s)"  <br/>
+cd ~/.ssh  <br/>
+ls  <br/>
+ssh-keygen -o  <br/>
+cat ~/.ssh/id_rsa.pub  <br/>
 
 ### how to install docker on wsl2
 sudo apt-get update
