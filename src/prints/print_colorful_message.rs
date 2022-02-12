@@ -8,9 +8,8 @@ use crate::prints::print_type_enum::PrintType;
 pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     print_type: PrintType,
-    file: &'static str,
-    line: u32,
-    column: u32,
+    sources: Vec<String>,
+    github_sources_links: Vec<String>,
     message: String,
 ) {
     if CONFIG.is_prints_enabled {
@@ -28,9 +27,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
                         CONFIG.is_info_prints_enabled_arxiv,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -46,9 +44,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
                         CONFIG.is_info_prints_enabled_biorxiv,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -64,9 +61,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_github,
                         CONFIG.is_info_prints_enabled_github,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -82,9 +78,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
                         CONFIG.is_info_prints_enabled_habr,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -100,9 +95,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
                         CONFIG.is_info_prints_enabled_medrxiv,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -118,9 +112,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
                         CONFIG.is_info_prints_enabled_reddit,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -136,9 +129,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
                         CONFIG.is_info_prints_enabled_twitter,
                         print_type,
-                        file,
-                        line,
-                        column,
+                        sources,
+                        github_sources_links,
                         message,
                     );
                 }
@@ -149,13 +141,11 @@ pub fn print_colorful_message(
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -168,13 +158,11 @@ pub fn print_colorful_message(
                             CONFIG.warning_high_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -187,13 +175,11 @@ pub fn print_colorful_message(
                             CONFIG.warning_low_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -206,13 +192,11 @@ pub fn print_colorful_message(
                             CONFIG.success_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -225,13 +209,11 @@ pub fn print_colorful_message(
                             CONFIG.partial_success_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -244,13 +226,11 @@ pub fn print_colorful_message(
                             CONFIG.time_measurement_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -263,13 +243,11 @@ pub fn print_colorful_message(
                             CONFIG.cleaning_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -279,13 +257,11 @@ pub fn print_colorful_message(
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
                         println!(
-                            "{}{}{}{}{}{}\n{}",
-                            rgb_color.paint("file: "),
-                            rgb_color.paint(file),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(line.to_string()),
-                            rgb_color.paint(":"),
-                            rgb_color.paint(column.to_string()),
+                            "{}{:#?}{}{:#?}\n{}",
+                            rgb_color.paint("trace: "),
+                            sources,
+                            rgb_color.paint("github source trace: "),
+                            github_sources_links,
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -308,9 +284,8 @@ fn handle_provider_prints(
     is_cleaning_warning_logs_directory_enabled_provider: bool,
     is_info_prints_enabled_provider: bool,
     print_type: PrintType,
-    file: &'static str,
-    line: u32,
-    column: u32,
+    sources: Vec<String>,
+    github_sources_links: Vec<String>,
     message: String,
 ) {
     if is_prints_enabled_provider {
@@ -320,13 +295,11 @@ fn handle_provider_prints(
                     let rgb_color: ansi_term::Colour =
                         RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -340,13 +313,11 @@ fn handle_provider_prints(
                         CONFIG.warning_high_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -359,13 +330,11 @@ fn handle_provider_prints(
                         CONFIG.warning_low_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -378,13 +347,11 @@ fn handle_provider_prints(
                         CONFIG.success_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -399,13 +366,11 @@ fn handle_provider_prints(
                         CONFIG.partial_success_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -418,13 +383,11 @@ fn handle_provider_prints(
                         CONFIG.time_measurement_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -439,13 +402,11 @@ fn handle_provider_prints(
                         CONFIG.cleaning_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -457,14 +418,12 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    println!(
-                        "{}{}{}{}{}{}\n{}",
-                        rgb_color.paint("file: "),
-                        rgb_color.paint(file),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(line.to_string()),
-                        rgb_color.paint(":"),
-                        rgb_color.paint(column.to_string()),
+                    eprintln!(
+                        "{}{:#?}{}{:#?}\n{}",
+                        rgb_color.paint("trace: "),
+                        sources,
+                        rgb_color.paint("github source trace: "),
+                        github_sources_links,
                         rgb_color.bold().paint(message)
                     );
                 }
