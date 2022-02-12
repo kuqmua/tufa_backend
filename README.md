@@ -40,7 +40,9 @@ sudo docker-compose down
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_backend/mongodb_volume:/data/db -d mongo:latest
 
 ### add user in mondodb
+sudo docker ps -a
 sudo docker exec -it MONGO_CONTAINER_ID bash
+("MONGO_CONTAINER_ID" will be written after "sudo docker ps -a" execution)
 inside container: 
 mongo
 inside mongo cli:
