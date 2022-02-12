@@ -35,8 +35,8 @@ pub struct ConfigStruct {
 
     pub mongo_login: String,
     pub mongo_password: String,
-    pub mongo_ip: String,//todo: 4x u8 
-    pub mongo_port: String,//todo: u16
+    pub mongo_ip: String,   //todo: 4x u8
+    pub mongo_port: String, //todo: u16
     pub mongo_params: String,
 
     pub mongo_providers_link_parts_db_name: String,
@@ -102,8 +102,8 @@ pub struct ConfigStruct {
 
     pub postgres_login: String,
     pub postgres_password: String,
-    pub postgres_ip: String,//todo: 4x u8 
-    pub postgres_port: String,//todo: u16
+    pub postgres_ip: String,   //todo: 4x u8
+    pub postgres_port: String, //todo: u16
     pub postgres_db: String,
 
     pub is_postgres_initialization_enabled: bool,
@@ -141,14 +141,14 @@ pub struct ConfigStruct {
     pub is_cleaning_warning_logs_directory_enabled_reddit: bool,
     pub is_cleaning_warning_logs_directory_enabled_twitter: bool,
 
-    pub starting_check_link: String,//todo add browser url limit check
-    pub check_link_arxiv: String,//todo add browser url limit check
-    pub check_link_biorxiv: String,//todo add browser url limit check
-    pub check_link_github: String,//todo add browser url limit check
-    pub check_link_habr: String,//todo add browser url limit check
-    pub check_link_medrxiv: String,//todo add browser url limit check
-    pub check_link_reddit: String,//todo add browser url limit check
-    pub check_link_twitter: String,//todo add browser url limit check
+    pub starting_check_link: String, //todo add browser url limit check
+    pub check_link_arxiv: String,    //todo add browser url limit check
+    pub check_link_biorxiv: String,  //todo add browser url limit check
+    pub check_link_github: String,   //todo add browser url limit check
+    pub check_link_habr: String,     //todo add browser url limit check
+    pub check_link_medrxiv: String,  //todo add browser url limit check
+    pub check_link_reddit: String,   //todo add browser url limit check
+    pub check_link_twitter: String,  //todo add browser url limit check
 
     pub is_enabled_providers: bool,
     pub is_enabled_arxiv: bool,

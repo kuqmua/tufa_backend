@@ -28,7 +28,7 @@ mod fetch {
 pub mod config_mods {
     pub mod config_functions {
         pub mod check_valid_i64_providers_links_limits_for_mongo;
-        pub mod wrap_config_checks;//stay
+        pub mod wrap_config_checks; //stay
     }
     pub mod config_struct;
     pub mod lazy_static_config;
@@ -129,10 +129,10 @@ mod tests {
     }
 }
 mod traits {
-    pub mod wrap_config_checks_trait;
     pub mod git_info_trait;
     pub mod provider_kind_from_config_trait;
     pub mod provider_kind_trait;
+    pub mod wrap_config_checks_trait;
 }
 mod check_new_posts_threads_parts;
 mod entry;

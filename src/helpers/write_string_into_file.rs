@@ -11,4 +11,3 @@ pub fn write_string_into_file(path: &Path, stringified_json: String) -> Result<(
     log_file.sync_all()?;
     Ok(())
 }
-
