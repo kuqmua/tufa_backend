@@ -12,6 +12,7 @@ use crate::postgres_integration::postgres_check_availability::PostgresCheckAvail
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 
 use crate::helpers::get_git_commit_string::get_git_commit_string;
+use crate::helpers::where_was::WhereWas;
 use crate::traits::git_info_trait::GitInfo;
 
 #[allow(clippy::enum_variant_names)]
@@ -21,48 +22,34 @@ pub enum CheckNetWrapperErrorEnum {
         net: CheckNetAvailabilityErrorEnum,
         postgres: PostgresCheckAvailabilityError,
         mongo: MongoCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NetAndPostgres {
         net: CheckNetAvailabilityErrorEnum,
         postgres: PostgresCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NetAndMongo {
         net: CheckNetAvailabilityErrorEnum,
         mongo: MongoCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     PostgresAndMongo {
         postgres: PostgresCheckAvailabilityError,
         mongo: MongoCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     Net {
         source: CheckNetAvailabilityErrorEnum,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     Postgres {
         source: PostgresCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     Mongo {
         source: MongoCheckAvailabilityError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -82,53 +69,67 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
                 net: *net_e,
                 postgres: postgres_e,
                 mongo: mongo_e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }))
         }
         (Err(net_e), Err(postgres_e), Ok(_)) => {
             Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgres {
                 net: *net_e,
                 postgres: postgres_e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }))
         }
         (Err(net_e), Ok(_), Err(mongo_e)) => Err(Box::new(CheckNetWrapperErrorEnum::NetAndMongo {
             net: *net_e,
             mongo: mongo_e,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         })),
         (Ok(_), Err(postgres_e), Err(mongo_e)) => {
             Err(Box::new(CheckNetWrapperErrorEnum::PostgresAndMongo {
                 postgres: postgres_e,
                 mongo: mongo_e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }))
         }
         (Err(e), Ok(_), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Net {
             source: *e,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         })),
         (Ok(_), Err(e), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Postgres {
             source: e,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         })),
         (Ok(_), Ok(_), Err(e)) => Err(Box::new(CheckNetWrapperErrorEnum::Mongo {
             source: e,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         })),
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
     }

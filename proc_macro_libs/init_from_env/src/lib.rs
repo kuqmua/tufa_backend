@@ -105,9 +105,11 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                             source: e,
                                             env_var_name: #env_var_name_as_screaming_snake_case_string,
                                             field_name: #env_var_name_as_snake_case_string,
-                                            file: file!(),
-                                            line: line!(),
-                                            column: column!(),
+                                            where_was: WhereWas {
+                                                file: file!(),
+                                                line: line!(),
+                                                column: column!(),
+                                            },
                                         }
                                     )
                                 ),
@@ -126,9 +128,11 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                                     env_var_name: #env_var_name_as_screaming_snake_case_string,
                                                     field_name: #env_var_name_as_snake_case_string,
                                                     expected_env_var_type: #enum_variant_type_as_string,
-                                                    file: file!(),
-                                                    line: line!(),
-                                                    column: column!(),
+                                                    where_was: WhereWas {
+                                                        file: file!(),
+                                                        line: line!(),
+                                                        column: column!(),
+                                                    },
                                                 }
                                             )
                                         ),
@@ -156,15 +160,13 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 ),
             };
             quote! {
-                #enum_variant_ident {
-                    source: std::env::VarError,
-                    env_var_name: &'static str,
-                    field_name:  &'static str,
-                    file: &'static str,
-                    line: u32,
-                    column: u32,
-                },
-            }
+                    #enum_variant_ident {
+                        source: std::env::VarError,
+                        env_var_name: &'static str,
+                        field_name:  &'static str,
+            where_was: WhereWas,
+                    },
+                }
         }),
         _ => panic!("InitFromEnv only works on Struct"),
     };
@@ -178,15 +180,13 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 ),
             };
             quote! {
-                #enum_variant_ident {
-                    env_var_name: &'static str,
-                    field_name:  &'static str,
-                    expected_env_var_type: &'static str,
-                    file: &'static str,
-                    line: u32,
-                    column: u32,
-                },
-            }
+                    #enum_variant_ident {
+                        env_var_name: &'static str,
+                        field_name:  &'static str,
+                        expected_env_var_type: &'static str,
+            where_was: WhereWas,
+                    },
+                }
         }),
         _ => panic!("InitFromEnv only works on Struct"),
     };

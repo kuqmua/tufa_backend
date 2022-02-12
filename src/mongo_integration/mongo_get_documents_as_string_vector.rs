@@ -1,6 +1,8 @@
 use futures::stream::TryStreamExt;
 use mongodb::{bson::Document, Collection};
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoGetDocumentsAsStringVectorError {
     pub source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
@@ -10,27 +12,19 @@ pub struct MongoGetDocumentsAsStringVectorError {
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {
     CollectionAggregate {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CursorTryNext {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     WrongBsonType {
         source: mongodb::bson::Bson,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NoKeyInDocument {
         source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -40,9 +34,11 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
         MongoGetDocumentsAsStringVectorError {
             source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }
     }
@@ -58,9 +54,11 @@ pub async fn mongo_get_documents_as_string_vector(
             source: Box::new(
                 MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
             ),
         }),
@@ -74,9 +72,11 @@ pub async fn mongo_get_documents_as_string_vector(
                             source: Box::new(
                                 MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
                                     source: db_collection_document_field_name_handle.to_string(),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
+                                    where_was: WhereWas {
+                                        file: file!(),
+                                        line: line!(),
+                                        column: column!(),
+                                    },
                                 },
                             ),
                         })
@@ -90,9 +90,11 @@ pub async fn mongo_get_documents_as_string_vector(
                                 source: Box::new(
                                     MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                         source: other_bson_type.clone(),
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
+                                        where_was: WhereWas {
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     },
                                 ),
                             });

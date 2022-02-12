@@ -7,12 +7,12 @@ use crate::providers::provider_kind_impl::functions::get_link_parts_from_local_j
 
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    where_was: WhereWas,
 }
 
 #[deny(clippy::indexing_slicing)]
@@ -46,9 +46,11 @@ pub async fn get_local_providers_link_parts(
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
             source: Box::new(errors_hashmap),
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         });
     }
     Ok(success_hashmap)

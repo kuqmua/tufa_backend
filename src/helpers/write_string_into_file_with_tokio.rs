@@ -2,6 +2,8 @@ use std::fmt;
 use std::path::Path;
 
 use tokio::io::AsyncWriteExt;
+
+use crate::helpers::where_was::WhereWas;
 //
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
@@ -12,21 +14,15 @@ pub struct WriteStringIntoFileWithTokioError {
 pub enum WriteStringIntoFileWithTokioErrorEnum {
     StdFsCreateDirAll {
         source: std::io::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     TokioFsFileOpen {
         source: std::io::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     FileWriteAll {
         source: std::io::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -39,9 +35,11 @@ pub async fn write_string_into_file_with_tokio(
             return Err(WriteStringIntoFileWithTokioError {
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -50,9 +48,11 @@ pub async fn write_string_into_file_with_tokio(
         Err(e) => Err(WriteStringIntoFileWithTokioError {
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(mut file) => {
@@ -60,9 +60,11 @@ pub async fn write_string_into_file_with_tokio(
                 return Err(WriteStringIntoFileWithTokioError {
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }

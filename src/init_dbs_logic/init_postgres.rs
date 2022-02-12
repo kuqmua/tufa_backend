@@ -3,6 +3,8 @@ use std::time::Duration;
 
 use sqlx::postgres::PgPoolOptions;
 
+use crate::helpers::where_was::WhereWas;
+
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
@@ -26,39 +28,27 @@ pub struct PostgresInitError {
 pub enum PostgresInitErrorEnum {
     EstablishConnection {
         source: sqlx::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CreateTableQueries {
         source: PostgresCreateProvidersDbsError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CheckProviderLinksTablesAreEmpty {
         source: PostgresCheckProvidersLinkPartsTablesEmptyError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     DeleteAllFromProvidersTables {
         source: PostgresDeleteAllFromProvidersTablesError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
         source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     InsertLinkPartsIntoProvidersTables {
         source: PostgresInsertLinkPartsIntoProvidersTablesError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -75,9 +65,11 @@ pub async fn init_postgres(
         Err(e) => Err(PostgresInitError {
             source: Box::new(PostgresInitErrorEnum::EstablishConnection {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(pool) => {
@@ -90,9 +82,11 @@ pub async fn init_postgres(
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::CreateTableQueries {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }
@@ -105,9 +99,11 @@ pub async fn init_postgres(
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }
@@ -120,9 +116,11 @@ pub async fn init_postgres(
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }
@@ -149,9 +147,11 @@ pub async fn init_postgres(
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }

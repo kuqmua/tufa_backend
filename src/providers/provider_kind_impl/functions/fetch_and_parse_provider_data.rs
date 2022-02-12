@@ -20,19 +20,17 @@ use crate::prints::print_type_enum::PrintType;
 
 use crate::traits::git_info_trait::GitInfo;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
         source: Vec<(String, FetchLinkError)>, //link, error
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NoItems {
         source: Vec<(String, NoItemsError)>, //link, error
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -78,9 +76,7 @@ impl ProviderKind {
             for (link, e) in &async_fetch_links_error_vec {
                 if let FetchLinkErrorEnum::StatusCode {
                     source,
-                    file: _,
-                    line: _,
-                    column: _,
+                    where_was: _,
                 } = *e.source
                 {
                     handle_error_status_code(source, link);
@@ -89,9 +85,11 @@ impl ProviderKind {
             return Err(Box::new(
                 FetchAndParseProviderDataErrorEnum::AsyncFetchLinks {
                     source: async_fetch_links_error_vec,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
             ));
         }
@@ -108,9 +106,11 @@ impl ProviderKind {
         if !no_items_error_vec.is_empty() {
             return Err(Box::new(FetchAndParseProviderDataErrorEnum::NoItems {
                 source: no_items_error_vec,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }));
         }
         Ok(success_vec)

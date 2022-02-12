@@ -14,12 +14,12 @@ use crate::helpers::get_git_commit_string::get_git_commit_string;
 
 use crate::traits::git_info_trait::GitInfo;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug, GitInfoDerive)]
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    where_was: WhereWas,
 }
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
@@ -55,9 +55,11 @@ pub async fn mongo_insert_data(
     if !error_hashmap.is_empty() {
         return Err(Box::new(MongoInsertDataError {
             source: error_hashmap,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         }));
     }
     Ok(())

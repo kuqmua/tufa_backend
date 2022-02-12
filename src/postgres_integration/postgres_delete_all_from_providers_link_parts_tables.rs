@@ -7,12 +7,12 @@ use futures::future::join_all;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    where_was: WhereWas,
 }
 
 pub async fn postgres_delete_all_from_providers_link_parts_tables(
@@ -36,9 +36,11 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
     if !delete_from_tables_error_hashmap.is_empty() {
         return Err(PostgresDeleteAllFromProvidersTablesError {
             source: Box::new(delete_from_tables_error_hashmap),
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         });
     }
     Ok(())

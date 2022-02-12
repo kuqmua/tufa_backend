@@ -2,25 +2,21 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen {
         source: std::io::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     TokioIoAsyncReadExtReadToEnd {
         source: std::io::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     SerdeJsonFromSlice {
         source: serde_json::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -33,9 +29,11 @@ impl ProviderKind {
             Err(e) => Err(Box::new(
                 GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
             )),
             Ok(mut file) => {
@@ -45,9 +43,11 @@ impl ProviderKind {
                     return Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
                     ));
                 }
@@ -55,9 +55,11 @@ impl ProviderKind {
                     Err(e) => Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
                     )),
                     Ok(file_content_as_struct) => Ok(file_content_as_struct.data),

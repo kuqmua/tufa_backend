@@ -13,6 +13,8 @@ use crate::{
     providers::provider_kind_enum::ProviderKind,
 };
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {
     pub source: Box<MongoGetProviderLinkPartsErrorEnum>,
@@ -22,21 +24,15 @@ pub struct MongoGetProviderLinkPartsError {
 pub enum MongoGetProviderLinkPartsErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     MongoGetDocumentsAsStringVector {
         source: MongoGetDocumentsAsStringVectorError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -50,18 +46,22 @@ impl ProviderKind {
             Err(e) => Err(MongoGetProviderLinkPartsError {
                 source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client_options) => match Client::with_options(client_options) {
                 Err(e) => Err(MongoGetProviderLinkPartsError {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 }),
                 Ok(client) => {
@@ -78,9 +78,11 @@ impl ProviderKind {
                             source: Box::new(
                                 MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector {
                                     source: e,
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
+                       where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
                         })}),
                         Ok(vec_of_strings) => Ok(vec_of_strings),
                     }

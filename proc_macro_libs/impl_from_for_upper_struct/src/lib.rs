@@ -53,9 +53,11 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
                                 source: Box::new(#ident::#variant(
                                     error,
                                 )),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                                where_was: WhereWas {
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             }
                         }
                     }

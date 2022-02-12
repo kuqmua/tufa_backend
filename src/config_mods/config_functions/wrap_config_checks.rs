@@ -4,6 +4,8 @@ use crate::traits::wrap_config_checks_trait::WrapConfigChecks;
 
 use crate::config_mods::config_struct::ConfigStruct;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct WrapConfigChecksError {
     pub source: Box<WrapConfigChecksErrorEnum>,
@@ -11,102 +13,22 @@ pub struct WrapConfigChecksError {
 
 #[derive(Debug)]
 pub enum WrapConfigChecksErrorEnum {
-    GithubName {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    GithubToken {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    RedditUserAgent {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    RedditClientId {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    RedditClientSecret {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    RedditUsername {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    RedditPassword {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    MongoLogin {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    MongoPassword {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    MongoIp {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    MongoPort {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    LogFileExtension {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    PathToProviderLinkPartsFolder {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    ProvidersDbCollectionDocumentFieldName {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    WarningLogsDirectoryName {
-        source: String,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
-    LinksLimitProviderse {
-        source: i64,
-        file: &'static str,
-        line: u32,
-        column: u32,
-    },
+    GithubName { source: String, where_was: WhereWas },
+    GithubToken { source: String, where_was: WhereWas },
+    RedditUserAgent { source: String, where_was: WhereWas },
+    RedditClientId { source: String, where_was: WhereWas },
+    RedditClientSecret { source: String, where_was: WhereWas },
+    RedditUsername { source: String, where_was: WhereWas },
+    RedditPassword { source: String, where_was: WhereWas },
+    MongoLogin { source: String, where_was: WhereWas },
+    MongoPassword { source: String, where_was: WhereWas },
+    MongoIp { source: String, where_was: WhereWas },
+    MongoPort { source: String, where_was: WhereWas },
+    LogFileExtension { source: String, where_was: WhereWas },
+    PathToProviderLinkPartsFolder { source: String, where_was: WhereWas },
+    ProvidersDbCollectionDocumentFieldName { source: String, where_was: WhereWas },
+    WarningLogsDirectoryName { source: String, where_was: WhereWas },
+    LinksLimitProviderse { source: i64, where_was: WhereWas },
 }
 
 impl WrapConfigChecks for ConfigStruct {
@@ -116,9 +38,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::GithubName {
                     source: self.github_name,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -126,9 +50,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::GithubToken {
                     source: self.github_token,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -136,9 +62,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditUserAgent {
                     source: self.reddit_user_agent,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -146,9 +74,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditClientId {
                     source: self.reddit_client_id,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -156,9 +86,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditClientSecret {
                     source: self.reddit_client_secret,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -166,9 +98,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditUsername {
                     source: self.reddit_username,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -176,9 +110,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditPassword {
                     source: self.reddit_password,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -186,9 +122,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoLogin {
                     source: self.mongo_login,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -196,9 +134,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoPassword {
                     source: self.mongo_password,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -206,9 +146,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoIp {
                     source: self.mongo_ip,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -216,9 +158,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoPort {
                     source: self.mongo_port,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -226,9 +170,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::LogFileExtension {
                     source: self.log_file_extension,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -236,9 +182,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::PathToProviderLinkPartsFolder {
                     source: self.path_to_provider_link_parts_folder,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -246,9 +194,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::WarningLogsDirectoryName {
                     source: self.warning_logs_directory_name,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -256,9 +206,11 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::LinksLimitProviderse {
                     source: self.links_limit_providers,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }

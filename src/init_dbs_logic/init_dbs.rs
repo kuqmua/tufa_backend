@@ -1,6 +1,8 @@
 use super::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use super::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct InitDbsError {
     pub source: Box<InitDbsErrorEnum>,
@@ -9,9 +11,7 @@ pub struct InitDbsError {
 pub enum InitDbsErrorEnum {
     InitDbsProvidersLinkParts {
         source: InitDbsProvidersLinkPartsError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -21,9 +21,11 @@ pub async fn init_dbs() -> Result<(), InitDbsError> {
         return Err(InitDbsError {
             source: Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         });
     }

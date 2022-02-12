@@ -1,5 +1,7 @@
 use mongodb::{options::ClientOptions, Client};
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoCheckDbIsEmptyError {
     pub source: Box<MongoCheckDbIsEmptyErrorEnum>,
@@ -9,33 +11,23 @@ pub struct MongoCheckDbIsEmptyError {
 pub enum MongoCheckDbIsEmptyErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ListCollectionNames {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NotEmpty {
         source: usize,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     DatabaseDrop {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -48,27 +40,33 @@ pub async fn mongo_check_db_is_empty(
         Err(e) => Err(MongoCheckDbIsEmptyError {
             source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoCheckDbIsEmptyError {
                 source: Box::new(MongoCheckDbIsEmptyErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => match client.database(db_name).list_collection_names(None).await {
                 Err(e) => Err(MongoCheckDbIsEmptyError {
                     source: Box::new(MongoCheckDbIsEmptyErrorEnum::ListCollectionNames {
                         source: e,
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                        where_was: WhereWas {
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 }),
                 Ok(documents_number) => {
@@ -76,9 +74,11 @@ pub async fn mongo_check_db_is_empty(
                         return Err(MongoCheckDbIsEmptyError {
                             source: Box::new(MongoCheckDbIsEmptyErrorEnum::NotEmpty {
                                 source: documents_number.len(),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                                where_was: WhereWas {
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             }),
                         });
                     }

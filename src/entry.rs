@@ -16,6 +16,7 @@ use crate::init_dbs_logic::init_dbs::{init_dbs, InitDbsErrorEnum};
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::helpers::where_was::WhereWas;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
@@ -87,168 +88,168 @@ pub fn entry() {
                 if let Err(e) = runtime.block_on(init_dbs()) {
                     match *e.source {
                         //its only one variant for now. later going to add more
-                        InitDbsErrorEnum::InitDbsProvidersLinkParts { source, file: file1, line: line1, column: column1 } => match *source.source {
-                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, file: file0, line: line0, column: column0 } => {
+                        InitDbsErrorEnum::InitDbsProvidersLinkParts { source, where_was: where_was1 } => match *source.source {
+                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, file: file0, line: line0, column: column0 } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, where_was: where_was0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                            vec![
-                                        format!("{}{}{}", file0, line0, column0),
-                                        format!("{}{}{}", file1, line1, column1),
+                                    vec![
+                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
+                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
                                     ],
                                     vec![
-                                        get_git_source_file_link(file0, line0),
-                                        get_git_source_file_link(file1, line1),
+                                        get_git_source_file_link(where_was0.file, where_was0.line),
+                                        get_git_source_file_link(where_was1.file, where_was1.line),
                                     ],
                                     format!("{:#?}", source),
                                 );

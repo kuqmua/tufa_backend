@@ -2,6 +2,8 @@ use std::collections::HashMap;
 
 use futures::future::join_all;
 
+use crate::helpers::where_was::WhereWas;
+
 use mongodb::{
     bson::{doc, Document},
     error::Error,
@@ -26,27 +28,19 @@ pub struct InitMongoError {
 pub enum InitMongoErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CollectionCountDocumentsOrIsNotEmpty {
         source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     InsertManyError {
         source: HashMap<ProviderKind, Error>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -64,18 +58,22 @@ pub async fn init_mongo(
         Err(e) => Err(InitMongoError {
             source: Box::new(InitMongoErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(InitMongoError {
                 source: Box::new(InitMongoErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -115,9 +113,11 @@ pub async fn init_mongo(
                         source: Box::new(
                             InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
                                 source: error_vec_count_documents,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                                where_was: WhereWas {
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             },
                         ),
                     });
@@ -139,9 +139,11 @@ pub async fn init_mongo(
                     return Err(InitMongoError {
                         source: Box::new(InitMongoErrorEnum::InsertManyError {
                             source: error_vec_insert_many,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         }),
                     });
                 }

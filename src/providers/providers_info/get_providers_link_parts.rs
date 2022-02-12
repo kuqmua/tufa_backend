@@ -12,12 +12,12 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct GetProvidersLinkPartsError {
     pub source: Box<GetProvidersLinkPartsErrorEnum>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    where_was: WhereWas,
 }
 
 #[derive(Debug)]
@@ -36,18 +36,22 @@ pub async fn get_providers_link_parts(
         Resource::Local => match get_local_providers_link_parts().await {
             Err(error_hashmap) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         Resource::Mongodb => match mongo_get_providers_link_parts().await {
             Err(e) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
             Ok(success_hashmap) => Ok(success_hashmap),
         },

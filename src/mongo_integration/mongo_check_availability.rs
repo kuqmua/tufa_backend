@@ -2,6 +2,8 @@ use mongodb::{options::ClientOptions, Client};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoCheckAvailabilityError {
     pub source: Box<MongoCheckAvailabilityErrorEnum>,
@@ -11,21 +13,15 @@ pub struct MongoCheckAvailabilityError {
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ListCollectionNames {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -35,18 +31,22 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
         Err(e) => Err(MongoCheckAvailabilityError {
             source: Box::new(MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoCheckAvailabilityError {
                 source: Box::new(MongoCheckAvailabilityErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -58,9 +58,11 @@ pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckA
                     return Err(MongoCheckAvailabilityError {
                         source: Box::new(MongoCheckAvailabilityErrorEnum::ListCollectionNames {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         }),
                     });
                 }

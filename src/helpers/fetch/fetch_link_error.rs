@@ -1,5 +1,7 @@
 use std::fmt;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug, ImplDisplayDerive)]
 pub struct FetchLinkError {
     pub source: Box<FetchLinkErrorEnum>,
@@ -9,20 +11,14 @@ pub struct FetchLinkError {
 pub enum FetchLinkErrorEnum {
     ReqwestBlockingGet {
         source: reqwest::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     StatusCode {
         source: reqwest::StatusCode,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ResponseText {
         source: reqwest::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }

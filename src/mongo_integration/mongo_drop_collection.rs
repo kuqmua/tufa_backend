@@ -2,6 +2,8 @@ use mongodb::bson::Document;
 use mongodb::Collection;
 use mongodb::{options::ClientOptions, Client};
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoDropCollectionError {
     pub source: Box<MongoDropCollectionErrorEnum>,
@@ -11,21 +13,15 @@ pub struct MongoDropCollectionError {
 pub enum MongoDropCollectionErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     DatabaseDrop {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -39,18 +35,22 @@ pub async fn mongo_drop_collection(
         Err(e) => Err(MongoDropCollectionError {
             source: Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoDropCollectionError {
                 source: Box::new(MongoDropCollectionErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -60,9 +60,11 @@ pub async fn mongo_drop_collection(
                     return Err(MongoDropCollectionError {
                         source: Box::new(MongoDropCollectionErrorEnum::DatabaseDrop {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         }),
                     });
                 }

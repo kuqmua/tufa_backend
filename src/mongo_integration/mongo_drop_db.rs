@@ -1,5 +1,7 @@
 use mongodb::{options::ClientOptions, Client};
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoDropDbError {
     pub source: Box<MongoDropDbErrorEnum>,
@@ -9,21 +11,15 @@ pub struct MongoDropDbError {
 pub enum MongoDropDbErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     DatabaseDrop {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -33,18 +29,22 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
         Err(e) => Err(MongoDropDbError {
             source: Box::new(MongoDropDbErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoDropDbError {
                 source: Box::new(MongoDropDbErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -52,9 +52,11 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                     return Err(MongoDropDbError {
                         source: Box::new(MongoDropDbErrorEnum::DatabaseDrop {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         }),
                     });
                 }

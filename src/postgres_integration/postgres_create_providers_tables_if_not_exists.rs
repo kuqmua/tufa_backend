@@ -7,12 +7,12 @@ use futures::future::join_all;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct PostgresCreateProvidersDbsError {
     pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    where_was: WhereWas,
 }
 
 pub async fn postgres_create_providers_tables_if_not_exists(
@@ -38,9 +38,11 @@ pub async fn postgres_create_providers_tables_if_not_exists(
     if !table_creation_error_hashmap.is_empty() {
         return Err(PostgresCreateProvidersDbsError {
             source: Box::new(table_creation_error_hashmap),
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         });
     }
     Ok(())

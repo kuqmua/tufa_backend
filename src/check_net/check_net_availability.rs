@@ -4,19 +4,17 @@ use crate::check_net::check_status_code::CheckStatusCodeError;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug, GitInfoDerive)]
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     StatusCodeError {
         source: CheckStatusCodeError,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -26,18 +24,22 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
         Err(e) => Err(Box::new(
             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             },
         )),
         Ok(res) => {
             if let Err(e) = check_status_code(res.status()) {
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
                     source: *e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }));
             }
             Ok(())

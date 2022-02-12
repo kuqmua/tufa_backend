@@ -7,6 +7,8 @@ use futures::future::join_all;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
@@ -16,15 +18,11 @@ pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     SelectCount {
         source: HashMap<ProviderKind, sqlx::Error>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NotEmpty {
         source: HashMap<ProviderKind, i64>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -63,9 +61,11 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
             source: Box::new(
                 PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount {
                     source: count_provider_links_tables_error_hashmap,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
             ),
         });
@@ -75,9 +75,11 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
             source: Box::new(
                 PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty {
                     source: provider_links_tables_not_empty_error_hashmap,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
             ),
         });

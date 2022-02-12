@@ -7,6 +7,8 @@ use futures::future::join_all;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
     pub source:
@@ -17,16 +19,12 @@ pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLen
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum {
     SelectCount {
         source: HashMap<ProviderKind, sqlx::Error>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ProviderLinksTablesRowsLengthNotEqual {
         source:
             HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -88,9 +86,11 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
             source: Box::new(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount {
                     source: count_provider_links_tables_error_hashmap,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
                 },
             ),
         });
@@ -100,9 +100,11 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
             source: Box::new(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual {
                     source: provider_links_tables_rows_length_not_equal_error_hashmap,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                   where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
                 },
             ),
         });

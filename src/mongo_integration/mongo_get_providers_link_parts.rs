@@ -16,6 +16,8 @@ use futures::future::join_all;
 
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoGetProvidersLinkPartsError {
     pub source: Box<MongoGetProvidersLinkPartsErrorEnum>,
@@ -25,33 +27,23 @@ pub struct MongoGetProvidersLinkPartsError {
 pub enum MongoGetProvidersLinkPartsErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ListCollectionNames {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NoSuchCollections {
         source: HashMap<ProviderKind, String>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     GetDocuments {
         source: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -62,18 +54,22 @@ pub async fn mongo_get_providers_link_parts(
         Err(e) => Err(MongoGetProvidersLinkPartsError {
             source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -83,9 +79,11 @@ pub async fn mongo_get_providers_link_parts(
                         source: Box::new(
                             MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
                                 source: e,
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                                where_was: WhereWas {
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             },
                         ),
                     }),
@@ -105,9 +103,11 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
                                         source: no_collection_error_hashmap,
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
+                                        where_was: WhereWas {
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     },
                                 ),
                             });
@@ -147,9 +147,11 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
                                         source: error_hashmap,
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
+                                        where_was: WhereWas {
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     },
                                 ),
                             });

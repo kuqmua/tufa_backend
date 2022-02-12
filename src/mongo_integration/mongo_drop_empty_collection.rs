@@ -2,6 +2,8 @@ use mongodb::bson::Document;
 use mongodb::Collection;
 use mongodb::{options::ClientOptions, Client};
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug)]
 pub struct MongoDropEmptyCollectionError {
     pub source: Box<MongoDropEmptyCollectionErrorEnum>,
@@ -11,33 +13,23 @@ pub struct MongoDropEmptyCollectionError {
 pub enum MongoDropEmptyCollectionErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     ClientWithOptions {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     CountDocuments {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     NotEmpty {
         source: u64,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     DatabaseDrop {
         source: mongodb::error::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -51,18 +43,22 @@ pub async fn mongo_drop_empty_collection(
         Err(e) => Err(MongoDropEmptyCollectionError {
             source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                where_was: WhereWas {
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoDropEmptyCollectionError {
                 source: Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
                     source: e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -72,9 +68,11 @@ pub async fn mongo_drop_empty_collection(
                     Err(e) => Err(MongoDropEmptyCollectionError {
                         source: Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments {
                             source: e,
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            where_was: WhereWas {
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         }),
                     }),
                     Ok(documents_number) => {
@@ -82,9 +80,11 @@ pub async fn mongo_drop_empty_collection(
                             Err(MongoDropEmptyCollectionError {
                                 source: Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty {
                                     source: documents_number,
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
+                                    where_was: WhereWas {
+                                        file: file!(),
+                                        line: line!(),
+                                        column: column!(),
+                                    },
                                 }),
                             })
                         } else {
@@ -93,9 +93,11 @@ pub async fn mongo_drop_empty_collection(
                                     source: Box::new(
                                         MongoDropEmptyCollectionErrorEnum::DatabaseDrop {
                                             source: e,
-                                            file: file!(),
-                                            line: line!(),
-                                            column: column!(),
+                                            where_was: WhereWas {
+                                                file: file!(),
+                                                line: line!(),
+                                                column: column!(),
+                                            },
                                         },
                                     ),
                                 });

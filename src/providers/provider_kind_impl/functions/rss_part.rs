@@ -10,25 +10,21 @@ use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
+use crate::helpers::where_was::WhereWas;
+
 #[derive(Debug, GitInfoDerive)]
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     StatusCode {
         source: StatusCode,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
     FetchAndParseProviderData {
         source: FetchAndParseProviderDataErrorEnum,
-        file: &'static str,
-        line: u32,
-        column: u32,
+        where_was: WhereWas,
     },
 }
 
@@ -40,26 +36,32 @@ pub async fn rss_part(
     match reqwest::get(pk.check_link()).await {
         Err(e) => Err(Box::new(RssPartErrorEnum::CheckLinkStatusCodeError {
             source: e,
-            file: file!(),
-            line: line!(),
-            column: column!(),
+            where_was: WhereWas {
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
         })),
         Ok(res) => {
             let status_code = res.status();
             if !StatusCode::is_success(&status_code) {
                 return Err(Box::new(RssPartErrorEnum::StatusCode {
                     source: status_code,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }));
             }
             match ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
                 Err(e) => Err(Box::new(RssPartErrorEnum::FetchAndParseProviderData {
                     source: *e,
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    where_was: WhereWas {
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 })),
                 Ok(vec) => Ok(vec),
             }
