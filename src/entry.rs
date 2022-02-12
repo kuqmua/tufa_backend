@@ -87,103 +87,169 @@ pub fn entry() {
                 if let Err(e) = runtime.block_on(init_dbs()) {
                     match *e.source {
                         //its only one variant for now. later going to add more
-                        InitDbsErrorEnum::InitDbsProvidersLinkParts { source, file, line, column } => match *source.source {
-                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, file, line, column } => {
+                        InitDbsErrorEnum::InitDbsProvidersLinkParts { source, file: file1, line: line1, column: column1 } => match *source.source {
+                            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                             vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                    vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
-                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, file, line, column } => {
+                            InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, file: file0, line: line0, column: column0 } => {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-        vec![format!("{}{}{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+                                            vec![
+                                        format!("{}{}{}", file0, line0, column0),
+                                        format!("{}{}{}", file1, line1, column1),
+                                    ],
+                                    vec![
+                                        get_git_source_file_link(file0, line0),
+                                        get_git_source_file_link(file1, line1),
+                                    ],
                                     format!("{:#?}", source),
                                 );
                             },
