@@ -11,6 +11,7 @@ use crate::helpers::fetch::async_fetch_link::async_fetch_link;
 use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
@@ -48,9 +49,8 @@ impl ProviderKind {
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
-                file!(),
-                line!(),
-                column!(),
+                vec![format!("{}{}{}", file!(), line!(), column!())],
+                vec![get_git_source_file_link(file!(), line!())],
                 format!(
                     "fetch_link {} in {}.{}ms",
                     link,

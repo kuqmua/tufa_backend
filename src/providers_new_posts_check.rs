@@ -11,6 +11,8 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn providers_new_posts_check(
     pk: ProviderKind,
@@ -33,9 +35,8 @@ pub async fn providers_new_posts_check(
                         print_colorful_message(
                             None,
                             PrintType::Error,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             format!("posts_handle.lock() (success_posts) error: {:#?}", e),
                         );
                     }
@@ -50,9 +51,8 @@ pub async fn providers_new_posts_check(
                 print_colorful_message(
                     None,
                     PrintType::Error,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     format!("posts_handle.lock() error: {:#?}", e),
                 );
             }

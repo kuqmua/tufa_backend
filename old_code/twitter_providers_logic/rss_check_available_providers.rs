@@ -27,9 +27,8 @@ pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Ve
                     print_colorful_message(
                         None,
                         PrintType::Error,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         format!("UnhandledFetchStatusInfo::Failure {:#?}", e),
                     );
                 }

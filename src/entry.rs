@@ -15,6 +15,8 @@ use crate::init_dbs_logic::init_dbs::{init_dbs, InitDbsErrorEnum};
 
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
 
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
     let time = Instant::now();
@@ -22,18 +24,16 @@ pub fn entry() {
     print_colorful_message(
         None,
         PrintType::Info,
-        file!(),
-        line!(),
-        column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         format!("We are on a multicore system with {} CPUs", cpus),
     );
     if cpus == 0 {
         print_colorful_message(
             None,
             PrintType::Error,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             format!("CPU number == {}, aborting", cpus),
         );
         return;
@@ -47,9 +47,8 @@ pub fn entry() {
             print_colorful_message(
                 None,
                 PrintType::Error,
-                file!(),
-                line!(),
-                column!(),
+                vec![format!("{}{}{}", file!(), line!(), column!())],
+                vec![get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {:#?}", e),
             );
             return;
@@ -59,9 +58,8 @@ pub fn entry() {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     format!("{:#?}", e),
                 );
                 return;
@@ -69,9 +67,8 @@ pub fn entry() {
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
-                file!(),
-                line!(),
-                column!(),
+                vec![format!("{}{}{}", file!(), line!(), column!())],
+                vec![get_git_source_file_link(file!(), line!())],
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
             if CONFIG.is_dbs_initialization_enabled {
@@ -81,9 +78,8 @@ pub fn entry() {
                     print_colorful_message(
                         None,
                         PrintType::WarningLow,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         String::from("db initialization for mongo and postgres are disabled"),
                     );
                     return;
@@ -96,9 +92,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+                                             vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -106,9 +101,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -116,9 +110,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -126,9 +119,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -136,9 +128,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -146,9 +137,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -156,9 +146,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -166,9 +155,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -176,9 +164,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -186,9 +173,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -196,9 +182,8 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                              file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     format!("{:#?}", source),
                                 );
                             },
@@ -210,9 +195,8 @@ pub fn entry() {
                 print_colorful_message(
                     None,
                     PrintType::WarningLow,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "all providers are disabled, get_providers_posts will not run".to_owned(),
                 );
                 return;
@@ -224,9 +208,8 @@ pub fn entry() {
     print_colorful_message(
         None,
         PrintType::TimeMeasurement,
-        file!(),
-        line!(),
-        column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         format!("main done in {} seconds", time.elapsed().as_secs()),
     );
 }

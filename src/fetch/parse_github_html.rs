@@ -5,6 +5,8 @@ use html_parser::{Dom, Node};
 
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
 
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+
 //todo: think about renaming
 pub type GithubPostInfoVec = Vec<(
     Option<String>, //avatar_link_handle
@@ -99,9 +101,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                     warning_message,
                                                 );
                                             }
@@ -110,9 +111,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 _ => print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -124,9 +124,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             );
                                             }
@@ -135,9 +134,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     _ => print_colorful_message(
                                                     None,
                                         PrintType::WarningHigh,
-                                                  file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                                 },
@@ -147,9 +145,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     print_colorful_message(
                                                     None,
                                         PrintType::WarningHigh,
-                                                  file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                                 }
@@ -158,9 +155,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -170,9 +166,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -183,9 +178,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                     print_colorful_message(
                         None,
                         PrintType::Error,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         error_message,
                     )
                 }
@@ -194,9 +188,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
         None => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "option content is None".to_string(),
         ),
     }
@@ -267,9 +260,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -278,9 +270,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     },
@@ -292,9 +283,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             warning_message,
                         )
                     }
@@ -302,9 +292,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -314,9 +303,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -324,9 +312,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -411,9 +398,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -425,9 +419,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -436,9 +437,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -451,9 +451,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -470,9 +469,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -484,9 +490,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -495,53 +508,53 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
                                     match node_element_first.children[3] {
                                         Node::Element(ref node_element_first_fourth) => {
                                             match node_element_first_fourth.children.len() {
-                                                1 => match node_element_first_fourth.children[0] {
-                                                    Node::Element(
-                                                        ref node_element_first_fourth_first,
-                                                    ) => {
-                                                        let attribute = "datetime";
-                                                        match node_element_first_fourth_first
-                                                            .attributes
-                                                            .get(attribute)
-                                                        {
-                                                            Some(datejs_handle_option) => {
-                                                                match datejs_handle_option {
-                                                                    Some(datejs_handle) => {
-                                                                        if !datejs_handle.is_empty()
-                                                                        {
-                                                                            datejs = datejs_handle_option.clone();
+                                                1 => {
+                                                    match node_element_first_fourth.children[0] {
+                                                        Node::Element(
+                                                            ref node_element_first_fourth_first,
+                                                        ) => {
+                                                            let attribute = "datetime";
+                                                            match node_element_first_fourth_first
+                                                                .attributes
+                                                                .get(attribute)
+                                                            {
+                                                                Some(datejs_handle_option) => {
+                                                                    match datejs_handle_option {
+                                                                        Some(datejs_handle) => {
+                                                                            if !datejs_handle
+                                                                                .is_empty()
+                                                                            {
+                                                                                datejs = datejs_handle_option.clone();
+                                                                            }
+                                                                        }
+                                                                        None => {
+                                                                            //todo
                                                                         }
                                                                     }
-                                                                    None => {
-                                                                        //todo
-                                                                    }
                                                                 }
-                                                            }
-                                                            None => {
-                                                                let warning_message = format!(
-                                                                    "no {} attribute",
-                                                                    attribute
-                                                                );
-                                                                print_colorful_message(
+                                                                None => {
+                                                                    let warning_message = format!(
+                                                                        "no {} attribute",
+                                                                        attribute
+                                                                    );
+                                                                    print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!(),
-                                                                    line!(),
-                                                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
+                                                                }
                                                             }
-                                                        }
-                                                        match node_element_first_fourth_first
+                                                            match node_element_first_fourth_first
                                                         .children
                                                         .len()
                                                     {
@@ -560,9 +573,8 @@ fn parse_github_html_second_part(
                                                                 _ => print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                 "different node".to_string(),
                                                             ),
                                                             }
@@ -575,23 +587,30 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                             }
                                                     }
+                                                        }
+                                                        _ => print_colorful_message(
+                                                            None,
+                                                            PrintType::WarningHigh,
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
+                                                            "different node".to_string(),
+                                                        ),
                                                     }
-                                                    _ => print_colorful_message(
-                                                        None,
-                                                        PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
-                                                        "different node".to_string(),
-                                                    ),
-                                                },
+                                                }
                                                 _ => {
                                                     let warning_message = format!(
                                                         "different children.len(): {}",
@@ -600,9 +619,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -611,9 +637,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -643,9 +668,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-              file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -659,9 +683,8 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -670,9 +693,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -696,9 +726,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-              file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -711,9 +740,8 @@ fn parse_github_html_second_part(
                                 print_colorful_message(
                                                     None,
                                     PrintType::WarningHigh,
-              file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                             }
@@ -722,9 +750,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -751,9 +786,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-              file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -767,9 +801,8 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -778,9 +811,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -793,9 +833,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -804,9 +851,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -825,9 +871,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -839,9 +892,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -850,9 +910,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -869,9 +928,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -883,9 +949,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -894,9 +967,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -909,9 +981,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -928,9 +999,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -942,9 +1020,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -953,9 +1038,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -978,7 +1062,9 @@ fn parse_github_html_second_part(
                                                                             if !datejs_handle
                                                                                 .is_empty()
                                                                             {
-                                                                                datejs = datejs_handle_value.clone();
+                                                                                datejs =
+                                                                                datejs_handle_value
+                                                                                    .clone();
                                                                             }
                                                                         }
                                                                         None => {}
@@ -990,13 +1076,12 @@ fn parse_github_html_second_part(
                                                                         attribute
                                                                     );
                                                                     print_colorful_message(
-                                                                        None,
-                                                                        PrintType::WarningHigh,
-                                                                        file!(),
-                                                                        line!(),
-                                                                        column!(),
-                                                                        warning_message,
-                                                                    )
+                                                                    None,
+                                                                    PrintType::WarningHigh,
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
+                                                                    warning_message,
+                                                                )
                                                                 }
                                                             }
                                                             match node_element_first_firth_first
@@ -1015,9 +1100,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1032,9 +1116,8 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -1043,9 +1126,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1058,9 +1148,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1069,9 +1166,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1101,9 +1197,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1117,9 +1212,8 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1128,9 +1222,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1154,9 +1255,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1169,9 +1269,8 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1180,9 +1279,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1209,9 +1315,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1224,9 +1329,8 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1235,9 +1339,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1250,9 +1361,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1261,9 +1379,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1276,9 +1393,8 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1287,9 +1403,8 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1364,9 +1479,16 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     warning_message,
                                                 )
                                             }
@@ -1375,9 +1497,8 @@ fn parse_github_html_second_part(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1395,9 +1516,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1409,9 +1537,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1420,9 +1555,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1435,9 +1569,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1455,9 +1588,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1469,9 +1609,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1480,9 +1627,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1495,9 +1641,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1514,9 +1659,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1528,9 +1680,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1539,9 +1698,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1576,13 +1734,12 @@ fn parse_github_html_second_part(
                                                                         attribute
                                                                     );
                                                                     print_colorful_message(
-                                                                        None,
-                                                                        PrintType::WarningHigh,
-                                                                        file!(),
-                                                                        line!(),
-                                                                        column!(),
-                                                                        warning_message,
-                                                                    )
+                                                                    None,
+                                                                    PrintType::WarningHigh,
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
+                                                                    warning_message,
+                                                                )
                                                                 }
                                                             }
                                                             match node_element_first_sixth_first
@@ -1600,9 +1757,8 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1615,9 +1771,8 @@ fn parse_github_html_second_part(
                                                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1626,9 +1781,16 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1641,9 +1803,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1652,9 +1821,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1667,9 +1835,8 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1678,9 +1845,8 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1734,9 +1900,16 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     warning_message,
                                                 )
                                             }
@@ -1745,9 +1918,8 @@ fn parse_github_html_second_part(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1766,9 +1938,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1782,9 +1961,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1793,9 +1979,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1808,9 +1993,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1830,9 +2014,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1846,9 +2037,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1857,9 +2055,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1872,9 +2069,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1893,9 +2089,16 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1909,9 +2112,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -1920,53 +2130,53 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
                                     match node_element_second.children[5] {
                                         Node::Element(ref node_element_second_six_element) => {
                                             match node_element_second_six_element.children.len() {
-                                                1 => match node_element_second_six_element.children
-                                                    [0]
-                                                {
-                                                    Node::Element(
-                                                        ref node_element_second_six_element,
-                                                    ) => {
-                                                        let attribute = "datetime";
-                                                        match node_element_second_six_element
-                                                            .attributes
-                                                            .get(attribute)
-                                                        {
-                                                            Some(datejs_handle_option) => {
-                                                                match datejs_handle_option {
-                                                                    Some(datejs_handle) => {
-                                                                        if !datejs_handle.is_empty()
-                                                                        {
-                                                                            datejs = datejs_handle_option.clone();
+                                                1 => {
+                                                    match node_element_second_six_element.children
+                                                        [0]
+                                                    {
+                                                        Node::Element(
+                                                            ref node_element_second_six_element,
+                                                        ) => {
+                                                            let attribute = "datetime";
+                                                            match node_element_second_six_element
+                                                                .attributes
+                                                                .get(attribute)
+                                                            {
+                                                                Some(datejs_handle_option) => {
+                                                                    match datejs_handle_option {
+                                                                        Some(datejs_handle) => {
+                                                                            if !datejs_handle
+                                                                                .is_empty()
+                                                                            {
+                                                                                datejs = datejs_handle_option.clone();
+                                                                            }
                                                                         }
+                                                                        None => {}
                                                                     }
-                                                                    None => {}
                                                                 }
-                                                            }
-                                                            None => {
-                                                                let warning_message = format!(
-                                                                    "no {} attribute",
-                                                                    attribute
-                                                                );
-                                                                print_colorful_message(
+                                                                None => {
+                                                                    let warning_message = format!(
+                                                                        "no {} attribute",
+                                                                        attribute
+                                                                    );
+                                                                    print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!(),
-                                                                    line!(),
-                                                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
+                                                                }
                                                             }
-                                                        }
-                                                        match node_element_second_six_element.children.len() {
+                                                            match node_element_second_six_element.children.len() {
                                                             1 => match node_element_second_six_element.children
                                                                 [0]
                                                             {
@@ -1983,9 +2193,8 @@ fn parse_github_html_second_part(
                                                                 _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                             },
@@ -1998,23 +2207,30 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
                                                         }
+                                                        }
+                                                        _ => print_colorful_message(
+                                                            None,
+                                                            PrintType::WarningHigh,
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
+                                                            "different node".to_string(),
+                                                        ),
                                                     }
-                                                    _ => print_colorful_message(
-                                                        None,
-                                                        PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
-                                                        "different node".to_string(),
-                                                    ),
-                                                },
+                                                }
                                                 _ => {
                                                     let warning_message = format!(
                                                         "different children.len(): {}",
@@ -2025,9 +2241,16 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         warning_message,
                                                     )
                                                 }
@@ -2036,9 +2259,8 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2051,9 +2273,8 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2062,9 +2283,8 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2078,9 +2298,8 @@ fn parse_github_html_second_part(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2089,9 +2308,8 @@ fn parse_github_html_second_part(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2165,9 +2383,8 @@ fn parse_github_html_second_part_inner_one_element(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -2179,9 +2396,8 @@ fn parse_github_html_second_part_inner_one_element(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -2190,9 +2406,8 @@ fn parse_github_html_second_part_inner_one_element(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -2218,9 +2433,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                         print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!(),
-                                                            line!(),
-                                                            column!(),
+                                                            vec![format!(
+                                                                "{}{}{}",
+                                                                file!(),
+                                                                line!(),
+                                                                column!()
+                                                            )],
+                                                            vec![get_git_source_file_link(
+                                                                file!(),
+                                                                line!(),
+                                                            )],
                                                             warning_message,
                                                         )
                                                     }
@@ -2258,9 +2480,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                             print_colorful_message(
                                                                 None,
                                                                 PrintType::WarningHigh,
-                                                                file!(),
-                                                                line!(),
-                                                                column!(),
+                                                                vec![format!(
+                                                                    "{}{}{}",
+                                                                    file!(),
+                                                                    line!(),
+                                                                    column!()
+                                                                )],
+                                                                vec![get_git_source_file_link(
+                                                                    file!(),
+                                                                    line!(),
+                                                                )],
                                                                 warning_message,
                                                             )
                                                         }
@@ -2269,9 +2498,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                 _ => print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -2283,9 +2519,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     warning_message,
                                                 );
                                                 println!(
@@ -2298,9 +2541,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2312,9 +2554,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2323,9 +2564,8 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2354,9 +2594,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     warning_message,
                                                 )
                                             }
@@ -2365,9 +2612,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2379,9 +2625,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2390,9 +2635,8 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2468,9 +2712,8 @@ fn parse_github_html_second_part_inner_one_element(
                                                                             print_colorful_message(
                                                     None,
                                                                                 PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                 }
@@ -2481,9 +2724,8 @@ fn parse_github_html_second_part_inner_one_element(
                                                                          print_colorful_message(
                                                     None,
                                                                                 PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                     }
@@ -2495,9 +2737,8 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-              file!(),
-                                    line!(),
-                                    column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                             },
@@ -2506,9 +2747,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!(),
-                                                        line!(),
-                                                        column!(),
+                                                        vec![format!(
+                                                            "{}{}{}",
+                                                            file!(),
+                                                            line!(),
+                                                            column!()
+                                                        )],
+                                                        vec![get_git_source_file_link(
+                                                            file!(),
+                                                            line!(),
+                                                        )],
                                                         "different node".to_string(),
                                                     ),
                                                 }
@@ -2589,9 +2837,16 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!(),
-                                                    line!(),
-                                                    column!(),
+                                                    vec![format!(
+                                                        "{}{}{}",
+                                                        file!(),
+                                                        line!(),
+                                                        column!()
+                                                    )],
+                                                    vec![get_git_source_file_link(
+                                                        file!(),
+                                                        line!(),
+                                                    )],
                                                     warning_message,
                                                 )
                                             }
@@ -2600,9 +2855,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2614,9 +2868,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2625,9 +2878,8 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!(),
-                            line!(),
-                            column!(),
+                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                            vec![get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2638,9 +2890,8 @@ fn parse_github_html_second_part_inner_one_element(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2649,9 +2900,8 @@ fn parse_github_html_second_part_inner_one_element(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2685,9 +2935,8 @@ fn handle_text_element(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2778,9 +3027,8 @@ fn second_element(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -2792,9 +3040,8 @@ fn second_element(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -2803,9 +3050,8 @@ fn second_element(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -2815,9 +3061,8 @@ fn second_element(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2826,9 +3071,8 @@ fn second_element(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2883,9 +3127,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -2897,9 +3140,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -2908,9 +3150,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -2923,9 +3164,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -2951,9 +3191,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                             }
@@ -2962,9 +3201,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -2989,9 +3227,13 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3006,9 +3248,13 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3020,9 +3266,13 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3031,9 +3281,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3045,9 +3294,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3056,9 +3304,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3076,9 +3323,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3090,9 +3336,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3101,9 +3346,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3116,9 +3360,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3144,9 +3387,8 @@ fn two_elements_one_child(
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3155,9 +3397,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3170,9 +3411,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3194,9 +3434,8 @@ fn two_elements_one_child(
                                         None => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!(),
-                                            line!(),
-                                            column!(),
+                                            vec![format!("{}{}{}", file!(), line!(), column!())],
+                                            vec![get_git_source_file_link(file!(), line!())],
                                             format!("no {} attrubite", attribute),
                                         ),
                                     }
@@ -3210,9 +3449,13 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3224,9 +3467,13 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3235,9 +3482,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3249,9 +3495,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3260,9 +3505,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3280,9 +3524,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3294,9 +3537,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3305,9 +3547,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3320,9 +3561,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3352,9 +3592,8 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     );
                                         }
@@ -3371,9 +3610,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3385,9 +3623,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3396,9 +3633,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3411,9 +3647,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3438,9 +3673,8 @@ fn two_elements_one_child(
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-          file!(),
-                                    line!(),
-                                    column!(),
+        vec![format!("{}{}{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3449,9 +3683,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3478,9 +3711,13 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3495,9 +3732,13 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3509,9 +3750,13 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3520,9 +3765,8 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3534,9 +3778,8 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3545,9 +3788,8 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3558,9 +3800,8 @@ fn two_elements_one_child(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3568,9 +3809,8 @@ fn two_elements_one_child(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3614,9 +3854,8 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3626,9 +3865,8 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3636,9 +3874,8 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3657,9 +3894,8 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3680,9 +3916,8 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3692,9 +3927,8 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3702,9 +3936,8 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3734,9 +3967,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -3751,9 +3983,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -3765,9 +3996,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -3776,9 +4006,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3788,9 +4017,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3798,9 +4026,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3842,9 +4069,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3856,9 +4082,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3867,9 +4092,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3882,9 +4106,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3900,9 +4123,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3914,9 +4136,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3925,9 +4146,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3952,9 +4172,13 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3969,9 +4193,13 @@ fn parse_github_html_second_part_two_children_first(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3983,9 +4211,13 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3994,9 +4226,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4008,9 +4239,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4019,9 +4249,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4042,9 +4271,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4056,9 +4284,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4067,9 +4294,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4082,9 +4308,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4100,9 +4325,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4114,9 +4338,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4125,9 +4348,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4140,9 +4362,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4159,9 +4380,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4173,9 +4393,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4184,9 +4403,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4211,9 +4429,13 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4228,9 +4450,13 @@ fn parse_github_html_second_part_two_children_first(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -4242,9 +4468,13 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4253,9 +4483,8 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4267,9 +4496,8 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!(),
-                                    line!(),
-                                    column!(),
+                                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                                    vec![get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4278,9 +4506,8 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4291,9 +4518,8 @@ fn parse_github_html_second_part_two_children_first(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4301,9 +4527,8 @@ fn parse_github_html_second_part_two_children_first(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4353,9 +4578,8 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4365,9 +4589,8 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4375,9 +4598,8 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4390,9 +4612,8 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4407,9 +4628,8 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4419,9 +4639,8 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4429,9 +4648,8 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4454,9 +4672,8 @@ fn four_cases(
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4472,9 +4689,8 @@ fn four_cases(
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -4486,9 +4702,8 @@ fn four_cases(
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!(),
-                                line!(),
-                                column!(),
+                                vec![format!("{}{}{}", file!(), line!(), column!())],
+                                vec![get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4497,9 +4712,8 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4511,9 +4725,8 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!(),
-                    line!(),
-                    column!(),
+                    vec![format!("{}{}{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4521,9 +4734,8 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!(),
-            line!(),
-            column!(),
+            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }

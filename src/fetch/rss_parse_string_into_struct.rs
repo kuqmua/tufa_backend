@@ -45,6 +45,8 @@ use serde_xml_rs::from_str;
 
 use regex::Regex;
 
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+
 // #[deny(clippy::indexing_slicing, clippy::unwrap_used)] //todo
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
@@ -75,9 +77,13 @@ pub fn rss_parse_string_into_struct(
                                             print_colorful_message(
                                                 Some(&pk),
                                                 PrintType::WarningLow,
-                                                file!(),
-                                                line!(),
-                                                column!(),
+                                                vec![format!(
+                                                    "{}{}{}",
+                                                    file!(),
+                                                    line!(),
+                                                    column!()
+                                                )],
+                                                vec![get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             );
                                         }
@@ -89,9 +95,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::WarningLow,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     );
                                 }
@@ -295,9 +300,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -422,9 +426,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -554,9 +557,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -679,9 +681,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -806,9 +807,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -934,9 +934,8 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!(),
-                                        line!(),
-                                        column!(),
+                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -956,9 +955,8 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::WarningLow,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         warning_message,
                     );
                     Err(NoItemsError::NoTag(
@@ -1084,9 +1082,8 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::Error,
-                        file!(),
-                        line!(),
-                        column!(),
+                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![get_git_source_file_link(file!(), line!())],
                         format!("Rss conversion from str error: {}", &e),
                     );
                     Err(NoItemsError::ConversionFromStrError(
