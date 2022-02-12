@@ -218,3 +218,7 @@ installation:
 cargo install cargo-audit
 usage:
 cargo audit
+
+# gnome extenstions works only in forefox then you want to change ubuntu
+
+# hide top bar extension
