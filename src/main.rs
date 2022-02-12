@@ -40,6 +40,7 @@ pub mod helpers {
     pub mod get_git_source_file_link;
     pub mod lazy_static_git_info;
     pub mod resource;
+    pub mod where_was;
     pub mod write_json_into_file;
     pub mod write_string_into_file;
     pub mod write_string_into_file_with_tokio;
