@@ -31,8 +31,9 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         print_colorful_message(
             Some(&pk),
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             format!("drop fail with error {:#?}", e),
         );
         return Err(e);

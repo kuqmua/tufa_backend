@@ -48,8 +48,9 @@ impl ProviderKind {
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
-                file!().to_string(),
-                line!().to_string(),
+                file!(),
+                line!(),
+                column!(),
                 format!(
                     "fetch_link {} in {}.{}ms",
                     link,

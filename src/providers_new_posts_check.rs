@@ -33,8 +33,9 @@ pub async fn providers_new_posts_check(
                         print_colorful_message(
                             None,
                             PrintType::Error,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             format!("posts_handle.lock() (success_posts) error: {:#?}", e),
                         );
                     }
@@ -49,8 +50,9 @@ pub async fn providers_new_posts_check(
                 print_colorful_message(
                     None,
                     PrintType::Error,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     format!("posts_handle.lock() error: {:#?}", e),
                 );
             }

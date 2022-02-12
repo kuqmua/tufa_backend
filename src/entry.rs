@@ -22,16 +22,18 @@ pub fn entry() {
     print_colorful_message(
         None,
         PrintType::Info,
-        file!().to_string(),
-        line!().to_string(),
+        file!(),
+        line!(),
+        column!(),
         format!("We are on a multicore system with {} CPUs", cpus),
     );
     if cpus == 0 {
         print_colorful_message(
             None,
             PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             format!("CPU number == {}, aborting", cpus),
         );
         return;
@@ -45,8 +47,9 @@ pub fn entry() {
             print_colorful_message(
                 None,
                 PrintType::Error,
-                file!().to_string(),
-                line!().to_string(),
+                file!(),
+                line!(),
+                column!(),
                 format!("Cannot build tokio runtime {:#?}", e),
             );
             return;
@@ -56,8 +59,9 @@ pub fn entry() {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     format!("{:#?}", e),
                 );
                 return;
@@ -65,8 +69,9 @@ pub fn entry() {
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
-                file!().to_string(),
-                line!().to_string(),
+                file!(),
+                line!(),
+                column!(),
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
             if CONFIG.is_dbs_initialization_enabled {
@@ -76,8 +81,9 @@ pub fn entry() {
                     print_colorful_message(
                         None,
                         PrintType::WarningLow,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         String::from("db initialization for mongo and postgres are disabled"),
                     );
                     return;
@@ -90,8 +96,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -99,8 +106,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -108,8 +116,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -117,8 +126,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -126,8 +136,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -135,8 +146,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -144,8 +156,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -153,8 +166,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -162,8 +176,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -171,8 +186,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -180,8 +196,9 @@ pub fn entry() {
                                 print_colorful_message(
                                     None,
                                     PrintType::Error,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                              file!(),
+                                    line!(),
+                                    column!(),
                                     format!("{:#?}", source),
                                 );
                             },
@@ -193,8 +210,9 @@ pub fn entry() {
                 print_colorful_message(
                     None,
                     PrintType::WarningLow,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "all providers are disabled, get_providers_posts will not run".to_owned(),
                 );
                 return;
@@ -206,8 +224,9 @@ pub fn entry() {
     print_colorful_message(
         None,
         PrintType::TimeMeasurement,
-        file!().to_string(),
-        line!().to_string(),
+        file!(),
+        line!(),
+        column!(),
         format!("main done in {} seconds", time.elapsed().as_secs()),
     );
 }

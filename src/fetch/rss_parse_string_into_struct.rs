@@ -75,8 +75,9 @@ pub fn rss_parse_string_into_struct(
                                             print_colorful_message(
                                                 Some(&pk),
                                                 PrintType::WarningLow,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             );
                                         }
@@ -88,8 +89,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::WarningLow,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     );
                                 }
@@ -293,8 +295,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -419,8 +422,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -550,8 +554,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -674,8 +679,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -800,8 +806,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -927,8 +934,9 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         format!("Rss conversion from str error: {}", &e),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -948,8 +956,9 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::WarningLow,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         warning_message,
                     );
                     Err(NoItemsError::NoTag(
@@ -1075,8 +1084,9 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         format!("Rss conversion from str error: {}", &e),
                     );
                     Err(NoItemsError::ConversionFromStrError(

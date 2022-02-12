@@ -29,8 +29,9 @@ pub fn rss_check_provider_status(
         print_colorful_message(
             None,
             PrintType::Error,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             format!("{} {}", link, res.status()),
         );
         Ok((false, HandledFetchStatusInfo::ResStatusError(res.status())))

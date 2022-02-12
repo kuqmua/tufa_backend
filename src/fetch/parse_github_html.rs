@@ -99,8 +99,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                     warning_message,
                                                 );
                                             }
@@ -109,8 +110,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 _ => print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -122,8 +124,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                 warning_message,
                                             );
                                             }
@@ -132,8 +135,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     _ => print_colorful_message(
                                                     None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                    line!().to_string(),
+                                                  file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                                 },
@@ -143,8 +147,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     print_colorful_message(
                                                     None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                    line!().to_string(),
+                                                  file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                                 }
@@ -153,8 +158,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 "different node".to_string(),
                             ),
                         },
@@ -164,8 +170,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 warning_message,
                             )
                         }
@@ -176,8 +183,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                     print_colorful_message(
                         None,
                         PrintType::Error,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         error_message,
                     )
                 }
@@ -186,8 +194,9 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
         None => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "option content is None".to_string(),
         ),
     }
@@ -258,8 +267,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -268,8 +278,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     },
@@ -281,8 +292,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             warning_message,
                         )
                     }
@@ -290,8 +302,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -301,8 +314,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -310,8 +324,9 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -396,8 +411,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -409,8 +425,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -419,8 +436,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -433,8 +451,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -451,8 +470,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -464,8 +484,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -474,8 +495,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -512,8 +534,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
+                                                                    file!(),
+                                                                    line!(),
+                                                                    column!(),
                                                                     warning_message,
                                                                 )
                                                             }
@@ -537,8 +560,9 @@ fn parse_github_html_second_part(
                                                                 _ => print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!().to_string(),
-                                                                line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                                 "different node".to_string(),
                                                             ),
                                                             }
@@ -551,8 +575,9 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                 warning_message,
                                             )
                                             }
@@ -561,8 +586,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -574,8 +600,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -584,8 +611,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -615,8 +643,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                    line!().to_string(),
+              file!(),
+                                    line!(),
+                                    column!(),
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -630,8 +659,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!().to_string(),
-                                                                line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                                 warning_message,
                                                             )
                                                             }
@@ -640,8 +670,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -665,8 +696,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                    line!().to_string(),
+              file!(),
+                                    line!(),
+                                    column!(),
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -679,8 +711,9 @@ fn parse_github_html_second_part(
                                 print_colorful_message(
                                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                line!().to_string(),
+              file!(),
+                                    line!(),
+                                    column!(),
                                 warning_message,
                             )
                             }
@@ -689,8 +722,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -717,8 +751,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                    line!().to_string(),
+              file!(),
+                                    line!(),
+                                    column!(),
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -732,8 +767,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                                             }
@@ -742,8 +778,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -756,8 +793,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -766,8 +804,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -786,8 +825,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -799,8 +839,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -809,8 +850,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -827,8 +869,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -840,8 +883,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -850,8 +894,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -864,8 +909,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -882,8 +928,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -895,8 +942,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -905,8 +953,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -943,8 +992,9 @@ fn parse_github_html_second_part(
                                                                     print_colorful_message(
                                                                         None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
+                                                                        file!(),
+                                                                        line!(),
+                                                                        column!(),
                                                                         warning_message,
                                                                     )
                                                                 }
@@ -965,8 +1015,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                                 }
@@ -981,8 +1032,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!().to_string(),
-                                                                line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                                 warning_message,
                                                             )
                                                             }
@@ -991,8 +1043,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1005,8 +1058,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1015,8 +1069,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1046,8 +1101,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                                 }
@@ -1061,8 +1117,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                                             }
@@ -1071,8 +1128,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1096,8 +1154,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                                 }
@@ -1110,8 +1169,9 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                             }
@@ -1120,8 +1180,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1148,8 +1209,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                                 }
@@ -1162,8 +1224,9 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                             }
@@ -1172,8 +1235,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1186,8 +1250,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1196,8 +1261,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1210,8 +1276,9 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -1220,8 +1287,9 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -1296,8 +1364,9 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     warning_message,
                                                 )
                                             }
@@ -1306,8 +1375,9 @@ fn parse_github_html_second_part(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1325,8 +1395,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1338,8 +1409,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1348,8 +1420,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1362,8 +1435,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1381,8 +1455,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1394,8 +1469,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1404,8 +1480,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1418,8 +1495,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1436,8 +1514,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1449,8 +1528,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1459,8 +1539,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1497,8 +1578,9 @@ fn parse_github_html_second_part(
                                                                     print_colorful_message(
                                                                         None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                        line!().to_string(),
+                                                                        file!(),
+                                                                        line!(),
+                                                                        column!(),
                                                                         warning_message,
                                                                     )
                                                                 }
@@ -1518,8 +1600,9 @@ fn parse_github_html_second_part(
                                                                     _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                                 }
@@ -1532,8 +1615,9 @@ fn parse_github_html_second_part(
                                                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                                             }
@@ -1542,8 +1626,9 @@ fn parse_github_html_second_part(
                                                         _ => print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             "different node".to_string(),
                                                         ),
                                                     }
@@ -1556,8 +1641,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1566,8 +1652,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1580,8 +1667,9 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -1590,8 +1678,9 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -1645,8 +1734,9 @@ fn parse_github_html_second_part(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     warning_message,
                                                 )
                                             }
@@ -1655,8 +1745,9 @@ fn parse_github_html_second_part(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1675,8 +1766,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1690,8 +1782,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1700,8 +1793,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1714,8 +1808,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1735,8 +1830,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1750,8 +1846,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1760,8 +1857,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1774,8 +1872,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1794,8 +1893,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1809,8 +1909,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1819,8 +1920,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1857,8 +1959,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
-                                                                    file!().to_string(),
-                                                                    line!().to_string(),
+                                                                    file!(),
+                                                                    line!(),
+                                                                    column!(),
                                                                     warning_message,
                                                                 )
                                                             }
@@ -1880,8 +1983,9 @@ fn parse_github_html_second_part(
                                                                 _ => print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         "different node".to_string(),
     ),
                                                             },
@@ -1894,8 +1998,9 @@ fn parse_github_html_second_part(
                                                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                                             }
@@ -1904,8 +2009,9 @@ fn parse_github_html_second_part(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 },
@@ -1919,8 +2025,9 @@ fn parse_github_html_second_part(
                                                     print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         warning_message,
                                                     )
                                                 }
@@ -1929,8 +2036,9 @@ fn parse_github_html_second_part(
                                         _ => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1943,8 +2051,9 @@ fn parse_github_html_second_part(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -1953,8 +2062,9 @@ fn parse_github_html_second_part(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -1968,8 +2078,9 @@ fn parse_github_html_second_part(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         warning_message,
                     )
                 }
@@ -1978,8 +2089,9 @@ fn parse_github_html_second_part(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -2053,8 +2165,9 @@ fn parse_github_html_second_part_inner_one_element(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -2066,8 +2179,9 @@ fn parse_github_html_second_part_inner_one_element(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -2076,8 +2190,9 @@ fn parse_github_html_second_part_inner_one_element(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 },
@@ -2103,8 +2218,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                         print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
-                                                            file!().to_string(),
-                                                            line!().to_string(),
+                                                            file!(),
+                                                            line!(),
+                                                            column!(),
                                                             warning_message,
                                                         )
                                                     }
@@ -2142,8 +2258,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                             print_colorful_message(
                                                                 None,
                                                                 PrintType::WarningHigh,
-                                                                file!().to_string(),
-                                                                line!().to_string(),
+                                                                file!(),
+                                                                line!(),
+                                                                column!(),
                                                                 warning_message,
                                                             )
                                                         }
@@ -2152,8 +2269,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                 _ => print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -2165,8 +2283,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     warning_message,
                                                 );
                                                 println!(
@@ -2179,8 +2298,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2192,8 +2312,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -2202,8 +2323,9 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -2232,8 +2354,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     warning_message,
                                                 )
                                             }
@@ -2242,8 +2365,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2255,8 +2379,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -2265,8 +2390,9 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -2342,8 +2468,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                                             print_colorful_message(
                                                     None,
                                                                                 PrintType::WarningHigh,
-                                                                                file!().to_string(),
-                                                                            line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                                             warning_message,
                                                                         )
                                                                 }
@@ -2354,8 +2481,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                                          print_colorful_message(
                                                     None,
                                                                                 PrintType::WarningHigh,
-                                                                                file!().to_string(),
-                                                                            line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
                                                                             warning_message,
                                                                         )
                                                                     }
@@ -2367,8 +2495,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     print_colorful_message(
                                                     None,
                                                                         PrintType::WarningHigh,
-                                                                        file!().to_string(),
-                                                                    line!().to_string(),
+              file!(),
+                                    line!(),
+                                    column!(),
                                                                     warning_message,
                                                                 )
                                                             },
@@ -2377,8 +2506,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                     _ => print_colorful_message(
                                                         None,
                                                         PrintType::WarningHigh,
-                                                        file!().to_string(),
-                                                        line!().to_string(),
+                                                        file!(),
+                                                        line!(),
+                                                        column!(),
                                                         "different node".to_string(),
                                                     ),
                                                 }
@@ -2459,8 +2589,9 @@ fn parse_github_html_second_part_inner_one_element(
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
-                                                    file!().to_string(),
-                                                    line!().to_string(),
+                                                    file!(),
+                                                    line!(),
+                                                    column!(),
                                                     warning_message,
                                                 )
                                             }
@@ -2469,8 +2600,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     _ => print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2482,8 +2614,9 @@ fn parse_github_html_second_part_inner_one_element(
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
-                                        file!().to_string(),
-                                        line!().to_string(),
+                                        file!(),
+                                        line!(),
+                                        column!(),
                                         warning_message,
                                     )
                                 }
@@ -2492,8 +2625,9 @@ fn parse_github_html_second_part_inner_one_element(
                         _ => print_colorful_message(
                             None,
                             PrintType::WarningHigh,
-                            file!().to_string(),
-                            line!().to_string(),
+                            file!(),
+                            line!(),
+                            column!(),
                             "different node".to_string(),
                         ),
                     }
@@ -2504,8 +2638,9 @@ fn parse_github_html_second_part_inner_one_element(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         warning_message,
                     )
                 }
@@ -2514,8 +2649,9 @@ fn parse_github_html_second_part_inner_one_element(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -2549,8 +2685,9 @@ fn handle_text_element(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -2641,8 +2778,9 @@ fn second_element(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -2654,8 +2792,9 @@ fn second_element(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -2664,8 +2803,9 @@ fn second_element(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 },
@@ -2675,8 +2815,9 @@ fn second_element(
                     print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         warning_message,
                     )
                 }
@@ -2685,8 +2826,9 @@ fn second_element(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -2741,8 +2883,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -2754,8 +2897,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -2764,8 +2908,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2778,8 +2923,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2805,8 +2951,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                             }
@@ -2815,8 +2962,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2841,8 +2989,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -2857,8 +3006,9 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -2870,8 +3020,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -2880,8 +3031,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -2893,8 +3045,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -2903,8 +3056,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2922,8 +3076,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -2935,8 +3090,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -2945,8 +3101,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2959,8 +3116,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -2986,8 +3144,9 @@ fn two_elements_one_child(
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                 }
@@ -2996,8 +3155,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3010,8 +3170,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3033,8 +3194,9 @@ fn two_elements_one_child(
                                         None => print_colorful_message(
                                             None,
                                             PrintType::WarningHigh,
-                                            file!().to_string(),
-                                            line!().to_string(),
+                                            file!(),
+                                            line!(),
+                                            column!(),
                                             format!("no {} attrubite", attribute),
                                         ),
                                     }
@@ -3048,8 +3210,9 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3061,8 +3224,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -3071,8 +3235,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3084,8 +3249,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3094,8 +3260,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3113,8 +3280,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3126,8 +3294,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3136,8 +3305,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3150,8 +3320,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3181,8 +3352,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     );
                                         }
@@ -3199,8 +3371,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3212,8 +3385,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3222,8 +3396,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3236,8 +3411,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3262,8 +3438,9 @@ fn two_elements_one_child(
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
-        file!().to_string(),
-        line!().to_string(),
+          file!(),
+                                    line!(),
+                                    column!(),
         warning_message,
     )
                                 }
@@ -3272,8 +3449,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3300,8 +3478,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -3316,8 +3495,9 @@ fn two_elements_one_child(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3329,8 +3509,9 @@ fn two_elements_one_child(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -3339,8 +3520,9 @@ fn two_elements_one_child(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3352,8 +3534,9 @@ fn two_elements_one_child(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3362,8 +3545,9 @@ fn two_elements_one_child(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3374,8 +3558,9 @@ fn two_elements_one_child(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -3383,8 +3568,9 @@ fn two_elements_one_child(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -3428,8 +3614,9 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -3439,8 +3626,9 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -3448,8 +3636,9 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -3468,8 +3657,9 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -3490,8 +3680,9 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -3501,8 +3692,9 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -3510,8 +3702,9 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -3541,8 +3734,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 warning_message,
                             )
                         }
@@ -3557,8 +3751,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 "different node".to_string(),
                             ),
                         },
@@ -3570,8 +3765,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 warning_message,
                             )
                         }
@@ -3580,8 +3776,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -3591,8 +3788,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -3600,8 +3798,9 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -3643,8 +3842,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3656,8 +3856,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3666,8 +3867,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3680,8 +3882,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3697,8 +3900,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3710,8 +3914,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3720,8 +3925,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3746,8 +3952,9 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -3762,8 +3969,9 @@ fn parse_github_html_second_part_two_children_first(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3775,8 +3983,9 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -3785,8 +3994,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3798,8 +4008,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3808,8 +4019,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3830,8 +4042,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3843,8 +4056,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3853,8 +4067,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3867,8 +4082,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3884,8 +4100,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3897,8 +4114,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3907,8 +4125,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3921,8 +4140,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3939,8 +4159,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -3952,8 +4173,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -3962,8 +4184,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -3988,8 +4211,9 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -4004,8 +4228,9 @@ fn parse_github_html_second_part_two_children_first(
                                             _ => print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -4017,8 +4242,9 @@ fn parse_github_html_second_part_two_children_first(
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
-                                                file!().to_string(),
-                                                line!().to_string(),
+                                                file!(),
+                                                line!(),
+                                                column!(),
                                                 warning_message,
                                             )
                                         }
@@ -4027,8 +4253,9 @@ fn parse_github_html_second_part_two_children_first(
                                 _ => print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     "different node".to_string(),
                                 ),
                             },
@@ -4040,8 +4267,9 @@ fn parse_github_html_second_part_two_children_first(
                                 print_colorful_message(
                                     None,
                                     PrintType::WarningHigh,
-                                    file!().to_string(),
-                                    line!().to_string(),
+                                    file!(),
+                                    line!(),
+                                    column!(),
                                     warning_message,
                                 )
                             }
@@ -4050,8 +4278,9 @@ fn parse_github_html_second_part_two_children_first(
                     _ => print_colorful_message(
                         None,
                         PrintType::WarningHigh,
-                        file!().to_string(),
-                        line!().to_string(),
+                        file!(),
+                        line!(),
+                        column!(),
                         "different node".to_string(),
                     ),
                 }
@@ -4062,8 +4291,9 @@ fn parse_github_html_second_part_two_children_first(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -4071,8 +4301,9 @@ fn parse_github_html_second_part_two_children_first(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -4122,8 +4353,9 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -4133,8 +4365,9 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -4142,8 +4375,9 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -4156,8 +4390,9 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -4172,8 +4407,9 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -4183,8 +4419,9 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -4192,8 +4429,9 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
@@ -4216,8 +4454,9 @@ fn four_cases(
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 warning_message,
                             )
                         }
@@ -4233,8 +4472,9 @@ fn four_cases(
                             _ => print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 "different node".to_string(),
                             ),
                         },
@@ -4246,8 +4486,9 @@ fn four_cases(
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
-                                file!().to_string(),
-                                line!().to_string(),
+                                file!(),
+                                line!(),
+                                column!(),
                                 warning_message,
                             )
                         }
@@ -4256,8 +4497,9 @@ fn four_cases(
                 _ => print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     "different node".to_string(),
                 ),
             },
@@ -4269,8 +4511,9 @@ fn four_cases(
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    file!().to_string(),
-                    line!().to_string(),
+                    file!(),
+                    line!(),
+                    column!(),
                     warning_message,
                 )
             }
@@ -4278,8 +4521,9 @@ fn four_cases(
         _ => print_colorful_message(
             None,
             PrintType::WarningHigh,
-            file!().to_string(),
-            line!().to_string(),
+            file!(),
+            line!(),
+            column!(),
             "different node".to_string(),
         ),
     }
