@@ -117,8 +117,8 @@ sudo apt install curl <br/>
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh <br/>
 sudo apt install build-essential <br/>
 source $HOME/.cargo/env <br/>
-sudo apt install pkg-config //optionally <br/>
-sudo apt-get install pkg-config libssl-dev <br/>
+sudo apt install pkg-config <br/>
+sudo apt install pkg-config<br/>
 rustup default nightly <br/>
 rustup update //update every week cause nightly <br/>
 source $HOME/.cargo/env <br/>
