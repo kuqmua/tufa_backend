@@ -1,10 +1,11 @@
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::traits::where_was_trait::WhereWasTrait;
 
+#[derive(Debug)]
 pub struct WhereWas {
-    file: &'static str,
-    line: u32,
-    column: u32,
+    pub file: &'static str,
+    pub line: u32,
+    pub column: u32,
 }
 
 impl WhereWasTrait for WhereWas {
