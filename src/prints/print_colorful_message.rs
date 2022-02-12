@@ -8,8 +8,9 @@ use crate::prints::print_type_enum::PrintType;
 pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     print_type: PrintType,
-    file: String,
-    line: String,
+    file: &'static str,
+    line: u32,
+    column: u32,
     message: String,
 ) {
     if CONFIG.is_prints_enabled {
@@ -29,6 +30,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -46,6 +48,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -63,6 +66,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -80,6 +84,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -97,6 +102,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -114,6 +120,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -131,6 +138,7 @@ pub fn print_colorful_message(
                         print_type,
                         file,
                         line,
+                        column,
                         message,
                     );
                 }
@@ -141,11 +149,13 @@ pub fn print_colorful_message(
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -158,11 +168,13 @@ pub fn print_colorful_message(
                             CONFIG.warning_high_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -175,11 +187,13 @@ pub fn print_colorful_message(
                             CONFIG.warning_low_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -192,11 +206,13 @@ pub fn print_colorful_message(
                             CONFIG.success_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -209,11 +225,13 @@ pub fn print_colorful_message(
                             CONFIG.partial_success_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -226,11 +244,13 @@ pub fn print_colorful_message(
                             CONFIG.time_measurement_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -243,11 +263,13 @@ pub fn print_colorful_message(
                             CONFIG.cleaning_blue,
                         );
                         eprintln!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -257,11 +279,13 @@ pub fn print_colorful_message(
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
                         println!(
-                            "{}{}{}{}\n{}",
+                            "{}{}{}{}{}{}\n{}",
                             rgb_color.paint("file: "),
                             rgb_color.paint(file),
                             rgb_color.paint(":"),
-                            rgb_color.paint(line),
+                            rgb_color.paint(line.to_string()),
+                            rgb_color.paint(":"),
+                            rgb_color.paint(column.to_string()),
                             rgb_color.bold().paint(message)
                         );
                     }
@@ -284,8 +308,9 @@ fn handle_provider_prints(
     is_cleaning_warning_logs_directory_enabled_provider: bool,
     is_info_prints_enabled_provider: bool,
     print_type: PrintType,
-    file: String,
-    line: String,
+    file: &'static str,
+    line: u32,
+    column: u32,
     message: String,
 ) {
     if is_prints_enabled_provider {
@@ -295,11 +320,13 @@ fn handle_provider_prints(
                     let rgb_color: ansi_term::Colour =
                         RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -313,11 +340,13 @@ fn handle_provider_prints(
                         CONFIG.warning_high_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -330,11 +359,13 @@ fn handle_provider_prints(
                         CONFIG.warning_low_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -347,11 +378,13 @@ fn handle_provider_prints(
                         CONFIG.success_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -366,11 +399,13 @@ fn handle_provider_prints(
                         CONFIG.partial_success_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -383,11 +418,13 @@ fn handle_provider_prints(
                         CONFIG.time_measurement_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -402,11 +439,13 @@ fn handle_provider_prints(
                         CONFIG.cleaning_blue,
                     );
                     eprintln!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
@@ -419,11 +458,13 @@ fn handle_provider_prints(
                         CONFIG.cleaning_blue,
                     );
                     println!(
-                        "{}{}{}{}\n{}",
+                        "{}{}{}{}{}{}\n{}",
                         rgb_color.paint("file: "),
                         rgb_color.paint(file),
                         rgb_color.paint(":"),
-                        rgb_color.paint(line),
+                        rgb_color.paint(line.to_string()),
+                        rgb_color.paint(":"),
+                        rgb_color.paint(column.to_string()),
                         rgb_color.bold().paint(message)
                     );
                 }
