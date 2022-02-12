@@ -252,7 +252,7 @@ impl WrapConfigChecks for ConfigStruct {
                 }),
             });
         }
-        if self.links_limit_providers > 0 {
+        if !self.links_limit_providers > 0 {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::LinksLimitProviderse {
                     source: self.links_limit_providers,
