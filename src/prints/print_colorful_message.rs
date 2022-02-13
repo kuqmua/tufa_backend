@@ -148,15 +148,25 @@ pub fn print_colorful_message(
                     if CONFIG.is_error_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -167,15 +177,25 @@ pub fn print_colorful_message(
                             CONFIG.warning_high_green,
                             CONFIG.warning_high_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -186,15 +206,25 @@ pub fn print_colorful_message(
                             CONFIG.warning_low_green,
                             CONFIG.warning_low_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -205,15 +235,25 @@ pub fn print_colorful_message(
                             CONFIG.success_green,
                             CONFIG.success_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -224,15 +264,25 @@ pub fn print_colorful_message(
                             CONFIG.partial_success_green,
                             CONFIG.partial_success_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -243,15 +293,25 @@ pub fn print_colorful_message(
                             CONFIG.time_measurement_green,
                             CONFIG.time_measurement_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -262,15 +322,25 @@ pub fn print_colorful_message(
                             CONFIG.cleaning_green,
                             CONFIG.cleaning_blue,
                         );
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             eprintln!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -278,15 +348,25 @@ pub fn print_colorful_message(
                     if CONFIG.is_info_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
-                        if CONFIG.is_show_github_source_place_enabled {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
                             println!(
                                 "{}{}\n{}",
                                 sources_track,
                                 github_sources_track,
                                 rgb_color.bold().paint(message)
                             );
-                        } else {
+                        } else if CONFIG.is_show_source_place_enabled {
                             println!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            println!(
+                                "{}\n{}",
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            println!("{}", rgb_color.bold().paint(message));
                         }
                     }
                 }
@@ -318,15 +398,25 @@ fn handle_provider_prints(
                 if CONFIG.is_error_prints_enabled && is_error_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour =
                         RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -338,15 +428,25 @@ fn handle_provider_prints(
                         CONFIG.warning_high_green,
                         CONFIG.warning_high_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -357,15 +457,25 @@ fn handle_provider_prints(
                         CONFIG.warning_low_green,
                         CONFIG.warning_low_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -376,15 +486,25 @@ fn handle_provider_prints(
                         CONFIG.success_green,
                         CONFIG.success_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -397,15 +517,25 @@ fn handle_provider_prints(
                         CONFIG.partial_success_green,
                         CONFIG.partial_success_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -416,15 +546,25 @@ fn handle_provider_prints(
                         CONFIG.time_measurement_green,
                         CONFIG.time_measurement_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -437,15 +577,25 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         eprintln!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
@@ -456,15 +606,25 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    if CONFIG.is_show_github_source_place_enabled {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
                         println!(
                             "{}{}\n{}",
                             sources_track,
                             github_sources_track,
                             rgb_color.bold().paint(message)
                         );
-                    } else {
+                    } else if CONFIG.is_show_source_place_enabled {
                         println!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        println!(
+                            "{}\n{}",
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        println!("{}", rgb_color.bold().paint(message));
                     }
                 }
             }
