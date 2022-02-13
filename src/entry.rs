@@ -2,6 +2,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::get_providers_posts::get_providers_posts;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::where_was_trait::WhereWasTrait;
 use std::time::Instant;
 
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -16,7 +17,6 @@ use crate::init_dbs_logic::init_dbs::{init_dbs, InitDbsErrorEnum};
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
-use crate::helpers::where_was::WhereWas;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub fn entry() {
@@ -94,12 +94,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -109,12 +109,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -124,12 +124,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -139,12 +139,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -154,12 +154,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -169,12 +169,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -184,12 +184,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -199,12 +199,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -214,12 +214,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -229,12 +229,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
@@ -244,12 +244,12 @@ pub fn entry() {
                                     None,
                                     PrintType::Error,
                                     vec![
-                                        format!("{}{}{}", where_was0.file, where_was0.line, where_was0.column),
-                                        format!("{}{}{}", where_was1.file, where_was1.line, where_was1.column),
+                                        where_was0.source_place(),
+                                        where_was1.source_place(),
                                     ],
                                     vec![
-                                        get_git_source_file_link(where_was0.file, where_was0.line),
-                                        get_git_source_file_link(where_was1.file, where_was1.line),
+                                        where_was0.github_source_place(),
+                                        where_was1.github_source_place(),
                                     ],
                                     format!("{:#?}", source),
                                 );
