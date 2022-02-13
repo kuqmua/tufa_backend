@@ -9,9 +9,17 @@ pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     print_type: PrintType,
     sources: Vec<String>,
-    github_sources_links: Vec<String>,
+    github_sources: Vec<String>,
     message: String,
 ) {
+    let mut sources_track = String::from("");
+    for source in sources {
+        sources_track.push_str(&format!("{}\n", source))
+    }
+    let mut github_sources_track = String::from("");
+    for github_source in github_sources {
+        github_sources_track.push_str(&format!("{}\n", github_source))
+    }
     if CONFIG.is_prints_enabled {
         match pk {
             Some(pk) => match pk {
@@ -27,8 +35,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
                         CONFIG.is_info_prints_enabled_arxiv,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -44,8 +52,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
                         CONFIG.is_info_prints_enabled_biorxiv,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -61,8 +69,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_github,
                         CONFIG.is_info_prints_enabled_github,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -78,8 +86,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
                         CONFIG.is_info_prints_enabled_habr,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -95,8 +103,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
                         CONFIG.is_info_prints_enabled_medrxiv,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -112,8 +120,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
                         CONFIG.is_info_prints_enabled_reddit,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -129,8 +137,8 @@ pub fn print_colorful_message(
                         CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
                         CONFIG.is_info_prints_enabled_twitter,
                         print_type,
-                        sources,
-                        github_sources_links,
+                        sources_track,
+                        github_sources_track,
                         message,
                     );
                 }
@@ -140,14 +148,16 @@ pub fn print_colorful_message(
                     if CONFIG.is_error_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::WarningHigh => {
@@ -157,14 +167,16 @@ pub fn print_colorful_message(
                             CONFIG.warning_high_green,
                             CONFIG.warning_high_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::WarningLow => {
@@ -174,14 +186,16 @@ pub fn print_colorful_message(
                             CONFIG.warning_low_green,
                             CONFIG.warning_low_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::Success => {
@@ -191,14 +205,16 @@ pub fn print_colorful_message(
                             CONFIG.success_green,
                             CONFIG.success_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::PartialSuccess => {
@@ -208,14 +224,16 @@ pub fn print_colorful_message(
                             CONFIG.partial_success_green,
                             CONFIG.partial_success_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::TimeMeasurement => {
@@ -225,14 +243,16 @@ pub fn print_colorful_message(
                             CONFIG.time_measurement_green,
                             CONFIG.time_measurement_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::CleaningWarningLogsDirectory => {
@@ -242,28 +262,32 @@ pub fn print_colorful_message(
                             CONFIG.cleaning_green,
                             CONFIG.cleaning_blue,
                         );
-                        eprintln!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            eprintln!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
                 PrintType::Info => {
                     if CONFIG.is_info_prints_enabled {
                         let rgb_color: ansi_term::Colour =
                             RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue);
-                        println!(
-                            "{}{:#?}{}{:#?}\n{}",
-                            rgb_color.paint("trace: "),
-                            sources,
-                            rgb_color.paint("github source trace: "),
-                            github_sources_links,
-                            rgb_color.bold().paint(message)
-                        );
+                        if CONFIG.is_show_github_source_place_enabled {
+                            println!(
+                                "{}{}\n{}",
+                                sources_track,
+                                github_sources_track,
+                                rgb_color.bold().paint(message)
+                            );
+                        } else {
+                            println!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                        }
                     }
                 }
             },
@@ -284,8 +308,8 @@ fn handle_provider_prints(
     is_cleaning_warning_logs_directory_enabled_provider: bool,
     is_info_prints_enabled_provider: bool,
     print_type: PrintType,
-    sources: Vec<String>,
-    github_sources_links: Vec<String>,
+    sources_track: String,
+    github_sources_track: String,
     message: String,
 ) {
     if is_prints_enabled_provider {
@@ -294,14 +318,16 @@ fn handle_provider_prints(
                 if CONFIG.is_error_prints_enabled && is_error_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour =
                         RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue);
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::WarningHigh => {
@@ -312,14 +338,16 @@ fn handle_provider_prints(
                         CONFIG.warning_high_green,
                         CONFIG.warning_high_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::WarningLow => {
@@ -329,14 +357,16 @@ fn handle_provider_prints(
                         CONFIG.warning_low_green,
                         CONFIG.warning_low_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::Success => {
@@ -346,14 +376,16 @@ fn handle_provider_prints(
                         CONFIG.success_green,
                         CONFIG.success_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::PartialSuccess => {
@@ -365,14 +397,16 @@ fn handle_provider_prints(
                         CONFIG.partial_success_green,
                         CONFIG.partial_success_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::TimeMeasurement => {
@@ -382,14 +416,16 @@ fn handle_provider_prints(
                         CONFIG.time_measurement_green,
                         CONFIG.time_measurement_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::CleaningWarningLogsDirectory => {
@@ -401,14 +437,16 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        eprintln!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        eprintln!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
             PrintType::Info => {
@@ -418,14 +456,16 @@ fn handle_provider_prints(
                         CONFIG.cleaning_green,
                         CONFIG.cleaning_blue,
                     );
-                    eprintln!(
-                        "{}{:#?}{}{:#?}\n{}",
-                        rgb_color.paint("trace: "),
-                        sources,
-                        rgb_color.paint("github source trace: "),
-                        github_sources_links,
-                        rgb_color.bold().paint(message)
-                    );
+                    if CONFIG.is_show_github_source_place_enabled {
+                        println!(
+                            "{}{}\n{}",
+                            sources_track,
+                            github_sources_track,
+                            rgb_color.bold().paint(message)
+                        );
+                    } else {
+                        println!("{}\n{}", sources_track, rgb_color.bold().paint(message));
+                    }
                 }
             }
         }
