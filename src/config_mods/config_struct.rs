@@ -270,6 +270,7 @@ pub struct ConfigStruct {
     pub links_limit_reddit: i64,
     pub links_limit_twitter: i64,
 
+    pub is_show_source_place_enabled: bool,
     pub is_show_github_source_place_enabled: bool,
 
     pub error_red: u8,
