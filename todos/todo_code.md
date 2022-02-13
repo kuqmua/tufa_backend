@@ -440,3 +440,11 @@ docker build image inside ci pipeline
 use Rc instead of Arc in cases with one thread.
 Between threads still must use Arc
 <br/>
+
+### -------------------
+can implement this
+impl User<u32> {
+
+}
+meaning implementation only for u32 type
+<br/>
