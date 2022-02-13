@@ -10,7 +10,7 @@ pub struct WhereWas {
 
 impl WhereWasTrait for WhereWas {
     fn source_place(&self) -> String {
-        format!("{}{}{}", self.file, self.line, self.column)
+        format!("{}:{}:{}", self.file, self.line, self.column)
     }
     fn github_source_place(&self) -> String {
         get_git_source_file_link(self.file, self.line)
