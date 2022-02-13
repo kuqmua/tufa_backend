@@ -435,3 +435,8 @@ get_enabled_providers_vec should be get_enabled_initialiation_providers_vec. add
 ### -------------------
 docker build image inside ci pipeline
 <br/>
+
+### -------------------
+use Rc instead of Arc in cases with one thread.
+Between threads still must use Arc
+<br/>
