@@ -47,7 +47,7 @@ impl ProviderKind {
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
-                vec![format!("{}{}{}", file!(), line!(), column!())],
+                vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![get_git_source_file_link(file!(), line!())],
                 format!(
                     "fetch_link {} in {}.{}ms",

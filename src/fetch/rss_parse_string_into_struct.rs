@@ -95,7 +95,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::WarningLow,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     );
@@ -300,7 +300,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -426,7 +426,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -557,7 +557,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -681,7 +681,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -807,7 +807,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -934,7 +934,7 @@ pub fn rss_parse_string_into_struct(
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::Error,
-                                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {}", &e),
                                     );
@@ -955,7 +955,7 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::WarningLow,
-                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![get_git_source_file_link(file!(), line!())],
                         warning_message,
                     );
@@ -1082,7 +1082,7 @@ pub fn rss_parse_string_into_struct(
                     print_colorful_message(
                         Some(&pk),
                         PrintType::Error,
-                        vec![format!("{}{}{}", file!(), line!(), column!())],
+                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![get_git_source_file_link(file!(), line!())],
                         format!("Rss conversion from str error: {}", &e),
                     );

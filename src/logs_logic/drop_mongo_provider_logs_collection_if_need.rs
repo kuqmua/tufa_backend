@@ -33,7 +33,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         print_colorful_message(
             Some(pk),
             PrintType::WarningHigh,
-            vec![format!("{}{}{}", file!(), line!(), column!())],
+            vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![get_git_source_file_link(file!(), line!())],
             format!("drop fail with error {:#?}", e),
         );
