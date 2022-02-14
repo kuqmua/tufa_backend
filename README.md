@@ -209,17 +209,17 @@ cargo install cargo-expand
 example using cargo expand to show generated code only for some mod
 cargo expand some_mod::some_inner_mod::some::inner_inner_mod
 
-# install cargo code Coverage
+### install cargo code Coverage
 installation:
 cargo install cargo-tarpaulin
 usage:
 cargo tarpaulin --ignore-tests
 
-# how to tune rustfmt
+### how to tune rustfmt
 You can tune rustfmt for a project with a configuration file, rustfmt.toml. Details can be found in
 rustfmt’s https://github.com/rust-lang/rustfmt#configuring-rustfmt
 
-# check vulnerabilities in project
+### check vulnerabilities in project
 cargo-audit, a convenient cargo sub-command to check if vulnerabilities have
 been reported for any of the crates in the dependency tree of your project.
 installation:
@@ -227,11 +227,11 @@ cargo install cargo-audit
 usage:
 cargo audit
 
-# gnome extenstions works only in forefox then you want to change ubuntu
+### gnome extenstions works only in forefox then you want to change ubuntu
 
-# hide top bar extension
+### hide top bar extension
 
-# make smaller window title ubuntu
+### make smaller window title ubuntu
 https://qastack.ru/unix/276951/how-to-change-the-titlebar-height-in-standard-gtk-apps-and-those-with-headerbars?noredirect=1&lq=1
 touch ~/.config/gtk-3.0/gtk.css
 nano ~/.config/gtk-3.0/gtk.css
