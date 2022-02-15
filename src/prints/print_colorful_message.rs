@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use ansi_term::Colour::RGB;
 
 use crate::prints::print_type_enum::PrintType;
@@ -24,126 +25,22 @@ pub fn print_colorful_message(
     }
     if CONFIG.is_prints_enabled {
         match pk {
-            Some(pk) => match pk {
-                ProviderKind::Arxiv => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_arxiv,
-                        CONFIG.is_error_prints_enabled_arxiv,
-                        CONFIG.is_warning_high_prints_enabled_arxiv,
-                        CONFIG.is_warning_low_prints_enabled_arxiv,
-                        CONFIG.is_success_prints_enabled_arxiv,
-                        CONFIG.is_partial_success_prints_enabled_arxiv,
-                        CONFIG.is_time_measurement_prints_enabled_arxiv,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_arxiv,
-                        CONFIG.is_info_prints_enabled_arxiv,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Biorxiv => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_biorxiv,
-                        CONFIG.is_error_prints_enabled_biorxiv,
-                        CONFIG.is_warning_high_prints_enabled_biorxiv,
-                        CONFIG.is_warning_low_prints_enabled_biorxiv,
-                        CONFIG.is_success_prints_enabled_biorxiv,
-                        CONFIG.is_partial_success_prints_enabled_biorxiv,
-                        CONFIG.is_time_measurement_prints_enabled_biorxiv,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_biorxiv,
-                        CONFIG.is_info_prints_enabled_biorxiv,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Github => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_github,
-                        CONFIG.is_error_prints_enabled_github,
-                        CONFIG.is_warning_high_prints_enabled_github,
-                        CONFIG.is_warning_low_prints_enabled_github,
-                        CONFIG.is_success_prints_enabled_github,
-                        CONFIG.is_partial_success_prints_enabled_github,
-                        CONFIG.is_time_measurement_prints_enabled_github,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_github,
-                        CONFIG.is_info_prints_enabled_github,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Habr => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_habr,
-                        CONFIG.is_error_prints_enabled_habr,
-                        CONFIG.is_warning_high_prints_enabled_habr,
-                        CONFIG.is_warning_low_prints_enabled_habr,
-                        CONFIG.is_success_prints_enabled_habr,
-                        CONFIG.is_partial_success_prints_enabled_habr,
-                        CONFIG.is_time_measurement_prints_enabled_habr,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_habr,
-                        CONFIG.is_info_prints_enabled_habr,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Medrxiv => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_medrxiv,
-                        CONFIG.is_error_prints_enabled_medrxiv,
-                        CONFIG.is_warning_high_prints_enabled_medrxiv,
-                        CONFIG.is_warning_low_prints_enabled_medrxiv,
-                        CONFIG.is_success_prints_enabled_medrxiv,
-                        CONFIG.is_partial_success_prints_enabled_medrxiv,
-                        CONFIG.is_time_measurement_prints_enabled_medrxiv,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_medrxiv,
-                        CONFIG.is_info_prints_enabled_medrxiv,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Reddit => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_reddit,
-                        CONFIG.is_error_prints_enabled_reddit,
-                        CONFIG.is_warning_high_prints_enabled_reddit,
-                        CONFIG.is_warning_low_prints_enabled_reddit,
-                        CONFIG.is_success_prints_enabled_reddit,
-                        CONFIG.is_partial_success_prints_enabled_reddit,
-                        CONFIG.is_time_measurement_prints_enabled_reddit,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_reddit,
-                        CONFIG.is_info_prints_enabled_reddit,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
-                ProviderKind::Twitter => {
-                    handle_provider_prints(
-                        CONFIG.is_prints_enabled_twitter,
-                        CONFIG.is_error_prints_enabled_twitter,
-                        CONFIG.is_warning_high_prints_enabled_twitter,
-                        CONFIG.is_warning_low_prints_enabled_twitter,
-                        CONFIG.is_success_prints_enabled_twitter,
-                        CONFIG.is_partial_success_prints_enabled_twitter,
-                        CONFIG.is_time_measurement_prints_enabled_twitter,
-                        CONFIG.is_cleaning_warning_logs_directory_enabled_twitter,
-                        CONFIG.is_info_prints_enabled_twitter,
-                        print_type,
-                        sources_track,
-                        github_sources_track,
-                        message,
-                    );
-                }
+            Some(pk) =>  {
+                handle_provider_prints(
+                    pk.is_prints_enabled(),
+                    pk.is_error_prints_enabled(),
+                    pk.is_warning_high_prints_enabled(),
+                    pk.is_warning_low_prints_enabled(),
+                    pk.is_success_prints_enabled(),
+                    pk.is_partial_success_prints_enabled(),
+                    pk.is_time_measurement_prints_enabled(),
+                    pk.is_cleaning_warning_logs_directory_enabled(),
+                    pk.is_info_prints_enabled(),
+                    print_type,
+                    sources_track,
+                    github_sources_track,
+                    message,
+                );
             },
             None => match print_type {
                 PrintType::Error => {
