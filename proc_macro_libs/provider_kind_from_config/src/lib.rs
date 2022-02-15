@@ -14,6 +14,7 @@ use proc_macro::TokenStream;
 use syn::Data;
 use syn::Ident;
 
+//copy of print_type_from_config
 #[proc_macro_derive(ProviderKindFromConfigTraitDerive)]
 pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
