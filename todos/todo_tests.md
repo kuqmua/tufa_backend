@@ -62,3 +62,9 @@ check all files names to not contain ":" symbol. its needed to correct parsing l
 ### -------------------
 check all files name be equal to his inner struct/function
 <br/>
+
+### -------------------
+try to use nexttest instead of cargo test
+https://nexte.st/
+https://github.com/nextest-rs/nextest
+<br/>
