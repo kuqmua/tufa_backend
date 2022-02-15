@@ -448,3 +448,9 @@ impl User<u32> {
 }
 meaning implementation only for u32 type
 <br/>
+  
+### -------------------
+auto check int and float overflow
+first, install cargo clippy
+#![deny(clippy::integer_arithmetic, clippy::float_arithmetic)]
+<br/>
