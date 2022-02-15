@@ -9,5 +9,6 @@ members = [
     "impl_display",
     "impl_from_for_upper_struct",
     "init_from_env",
+    "print_type_from_config",
     "provider_kind_from_config"
 ]

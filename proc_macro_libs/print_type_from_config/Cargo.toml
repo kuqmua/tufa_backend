@@ -1,5 +1,5 @@
 [package]
-name = "provider_kind_from_config"
+name = "print_type_from_config"
 version = "0.1.0"
 edition = "2021"
 
