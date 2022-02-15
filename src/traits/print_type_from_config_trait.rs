@@ -1,4 +1,4 @@
-pub trait PrintTypeTrait {
+pub trait PrintTypeFromConfigTrait {
     fn is_error_prints_enabled(&self) -> bool;
     fn is_warning_high_prints_enabled(&self) -> bool;
     fn is_warning_low_prints_enabled(&self) -> bool;

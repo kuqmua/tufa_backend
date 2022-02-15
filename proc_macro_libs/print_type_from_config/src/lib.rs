@@ -1,8 +1,5 @@
 use std::fs;
 
-use convert_case::Case;
-use convert_case::Casing;
-
 use quote::quote;
 
 use syn;
@@ -53,39 +50,10 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     };
     let mut function_quote_vec_ident = Vec::with_capacity(function_vec_idents.len());
     for (function_name_ident, output) in function_vec_idents {
-        let mut is_str = false;
-        if let syn::ReturnType::Type(_, box_type) = &output {
-            if let syn::Type::Reference(type_reference) = &**box_type {
-                if let syn::Type::Path(reference_type_path) = &*type_reference.elem {
-                    for i in &reference_type_path.path.segments {
-                        if i.ident.to_string() == "str" {
-                            is_str = true;
-                        }
-                    }
-                }
-            }
-        }
         let variants_for_quote = variants.iter().map(|variant| {
             let variant_name = &variant.ident;
-            let config_field_name = syn::Ident::new(
-                &format!(
-                    "{}_{}",
-                    function_name_ident
-                        .to_string()
-                        .to_case(Case::Snake)
-                        .to_lowercase(),
-                    variant_name.to_string().to_case(Case::Snake).to_lowercase()
-                ),
-                variant_name.span(),
-            );
-            if is_str {
-                quote! {
-                    #ident::#variant_name => &CONFIG.#config_field_name
-                }
-            } else {
-                quote! {
-                        #ident::#variant_name => CONFIG.#config_field_name
-                }
+            quote! {
+                #ident::#variant_name => CONFIG.#function_name_ident
             }
         });
         function_quote_vec_ident.push(quote! {
