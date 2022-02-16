@@ -12,7 +12,6 @@ pub enum PrintType {
     Success,
     PartialSuccess,
     TimeMeasurement,
-    CleaningWarningLogsDirectory,
     Info,
 }
 
@@ -25,7 +24,6 @@ impl PrintTypeTrait for PrintType {
             PrintType::Success => CONFIG.is_success_prints_enabled,
             PrintType::PartialSuccess => CONFIG.is_partial_success_prints_enabled,
             PrintType::TimeMeasurement => CONFIG.is_time_measurement_prints_enabled,
-            PrintType::CleaningWarningLogsDirectory => CONFIG.is_cleaning_warning_logs_directory_enabled,
             PrintType::Info => CONFIG.is_info_prints_enabled,
         }
     }
@@ -56,11 +54,6 @@ impl PrintTypeTrait for PrintType {
                 CONFIG.time_measurement_red,
                 CONFIG.time_measurement_green,
                 CONFIG.time_measurement_blue,
-            ),
-            PrintType::CleaningWarningLogsDirectory => RGB(
-                CONFIG.cleaning_red,
-                CONFIG.cleaning_green,
-                CONFIG.cleaning_blue,
             ),
             PrintType::Info => RGB(
                 CONFIG.info_red,

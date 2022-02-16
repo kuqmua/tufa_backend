@@ -238,39 +238,6 @@ pub fn print_colorful_message(
                         }
                     }
                 }
-                PrintType::CleaningWarningLogsDirectory => {
-                    if CONFIG.is_cleaning_warning_logs_directory_enabled {
-                        let rgb_color: ansi_term::Colour = RGB(
-                            CONFIG.cleaning_red,
-                            CONFIG.cleaning_green,
-                            CONFIG.cleaning_blue,
-                        );
-                        if CONFIG.is_show_source_place_enabled
-                            && CONFIG.is_show_github_source_place_enabled
-                        {
-                            eprintln!(
-                                "{}{}\n{}",
-                                rgb_color.bold().paint(sources_track),
-                                rgb_color.bold().paint(github_sources_track),
-                                rgb_color.bold().paint(message)
-                            );
-                        } else if CONFIG.is_show_source_place_enabled {
-                            eprintln!(
-                                "{}\n{}",
-                                rgb_color.bold().paint(sources_track),
-                                rgb_color.bold().paint(message)
-                            );
-                        } else if CONFIG.is_show_github_source_place_enabled {
-                            eprintln!(
-                                "{}\n{}",
-                                rgb_color.bold().paint(github_sources_track),
-                                rgb_color.bold().paint(message)
-                            );
-                        } else {
-                            eprintln!("{}", rgb_color.bold().paint(message));
-                        }
-                    }
-                }
                 PrintType::Info => {
                     if CONFIG.is_info_prints_enabled {
                         let rgb_color: ansi_term::Colour =

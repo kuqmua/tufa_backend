@@ -55,13 +55,6 @@ pub fn handle_provider_prints(
                     print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
                 }
             }
-            PrintType::CleaningWarningLogsDirectory => {
-                if pt.is_prints_enabled()
-                    && is_cleaning_warning_logs_directory_enabled_provider
-                {
-                    print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
-                }
-            }
             PrintType::Info => {
                 if pt.is_prints_enabled() && is_info_prints_enabled_provider {
                     print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
