@@ -260,9 +260,9 @@ pub fn handle_provider_prints(
             PrintType::Info => {
                 if pt.is_prints_enabled() && is_info_prints_enabled_provider {
                     let rgb_color: ansi_term::Colour = RGB(
-                        CONFIG.cleaning_red,
-                        CONFIG.cleaning_green,
-                        CONFIG.cleaning_blue,
+                        CONFIG.info_red,
+                        CONFIG.info_green,
+                        CONFIG.info_blue,
                     );
                     if CONFIG.is_show_source_place_enabled
                         && CONFIG.is_show_github_source_place_enabled
