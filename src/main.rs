@@ -115,6 +115,7 @@ mod providers {
             pub mod mongo_get_provider_link_parts;
             pub mod rss_part;
         }
+        pub mod provider_kind_for_print_type_trait;
         pub mod provider_kind_trait;
     }
     pub mod check_providers_link_parts_on_empty;
@@ -132,7 +133,6 @@ mod tests {
     }
 }
 mod traits {
-    pub mod provider_kind_for_print_type_trait;
     pub mod git_info_trait;
     pub mod print_type_trait;
     pub mod provider_kind_from_config_trait;
