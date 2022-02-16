@@ -4,7 +4,7 @@ use crate::traits::print_type_trait::PrintTypeTrait;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 impl ProviderKind {
-    fn is_prints_for_print_type_enabled(&self, pt: &PrintType) -> bool {
+    pub fn is_prints_for_print_type_enabled(&self, pt: &PrintType) -> bool {
         match *pt {
             PrintType::Error => pt.is_prints_enabled() && self.is_error_prints_enabled(),
             PrintType::WarningHigh => pt.is_prints_enabled() && self.is_warning_high_prints_enabled(),
