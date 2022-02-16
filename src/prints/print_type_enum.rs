@@ -1,3 +1,6 @@
+use ansi_term::Colour::RGB;
+use ansi_term::Colour;
+
 use crate::traits::print_type_trait::PrintTypeTrait;
 
 use crate::config_mods::lazy_static_config::CONFIG;
@@ -24,6 +27,46 @@ impl PrintTypeTrait for PrintType {
             PrintType::TimeMeasurement => CONFIG.is_time_measurement_prints_enabled,
             PrintType::CleaningWarningLogsDirectory => CONFIG.is_cleaning_warning_logs_directory_enabled,
             PrintType::Info => CONFIG.is_info_prints_enabled,
+        }
+    }
+    fn get_color(&self) -> Colour {
+        match *self {
+            PrintType::Error => RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue),
+            PrintType::WarningHigh => RGB(
+                CONFIG.warning_high_red,
+                CONFIG.warning_high_green,
+                CONFIG.warning_high_blue,
+            ),
+            PrintType::WarningLow => RGB(
+                CONFIG.warning_low_red,
+                CONFIG.warning_low_green,
+                CONFIG.warning_low_blue,
+            ),
+            PrintType::Success => RGB(
+                CONFIG.success_red,
+                CONFIG.success_green,
+                CONFIG.success_blue,
+            ),
+            PrintType::PartialSuccess => RGB(
+                CONFIG.partial_success_red,
+                CONFIG.partial_success_green,
+                CONFIG.partial_success_blue,
+            ),
+            PrintType::TimeMeasurement => RGB(
+                CONFIG.time_measurement_red,
+                CONFIG.time_measurement_green,
+                CONFIG.time_measurement_blue,
+            ),
+            PrintType::CleaningWarningLogsDirectory => RGB(
+                CONFIG.cleaning_red,
+                CONFIG.cleaning_green,
+                CONFIG.cleaning_blue,
+            ),
+            PrintType::Info => RGB(
+                CONFIG.info_red,
+                CONFIG.info_green,
+                CONFIG.info_blue,
+            ),
         }
     }
 }
