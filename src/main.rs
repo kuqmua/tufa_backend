@@ -87,7 +87,6 @@ pub mod postgres_integration {
 }
 pub mod prints {
     pub mod print_wrapper;
-    pub mod handle_provider_prints;
     pub mod print_colorful_message;
     pub mod print_type_enum;
 }

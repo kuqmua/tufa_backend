@@ -6,8 +6,6 @@ use ansi_term::Colour::RGB;
 
 use crate::prints::print_type_enum::PrintType;
 
-use crate::prints::handle_provider_prints::handle_provider_prints;
-
 use super::print_wrapper::print_wrapper;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
