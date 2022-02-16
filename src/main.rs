@@ -132,7 +132,7 @@ mod tests {
 }
 mod traits {
     pub mod git_info_trait;
-    pub mod print_type_from_config_trait;
+    pub mod print_type_trait;
     pub mod provider_kind_from_config_trait;
     pub mod provider_kind_trait;
     pub mod where_was_trait;
@@ -159,8 +159,6 @@ extern crate impl_display;
 extern crate impl_from_for_upper_struct;
 #[macro_use]
 extern crate init_from_env;
-#[macro_use]
-extern crate print_type_from_config;
 #[macro_use]
 extern crate provider_kind_from_config;
 
