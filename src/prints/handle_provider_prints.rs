@@ -13,7 +13,6 @@ pub fn handle_provider_prints(
     is_success_prints_enabled_provider: bool,
     is_partial_success_prints_enabled_provider: bool,
     enable_provider_time_measurement: bool,
-    is_cleaning_warning_logs_directory_enabled_provider: bool,
     is_info_prints_enabled_provider: bool,
     pt: PrintType,
     sources_track: String,

@@ -34,7 +34,6 @@ pub fn print_colorful_message(
                     pk.is_success_prints_enabled(),
                     pk.is_partial_success_prints_enabled(),
                     pk.is_time_measurement_prints_enabled(),
-                    pk.is_cleaning_warning_logs_directory_enabled(),
                     pk.is_info_prints_enabled(),
                     print_type,
                     sources_track,
