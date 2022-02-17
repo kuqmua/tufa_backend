@@ -10,8 +10,8 @@ pub fn generate_github_links(github_names: Vec<String>) -> Vec<String> {
         .iter()
         .map(|name| {
             format!(
-                "{}{}{}{}",
-                GITHUB_LINK_FIRST_PART, name, GITHUB_LINK_SECOND_PART, CONFIG.github_token
+                "{GITHUB_LINK_FIRST_PART}{name}{GITHUB_LINK_SECOND_PART}{}",
+                CONFIG.github_token
             )
         })
         .collect()

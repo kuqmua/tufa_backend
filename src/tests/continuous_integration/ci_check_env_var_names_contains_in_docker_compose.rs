@@ -11,15 +11,11 @@ use crate::config_mods::config_struct::ConfigStructEnum;
 #[test]
 pub fn ci_check_env_var_names_contains_in_docker_compose() {
     let result_of_reading_to_string = fs::read_to_string(&format!(
-        "{}{}",
-        PATH_TO_DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_FILE_NAME
+        "{PATH_TO_DOCKER_COMPOSE_FILE}{DOCKER_COMPOSE_FILE_NAME}"
     ));
     match result_of_reading_to_string {
         Err(e) => {
-            panic!(
-                "cannot read_to_string from file {}{}, reason: {}",
-                PATH_TO_DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_FILE_NAME, e
-            )
+            panic!("cannot read_to_string from file {PATH_TO_DOCKER_COMPOSE_FILE}{DOCKER_COMPOSE_FILE_NAME}, reason: {e}");
         }
         Ok(file_content) => {
             let mut vec = Vec::with_capacity(ConfigStructEnum::get_length());
@@ -30,7 +26,7 @@ pub fn ci_check_env_var_names_contains_in_docker_compose() {
                 }
             }
             if !vec.is_empty() {
-                panic!("no such env name(s) inside docker-compose: {:?}", vec);
+                panic!("no such env name(s) inside docker-compose: {vec:?}");
             }
         }
     }

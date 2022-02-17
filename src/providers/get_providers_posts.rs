@@ -12,7 +12,7 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,
 //         db_name_handle,
-//         &format!("{}{}", key, db_collection_handle_second_part),
+//         &format!("{key}{db_collection_handle_second_part}"),
 //         false,
 //     );
 //     match future_possible_drop_collection {
@@ -87,7 +87,7 @@ pub async fn get_providers_posts() {
             // //                             PrintType::Error,
             // //                             file!().to_string(),
             // //                             line!().to_string(),
-            // //                             format!("wrong_cases_thread.join() error: {:#?}", e),
+            // //                             format!("wrong_cases_thread.join() error: {e:#?}"),
             // //                         );
             // //                     }
             // //                 }

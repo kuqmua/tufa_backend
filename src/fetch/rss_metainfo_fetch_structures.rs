@@ -32,7 +32,7 @@ impl NoItemsError {
                     "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                     "link": link,
                     "tag": tag,
-                    "part_of": format!("{}", pk),
+                    "part_of": format!("{pk}"),
                     "date": Local::now().to_string()
                 })
             }
@@ -41,14 +41,14 @@ impl NoItemsError {
                 "link": link,
                 "string": string,
                 "error": error,
-                "part_of": format!("{}", pk),
+                "part_of": format!("{pk}"),
                 "date": Local::now().to_string()
             }),
             NoItemsError::NoTag(tag) => json!({
                 "error_kind": NoItemsError::get_stringified_kind(no_items_error),
                 "link": link,
                 "tag": tag,
-                "part_of": format!("{}", pk),
+                "part_of": format!("{pk}"),
                 "date": Local::now().to_string()
             }),
         }

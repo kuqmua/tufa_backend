@@ -23,15 +23,14 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
         |(pk, string_vec)| async {
             let mut values_string = String::from("");
             for link_part in string_vec.clone() {
-                values_string.push_str(&format!("('{}'),", link_part));
+                values_string.push_str(&format!("('{link_part}'),"));
             }
             if !values_string.is_empty() {
                 values_string.pop();
             }
             let query_string = format!(
-                "INSERT INTO {} (link_part) VALUES {};",
-                pk.get_postgres_table_name(),
-                values_string
+                "INSERT INTO {} (link_part) VALUES {values_string};",
+                pk.get_postgres_table_name()
             );
             (*pk, sqlx::query(&query_string).execute(pool).await)
         },

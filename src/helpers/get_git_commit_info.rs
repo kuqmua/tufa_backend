@@ -63,14 +63,8 @@ pub fn get_git_commit_info() -> GitCommitInfo {
                     let end_line_to_find = "\n";
                     match fetch_head_content.find(end_line_to_find) {
                         None => {
-                            branch = format!(
-                                "error: no line break character inside '{}'",
-                                fetch_head_content
-                            );
-                            repo_link = format!(
-                                "error: no line break character inside '{}'",
-                                fetch_head_content
-                            );
+                            branch = format!("error: no line break character inside '{fetch_head_content}'");
+                            repo_link = format!("error: no line break character inside '{fetch_head_content}'");
                         }
                         Some(index) => {
                             let first_line = fetch_head_content[..index].to_string();
@@ -78,26 +72,14 @@ pub fn get_git_commit_info() -> GitCommitInfo {
                             let second_slice_to_find = "' of ";
                             match first_line.find(first_slice_to_find) {
                                 None => {
-                                    branch = format!(
-                                        "error: no '{}' inside '{}'",
-                                        first_slice_to_find, first_line
-                                    );
-                                    repo_link = format!(
-                                        "error: no '{}' inside '{}'",
-                                        first_slice_to_find, first_line
-                                    );
+                                    branch = format!("error: no '{first_slice_to_find}' inside '{first_line}'");
+                                    repo_link = format!("error: no '{first_slice_to_find}' inside '{first_line}'");
                                 }
                                 Some(first_branch_index) => {
                                     match first_line.find(second_slice_to_find) {
                                         None => {
-                                            branch = format!(
-                                                "error: no '{}' inside '{}'",
-                                                second_slice_to_find, first_line
-                                            );
-                                            repo_link = format!(
-                                                "error: no '{}' inside '{}'",
-                                                second_slice_to_find, first_line
-                                            );
+                                            branch = format!("error: no '{second_slice_to_find}' inside '{first_line}'");
+                                            repo_link = format!("error: no '{second_slice_to_find}' inside '{first_line}'");
                                         }
                                         Some(second_branch_index) => {
                                             branch = first_line[first_branch_index

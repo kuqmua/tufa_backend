@@ -50,8 +50,7 @@ impl ProviderKind {
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![get_git_source_file_link(file!(), line!())],
                 format!(
-                    "fetch_link {} in {}.{}ms",
-                    link,
+                    "fetch_link {link} in {}.{}ms",
                     time.elapsed().as_secs(),
                     time.elapsed().as_millis() / 10,
                 ),

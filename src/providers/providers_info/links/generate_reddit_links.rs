@@ -8,9 +8,7 @@ pub fn generate_reddit_links(subreddits_names: Vec<String>) -> Vec<String> {
         .iter()
         .map(|name| {
             format!(
-                "{}{}{}",
-                REDDIT_LINK_FIRST_PART, name, REDDIT_LINK_SECOND_PART
-            )
+                "{REDDIT_LINK_FIRST_PART}{name}{REDDIT_LINK_SECOND_PART}")
         })
         .collect()
 }

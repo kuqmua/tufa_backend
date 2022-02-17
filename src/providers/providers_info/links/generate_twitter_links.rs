@@ -10,12 +10,8 @@ pub fn generate_twitter_links(twitter_subs_names: Vec<String>) -> Vec<String> {
         .iter()
         .map(|name| {
             format!(
-                "{}{}{}{}{}",
-                TWITTER_LINK_FIRST_PART,
-                get_twitter_provider_name(),
-                TWITTER_LINK_SECOND_PART,
-                name,
-                TWITTER_LINK_THIRD_PART
+                "{TWITTER_LINK_FIRST_PART}{}{TWITTER_LINK_SECOND_PART}{name}{TWITTER_LINK_THIRD_PART}",
+                get_twitter_provider_name()
             )
         })
         .collect()

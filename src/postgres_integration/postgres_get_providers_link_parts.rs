@@ -37,7 +37,7 @@
 //                     for i in &vec {
 //                         let mut is_correct_field = false;
 //                         for pk in pk_array {
-//                             if i.provider_kind == format!("{}", *pk) {
+//                             if i.provider_kind == format!("{pk}") {
 //                                 is_correct_field = true;
 //                                 if !(providers_vec_from_db.contains(pk)) {
 //                                     providers_vec_from_db.push(*pk);
@@ -57,7 +57,7 @@
 //                     for pk in providers_vec_from_db {
 //                         let mut vecc = Vec::new();
 //                         for i in &vec {
-//                             if i.provider_kind == format!("{}", pk) {
+//                             if i.provider_kind == format!("{pk}") {
 //                                 vecc.push(i.link_part.clone());
 //                             }
 //                         }

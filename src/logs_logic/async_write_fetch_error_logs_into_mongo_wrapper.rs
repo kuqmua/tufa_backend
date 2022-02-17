@@ -105,8 +105,8 @@
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!(
-//                         "mongo_drop_db url: {}, db name: {}, error: {:#?} \n maybe disable mongo dropping db parameter in config?",
-//                         &mongo_get_db_url(), &CONFIG.mongo_providers_logs_db_name, e
+//                         "mongo_drop_db url: {}, db name: {}, error: {e:#?} \n maybe disable mongo dropping db parameter in config?",
+//                         &mongo_get_db_url(), &CONFIG.mongo_providers_logs_db_name
 //                     ),
 //                 );
 //                 return WriteLogsResult::Failure;
@@ -170,7 +170,7 @@
 //                                 PrintType::WarningLow,
 //                                 file!().to_string(),
 //                                 line!().to_string(),
-//                                 format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
+//                                 format!("serde_json::to_string_pretty(&json) error: {e:#?}"),
 //                             );
 //                             //todo
 //                         }
@@ -186,7 +186,7 @@
 //                     let json = json!({
 //                         "link": link,
 //                         "stringified_error": error.to_string(),
-//                         "part_of": format!("{}", provider_kind),
+//                         "part_of": format!("{provider_kind}"),
 //                         "date": Local::now().to_string()
 //                     });
 //                     let result_stringified_json = serde_json::to_string_pretty(&json);
@@ -214,7 +214,7 @@
 //                                 PrintType::WarningLow,
 //                                 file!().to_string(),
 //                                 line!().to_string(),
-//                                 format!("serde_json::to_string_pretty(&json) error: {:#?}", e),
+//                                 format!("serde_json::to_string_pretty(&json) error: {e:#?}"),
 //                             );
 //                             //todo
 //                         }
@@ -300,8 +300,7 @@
 //                     PrintType::WarningLow,
 //                     file!().to_string(),
 //                     line!().to_string(),
-//                     format!("partial_success coz results_vec_len != hashmap_len and results_vec not all true, results_vec.len() {}, hashmap_len {}",
-//                                results_vec_len, hashmap_len),
+//                     format!("partial_success coz results_vec_len != hashmap_len and results_vec not all true, results_vec.len() {results_vec_len}, hashmap_len {hashmap_len}"),
 //                 );
 //         WriteLogsResult::PartialSuccess
 //     }

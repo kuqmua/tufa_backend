@@ -37,23 +37,21 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_mongo_log_collection_name(&self) -> String {
         format!(
-            "{}{}",
-            self,
+            "{self}{}",
             CONFIG.mongo_providers_logs_db_collection_handle_second_part //todo rename it into db log collection
         )
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_path_to_logs_directory(&self) -> String {
-        format!("logs/{}/{:?}", &CONFIG.warning_logs_directory_name, self)
+        format!("logs/{}/{self:?}", &CONFIG.warning_logs_directory_name)
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_path_to_provider_log_file(&self) -> String {
         format!(
-            "logs/{}/{:?}/{}",
+            "logs/{}/{self:?}/{}",
             &CONFIG.warning_logs_directory_name,
-            self,
             &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir
         )
     }
@@ -61,8 +59,8 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_init_local_data_file_path(&self) -> String {
         format!(
-            "{}{}_link_parts{}",
-            CONFIG.path_to_provider_link_parts_folder, self, CONFIG.log_file_extension
+            "{}{self}_link_parts{}",
+            CONFIG.path_to_provider_link_parts_folder, CONFIG.log_file_extension
         )
     }
 
@@ -121,7 +119,7 @@ impl ProviderKindTrait for ProviderKind {
         ProviderKind::iter()
             .filter_map(|pk| {
                 if pk.is_enabled() {
-                    return Some(format!("{}", pk));
+                    return Some(format!("{pk}"));
                 }
                 None
             })
@@ -140,7 +138,7 @@ impl ProviderKindTrait for ProviderKind {
         ProviderKind::iter()
             .filter_map(|pk| {
                 if pk.is_mongo_initialization_enabled() {
-                    return Some(format!("{}", pk));
+                    return Some(format!("{pk}"));
                 }
                 None
             })
@@ -150,14 +148,14 @@ impl ProviderKindTrait for ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_hashmap() -> HashMap<String, ProviderKind> {
         ProviderKind::iter()
-            .map(|pk| (format!("{}", pk), pk))
+            .map(|pk| (format!("{pk}"), pk))
             .collect()
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn into_string_name_and_kind_tuple_vec() -> Vec<(String, ProviderKind)> {
         ProviderKind::iter()
-            .map(|pk| (format!("{}", pk), pk))
+            .map(|pk| (format!("{pk}"), pk))
             .collect()
     }
 
@@ -202,7 +200,7 @@ impl ProviderKindTrait for ProviderKind {
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     fn get_db_tag(&self) -> String {
-        format!("{}", self)
+        format!("{self}")
     }
 
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
