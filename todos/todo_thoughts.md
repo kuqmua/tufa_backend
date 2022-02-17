@@ -652,3 +652,10 @@ enabled git commit name id and brach inside error or not
 ### -------------------
 Github link code line with # symbol
 <br/>
+    
+    
+### -------------------
+do not use Mutex.lock() with match expression
+like match mutex.lock() {}
+explanation https://fasterthanli.me/articles/a-rust-match-made-in-hell
+<br/>
