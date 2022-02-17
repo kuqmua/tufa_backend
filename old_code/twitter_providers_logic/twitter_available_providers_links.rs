@@ -40,7 +40,7 @@
 //                                 PrintType::Error,
 //                                 file!().to_string(),
 //                                 line!().to_string(),
-//                                 format!("not_ready_processed_posts_handle.lock() error: {:#?}", e),
+//                                 format!("not_ready_processed_posts_handle.lock() error: {e:#?}"),
 //                             );
 //                     }
 //                 }
@@ -57,7 +57,7 @@
 //                         PrintType::Error,
 //                         file!().to_string(),
 //                         line!().to_string(),
-//                         format!("thread.join()  error: {:#?}", e),
+//                         format!("thread.join() error: {e:#?}"),
 //                     );
 //                 }
 //             }
@@ -85,10 +85,7 @@
 //                         PrintType::Error,
 //                         file!().to_string(),
 //                         line!().to_string(),
-//                         format!(
-//                             "not_ready_processed_posts.lock()  error: {:#?}",
-//                             e
-//                         ),
+//                         format!("not_ready_processed_posts.lock() error: {e:#?}"),
 //                     );
 //                     return (None, None);
 //                 }

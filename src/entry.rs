@@ -27,7 +27,7 @@ pub fn entry() {
         PrintType::Info,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![get_git_source_file_link(file!(), line!())],
-        format!("We are on a multicore system with {} CPUs", cpus),
+        format!("We are on a multicore system with {cpus} CPUs"),
     );
     if cpus == 0 {
         print_colorful_message(
@@ -35,7 +35,7 @@ pub fn entry() {
             PrintType::Error,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![get_git_source_file_link(file!(), line!())],
-            format!("CPU number == {}, aborting", cpus),
+            format!("CPU number == {cpus}, aborting"),
         );
         return;
     }
@@ -50,7 +50,7 @@ pub fn entry() {
                 PrintType::Error,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![get_git_source_file_link(file!(), line!())],
-                format!("Cannot build tokio runtime {:#?}", e),
+                format!("Cannot build tokio runtime {e:#?}"),
             );
             return;
         }
@@ -61,7 +61,7 @@ pub fn entry() {
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![get_git_source_file_link(file!(), line!())],
-                    format!("{:#?}", e),
+                    format!("{e:#?}"),
                 );
                 return;
             }
@@ -99,7 +99,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse { source, where_was: where_was0 } => {
@@ -114,7 +114,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions { source, where_was: where_was0 } => {
@@ -129,7 +129,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty { source, where_was: where_was0 } => {
@@ -144,7 +144,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError { source, where_was: where_was0 } => {
@@ -159,7 +159,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source, where_was: where_was0 } => {
@@ -174,7 +174,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables { source, where_was: where_was0 } => {
@@ -189,7 +189,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError { source, where_was: where_was0 } => {
@@ -204,7 +204,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries { source, where_was: where_was0 } => {
@@ -219,7 +219,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables { source, where_was: where_was0 } => {
@@ -234,7 +234,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                         InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection { source, where_was: where_was0 } => {
@@ -249,7 +249,7 @@ pub fn entry() {
                                     where_was0.github_source_place(),
                                     where_was1.github_source_place(),
                                 ],
-                                format!("{:#?}", source),
+                                format!("{source:#?}"),
                             );
                         },
                     },

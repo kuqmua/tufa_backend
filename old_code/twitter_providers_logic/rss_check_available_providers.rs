@@ -13,7 +13,7 @@ pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Ve
         let twitter_providers_links_available_handle =
             Arc::clone(&twitter_providers_links_available);
         let handle = thread::spawn(move || {
-            let provider_link: String = format!("https://{}/TheCherno/rss", provider_name); //choose random account from following
+            let provider_link: String = format!("https://{provider_name}/TheCherno/rss"); //choose random account from following
             let check_status_result = rss_check_provider_status(&provider_link);
             match check_status_result {
                 Ok(fetch_tuple_result) => {
@@ -29,7 +29,7 @@ pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Ve
                         PrintType::Error,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![get_git_source_file_link(file!(), line!())],
-                        format!("UnhandledFetchStatusInfo::Failure {:#?}", e),
+                        format!("UnhandledFetchStatusInfo::Failure {e:#?}"),
                     );
                 }
             }

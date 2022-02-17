@@ -18,7 +18,7 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
                 let enum_variant_ident = match field.ident {
                     None => panic!("field.ident is None"),
                     Some(field_ident) => syn::Ident::new(
-                        &format!("{}", field_ident).to_case(Case::Pascal),
+                        &format!("{field_ident}").to_case(Case::Pascal),
                         ident.span(),
                     ),
                 };
@@ -35,7 +35,7 @@ pub fn derive_gen_enum(input: TokenStream) -> TokenStream {
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-    let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
+    let enum_ident = syn::Ident::new(&format!("{ident}Enum"), ident.span());
     let gen = quote! {
         #[derive(Debug, EnumIter, strum_macros::Display, EnumExtenstion)]
         pub enum #enum_ident {

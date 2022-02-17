@@ -18,13 +18,13 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput =
         syn::parse(input).expect("derive_init_from_env syn::parse(input) failed");
     let ident = &ast.ident;
-    let error_ident = syn::Ident::new(&format!("{}Error", ident), ident.span());
-    let error_enum_ident = syn::Ident::new(&format!("{}ErrorEnum", ident), ident.span());
-    let error_std_env_var_ident = syn::Ident::new(&format!("{}StdEnvVar", ident), ident.span());
+    let error_ident = syn::Ident::new(&format!("{ident}Error"), ident.span());
+    let error_enum_ident = syn::Ident::new(&format!("{ident}ErrorEnum"), ident.span());
+    let error_std_env_var_ident = syn::Ident::new(&format!("{ident}StdEnvVar"), ident.span());
     let error_std_env_var_enum_ident =
-        syn::Ident::new(&format!("{}ErrorStdEnvEnum", ident), ident.span());
-    let error_parse_ident = syn::Ident::new(&format!("{}Parse", ident), ident.span());
-    let error_parse_enum_ident = syn::Ident::new(&format!("{}ErrorParseEnum", ident), ident.span());
+        syn::Ident::new(&format!("{ident}ErrorStdEnvEnum"), ident.span());
+    let error_parse_ident = syn::Ident::new(&format!("{ident}Parse"), ident.span());
+    let error_parse_enum_ident = syn::Ident::new(&format!("{ident}ErrorParseEnum"), ident.span());
     let value_suffix = "_value";
     let generated_init_struct_fields = match ast.data.clone() {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
@@ -34,8 +34,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 None => panic!("field.ident is None"),
                 Some(field_ident) => {
                     enum_variant_ident = field_ident.clone();
-                    enum_variant_ident_value =
-                        syn::Ident::new(&format!("{}{}", field_ident, value_suffix), ident.span());
+                    enum_variant_ident_value = syn::Ident::new(&format!("{field_ident}{value_suffix}"), ident.span());
                 }
             };
             quote! {
@@ -54,19 +53,19 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 None => panic!("field.ident is None"),
                 Some(field_ident) => {
                     enum_variant_ident_pascal_case = syn::Ident::new(
-                        &format!("{}", field_ident).to_case(Case::Pascal),
+                        &format!("{field_ident}").to_case(Case::Pascal),
                         ident.span(),
                     );
                     enum_variant_ident_value =
-                        syn::Ident::new(&format!("{}{}", field_ident, value_suffix), ident.span());
+                        syn::Ident::new(&format!("{field_ident}{value_suffix}"), ident.span());
                     env_var_name = syn::Ident::new(
-                        &format!("{}", field_ident)
+                        &format!("{field_ident}")
                             .to_case(Case::Snake)
                             .to_uppercase(),
                         ident.span(),
                     );
                     env_var_name_as_snake_case_string =
-                        syn::LitStr::new(&format!("{}", field_ident), ident.span());
+                        syn::LitStr::new(&format!("{field_ident}"), ident.span());
                 }
             };
             let enum_variant_type: Path;
@@ -91,7 +90,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 _ => panic!("field.ty is not a syn::Type::Path!"),
             };
             let env_var_name_as_screaming_snake_case_string =
-                syn::LitStr::new(&format!("{}", env_var_name), ident.span());
+                syn::LitStr::new(&format!("{env_var_name}"), ident.span());
             //todo: add parsing error
             quote! {
                 let #enum_variant_ident_value: #enum_variant_type;
@@ -155,7 +154,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             let enum_variant_ident = match field.ident.clone() {
                 None => panic!("field.ident is None"),
                 Some(field_ident) => syn::Ident::new(
-                    &format!("{}", field_ident).to_case(Case::Pascal),
+                    &format!("{field_ident}").to_case(Case::Pascal),
                     ident.span(),
                 ),
             };
@@ -175,7 +174,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             let enum_variant_ident = match field.ident.clone() {
                 None => panic!("field.ident is None"),
                 Some(field_ident) => syn::Ident::new(
-                    &format!("{}", field_ident).to_case(Case::Pascal),
+                    &format!("{field_ident}").to_case(Case::Pascal),
                     ident.span(),
                 ),
             };

@@ -37,7 +37,7 @@ pub async fn providers_new_posts_check(
                             PrintType::Error,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![get_git_source_file_link(file!(), line!())],
-                            format!("posts_handle.lock() (success_posts) error: {:#?}", e),
+                            format!("posts_handle.lock() (success_posts) error: {e:#?}"),
                         );
                     }
                 }
@@ -53,7 +53,7 @@ pub async fn providers_new_posts_check(
                     PrintType::Error,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![get_git_source_file_link(file!(), line!())],
-                    format!("posts_handle.lock() error: {:#?}", e),
+                    format!("posts_handle.lock() error: {e:#?}"),
                 );
             }
         },

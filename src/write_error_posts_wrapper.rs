@@ -25,12 +25,12 @@
 //             Err(error_hashmap) => {
 //                 for (pk, error) in error_hashmap {
 //                     print_colorful_message(
-//                                     Some(&pk),
-//                                     PrintType::Error,
-//                                     file!().to_string(),
-//                                     line!().to_string(),
-//                                     format!("ProviderKind::remove_providers_logs_directories() failed for {:#?} (todo2) error: {:#?}", pk, error),
-//                                 );
+//                         Some(&pk),
+//                         PrintType::Error,
+//                         file!().to_string(),
+//                         line!().to_string(),
+//                         format!("ProviderKind::remove_providers_logs_directories() failed for {pk:#?} (todo2) error: {error:#?}"),
+//                     );
 //                 }
 //             }
 //         }
@@ -44,10 +44,7 @@
 //                     PrintType::Success,
 //                     file!().to_string(),
 //                     line!().to_string(),
-//                     format!(
-//                         "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
-//                         result
-//                     ),
+//                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),
 //                 );
 //             }
 //             WriteLogsResult::PartialSuccess => {
@@ -56,10 +53,7 @@
 //                     PrintType::PartialSuccess,
 //                     file!().to_string(),
 //                     line!().to_string(),
-//                     format!(
-//                         "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
-//                         result
-//                     ),
+//                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),
 //                 );
 //             }
 //             WriteLogsResult::Failure => {
@@ -68,10 +62,7 @@
 //                     PrintType::Error,
 //                     file!().to_string(),
 //                     line!().to_string(),
-//                     format!(
-//                         "async_write_fetch_error_logs_into_mongo_wrapper result {:#?}",
-//                         result
-//                     ),
+//                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),
 //                 );
 //             }
 //         }

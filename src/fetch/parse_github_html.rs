@@ -94,18 +94,18 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                             vec_of_something = vec_of_something_handle;
                                                         }
                                                         _ => {
-                                                let warning_message = format!(
-                                                    "different children.len(): {}",
-                                                    dom_first_child_first_child_first_child.children.len()
-                                                );
-                                                print_colorful_message(
-                                                    None,
-                                                    PrintType::WarningHigh,
-        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
-                                                    warning_message,
-                                                );
-                                            }
+                                                            let warning_message = format!(
+                                                                "different children.len(): {}",
+                                                                dom_first_child_first_child_first_child.children.len()
+                                                            );
+                                                            print_colorful_message(
+                                                                None,
+                                                                PrintType::WarningHigh,
+                                                                vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                                                                vec![get_git_source_file_link(file!(), line!())],
+                                                                warning_message,
+                                                            );
+                                                        }
                                                     }
                                                 }
                                                 _ => print_colorful_message(
@@ -174,7 +174,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                     }
                 }
                 Err(e) => {
-                    let error_message = format!("Dom::parse error {}", e);
+                    let error_message = format!("Dom::parse error {e}");
                     print_colorful_message(
                         None,
                         PrintType::Error,
@@ -253,7 +253,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                     }
                                 }
                                 None => {
-                                    let warning_message = format!("no {} attribute", attribute);
+                                    let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                         None,
                                         PrintType::WarningHigh,
@@ -539,8 +539,7 @@ fn parse_github_html_second_part(
                                                                 }
                                                                 None => {
                                                                     let warning_message = format!(
-                                                                        "no {} attribute",
-                                                                        attribute
+                                                                        "no {attribute} attribute",
                                                                     );
                                                                     print_colorful_message(
                                                                     None,
@@ -1068,10 +1067,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                 }
                                                                 None => {
-                                                                    let warning_message = format!(
-                                                                        "no {} attribute",
-                                                                        attribute
-                                                                    );
+                                                                    let warning_message = format!("no {attribute} attribute");
                                                                     print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
@@ -1726,10 +1722,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                 }
                                                                 None => {
-                                                                    let warning_message = format!(
-                                                                        "no {} attribute",
-                                                                        attribute
-                                                                    );
+                                                                    let warning_message = format!("no {attribute} attribute");
                                                                     print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
@@ -2160,10 +2153,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                 }
                                                                 None => {
-                                                                    let warning_message = format!(
-                                                                        "no {} attribute",
-                                                                        attribute
-                                                                    );
+                                                                    let warning_message = format!("no {attribute} attribute");
                                                                     print_colorful_message(
                                                                     None,
                                                                     PrintType::WarningHigh,
@@ -2425,8 +2415,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         //useless default github avatar
                                                     }
                                                     None => {
-                                                        let warning_message =
-                                                            format!("no {} attribute", attribute);
+                                                        let warning_message = format!("no {attribute} attribute");
                                                         print_colorful_message(
                                                             None,
                                                             PrintType::WarningHigh,
@@ -2470,10 +2459,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                             }
                                                         }
                                                         None => {
-                                                            let warning_message = format!(
-                                                                "no {} attribute",
-                                                                attribute
-                                                            );
+                                                            let warning_message = format!("no {attribute} attribute");
                                                             print_colorful_message(
                                                                 None,
                                                                 PrintType::WarningHigh,
@@ -2583,8 +2569,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                 }
                                             }
                                             None => {
-                                                let warning_message =
-                                                    format!("no {} attribute", attribute);
+                                                let warning_message = format!("no {attribute} attribute");
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
@@ -3167,7 +3152,7 @@ fn two_elements_one_child(
                                 }
                             }
                             None => {
-                                let warning_message = format!("no {} attribute", attribute);
+                                let warning_message = format!("no {attribute} attribute");
                                 print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
@@ -3203,7 +3188,7 @@ fn two_elements_one_child(
                                         },
                                         None => {
                                             let warning_message =
-                                                format!("no {} attribute", attribute);
+                                                format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
@@ -3363,7 +3348,7 @@ fn two_elements_one_child(
                                     }
                                 }
                                 None => {
-                                    let warning_message = format!("no {} attribute", attribute);
+                                    let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
@@ -3416,7 +3401,7 @@ fn two_elements_one_child(
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![get_git_source_file_link(file!(), line!())],
-                                            format!("no {} attrubite", attribute),
+                                            format!("no {attribute} attrubite"),
                                         ),
                                     }
                                     match node_element_firth_element.children.len() {
@@ -3565,10 +3550,7 @@ fn two_elements_one_child(
                                     match node_element_third.attributes.get(attribute_check_case) {
                                         Some(_) => {}
                                         None => {
-                                            let warning_message = format!(
-                                                "no {} attribute or {} attribute",
-                                                attribute, attribute_check_case
-                                            );
+                                            let warning_message = format!("no {attribute} attribute or {attribute_check_case} attribute");
                                             print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
@@ -3649,7 +3631,7 @@ fn two_elements_one_child(
                                     }
                                 }
                                 None => {
-                                    let warning_message = format!("no {} attribute", attribute);
+                                    let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                                     None,
         PrintType::WarningHigh,
@@ -3687,7 +3669,7 @@ fn two_elements_one_child(
                                         },
                                         None => {
                                             let warning_message =
-                                                format!("no {} attribute", attribute);
+                                                format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
@@ -3937,7 +3919,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             None => {}
                         },
                         None => {
-                            let warning_message = format!("no {} attribute", attribute);
+                            let warning_message = format!("no {attribute} attribute");
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,
@@ -4141,8 +4123,7 @@ fn parse_github_html_second_part_two_children_first(
                                             None => {}
                                         },
                                         None => {
-                                            let warning_message =
-                                                format!("no {} attribute", attribute);
+                                            let warning_message = format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
@@ -4399,7 +4380,7 @@ fn parse_github_html_second_part_two_children_first(
                                         },
                                         None => {
                                             let warning_message =
-                                                format!("no {} attribute", attribute);
+                                                format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
                                                 PrintType::WarningHigh,
@@ -4639,7 +4620,7 @@ fn four_cases(
                             None => {}
                         },
                         None => {
-                            let warning_message = format!("no {} attribute", attribute);
+                            let warning_message = format!("no {attribute} attribute");
                             print_colorful_message(
                                 None,
                                 PrintType::WarningHigh,

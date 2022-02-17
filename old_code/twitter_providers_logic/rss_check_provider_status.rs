@@ -31,7 +31,7 @@ pub fn rss_check_provider_status(
             PrintType::Error,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![get_git_source_file_link(file!(), line!())],
-            format!("{} {}", link, res.status()),
+            format!("{link} {}", res.status()),
         );
         Ok((false, HandledFetchStatusInfo::ResStatusError(res.status())))
     }
