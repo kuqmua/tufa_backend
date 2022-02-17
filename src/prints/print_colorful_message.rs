@@ -15,15 +15,15 @@ pub fn print_colorful_message(
     github_sources: Vec<String>,
     message: String,
 ) {
+    if CONFIG.is_prints_enabled {
     let mut sources_track = String::from("");
     for source in sources {
-        sources_track.push_str(&format!("{}\n", source))
+        sources_track.push_str(&format!("{source}\n"))
     }
     let mut github_sources_track = String::from("");
     for github_source in github_sources {
-        github_sources_track.push_str(&format!("{}\n", github_source))
+        github_sources_track.push_str(&format!("{github_source}\n"))
     }
-    if CONFIG.is_prints_enabled {
         match pk {
             Some(pk) =>  {
                 if pk.is_prints_enabled() {
