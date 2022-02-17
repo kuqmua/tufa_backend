@@ -25,7 +25,7 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let function_vec_idents: Vec<(Ident, ReturnType)>;
     //todo: how to match it without fs::read_to_string("./src/traits/provider_kind_from_config_trait.rs") ? import CONFIG type somehow?
     match fs::read_to_string("./src/traits/provider_kind_from_config_trait.rs") {
-        Err(e) => panic!("file:  error: {}", e),
+        Err(e) => panic!("file:  error: {e}"),
         Ok(file) => {
             let token_stream: proc_macro::TokenStream = file
                 .parse()
