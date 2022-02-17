@@ -24,7 +24,7 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 //             }
 //         }
 //         Err(e) => {
-//             println!("drop fail with error {:#?}", e);
+//             println!("drop fail with error {e:#?}",);
 //         }
 //     }
 
