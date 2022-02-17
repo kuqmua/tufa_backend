@@ -1,5 +1,5 @@
-use ansi_term::Colour::RGB;
 use ansi_term::Colour;
+use ansi_term::Colour::RGB;
 
 use crate::traits::print_type_trait::PrintTypeTrait;
 
@@ -55,13 +55,7 @@ impl PrintTypeTrait for PrintType {
                 CONFIG.time_measurement_green,
                 CONFIG.time_measurement_blue,
             ),
-            PrintType::Info => RGB(
-                CONFIG.info_red,
-                CONFIG.info_green,
-                CONFIG.info_blue,
-            ),
+            PrintType::Info => RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue),
         }
     }
 }
-
-

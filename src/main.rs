@@ -86,9 +86,9 @@ pub mod postgres_integration {
     pub mod postgres_insert_link_parts_into_providers_tables;
 }
 pub mod prints {
-    pub mod print_wrapper;
     pub mod print_colorful_message;
     pub mod print_type_enum;
+    pub mod print_wrapper;
 }
 mod providers {
     pub mod providers_info {
@@ -108,10 +108,10 @@ mod providers {
     }
     pub mod provider_kind_impl {
         pub mod functions {
-            pub mod is_prints_for_print_type_enabled;
             pub mod fetch_and_parse_provider_data;
             pub mod get_link_parts_from_local_json_file;
             pub mod get_mongo_provider_link_parts_aggregation;
+            pub mod is_prints_for_print_type_enabled;
             pub mod mongo_get_provider_link_parts;
             pub mod rss_part;
         }
