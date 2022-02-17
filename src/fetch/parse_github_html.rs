@@ -193,24 +193,21 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
             "option content is None".to_string(),
         ),
     }
-    // println!("avatar_link {:#?}", avatar_link);
-    // println!("author {:#?}", author);
-    // println!("action {:#?}", action);
-    // println!("repository {:#?}", repository);
-    // println!(
-    //     "from_what_repository_forked {:#?}",
-    //     from_what_repository_forked
-    // );
-    // println!("from {:#?}", from);
-    // println!("datejs {:#?}", datejs);
-    // println!("date {:#?}", date);
-    // println!("actionto {:#?}", actionto);
-    // println!("branch {:#?}", branch);
-    // println!("release_tag {:#?}", release_tag);
-    // println!("of {:#?}", of);
-    // println!("bot_tag {:#?}", bot_tag);
-    // println!("who_follow {:#?}", who_follow);
-    // println!("vec_of_something {:#?}", vec_of_something);
+    // println!("avatar_link {avatar_link:#?}");
+    // println!("author {author:#?}");
+    // println!("action {action:#?}");
+    // println!("repository {repository:#?}", );
+    // println!("from_what_repository_forked {from_what_repository_forked:#?}");
+    // println!("from {from:#?}");
+    // println!("datejs {datejs:#?}");
+    // println!("date {date:#?}");
+    // println!("actionto {actionto:#?}");
+    // println!("branch {branch:#?}");
+    // println!("release_tag {release_tag:#?}");
+    // println!("of {of:#?}");
+    // println!("bot_tag {bot_tag:#?}");
+    // println!("who_follow {who_follow:#?}");
+    // println!("vec_of_something {vec_of_something:#?}");
     // for i in &vec_of_something {
     //     println!("label{:#?}", i.5)
     // }
@@ -2313,14 +2310,14 @@ fn parse_github_html_second_part(
             "different node".to_string(),
         ),
     }
-    // println!("author {}", author);
-    // println!("action {}", action);
-    // println!("repository {}", repository);
-    // println!("datejs {:#?}", datejs);
-    // println!("date {}", date);
-    // println!("repository {}", repository);
-    // println!("actionto {}", actionto);
-    // println!("branch {}", branch);
+    // println!("author {author}");
+    // println!("action {action}");
+    // println!("repository {repository}");
+    // println!("datejs {datejs:#?}");
+    // println!("date {date}");
+    // println!("repository {repository}");
+    // println!("actionto {actionto}");
+    // println!("branch {branch}");
     // println!("vec_of_something.len() {}", vec_of_something.len());
     (
         author,
@@ -2531,10 +2528,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     )],
                                                     warning_message,
                                                 );
-                                                println!(
-                                                    "node_element_first_first{:#?}",
-                                                    node_element_first_first
-                                                );
+                                                println!("node_element_first_first{node_element_first_first:#?}");
                                             }
                                         }
                                     }
@@ -2777,17 +2771,11 @@ fn parse_github_html_second_part_inner_one_element(
                                                 ) = second_element(
                                                     &node_element_first_first.children[1],
                                                 );
-                                                println!(
-                                                    "data_hovercard_type_handle1 {:#?}",
-                                                    data_hovercard_type_handle
-                                                );
-                                                println!(
-                                                    "data_hovercard_url_handle1{:#?}",
-                                                    data_hovercard_url_handle
-                                                );
-                                                println!("data_id_handle1 {:#?}", data_id_handle);
-                                                println!("href_handle1 {:#?}", href_handle);
-                                                println!("data_url_handle1 {:#?}", data_url_handle);
+                                                println!("data_hovercard_type_handle1 {data_hovercard_type_handle:#?}");
+                                                println!("data_hovercard_url_handle1{data_hovercard_url_handle:#?}");
+                                                println!("data_id_handle1 {data_id_handle:#?}");
+                                                println!("href_handle1 {href_handle:#?}", );
+                                                println!("data_url_handle1 {data_url_handle:#?}");
                                                 println!("----------------------");
                                                 // todo: value copies
                                                 // data_hovercard_type = data_hovercard_type_handle;
@@ -2807,17 +2795,11 @@ fn parse_github_html_second_part_inner_one_element(
                                                 ) = second_element(
                                                     &node_element_first_first.children[3],
                                                 );
-                                                println!(
-                                                    "data_hovercard_type_handle2 {:#?}",
-                                                    data_hovercard_type_handle
-                                                );
-                                                println!(
-                                                    "data_hovercard_url_handle2 {:#?}",
-                                                    data_hovercard_url_handle
-                                                );
-                                                println!("data_id_handle2 {:#?}", data_id_handle);
-                                                println!("href_handle2 {:#?}", href_handle);
-                                                println!("data_url_handle2 {:#?}", data_url_handle);
+                                                println!("data_hovercard_type_handle2 {data_hovercard_type_handle:#?}");
+                                                println!("data_hovercard_url_handle2 {data_hovercard_url_handle:#?}");
+                                                println!("data_id_handle2 {data_id_handle:#?}");
+                                                println!("href_handle2 {href_handle:#?}");
+                                                println!("data_url_handle2 {data_url_handle:#?}");
                                                 data_hovercard_type = data_hovercard_type_handle;
                                                 data_hovercard_url = data_hovercard_url_handle;
                                                 data_id = data_id_handle;
@@ -2827,13 +2809,11 @@ fn parse_github_html_second_part_inner_one_element(
                                                     //some trash
                                                     &node_element_first_first.children[4],
                                                 );
-                                                println!("some_trash{:#?}", some_trash)
+                                                println!("some_trash{some_trash:#?}");
                                             }
                                             _ => {
-                                                let warning_message = format!(
-                                                    "different children.len(): {}",
-                                                    node_element_first_first.children.len()
-                                                );
+                                                let len = node_element_first_first.children.len();
+                                                let warning_message = format!("different children.len(): {len}");
                                                 print_colorful_message(
                                                     None,
                                                     PrintType::WarningHigh,
@@ -2905,11 +2885,11 @@ fn parse_github_html_second_part_inner_one_element(
             "different node".to_string(),
         ),
     }
-    // println!("avatar_link {:#?}", avatar_link);
-    // println!("relative_commit_link {:#?}", relative_commit_link);
-    // println!("commit_text {:#?}", commit_text);
-    // println!("from_text {:#?}", from_text);
-    // println!("commits_number {:#?}", commits_number);
+    // println!("avatar_link {avatar_link:#?}");
+    // println!("relative_commit_link {relative_commit_link:#?}");
+    // println!("commit_text {commit_text:#?}");
+    // println!("from_text {from_text:#?}");
+    // println!("commits_number {commits_number:#?}");
     (
         avatar_link,
         relative_commit_link,
@@ -3076,11 +3056,11 @@ fn second_element(
             "different node".to_string(),
         ),
     }
-    // println!("data_hovercard_type {:#?}", data_hovercard_type);
-    // println!("data_hovercard_url {:#?}", data_hovercard_url);
-    // println!("data_id {:#?}", data_id);
-    // println!("href {:#?}", href);
-    // println!("data_url {:#?}", data_url);
+    // println!("data_hovercard_type {data_hovercard_type:#?}");
+    // println!("data_hovercard_url {data_hovercard_url:#?}");
+    // println!("data_id {data_id:#?}");
+    // println!("href {href:#?}");
+    // println!("data_url {data_url:#?}");
     (
         data_hovercard_type,
         data_hovercard_url,
@@ -3815,20 +3795,14 @@ fn two_elements_one_child(
         ),
     }
     // println!("-----------------");
-    // println!("author_name {:#?}", author_name);
-    // println!("action {:#?}", action);
-    // println!(
-    //     "the_accounts_repo_on_which_the_action_was_performed_relative_href {:#?}",
-    //     the_accounts_repo_on_which_the_action_was_performed_relative_href
-    // );
-    // println!(
-    //     "the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from {:#?}",
-    //     the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from
-    // );
-    // println!("datejs {:#?}", datejs);
-    // println!("date {}", date);
-    // println!("from {}", from);
-    // println!("isssue_label {}", isssue_label);
+    // println!("author_name {author_name:#?}");
+    // println!("action {action:#?}");
+    // println!("the_accounts_repo_on_which_the_action_was_performed_relative_href {the_accounts_repo_on_which_the_action_was_performed_relative_href:#?}");
+    // println!("the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from {the_accounts_repo_on_which_the_action_was_performed_relative_href_forked_from:#?}");
+    // println!("datejs {datejs:#?}");
+    // println!("date {date}");
+    // println!("from {from}");
+    // println!("isssue_label {isssue_label}");
     (
         author,
         action,
@@ -3879,7 +3853,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
             "different node".to_string(),
         ),
     }
-    // println!("author_another_another {}", author_another_another);
+    // println!("author_another_another {author_another_another}");
     author_another_another
 }
 
@@ -3899,7 +3873,7 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
             "different node".to_string(),
         ),
     }
-    // println!("action_another_another {}", action_another_another);
+    // println!("action_another_another {action_another_another}");
     action_another_another
 }
 
@@ -3941,7 +3915,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
             "different node".to_string(),
         ),
     }
-    // println!("who_follow {}", who_follow);
+    // println!("who_follow {who_follow}");
     who_follow
 }
 
@@ -4031,8 +4005,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
             "different node".to_string(),
         ),
     }
-    // println!("datejs {:#?}", datejs);
-    // println!("date {:#?}", date);
+    // println!("datejs {datejs:#?}");
+    // println!("date {date:#?}");
     (datejs, date)
 }
 
@@ -4532,16 +4506,13 @@ fn parse_github_html_second_part_two_children_first(
             "different node".to_string(),
         ),
     }
-    // println!("author {:#?}", author);
-    // println!("action {:#?}", action);
-    // println!("repository {:#?}", repository);
-    // println!("from {:#?}", from);
-    // println!(
-    //     "from_what_repository_forked {:#?}",
-    //     from_what_repository_forked
-    // );
-    // println!("datejs {:#?}", datejs);
-    // println!("date {:#?}", date);
+    // println!("author {author:#?}");
+    // println!("action {action:#?}");
+    // println!("repository {repository:#?}");
+    // println!("from {from:#?}");
+    // println!("from_what_repository_forked {from_what_repository_forked:#?}");
+    // println!("datejs {datejs:#?}");
+    // println!("date {date:#?}");
     (
         author,
         action,
@@ -4739,10 +4710,10 @@ fn four_cases(
             "different node".to_string(),
         ),
     }
-    // println!("author {:#?}", author);
-    // println!("action {:#?}", action);
-    // println!("who_follow {:#?}", who_follow);
-    // println!("datejs {:#?}", datejs);
-    // println!("date {:#?}", date);
+    // println!("author {author:#?}");
+    // println!("action {action:#?}");
+    // println!("who_follow {who_follow:#?}");
+    // println!("datejs {datejs:#?}");
+    // println!("date {date:#?}");
     (author, action, who_follow, datejs, date)
 }
