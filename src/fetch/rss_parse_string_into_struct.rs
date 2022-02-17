@@ -70,7 +70,8 @@ pub fn rss_parse_string_into_struct(
                                                 .to_string();
                                         }
                                         _ => {
-                                            let warning_message: String = format!("no </channel> in response link: {value}");
+                                            let warning_message: String =
+                                                format!("no </channel> in response link: {value}");
                                             print_colorful_message(
                                                 Some(&pk),
                                                 PrintType::WarningLow,
@@ -87,7 +88,8 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 _ => {
-                                    let warning_message: String = format!("no <channel> in response link: {value}");
+                                    let warning_message: String =
+                                        format!("no <channel> in response link: {value}");
                                     print_colorful_message(
                                         Some(&pk),
                                         PrintType::WarningLow,

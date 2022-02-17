@@ -29,7 +29,7 @@
 //                 let path_to_file_string = format!(
 //                     "logs/{}/{pk}/{}/{pk}-{replaced_link}.json",
 //                     &CONFIG.warning_logs_directory_name,
-//                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir          
+//                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir
 //                 );
 //                 let path_to_file = std::path::Path::new(&path_to_file_string);
 //                 (pk, write_json_into_file(path_to_file, json_object).await)
@@ -43,7 +43,7 @@
 //                 let path_to_file_string = format!(
 //                     "logs/{}/{pk}/{}/{pk}-{replaced_link}.json",
 //                     &CONFIG.warning_logs_directory_name,
-//                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir  
+//                     &CONFIG.unhandled_success_handled_success_are_there_items_initialized_posts_dir
 //                 );
 //                 let path_to_file = std::path::Path::new(&path_to_file_string);
 //                 let json_object = json!({

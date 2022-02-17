@@ -19,7 +19,8 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
         return Ok(());
     }
     let db_collection_name = &format!(
-        "{pk:#?}{}", &CONFIG.mongo_providers_logs_db_collection_handle_second_part
+        "{pk:#?}{}",
+        &CONFIG.mongo_providers_logs_db_collection_handle_second_part
     );
     //using different (old) tokio runtime 0.2.25
     let future_possible_drop_collection = mongo_drop_empty_collection(
