@@ -64,7 +64,9 @@ impl ProviderKind {
                             },
                         },
                     )),
-                    Ok(file_content_as_struct) => Ok(file_content_as_struct.data.into_iter().unique().collect()),
+                    Ok(file_content_as_struct) => {
+                        Ok(file_content_as_struct.data.into_iter().unique().collect())
+                    }
                 }
             }
         }
