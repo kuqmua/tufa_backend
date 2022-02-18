@@ -462,3 +462,6 @@ use this lint
 https://rust-lang.github.io/rust-clippy/master/#await_holding_lock
 <br/>
   
+### -------------------
+links limits and other getters functions like before on config new initialization (before proc macro)
+<br/>
