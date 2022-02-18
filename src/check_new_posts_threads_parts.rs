@@ -11,13 +11,13 @@ use crate::providers::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
 
-use crate::providers_new_posts_check::providers_new_posts_check;
-
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::resource::Resource;
 
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+
+use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
 
 #[derive(GitInfoDerive)]
 pub enum ResourceError {
@@ -33,16 +33,19 @@ pub async fn check_new_posts_threads_parts(
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(HashMap::with_capacity(
         providers_link_parts.len(),
     )));
-    //check if provider_names are unique
     let tasks_vec = providers_link_parts.into_iter().map(|(pk, link_parts)| {
         let posts_and_errors_handle_arc = Arc::clone(&posts_and_errors_arc_mutex);
         async move {
-            providers_new_posts_check(
-                pk,
-                pk.generate_provider_links(link_parts),
-                posts_and_errors_handle_arc,
-            )
-            .await;
+            match rss_part(pk, pk.generate_provider_links(link_parts)).await {
+                Ok(posts_vec) => {
+                        let mut posts_handle_locked = posts_and_errors_handle_arc.lock().await;
+                        posts_handle_locked.insert(pk, Ok(posts_vec));
+                }
+                Err(e) => {
+                    let mut posts_handle_locked = posts_and_errors_handle_arc.lock().await;
+                    posts_handle_locked.insert(pk, Err(*e));
+                }
+            }
         }
     });
     let _ = join_all(tasks_vec).await;
