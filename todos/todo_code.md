@@ -457,6 +457,6 @@ use checked_sub() and checked_add() methods
 <br/>
 
 ### -------------------
-in some cases use tokio::sync::Mutex instead of std Mutex
+in cases across await points use tokio::sync::Mutex instead of std Mutex
 <br/>
   
