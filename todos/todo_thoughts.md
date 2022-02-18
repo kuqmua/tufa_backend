@@ -653,9 +653,17 @@ enabled git commit name id and brach inside error or not
 Github link code line with # symbol
 <br/>
     
-    
 ### -------------------
 do not use Mutex.lock() with match expression
 like match mutex.lock() {}
 explanation https://fasterthanli.me/articles/a-rust-match-made-in-hell
 <br/>
+
+### -------------------
+deadlock detection with parking_lot
+parking_lot = { version = "0.12.0", features = ["deadlock_detection"] } 
+just find this inside page to see example
+https://fasterthanli.me/articles/a-rust-match-made-in-hell
+<br/>
+    
+    [dependencies]
