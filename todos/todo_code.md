@@ -458,5 +458,7 @@ use checked_sub() and checked_add() methods
 
 ### -------------------
 in cases across await points use tokio::sync::Mutex instead of std Mutex
+use this lint 
+https://rust-lang.github.io/rust-clippy/master/#await_holding_lock
 <br/>
   
