@@ -250,7 +250,7 @@ pub struct ConfigStruct {
     pub is_info_prints_enabled_reddit: bool,
     pub is_info_prints_enabled_twitter: bool,
 
-    pub is_links_limit_enabled: bool,
+    pub is_links_limit_enabled: bool,//useless parameter?
     pub is_links_limit_enabled_providers: bool,
     pub is_links_limit_enabled_arxiv: bool,
     pub is_links_limit_enabled_biorxiv: bool,
@@ -260,7 +260,7 @@ pub struct ConfigStruct {
     pub is_links_limit_enabled_reddit: bool,
     pub is_links_limit_enabled_twitter: bool,
 
-    pub is_links_limit_providers_enabled: bool,
+    pub is_links_limit_providers_enabled: bool,//remove later?
     pub links_limit_providers: i64, //override links limit for providers. this value applied for each provider
     pub links_limit_arxiv: i64,
     pub links_limit_biorxiv: i64,
