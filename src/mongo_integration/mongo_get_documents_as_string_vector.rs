@@ -1,4 +1,5 @@
 use futures::stream::TryStreamExt;
+use itertools::Itertools;
 use mongodb::{bson::Document, Collection};
 
 use crate::helpers::where_was::WhereWas;
@@ -102,7 +103,8 @@ pub async fn mongo_get_documents_as_string_vector(
                     },
                 }
             }
-            Ok(vec_of_strings)
+            let unique_vec = vec_of_strings.into_iter().unique().collect();
+            Ok(unique_vec)
         }
     }
 }
