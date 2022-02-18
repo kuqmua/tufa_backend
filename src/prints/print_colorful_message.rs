@@ -27,7 +27,7 @@ pub fn print_colorful_message(
         match pk {
             Some(pk) => {
                 if pk.is_prints_enabled() {
-                    if ProviderKind::is_prints_for_print_type_enabled(pk, &pt) {
+                    if pk.is_prints_for_print_type_enabled(&pt) {
                         print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
                     }
                 }
