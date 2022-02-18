@@ -29,7 +29,7 @@ pub async fn check_new_posts_threads_parts(
 ) -> Result<HashMap<ProviderKind, Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>>, ResourceError>
 {
     let mut tasks_vec = Vec::with_capacity(providers_link_parts.len());
-    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(HashMap::with_capacity(
+    let posts_and_errors_arc_mutex = Arc::new(Mutex::new(HashMap::with_capacity(//maybe it needs only Muxex? without Arc?
         providers_link_parts.len(),
     )));
     //check if provider_names are unique
