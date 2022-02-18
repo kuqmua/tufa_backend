@@ -19,7 +19,7 @@ pub struct GetLocalProvidersLinkPartsError {
 pub async fn get_local_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
     let result_vec = join_all(
-        ProviderKind::get_dbs_initialization_enabled_vec()
+        ProviderKind::get_enabled_providers_vec()//maybe its not exactly correct
             .into_iter()
             .map(|pk| async move {
                 (
