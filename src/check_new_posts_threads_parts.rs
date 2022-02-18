@@ -19,7 +19,7 @@ use crate::helpers::resource::Resource;
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 
-#[derive(Debug, GitInfoDerive)]
+#[derive(GitInfoDerive)]
 pub enum ResourceError {
     NoLinkParts(Resource),
     Other,
@@ -31,7 +31,6 @@ pub async fn check_new_posts_threads_parts(
 ) -> Result<HashMap<ProviderKind, Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>>, ResourceError>
 {
     let posts_and_errors_arc_mutex = Arc::new(Mutex::new(HashMap::with_capacity(
-        //maybe it needs only Muxex? without Arc?
         providers_link_parts.len(),
     )));
     //check if provider_names are unique

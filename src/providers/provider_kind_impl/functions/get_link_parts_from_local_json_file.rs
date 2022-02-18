@@ -4,6 +4,8 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::helpers::where_was::WhereWas;
 
+use itertools::Itertools;
+
 #[derive(Debug)]
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen {
@@ -62,7 +64,7 @@ impl ProviderKind {
                             },
                         },
                     )),
-                    Ok(file_content_as_struct) => Ok(file_content_as_struct.data),
+                    Ok(file_content_as_struct) => Ok(file_content_as_struct.data.into_iter().unique().collect()),
                 }
             }
         }
