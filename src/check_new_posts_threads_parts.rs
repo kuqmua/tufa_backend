@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
 
 use futures::future::join_all;
 
@@ -47,6 +49,6 @@ pub async fn check_new_posts_threads_parts(
         }
     }
     let _ = join_all(tasks_vec).await;
-    let posts_and_errors_to_return = posts_and_errors_arc_mutex.lock().unwrap().drain().collect();
+    let posts_and_errors_to_return = posts_and_errors_arc_mutex.lock().await.drain().collect();
     Ok(posts_and_errors_to_return)
 }

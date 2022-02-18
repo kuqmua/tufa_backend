@@ -1,5 +1,7 @@
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
@@ -7,11 +9,6 @@ use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
 use crate::providers::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 
 use crate::providers::provider_kind_enum::ProviderKind;
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
-use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
 #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 pub async fn providers_new_posts_check(
@@ -24,38 +21,15 @@ pub async fn providers_new_posts_check(
     match rss_part(pk, vec_of_provider_links).await {
         Ok(posts_vec) => {
             //maybe do it in parrallel? success and error posts
-            //todo: try to lock few times
             if !posts_vec.is_empty() {
                 //must check on empty coz lock it for nothing is bad
-                match posts_and_errors_arc_mutex.lock() {
-                    Ok(mut posts_handle_locked) => {
-                        posts_handle_locked.insert(pk, Ok(posts_vec));
-                    }
-                    Err(e) => {
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
-                            format!("posts_handle.lock() (success_posts) error: {e:#?}"),
-                        );
-                    }
-                }
+                let mut posts_handle_locked = posts_and_errors_arc_mutex.lock().await;
+                posts_handle_locked.insert(pk, Ok(posts_vec));
             }
         }
-        Err(e) => match posts_and_errors_arc_mutex.lock() {
-            Ok(mut posts_handle_locked) => {
-                posts_handle_locked.insert(pk, Err(*e));
-            }
-            Err(e) => {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
-                    format!("posts_handle.lock() error: {e:#?}"),
-                );
-            }
-        },
+        Err(e) => {
+            let mut posts_handle_locked = posts_and_errors_arc_mutex.lock().await;
+            posts_handle_locked.insert(pk, Err(*e));
+        }
     }
 }
