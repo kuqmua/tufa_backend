@@ -33,10 +33,9 @@
 //                 Err(e) => Err(PostgresGetProviderLinksError::LoadingProvidersLinkParts(e)),
 //                 Ok(vec) => {
 //                     let mut providers_vec_from_db = Vec::new();
-//                     let pk_array = ProviderKind::into_array();
 //                     for i in &vec {
 //                         let mut is_correct_field = false;
-//                         for pk in pk_array {
+//                         for pk in ProviderKind::into_array() {
 //                             if i.provider_kind == format!("{pk}") {
 //                                 is_correct_field = true;
 //                                 if !(providers_vec_from_db.contains(pk)) {
