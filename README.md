@@ -66,17 +66,7 @@ with docker-compose(other services too): sudo docker-compose -f docker-compose.y
 sudo apt install libpq-dev <br/>
 cargo install diesel_cli --no-default-features --features postgres
 
-### diesel examples (libs/diesel_demo/)
-diesel setup <br/>
-diesel migration run <br/>
-diesel migration redo <br/>
-cargo run --bin write_post <br/>
-cargo run --bin publish_post 1 <br/>
-cargo run --bin show_posts <br/>
-cargo run --bin delete_post (post name)
-
-### create another rust lib
-cd libs
+### create new rust library
 cargo new example_lib --lib
 
 ### pull and run postgres docker container
