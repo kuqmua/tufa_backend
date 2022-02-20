@@ -7,12 +7,11 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 impl ProviderKind {
     #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
     pub fn get_mongo_provider_link_parts_aggregation(&self) -> Option<Document> {
-        //its common case - rename later is_links_limit_providers_enabled
-        if CONFIG.is_links_limit_providers_enabled
+        if CONFIG.is_links_limit_enabled_providers
             && self.is_mongo_link_parts_randomize_order_enabled()
         {
             Some(doc! { "$sample" : {"size": CONFIG.links_limit_providers }});
-        } else if CONFIG.is_links_limit_providers_enabled {
+        } else if CONFIG.is_links_limit_enabled_providers {
             Some(doc! { "$limit" :  CONFIG.links_limit_providers });
         } else if self.is_links_limit_enabled()
             && self.is_mongo_link_parts_randomize_order_enabled()
