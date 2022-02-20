@@ -1,6 +1,11 @@
 use reqwest::StatusCode;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn handle_error_status_code(error_status_code: StatusCode, link: &str) -> bool {
     //cannot write match for error_status_code coz it has unsafe inside
     // println!(" handle_error_status_code {error_status_code}");

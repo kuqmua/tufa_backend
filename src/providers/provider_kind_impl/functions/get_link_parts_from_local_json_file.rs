@@ -24,7 +24,12 @@ pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
 }
 
 impl ProviderKind {
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub async fn get_link_parts_from_local_json_file(
         self,
     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileErrorEnum>> {
@@ -66,20 +71,19 @@ impl ProviderKind {
                         },
                     )),
                     Ok(file_content_as_struct) => {
-                        let unique_vec: Vec<String> = file_content_as_struct.data.into_iter().unique().collect();
+                        let unique_vec: Vec<String> =
+                            file_content_as_struct.data.into_iter().unique().collect();
                         let len = unique_vec.len();
                         let return_vec: Vec<String>;
                         //todo - add correct impl for is_links_limit_enabled - like is_links_limit_enabled_providers && is_links_limit_enabled_arxiv
                         if self.is_links_limit_enabled() {
-                            let limit = self.links_limit().try_into().unwrap();//todo i64 type change?
+                            let limit = self.links_limit().try_into().unwrap(); //todo i64 type change?
                             if len > limit {
                                 return_vec = unique_vec[..limit].to_vec();
-                            }
-                            else {
+                            } else {
                                 return_vec = unique_vec;
                             }
-                        }
-                        else {
+                        } else {
                             return_vec = unique_vec;
                         }
                         Ok(return_vec)

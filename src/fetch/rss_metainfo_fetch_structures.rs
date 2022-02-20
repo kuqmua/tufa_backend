@@ -20,7 +20,12 @@ impl NoItemsError {
             NoItemsError::NoTag(_) => stringify!(NoItemsError::NoTag),
         }
     }
-    #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub fn into_json_with_link_and_provider_kind(
         link: &str,
         no_items_error: &NoItemsError,

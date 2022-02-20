@@ -47,7 +47,12 @@ use regex::Regex;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
-// #[deny(clippy::indexing_slicing, clippy::unwrap_used)] //todo
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
     value: &str,

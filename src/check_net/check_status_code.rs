@@ -11,7 +11,12 @@ pub struct CheckStatusCodeError {
     where_was: WhereWas,
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn check_status_code(status_code: StatusCode) -> Result<(), Box<CheckStatusCodeError>> {
     if !StatusCode::is_success(&status_code) {
         return Err(Box::new(CheckStatusCodeError {

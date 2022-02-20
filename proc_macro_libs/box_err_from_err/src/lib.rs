@@ -57,6 +57,12 @@ pub fn derive_box_err_from_err(input: TokenStream) -> TokenStream {
     }
     let gen = quote! {
         impl From<#error_type_ident> for #ident {
+            #[deny(
+                clippy::indexing_slicing,
+                clippy::unwrap_used,
+                clippy::integer_arithmetic,
+                clippy::float_arithmetic
+            )]
             fn from(error: #error_type_ident) -> Self {
                 #ident {
                     source: Box::new(error),

@@ -34,7 +34,8 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                 None => panic!("field.ident is None"),
                 Some(field_ident) => {
                     enum_variant_ident = field_ident.clone();
-                    enum_variant_ident_value = syn::Ident::new(&format!("{field_ident}{value_suffix}"), ident.span());
+                    enum_variant_ident_value =
+                        syn::Ident::new(&format!("{field_ident}{value_suffix}"), ident.span());
                 }
             };
             quote! {
@@ -209,6 +210,12 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
             #(#generated_enum_error_parse_variants)*
         }
         impl #ident {
+            #[deny(
+                clippy::indexing_slicing,
+                clippy::unwrap_used,
+                clippy::integer_arithmetic,
+                clippy::float_arithmetic
+            )]
             pub fn new() -> Result<Self, #error_ident> {
                 let was_dotenv_enable = dotenv().is_ok();
                 #(#generated_functions)*

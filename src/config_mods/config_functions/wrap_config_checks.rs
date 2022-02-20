@@ -32,6 +32,12 @@ pub enum WrapConfigChecksErrorEnum {
 }
 
 impl WrapConfigChecks for ConfigStruct {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
         //todo: check ip pattern. check port pattern
         if self.github_name.is_empty() {

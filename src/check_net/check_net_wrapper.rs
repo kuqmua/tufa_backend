@@ -15,7 +15,6 @@ use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::where_was::WhereWas;
 use crate::traits::git_info_trait::GitInfo;
 
-#[allow(clippy::enum_variant_names)]
 #[derive(Debug, GitInfoDerive)]
 pub enum CheckNetWrapperErrorEnum {
     NetAndPostgresAndMongo {
@@ -53,7 +52,12 @@ pub enum CheckNetWrapperErrorEnum {
     },
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
     let starting_url = &CONFIG.starting_check_link;
     let postgres_url = &postgres_get_db_url();

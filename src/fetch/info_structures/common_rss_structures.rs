@@ -308,7 +308,12 @@ pub struct GithubInfoFromHtml {
 }
 
 impl GithubInfoFromHtml {
-    #[allow(clippy::too_many_arguments)]
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub fn initialize_with_params(
         avatar_link: Option<String>,
         author: Option<String>,

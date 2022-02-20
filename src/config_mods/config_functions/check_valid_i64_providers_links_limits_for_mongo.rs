@@ -3,6 +3,12 @@ extern crate toml;
 use crate::config_mods::config_struct::ConfigStruct;
 
 impl ConfigStruct {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub fn check_valid_i64_providers_links_limits_for_mongo(config_handle: &ConfigStruct) -> bool {
         if config_handle.links_limit_arxiv <= 0 {
             return false;

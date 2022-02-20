@@ -18,7 +18,12 @@ pub enum CheckNetAvailabilityErrorEnum {
     },
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityErrorEnum>> {
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(

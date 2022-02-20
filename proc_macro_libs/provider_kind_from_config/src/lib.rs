@@ -89,6 +89,12 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             }
         });
         function_quote_vec_ident.push(quote! {
+            #[deny(
+                clippy::indexing_slicing,
+                clippy::unwrap_used,
+                clippy::integer_arithmetic,
+                clippy::float_arithmetic
+            )]
             fn #function_name_ident(&self) #output {
                 match self {
                    #(#variants_for_quote,)*
