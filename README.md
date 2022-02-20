@@ -181,25 +181,6 @@ First, Open a new and fresh shell and try there. The %PATH% variable is only loa
 If that did not work, you can execute rustup.exe again and re-install the rust toolchain
 Or you can edit the PATH variable by hand in the computers settings.
 
-### install pgadmin
-curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add  <br/>
-sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'  <br/>
-sudo apt install pgadmin4  <br/>
-link how to do it with more info (russian)
-https://ruvds.com/ru/helpcenter/postgresql-pgadmin-ubuntu/
-
-### install cargo expand
-cargo install cargo-expand
-(for procedural macros dev debug)
-example using cargo expand to show generated code only for some mod
-cargo expand some_mod::some_inner_mod::some::inner_inner_mod
-
-### install cargo code Coverage
-installation:
-cargo install cargo-tarpaulin
-usage:
-cargo tarpaulin --ignore-tests
-
 ### how to tune rustfmt
 You can tune rustfmt for a project with a configuration file, rustfmt.toml. Details can be found in
 rustfmt’s https://github.com/rust-lang/rustfmt#configuring-rustfmt
