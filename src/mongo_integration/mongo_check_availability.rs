@@ -25,7 +25,12 @@ pub enum MongoCheckAvailabilityErrorEnum {
     },
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn mongo_check_availability(mongo_url: &str) -> Result<(), MongoCheckAvailabilityError> {
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(MongoCheckAvailabilityError {

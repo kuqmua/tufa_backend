@@ -15,7 +15,12 @@ pub enum InitDbsErrorEnum {
     },
 }
 
-#[deny(clippy::indexing_slicing)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn init_dbs() -> Result<(), InitDbsError> {
     if let Err(e) = init_dbs_with_providers_link_parts().await {
         return Err(InitDbsError {

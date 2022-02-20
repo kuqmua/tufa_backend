@@ -18,7 +18,12 @@ use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersL
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn entry() {
     let time = Instant::now();
     let cpus = num_cpus::get();

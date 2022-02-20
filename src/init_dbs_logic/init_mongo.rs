@@ -50,7 +50,12 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
     IsNotEmpty(u64),
 }
 
-#[deny(clippy::indexing_slicing)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), InitMongoError> {

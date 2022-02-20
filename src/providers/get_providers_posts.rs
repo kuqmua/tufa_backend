@@ -52,7 +52,12 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 // }
 //TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
 
-#[deny(clippy::indexing_slicing)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn get_providers_posts() {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => match *e.source {

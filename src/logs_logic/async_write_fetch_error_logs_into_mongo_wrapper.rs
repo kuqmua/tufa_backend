@@ -28,7 +28,12 @@
 //     Failure,
 // }
 
-// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+// #[deny(
+//     clippy::indexing_slicing,
+//     clippy::unwrap_used,
+//     clippy::integer_arithmetic,
+//     clippy::float_arithmetic
+// )]
 // pub async fn async_write_fetch_error_logs_into_mongo_wrapper(
 //     error_posts: Vec<PostErrorVariant>,
 // ) -> WriteLogsResult {

@@ -7,7 +7,12 @@ use crate::prints::print_type_enum::PrintType;
 
 use super::print_wrapper::print_wrapper;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     pt: PrintType,

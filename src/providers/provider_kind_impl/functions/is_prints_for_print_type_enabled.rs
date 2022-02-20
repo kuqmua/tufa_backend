@@ -4,6 +4,12 @@ use crate::traits::print_type_trait::PrintTypeTrait;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 impl ProviderKind {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub fn is_prints_for_print_type_enabled(&self, pt: &PrintType) -> bool {
         match *pt {
             PrintType::Error => pt.is_prints_enabled() && self.is_error_prints_enabled(),

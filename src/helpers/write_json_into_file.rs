@@ -21,7 +21,12 @@ pub enum WriteJsonIntoFileError {
     ),
 }
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn write_json_into_file(
     path: &Path,
     json_object: Value,

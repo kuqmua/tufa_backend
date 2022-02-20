@@ -3,7 +3,12 @@ use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 
 use crate::helpers::where_was::WhereWas;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn async_fetch_link(link: &str) -> Result<String, FetchLinkError> {
     match reqwest::get(link).await {
         Err(e) => Err(FetchLinkError {

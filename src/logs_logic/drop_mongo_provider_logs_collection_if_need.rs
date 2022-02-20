@@ -11,6 +11,12 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn drop_mongo_provider_logs_collection_if_need(
     pk: &ProviderKind,
     mongo_url: String,

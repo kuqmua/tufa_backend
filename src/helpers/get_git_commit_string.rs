@@ -1,6 +1,11 @@
 use super::lazy_static_git_info::GIT_INFO;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn get_git_commit_string() -> String {
     format!(
         "{} branch'{}' {} {}",

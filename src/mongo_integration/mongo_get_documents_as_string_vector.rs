@@ -45,6 +45,12 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
     }
 }
 
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn mongo_get_documents_as_string_vector(
     collection: Collection<Document>,
     db_collection_document_field_name_handle: &str,

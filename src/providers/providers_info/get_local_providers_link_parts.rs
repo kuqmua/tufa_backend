@@ -15,11 +15,16 @@ pub struct GetLocalProvidersLinkPartsError {
     where_was: WhereWas,
 }
 
-#[deny(clippy::indexing_slicing)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn get_local_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
     let result_vec = join_all(
-        ProviderKind::get_enabled_providers_vec()//maybe its not exactly correct
+        ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
             .into_iter()
             .map(|pk| async move {
                 (

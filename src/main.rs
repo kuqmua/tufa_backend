@@ -164,7 +164,12 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
-#[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 fn main() {
     entry::entry();
 }

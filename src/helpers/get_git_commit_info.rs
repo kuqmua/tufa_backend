@@ -10,6 +10,12 @@ pub struct GitCommitInfo {
     pub repo_link: String,
 }
 
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub fn get_git_commit_info() -> GitCommitInfo {
     //must not panic
     //todo: write a message on start in case of error get config info

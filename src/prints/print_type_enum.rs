@@ -16,6 +16,12 @@ pub enum PrintType {
 }
 
 impl PrintTypeTrait for PrintType {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     fn is_prints_enabled(&self) -> bool {
         match *self {
             PrintType::Error => CONFIG.is_error_prints_enabled,
@@ -27,6 +33,12 @@ impl PrintTypeTrait for PrintType {
             PrintType::Info => CONFIG.is_info_prints_enabled,
         }
     }
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     fn get_color(&self) -> Colour {
         match *self {
             PrintType::Error => RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue),

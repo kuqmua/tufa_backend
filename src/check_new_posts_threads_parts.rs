@@ -11,7 +11,12 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
 
-#[deny(clippy::indexing_slicing)]
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
 pub async fn check_new_posts_threads_parts(
     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
 ) -> HashMap<ProviderKind, Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>> {

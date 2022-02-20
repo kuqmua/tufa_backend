@@ -9,9 +9,21 @@ pub struct WhereWas {
 }
 
 impl WhereWasTrait for WhereWas {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     fn source_place(&self) -> String {
         format!("{}:{}:{}", self.file, self.line, self.column)
     }
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     fn github_source_place(&self) -> String {
         get_git_source_file_link(self.file, self.line)
     }
