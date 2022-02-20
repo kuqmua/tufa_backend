@@ -95,14 +95,6 @@ cd libs/tests_lib && cargo test local -- --show-output
 ### show tree visualization of a dependency graph
 cargo tree
 
-### how to add ssh key on wsl2
-ssh-keygen  <br/>
-eval "$(ssh-agent -s)"  <br/>
-cd ~/.ssh  <br/>
-ls  <br/>
-ssh-keygen -o  <br/>
-cat ~/.ssh/id_rsa.pub  <br/>
-
 ### how to install wsl in windows 11
 open cmd with administator rights
 wsl --install
