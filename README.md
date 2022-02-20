@@ -95,10 +95,6 @@ cd libs/tests_lib && cargo test local -- --show-output
 ### show tree visualization of a dependency graph
 cargo tree
 
-### install docker-compose on wsl2
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose <br/>
-sudo chmod +x /usr/local/bin/docker-compose
-
 ### how to install rust in wsl2
 sudo apt install curl <br/>
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh <br/>
@@ -118,22 +114,6 @@ cd ~/.ssh  <br/>
 ls  <br/>
 ssh-keygen -o  <br/>
 cat ~/.ssh/id_rsa.pub  <br/>
-
-### how to install docker on wsl2
-sudo apt-get update
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-
 
 ### how to install wsl in windows 11
 open cmd with administator rights
