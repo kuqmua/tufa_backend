@@ -62,10 +62,6 @@ https://www.youtube.com/watch?v=t_X7qFMmWhI
 with docker: sudo docker start mongo-tufa-wsl2 <br/>
 with docker-compose(other services too): sudo docker-compose -f docker-compose.yml up -d 
 
-### install diesel cli for postgres(diesel dependency)
-sudo apt install libpq-dev <br/>
-cargo install diesel_cli --no-default-features --features postgres
-
 ### create new rust library
 cargo new example_lib --lib
 
