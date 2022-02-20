@@ -38,23 +38,6 @@ sudo docker-compose down
 (need to write path to your project directory)
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_backend/mongodb_volume:/data/db -d mongo:latest
 
-### add user in mondodb
-sudo docker ps -a
-sudo docker exec -it MONGO_CONTAINER_ID bash
-("MONGO_CONTAINER_ID (just CONTAINER_ID field with IMAGE mongo)" will be written after "sudo docker ps -a" execution)
-inside container: 
-mongo
-inside mongo cli:
-use admin
-db.createUser(
-  {
-    user: "your_username",
-    pwd: "your_password",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  }
-)
-then exit mongo cli and container
-
 ### How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)
 https://www.youtube.com/watch?v=t_X7qFMmWhI
 
