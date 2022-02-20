@@ -95,18 +95,6 @@ cd libs/tests_lib && cargo test local -- --show-output
 ### show tree visualization of a dependency graph
 cargo tree
 
-### how to install rust in wsl2
-sudo apt install curl <br/>
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh <br/>
-sudo apt install build-essential <br/>
-source $HOME/.cargo/env <br/>
-sudo apt install pkg-config <br/>
-sudo apt-get install pkg-config libssl-dev <br/>
-rustup default nightly <br/>
-rustup update //update every week cause nightly <br/>
-source $HOME/.cargo/env <br/>
-source ~/.profile <br/>
-
 ### how to add ssh key on wsl2
 ssh-keygen  <br/>
 eval "$(ssh-agent -s)"  <br/>
