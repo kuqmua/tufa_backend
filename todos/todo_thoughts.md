@@ -512,7 +512,7 @@ https://erayerdin.com/checking-unused-dependencies-in-a-rust-project-with-github
 <br/>
     
 ### -------------------
-write aboud dbs, tables in postgres and clusters dbs and collections in mongo
+write about dbs, tables in postgres and clusters dbs and collections in mongo
 should i create table for each provider?
 should i create collection for each provider?
 <br/>
@@ -526,12 +526,6 @@ https://github.com/marketplace/actions/rust-cache
 rust macros book
 https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
 <br/>
-
-### -------------------
-There are struct fields inside proc_macro_derive ast 
-maybe rewrite logic without creating enum
-<br/>
-
 
 ### -------------------
 how to do error handling:
