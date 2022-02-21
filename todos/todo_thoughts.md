@@ -578,7 +578,6 @@ small error (yeah with less info about error) version for high allocation statis
 (in small version still allocate big error version from time to time - for more info)
 <br/>
     
-    
 ### -------------------
 rust zero to production book 
 https://github.com/LukeMathWalker/zero-to-production
@@ -610,6 +609,7 @@ https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
     
 ### -------------------
 add tracing::error? https://crates.io/crates/tracing-error
+*update* dont know how to use it
 <br/>
 
 ### -------------------
@@ -644,16 +644,6 @@ or make more time between function exection that can return this error
 <br/>
     
 ### -------------------
-config flags:
-enabled github link to code inside error or not.
-enabled git commit name id and brach inside error or not
-<br/>
-
-### -------------------
-Github link code line with # symbol
-<br/>
-    
-### -------------------
 do not use Mutex.lock() with match expression
 like match mutex.lock() {}
 explanation https://fasterthanli.me/articles/a-rust-match-made-in-hell
@@ -665,5 +655,3 @@ parking_lot = { version = "0.12.0", features = ["deadlock_detection"] }
 just find this inside page to see example
 https://fasterthanli.me/articles/a-rust-match-made-in-hell
 <br/>
-    
-    [dependencies]
