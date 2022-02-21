@@ -9,7 +9,6 @@ version = "0.1.0"
 [dependencies]
 futures = "0.3.5"
 reqwest = {version = "0.11.0", features = ["json","blocking"]}
-roux = "1.3.10" #reddit. worked with 0.4.0 version
 serde = "1.0"
 serde-xml-rs = "0.5.1"
 serde_derive = "1.0"
@@ -28,10 +27,8 @@ lazy_static = "1.4"
 strum = "0.23.0"
 strum_macros = "0.23.1"
 itertools = "0.10.1"
-async-std = "1.10.0"
 convert_case = "0.5.0"
 thiserror = "1.0.30"
-displaydoc = "0.2.3"
 box_err_from_err = { path = "./proc_macro_libs/box_err_from_err" }
 enum_extention = { path = "./proc_macro_libs/enum_extention" }
 gen_enum = { path = "./proc_macro_libs/gen_enum" }
@@ -40,6 +37,9 @@ impl_display = { path = "./proc_macro_libs/impl_display" }
 impl_from_for_upper_struct = { path = "./proc_macro_libs/impl_from_for_upper_struct" }
 init_from_env = { path = "./proc_macro_libs/init_from_env" }
 provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }
+# async-std = "1.10.0"
+# displaydoc = "0.2.3"
+# roux = "1.3.10" #reddit. worked with 0.4.0 version
 #egg-mode = "0.15.0"//twitter
 #google-youtube3 = "1.0.13+20200402" - do not saw openssl, under linux its all good
 # quick-xml = "0.18.1"
