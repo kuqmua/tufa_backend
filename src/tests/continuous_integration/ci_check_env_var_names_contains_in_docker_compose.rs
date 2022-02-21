@@ -24,8 +24,9 @@ pub fn ci_check_env_var_names_contains_in_docker_compose() {
         }
         Ok(file_content) => {
             let mut vec = Vec::with_capacity(ConfigStructEnum::get_length());
-            for i in ConfigStructEnum::iter() {
+            for i in ConfigStructEnum::iter() {//TODO! remove values. only names must stay
                 let env_name = i.to_upper_snake_case();
+                println!("env_namem {env_name}");
                 if !file_content.contains(&env_name) {
                     vec.push(env_name);
                 }
