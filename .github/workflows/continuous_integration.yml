@@ -1,5 +1,5 @@
 name: CI
-on: [push]
+on: [push, pull_request]
 # env:
 #    APPLICATION_NAME: "tufa"
 #    PACKAGE_NAME: "tufa-backend-package-${{ github.sha }}"
@@ -47,7 +47,15 @@ jobs:
       - name: cargo test ci -- --show-output
         run: cargo test ci -- --show-output
 
+      - uses: actions-rs/cargo@v1
+        name: "Udeps Installation"
+        with:
+          command: install
+          args: cargo-udeps --locked
+      
+      - uses: actions-rs/cargo@v1
+        name: "Unused Dependency Check"
+        with:
+          command: udeps
       # - name: cargo audit #remove temporary coz always failing 
       #   run: cargo audit
-
-
