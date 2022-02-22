@@ -649,3 +649,10 @@ parking_lot = { version = "0.12.0", features = ["deadlock_detection"] }
 just find this inside page to see example
 https://fasterthanli.me/articles/a-rust-match-made-in-hell
 <br/>
+  
+### -------------------
+Rust Macro Expand vscode extension
+https://marketplace.visualstudio.com/items?itemName=Odiriuss.rust-macro-expand
+<br/>
+    
+    
