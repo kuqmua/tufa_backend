@@ -5,7 +5,7 @@ use strum::IntoEnumIterator;
 use crate::tests::tests_constants::DOCKER_COMPOSE_FILE_NAME;
 use crate::tests::tests_constants::PATH_TO_DOCKER_COMPOSE_FILE;
 
-use crate::config_mods::config_struct::ConfigStructEnum;
+use crate::config_mods::config_struct::ConfigStructEnumWithoutValues;
 
 #[deny(
     clippy::indexing_slicing,
@@ -23,8 +23,8 @@ pub fn ci_check_env_var_names_contains_in_docker_compose() {
             panic!("cannot read_to_string from file {PATH_TO_DOCKER_COMPOSE_FILE}{DOCKER_COMPOSE_FILE_NAME}, reason: {e}");
         }
         Ok(file_content) => {
-            let mut vec = Vec::with_capacity(ConfigStructEnum::get_length());
-            for i in ConfigStructEnum::iter() {//TODO! remove values. only names must stay
+            let mut vec = Vec::with_capacity(ConfigStructEnumWithoutValues::get_length());
+            for i in ConfigStructEnumWithoutValues::iter() {
                 let env_name = i.to_upper_snake_case();
                 println!("env_namem {env_name}");
                 if !file_content.contains(&env_name) {
