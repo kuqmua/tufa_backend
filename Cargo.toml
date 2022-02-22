@@ -1,42 +1,43 @@
 [package]
-authors = ["sergey shmakov <tyfaproject@gmail.com>"]
-edition = "2021"#maybe cant compile but switch from 2018 to 2021
-name = "tufa_backend"
-version = "0.1.0"
+authors = ["sergey shmakov <tyfaproject@gmail.com>"] 
+edition = "2021" #maybe cant compile but switch from 2018 to 2021
+name = "tufa_backend" 
+version = "0.1.0" 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ansi_term = "0.12"
+box_err_from_err = {path = "./proc_macro_libs/box_err_from_err"}
+chrono = "0.4"
+convert_case = "0.5.0"
+dotenv = "0.15.0"
+enum_extention = {path = "./proc_macro_libs/enum_extention"}
 futures = "0.3.5"
-reqwest = {version = "0.11.0", features = ["json","blocking"]}
+gen_enum = {path = "./proc_macro_libs/gen_enum"}
+gen_enum_without_values = {path = "./proc_macro_libs/gen_enum_without_values"}
+git_info = {path = "./proc_macro_libs/git_info"}
+html_parser = "0.6.2"
+impl_display = {path = "./proc_macro_libs/impl_display"}
+impl_from_for_upper_struct = {path = "./proc_macro_libs/impl_from_for_upper_struct"}
+init_from_env = {path = "./proc_macro_libs/init_from_env"}
+itertools = "0.10.1"
+lazy_static = "1.4"
+mongodb = "2.0.1"
+num_cpus = "1.0"
+provider_kind_from_config = {path = "./proc_macro_libs/provider_kind_from_config"}
+regex = "1.5"
+reqwest = {version = "0.11.0", features = ["json", "blocking"]}
 serde = "1.0"
 serde-xml-rs = "0.5.1"
 serde_derive = "1.0"
 serde_json = "1.0"
-chrono = "0.4"
-tokio = {version = "1.7.1", features = ["macros"]}
-mongodb = "2.0.1"
-ansi_term = "0.12"
-num_cpus = "1.0"
-toml = "0.5"
-html_parser = "0.6.2"
-regex = "1.5"
-sqlx = { version = "0.5", features = [ "runtime-tokio-native-tls" , "postgres" ] }
-dotenv = "0.15.0"
-lazy_static = "1.4"
+sqlx = {version = "0.5", features = ["runtime-tokio-native-tls", "postgres"]}
 strum = "0.23.0"
 strum_macros = "0.23.1"
-itertools = "0.10.1"
-convert_case = "0.5.0"
 thiserror = "1.0.30"
-box_err_from_err = { path = "./proc_macro_libs/box_err_from_err" }
-enum_extention = { path = "./proc_macro_libs/enum_extention" }
-gen_enum = { path = "./proc_macro_libs/gen_enum" }
-git_info = { path = "./proc_macro_libs/git_info" }
-impl_display = { path = "./proc_macro_libs/impl_display" }
-impl_from_for_upper_struct = { path = "./proc_macro_libs/impl_from_for_upper_struct" }
-init_from_env = { path = "./proc_macro_libs/init_from_env" }
-provider_kind_from_config = { path = "./proc_macro_libs/provider_kind_from_config" }
+tokio = {version = "1.7.1", features = ["macros"]}
+toml = "0.5"
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
 # roux = "1.3.10" #reddit. worked with 0.4.0 version
