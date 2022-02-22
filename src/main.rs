@@ -152,6 +152,8 @@ extern crate enum_extention;
 #[macro_use]
 extern crate gen_enum;
 #[macro_use]
+extern crate gen_enum_without_values;
+#[macro_use]
 extern crate git_info;
 #[macro_use]
 extern crate impl_display;
