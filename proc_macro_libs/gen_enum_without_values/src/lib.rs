@@ -30,7 +30,7 @@ pub fn derive_gen_enum_without_values(input: TokenStream) -> TokenStream {
         }
         _ => panic!("GenEnum only works on Struct"),
     };
-    let enum_ident = syn::Ident::new(&format!("{}Enum", ident), ident.span());
+    let enum_ident = syn::Ident::new(&format!("{}EnumWithoutValues", ident), ident.span());
     let gen = quote! {
          #[derive(Debug, strum_macros::Display, EnumIter, EnumExtenstion)]
         pub enum #enum_ident {
