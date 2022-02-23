@@ -43,7 +43,8 @@ pub async fn mongo_check_availability(
             },
         )),
         Ok(mut client_options) => {
-            client_options.connect_timeout = Some(Duration::from_millis(1000));
+            client_options.connect_timeout =
+                Some(Duration::from_millis(CONFIG.mongo_connection_timeout));
             match Client::with_options(client_options) {
                 Err(e) => Err(Box::new(
                     MongoCheckAvailabilityErrorEnum::ClientWithOptions {

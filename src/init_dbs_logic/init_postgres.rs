@@ -3,6 +3,7 @@ use std::time::Duration;
 
 use sqlx::postgres::PgPoolOptions;
 
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
@@ -63,7 +64,7 @@ pub async fn init_postgres(
 ) -> Result<(), PostgresInitError> {
     match PgPoolOptions::new()
         .max_connections(providers_json_local_data_hashmap.len() as u32)
-        .connect_timeout(Duration::from_millis(10000)) //todo add timeout constant or env var
+        .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
         .connect(&postgres_get_db_url())
         .await
     {

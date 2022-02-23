@@ -4,6 +4,8 @@ use sqlx::postgres::PgPoolOptions;
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub struct PostgresCheckAvailabilityError {
     pub source: sqlx::Error,
@@ -21,7 +23,7 @@ pub async fn postgres_check_availability(
 ) -> Result<(), Box<PostgresCheckAvailabilityError>> {
     if let Err(e) = PgPoolOptions::new()
         .max_connections(1)
-        .connect_timeout(Duration::from_millis(1000))
+        .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout))
         .connect(postgres_url)
         .await
     {
