@@ -465,3 +465,7 @@ https://rust-lang.github.io/rust-clippy/master/#await_holding_lock
 ### -------------------
 links limits and other getters functions like before on config new initialization (before proc macro)
 <br/>
+
+### -------------------
+add connect_timeout to all mongo client_options usage
+<br/>
