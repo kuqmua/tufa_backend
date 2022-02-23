@@ -8,7 +8,7 @@ use crate::helpers::where_was::WhereWas;
 #[derive(Debug, GitInfoDerive)]
 pub struct CheckStatusCodeError {
     pub source: StatusCode,
-    where_was: WhereWas,
+    pub where_was: WhereWas,
 }
 
 #[deny(

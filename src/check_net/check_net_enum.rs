@@ -1,3 +1,6 @@
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
@@ -12,12 +15,14 @@ use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 
+#[derive(Debug, EnumIter)]
 pub enum CheckNet {
     Net,
     Postgres,
     Mongo,
 }
 
+#[derive(Debug)]
 pub enum CheckNetError {
     Net(CheckNetAvailabilityErrorEnum),
     Postgres(PostgresCheckAvailabilityError),
@@ -32,7 +37,7 @@ impl CheckNet {
             CheckNet::Postgres => mongo_get_db_url(),
         }
     }
-    pub async fn check(&self) -> Result<(), CheckNetError> {
+    pub async fn check(self) -> Result<(), CheckNetError> {
         match self {
             CheckNet::Net => {
                 if let Err(e) = check_net_availability(&self.get_url()).await {
