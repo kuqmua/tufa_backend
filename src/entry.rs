@@ -34,16 +34,6 @@ pub fn entry() {
         vec![get_git_source_file_link(file!(), line!())],
         format!("We are on a multicore system with {cpus} CPUs"),
     );
-    if cpus == 0 {
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
-            format!("CPU number == {cpus}, aborting"),
-        );
-        return;
-    }
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(cpus)
         .enable_all()
