@@ -654,5 +654,9 @@ https://fasterthanli.me/articles/a-rust-match-made-in-hell
 Rust Macro Expand vscode extension
 https://marketplace.visualstudio.com/items?itemName=Odiriuss.rust-macro-expand
 <br/>
-    
+   
+### -------------------
+https://rust-lang.github.io/rustfmt/?version=v1.4.38&search=
+<br/>
+ 
     
