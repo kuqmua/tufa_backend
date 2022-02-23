@@ -15,7 +15,9 @@ use convert_case::Casing;
 
 use strum::IntoEnumIterator;
 
-#[derive(Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq)]
+#[derive(
+    Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq,
+)]
 pub struct ConfigStruct {
     pub github_name: String,
     pub github_token: String,
@@ -39,6 +41,8 @@ pub struct ConfigStruct {
     pub mongo_ip: String,   //todo: 4x u8
     pub mongo_port: String, //todo: u16
     pub mongo_params: String,
+
+    pub mongo_connection_timeout: u64,
 
     pub mongo_providers_link_parts_db_name: String,
     pub mongo_providers_logs_db_name: String,
@@ -106,6 +110,8 @@ pub struct ConfigStruct {
     pub postgres_ip: String,   //todo: 4x u8
     pub postgres_port: String, //todo: u16
     pub postgres_db: String,
+
+    pub postgres_connection_timeout: u64,
 
     pub is_postgres_initialization_enabled: bool,
     pub is_postgres_initialization_enabled_providers: bool,
