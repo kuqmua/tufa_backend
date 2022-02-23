@@ -71,7 +71,7 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
         (Err(net_e), Err(postgres_e), Err(mongo_e)) => {
             Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgresAndMongo {
                 net: *net_e,
-                postgres: postgres_e,
+                postgres: *postgres_e,
                 mongo: mongo_e,
                 where_was: WhereWas {
                     file: file!(),
@@ -83,7 +83,7 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
         (Err(net_e), Err(postgres_e), Ok(_)) => {
             Err(Box::new(CheckNetWrapperErrorEnum::NetAndPostgres {
                 net: *net_e,
-                postgres: postgres_e,
+                postgres: *postgres_e,
                 where_was: WhereWas {
                     file: file!(),
                     line: line!(),
@@ -102,7 +102,7 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
         })),
         (Ok(_), Err(postgres_e), Err(mongo_e)) => {
             Err(Box::new(CheckNetWrapperErrorEnum::PostgresAndMongo {
-                postgres: postgres_e,
+                postgres: *postgres_e,
                 mongo: mongo_e,
                 where_was: WhereWas {
                     file: file!(),
@@ -119,8 +119,8 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperErrorEnum>> {
                 column: column!(),
             },
         })),
-        (Ok(_), Err(e), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Postgres {
-            source: e,
+        (Ok(_), Err(postgres_e), Ok(_)) => Err(Box::new(CheckNetWrapperErrorEnum::Postgres {
+            source: *postgres_e,
             where_was: WhereWas {
                 file: file!(),
                 line: line!(),
