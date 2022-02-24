@@ -25,7 +25,7 @@ impl InitTablesEnum {
                         },
                     }));
                 }
-            },
+            }
         }
         Ok(())
     }

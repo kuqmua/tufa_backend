@@ -22,16 +22,16 @@ pub enum InitDbsErrorEnum {
     clippy::float_arithmetic
 )]
 pub async fn init_dbs() -> Result<(), Vec<Box<InitDbsErrorEnum>>> {
-    let results = 
-    join_all(InitTablesEnum::iter().map(|table| async move { table.init().await })).await
-    .into_iter()
-    .filter_map(|result| {
-        if let Err(e) = result {
-            return Some(e);
-        }
-        None
-     })
-    .collect::<Vec<Box<InitDbsErrorEnum>>>();
+    let results = join_all(InitTablesEnum::iter().map(|table| async move { table.init().await }))
+        .await
+        .into_iter()
+        .filter_map(|result| {
+            if let Err(e) = result {
+                return Some(e);
+            }
+            None
+        })
+        .collect::<Vec<Box<InitDbsErrorEnum>>>();
     if !results.is_empty() {
         return Err(results);
     }

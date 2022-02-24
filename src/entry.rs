@@ -79,14 +79,13 @@ pub fn entry() {
                         String::from("db initialization for mongo and postgres are disabled"),
                     );
                 } else if let Err(e) = runtime.block_on(init_dbs()) {
-                        print_colorful_message(
-                            None,
-                            PrintType::Error,
-                            vec![],
-                            vec![],
-                            format!("{e:#?}"),
-                        );
-                    
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        vec![],
+                        vec![],
+                        format!("{e:#?}"),
+                    );
                 }
             }
             if ProviderKind::get_enabled_providers_vec().is_empty() {
