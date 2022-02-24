@@ -1,7 +1,11 @@
-use super::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
+use futures::future::join_all;
+use strum::IntoEnumIterator;
+
 use super::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 
 use crate::helpers::where_was::WhereWas;
+
+use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 
 #[derive(Debug)]
 pub enum InitDbsErrorEnum {
@@ -17,16 +21,19 @@ pub enum InitDbsErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn init_dbs() -> Result<(), Box<InitDbsErrorEnum>> {
-    if let Err(e) = init_dbs_with_providers_link_parts().await {
-        return Err(Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts {
-            source: e,
-            where_was: WhereWas {
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-        }));
+pub async fn init_dbs() -> Result<(), Vec<Box<InitDbsErrorEnum>>> {
+    let results = 
+    join_all(InitTablesEnum::iter().map(|table| async move { table.init().await })).await
+    .into_iter()
+    .filter_map(|result| {
+        if let Err(e) = result {
+            return Some(e);
+        }
+        None
+     })
+    .collect::<Vec<Box<InitDbsErrorEnum>>>();
+    if !results.is_empty() {
+        return Err(results);
     }
     Ok(())
 }
