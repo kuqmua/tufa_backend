@@ -1,19 +1,9 @@
 use futures::future::join_all;
 use strum::IntoEnumIterator;
 
-use super::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
-
-use crate::helpers::where_was::WhereWas;
-
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 
-#[derive(Debug)]
-pub enum InitDbsErrorEnum {
-    InitDbsProvidersLinkParts {
-        source: InitDbsProvidersLinkPartsError,
-        where_was: WhereWas,
-    },
-}
+use crate::init_dbs_logic::init_tables_enum::InitDbsErrorEnum;
 
 #[deny(
     clippy::indexing_slicing,
