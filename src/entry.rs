@@ -53,7 +53,7 @@ pub fn entry() {
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![get_git_source_file_link(file!(), line!())],
-                    format!("{e:#?}"),
+                    format!("{e}"),
                 );
                 return;
             }
