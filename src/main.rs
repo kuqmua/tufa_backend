@@ -57,6 +57,7 @@ pub mod init_dbs_logic {
     pub mod init_dbs_with_providers_link_parts;
     pub mod init_mongo;
     pub mod init_postgres;
+    pub mod init_tables_enum;
 }
 mod logs_logic {
     pub mod async_write_fetch_error_logs_into_mongo_wrapper;
