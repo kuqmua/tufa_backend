@@ -79,7 +79,7 @@ pub fn entry() {
                         String::from("db initialization for mongo and postgres are disabled"),
                     );
                 } else if let Err(e) = runtime.block_on(init_dbs()) {
-                    match *e.source {
+                    match *e {
                     //its only one variant for now. later going to add more
                     InitDbsErrorEnum::InitDbsProvidersLinkParts { source, where_was: where_was1 } => match *source.source {
                         InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts { source, where_was: where_was0 } => {
