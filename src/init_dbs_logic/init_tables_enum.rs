@@ -12,6 +12,12 @@ pub enum InitTablesEnum {
 }
 
 impl InitTablesEnum {
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub async fn init(&self) -> Result<(), Box<InitDbsErrorEnum>> {
         match self {
             InitTablesEnum::ProvidersLinkParts => {
