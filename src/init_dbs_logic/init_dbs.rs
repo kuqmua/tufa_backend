@@ -3,7 +3,7 @@ use strum::IntoEnumIterator;
 
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 
-use crate::init_dbs_logic::init_tables_enum::InitDbsErrorEnum;
+use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 
 #[deny(
     clippy::indexing_slicing,
@@ -11,7 +11,7 @@ use crate::init_dbs_logic::init_tables_enum::InitDbsErrorEnum;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn init_dbs() -> Result<(), Vec<Box<InitDbsErrorEnum>>> {
+pub async fn init_dbs() -> Result<(), Vec<Box<InitTablesEnumError>>> {
     let results = join_all(InitTablesEnum::iter().map(|table| async move { table.init().await }))
         .await
         .into_iter()
@@ -21,7 +21,7 @@ pub async fn init_dbs() -> Result<(), Vec<Box<InitDbsErrorEnum>>> {
             }
             None
         })
-        .collect::<Vec<Box<InitDbsErrorEnum>>>();
+        .collect::<Vec<Box<InitTablesEnumError>>>();
     if !results.is_empty() {
         return Err(results);
     }

@@ -12,8 +12,8 @@ pub enum InitTablesEnum {
 }
 
 #[derive(Debug)]
-pub enum InitDbsErrorEnum {
-    InitDbsProvidersLinkParts {
+pub enum InitTablesEnumError {
+    ProvidersLinkParts {
         source: InitDbsProvidersLinkPartsError,
         where_was: WhereWas,
     },
@@ -26,11 +26,11 @@ impl InitTablesEnum {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub async fn init(&self) -> Result<(), Box<InitDbsErrorEnum>> {
+    pub async fn init(&self) -> Result<(), Box<InitTablesEnumError>> {
         match self {
             InitTablesEnum::ProvidersLinkParts => {
                 if let Err(e) = init_dbs_with_providers_link_parts().await {
-                    return Err(Box::new(InitDbsErrorEnum::InitDbsProvidersLinkParts {
+                    return Err(Box::new(InitTablesEnumError::ProvidersLinkParts {
                         source: e,
                         where_was: WhereWas {
                             file: file!(),
