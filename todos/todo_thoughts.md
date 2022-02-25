@@ -659,4 +659,11 @@ https://marketplace.visualstudio.com/items?itemName=Odiriuss.rust-macro-expand
 https://rust-lang.github.io/rustfmt/?version=v1.4.38&search=
 <br/>
  
+### -------------------
+Cargo now shows you warnings when a dependency will be rejected by a future version of Rust. After running cargo build or cargo check, you might see:
+warning: the following packages contain code that will be rejected by a future version of Rust: old_dep v0.1.0
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+You can run the cargo report command mentioned in the warning to see a full report of the code that will be rejected. This gives you time to upgrade your dependency before it breaks your build.
+<br/>
+    
     
