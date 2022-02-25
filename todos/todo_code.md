@@ -469,3 +469,7 @@ links limits and other getters functions like before on config new initializatio
 ### -------------------
 add connect_timeout to all mongo client_options usage
 <br/>
+  
+### -------------------
+add time to errors like this ./server/utils/dependencies.ts:524:17  15:30:40 25.01.22 
+<br/>
