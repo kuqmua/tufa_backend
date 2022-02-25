@@ -666,4 +666,15 @@ note: to see what the problems were, use the option `--future-incompat-report`, 
 You can run the cargo report command mentioned in the warning to see a full report of the code that will be rejected. This gives you time to upgrade your dependency before it breaks your build.
 <br/>
     
-    
+### -------------------
+On Linux, you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you’re going to try this you probably want to use a VM):
+echo b > /proc/sysrq-trigger
+We can sort of simulate an operating system level crash (or having the plug pulled on our server rack) by using this:
+
+pub fn reboot_kernel() {
+    File::create("/proc/sysrq-trigger")
+        .unwrap()
+        .write_all(b"b")
+        .unwrap();
+}
+<br/>
