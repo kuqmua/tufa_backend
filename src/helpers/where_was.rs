@@ -1,8 +1,13 @@
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::traits::where_was_trait::WhereWasTrait;
 
+extern crate chrono;
+use chrono::prelude::DateTime;
+use chrono::FixedOffset;
+
 #[derive(Debug)]
 pub struct WhereWas {
+    pub time: DateTime<FixedOffset>,
     pub file: &'static str,
     pub line: u32,
     pub column: u32,
