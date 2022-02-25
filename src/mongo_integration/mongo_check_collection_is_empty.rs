@@ -1,6 +1,8 @@
 use mongodb::bson::Document;
 use mongodb::{options::ClientOptions, Client};
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::helpers::where_was::WhereWas;
 
 #[derive(Debug)]
@@ -44,6 +46,8 @@ pub async fn mongo_check_collection_is_empty(
             source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -55,6 +59,8 @@ pub async fn mongo_check_collection_is_empty(
                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -72,6 +78,8 @@ pub async fn mongo_check_collection_is_empty(
                         source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::CountDocuments {
                             source: e,
                             where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(3 * 3600)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
@@ -84,6 +92,11 @@ pub async fn mongo_check_collection_is_empty(
                                 source: Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty {
                                     source: documents_number,
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),

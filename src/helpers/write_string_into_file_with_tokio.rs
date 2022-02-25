@@ -1,6 +1,8 @@
 use std::fmt;
 use std::path::Path;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use tokio::io::AsyncWriteExt;
 
 use crate::helpers::where_was::WhereWas;
@@ -42,6 +44,8 @@ pub async fn write_string_into_file_with_tokio(
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -55,6 +59,8 @@ pub async fn write_string_into_file_with_tokio(
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -67,6 +73,8 @@ pub async fn write_string_into_file_with_tokio(
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

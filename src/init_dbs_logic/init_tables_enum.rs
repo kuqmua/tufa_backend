@@ -1,3 +1,5 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use strum_macros::EnumIter;
 
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
@@ -33,6 +35,8 @@ impl InitTablesEnum {
                     return Err(Box::new(InitTablesEnumError::ProvidersLinkParts {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

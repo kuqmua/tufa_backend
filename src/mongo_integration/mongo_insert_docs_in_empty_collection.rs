@@ -4,6 +4,8 @@ use mongodb::{
     Client,
 };
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
@@ -50,6 +52,8 @@ pub async fn mongo_insert_docs_in_empty_collection(
             MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -61,6 +65,8 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -75,11 +81,13 @@ pub async fn mongo_insert_docs_in_empty_collection(
                     Err(e) => Err(Box::new(
                         MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments {
                             source: e,
-                            where_was: WhereWas {
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                         },
                     )),
                     Ok(documents_number) => {
@@ -87,11 +95,13 @@ pub async fn mongo_insert_docs_in_empty_collection(
                             Err(Box::new(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty {
                                     source: documents_number,
-                                    where_was: WhereWas {
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
-                                    },
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                                 },
                             ))
                         } else {
@@ -104,6 +114,8 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                     Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany {
                                 source: e,
                                                  where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),

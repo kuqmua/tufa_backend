@@ -1,5 +1,7 @@
 use std::fmt;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use futures::future::join_all;
 use strum::IntoEnumIterator;
 
@@ -65,7 +67,7 @@ impl fmt::Display for CheckNetWrapperError {
 
         //                 },
         //                 CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
-                            
+
         //                 },
         //             }
         //         },
@@ -77,7 +79,12 @@ impl fmt::Display for CheckNetWrapperError {
         //         },
         //     }
         // }
-        write!(f, "{}\n{})", self.where_was.source_place(), self.where_was.github_source_place())
+        write!(
+            f,
+            "{}\n{})",
+            self.where_was.source_place(),
+            self.where_was.github_source_place()
+        )
     }
 }
 
@@ -102,6 +109,8 @@ pub async fn check_net_wrapper() -> Result<(), Box<CheckNetWrapperError>> {
         return Err(Box::new(CheckNetWrapperError {
             source: err_vec,
             where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                 file: file!(),
                 line: line!(),
                 column: column!(),

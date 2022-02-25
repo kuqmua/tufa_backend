@@ -1,5 +1,7 @@
 use mongodb::{bson::Document, options::ClientOptions, Client};
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::{
     config_mods::lazy_static_config::CONFIG,
     mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError,
@@ -52,6 +54,8 @@ impl ProviderKind {
                 source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -63,6 +67,8 @@ impl ProviderKind {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions {
                         source: e,
                         where_was: WhereWas {
+                                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -84,6 +90,8 @@ impl ProviderKind {
                                 MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector {
                                     source: e,
                        where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

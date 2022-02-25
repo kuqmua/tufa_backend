@@ -1,3 +1,5 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::check_net::check_status_code::check_status_code;
 use crate::check_net::check_status_code::CheckStatusCodeError;
 
@@ -30,6 +32,8 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -41,6 +45,8 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
                     source: *e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),

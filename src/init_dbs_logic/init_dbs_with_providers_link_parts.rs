@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::config_mods::lazy_static_config::CONFIG;
 
 use crate::helpers::where_was::WhereWas;
@@ -89,6 +91,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                 InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
                     source: errors_hashmap,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -120,6 +124,11 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                 InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
                                     source,
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),
@@ -134,6 +143,11 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                 InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
                                     source,
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),
@@ -150,6 +164,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -163,6 +179,11 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                                 InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
                                     source,
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),
@@ -180,6 +201,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -192,6 +215,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -204,6 +229,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -216,6 +243,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -228,6 +257,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -240,6 +271,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                             source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection {
                                 source,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

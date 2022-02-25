@@ -1,5 +1,7 @@
 use std::time::Duration;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use mongodb::{options::ClientOptions, Client};
 
 use crate::config_mods::lazy_static_config::CONFIG;
@@ -36,6 +38,8 @@ pub async fn mongo_check_availability(
             MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -50,6 +54,8 @@ pub async fn mongo_check_availability(
                     MongoCheckAvailabilityErrorEnum::ClientWithOptions {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -66,6 +72,8 @@ pub async fn mongo_check_availability(
                             MongoCheckAvailabilityErrorEnum::ListCollectionNames {
                                 source: e,
                                 where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),

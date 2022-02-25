@@ -1,5 +1,7 @@
 use mongodb::{options::ClientOptions, Client};
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::helpers::where_was::WhereWas;
 
 #[derive(Debug)]
@@ -46,6 +48,8 @@ pub async fn mongo_drop_empty_db(
             source: Box::new(MongoDropEmptyDbErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -57,6 +61,8 @@ pub async fn mongo_drop_empty_db(
                 source: Box::new(MongoDropEmptyDbErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -70,6 +76,8 @@ pub async fn mongo_drop_empty_db(
                         source: Box::new(MongoDropEmptyDbErrorEnum::ListCollectionNames {
                             source: e,
                             where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(3 * 3600)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
@@ -83,6 +91,11 @@ pub async fn mongo_drop_empty_db(
                                     MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty {
                                         source: db_name.to_string(),
                                         where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
+                                                Local::now().naive_utc(),
+                                                Utc,
+                                            )
+                                            .with_timezone(&FixedOffset::east(3 * 3600)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),
@@ -96,6 +109,11 @@ pub async fn mongo_drop_empty_db(
                                 source: Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop {
                                     source: e,
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),

@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use mongodb::{bson::Document, options::ClientOptions, Client};
 
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
@@ -60,6 +62,8 @@ pub async fn mongo_get_providers_link_parts(
             source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -71,6 +75,8 @@ pub async fn mongo_get_providers_link_parts(
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -85,6 +91,8 @@ pub async fn mongo_get_providers_link_parts(
                             MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
                                 source: e,
                                 where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
@@ -109,6 +117,11 @@ pub async fn mongo_get_providers_link_parts(
                                     MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
                                         source: no_collection_error_hashmap,
                                         where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
+                                                Local::now().naive_utc(),
+                                                Utc,
+                                            )
+                                            .with_timezone(&FixedOffset::east(3 * 3600)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),
@@ -153,6 +166,11 @@ pub async fn mongo_get_providers_link_parts(
                                     MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
                                         source: error_hashmap,
                                         where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
+                                                Local::now().naive_utc(),
+                                                Utc,
+                                            )
+                                            .with_timezone(&FixedOffset::east(3 * 3600)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),

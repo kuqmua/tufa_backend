@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::helpers::resource::Resource;
 
 use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
@@ -42,6 +44,8 @@ pub async fn get_providers_link_parts(
             Err(error_hashmap) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -53,6 +57,8 @@ pub async fn get_providers_link_parts(
             Err(e) => Err(GetProvidersLinkPartsError {
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

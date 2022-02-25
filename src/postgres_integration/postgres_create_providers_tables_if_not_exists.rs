@@ -1,3 +1,5 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use std::collections::HashMap;
 
 use sqlx::{Pool, Postgres};
@@ -45,6 +47,8 @@ pub async fn postgres_create_providers_tables_if_not_exists(
         return Err(PostgresCreateProvidersDbsError {
             source: Box::new(table_creation_error_hashmap),
             where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                 file: file!(),
                 line: line!(),
                 column: column!(),

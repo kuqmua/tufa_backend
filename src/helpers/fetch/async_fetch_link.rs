@@ -1,3 +1,5 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 
@@ -15,6 +17,8 @@ pub async fn async_fetch_link(link: &str) -> Result<String, FetchLinkError> {
             source: Box::new(FetchLinkErrorEnum::ReqwestBlockingGet {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -28,6 +32,8 @@ pub async fn async_fetch_link(link: &str) -> Result<String, FetchLinkError> {
                     source: Box::new(FetchLinkErrorEnum::StatusCode {
                         source: status,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -40,6 +46,8 @@ pub async fn async_fetch_link(link: &str) -> Result<String, FetchLinkError> {
                     source: Box::new(FetchLinkErrorEnum::ResponseText {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

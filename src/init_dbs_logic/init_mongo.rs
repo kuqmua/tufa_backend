@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use futures::future::join_all;
 
 use crate::helpers::where_was::WhereWas;
@@ -64,6 +66,8 @@ pub async fn init_mongo(
             source: Box::new(InitMongoErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -75,6 +79,8 @@ pub async fn init_mongo(
                 source: Box::new(InitMongoErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -119,6 +125,8 @@ pub async fn init_mongo(
                             InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
                                 source: error_vec_count_documents,
                                 where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
@@ -145,6 +153,8 @@ pub async fn init_mongo(
                         source: Box::new(InitMongoErrorEnum::InsertManyError {
                             source: error_vec_insert_many,
                             where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(3 * 3600)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),

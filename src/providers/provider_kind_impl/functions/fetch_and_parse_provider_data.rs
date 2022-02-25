@@ -1,5 +1,7 @@
 use std::time::Instant;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use futures::future::join_all;
 
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
@@ -90,6 +92,8 @@ impl ProviderKind {
                 FetchAndParseProviderDataErrorEnum::AsyncFetchLinks {
                     source: async_fetch_links_error_vec,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -111,6 +115,8 @@ impl ProviderKind {
             return Err(Box::new(FetchAndParseProviderDataErrorEnum::NoItems {
                 source: no_items_error_vec,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

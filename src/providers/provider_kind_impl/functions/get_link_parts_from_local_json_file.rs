@@ -1,3 +1,5 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
@@ -38,6 +40,8 @@ impl ProviderKind {
                 GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -52,6 +56,8 @@ impl ProviderKind {
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd {
                             source: e,
                             where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(3 * 3600)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
@@ -64,6 +70,8 @@ impl ProviderKind {
                         GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice {
                             source: e,
                             where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(3 * 3600)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),

@@ -1,5 +1,7 @@
 use reqwest::StatusCode;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 
 use crate::providers::provider_kind_enum::ProviderKind;
@@ -42,6 +44,8 @@ pub async fn rss_part(
         Err(e) => Err(Box::new(RssPartErrorEnum::CheckLinkStatusCodeError {
             source: e,
             where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(3 * 3600)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
@@ -53,6 +57,8 @@ pub async fn rss_part(
                 return Err(Box::new(RssPartErrorEnum::StatusCode {
                     source: status_code,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -63,6 +69,8 @@ pub async fn rss_part(
                 Err(e) => Err(Box::new(RssPartErrorEnum::FetchAndParseProviderData {
                     source: *e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),

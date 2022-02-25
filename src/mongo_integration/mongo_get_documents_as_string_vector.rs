@@ -2,6 +2,8 @@ use futures::stream::TryStreamExt;
 use itertools::Itertools;
 use mongodb::{bson::Document, Collection};
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::helpers::where_was::WhereWas;
 
 #[derive(Debug)]
@@ -36,6 +38,8 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
             source: Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -62,6 +66,8 @@ pub async fn mongo_get_documents_as_string_vector(
                 MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
                     source: e,
                     where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(3 * 3600)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -80,6 +86,11 @@ pub async fn mongo_get_documents_as_string_vector(
                                 MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
                                     source: db_collection_document_field_name_handle.to_string(),
                                     where_was: WhereWas {
+                                        time: DateTime::<Utc>::from_utc(
+                                            Local::now().naive_utc(),
+                                            Utc,
+                                        )
+                                        .with_timezone(&FixedOffset::east(3 * 3600)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),
@@ -98,6 +109,11 @@ pub async fn mongo_get_documents_as_string_vector(
                                     MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                         source: other_bson_type.clone(),
                                         where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
+                                                Local::now().naive_utc(),
+                                                Utc,
+                                            )
+                                            .with_timezone(&FixedOffset::east(3 * 3600)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),

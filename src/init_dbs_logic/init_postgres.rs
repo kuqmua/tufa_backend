@@ -3,6 +3,8 @@ use std::time::Duration;
 
 use sqlx::postgres::PgPoolOptions;
 
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 
@@ -72,6 +74,8 @@ pub async fn init_postgres(
             source: Box::new(PostgresInitErrorEnum::EstablishConnection {
                 source: e,
                 where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(3 * 3600)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -89,6 +93,8 @@ pub async fn init_postgres(
                     source: Box::new(PostgresInitErrorEnum::CreateTableQueries {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -106,6 +112,8 @@ pub async fn init_postgres(
                     source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -123,6 +131,8 @@ pub async fn init_postgres(
                     source: Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -154,6 +164,8 @@ pub async fn init_postgres(
                     source: Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
                         source: e,
                         where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
