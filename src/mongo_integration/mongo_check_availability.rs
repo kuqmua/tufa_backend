@@ -1,3 +1,4 @@
+use std::fmt;
 use std::time::Duration;
 
 use chrono::{DateTime, FixedOffset, Local, Utc};
@@ -22,6 +23,97 @@ pub enum MongoCheckAvailabilityErrorEnum {
         source: mongodb::error::Error,
         where_was: WhereWas,
     },
+}
+
+impl fmt::Display for MongoCheckAvailabilityErrorEnum {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MongoCheckAvailabilityErrorEnum::ClientOptionsParse { source, where_was } => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else {
+                    write!(f, "{}", source)
+                }
+            }
+            MongoCheckAvailabilityErrorEnum::ClientWithOptions { source, where_was } => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else {
+                    write!(f, "{}", source)
+                }
+            }
+            MongoCheckAvailabilityErrorEnum::ListCollectionNames { source, where_was } => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else {
+                    write!(f, "{}", source)
+                }
+            }
+        }
+    }
 }
 
 #[deny(
