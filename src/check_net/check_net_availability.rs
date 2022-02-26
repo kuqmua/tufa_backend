@@ -5,6 +5,7 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 use crate::check_net::check_status_code::check_status_code;
 use crate::check_net::check_status_code::CheckStatusCodeError;
 
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::traits::git_info_trait::GitInfo;
 
@@ -22,19 +23,68 @@ pub enum CheckNetAvailabilityErrorEnum {
     },
 }
 
-// impl fmt::Display for CheckNetAvailabilityErrorEnum {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         match self {
-//             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
-
-//             },
-//             CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
-
-//             },
-//         }
-//         write!(f, "{:#?}", self.source)
-//     }
-// }
+impl fmt::Display for CheckNetAvailabilityErrorEnum {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else {
+                    write!(f, "{}", source)
+                }
+            }
+            CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.source_place_with_readable_time(),
+                        source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        where_was.github_source_place_with_readable_time(),
+                        source
+                    )
+                } else {
+                    write!(f, "{}", source)
+                }
+            }
+        }
+    }
+}
 
 #[deny(
     clippy::indexing_slicing,
