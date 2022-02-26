@@ -48,7 +48,7 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if let Err(e) = runtime.block_on(check_net_wrapper()) {
-                println!("e {}", e.where_was.time);
+                println!("e {}", e.where_was.readable_time());
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
