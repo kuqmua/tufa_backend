@@ -8,7 +8,6 @@ use strum::IntoEnumIterator;
 use crate::helpers::where_was::WhereWas;
 
 use crate::check_net::check_net_enum::CheckNet;
-use crate::traits::where_was_trait::WhereWasTrait;
 
 use super::check_net_enum::CheckNetError;
 
@@ -54,39 +53,39 @@ pub struct CheckNetWrapperError {
 //         column: 25,
 //     },
 // }
-impl fmt::Display for CheckNetWrapperError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        // enum Something {
-        //     TODO! how to write from WhereWas conversion properly?
-        // }
-        // for i in &self.source {
-        //     match i {
-        //         CheckNetError::Net(e) => {
-        //             match e {
-        //                 CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+// impl fmt::Display for CheckNetWrapperError {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         // enum Something {
+//         //     TODO! how to write from WhereWas conversion properly?
+//         // }
+//         // for i in &self.source {
+//         //     match i {
+//         //         CheckNetError::Net(e) => {
+//         //             match e {
+//         //                 CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
 
-        //                 },
-        //                 CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+//         //                 },
+//         //                 CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
 
-        //                 },
-        //             }
-        //         },
-        //         CheckNetError::Postgres(e) => {
+//         //                 },
+//         //             }
+//         //         },
+//         //         CheckNetError::Postgres(e) => {
 
-        //         },
-        //         CheckNetError::Mongo(e) => {
+//         //         },
+//         //         CheckNetError::Mongo(e) => {
 
-        //         },
-        //     }
-        // }
-        write!(
-            f,
-            "{}\n{})",
-            self.where_was.source_place(),
-            self.where_was.github_source_place()
-        )
-    }
-}
+//         //         },
+//         //     }
+//         // }
+//         write!(
+//             f,
+//             "{}\n{})",
+//             self.where_was.source_place(),
+//             self.where_was.github_source_place()
+//         )
+//     }
+// }
 
 #[deny(
     clippy::indexing_slicing,

@@ -48,12 +48,13 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if let Err(e) = runtime.block_on(check_net_wrapper()) {
+                println!("e {}", e.where_was.time);
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![get_git_source_file_link(file!(), line!())],
-                    format!("{e}"),
+                    format!("{e:#?}"),
                 );
                 return;
             }

@@ -1,5 +1,4 @@
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
-use crate::traits::where_was_trait::WhereWasTrait;
 
 extern crate chrono;
 use chrono::prelude::DateTime;
@@ -13,7 +12,7 @@ pub struct WhereWas {
     pub column: u32,
 }
 
-impl WhereWasTrait for WhereWas {
+impl WhereWas {
     #[deny(
         clippy::indexing_slicing,
         clippy::unwrap_used,
