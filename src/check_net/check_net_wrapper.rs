@@ -58,32 +58,27 @@ pub struct CheckNetWrapperError {
 //         // enum Something {
 //         //     TODO! how to write from WhereWas conversion properly?
 //         // }
-//         // for i in &self.source {
-//         //     match i {
-//         //         CheckNetError::Net(e) => {
-//         //             match e {
-//         //                 CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+//         for i in &self.source {
+//             match i {
+//                 CheckNetError::Net(e) => {
+//                     match e {
+//                         CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
 
-//         //                 },
-//         //                 CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+//                         },
+//                         CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
 
-//         //                 },
-//         //             }
-//         //         },
-//         //         CheckNetError::Postgres(e) => {
+//                         },
+//                     }
+//                 },
+//                 CheckNetError::Postgres(e) => {
 
-//         //         },
-//         //         CheckNetError::Mongo(e) => {
+//                 },
+//                 CheckNetError::Mongo(e) => {
 
-//         //         },
-//         //     }
-//         // }
-//         write!(
-//             f,
-//             "{}\n{})",
-//             self.where_was.source_place(),
-//             self.where_was.github_source_place()
-//         )
+//                 },
+//             }
+//         }
+//         write!(f, "{:#?}", self.source)
 //     }
 // }
 
