@@ -1,3 +1,5 @@
+use std::fmt;
+
 use chrono::{DateTime, FixedOffset, Local, Utc};
 
 use crate::check_net::check_status_code::check_status_code;
@@ -19,6 +21,20 @@ pub enum CheckNetAvailabilityErrorEnum {
         where_was: WhereWas,
     },
 }
+
+// impl fmt::Display for CheckNetAvailabilityErrorEnum {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         match self {
+//             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+
+//             },
+//             CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+
+//             },
+//         }
+//         write!(f, "{:#?}", self.source)
+//     }
+// }
 
 #[deny(
     clippy::indexing_slicing,
