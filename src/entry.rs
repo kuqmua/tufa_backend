@@ -15,6 +15,12 @@ use crate::init_dbs_logic::init_dbs::init_dbs;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
+use crate::check_net::check_net_enum::CheckNetError;
+
+use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
+
+use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -48,16 +54,77 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if let Err(e) = runtime.block_on(check_net_wrapper()) {
-                println!("e {}", e.where_was.readable_time());
+                let sources = e
+                    .source
+                    .iter()
+                    .map(|e| match e {
+                        CheckNetError::Net(e) => match e {
+                            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            CheckNetAvailabilityErrorEnum::StatusCodeError {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                        },
+                        CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
+                        CheckNetError::Mongo(e) => match e {
+                            MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            MongoCheckAvailabilityErrorEnum::ClientWithOptions {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            MongoCheckAvailabilityErrorEnum::ListCollectionNames {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                        },
+                    })
+                    .collect::<Vec<String>>();
+                let github_sources = e
+                    .source
+                    .iter()
+                    .map(|e| match e {
+                        CheckNetError::Net(e) => match e {
+                            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            CheckNetAvailabilityErrorEnum::StatusCodeError {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                        },
+                        CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
+                        CheckNetError::Mongo(e) => match e {
+                            MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            MongoCheckAvailabilityErrorEnum::ClientWithOptions {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                            MongoCheckAvailabilityErrorEnum::ListCollectionNames {
+                                source: _,
+                                where_was,
+                            } => where_was.source_place_with_readable_time(),
+                        },
+                    })
+                    .collect::<Vec<String>>();
                 print_colorful_message(
                     None,
                     PrintType::WarningHigh,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    sources,
+                    github_sources,
                     format!("{e:#?}"),
                 );
                 return;
-            }
+            };
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
