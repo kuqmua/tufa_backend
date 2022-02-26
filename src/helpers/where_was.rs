@@ -37,6 +37,15 @@ impl WhereWas {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
+    pub fn source_place_with_readable_time(&self) -> String {
+        format!("{} {}", self.source_place(), self.readable_time())
+    }
+    #[deny(
+        clippy::indexing_slicing,
+        clippy::unwrap_used,
+        clippy::integer_arithmetic,
+        clippy::float_arithmetic
+    )]
     pub fn github_source_place(&self) -> String {
         get_git_source_file_link(self.file, self.line)
     }
