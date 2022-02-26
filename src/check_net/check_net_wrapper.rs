@@ -5,6 +5,7 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 use futures::future::join_all;
 use strum::IntoEnumIterator;
 
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 
 use crate::check_net::check_net_enum::CheckNet;
@@ -13,74 +14,188 @@ use super::check_net_enum::CheckNetError;
 
 use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
 
+use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
+
 #[derive(Debug)]
 pub struct CheckNetWrapperError {
     pub source: Vec<CheckNetError>,
     pub where_was: WhereWas,
 }
 
-// CheckNetWrapperError {
-//     source: [
-//         Postgres(
-//             PostgresCheckAvailabilityError {
-//                 source: PoolTimedOut,
-//                 where_was: WhereWas {
-//                     file: "src/postgres_integration/postgres_check_availability.rs",
-//                     line: 34,
-//                     column: 25,
-//                 },
-//             },
-//         ),
-//         Mongo(
-//             ClientOptionsParse {
-//                 source: Error {
-//                     kind: InvalidArgument {
-//                         message: "invalid connection string scheme: postgres",
-//                     },
-//                     labels: {},
-//                 },
-//                 where_was: WhereWas {
-//                     file: "src/mongo_integration/mongo_check_availability.rs",
-//                     line: 40,
-//                     column: 29,
-//                 },
-//             },
-//         ),
-//     ],
-//     where_was: WhereWas {
-//         file: "src/check_net/check_net_wrapper.rs",
-//         line: 38,
-//         column: 25,
-//     },
-// }
-// impl fmt::Display for CheckNetWrapperError {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         // enum Something {
-//         //     TODO! how to write from WhereWas conversion properly?
-//         // }
-//         for i in &self.source {
-//             match i {
-//                 CheckNetError::Net(e) => {
-//                     match e {
-//                         CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
-
-//                         },
-//                         CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
-
-//                         },
-//                     }
-//                 },
-//                 CheckNetError::Postgres(e) => {
-
-//                 },
-//                 CheckNetError::Mongo(e) => {
-
-//                 },
-//             }
-//         }
-//         write!(f, "{:#?}", self.source)
-//     }
-// }
+impl fmt::Display for CheckNetWrapperError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let stringified_errors = self
+            .source
+            .iter()
+            .map(|e| match e {
+                CheckNetError::Net(e) => match e {
+                    CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                        source,
+                        where_was,
+                    } => {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
+                            format!(
+                                "{}\n{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else {
+                            format!("{}", source)
+                        }
+                    }
+                    CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
+                            format!(
+                                "{}\n{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else {
+                            format!("{}", source)
+                        }
+                    }
+                },
+                CheckNetError::Postgres(e) => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        format!(
+                            "{}\n{}\n{}",
+                            e.where_was.source_place_with_readable_time(),
+                            e.where_was.github_source_place_with_readable_time(),
+                            e.source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        format!(
+                            "{}\n{}",
+                            e.where_was.source_place_with_readable_time(),
+                            e.source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        format!(
+                            "{}\n{}",
+                            e.where_was.github_source_place_with_readable_time(),
+                            e.source
+                        )
+                    } else {
+                        format!("{}", e.source)
+                    }
+                }
+                CheckNetError::Mongo(e) => match e {
+                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse { source, where_was } => {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
+                            format!(
+                                "{}\n{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else {
+                            format!("{}", source)
+                        }
+                    }
+                    MongoCheckAvailabilityErrorEnum::ClientWithOptions { source, where_was } => {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
+                            format!(
+                                "{}\n{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else {
+                            format!("{}", source)
+                        }
+                    }
+                    MongoCheckAvailabilityErrorEnum::ListCollectionNames { source, where_was } => {
+                        if CONFIG.is_show_source_place_enabled
+                            && CONFIG.is_show_github_source_place_enabled
+                        {
+                            format!(
+                                "{}\n{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.source_place_with_readable_time(),
+                                source
+                            )
+                        } else if CONFIG.is_show_github_source_place_enabled {
+                            format!(
+                                "{}\n{}",
+                                where_was.github_source_place_with_readable_time(),
+                                source
+                            )
+                        } else {
+                            format!("{}", source)
+                        }
+                    }
+                },
+            })
+            .collect::<String>();
+        write!(f, "{}", stringified_errors)
+    }
+}
 
 #[deny(
     clippy::indexing_slicing,
