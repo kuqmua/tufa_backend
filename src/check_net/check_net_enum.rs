@@ -1,4 +1,5 @@
-use strum::IntoEnumIterator;
+use std::fmt;
+
 use strum_macros::EnumIter;
 
 use crate::config_mods::lazy_static_config::CONFIG;
@@ -27,6 +28,190 @@ pub enum CheckNetError {
     Net(CheckNetAvailabilityErrorEnum),
     Postgres(PostgresCheckAvailabilityError),
     Mongo(MongoCheckAvailabilityErrorEnum),
+}
+
+impl fmt::Display for CheckNetError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            CheckNetError::Net(e) => match e {
+                CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        write!(
+                            f,
+                            "{}\n{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else {
+                        write!(f, "{}", source)
+                    }
+                }
+                CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        write!(
+                            f,
+                            "{}\n{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else {
+                        write!(f, "{}", source)
+                    }
+                }
+            },
+            CheckNetError::Postgres(e) => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}\n{}",
+                        e.where_was.source_place_with_readable_time(),
+                        e.where_was.github_source_place_with_readable_time(),
+                        e.source
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        e.where_was.source_place_with_readable_time(),
+                        e.source
+                    )
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        e.where_was.github_source_place_with_readable_time(),
+                        e.source
+                    )
+                } else {
+                    write!(f, "{}", e.source)
+                }
+            }
+            CheckNetError::Mongo(e) => match e {
+                MongoCheckAvailabilityErrorEnum::ClientOptionsParse { source, where_was } => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        write!(
+                            f,
+                            "{}\n{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else {
+                        write!(f, "{}", source)
+                    }
+                }
+                MongoCheckAvailabilityErrorEnum::ClientWithOptions { source, where_was } => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        write!(
+                            f,
+                            "{}\n{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else {
+                        write!(f, "{}", source)
+                    }
+                }
+                MongoCheckAvailabilityErrorEnum::ListCollectionNames { source, where_was } => {
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        write!(
+                            f,
+                            "{}\n{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.source_place_with_readable_time(),
+                            source
+                        )
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        write!(
+                            f,
+                            "{}\n{}",
+                            where_was.github_source_place_with_readable_time(),
+                            source
+                        )
+                    } else {
+                        write!(f, "{}", source)
+                    }
+                }
+            },
+        }
+    }
 }
 
 impl CheckNet {
