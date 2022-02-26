@@ -37,25 +37,25 @@ impl fmt::Display for CheckNetWrapperError {
                             && CONFIG.is_show_github_source_place_enabled
                         {
                             format!(
-                                "{}\n{}\n{}",
+                                "{}\n{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_github_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else {
-                            format!("{}", source)
+                            format!("{}\n", source)
                         }
                     }
                     CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
@@ -63,25 +63,25 @@ impl fmt::Display for CheckNetWrapperError {
                             && CONFIG.is_show_github_source_place_enabled
                         {
                             format!(
-                                "{}\n{}\n{}",
+                                "{}\n{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_github_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else {
-                            format!("{}", source)
+                            format!("{}\n", source)
                         }
                     }
                 },
@@ -90,25 +90,25 @@ impl fmt::Display for CheckNetWrapperError {
                         && CONFIG.is_show_github_source_place_enabled
                     {
                         format!(
-                            "{}\n{}\n{}",
+                            "{}\n{}\n{}\n",
                             e.where_was.source_place_with_readable_time(),
                             e.where_was.github_source_place_with_readable_time(),
                             e.source
                         )
                     } else if CONFIG.is_show_source_place_enabled {
                         format!(
-                            "{}\n{}",
+                            "{}\n{}\n",
                             e.where_was.source_place_with_readable_time(),
                             e.source
                         )
                     } else if CONFIG.is_show_github_source_place_enabled {
                         format!(
-                            "{}\n{}",
+                            "{}\n{}\n",
                             e.where_was.github_source_place_with_readable_time(),
                             e.source
                         )
                     } else {
-                        format!("{}", e.source)
+                        format!("{}\n", e.source)
                     }
                 }
                 CheckNetError::Mongo(e) => match e {
@@ -117,25 +117,25 @@ impl fmt::Display for CheckNetWrapperError {
                             && CONFIG.is_show_github_source_place_enabled
                         {
                             format!(
-                                "{}\n{}\n{}",
+                                "{}\n{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_github_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else {
-                            format!("{}", source)
+                            format!("{}\n", source)
                         }
                     }
                     MongoCheckAvailabilityErrorEnum::ClientWithOptions { source, where_was } => {
@@ -143,25 +143,25 @@ impl fmt::Display for CheckNetWrapperError {
                             && CONFIG.is_show_github_source_place_enabled
                         {
                             format!(
-                                "{}\n{}\n{}",
+                                "{}\n{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_github_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else {
-                            format!("{}", source)
+                            format!("{}\n", source)
                         }
                     }
                     MongoCheckAvailabilityErrorEnum::ListCollectionNames { source, where_was } => {
@@ -169,25 +169,25 @@ impl fmt::Display for CheckNetWrapperError {
                             && CONFIG.is_show_github_source_place_enabled
                         {
                             format!(
-                                "{}\n{}\n{}",
+                                "{}\n{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.source_place_with_readable_time(),
                                 source
                             )
                         } else if CONFIG.is_show_github_source_place_enabled {
                             format!(
-                                "{}\n{}",
+                                "{}\n{}\n",
                                 where_was.github_source_place_with_readable_time(),
                                 source
                             )
                         } else {
-                            format!("{}", source)
+                            format!("{}\n", source)
                         }
                     }
                 },

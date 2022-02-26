@@ -54,75 +54,76 @@ pub fn entry() {
         }
         Ok(runtime) => {
             if let Err(e) = runtime.block_on(check_net_wrapper()) {
-                let sources = e
-                    .source
-                    .iter()
-                    .map(|e| match e {
-                        CheckNetError::Net(e) => match e {
-                            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            CheckNetAvailabilityErrorEnum::StatusCodeError {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                        },
-                        CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
-                        CheckNetError::Mongo(e) => match e {
-                            MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            MongoCheckAvailabilityErrorEnum::ClientWithOptions {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            MongoCheckAvailabilityErrorEnum::ListCollectionNames {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                        },
-                    })
-                    .collect::<Vec<String>>();
-                let github_sources = e
-                    .source
-                    .iter()
-                    .map(|e| match e {
-                        CheckNetError::Net(e) => match e {
-                            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            CheckNetAvailabilityErrorEnum::StatusCodeError {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                        },
-                        CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
-                        CheckNetError::Mongo(e) => match e {
-                            MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            MongoCheckAvailabilityErrorEnum::ClientWithOptions {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                            MongoCheckAvailabilityErrorEnum::ListCollectionNames {
-                                source: _,
-                                where_was,
-                            } => where_was.source_place_with_readable_time(),
-                        },
-                    })
-                    .collect::<Vec<String>>();
-                print_colorful_message(
-                    None,
-                    PrintType::WarningHigh,
-                    sources,
-                    github_sources,
-                    format!("{e:#?}"),
-                );
+                println!("{e}");
+                // let sources = e
+                //     .source
+                //     .iter()
+                //     .map(|e| match e {
+                //         CheckNetError::Net(e) => match e {
+                //             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             CheckNetAvailabilityErrorEnum::StatusCodeError {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //         },
+                //         CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
+                //         CheckNetError::Mongo(e) => match e {
+                //             MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             MongoCheckAvailabilityErrorEnum::ClientWithOptions {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             MongoCheckAvailabilityErrorEnum::ListCollectionNames {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //         },
+                //     })
+                //     .collect::<Vec<String>>();
+                // let github_sources = e
+                //     .source
+                //     .iter()
+                //     .map(|e| match e {
+                //         CheckNetError::Net(e) => match e {
+                //             CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             CheckNetAvailabilityErrorEnum::StatusCodeError {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //         },
+                //         CheckNetError::Postgres(e) => e.where_was.source_place_with_readable_time(),
+                //         CheckNetError::Mongo(e) => match e {
+                //             MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             MongoCheckAvailabilityErrorEnum::ClientWithOptions {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //             MongoCheckAvailabilityErrorEnum::ListCollectionNames {
+                //                 source: _,
+                //                 where_was,
+                //             } => where_was.source_place_with_readable_time(),
+                //         },
+                //     })
+                //     .collect::<Vec<String>>();
+                // print_colorful_message(
+                //     None,
+                //     PrintType::WarningHigh,
+                //     sources,
+                //     github_sources,
+                //     format!("{e:#?}"),
+                // );
                 return;
             };
             print_colorful_message(
