@@ -1,3 +1,4 @@
+use std::fmt;
 use std::time::Duration;
 
 use chrono::{DateTime, FixedOffset, Local, Utc};
@@ -11,6 +12,36 @@ use crate::config_mods::lazy_static_config::CONFIG;
 pub struct PostgresCheckAvailabilityError {
     pub source: sqlx::Error,
     pub where_was: WhereWas,
+}
+
+impl fmt::Display for PostgresCheckAvailabilityError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}\n{}",
+                self.where_was.source_place_with_readable_time(),
+                self.where_was.github_source_place_with_readable_time(),
+                self.source
+            )
+        } else if CONFIG.is_show_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}",
+                self.where_was.source_place_with_readable_time(),
+                self.source
+            )
+        } else if CONFIG.is_show_github_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}",
+                self.where_was.github_source_place_with_readable_time(),
+                self.source
+            )
+        } else {
+            write!(f, "{}", self.source)
+        }
+    }
 }
 
 #[deny(
