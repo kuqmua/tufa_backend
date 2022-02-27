@@ -15,6 +15,7 @@ pub struct WrapConfigChecksError {
 
 #[derive(Debug)]
 pub enum WrapConfigChecksErrorEnum {
+    Timezone { source: i32 }, //no where_was for this coz inside using timezone
     GithubName { source: String, where_was: WhereWas },
     GithubToken { source: String, where_was: WhereWas },
     RedditUserAgent { source: String, where_was: WhereWas },
@@ -41,6 +42,14 @@ impl WrapConfigChecks for ConfigStruct {
         clippy::float_arithmetic
     )]
     fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
+        //its important to check timezone first coz it will be used later. it must be valid
+        if -86_400 < self.timezone && self.timezone < 86_400 {
+            return Err(WrapConfigChecksError {
+                source: Box::new(WrapConfigChecksErrorEnum::Timezone {
+                    source: self.timezone,
+                }),
+            });
+        }
         //todo: check ip pattern. check port pattern
         if self.github_name.is_empty() {
             return Err(WrapConfigChecksError {
