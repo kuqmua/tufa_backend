@@ -43,7 +43,7 @@ impl WrapConfigChecks for ConfigStruct {
     )]
     fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
         //its important to check timezone first coz it will be used later. it must be valid
-        if -86_400 < self.timezone && self.timezone < 86_400 {
+        if !(-86_400 < self.timezone && self.timezone < 86_400) {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::Timezone {
                     source: self.timezone,
@@ -57,7 +57,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.github_name,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -71,7 +71,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.github_token,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -85,7 +85,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.reddit_user_agent,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -99,7 +99,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.reddit_client_id,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -113,7 +113,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.reddit_client_secret,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -127,7 +127,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.reddit_username,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -141,7 +141,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.reddit_password,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -155,7 +155,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.mongo_login,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -169,7 +169,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.mongo_password,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -183,7 +183,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.mongo_ip,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -197,7 +197,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.mongo_port,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -211,7 +211,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.log_file_extension,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -225,7 +225,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.path_to_provider_link_parts_folder,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -239,7 +239,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.warning_logs_directory_name,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -253,7 +253,7 @@ impl WrapConfigChecks for ConfigStruct {
                     source: self.links_limit_providers,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(self.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
