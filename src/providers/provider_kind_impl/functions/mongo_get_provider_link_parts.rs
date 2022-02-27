@@ -67,8 +67,8 @@ impl ProviderKind {
                     source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientWithOptions {
                         source: e,
                         where_was: WhereWas {
-                                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(3 * 3600)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
