@@ -27,9 +27,33 @@ impl fmt::Display for CheckNetWrapperError {
         let stringified_errors = self
             .source
             .iter()
-            .map(|e| format!("{e}"))
+            .map(|e| format!("{e}\n"))
             .collect::<String>();
-        write!(f, "{}", stringified_errors)
+        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}\n{}",
+                self.where_was.source_place_with_readable_time(),
+                self.where_was.github_source_place_with_readable_time(),
+                stringified_errors
+            )
+        } else if CONFIG.is_show_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}",
+                self.where_was.source_place_with_readable_time(),
+                stringified_errors
+            )
+        } else if CONFIG.is_show_github_source_place_enabled {
+            write!(
+                f,
+                "{}\n{}",
+                self.where_was.github_source_place_with_readable_time(),
+                stringified_errors
+            )
+        } else {
+            write!(f, "{}", stringified_errors)
+        }
     }
 }
 

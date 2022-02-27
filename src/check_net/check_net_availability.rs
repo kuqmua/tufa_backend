@@ -25,64 +25,7 @@ pub enum CheckNetAvailabilityErrorEnum {
 
 impl fmt::Display for CheckNetAvailabilityErrorEnum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
-                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
-                {
-                    write!(
-                        f,
-                        "{}\n{}\n{}",
-                        where_was.source_place_with_readable_time(),
-                        where_was.github_source_place_with_readable_time(),
-                        source
-                    )
-                } else if CONFIG.is_show_source_place_enabled {
-                    write!(
-                        f,
-                        "{}\n{}",
-                        where_was.source_place_with_readable_time(),
-                        source
-                    )
-                } else if CONFIG.is_show_github_source_place_enabled {
-                    write!(
-                        f,
-                        "{}\n{}",
-                        where_was.github_source_place_with_readable_time(),
-                        source
-                    )
-                } else {
-                    write!(f, "{}", source)
-                }
-            }
-            CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
-                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
-                {
-                    write!(
-                        f,
-                        "{}\n{}\n{}",
-                        where_was.source_place_with_readable_time(),
-                        where_was.github_source_place_with_readable_time(),
-                        source
-                    )
-                } else if CONFIG.is_show_source_place_enabled {
-                    write!(
-                        f,
-                        "{}\n{}",
-                        where_was.source_place_with_readable_time(),
-                        source
-                    )
-                } else if CONFIG.is_show_github_source_place_enabled {
-                    write!(
-                        f,
-                        "{}\n{}",
-                        where_was.github_source_place_with_readable_time(),
-                        source
-                    )
-                } else {
-                    write!(f, "{}", source)
-                }
-            }
-        }
+        write!(f, "{self}")
     }
 }
 
