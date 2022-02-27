@@ -25,7 +25,7 @@ pub enum CheckNet {
     Mongo,
 }
 
-#[derive(Debug)]
+#[derive(Debug, ErrorDisplay)]
 pub struct CheckNetError {
     source: Box<CheckNetErrorEnum>,
     where_was: WhereWas,
@@ -38,35 +38,35 @@ pub enum CheckNetErrorEnum {
     Mongo(MongoCheckAvailabilityErrorEnum),
 }
 
-impl fmt::Display for CheckNetError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                self.where_was.github_source_place_with_readable_time(),
-                self.source
-            )
-        } else if CONFIG.is_show_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                self.source
-            )
-        } else if CONFIG.is_show_github_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}",
-                self.where_was.github_source_place_with_readable_time(),
-                self.source
-            )
-        } else {
-            write!(f, "{}", self.source)
-        }
-    }
-}
+// impl fmt::Display for CheckNetError {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}\n{}",
+//                 self.where_was.source_place_with_readable_time(),
+//                 self.where_was.github_source_place_with_readable_time(),
+//                 self.source
+//             )
+//         } else if CONFIG.is_show_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}",
+//                 self.where_was.source_place_with_readable_time(),
+//                 self.source
+//             )
+//         } else if CONFIG.is_show_github_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}",
+//                 self.where_was.github_source_place_with_readable_time(),
+//                 self.source
+//             )
+//         } else {
+//             write!(f, "{}", self.source)
+//         }
+//     }
+// }
 
 impl fmt::Display for CheckNetErrorEnum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
