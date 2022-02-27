@@ -12,15 +12,24 @@ use crate::check_net::check_net_enum::CheckNet;
 
 use super::check_net_enum::CheckNetError;
 
-use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
-
-use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
+// pub struct CheckNetErrorVec(Vec<CheckNetError>);//need it to implement Display with proc macro
 
 #[derive(Debug)]
 pub struct CheckNetWrapperError {
     pub source: Vec<CheckNetError>,
     pub where_was: WhereWas,
 }
+
+// impl std::fmt::Display for Vec<CheckNetError> {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> fmt::Result {
+//         let stringified_errors = self
+//             .source
+//             .iter()
+//             .map(|e| format!("{e}\n"))
+//             .collect::<String>();
+//         write!(f, "{}", stringified_errors)
+//     }
+// }
 
 impl fmt::Display for CheckNetWrapperError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
