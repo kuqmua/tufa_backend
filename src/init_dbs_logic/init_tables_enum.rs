@@ -8,6 +8,8 @@ use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersL
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug, EnumIter)]
 pub enum InitTablesEnum {
     ProvidersLinkParts,
@@ -36,7 +38,7 @@ impl InitTablesEnum {
                         source: e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

@@ -6,7 +6,9 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 use tokio::io::AsyncWriteExt;
 
 use crate::helpers::where_was::WhereWas;
-//
+
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
@@ -45,7 +47,7 @@ pub async fn write_string_into_file_with_tokio(
                     source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -60,7 +62,7 @@ pub async fn write_string_into_file_with_tokio(
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -74,7 +76,7 @@ pub async fn write_string_into_file_with_tokio(
                         source: e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

@@ -55,7 +55,7 @@ pub fn derive_impl_from_for_upper_struct(input: TokenStream) -> TokenStream {
                                 )),
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),

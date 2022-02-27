@@ -14,6 +14,8 @@ use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug, GitInfoDerive)]
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
@@ -45,7 +47,7 @@ pub async fn rss_part(
             source: e,
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
@@ -58,7 +60,7 @@ pub async fn rss_part(
                     source: status_code,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -70,7 +72,7 @@ pub async fn rss_part(
                     source: *e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),

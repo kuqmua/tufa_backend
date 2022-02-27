@@ -11,6 +11,8 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
@@ -55,7 +57,7 @@ pub async fn get_local_providers_link_parts(
             source: Box::new(errors_hashmap),
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),

@@ -5,6 +5,8 @@ use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -18,7 +20,7 @@ pub fn blocking_fetch_link(link: &str) -> Result<String, FetchLinkError> {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -33,7 +35,7 @@ pub fn blocking_fetch_link(link: &str) -> Result<String, FetchLinkError> {
                         source: status,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -47,7 +49,7 @@ pub fn blocking_fetch_link(link: &str) -> Result<String, FetchLinkError> {
                         source: e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

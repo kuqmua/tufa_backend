@@ -17,6 +17,8 @@ use convert_case::Casing;
 
 use strum::IntoEnumIterator;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(
     Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq,
 )]

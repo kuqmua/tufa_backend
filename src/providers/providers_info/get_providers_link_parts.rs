@@ -16,6 +16,8 @@ use crate::providers::providers_info::get_local_providers_link_parts::GetLocalPr
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub struct GetProvidersLinkPartsError {
     pub source: Box<GetProvidersLinkPartsErrorEnum>,
@@ -45,7 +47,7 @@ pub async fn get_providers_link_parts(
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -58,7 +60,7 @@ pub async fn get_providers_link_parts(
                 source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

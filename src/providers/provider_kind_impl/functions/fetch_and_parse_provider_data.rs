@@ -24,6 +24,8 @@ use crate::traits::git_info_trait::GitInfo;
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
@@ -93,7 +95,7 @@ impl ProviderKind {
                     source: async_fetch_links_error_vec,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -116,7 +118,7 @@ impl ProviderKind {
                 source: no_items_error_vec,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),

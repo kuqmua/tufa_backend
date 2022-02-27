@@ -64,7 +64,7 @@ impl CheckNet {
                         source: Box::new(CheckNetErrorEnum::Net(*e)),
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -78,7 +78,7 @@ impl CheckNet {
                         source: Box::new(CheckNetErrorEnum::Postgres(*e)),
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),
@@ -92,7 +92,7 @@ impl CheckNet {
                         source: Box::new(CheckNetErrorEnum::Mongo(*e)),
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(3 * 3600)),
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                             file: file!(),
                             line: line!(),
                             column: column!(),

@@ -4,6 +4,8 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub struct MongoDropEmptyDbError {
     source: Box<MongoDropEmptyDbErrorEnum>,
@@ -49,7 +51,7 @@ pub async fn mongo_drop_empty_db(
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -62,7 +64,7 @@ pub async fn mongo_drop_empty_db(
                     source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -77,7 +79,7 @@ pub async fn mongo_drop_empty_db(
                             source: e,
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
@@ -95,7 +97,7 @@ pub async fn mongo_drop_empty_db(
                                                 Local::now().naive_utc(),
                                                 Utc,
                                             )
-                                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),
@@ -113,7 +115,7 @@ pub async fn mongo_drop_empty_db(
                                             Local::now().naive_utc(),
                                             Utc,
                                         )
-                                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),

@@ -9,6 +9,8 @@ use crate::helpers::where_was::WhereWas;
 
 use itertools::Itertools;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen {
@@ -41,7 +43,7 @@ impl ProviderKind {
                     source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -57,7 +59,7 @@ impl ProviderKind {
                             source: e,
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),
@@ -71,7 +73,7 @@ impl ProviderKind {
                             source: e,
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),

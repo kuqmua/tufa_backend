@@ -106,7 +106,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                             env_var_name: #env_var_name_as_screaming_snake_case_string,
                                             field_name: #env_var_name_as_snake_case_string,
                                             where_was: WhereWas {
-                                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(3 * 3600)),
+                                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                                 file: file!(),
                                                 line: line!(),
                                                 column: column!(),
@@ -130,7 +130,7 @@ pub fn derive_init_from_env(input: TokenStream) -> TokenStream {
                                                     field_name: #env_var_name_as_snake_case_string,
                                                     expected_env_var_type: #enum_variant_type_as_string,
                                                     where_was: WhereWas {
-                                                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(3 * 3600)),
+                                                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                                         file: file!(),
                                                         line: line!(),
                                                         column: column!(),

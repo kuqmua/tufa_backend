@@ -67,7 +67,7 @@ pub async fn init_mongo(
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -80,7 +80,7 @@ pub async fn init_mongo(
                     source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -126,7 +126,7 @@ pub async fn init_mongo(
                                 source: error_vec_count_documents,
                                 where_was: WhereWas {
                                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
@@ -154,7 +154,7 @@ pub async fn init_mongo(
                             source: error_vec_insert_many,
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(3 * 3600)),
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                 file: file!(),
                                 line: line!(),
                                 column: column!(),

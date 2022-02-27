@@ -6,6 +6,8 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 
 use crate::helpers::where_was::WhereWas;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[derive(Debug)]
 pub struct MongoGetDocumentsAsStringVectorError {
     pub source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
@@ -39,7 +41,7 @@ impl From<mongodb::error::Error> for MongoGetDocumentsAsStringVectorError {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
@@ -67,7 +69,7 @@ pub async fn mongo_get_documents_as_string_vector(
                     source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
@@ -90,7 +92,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                             Local::now().naive_utc(),
                                             Utc,
                                         )
-                                        .with_timezone(&FixedOffset::east(3 * 3600)),
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                         file: file!(),
                                         line: line!(),
                                         column: column!(),
@@ -113,7 +115,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                                 Local::now().naive_utc(),
                                                 Utc,
                                             )
-                                            .with_timezone(&FixedOffset::east(3 * 3600)),
+                                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                             file: file!(),
                                             line: line!(),
                                             column: column!(),
