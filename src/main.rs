@@ -151,6 +151,8 @@ extern crate box_err_from_err;
 #[macro_use]
 extern crate enum_extention;
 #[macro_use]
+extern crate error_display;
+#[macro_use]
 extern crate gen_enum;
 #[macro_use]
 extern crate gen_enum_without_values;
