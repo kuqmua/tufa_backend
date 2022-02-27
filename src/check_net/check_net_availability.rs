@@ -11,7 +11,7 @@ use crate::traits::git_info_trait::GitInfo;
 
 use crate::helpers::where_was::WhereWas;
 
-#[derive(Debug, GitInfoDerive)]
+#[derive(Debug, GitInfoDerive, ErrorDisplay)]
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,
@@ -21,12 +21,6 @@ pub enum CheckNetAvailabilityErrorEnum {
         source: CheckStatusCodeError,
         where_was: WhereWas,
     },
-}
-
-impl fmt::Display for CheckNetAvailabilityErrorEnum {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{self}")
-    }
 }
 
 #[deny(
