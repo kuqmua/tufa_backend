@@ -52,8 +52,8 @@ impl CheckNet {
     pub fn get_url(&self) -> String {
         match self {
             CheckNet::Net => CONFIG.starting_check_link.clone(),
-            CheckNet::Mongo => postgres_get_db_url(),
-            CheckNet::Postgres => mongo_get_db_url(),
+            CheckNet::Mongo => mongo_get_db_url(),
+            CheckNet::Postgres => postgres_get_db_url(),
         }
     }
     pub async fn check(self) -> Result<(), CheckNetError> {
