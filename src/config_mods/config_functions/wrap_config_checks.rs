@@ -252,6 +252,22 @@ impl WrapConfigChecks for ConfigStruct {
                 }),
             });
         }
+        /////////////
+        //     pub fn east_opt(secs: i32) -> Option<FixedOffset> {
+        //     if -86_400 < secs && secs < 86_400 {
+        //         Some(FixedOffset { local_minus_utc: secs })
+        //     } else {
+        //         None
+        //     }
+        // }
+        // pub fn west_opt(secs: i32) -> Option<FixedOffset> {
+        //     if -86_400 < secs && secs < 86_400 {
+        //         Some(FixedOffset { local_minus_utc: -secs })
+        //     } else {
+        //         None
+        //     }
+        // }
+        ///////////////
         // if !ConfigStruct::check_valid_i64_providers_links_limits_for_mongo(&self) {
         //     return Err(WrapConfigChecksError {
         //         source: Box::new(WrapConfigChecksErrorEnum::GithubName {
