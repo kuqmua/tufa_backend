@@ -32,6 +32,8 @@ pub struct ConfigStruct {
 
     pub providers_link_parts_source: Resource,
 
+    pub timezone: i32,
+
     pub mongo_first_handle_url_part: String,
     pub mongo_second_handle_url_part: String,
     pub mongo_third_handle_url_part: String,
