@@ -124,6 +124,10 @@ mod providers {
     pub mod get_providers_posts;
     pub mod provider_kind_enum;
 }
+mod routes {
+    pub mod index;
+    pub mod kekw;
+}
 #[cfg(test)]
 mod tests {
     pub mod tests_constants;
@@ -170,21 +174,13 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
-use actix_web::{get, web, App, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 
 use crate::helpers::get_server_address::get_server_address;
 
-#[get("/{id}/{name}/index.html")]
-async fn index(web::Path((id, name)): web::Path<(u32, String)>) -> impl Responder {
-    entry::entry();
-    format!("Hello {}! id:{}", name, id)
-}
+use crate::routes::index::index;
 
-#[get("/{kekw}/index.html")]
-async fn kekw(web::Path(_): web::Path<String>) -> impl Responder {
-    println!("kekw");
-    format!("Hello kekw")
-}
+use crate::routes::kekw::kekw;
 
 #[deny(
     clippy::indexing_slicing,
