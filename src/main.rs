@@ -177,6 +177,12 @@ async fn index(web::Path((id, name)): web::Path<(u32, String)>) -> impl Responde
     format!("Hello {}! id:{}", name, id)
 }
 
+#[get("/{kekw}/index.html")]
+async fn kekw(web::Path(_): web::Path<String>) -> impl Responder {
+    println!("kekw");
+    format!("Hello kekw")
+}
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -185,7 +191,7 @@ async fn index(web::Path((id, name)): web::Path<(u32, String)>) -> impl Responde
 )]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(index))
+    HttpServer::new(|| App::new().service(index).service(kekw))
         .bind("127.0.0.1:8080")?
         .run()
         .await
