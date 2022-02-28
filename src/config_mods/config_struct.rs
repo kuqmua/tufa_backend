@@ -23,6 +23,9 @@ use crate::config_mods::lazy_static_config::CONFIG;
     Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq,
 )]
 pub struct ConfigStruct {
+    pub server_ip: String,
+    pub server_port: String,
+
     pub github_name: String,
     pub github_token: String,
 
