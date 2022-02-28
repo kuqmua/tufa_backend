@@ -172,6 +172,8 @@ extern crate dotenv;
 
 use actix_web::{get, web, App, HttpServer, Responder};
 
+use crate::helpers::get_server_address::get_server_address;
+
 #[get("/{id}/{name}/index.html")]
 async fn index(web::Path((id, name)): web::Path<(u32, String)>) -> impl Responder {
     entry::entry();
@@ -193,7 +195,7 @@ async fn kekw(web::Path(_): web::Path<String>) -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| App::new().service(index).service(kekw))
-        .bind("127.0.0.1:8080")?
+        .bind(get_server_address())?
         .run()
         .await
 }
