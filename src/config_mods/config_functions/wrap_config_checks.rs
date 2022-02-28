@@ -16,6 +16,8 @@ pub struct WrapConfigChecksError {
 #[derive(Debug)]
 pub enum WrapConfigChecksErrorEnum {
     Timezone { source: i32 }, //no where_was for this coz inside using timezone
+    ServerIp { source: String, where_was: WhereWas },
+    ServerPort { source: String, where_was: WhereWas },
     GithubName { source: String, where_was: WhereWas },
     GithubToken { source: String, where_was: WhereWas },
     RedditUserAgent { source: String, where_was: WhereWas },
@@ -47,6 +49,35 @@ impl WrapConfigChecks for ConfigStruct {
             return Err(WrapConfigChecksError {
                 source: Box::new(WrapConfigChecksErrorEnum::Timezone {
                     source: self.timezone,
+                }),
+            });
+        }
+        //todo: add server_ip server_port checks. and postgres and mongo for validation
+        if self.server_ip.is_empty() {
+            return Err(WrapConfigChecksError {
+                source: Box::new(WrapConfigChecksErrorEnum::ServerIp {
+                    source: self.server_ip,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(self.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                }),
+            });
+        }
+        if self.server_port.is_empty() {
+            return Err(WrapConfigChecksError {
+                source: Box::new(WrapConfigChecksErrorEnum::ServerPort {
+                    source: self.server_port,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(self.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
