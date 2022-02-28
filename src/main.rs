@@ -35,6 +35,7 @@ pub mod config_mods {
     pub mod lazy_static_config;
 }
 pub mod helpers {
+    pub mod get_server_address;
     pub mod create_dir_if_it_doesnt_exist;
     pub mod get_git_commit_info;
     pub mod get_git_commit_string;
