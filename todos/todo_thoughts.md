@@ -682,3 +682,9 @@ pub fn reboot_kernel() {
 ### -------------------
 Rust exposes this system call via the File::sync_all method. If we call sync_all, when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I’ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, let’s keep things simple and assume syncing is a reliable process.
 <br/>
+
+### -------------------
+show llvm ir command
+rustc simple1.rs --emit=llvm-ir
+<br/>
+    
