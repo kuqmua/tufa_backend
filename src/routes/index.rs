@@ -2,8 +2,8 @@ use actix_web::{get, web, Responder};
 
 use crate::entry::entry;
 
-#[get("/{id}/{name}/index.html")]
-pub async fn index(web::Path((id, name)): web::Path<(u32, String)>) -> impl Responder {
+#[get("/{name}")]
+async fn index(name: web::Path<String>) -> impl Responder {
     entry();
-    format!("Hello {}! id:{}", name, id)
+    format!("Hello {name}!")
 }

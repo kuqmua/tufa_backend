@@ -174,7 +174,7 @@ extern crate provider_kind_from_config;
 
 extern crate dotenv;
 
-use actix_web::{App, HttpServer};
+use actix_web::{web, App, HttpServer};
 
 use crate::helpers::get_server_address::get_server_address;
 
@@ -182,16 +182,16 @@ use crate::routes::index::index;
 
 use crate::routes::kekw::kekw;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
-#[actix_web::main]
+#[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(index).service(kekw))
-        .bind(get_server_address())?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(|| async { "Hello World!" }))
+            .service(index)
+            .service(kekw)
+    })
+    .bind(get_server_address())?
+    .run()
+    .await
 }
+
