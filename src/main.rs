@@ -130,6 +130,7 @@ mod routes {
     pub mod default_route;
     pub mod get_providers_posts_route;
     pub mod kekw;
+    pub mod html_route;
     pub mod manual_responder;
 }
 #[cfg(test)]
