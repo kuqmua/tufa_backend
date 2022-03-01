@@ -185,6 +185,8 @@ use crate::routes::index::index;
 
 use crate::routes::kekw::kekw;
 
+use crate::routes::hello::hello;
+
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
     //tokio::runtime::Builder::new_multi_thread()
