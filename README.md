@@ -4,6 +4,9 @@ Status of last deployment: <br/>
 ### simple route request
 curl http://127.0.0.1:8080/kekw/index.html
 
+### get_providers_posts route request
+curl http://127.0.0.1:8080/get_providers_posts/
+
 ### change project config
 ./env
 
