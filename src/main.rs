@@ -127,7 +127,7 @@ mod providers {
 mod routes {
     pub mod get_echo;
     pub mod post_echo;
-    pub mod hello;
+    pub mod default_route;
     pub mod index;
     pub mod kekw;
     pub mod manual_responder;
