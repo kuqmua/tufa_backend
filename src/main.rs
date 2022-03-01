@@ -125,6 +125,7 @@ mod providers {
     pub mod provider_kind_enum;
 }
 mod routes {
+    pub mod echo;
     pub mod hello;
     pub mod index;
     pub mod kekw;
@@ -182,10 +183,9 @@ use actix_web::{web, App, HttpServer};
 use crate::helpers::get_server_address::get_server_address;
 
 use crate::routes::index::index;
-
 use crate::routes::kekw::kekw;
-
 use crate::routes::hello::hello;
+use crate::routes::echo::echo;
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -206,12 +206,3 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await
 }
-
-use actix_web::{get, post, HttpResponse, Responder};
-
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    println!("echo");
-    HttpResponse::Ok().body(req_body)
-}
-
