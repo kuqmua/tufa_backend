@@ -128,7 +128,7 @@ mod routes {
     pub mod get_echo;
     pub mod post_echo;
     pub mod default_route;
-    pub mod index;
+    pub mod get_providers_posts_route;
     pub mod kekw;
     pub mod manual_responder;
 }
