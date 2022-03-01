@@ -1,25 +1,22 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use std::time::Instant;
+
+extern crate num_cpus;
+
 use crate::providers::get_providers_posts::get_providers_posts;
 use crate::providers::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
-use std::time::Instant;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 
-extern crate num_cpus;
+use crate::config_mods::lazy_static_config::CONFIG;
+
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 use crate::check_net::check_net_wrapper::check_net_wrapper;
 
 use crate::init_dbs_logic::init_dbs::init_dbs;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
-
-// use crate::check_net::check_net_enum::CheckNetError;
-
-// use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
-
-// use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
 
 #[deny(
     clippy::indexing_slicing,
@@ -37,26 +34,6 @@ pub async fn entry() {
         vec![get_git_source_file_link(file!(), line!())],
         format!("We are on a multicore system with {cpus} CPUs"),
     );
-    // match tokio::runtime::Builder::new_multi_thread()
-    //     .worker_threads(cpus)
-    //     .enable_all()
-    //     .build()
-    // {
-        
-    // }
-    // Err(e) => {
-    //     print_colorful_message(
-    //         None,
-    //         PrintType::Error,
-    //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-    //         vec![get_git_source_file_link(file!(), line!())],
-    //         format!("Cannot build tokio runtime {e:#?}"),
-    //     );
-    //     return;
-    // }
-    // Ok(runtime) => {
-        
-    // }
     if let Err(e) = check_net_wrapper().await {
         println!("{e}");
         // let sources = e

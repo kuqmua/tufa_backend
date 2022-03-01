@@ -184,6 +184,10 @@ use crate::routes::kekw::kekw;
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    //tokio::runtime::Builder::new_multi_thread()
+    //     .worker_threads(cpus)
+    //     .enable_all()
+    //     .build()
     HttpServer::new(|| {
         App::new()
             .route("/", web::get().to(|| async { "Hello World!" }))
@@ -202,11 +206,13 @@ use actix_web::{get, post, HttpResponse, Responder};
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
+    println!("hello");
+    HttpResponse::Ok().body("hello")
 }
 
 #[post("/echo")]
 async fn echo(req_body: String) -> impl Responder {
+    println!("echo");
     HttpResponse::Ok().body(req_body)
 }
 
