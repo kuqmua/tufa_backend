@@ -125,6 +125,7 @@ mod providers {
     pub mod provider_kind_enum;
 }
 mod routes {
+    pub mod hello;
     pub mod index;
     pub mod kekw;
     pub mod manual_responder;
@@ -149,6 +150,7 @@ mod traits {
 mod check_new_posts_threads_parts;
 mod entry;
 mod write_error_posts_wrapper;
+mod server_wrapper;
 
 #[macro_use]
 extern crate lazy_static;
@@ -204,12 +206,6 @@ async fn main() -> std::io::Result<()> {
 }
 
 use actix_web::{get, post, HttpResponse, Responder};
-
-#[get("/")]
-async fn hello() -> impl Responder {
-    println!("hello");
-    HttpResponse::Ok().body("hello")
-}
 
 #[post("/echo")]
 async fn echo(req_body: String) -> impl Responder {
