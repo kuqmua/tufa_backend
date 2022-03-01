@@ -1,9 +1,9 @@
 use actix_web::{get, web, Responder};
 
-use crate::entry::entry;
+use crate::providers::get_providers_posts::get_providers_posts;
 
 #[get("/fff/{name}")]
 async fn index(name: web::Path<String>) -> impl Responder {
-    entry().await;
+    get_providers_posts().await;
     format!("Hello {name}!")
 }

@@ -8,14 +8,10 @@ use crate::routes::hello::hello;
 use crate::routes::echo::echo;
 
 #[actix_web::main] // or #[tokio::main]
-async fn server_wrapper() -> std::io::Result<()> {
-    //tokio::runtime::Builder::new_multi_thread()
-    //     .worker_threads(cpus)
-    //     .enable_all()
-    //     .build()
+pub async fn server_wrapper() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .route("/", web::get().to(|| async { "Hello World!" }))
+            // .route("/", web::get().to(|| async { "Hello World!" }))
             .service(index)
             .service(kekw)
             .service(hello)

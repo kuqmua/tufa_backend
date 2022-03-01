@@ -1,5 +1,10 @@
+use std::time::Instant;
+
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 
 use super::check_providers_link_parts_on_empty::CheckEmptyError;
@@ -59,6 +64,7 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
     clippy::float_arithmetic
 )]
 pub async fn get_providers_posts() {
+    let time = Instant::now();
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => match *e.source {
             GetProvidersLinkPartsErrorEnum::Local(_) => todo!(),
@@ -103,4 +109,11 @@ pub async fn get_providers_posts() {
             // // }
         }
     }
+    print_colorful_message(
+        None,
+        PrintType::TimeMeasurement,
+        vec![format!("{}:{}:{}", file!(), line!(), column!())],
+        vec![get_git_source_file_link(file!(), line!())],
+        format!("get_providers_posts done in {} seconds", time.elapsed().as_secs()),
+    );
 }
