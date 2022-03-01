@@ -6,7 +6,7 @@ use crate::helpers::get_server_address::get_server_address;
 use crate::routes::index::index;
 use crate::routes::kekw::kekw;
 use crate::routes::hello::hello;
-use crate::routes::echo::echo;
+use crate::routes::post_echo::post_echo;
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> std::io::Result<()> {
@@ -16,7 +16,7 @@ pub async fn server_wrapper() -> std::io::Result<()> {
             .service(index)
             .service(kekw)
             .service(hello)
-            .service(echo)
+            .service(post_echo)
             // .service(manual_hello)
     })
     .bind(get_server_address())?
