@@ -472,4 +472,9 @@ add connect_timeout to all mongo client_options usage
   
 ### -------------------
 add time to errors like this ./server/utils/dependencies.ts:524:17  15:30:40 25.01.22 
+(partially done)
+<br/>
+
+### -------------------
+add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
 <br/>
