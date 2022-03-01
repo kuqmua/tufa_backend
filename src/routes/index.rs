@@ -4,6 +4,6 @@ use crate::entry::entry;
 
 #[get("/{name}")]
 async fn index(name: web::Path<String>) -> impl Responder {
-    entry();
+    entry().await;
     format!("Hello {name}!")
 }
