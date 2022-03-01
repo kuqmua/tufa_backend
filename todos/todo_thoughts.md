@@ -688,3 +688,6 @@ show llvm ir command
 rustc simple1.rs --emit=llvm-ir
 <br/>
     
+### -------------------
+open api routes ?
+<br/>
