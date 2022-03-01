@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-extern crate num_cpus;
+use num_cpus;
 
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;

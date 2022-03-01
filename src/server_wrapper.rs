@@ -1,4 +1,5 @@
-use actix_web::{web, App, HttpServer};
+use actix_web::App;
+use actix_web::HttpServer;
 
 use crate::helpers::get_server_address::get_server_address;
 
