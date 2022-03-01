@@ -1,7 +1,7 @@
 use actix_web::{post, HttpResponse, Responder};
 
-#[post("/echo")]
+#[post("/post_echo")]
 async fn post_echo(req_body: String) -> impl Responder {
-    println!("echo");
+    println!("post_echo");
     HttpResponse::Ok().body(req_body)
 }

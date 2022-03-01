@@ -125,6 +125,7 @@ mod providers {
     pub mod provider_kind_enum;
 }
 mod routes {
+    pub mod get_echo;
     pub mod post_echo;
     pub mod hello;
     pub mod index;
