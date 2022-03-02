@@ -691,3 +691,8 @@ rustc simple1.rs --emit=llvm-ir
 ### -------------------
 open api routes ?
 <br/>
+
+### -------------------
+rust template gitignore
+https://github.com/github/gitignore/blob/main/Rust.gitignore
+<br/>
