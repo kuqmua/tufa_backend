@@ -11,6 +11,8 @@ use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 
 use crate::preparation::preparation;
 
+use crate::config_mods::lazy_static_config::CONFIG;
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -20,13 +22,6 @@ use crate::preparation::preparation;
 pub fn entry() {
     let time = Instant::now();
     let cpus = num_cpus::get();
-    print_colorful_message(
-        None,
-        PrintType::Info,
-        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
-        format!("We are on a multicore system with {cpus} CPUs"),
-    );
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(cpus)
         .enable_all()
@@ -43,6 +38,13 @@ pub fn entry() {
             return;
         }
         Ok(runtime) => {
+            print_colorful_message(
+                None,
+                PrintType::Info,
+                vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                vec![get_git_source_file_link(file!(), line!())],
+                format!("We are on a multicore system on {}:{} with {cpus} CPUs", CONFIG.server_ip, CONFIG.server_port),
+            );
             runtime.block_on(preparation());
             print_colorful_message(
                 None,
