@@ -1,4 +1,4 @@
-use actix_web::{get, web, Responder};
+use actix_web::{get, Responder};
 use std::time::Instant;
 
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
