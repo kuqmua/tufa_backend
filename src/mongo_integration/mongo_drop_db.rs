@@ -7,11 +7,6 @@ use crate::helpers::where_was::WhereWas;
 use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
-pub struct MongoDropDbError {
-    pub source: Box<MongoDropDbErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum MongoDropDbErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
@@ -33,10 +28,20 @@ pub enum MongoDropDbErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDropDbError> {
+pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), Box<MongoDropDbErrorEnum>> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => Err(MongoDropDbError {
-            source: Box::new(MongoDropDbErrorEnum::ClientOptionsParse {
+        Err(e) => Err(Box::new(MongoDropDbErrorEnum::ClientOptionsParse {
+            source: e,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        })),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(Box::new(MongoDropDbErrorEnum::ClientWithOptions {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -45,35 +50,19 @@ pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), MongoDr
                     line: line!(),
                     column: column!(),
                 },
-            }),
-        }),
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(MongoDropDbError {
-                source: Box::new(MongoDropDbErrorEnum::ClientWithOptions {
-                    source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                }),
-            }),
+            })),
             Ok(client) => {
                 if let Err(e) = client.database(db_name).drop(None).await {
-                    return Err(MongoDropDbError {
-                        source: Box::new(MongoDropDbErrorEnum::DatabaseDrop {
-                            source: e,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        }),
-                    });
+                    return Err(Box::new(MongoDropDbErrorEnum::DatabaseDrop {
+                        source: e,
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                    }));
                 }
                 Ok(())
             }
