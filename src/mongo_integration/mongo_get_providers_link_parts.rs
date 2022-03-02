@@ -16,7 +16,7 @@ use crate::{
 
 use futures::future::join_all;
 
-use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError;
+use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum;
 
 use crate::helpers::where_was::WhereWas;
 
@@ -44,7 +44,7 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
         where_was: WhereWas,
     },
     GetDocuments {
-        source: HashMap<ProviderKind, MongoGetDocumentsAsStringVectorError>,
+        source: HashMap<ProviderKind, Box<MongoGetDocumentsAsStringVectorErrorEnum>>,
         where_was: WhereWas,
     },
 }
@@ -148,7 +148,7 @@ pub async fn mongo_get_providers_link_parts(
                             HashMap::new();
                         let mut error_hashmap: HashMap<
                             ProviderKind,
-                            MongoGetDocumentsAsStringVectorError,
+                            Box<MongoGetDocumentsAsStringVectorErrorEnum>,
                         > = HashMap::new();
                         for (pk, result) in result_get_documents_hashmap.into_iter() {
                             match result {
