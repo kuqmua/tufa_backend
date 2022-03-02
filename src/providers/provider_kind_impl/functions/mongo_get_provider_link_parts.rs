@@ -4,7 +4,7 @@ use chrono::{DateTime, FixedOffset, Local, Utc};
 
 use crate::{
     config_mods::lazy_static_config::CONFIG,
-    mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorError,
+    mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum,
     traits::provider_kind_trait::ProviderKindTrait,
 };
 
@@ -33,7 +33,7 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
         where_was: WhereWas,
     },
     MongoGetDocumentsAsStringVector {
-        source: MongoGetDocumentsAsStringVectorError,
+        source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
         where_was: WhereWas,
     },
 }
