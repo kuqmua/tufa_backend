@@ -118,8 +118,7 @@ pub async fn mongo_get_documents_as_string_vector(
                     },
                 }
             }
-            let unique_vec = vec_of_strings.into_iter().unique().collect();
-            Ok(unique_vec)
+            Ok(vec_of_strings.into_iter().unique().collect())
         }
     }
 }
