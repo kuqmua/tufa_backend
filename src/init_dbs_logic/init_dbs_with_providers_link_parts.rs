@@ -186,7 +186,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvi
                 }
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
-                match *err.source {
+                match *err {
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source,where_was: _, } => {
                         return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
                             source,

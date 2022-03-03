@@ -23,11 +23,6 @@ use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum;
 
 #[derive(Debug)]
-pub struct PostgresInitError {
-    pub source: Box<PostgresInitErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection {
         source: sqlx::Error,
@@ -63,25 +58,23 @@ pub enum PostgresInitErrorEnum {
 )]
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), PostgresInitError> {
+) -> Result<(), Box<PostgresInitErrorEnum>> {
     match PgPoolOptions::new()
         .max_connections(providers_json_local_data_hashmap.len() as u32)
         .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
         .connect(&postgres_get_db_url())
         .await
     {
-        Err(e) => Err(PostgresInitError {
-            source: Box::new(PostgresInitErrorEnum::EstablishConnection {
-                source: e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            }),
-        }),
+        Err(e) => Err(Box::new(PostgresInitErrorEnum::EstablishConnection {
+            source: e,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        })),
         Ok(pool) => {
             if let Err(e) = postgres_create_providers_tables_if_not_exists(
                 &providers_json_local_data_hashmap,
@@ -89,18 +82,16 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(PostgresInitError {
-                    source: Box::new(PostgresInitErrorEnum::CreateTableQueries {
-                        source: *e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    }),
-                });
+                return Err(Box::new(PostgresInitErrorEnum::CreateTableQueries {
+                    source: *e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                }));
             }
             if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
                 &providers_json_local_data_hashmap,
@@ -108,18 +99,16 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(PostgresInitError {
-                    source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
-                        source: *e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    }),
-                });
+                return Err(Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
+                    source: *e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                }));
             }
             if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(
                 &providers_json_local_data_hashmap,
@@ -127,18 +116,16 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(PostgresInitError {
-                    source: Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables {
-                        source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    }),
-                });
+                return Err(Box::new(PostgresInitErrorEnum::DeleteAllFromProvidersTables {
+                    source: e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                }));
             }
             // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
             //     &providers_json_local_data_hashmap,
@@ -160,18 +147,16 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(PostgresInitError {
-                    source: Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
-                        source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    }),
-                });
+                return Err(Box::new(PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
+                    source: e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                }));
             }
             Ok(())
         }
