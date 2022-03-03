@@ -107,7 +107,7 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvi
                 }
             );
             if let Some(Err(err)) = mongo_insert_data_option_result {
-                match *err.source {
+                match *err {
                     InitMongoErrorEnum::ClientOptionsParse {
                         source,
                         where_was: _,

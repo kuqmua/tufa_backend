@@ -22,11 +22,6 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 
 #[derive(Debug)]
-pub struct InitMongoError {
-    pub source: Box<InitMongoErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum InitMongoErrorEnum {
     ClientOptionsParse {
         source: mongodb::error::Error,
@@ -60,10 +55,20 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
 )]
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), InitMongoError> {
+) -> Result<(), Box<InitMongoErrorEnum>> {
     match ClientOptions::parse(&mongo_get_db_url()).await {
-        Err(e) => Err(InitMongoError {
-            source: Box::new(InitMongoErrorEnum::ClientOptionsParse {
+        Err(e) => Err(Box::new(InitMongoErrorEnum::ClientOptionsParse {
+            source: e,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        })),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(Box::new(InitMongoErrorEnum::ClientWithOptions {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -72,21 +77,7 @@ pub async fn init_mongo(
                     line: line!(),
                     column: column!(),
                 },
-            }),
-        }),
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(InitMongoError {
-                source: Box::new(InitMongoErrorEnum::ClientWithOptions {
-                    source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                }),
-            }),
+            })),
             Ok(client) => {
                 // let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
                 // let client = Client::with_options(client_options)?;
@@ -120,20 +111,18 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
                 if !error_vec_count_documents.is_empty() {
-                    return Err(InitMongoError {
-                        source: Box::new(
-                            InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
-                                source: error_vec_count_documents,
-                                where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                    return Err(Box::new(
+                        InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
+                            source: error_vec_count_documents,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
                             },
-                        ),
-                    });
+                        },
+                    ));
                 }
                 drop(error_vec_count_documents);
                 let error_vec_insert_many = join_all(providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
@@ -149,18 +138,16 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, Error>>();
                 if !error_vec_insert_many.is_empty() {
-                    return Err(InitMongoError {
-                        source: Box::new(InitMongoErrorEnum::InsertManyError {
-                            source: error_vec_insert_many,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        }),
-                    });
+                    return Err(Box::new(InitMongoErrorEnum::InsertManyError {
+                        source: error_vec_insert_many,
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                    }));
                 }
                 Ok(())
             }
