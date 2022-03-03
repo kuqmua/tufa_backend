@@ -4,7 +4,7 @@ use strum_macros::EnumIter;
 
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 
-use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
+use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
 
 use crate::helpers::where_was::WhereWas;
 
@@ -18,7 +18,7 @@ pub enum InitTablesEnum {
 #[derive(Debug)]
 pub enum InitTablesEnumError {
     ProvidersLinkParts {
-        source: InitDbsProvidersLinkPartsError,
+        source: InitDbsProvidersLinkPartsErrorEnum,
         where_was: WhereWas,
     },
 }
@@ -35,7 +35,7 @@ impl InitTablesEnum {
             InitTablesEnum::ProvidersLinkParts => {
                 if let Err(e) = init_dbs_with_providers_link_parts().await {
                     return Err(Box::new(InitTablesEnumError::ProvidersLinkParts {
-                        source: e,
+                        source: *e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

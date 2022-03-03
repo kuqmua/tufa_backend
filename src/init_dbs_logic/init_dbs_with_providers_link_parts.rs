@@ -23,11 +23,6 @@ use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_t
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 
 #[derive(Debug)]
-pub struct InitDbsProvidersLinkPartsError {
-    pub source: Box<InitDbsProvidersLinkPartsErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts {
         source: GetLocalProvidersLinkPartsError,
@@ -43,7 +38,6 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     },
     MongoCollectionCountDocumentsOrIsNotEmpty {
         source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-
         where_was: WhereWas,
     },
     MongoInsertManyError {
@@ -82,22 +76,20 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProvidersLinkPartsError> {
+pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvidersLinkPartsErrorEnum>> {
     match get_local_providers_link_parts().await {
-        Err(errors_hashmap) => Err(InitDbsProvidersLinkPartsError {
-            source: Box::new(
-                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
-                    source: errors_hashmap,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+        Err(errors_hashmap) => Err(Box::new(
+            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
+                source: errors_hashmap,
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
-            ),
-        }),
+            },
+        )),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
@@ -120,172 +112,146 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), InitDbsProviders
                         source,
                         where_was: _,
                     } => {
-                        return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
-                                    source,
-                                    where_was: WhereWas {
-                                        time: DateTime::<Utc>::from_utc(
-                                            Local::now().naive_utc(),
-                                            Utc,
-                                        )
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
-                                    },
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
+                                source,
+                                where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(
+                                        Local::now().naive_utc(),
+                                        Utc,
+                                    )
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
-                            ),
-                        });
+                            },
+                        ));
                     }
                     InitMongoErrorEnum::ClientWithOptions {
                         source,
                         where_was: _,
                     } => {
-                        return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
-                                    source,
-                                    where_was: WhereWas {
-                                        time: DateTime::<Utc>::from_utc(
-                                            Local::now().naive_utc(),
-                                            Utc,
-                                        )
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
-                                    },
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
+                                source,
+                                where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(
+                                        Local::now().naive_utc(),
+                                        Utc,
+                                    )
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
-                            ),
-                        });
+                            },
+                        ));
                     }
                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
                         source,
                         where_was: _,
                     } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err( Box::new(InitDbsProvidersLinkPartsErrorEnum::MongoCollectionCountDocumentsOrIsNotEmpty {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     InitMongoErrorEnum::InsertManyError {
                         source,
                         where_was: _,
                     } => {
-                        return Err(InitDbsProvidersLinkPartsError {
-                            source: Box::new(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
-                                    source,
-                                    where_was: WhereWas {
-                                        time: DateTime::<Utc>::from_utc(
-                                            Local::now().naive_utc(),
-                                            Utc,
-                                        )
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                        file: file!(),
-                                        line: line!(),
-                                        column: column!(),
-                                    },
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
+                                source,
+                                where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(
+                                        Local::now().naive_utc(),
+                                        Utc,
+                                    )
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
                                 },
-                            ),
-                        });
+                            },
+                        ));
                     }
                 }
             }
             if let Some(Err(err)) = postgres_insert_data_option_result {
                 match *err.source {
                     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength { source,where_was: _, } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables { source, where_was: _, } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresDeleteAllFromProvidersTables {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty { source, where_was: _, } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCheckProvidersLinkPartsTablesEmptyError {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     PostgresInitErrorEnum::CreateTableQueries { source, where_was: _, } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresCreateTableQueries {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables { source, where_was: _, } => {
-                        return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                        return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresInsertLinkPartsIntoProvidersTables {
+                            source,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
                     }
                     PostgresInitErrorEnum::EstablishConnection { source, where_was: _, } => {
-                       return Err(InitDbsProvidersLinkPartsError{
-                            source: Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection {
-                                source,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                            }),
-                        });
+                       return Err(Box::new(InitDbsProvidersLinkPartsErrorEnum::PostgresEstablishConnection {
+                        source,
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                    }));
                     }
                 }
             }
