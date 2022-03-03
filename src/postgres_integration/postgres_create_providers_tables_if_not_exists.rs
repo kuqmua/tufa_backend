@@ -15,7 +15,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
 pub struct PostgresCreateProvidersDbsError {
-    pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
+    pub source: HashMap<ProviderKind, sqlx::Error>,
     pub where_was: WhereWas,
 }
 
@@ -28,7 +28,7 @@ pub struct PostgresCreateProvidersDbsError {
 pub async fn postgres_create_providers_tables_if_not_exists(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<(), PostgresCreateProvidersDbsError> {
+) -> Result<(), Box<PostgresCreateProvidersDbsError>> {
     let table_creation_error_hashmap = join_all(
         providers_json_local_data_hashmap.keys().map(|pk| async {
             let query_string = format!(
@@ -46,8 +46,8 @@ pub async fn postgres_create_providers_tables_if_not_exists(
         })
         .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !table_creation_error_hashmap.is_empty() {
-        return Err(PostgresCreateProvidersDbsError {
-            source: Box::new(table_creation_error_hashmap),
+        return Err(Box::new(PostgresCreateProvidersDbsError {
+            source: table_creation_error_hashmap,
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -55,7 +55,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
                 line: line!(),
                 column: column!(),
             },
-        });
+        }));
     }
     Ok(())
 }
