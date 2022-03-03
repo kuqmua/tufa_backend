@@ -51,9 +51,9 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     let count_provider_links_tables_error_vec: Vec<(ProviderKind, Result<(i64,), sqlx::Error>)> =
         join_all(count_provider_links_tables_tasks_vec).await;
     let mut count_provider_links_tables_error_hashmap: HashMap<ProviderKind, sqlx::Error> =
-        HashMap::new();
+        HashMap::with_capacity(count_provider_links_tables_error_vec.len());
     let mut provider_links_tables_not_empty_error_hashmap: HashMap<ProviderKind, i64> =
-        HashMap::new();
+        HashMap::with_capacity(count_provider_links_tables_error_vec.len());
     for (pk, result) in count_provider_links_tables_error_vec {
         match result {
             Err(e) => {
