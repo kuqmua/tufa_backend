@@ -1,9 +1,13 @@
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
+use crate::helpers::where_was::WhereWas;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 
-use super::check_providers_link_parts_on_empty::CheckEmptyError;
-use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
+use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
+
+use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsError;
+
+use chrono::{DateTime, Utc, FixedOffset, Local};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -52,27 +56,55 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 // }
 //TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
 
+#[derive(Debug)]
+pub enum GetProviderPostsErrorEnum {
+    GetLocalProvidersLinkParts {
+        source: GetProvidersLinkPartsError,
+        where_was: WhereWas,
+    },
+    CheckProvidersLinkPartsEmpty {
+        source: CheckProvidersLinkPartsEmptyError,
+        where_was: WhereWas,
+    },
+}
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn get_providers_posts() {
+pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>> {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
-        Err(e) => match *e.source {
-            GetProvidersLinkPartsErrorEnum::Local(_) => todo!(),
-            GetProvidersLinkPartsErrorEnum::Mongodb(_) => todo!(),
-            GetProvidersLinkPartsErrorEnum::PostgreSql => todo!(),
+        Err(e) => {
+            return Err(Box::new(GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
+                source: e,
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+            }));
         },
         Ok(providers_link_parts) => {
             match check_providers_link_parts_on_empty(providers_link_parts) {
-                Err(e) => match e {
-                    CheckEmptyError::Full => todo!(),
-                    CheckEmptyError::Partially(_) => todo!(),
+                Err(e) => {
+                    return Err(Box::new(GetProviderPostsErrorEnum::CheckProvidersLinkPartsEmpty {
+                        source: *e,
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                    }));
                 },
                 Ok(non_empty_providers_link_parts) => {
                     let _vec = check_new_posts_threads_parts(non_empty_providers_link_parts).await;
+                    Ok(())
                 }
             }
             // //todo: conversion function before write_error_posts_wrapper
