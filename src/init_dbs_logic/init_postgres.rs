@@ -16,7 +16,7 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 use crate::providers::provider_kind_enum::ProviderKind;
 
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
-use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
@@ -38,7 +38,7 @@ pub enum PostgresInitErrorEnum {
         where_was: WhereWas,
     },
     CheckProviderLinksTablesAreEmpty {
-        source: PostgresCheckProvidersLinkPartsTablesEmptyError,
+        source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
     },
     DeleteAllFromProvidersTables {
@@ -110,7 +110,7 @@ pub async fn init_postgres(
             {
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
-                        source: e,
+                        source: *e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

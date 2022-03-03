@@ -14,11 +14,6 @@ use crate::helpers::where_was::WhereWas;
 use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
-pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
-    pub source: Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     SelectCount {
         source: HashMap<ProviderKind, sqlx::Error>,
@@ -39,7 +34,7 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
 pub async fn postgres_check_providers_link_parts_tables_are_empty(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<(), PostgresCheckProvidersLinkPartsTablesEmptyError> {
+) -> Result<(), Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap.keys().map(|pk| async {
             let query_string = format!(
@@ -67,36 +62,32 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
         }
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
-        return Err(PostgresCheckProvidersLinkPartsTablesEmptyError {
-            source: Box::new(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount {
-                    source: count_provider_links_tables_error_hashmap,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+        return Err(Box::new(
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount {
+                source: count_provider_links_tables_error_hashmap,
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
-            ),
-        });
+            },
+        ));
     }
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
-        return Err(PostgresCheckProvidersLinkPartsTablesEmptyError {
-            source: Box::new(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty {
-                    source: provider_links_tables_not_empty_error_hashmap,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+        return Err(Box::new(
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty {
+                source: provider_links_tables_not_empty_error_hashmap,
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
-            ),
-        });
+            },
+        ));
     }
     Ok(())
 }

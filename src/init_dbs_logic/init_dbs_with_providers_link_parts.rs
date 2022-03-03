@@ -17,7 +17,7 @@ use crate::providers::providers_info::get_local_providers_link_parts::GetLocalPr
 
 use super::init_mongo::CollectionCountDocumentsOrIsNotEmpty;
 
-use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
@@ -59,8 +59,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
         where_was: WhereWas,
     },
     PostgresCheckProvidersLinkPartsTablesEmptyError {
-        source: PostgresCheckProvidersLinkPartsTablesEmptyError,
-
+        source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
     },
     PostgresCreateTableQueries {
