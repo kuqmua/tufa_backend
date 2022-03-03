@@ -91,7 +91,7 @@ pub async fn init_postgres(
             {
                 return Err(PostgresInitError {
                     source: Box::new(PostgresInitErrorEnum::CreateTableQueries {
-                        source: e,
+                        source: *e,
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
