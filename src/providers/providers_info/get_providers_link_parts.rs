@@ -19,17 +19,19 @@ use crate::helpers::where_was::WhereWas;
 use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
-pub struct GetProvidersLinkPartsError {
-    pub source: Box<GetProvidersLinkPartsErrorEnum>,
-    where_was: WhereWas,
-}
-
-#[derive(Debug)]
 pub enum GetProvidersLinkPartsErrorEnum {
-    Local(GetLocalProvidersLinkPartsError),
-    Mongodb(MongoGetProvidersLinkPartsError),
-    // PostgreSql(PostgresGetProviderLinksError),
-    PostgreSql,
+    Local{
+        source: GetLocalProvidersLinkPartsError,
+        where_was: WhereWas,
+    },
+    Mongodb { 
+        source: MongoGetProvidersLinkPartsError,
+        where_was: WhereWas,
+    },
+    PostgreSql {
+        // source: PostgresGetProviderLinksError,
+        // where_was: WhereWas,
+    },
 }
 
 #[deny(
@@ -40,11 +42,11 @@ pub enum GetProvidersLinkPartsErrorEnum {
 )]
 pub async fn get_providers_link_parts(
     resource: &Resource,
-) -> Result<HashMap<ProviderKind, Vec<String>>, GetProvidersLinkPartsError> {
+) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorEnum>> {
     match resource {
         Resource::Local => match get_local_providers_link_parts().await {
-            Err(error_hashmap) => Err(GetProvidersLinkPartsError {
-                source: Box::new(GetProvidersLinkPartsErrorEnum::Local(error_hashmap)),
+            Err(error_hashmap) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Local{
+                source: error_hashmap,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -52,12 +54,12 @@ pub async fn get_providers_link_parts(
                     line: line!(),
                     column: column!(),
                 },
-            }),
+            })),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         Resource::Mongodb => match mongo_get_providers_link_parts().await {
-            Err(e) => Err(GetProvidersLinkPartsError {
-                source: Box::new(GetProvidersLinkPartsErrorEnum::Mongodb(e)),
+            Err(e) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Mongodb{
+                source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -65,7 +67,7 @@ pub async fn get_providers_link_parts(
                     line: line!(),
                     column: column!(),
                 },
-            }),
+            })),
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         // Resource::PostgreSql => match postgres_get_providers_link_parts().await {
