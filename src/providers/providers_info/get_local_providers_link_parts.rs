@@ -16,7 +16,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
-    where_was: WhereWas,
+    pub where_was: WhereWas,
 }
 
 #[deny(

@@ -5,7 +5,7 @@ use crate::providers::providers_info::get_providers_link_parts::get_providers_li
 
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
 
-use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsError;
+use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 
 use chrono::{DateTime, Utc, FixedOffset, Local};
 
@@ -59,7 +59,7 @@ use crate::providers::check_providers_link_parts_on_empty::check_providers_link_
 #[derive(Debug)]
 pub enum GetProviderPostsErrorEnum {
     GetLocalProvidersLinkParts {
-        source: GetProvidersLinkPartsError,
+        source: GetProvidersLinkPartsErrorEnum,
         where_was: WhereWas,
     },
     CheckProvidersLinkPartsEmpty {
@@ -78,7 +78,7 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => {
             return Err(Box::new(GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
-                source: e,
+                source: *e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
