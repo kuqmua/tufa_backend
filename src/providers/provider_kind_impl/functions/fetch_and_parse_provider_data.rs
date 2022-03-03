@@ -10,7 +10,6 @@ use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
-use crate::helpers::fetch::fetch_link_error::FetchLinkError;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
@@ -29,7 +28,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
-        source: Vec<(String, FetchLinkError)>, //link, error
+        source: Vec<(String, Box<FetchLinkErrorEnum>)>, //link, error
         where_was: WhereWas,
     },
     NoItems {
@@ -85,9 +84,9 @@ impl ProviderKind {
                 if let FetchLinkErrorEnum::StatusCode {
                     source,
                     where_was: _,
-                } = *e.source
+                } = **e
                 {
-                    handle_error_status_code(source, link);
+                    handle_error_status_code(source, &link);
                 }
             }
             return Err(Box::new(

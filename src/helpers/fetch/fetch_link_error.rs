@@ -1,11 +1,4 @@
-use std::fmt;
-
 use crate::helpers::where_was::WhereWas;
-
-#[derive(Debug, ImplDisplayDerive)]
-pub struct FetchLinkError {
-    pub source: Box<FetchLinkErrorEnum>,
-}
 
 #[derive(Debug)]
 pub enum FetchLinkErrorEnum {
