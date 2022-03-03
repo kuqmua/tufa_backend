@@ -1,11 +1,20 @@
 use std::collections::HashMap;
 
+use chrono::{DateTime, Utc, FixedOffset, Local};
+
+use crate::{helpers::where_was::WhereWas, config_mods::lazy_static_config::CONFIG};
+
 use super::provider_kind_enum::ProviderKind;
 
 #[derive(Debug)]
-pub enum CheckEmptyError {
-    Full,
-    Partially(Vec<ProviderKind>),
+pub enum CheckProvidersLinkPartsEmptyError {
+    Full { 
+        where_was: WhereWas,
+    },
+    Partially {
+        source: Vec<ProviderKind>,
+        where_was: WhereWas,
+    },
 }
 
 #[deny(
@@ -16,9 +25,17 @@ pub enum CheckEmptyError {
 )]
 pub fn check_providers_link_parts_on_empty(
     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
-) -> Result<HashMap<ProviderKind, Vec<String>>, CheckEmptyError> {
+) -> Result<HashMap<ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyError>> {
     if providers_link_parts.is_empty() {
-        return Err(CheckEmptyError::Full);
+        return Err(Box::new(CheckProvidersLinkPartsEmptyError::Full {
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        }));
     }
     let mut non_empty_providers_link_parts = HashMap::with_capacity(providers_link_parts.len());
     let mut empty_providers_link_parts = HashMap::with_capacity(providers_link_parts.len());
@@ -34,7 +51,16 @@ pub fn check_providers_link_parts_on_empty(
         for pk in empty_providers_link_parts.keys() {
             pk_vec.push(*pk);
         }
-        return Err(CheckEmptyError::Partially(pk_vec));
+        return Err(Box::new(CheckProvidersLinkPartsEmptyError::Partially{
+            source: pk_vec,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            }, 
+        }));
     }
     Ok(non_empty_providers_link_parts)
 }
