@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
 
 use crate::helpers::where_was::WhereWas;
@@ -5,6 +7,8 @@ use crate::providers::providers_info::get_providers_link_parts::get_providers_li
 
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
 
+use super::provider_kind_enum::ProviderKind;
+use super::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 
 use chrono::{DateTime, Utc, FixedOffset, Local};
@@ -66,6 +70,10 @@ pub enum GetProviderPostsErrorEnum {
         source: CheckProvidersLinkPartsEmptyError,
         where_was: WhereWas,
     },
+    GetNewPosts {
+        source: HashMap<ProviderKind, RssPartErrorEnum>,
+        where_was: WhereWas,
+    }
 }
 
 #[deny(
@@ -103,7 +111,31 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                     }));
                 },
                 Ok(non_empty_providers_link_parts) => {
-                    let _vec = check_new_posts_threads_parts(non_empty_providers_link_parts).await;
+                    let hm = check_new_posts_threads_parts(non_empty_providers_link_parts).await;
+                    let mut error_hashmap = HashMap::with_capacity(hm.len());
+                    let mut success_hashmap = HashMap::with_capacity(hm.len());
+                    for (key, value) in hm {
+                        match value {
+                            Err(e) => {
+                                error_hashmap.insert(key, e);
+                            },
+                            Ok(vec) => {
+                                success_hashmap.insert(key, vec);
+                            },
+                        }
+                    }
+                    if !error_hashmap.is_empty() {
+                        return Err(Box::new(GetProviderPostsErrorEnum::GetNewPosts {
+                            source: error_hashmap,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                        }));
+                    }
                     Ok(())
                 }
             }
