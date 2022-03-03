@@ -17,7 +17,7 @@ use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn check_new_posts_threads_parts(
+pub async fn check_new_providers_posts(
     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
 ) -> HashMap<ProviderKind, Result<Vec<CommonRssPostStruct>, RssPartErrorEnum>> {
     let tasks_vec = providers_link_parts

@@ -150,7 +150,7 @@ mod traits {
     pub mod provider_kind_trait;
     pub mod wrap_config_checks_trait;
 }
-mod check_new_posts_threads_parts;
+mod check_new_providers_posts;
 mod entry;
 mod preparation;
 mod write_error_posts_wrapper;

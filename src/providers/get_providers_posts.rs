@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::check_new_posts_threads_parts::check_new_posts_threads_parts;
+use crate::check_new_providers_posts::check_new_providers_posts;
 
 use crate::helpers::where_was::WhereWas;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
@@ -70,7 +70,7 @@ pub enum GetProviderPostsErrorEnum {
         source: CheckProvidersLinkPartsEmptyError,
         where_was: WhereWas,
     },
-    GetNewPosts {
+    GetNewProvidersPosts {
         source: HashMap<ProviderKind, RssPartErrorEnum>,
         where_was: WhereWas,
     }
@@ -111,7 +111,7 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                     }));
                 },
                 Ok(non_empty_providers_link_parts) => {
-                    let hm = check_new_posts_threads_parts(non_empty_providers_link_parts).await;
+                    let hm = check_new_providers_posts(non_empty_providers_link_parts).await;
                     let mut error_hashmap = HashMap::with_capacity(hm.len());
                     let mut success_hashmap = HashMap::with_capacity(hm.len());
                     for (key, value) in hm {
@@ -125,7 +125,7 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                         }
                     }
                     if !error_hashmap.is_empty() {
-                        return Err(Box::new(GetProviderPostsErrorEnum::GetNewPosts {
+                        return Err(Box::new(GetProviderPostsErrorEnum::GetNewProvidersPosts {
                             source: error_hashmap,
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
