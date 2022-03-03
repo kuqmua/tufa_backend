@@ -10,7 +10,7 @@ use crate::init_dbs_logic::init_mongo::InitMongoErrorEnum;
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitErrorEnum;
 
-use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
+use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
@@ -51,8 +51,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
         where_was: WhereWas,
     },
     PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
-        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
-
+        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
         where_was: WhereWas,
     },
     PostgresDeleteAllFromProvidersTables {

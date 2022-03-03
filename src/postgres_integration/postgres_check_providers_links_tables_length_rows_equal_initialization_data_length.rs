@@ -14,12 +14,6 @@ use crate::helpers::where_was::WhereWas;
 use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
-pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
-    pub source:
-        Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
-}
-
-#[derive(Debug)]
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum {
     SelectCount {
         source: HashMap<ProviderKind, sqlx::Error>,
@@ -47,7 +41,7 @@ pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<(), PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError> {
+) -> Result<(), Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap
             .iter()
@@ -92,34 +86,30 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
         }
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
-        return Err(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
-            source: Box::new(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount {
-                    source: count_provider_links_tables_error_hashmap,
-                    where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+        return Err(Box::new(
+            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount {
+                source: count_provider_links_tables_error_hashmap,
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
                 },
-            ),
-        });
+            },
+        ));
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
-        return Err(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
-            source: Box::new(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual {
-                    source: provider_links_tables_rows_length_not_equal_error_hashmap,
-                   where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+        return Err(Box::new(
+            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual {
+                source: provider_links_tables_rows_length_not_equal_error_hashmap,
+               where_was: WhereWas {
+                   time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc).with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                   file: file!(),
+                   line: line!(),
+                   column: column!(),
                 },
-            ),
-        });
+            },
+        ));
     }
     Ok(())
 }
