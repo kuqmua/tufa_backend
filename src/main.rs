@@ -125,10 +125,13 @@ mod providers {
     pub mod provider_kind_enum;
 }
 mod routes {
+    pub mod html {
+        pub mod html_route;
+        pub mod html_route_from_file;
+    }
     pub mod default_route;
     pub mod get_echo;
     pub mod get_providers_posts_route;
-    pub mod html_route;
     pub mod kekw;
     pub mod manual_responder;
     pub mod post_echo;
