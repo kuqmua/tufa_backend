@@ -43,7 +43,10 @@ pub fn entry() {
                 PrintType::Info,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![get_git_source_file_link(file!(), line!())],
-                format!("We are on a multicore system on {}:{} with {cpus} CPUs", CONFIG.server_ip, CONFIG.server_port),
+                format!(
+                    "We are on a multicore system on {}:{} with {cpus} CPUs",
+                    CONFIG.server_ip, CONFIG.server_port
+                ),
             );
             runtime.block_on(preparation());
             print_colorful_message(

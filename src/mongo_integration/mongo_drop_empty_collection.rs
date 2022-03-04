@@ -44,18 +44,8 @@ pub async fn mongo_drop_empty_collection(
     db_collection_name: &str,
 ) -> Result<(), Box<MongoDropEmptyCollectionErrorEnum>> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => Err(Box::new(MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
-            source: e,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-        })),
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(Box::new(MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
+        Err(e) => Err(Box::new(
+            MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -64,31 +54,44 @@ pub async fn mongo_drop_empty_collection(
                     line: line!(),
                     column: column!(),
                 },
-            })),
+            },
+        )),
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => Err(Box::new(
+                MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
+                    source: e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                },
+            )),
             Ok(client) => {
                 let collection: Collection<Document> =
                     client.database(db_name).collection(db_collection_name);
                 match collection.count_documents(None, None).await {
-                    Err(e) => Err(Box::new(MongoDropEmptyCollectionErrorEnum::CountDocuments {
-                        source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                    Err(e) => Err(Box::new(
+                        MongoDropEmptyCollectionErrorEnum::CountDocuments {
+                            source: e,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
-                    })),
+                    )),
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             Err(Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty {
                                 source: documents_number,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(
-                                        Local::now().naive_utc(),
-                                        Utc,
-                                    )
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),

@@ -41,7 +41,10 @@ pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<(), Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>> {
+) -> Result<
+    (),
+    Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
+> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap
             .iter()

@@ -97,11 +97,8 @@ pub async fn mongo_drop_empty_db(
                             return Err(Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop {
                                 source: e,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(
-                                        Local::now().naive_utc(),
-                                        Utc,
-                                    )
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),

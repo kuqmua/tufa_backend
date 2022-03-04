@@ -1,14 +1,14 @@
 use std::collections::HashMap;
 
-use chrono::{DateTime, Utc, FixedOffset, Local};
+use chrono::{DateTime, FixedOffset, Local, Utc};
 
-use crate::{helpers::where_was::WhereWas, config_mods::lazy_static_config::CONFIG};
+use crate::{config_mods::lazy_static_config::CONFIG, helpers::where_was::WhereWas};
 
 use super::provider_kind_enum::ProviderKind;
 
 #[derive(Debug)]
 pub enum CheckProvidersLinkPartsEmptyError {
-    Full { 
+    Full {
         where_was: WhereWas,
     },
     Partially {
@@ -51,7 +51,7 @@ pub fn check_providers_link_parts_on_empty(
         for pk in empty_providers_link_parts.keys() {
             pk_vec.push(*pk);
         }
-        return Err(Box::new(CheckProvidersLinkPartsEmptyError::Partially{
+        return Err(Box::new(CheckProvidersLinkPartsEmptyError::Partially {
             source: pk_vec,
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -59,7 +59,7 @@ pub fn check_providers_link_parts_on_empty(
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            }, 
+            },
         }));
     }
     Ok(non_empty_providers_link_parts)

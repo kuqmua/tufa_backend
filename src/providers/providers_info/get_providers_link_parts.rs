@@ -20,17 +20,17 @@ use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(Debug)]
 pub enum GetProvidersLinkPartsErrorEnum {
-    Local{
+    Local {
         source: GetLocalProvidersLinkPartsError,
         where_was: WhereWas,
     },
-    Mongodb { 
+    Mongodb {
         source: MongoGetProvidersLinkPartsError,
         where_was: WhereWas,
     },
     PostgreSql {
         // source: PostgresGetProviderLinksError,
-        // where_was: WhereWas,
+    // where_was: WhereWas,
     },
 }
 
@@ -45,7 +45,7 @@ pub async fn get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorEnum>> {
     match resource {
         Resource::Local => match get_local_providers_link_parts().await {
-            Err(error_hashmap) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Local{
+            Err(error_hashmap) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Local {
                 source: error_hashmap,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -58,7 +58,7 @@ pub async fn get_providers_link_parts(
             Ok(success_hashmap) => Ok(success_hashmap),
         },
         Resource::Mongodb => match mongo_get_providers_link_parts().await {
-            Err(e) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Mongodb{
+            Err(e) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Mongodb {
                 source: e,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)

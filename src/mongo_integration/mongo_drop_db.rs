@@ -28,7 +28,10 @@ pub enum MongoDropDbErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn mongo_drop_db(mongo_url: &str, db_name: &str) -> Result<(), Box<MongoDropDbErrorEnum>> {
+pub async fn mongo_drop_db(
+    mongo_url: &str,
+    db_name: &str,
+) -> Result<(), Box<MongoDropDbErrorEnum>> {
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(Box::new(MongoDropDbErrorEnum::ClientOptionsParse {
             source: e,

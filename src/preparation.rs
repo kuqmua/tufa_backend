@@ -89,10 +89,9 @@ pub async fn preparation() {
         // );
         return;
     };
-    if CONFIG.is_dbs_initialization_enabled {//todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
-        if !CONFIG.is_mongo_initialization_enabled
-            && !CONFIG.is_postgres_initialization_enabled
-        {
+    if CONFIG.is_dbs_initialization_enabled {
+        //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
+        if !CONFIG.is_mongo_initialization_enabled && !CONFIG.is_postgres_initialization_enabled {
             print_colorful_message(
                 None,
                 PrintType::WarningLow,
@@ -101,13 +100,7 @@ pub async fn preparation() {
                 String::from("db initialization for mongo and postgres are disabled"),
             );
         } else if let Err(e) = init_dbs().await {
-            print_colorful_message(
-                None,
-                PrintType::Error,
-                vec![],
-                vec![],
-                format!("{e:#?}"),
-            );
+            print_colorful_message(None, PrintType::Error, vec![], vec![], format!("{e:#?}"));
         }
     }
 }

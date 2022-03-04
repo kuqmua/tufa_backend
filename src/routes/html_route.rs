@@ -1,6 +1,4 @@
-
-
-use actix_web::{get, web, Responder, HttpResponse, http::header::ContentType};
+use actix_web::{get, http::header::ContentType, web, HttpResponse, Responder};
 
 #[get("/html/{name}")]
 async fn html_route(name: web::Path<String>) -> impl Responder {
@@ -21,7 +19,5 @@ async fn html_route(name: web::Path<String>) -> impl Responder {
         </body>
         </html>"#
     );
-    HttpResponse::Ok()
-        .content_type(ContentType::html())
-        .body(f)
+    HttpResponse::Ok().content_type(ContentType::html()).body(f)
 }

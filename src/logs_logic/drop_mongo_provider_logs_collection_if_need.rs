@@ -32,7 +32,8 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             &CONFIG.mongo_providers_logs_db_collection_handle_second_part
         ),
     )
-    .await {
+    .await
+    {
         print_colorful_message(
             Some(pk),
             PrintType::WarningHigh,

@@ -10,7 +10,7 @@ async fn post_echo(req_body: String) -> impl Responder {
 //     name: 'John',
 //     surname: 'Smith'
 // };
-  
+
 // let response = await fetch('http://127.0.0.1:8080/post_echo', {
 //     method: 'POST',
 //     headers: {

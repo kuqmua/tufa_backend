@@ -76,7 +76,8 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvidersLinkPartsErrorEnum>> {
+pub async fn init_dbs_with_providers_link_parts(
+) -> Result<(), Box<InitDbsProvidersLinkPartsErrorEnum>> {
     match get_local_providers_link_parts().await {
         Err(errors_hashmap) => Err(Box::new(
             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
@@ -116,11 +117,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvi
                             InitDbsProvidersLinkPartsErrorEnum::MongoClientOptionsParse {
                                 source,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(
-                                        Local::now().naive_utc(),
-                                        Utc,
-                                    )
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
@@ -136,11 +134,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvi
                             InitDbsProvidersLinkPartsErrorEnum::MongoClientWithOptions {
                                 source,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(
-                                        Local::now().naive_utc(),
-                                        Utc,
-                                    )
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),
@@ -171,11 +166,8 @@ pub async fn init_dbs_with_providers_link_parts() -> Result<(), Box<InitDbsProvi
                             InitDbsProvidersLinkPartsErrorEnum::MongoInsertManyError {
                                 source,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(
-                                        Local::now().naive_utc(),
-                                        Utc,
-                                    )
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                                     file: file!(),
                                     line: line!(),
                                     column: column!(),

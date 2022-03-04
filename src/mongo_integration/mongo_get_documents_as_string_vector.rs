@@ -57,27 +57,30 @@ pub async fn mongo_get_documents_as_string_vector(
             loop {
                 match cursor.try_next().await {
                     Err(e) => {
-                        return Err(Box::new(MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
-                            source: e,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                        return Err(Box::new(
+                            MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
+                                source: e,
+                                where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             },
-                        }));
-                    },
+                        ));
+                    }
                     Ok(option_document) => {
                         match option_document {
                             None => {
                                 break;
-                            },
-                            Some(document) => match document.get(db_collection_document_field_name_handle) {
-                                None => {
-                                    return Err(Box::new(
+                            }
+                            Some(document) => {
+                                match document.get(db_collection_document_field_name_handle) {
+                                    None => return Err(Box::new(
                                         MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
-                                            source: db_collection_document_field_name_handle.to_string(),
+                                            source: db_collection_document_field_name_handle
+                                                .to_string(),
                                             where_was: WhereWas {
                                                 time: DateTime::<Utc>::from_utc(
                                                     Local::now().naive_utc(),
@@ -89,14 +92,13 @@ pub async fn mongo_get_documents_as_string_vector(
                                                 column: column!(),
                                             },
                                         },
-                                    ))
-                                }
-                                Some(bson_handle) => match bson_handle {
-                                    mongodb::bson::Bson::String(value) => {
-                                        vec_of_strings.push(value.to_string());
-                                    }
-                                    other_bson_type => {
-                                        return Err(Box::new(
+                                    )),
+                                    Some(bson_handle) => match bson_handle {
+                                        mongodb::bson::Bson::String(value) => {
+                                            vec_of_strings.push(value.to_string());
+                                        }
+                                        other_bson_type => {
+                                            return Err(Box::new(
                                             MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                                 source: other_bson_type.clone(),
                                                 where_was: WhereWas {
@@ -111,11 +113,12 @@ pub async fn mongo_get_documents_as_string_vector(
                                                 },
                                             },
                                         ));
-                                    }
-                                },
-                            },
+                                        }
+                                    },
+                                }
+                            }
                         }
-                    },
+                    }
                 }
             }
             Ok(vec_of_strings.into_iter().unique().collect())

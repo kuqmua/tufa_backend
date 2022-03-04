@@ -11,7 +11,7 @@ use super::provider_kind_enum::ProviderKind;
 use super::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
 use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 
-use chrono::{DateTime, Utc, FixedOffset, Local};
+use chrono::{DateTime, FixedOffset, Local, Utc};
 
 use crate::config_mods::lazy_static_config::CONFIG;
 
@@ -73,7 +73,7 @@ pub enum GetProviderPostsErrorEnum {
     GetNewProvidersPosts {
         source: HashMap<ProviderKind, RssPartErrorEnum>,
         where_was: WhereWas,
-    }
+    },
 }
 
 #[deny(
@@ -85,31 +85,35 @@ pub enum GetProviderPostsErrorEnum {
 pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>> {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => {
-            return Err(Box::new(GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
-                source: *e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+            return Err(Box::new(
+                GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
+                    source: *e,
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 },
-            }));
-        },
+            ));
+        }
         Ok(providers_link_parts) => {
             match check_providers_link_parts_on_empty(providers_link_parts) {
                 Err(e) => {
-                    return Err(Box::new(GetProviderPostsErrorEnum::CheckProvidersLinkPartsEmpty {
-                        source: *e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                    return Err(Box::new(
+                        GetProviderPostsErrorEnum::CheckProvidersLinkPartsEmpty {
+                            source: *e,
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
-                    }));
-                },
+                    ));
+                }
                 Ok(non_empty_providers_link_parts) => {
                     let hm = check_new_providers_posts(non_empty_providers_link_parts).await;
                     let mut error_hashmap = HashMap::with_capacity(hm.len());
@@ -118,10 +122,10 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                         match value {
                             Err(e) => {
                                 error_hashmap.insert(key, e);
-                            },
+                            }
                             Ok(vec) => {
                                 success_hashmap.insert(key, vec);
-                            },
+                            }
                         }
                     }
                     if !error_hashmap.is_empty() {

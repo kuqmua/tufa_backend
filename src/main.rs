@@ -35,11 +35,11 @@ pub mod config_mods {
     pub mod lazy_static_config;
 }
 pub mod helpers {
-    pub mod get_server_address;
     pub mod create_dir_if_it_doesnt_exist;
     pub mod get_git_commit_info;
     pub mod get_git_commit_string;
     pub mod get_git_source_file_link;
+    pub mod get_server_address;
     pub mod lazy_static_git_info;
     pub mod resource;
     pub mod where_was;
@@ -125,13 +125,13 @@ mod providers {
     pub mod provider_kind_enum;
 }
 mod routes {
-    pub mod get_echo;
-    pub mod post_echo;
     pub mod default_route;
+    pub mod get_echo;
     pub mod get_providers_posts_route;
-    pub mod kekw;
     pub mod html_route;
+    pub mod kekw;
     pub mod manual_responder;
+    pub mod post_echo;
 }
 #[cfg(test)]
 mod tests {
@@ -153,8 +153,8 @@ mod traits {
 mod check_new_providers_posts;
 mod entry;
 mod preparation;
-mod write_error_posts_wrapper;
 mod server_wrapper;
+mod write_error_posts_wrapper;
 
 #[macro_use]
 extern crate lazy_static;

@@ -11,7 +11,10 @@ use crate::providers::get_providers_posts::get_providers_posts;
 async fn get_providers_posts_route() -> impl Responder {
     let time = Instant::now();
     get_providers_posts().await;
-    let message = format!("get_providers_posts done in {} seconds", time.elapsed().as_secs());
+    let message = format!(
+        "get_providers_posts done in {} seconds",
+        time.elapsed().as_secs()
+    );
     print_colorful_message(
         None,
         PrintType::TimeMeasurement,

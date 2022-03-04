@@ -63,16 +63,18 @@ pub async fn mongo_check_db_is_empty(
                 },
             })),
             Ok(client) => match client.database(db_name).list_collection_names(None).await {
-                Err(e) => Err(Box::new(MongoCheckDbIsEmptyErrorEnum::ListCollectionNames {
-                    source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+                Err(e) => Err(Box::new(
+                    MongoCheckDbIsEmptyErrorEnum::ListCollectionNames {
+                        source: e,
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     },
-                })),
+                )),
                 Ok(documents_number) => {
                     if !documents_number.is_empty() {
                         return Err(Box::new(MongoCheckDbIsEmptyErrorEnum::NotEmpty {
