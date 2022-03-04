@@ -40,3 +40,10 @@ CMD [ "./tufa_backend" ]
 # coz maybe would be linking error
 # sudo apt install libpq-dev <br/>
 # cargo install diesel_cli --no-default-features --features postgres
+
+##################################
+# custom linker dependencies
+# from https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
+# FROM lukemathwalker/cargo-chef:latest-rust-1.56.0 as chef
+# WORKDIR /app
+# RUN apt update && apt install lld clang -y
