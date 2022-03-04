@@ -95,3 +95,10 @@ installation:
 cargo install cargo-audit
 usage:
 cargo audit
+
+### fix Error: I/O error: Permission denied (os error 13) error
+cd ..
+sudo chmod -R 777 tufa_backend
+
+### cargo watch 
+cargo watch -x check -x test -x "run | bunyan"
