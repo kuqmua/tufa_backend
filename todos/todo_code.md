@@ -486,3 +486,9 @@ https://blog.turbo.fish/proc-macro-error-handling/
 ### -------------------
 web-server library-agnostic modules architecture. must add actix, rocket, warp, axum
 <br/>
+
+### -------------------
+actix-web html + session-based-authentication
+https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
+<br/>
+  
