@@ -131,6 +131,7 @@ mod routes {
     }
     pub mod login {
         pub mod login_form;
+        pub mod login;
     }
     pub mod default_route;
     pub mod get_echo;
