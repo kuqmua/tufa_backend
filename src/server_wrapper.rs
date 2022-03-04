@@ -9,6 +9,7 @@ use crate::routes::html::html_route::html_route;
 use crate::routes::html::html_route_from_file::html_route_from_file;
 use crate::routes::kekw::kekw;
 use crate::routes::post_echo::post_echo;
+use crate::routes::login::login_form::login_form;
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> std::io::Result<()> {
@@ -21,6 +22,7 @@ pub async fn server_wrapper() -> std::io::Result<()> {
             .service(post_echo)
             .service(html_route)
             .service(html_route_from_file)
+            .service(login_form)
         // .service(manual_hello)
     })
     .bind(get_server_address())?
