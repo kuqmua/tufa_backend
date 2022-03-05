@@ -135,6 +135,7 @@ mod routes {
     pub mod default {
         pub mod default_route;
     }
+    pub mod newsletters;
     pub mod get_echo;
     pub mod get_providers_posts_route;
     pub mod kekw;
