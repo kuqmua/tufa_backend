@@ -4,7 +4,7 @@ use actix_web::http::header::LOCATION;
 #[post("/login")]
 pub async fn login() -> HttpResponse {
     println!("login");
-    HttpResponse::Ok()
+    HttpResponse::SeeOther()
     .insert_header((LOCATION, "/"))
     .finish()
 }
