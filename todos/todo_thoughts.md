@@ -724,3 +724,8 @@ fn main() {
 }
 If you’re using VSCode + Rust Analyzer, I highly suggest going into the settings > Rust Analyzer > Check On Save: Command and setting "clippy" as the new default instead of "check". Same UX, better warnings.
 <br/>
+
+### -------------------
+rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
+<br/>
+    
