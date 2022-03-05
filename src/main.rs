@@ -127,13 +127,14 @@ mod providers {
 mod routes {
     pub mod html {
         pub mod html_route;
-        pub mod html_route_from_file;
     }
     pub mod login {
         pub mod login_form;
         pub mod login;
     }
-    pub mod default_route;
+    pub mod default {
+        pub mod default_route;
+    }
     pub mod get_echo;
     pub mod get_providers_posts_route;
     pub mod kekw;
