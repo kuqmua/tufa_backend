@@ -8,7 +8,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 )]
 pub fn postgres_get_db_url() -> String {
     format!(
-        "{}{}{}{}{}{}{}{}{}{}",
+        "{}{}{}{}{}{}{}{}{}{}{}{}",
         CONFIG.postgres_first_handle_url_part,
         CONFIG.postgres_login,
         CONFIG.postgres_second_handle_url_part,
@@ -18,6 +18,8 @@ pub fn postgres_get_db_url() -> String {
         CONFIG.postgres_fourth_handle_url_part,
         CONFIG.postgres_port,
         CONFIG.postgres_fifth_handle_url_part,
-        CONFIG.postgres_db
+        CONFIG.postgres_db,
+        CONFIG.postgres_sixth_handle_url_part,
+        CONFIG.postgres_params
     )
 }
