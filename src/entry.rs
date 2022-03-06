@@ -44,7 +44,7 @@ pub fn entry() {
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![get_git_source_file_link(file!(), line!())],
                 format!(
-                    "We are on a multicore system on {}:{} with {cpus} CPUs",
+                    "server running on {}:{} with {cpus} CPUs",
                     CONFIG.server_ip, CONFIG.server_port
                 ),
             );
