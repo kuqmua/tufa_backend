@@ -113,12 +113,14 @@ pub struct ConfigStruct {
     pub postgres_third_handle_url_part: String,
     pub postgres_fourth_handle_url_part: String,
     pub postgres_fifth_handle_url_part: String,
+    pub postgres_sixth_handle_url_part: String,
 
     pub postgres_login: String,
     pub postgres_password: String,
     pub postgres_ip: String,   //todo: 4x u8
     pub postgres_port: String, //todo: u16
     pub postgres_db: String,
+    pub postgres_params: String,
 
     pub postgres_connection_timeout: u64,
 
