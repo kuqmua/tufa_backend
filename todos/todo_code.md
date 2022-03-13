@@ -492,3 +492,7 @@ actix-web html + session-based-authentication
 https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 <br/>
   
+### -------------------
+there is a function to handle request error status inside reqwest crate
+.error_for_status()
+<br/>
