@@ -729,3 +729,7 @@ If you’re using VSCode + Rust Analyzer, I highly suggest going into the settin
 rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
 <br/>
     
+### -------------------
+inside cargo.toml
+use the “*” to pull the latest version of the dependency.
+<br/>
