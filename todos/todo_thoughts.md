@@ -736,5 +736,6 @@ use the “*” to pull the latest version of the dependency.
     
 ### -------------------
 more readable tracing like a tree https://lib.rs/crates/tracing-tree
+examples https://fasterthanli.me/articles/request-coalescing-in-async-rust
 <br/>
     
