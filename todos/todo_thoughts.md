@@ -744,5 +744,8 @@ usefull crates:
 https://crates.io/crates/base64 (encodes and decodes base64 as bytes or utf8)
 https://crates.io/crates/clap (command line parser)
 https://crates.io/crates/signal-hook (Unix signal handling)
+<br/>
 
+### -------------------
+If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error. It can, if it makes sense, add more context to it.
 <br/>
