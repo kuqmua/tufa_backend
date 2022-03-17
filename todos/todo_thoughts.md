@@ -739,3 +739,10 @@ more readable tracing like a tree https://lib.rs/crates/tracing-tree
 examples https://fasterthanli.me/articles/request-coalescing-in-async-rust
 <br/>
     
+### -------------------
+usefull crates:
+https://crates.io/crates/base64 (encodes and decodes base64 as bytes or utf8)
+https://crates.io/crates/clap (command line parser)
+https://crates.io/crates/signal-hook (Unix signal handling)
+
+<br/>
