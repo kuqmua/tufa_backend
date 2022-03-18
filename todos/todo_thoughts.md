@@ -749,3 +749,10 @@ https://crates.io/crates/signal-hook (Unix signal handling)
 ### -------------------
 If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error. It can, if it makes sense, add more context to it.
 <br/>
+    
+### -------------------
+algebraic data types inside postgres
+https://stackoverflow.com/questions/44431740/algebraic-data-types-in-postgres
+<br/>
+    
+    
