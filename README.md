@@ -40,6 +40,9 @@ sudo docker-compose up -d
 ### stop containers with docker-compose
 sudo docker-compose down
 
+### default docker volumes folder on linux
+/var/lib/docker/volumes
+
 ### pull and run mongodb docker container
 (need to write path to your project directory)
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_backend/mongodb_volume:/data/db -d mongo:latest
