@@ -10,6 +10,7 @@ And maybe fields can be null/empty
 
 ### -------------------
 add write logs in db into dir if provider doesnt respond to request 
+What to use? Postgres? Clickhouse? Mongo
 <br/>
 
 ### -------------------
