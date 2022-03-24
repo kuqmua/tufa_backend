@@ -32,6 +32,7 @@ for loop into iterators?
 
 ### -------------------
 add everywhere explicit types
+Except maybe functional way 
 <br/>
 
 ### -------------------
@@ -50,6 +51,7 @@ instead of find(<item></item>)
 ### -------------------
 error had .description method
 maybe rewrite error messages?
+But description is depreciated
 <br/>
 
 ### -------------------
