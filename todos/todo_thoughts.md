@@ -757,4 +757,9 @@ algebraic data types inside postgres
 https://stackoverflow.com/questions/44431740/algebraic-data-types-in-postgres
 <br/>
     
+### -------------------
+This library provides implementations of Mutex, RwLock, Condvar and Once that are smaller, faster and more flexible than those in the Rust standard library, as well as a ReentrantMutex type which supports recursive locking. It also exposes a low-level API for creating your own efficient synchronization primitives.
+https://lib.rs/crates/parking_lot
+<br/>
+    
     
