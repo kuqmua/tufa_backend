@@ -762,4 +762,8 @@ This library provides implementations of Mutex, RwLock, Condvar and Once that ar
 https://lib.rs/crates/parking_lot
 <br/>
     
-    
+### -------------------
+let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
+let _: HashMap<u64, u64> = HashMap::from_iter(x);
+<br/>
+
