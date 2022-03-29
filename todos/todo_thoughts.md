@@ -772,3 +772,16 @@ writing cross-platform “bash” scripts in Rust
 https://docs.rs/xshell/latest/xshell/
 maybe rewrite shell scripts for service init in xshell?
 <br/>
+
+### -------------------
+some useful methods
+let v = vec!["Hello", "World", "!"].into_iter();
+let w: Vec<String> = v.map(String::from).collect();
+into_par_iter()
+inspect
+chain
+fold
+for_each_concurrent
+buffer_unordered
+<br/>
+ 
