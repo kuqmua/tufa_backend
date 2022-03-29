@@ -766,4 +766,8 @@ https://lib.rs/crates/parking_lot
 let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
 let _: HashMap<u64, u64> = HashMap::from_iter(x);
 <br/>
-
+    
+### -------------------
+writing cross-platform “bash” scripts in Rust
+https://docs.rs/xshell/latest/xshell/
+<br/>
