@@ -770,4 +770,5 @@ let _: HashMap<u64, u64> = HashMap::from_iter(x);
 ### -------------------
 writing cross-platform “bash” scripts in Rust
 https://docs.rs/xshell/latest/xshell/
+maybe rewrite shell scripts for service init in xshell?
 <br/>
