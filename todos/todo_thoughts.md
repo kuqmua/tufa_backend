@@ -32,6 +32,7 @@ for loop into iterators?
 
 ### -------------------
 add everywhere explicit types
+Except maybe functional way 
 <br/>
 
 ### -------------------
@@ -50,6 +51,7 @@ instead of find(<item></item>)
 ### -------------------
 error had .description method
 maybe rewrite error messages?
+But description is depreciated
 <br/>
 
 ### -------------------
@@ -729,3 +731,57 @@ If you’re using VSCode + Rust Analyzer, I highly suggest going into the settin
 rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
 <br/>
     
+### -------------------
+inside cargo.toml
+use the “*” to pull the latest version of the dependency.
+<br/>
+    
+### -------------------
+more readable tracing like a tree https://lib.rs/crates/tracing-tree
+examples https://fasterthanli.me/articles/request-coalescing-in-async-rust
+<br/>
+    
+### -------------------
+usefull crates:
+https://crates.io/crates/base64 (encodes and decodes base64 as bytes or utf8)
+https://crates.io/crates/clap (command line parser)
+https://crates.io/crates/signal-hook (Unix signal handling)
+<br/>
+
+### -------------------
+If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error. It can, if it makes sense, add more context to it.
+<br/>
+    
+### -------------------
+algebraic data types inside postgres
+https://stackoverflow.com/questions/44431740/algebraic-data-types-in-postgres
+<br/>
+    
+### -------------------
+This library provides implementations of Mutex, RwLock, Condvar and Once that are smaller, faster and more flexible than those in the Rust standard library, as well as a ReentrantMutex type which supports recursive locking. It also exposes a low-level API for creating your own efficient synchronization primitives.
+https://lib.rs/crates/parking_lot
+<br/>
+    
+### -------------------
+let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
+let _: HashMap<u64, u64> = HashMap::from_iter(x);
+<br/>
+    
+### -------------------
+writing cross-platform “bash” scripts in Rust
+https://docs.rs/xshell/latest/xshell/
+maybe rewrite shell scripts for service init in xshell?
+<br/>
+
+### -------------------
+some useful methods
+let v = vec!["Hello", "World", "!"].into_iter();
+let w: Vec<String> = v.map(String::from).collect();
+into_par_iter()
+inspect
+chain
+fold
+for_each_concurrent
+buffer_unordered
+<br/>
+ 

@@ -2,10 +2,15 @@
 
 ### -------------------
 write logs into db in different service
+Try two dbs: postgres and mongo. 
+To write logs inside postgres need to add migrations
+And know exactly what fields to write
+And maybe fields can be null/empty
 <br/>
 
 ### -------------------
 add write logs in db into dir if provider doesnt respond to request 
+What to use? Postgres? Clickhouse? Mongo
 <br/>
 
 ### -------------------
