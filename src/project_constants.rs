@@ -35,3 +35,10 @@ pub const REDDIT_LINK_SECOND_PART: &str = "/new.json";
 pub const TWITTER_LINK_FIRST_PART: &str = "https://";
 pub const TWITTER_LINK_SECOND_PART: &str = "/";
 pub const TWITTER_LINK_THIRD_PART: &str = "/rss";
+
+//tests constants start
+pub const ENV_FILE_NAME: &str = ".env";
+pub const PATH_TO_ENV_FILE: &str = "./";
+pub const PATH_TO_DOCKER_COMPOSE_FILE: &str = "./";
+pub const DOCKER_COMPOSE_FILE_NAME: &str = "docker-compose.yml";
+//tests constants end
