@@ -1,5 +1,5 @@
-use actix_web::{get, HttpResponse};
 use actix_web::http::header::ContentType;
+use actix_web::{get, HttpResponse};
 
 #[get("/")]
 pub async fn default_route() -> HttpResponse {

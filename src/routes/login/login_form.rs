@@ -1,5 +1,5 @@
-use actix_web::{get, HttpResponse};
 use actix_web::http::header::ContentType;
+use actix_web::{get, HttpResponse};
 
 #[get("/login_form/")]
 pub async fn login_form() -> HttpResponse {
