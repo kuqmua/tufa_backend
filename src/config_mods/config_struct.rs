@@ -308,3 +308,16 @@ pub struct ConfigStruct {
     pub info_green: u8,
     pub info_blue: u8,
 }
+
+#[deny(
+    clippy::indexing_slicing,
+    clippy::unwrap_used,
+    clippy::integer_arithmetic,
+    clippy::float_arithmetic
+)]
+#[test]
+fn ci_check_compromised_env_vars() {
+    let config_from_env = ConfigStruct::new().expect("cannot create ConfigStruct::new()");
+    let default_config = ConfigStruct::default();
+    assert_eq!(config_from_env, default_config)
+}

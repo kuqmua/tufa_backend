@@ -14,7 +14,6 @@ mod routes;
 mod tests {
     pub mod tests_constants;
     pub mod continuous_integration {
-        pub mod ci_check_compromised_env_vars;
         pub mod ci_check_docker_compose_file_exists;
         pub mod ci_check_env_file_exists;
         pub mod ci_check_env_var_names_contains_in_docker_compose;
