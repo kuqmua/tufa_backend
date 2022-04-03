@@ -88,11 +88,7 @@ pub mod postgres_integration {
     pub mod postgres_get_providers_link_parts;
     pub mod postgres_insert_link_parts_into_providers_tables;
 }
-pub mod prints {
-    pub mod print_colorful_message;
-    pub mod print_type_enum;
-    pub mod print_wrapper;
-}
+pub mod prints;
 mod providers;
 mod routes;
 #[cfg(test)]
