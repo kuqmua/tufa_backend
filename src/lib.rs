@@ -152,16 +152,10 @@ mod tests {
         pub mod ci_check_env_var_names_contains_in_docker_compose;
     }
 }
-mod traits {
-    pub mod git_info_trait;
-    pub mod print_type_trait;
-    pub mod provider_kind_from_config_trait;
-    pub mod provider_kind_trait;
-    pub mod wrap_config_checks_trait;
-}
 pub mod check_new_providers_posts;
 pub mod entry;
 pub mod preparation;
 pub mod server_wrapper;
 pub mod telemetry;
+mod traits;
 pub mod write_error_posts_wrapper;
