@@ -1,7 +1,7 @@
 // use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 // use crate::logs_logic::drop_mongo_provider_logs_collection_if_need::drop_mongo_provider_logs_collection_if_need;
 // use crate::config_mods::lazy_static_config::CONFIG;
-// use crate::providers::provider_kind_enum::ProviderKind;
+// use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 // use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 // use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 // use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;

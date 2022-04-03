@@ -1,7 +1,7 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::rss_part::rss_part;
 use crate::providers::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
+use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use std::collections::HashMap;

@@ -1,6 +1,6 @@
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 use crate::{
     config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
 };

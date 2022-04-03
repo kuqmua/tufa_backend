@@ -2,7 +2,7 @@
 // use roux::Reddit;
 // use crate::prints::print_colorful_message::print_colorful_message;
 // use crate::prints::print_type_enum::PrintType;
-// use crate::providers::provider_kind_enum::ProviderKind;
+// use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 
 // #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
 // pub fn reddit_authorization(

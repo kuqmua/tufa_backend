@@ -1,4 +1,4 @@
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 use chrono::Local;
 use serde_json::{json, Value};
 

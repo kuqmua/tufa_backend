@@ -1,4 +1,3 @@
-
 pub mod providers_info {
     pub mod links {
         pub mod generate_arxiv_links;
@@ -23,8 +22,8 @@ pub mod provider_kind_impl {
         pub mod mongo_get_provider_link_parts;
         pub mod rss_part;
     }
+    pub mod provider_kind_enum;
     pub mod provider_kind_trait;
 }
 pub mod check_providers_link_parts_on_empty;
 pub mod get_providers_posts;
-pub mod provider_kind_enum;

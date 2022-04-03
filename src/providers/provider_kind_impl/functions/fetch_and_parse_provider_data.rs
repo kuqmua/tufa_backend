@@ -10,7 +10,7 @@ use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::helpers::where_was::WhereWas;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use futures::future::join_all;

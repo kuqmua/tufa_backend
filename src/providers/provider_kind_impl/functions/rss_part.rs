@@ -2,7 +2,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::where_was::WhereWas;
-use crate::providers::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_impl::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;

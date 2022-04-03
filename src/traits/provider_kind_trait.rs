@@ -1,4 +1,4 @@
-use crate::providers::provider_kind_enum::{CleanLogsDirError, RemoveDirError};
+use crate::providers::provider_kind_impl::provider_kind_enum::{CleanLogsDirError, RemoveDirError};
 use std::collections::HashMap;
 
 pub trait ProviderKindTrait {
