@@ -3,8 +3,8 @@ use crate::routes::default::default_route::default_route;
 use crate::routes::get_providers_posts_route::get_providers_posts_route;
 use crate::routes::html::html_route::html_route;
 use crate::routes::kekw::kekw;
-use crate::routes::login::login::login;
 use crate::routes::login::login_form::login_form;
+use crate::routes::login::login_handle::login_handle;
 use crate::routes::post_echo::post_echo;
 use actix_web::App;
 use actix_web::HttpServer;
@@ -19,7 +19,7 @@ pub async fn server_wrapper() -> std::io::Result<()> {
             .service(post_echo)
             .service(html_route)
             .service(login_form)
-            .service(login)
+            .service(login_handle)
             .service(default_route)
         // .service(manual_hello)
     })

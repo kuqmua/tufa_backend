@@ -9,7 +9,7 @@ use actix_web::{post, HttpResponse};
 // }
 
 #[post("/login")]
-pub async fn login() -> HttpResponse {
+pub async fn login_handle() -> HttpResponse {
     //form: web::Form<FormData>
     println!("login");
     HttpResponse::SeeOther()

@@ -1,10 +1,9 @@
-
 pub mod html {
     pub mod html_route;
 }
 pub mod login {
-    pub mod login;
     pub mod login_form;
+    pub mod login_handle;
 }
 pub mod default {
     pub mod default_route;
