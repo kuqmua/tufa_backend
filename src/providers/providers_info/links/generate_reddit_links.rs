@@ -1,5 +1,5 @@
-use crate::constants::project_constants::REDDIT_LINK_FIRST_PART;
-use crate::constants::project_constants::REDDIT_LINK_SECOND_PART;
+use crate::project_constants::REDDIT_LINK_FIRST_PART;
+use crate::project_constants::REDDIT_LINK_SECOND_PART;
 
 #[deny(
     clippy::indexing_slicing,

@@ -1,6 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::constants::project_constants::GITHUB_LINK_FIRST_PART;
-use crate::constants::project_constants::GITHUB_LINK_SECOND_PART;
+use crate::project_constants::GITHUB_LINK_FIRST_PART;
+use crate::project_constants::GITHUB_LINK_SECOND_PART;
 
 #[deny(
     clippy::indexing_slicing,

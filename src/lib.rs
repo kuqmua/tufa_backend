@@ -4,9 +4,6 @@ mod check_net {
     pub mod check_net_wrapper;
     pub mod check_status_code;
 }
-mod constants {
-    pub mod project_constants;
-}
 pub mod config_mods;
 mod fetch;
 pub mod helpers;
@@ -15,6 +12,7 @@ mod logs_logic;
 pub mod mongo_integration;
 pub mod postgres_integration;
 pub mod prints;
+pub mod project_constants;
 mod providers;
 mod routes;
 #[cfg(test)]

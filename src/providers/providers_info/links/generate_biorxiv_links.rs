@@ -1,4 +1,4 @@
-use crate::constants::project_constants::BIORXIV_LINK_FIRST_PART;
+use crate::project_constants::BIORXIV_LINK_FIRST_PART;
 
 #[deny(
     clippy::indexing_slicing,
