@@ -1,5 +1,5 @@
 use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::print_type_trait::PrintTypeTrait;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 

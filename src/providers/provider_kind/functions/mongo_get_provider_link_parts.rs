@@ -7,7 +7,7 @@ use crate::{
 };
 use crate::{
     mongo_integration::mongo_get_db_url::mongo_get_db_url,
-    providers::provider_kind_impl::provider_kind_enum::ProviderKind,
+    providers::provider_kind::provider_kind_enum::ProviderKind,
 };
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use mongodb::{bson::Document, options::ClientOptions, Client};

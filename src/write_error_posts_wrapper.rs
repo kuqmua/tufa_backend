@@ -4,7 +4,7 @@
 // use crate::prints::print_colorful_message::print_colorful_message;
 // use crate::prints::print_type_enum::PrintType;
 // use crate::config_mods::lazy_static_config::CONFIG;
-// use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
+// use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 // use crate::traits::provider_kind_trait::ProviderKindTrait;
 
 // #[deny(

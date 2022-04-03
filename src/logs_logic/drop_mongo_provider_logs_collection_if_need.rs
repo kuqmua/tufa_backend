@@ -4,7 +4,7 @@ use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_coll
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 
 #[deny(

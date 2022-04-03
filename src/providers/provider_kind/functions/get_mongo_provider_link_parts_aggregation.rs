@@ -1,7 +1,7 @@
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use crate::{
     config_mods::lazy_static_config::CONFIG,
-    providers::provider_kind_impl::provider_kind_enum::ProviderKind,
+    providers::provider_kind::provider_kind_enum::ProviderKind,
 };
 use mongodb::bson::{doc, Document};
 

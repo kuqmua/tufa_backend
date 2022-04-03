@@ -3,7 +3,7 @@ use crate::helpers::resource::Resource;
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
 use crate::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsError;
-use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 use chrono::{DateTime, FixedOffset, Local, Utc};

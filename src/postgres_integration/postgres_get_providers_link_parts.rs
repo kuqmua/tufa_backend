@@ -5,7 +5,7 @@
 // use crate::postgres_integration::models::queryable::queryable_link_part::QueryableLinkPart;
 // use crate::postgres_integration::schemas::providers_link_parts_schema::providers_link_parts::dsl::*;
 // use crate::config_mods::lazy_static_config::CONFIG;
-// use crate::providers::provider_kind_impl::provider_kind_enum::ProviderKind;
+// use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 // use crate::traits::enum_extention::EnumExtenstion;
 
 // #[derive(Debug)]

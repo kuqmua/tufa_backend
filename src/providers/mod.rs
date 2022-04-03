@@ -13,7 +13,7 @@ pub mod providers_info {
     pub mod get_twitter_provider_name;
     pub mod providers_init_json_schema;
 }
-pub mod provider_kind_impl {
+pub mod provider_kind {
     pub mod functions {
         pub mod fetch_and_parse_provider_data;
         pub mod get_link_parts_from_local_json_file;

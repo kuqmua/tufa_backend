@@ -1,6 +1,6 @@
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
-use super::provider_kind_impl::functions::rss_part::RssPartErrorEnum;
-use super::provider_kind_impl::provider_kind_enum::ProviderKind;
+use super::provider_kind::functions::rss_part::RssPartErrorEnum;
+use super::provider_kind::provider_kind_enum::ProviderKind;
 use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 use crate::check_new_providers_posts::check_new_providers_posts;
 use crate::config_mods::lazy_static_config::CONFIG;
