@@ -1,4 +1,8 @@
+use impl_display::ImplDisplayDerive;
+use std::fmt;
 use tokio::task::JoinHandle;
+use tracing::dispatcher::SetGlobalDefaultError;
+use tracing::log::SetLoggerError;
 use tracing::subscriber::set_global_default;
 use tracing::Subscriber;
 use tracing_bunyan_formatter::{BunyanFormattingLayer, JsonStorageLayer};
@@ -37,7 +41,22 @@ where
         .with(formatting_layer)
 }
 
-pub fn init_subscriber(subscriber: impl Subscriber + Send + Sync) {
-    LogTracer::init().expect("Failed to set logger");
-    set_global_default(subscriber).expect("Failed to set subscriber");
+#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
+pub enum InitSubcriberErrorEnum {
+    SetLogger {
+        #[from]
+        source: SetLoggerError,
+    },
+    SetGlobalDefault {
+        #[from]
+        source: SetGlobalDefaultError,
+    },
+}
+
+pub fn init_subscriber(
+    subscriber: impl Subscriber + Send + Sync,
+) -> Result<(), InitSubcriberErrorEnum> {
+    LogTracer::init()?;
+    set_global_default(subscriber)?;
+    Ok(())
 }
