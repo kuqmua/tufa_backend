@@ -4,6 +4,7 @@ use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::server_wrapper::server_wrapper;
+use crate::telemetry::{get_subscriber, init_subscriber};
 use std::time::Instant;
 
 #[deny(
@@ -13,6 +14,17 @@ use std::time::Instant;
     clippy::float_arithmetic
 )]
 pub fn entry() {
+    let subscriber = get_subscriber("tufa_backend".into(), "info".into(), std::io::stdout);
+    if let Err(e) = init_subscriber(subscriber) {
+        print_colorful_message(
+            None,
+            PrintType::Error,
+            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+            vec![get_git_source_file_link(file!(), line!())],
+            format!("Failed to init_subscriber {e}"),
+        );
+        return;
+    }
     let time = Instant::now();
     let cpus = num_cpus::get();
     match tokio::runtime::Builder::new_multi_thread()
