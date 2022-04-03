@@ -1,5 +1,5 @@
-use crate::tests::tests_constants::ENV_FILE_NAME;
-use crate::tests::tests_constants::PATH_TO_ENV_FILE;
+use crate::constants::ENV_FILE_NAME;
+use crate::constants::PATH_TO_ENV_FILE;
 use std::fs::File;
 
 #[deny(
