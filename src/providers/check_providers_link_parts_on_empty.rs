@@ -1,10 +1,7 @@
-use std::collections::HashMap;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use crate::{config_mods::lazy_static_config::CONFIG, helpers::where_was::WhereWas};
-
 use super::provider_kind_enum::ProviderKind;
+use crate::{config_mods::lazy_static_config::CONFIG, helpers::where_was::WhereWas};
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub enum CheckProvidersLinkPartsEmptyError {

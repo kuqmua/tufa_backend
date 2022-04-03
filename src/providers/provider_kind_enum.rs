@@ -1,17 +1,11 @@
-use strum_macros::EnumIter;
-
-use mongodb::bson::doc;
-
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use convert_case::{Case, Casing};
-
+use mongodb::bson::doc;
 use std::collections::HashMap;
-
 use strum::IntoEnumIterator;
 use strum_macros::Display;
-
-use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-
-use crate::config_mods::lazy_static_config::CONFIG;
+use strum_macros::EnumIter;
 
 #[derive(Debug)]
 pub struct RemoveDirError {

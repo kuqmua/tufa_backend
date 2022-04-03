@@ -1,35 +1,23 @@
-use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
-use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-
-use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-
+use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
+use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
+use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_1;
+use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
+use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
+use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_1;
+use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_2;
+use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
+use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_1;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_2;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 use crate::constants::project_constants::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
-
-use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_1;
-use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REMOVE_2;
-use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use crate::constants::project_constants::MEDRXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
-
-use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
-use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
-use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use crate::constants::project_constants::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
-
-use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_1;
-use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REMOVE_2;
-use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
-use crate::constants::project_constants::HABR_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
-
-use crate::providers::provider_kind_enum::ProviderKind;
-
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
-
+use crate::fetch::info_structures::common_rss_structures::CommonRssPost;
+use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::info_structures::structs_for_parsing::arxiv_struct_for_parsing::ArxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::biorxiv_struct_for_parsing::BiorxivStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::github_struct_for_parsing::GithubStructForParsing;
@@ -38,14 +26,14 @@ use crate::fetch::info_structures::structs_for_parsing::medrxiv_struct_for_parsi
 use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsing::RedditStructForParsing;
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 use crate::fetch::parse_github_html::parse_github_html;
-
-use crate::traits::provider_kind_trait::ProviderKindTrait;
-
-use serde_xml_rs::from_str;
-
-use regex::Regex;
-
+use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::prints::print_colorful_message::print_colorful_message;
+use crate::prints::print_type_enum::PrintType;
+use crate::providers::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+use regex::Regex;
+use serde_xml_rs::from_str;
 
 #[deny(
     clippy::indexing_slicing,

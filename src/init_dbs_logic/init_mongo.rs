@@ -1,25 +1,18 @@
-use std::collections::HashMap;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use futures::future::join_all;
-
 use crate::helpers::where_was::WhereWas;
-
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+use crate::providers::provider_kind_enum::ProviderKind;
+use crate::{
+    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
+};
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use futures::future::join_all;
 use mongodb::{
     bson::{doc, Document},
     error::Error,
     options::ClientOptions,
     Client,
 };
-
-use crate::{
-    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
-};
-
-use crate::providers::provider_kind_enum::ProviderKind;
-
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub enum InitMongoErrorEnum {

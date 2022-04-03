@@ -1,5 +1,4 @@
 // use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
-
 // use crate::prints::print_colorful_message::print_colorful_message;
 // use crate::prints::print_type_enum::PrintType;
 

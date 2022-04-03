@@ -1,11 +1,9 @@
-use actix_web::{get, Responder};
-use std::time::Instant;
-
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
 use crate::providers::get_providers_posts::get_providers_posts;
+use actix_web::{get, Responder};
+use std::time::Instant;
 
 #[get("/get_providers_posts/")]
 async fn get_providers_posts_route() -> impl Responder {

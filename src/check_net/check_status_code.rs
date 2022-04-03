@@ -1,15 +1,10 @@
-use std::fmt;
-
-use reqwest::StatusCode;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use crate::helpers::get_git_commit_string::get_git_commit_string;
-use crate::traits::git_info_trait::GitInfo;
-
-use crate::helpers::where_was::WhereWas;
-
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::get_git_commit_string::get_git_commit_string;
+use crate::helpers::where_was::WhereWas;
+use crate::traits::git_info_trait::GitInfo;
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use reqwest::StatusCode;
+use std::fmt;
 
 #[derive(Debug, GitInfoDerive)]
 pub struct CheckStatusCodeError {

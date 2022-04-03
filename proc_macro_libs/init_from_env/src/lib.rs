@@ -1,14 +1,11 @@
+use convert_case::Case;
+use convert_case::Casing;
+use proc_macro::TokenStream;
+use quote::quote;
 use syn;
 use syn::Ident;
 use syn::LitStr;
 use syn::Path;
-
-use convert_case::Case;
-use convert_case::Casing;
-
-use proc_macro::TokenStream;
-
-use quote::quote;
 
 ///require this
 ///use dotenv::dotenv;

@@ -1,11 +1,8 @@
 use convert_case::Case;
 use convert_case::Casing;
-
-use syn;
-
 use proc_macro::TokenStream;
-
 use quote::quote;
+use syn;
 
 #[proc_macro_derive(GenEnumWithoutValuesDerive)]
 pub fn derive_gen_enum_without_values(input: TokenStream) -> TokenStream {

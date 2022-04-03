@@ -1,9 +1,7 @@
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::traits::print_type_trait::PrintTypeTrait;
 use ansi_term::Colour;
 use ansi_term::Colour::RGB;
-
-use crate::traits::print_type_trait::PrintTypeTrait;
-
-use crate::config_mods::lazy_static_config::CONFIG;
 
 pub enum PrintType {
     Error,

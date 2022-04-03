@@ -1,16 +1,11 @@
-use std::fmt;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use futures::future::join_all;
-use strum::IntoEnumIterator;
-
+use super::check_net_enum::CheckNetError;
+use crate::check_net::check_net_enum::CheckNet;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-
-use crate::check_net::check_net_enum::CheckNet;
-
-use super::check_net_enum::CheckNetError;
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use futures::future::join_all;
+use std::fmt;
+use strum::IntoEnumIterator;
 
 // pub struct CheckNetErrorVec(Vec<CheckNetError>);//need it to implement Display with proc macro
 

@@ -1,13 +1,9 @@
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::where_was::WhereWas;
+use chrono::{DateTime, FixedOffset, Local, Utc};
 use std::fmt;
 use std::path::Path;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
 use tokio::io::AsyncWriteExt;
-
-use crate::helpers::where_was::WhereWas;
-
-use crate::config_mods::lazy_static_config::CONFIG;
 
 #[derive(thiserror::Error, Debug, ImplDisplayDerive)]
 pub struct WriteStringIntoFileWithTokioError {

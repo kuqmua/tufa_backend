@@ -1,11 +1,9 @@
+use super::print_wrapper::print_wrapper;
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::print_type_trait::PrintTypeTrait;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-
-use crate::prints::print_type_enum::PrintType;
-
-use super::print_wrapper::print_wrapper;
 
 #[deny(
     clippy::indexing_slicing,

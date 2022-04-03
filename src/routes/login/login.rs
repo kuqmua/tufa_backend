@@ -1,6 +1,5 @@
-use actix_web::{post, HttpResponse, web};
 use actix_web::http::header::LOCATION;
-
+use actix_web::{post, HttpResponse};
 // use secrecy::Secret;
 
 // #[derive(serde::Deserialize)]
@@ -10,9 +9,10 @@ use actix_web::http::header::LOCATION;
 // }
 
 #[post("/login")]
-pub async fn login() -> HttpResponse {//form: web::Form<FormData>
+pub async fn login() -> HttpResponse {
+    //form: web::Form<FormData>
     println!("login");
     HttpResponse::SeeOther()
-    .insert_header((LOCATION, "/"))
-    .finish()
+        .insert_header((LOCATION, "/"))
+        .finish()
 }

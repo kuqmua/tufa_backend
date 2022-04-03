@@ -1,23 +1,15 @@
-use std::collections::HashMap;
-
 use chrono::{DateTime, FixedOffset, Local, Utc};
-
+use std::collections::HashMap;
 extern crate toml;
-
-use dotenv::dotenv;
-use init_from_env::InitFromEnv;
-
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::resource::Resource;
 use crate::helpers::where_was::WhereWas;
-
-use strum_macros::EnumIter;
-
 use convert_case::Case;
 use convert_case::Casing;
-
+use dotenv::dotenv;
+use init_from_env::InitFromEnv;
 use strum::IntoEnumIterator;
-
-use crate::config_mods::lazy_static_config::CONFIG;
+use strum_macros::EnumIter;
 
 #[derive(
     Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq,

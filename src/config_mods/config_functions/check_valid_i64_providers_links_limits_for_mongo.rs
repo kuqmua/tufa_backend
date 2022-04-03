@@ -1,5 +1,4 @@
 extern crate toml;
-
 use crate::config_mods::config_struct::ConfigStruct;
 
 impl ConfigStruct {

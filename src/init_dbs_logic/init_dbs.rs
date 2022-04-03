@@ -1,9 +1,7 @@
+use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
+use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use futures::future::join_all;
 use strum::IntoEnumIterator;
-
-use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
-
-use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 
 #[deny(
     clippy::indexing_slicing,

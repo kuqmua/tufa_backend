@@ -1,15 +1,11 @@
-use std::fmt;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
 use crate::check_net::check_status_code::check_status_code;
 use crate::check_net::check_status_code::CheckStatusCodeError;
-
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
-use crate::traits::git_info_trait::GitInfo;
-
 use crate::helpers::where_was::WhereWas;
+use crate::traits::git_info_trait::GitInfo;
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use std::fmt;
 
 #[derive(Debug, GitInfoDerive, ErrorDisplay)]
 pub enum CheckNetAvailabilityErrorEnum {

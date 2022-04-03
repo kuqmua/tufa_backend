@@ -1,22 +1,16 @@
-use std::fmt;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-use strum_macros::EnumIter;
-
-use crate::config_mods::lazy_static_config::CONFIG;
-
-use crate::helpers::where_was::WhereWas;
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
-
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
-
 use crate::check_net::check_net_availability::check_net_availability;
-use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
-use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
-
 use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::where_was::WhereWas;
+use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
+use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
+use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
+use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use std::fmt;
+use strum_macros::EnumIter;
 
 #[derive(Debug, EnumIter)]
 pub enum CheckNet {

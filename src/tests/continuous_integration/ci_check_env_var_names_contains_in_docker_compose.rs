@@ -1,11 +1,8 @@
-use std::fs;
-
-use strum::IntoEnumIterator;
-
+use crate::config_mods::config_struct::ConfigStructEnumWithoutValues;
 use crate::tests::tests_constants::DOCKER_COMPOSE_FILE_NAME;
 use crate::tests::tests_constants::PATH_TO_DOCKER_COMPOSE_FILE;
-
-use crate::config_mods::config_struct::ConfigStructEnumWithoutValues;
+use std::fs;
+use strum::IntoEnumIterator;
 
 #[deny(
     clippy::indexing_slicing,

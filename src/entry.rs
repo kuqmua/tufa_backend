@@ -1,17 +1,10 @@
-use std::time::Instant;
-
-use num_cpus;
-
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
 use crate::server_wrapper::server_wrapper;
-
-use crate::helpers::get_git_source_file_link::get_git_source_file_link;
-
-use crate::preparation::preparation;
-
-use crate::config_mods::lazy_static_config::CONFIG;
+use std::time::Instant;
 
 #[deny(
     clippy::indexing_slicing,
@@ -35,7 +28,6 @@ pub fn entry() {
                 vec![get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {e:#?}"),
             );
-            return;
         }
         Ok(runtime) => {
             print_colorful_message(

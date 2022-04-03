@@ -1,29 +1,20 @@
-use std::time::Instant;
-
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use futures::future::join_all;
-
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
-
-use crate::providers::provider_kind_enum::ProviderKind;
-
+use crate::helpers::where_was::WhereWas;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-
+use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::git_info_trait::GitInfo;
-
-use crate::helpers::where_was::WhereWas;
-
-use crate::config_mods::lazy_static_config::CONFIG;
+use chrono::{DateTime, FixedOffset, Local, Utc};
+use futures::future::join_all;
+use std::time::Instant;
 
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {

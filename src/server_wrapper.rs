@@ -1,15 +1,13 @@
-use actix_web::App;
-use actix_web::HttpServer;
-
 use crate::helpers::get_server_address::get_server_address;
-
 use crate::routes::default::default_route::default_route;
 use crate::routes::get_providers_posts_route::get_providers_posts_route;
 use crate::routes::html::html_route::html_route;
 use crate::routes::kekw::kekw;
-use crate::routes::post_echo::post_echo;
-use crate::routes::login::login_form::login_form;
 use crate::routes::login::login::login;
+use crate::routes::login::login_form::login_form;
+use crate::routes::post_echo::post_echo;
+use actix_web::App;
+use actix_web::HttpServer;
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> std::io::Result<()> {

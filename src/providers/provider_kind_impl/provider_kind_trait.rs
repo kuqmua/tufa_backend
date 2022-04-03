@@ -1,14 +1,4 @@
-use std::collections::HashMap;
-use std::fs;
-use std::path::Path;
-
-use strum::IntoEnumIterator;
-
 use crate::config_mods::lazy_static_config::CONFIG;
-
-use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
-
 use crate::providers::provider_kind_enum::CleanLogsDirError;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind_enum::RemoveDirError;
@@ -19,6 +9,12 @@ use crate::providers::providers_info::links::generate_habr_links::generate_habr_
 use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
 use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
+use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+use std::collections::HashMap;
+use std::fs;
+use std::path::Path;
+use strum::IntoEnumIterator;
 
 impl ProviderKindTrait for ProviderKind {
     #[deny(

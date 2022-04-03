@@ -1,10 +1,7 @@
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
-use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
-
-use crate::helpers::where_was::WhereWas;
-
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
+use crate::helpers::where_was::WhereWas;
+use chrono::{DateTime, FixedOffset, Local, Utc};
 
 #[deny(
     clippy::indexing_slicing,

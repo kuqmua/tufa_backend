@@ -1,18 +1,13 @@
-use std::fs;
-
 use convert_case::Case;
 use convert_case::Casing;
-
-use quote::quote;
-
-use syn;
-use syn::ReturnType;
-use syn::TraitItem;
-
 use proc_macro::TokenStream;
-
+use quote::quote;
+use std::fs;
+use syn;
 use syn::Data;
 use syn::Ident;
+use syn::ReturnType;
+use syn::TraitItem;
 
 //copy of print_type_from_config
 #[proc_macro_derive(ProviderKindFromConfigTraitDerive)]

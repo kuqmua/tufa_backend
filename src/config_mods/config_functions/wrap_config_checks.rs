@@ -1,12 +1,8 @@
 use chrono::{DateTime, FixedOffset, Local, Utc};
-
 extern crate toml;
-
-use crate::traits::wrap_config_checks_trait::WrapConfigChecks;
-
 use crate::config_mods::config_struct::ConfigStruct;
-
 use crate::helpers::where_was::WhereWas;
+use crate::traits::wrap_config_checks_trait::WrapConfigChecks;
 
 #[derive(Debug)]
 pub struct WrapConfigChecksError {

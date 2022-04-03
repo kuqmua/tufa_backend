@@ -1,6 +1,5 @@
-use ansi_term::Colour;
-
 use crate::config_mods::lazy_static_config::CONFIG;
+use ansi_term::Colour;
 
 #[deny(
     clippy::indexing_slicing,
