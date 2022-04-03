@@ -163,6 +163,7 @@ mod check_new_providers_posts;
 mod entry;
 mod preparation;
 mod server_wrapper;
+mod telemetry;
 mod write_error_posts_wrapper;
 
 #[macro_use]
