@@ -124,24 +124,7 @@ mod providers {
     pub mod get_providers_posts;
     pub mod provider_kind_enum;
 }
-mod routes {
-    pub mod html {
-        pub mod html_route;
-    }
-    pub mod login {
-        pub mod login;
-        pub mod login_form;
-    }
-    pub mod default {
-        pub mod default_route;
-    }
-    pub mod get_echo;
-    pub mod get_providers_posts_route;
-    pub mod kekw;
-    pub mod manual_responder;
-    pub mod newsletters;
-    pub mod post_echo;
-}
+mod routes;
 #[cfg(test)]
 mod tests {
     pub mod tests_constants;
