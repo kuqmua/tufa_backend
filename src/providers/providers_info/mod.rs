@@ -1,13 +1,5 @@
-pub mod links {
-    pub mod generate_arxiv_links;
-    pub mod generate_biorxiv_links;
-    pub mod generate_github_links;
-    pub mod generate_habr_links;
-    pub mod generate_medrxiv_links;
-    pub mod generate_reddit_links;
-    pub mod generate_twitter_links;
-}
 pub mod get_local_providers_link_parts;
 pub mod get_providers_link_parts;
 pub mod get_twitter_provider_name;
+pub mod links;
 pub mod providers_init_json_schema;
