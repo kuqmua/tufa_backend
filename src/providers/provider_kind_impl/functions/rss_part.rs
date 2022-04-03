@@ -7,6 +7,7 @@ use crate::providers::provider_kind_impl::functions::fetch_and_parse_provider_da
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use chrono::{DateTime, FixedOffset, Local, Utc};
+use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 
 #[derive(Debug, GitInfoDerive)]

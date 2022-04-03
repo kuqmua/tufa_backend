@@ -14,6 +14,7 @@ use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use futures::future::join_all;
+use git_info::GitInfoDerive;
 use std::time::Instant;
 
 #[derive(Debug, GitInfoDerive)]

@@ -1,5 +1,3 @@
-use chrono::{DateTime, FixedOffset, Local, Utc};
-
 use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::get_git_commit_string::get_git_commit_string;
@@ -7,7 +5,9 @@ use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind_enum::ProviderKind;
 use crate::traits::git_info_trait::GitInfo;
+use chrono::{DateTime, FixedOffset, Local, Utc};
 use futures::future::join_all;
+use git_info::GitInfoDerive;
 use std::collections::HashMap;
 
 #[derive(Debug, GitInfoDerive)]

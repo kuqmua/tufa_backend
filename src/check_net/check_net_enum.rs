@@ -9,6 +9,7 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 use chrono::{DateTime, FixedOffset, Local, Utc};
+use error_display::ErrorDisplay;
 use std::fmt;
 use strum_macros::EnumIter;
 

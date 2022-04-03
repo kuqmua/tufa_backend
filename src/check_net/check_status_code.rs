@@ -3,6 +3,7 @@ use crate::helpers::get_git_commit_string::get_git_commit_string;
 use crate::helpers::where_was::WhereWas;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::{DateTime, FixedOffset, Local, Utc};
+use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 use std::fmt;
 
