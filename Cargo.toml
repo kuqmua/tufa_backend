@@ -41,6 +41,10 @@ strum_macros = "0.23.1"
 thiserror = "1.0.30"
 tokio = {version = "1.7.1", features = ["macros"]}
 toml = "0.5"
+tracing = {version = "0.1", features = ["log"]}
+tracing-bunyan-formatter = "0.3"
+tracing-log = "0.1"
+tracing-subscriber = {version = "0.3", features = ["registry", "env-filter"]}
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
 # roux = "1.3.10" #reddit. worked with 0.4.0 version
