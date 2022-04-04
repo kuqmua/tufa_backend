@@ -20,6 +20,9 @@ use strum_macros::EnumIter;
 pub struct ConfigStruct {
     pub server_ip: String,
     pub server_port: String,
+    pub hmac_secret: String,
+    pub base_url: String,
+    pub require_ssl: bool,
 
     pub github_name: String,
     pub github_token: String,
@@ -33,6 +36,9 @@ pub struct ConfigStruct {
     pub providers_link_parts_source: Resource,
 
     pub timezone: i32,
+
+    pub redis_ip: String,
+    pub redis_port: String,
 
     pub mongo_first_handle_url_part: String,
     pub mongo_second_handle_url_part: String,
