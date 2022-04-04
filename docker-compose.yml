@@ -38,6 +38,8 @@ services:
     environment:
       SERVER_IP: ${SERVER_IP}
       SERVER_PORT: ${SERVER_PORT}
+      HMAC_SECRET: ${HMAC_SECRET}
+
       GITHUB_NAME: ${GITHUB_NAME}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
 
