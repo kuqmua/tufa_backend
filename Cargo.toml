@@ -17,6 +17,7 @@ actix-web = "4.0.1"
 actix-session = {version = "0.6", features = ["redis-rs-tls-session"]}
 actix-web-flash-messages = {version = "0.3", features = ["cookies"]}
 actix-web-lab = "0.15"
+anyhow = "1"
 tracing-actix-web = "0.5"
 ansi_term = "0.12"
 box_err_from_err = {path = "./proc_macro_libs/box_err_from_err"}
