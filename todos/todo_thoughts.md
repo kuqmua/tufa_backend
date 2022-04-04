@@ -785,3 +785,7 @@ for_each_concurrent
 buffer_unordered
 <br/>
  
+### -------------------
+gen rust files
+https://matklad.github.io/2022/03/26/self-modifying-code.html
+<br/>
