@@ -501,3 +501,7 @@ https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 there is a function to handle request error status inside reqwest crate
 .error_for_status()
 <br/>
+
+### -------------------
+add check on ports fields from env or config to be not equal 0-1000 range
+<br/>
