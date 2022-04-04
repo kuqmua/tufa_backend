@@ -52,17 +52,17 @@ use sqlx::ConnectOptions;
 // }
 
 #[derive(serde::Deserialize, Clone)]
-pub struct DatabaseSettings {
-    pub username: String,
+pub struct DatabaseSettings<'a> {
+    pub username: &'a str,
     pub password: Secret<String>,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub port: u16,
-    pub host: String,
-    pub database_name: String,
+    pub host: &'a str,
+    pub database_name: &'a str,
     pub require_ssl: bool,
 }
 
-impl DatabaseSettings {
+impl DatabaseSettings<'_> {
     pub fn with_db(&self) -> PgConnectOptions {
         let mut options = self.without_db().database(&self.database_name);
         options.log_statements(tracing::log::LevelFilter::Trace);

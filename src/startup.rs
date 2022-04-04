@@ -35,11 +35,11 @@ pub struct Application {
 impl Application {
     pub async fn build() -> Result<Self, anyhow::Error> {
         let db = DatabaseSettings {
-            host: "localhost".to_string(),
+            host: &CONFIG.postgres_ip,
             port: 5432,
-            username: "postgres".to_string(),
+            username: &CONFIG.postgres_login,
             password: Secret::new("postgres".to_string()),
-            database_name: "newsletter".to_string(),
+            database_name: &CONFIG.postgres_db,
             require_ssl: false,
         };
         let connection_pool = get_connection_pool(db.with_db());
