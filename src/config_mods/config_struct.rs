@@ -19,7 +19,7 @@ use strum_macros::EnumIter;
 )]
 pub struct ConfigStruct {
     pub server_ip: String,
-    pub server_port: String,
+    pub server_port: u16,
     pub hmac_secret: String,
     pub base_url: String,
     pub require_ssl: bool,
@@ -38,7 +38,7 @@ pub struct ConfigStruct {
     pub timezone: i32,
 
     pub redis_ip: String,
-    pub redis_port: String,
+    pub redis_port: u16,
 
     pub mongo_first_handle_url_part: String,
     pub mongo_second_handle_url_part: String,
@@ -49,7 +49,7 @@ pub struct ConfigStruct {
     pub mongo_login: String,
     pub mongo_password: String,
     pub mongo_ip: String,   //todo: 4x u8
-    pub mongo_port: String, //todo: u16
+    pub mongo_port: u16,
     pub mongo_params: String,
 
     pub mongo_connection_timeout: u64,
@@ -119,7 +119,7 @@ pub struct ConfigStruct {
     pub postgres_login: String,
     pub postgres_password: String,
     pub postgres_ip: String,   //todo: 4x u8
-    pub postgres_port: String, //todo: u16
+    pub postgres_port: u16,
     pub postgres_db: String,
     pub postgres_params: String,
 
