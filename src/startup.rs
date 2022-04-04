@@ -44,17 +44,16 @@ impl Application {
         };
         let connection_pool = get_connection_pool(db.with_db());
         // let email_client = configuration.email_client.client();
-        let address = format!(
+        let listener = TcpListener::bind(&format!(
             "{}:{}",
             CONFIG.server_ip, CONFIG.server_port
-        );
-        let listener = TcpListener::bind(&address)?;
+        ))?;
         let port = listener.local_addr().unwrap().port();
         let server = run(
             listener,
             connection_pool,
             // email_client,
-            "http://127.0.0.1".to_string(),//configuration.application.base_url,
+            format!("http://{}", CONFIG.server_ip),//configuration.application.base_url,
             Secret::new("super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string()), //"configuration.application.hmac_secret,
             Secret::new("redis://127.0.0.1:6379".to_string())//configuration.redis_uri,
         )
