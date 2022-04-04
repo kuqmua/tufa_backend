@@ -36,9 +36,9 @@ impl Application {
     pub async fn build() -> Result<Self, anyhow::Error> {
         let db = DatabaseSettings {
             host: &CONFIG.postgres_ip,
-            port: 5432,
+            port: 5432,//CONFIG.postgres_port
             username: &CONFIG.postgres_login,
-            password: Secret::new("postgres".to_string()),
+            password: Secret::new(CONFIG.postgres_password.clone()),
             database_name: &CONFIG.postgres_db,
             require_ssl: false,
         };
