@@ -36,6 +36,9 @@ pub enum ApplicationBuildErrorEnum {
     TcpListenerBind {
         source: std::io::Error,
     },
+    TcpListenerLocalAddress {
+        source: std::io::Error,
+    },
     ApplicationRun {
         source: anyhow::Error
     }
@@ -62,7 +65,12 @@ impl Application {
                 source: e
             })),
         };
-        let port = listener.local_addr().unwrap().port();
+        let port = match listener.local_addr() {
+            Ok(address) => address,
+            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerLocalAddress  {
+                source: e
+            })),
+        }.port();
         let server = match run(
             listener,
             connection_pool,
