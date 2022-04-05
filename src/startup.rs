@@ -32,8 +32,17 @@ pub struct Application {
     server: Server,
 }
 
+pub enum ApplicationBuildErrorEnum {
+    TcpListenerBind {
+        source: std::io::Error,
+    },
+    ApplicationRun {
+        source: anyhow::Error
+    }
+}
+
 impl Application {
-    pub async fn build() -> Result<Self, anyhow::Error> {
+    pub async fn build() -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let db = DatabaseSettings {
             host: &CONFIG.postgres_ip,
             port: CONFIG.postgres_port,
@@ -44,12 +53,17 @@ impl Application {
         };
         let connection_pool = get_connection_pool(db.with_db());
         // let email_client = configuration.email_client.client();
-        let listener = TcpListener::bind(&format!(
+        let listener = match TcpListener::bind(&format!(
             "{}:{}",
             CONFIG.server_ip, CONFIG.server_port
-        ))?;
+        )) {
+            Ok(listener) => listener,
+            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
+                source: e
+            })),
+        };
         let port = listener.local_addr().unwrap().port();
-        let server = run(
+        let server = match run(
             listener,
             connection_pool,
             // email_client,
@@ -57,7 +71,12 @@ impl Application {
             Secret::new("super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string()), //"configuration.application.hmac_secret,
             Secret::new("redis://127.0.0.1:6379".to_string())//configuration.redis_uri,
         )
-        .await?;
+        .await {
+            Ok(server) => server,
+            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
+                source: e
+            })),
+        };
         Ok(Self { port, server })
     }
 
