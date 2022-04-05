@@ -8,20 +8,20 @@ use sqlx::postgres::PgSslMode;
 use sqlx::ConnectOptions;
 
 // #[derive(serde::Deserialize, Clone)]
-// pub struct Settings {
-//     pub database: DatabaseSettings,
+// pub struct Settings<'a> {
+//     pub database: DatabaseSettings<'a>,
 //     pub application: ApplicationSettings,
 //     pub email_client: EmailClientSettings,
 //     pub redis_uri: Secret<String>,
 // }
 
-// #[derive(serde::Deserialize, Clone)]
-// pub struct EmailClientSettings {
-//     pub base_url: String,
-//     pub sender_email: String,
-//     pub authorization_token: Secret<String>,
-//     pub timeout_milliseconds: u64,
-// }
+#[derive(serde::Deserialize, Clone)]
+pub struct EmailClientSettings {
+    pub base_url: String,
+    pub sender_email: String,
+    pub authorization_token: Secret<String>,
+    pub timeout_milliseconds: u64,
+}
 
 // impl EmailClientSettings {
 //     pub fn sender(&self) -> Result<SubscriberEmail, String> {
@@ -42,14 +42,14 @@ use sqlx::ConnectOptions;
 //     }
 // }
 
-// #[derive(serde::Deserialize, Clone)]
-// pub struct ApplicationSettings {
-//     #[serde(deserialize_with = "deserialize_number_from_string")]
-//     pub port: u16,
-//     pub host: String,
-//     pub base_url: String,
-//     pub hmac_secret: Secret<String>,
-// }
+#[derive(serde::Deserialize, Clone)]
+pub struct ApplicationSettings {
+    #[serde(deserialize_with = "deserialize_number_from_string")]
+    pub port: u16,
+    pub host: String,
+    pub base_url: String,
+    pub hmac_secret: Secret<String>,
+}
 
 #[derive(serde::Deserialize, Clone)]
 pub struct DatabaseSettings<'a> {
