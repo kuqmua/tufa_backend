@@ -36,11 +36,11 @@ impl Application {
     pub async fn build() -> Result<Self, anyhow::Error> {
         let db = DatabaseSettings {
             host: &CONFIG.postgres_ip,
-            port: 5432,//CONFIG.postgres_port
+            port: CONFIG.postgres_port,
             username: &CONFIG.postgres_login,
             password: Secret::new(CONFIG.postgres_password.clone()),
             database_name: &CONFIG.postgres_db,
-            require_ssl: false,
+            require_ssl: CONFIG.require_ssl,
         };
         let connection_pool = get_connection_pool(db.with_db());
         // let email_client = configuration.email_client.client();
