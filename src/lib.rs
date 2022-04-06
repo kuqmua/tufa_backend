@@ -19,3 +19,4 @@ mod traits;
 mod write_error_posts_wrapper;
 mod startup;
 mod configuration;
+mod domain;
