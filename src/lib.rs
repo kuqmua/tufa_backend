@@ -21,5 +21,6 @@ mod startup;
 mod configuration;
 mod domain;
 mod email_client;
-// mod authentication;
+mod authentication;
 mod utils;
+mod session_state;
