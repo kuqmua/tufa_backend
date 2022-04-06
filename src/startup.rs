@@ -10,8 +10,8 @@ use crate::email_client::EmailClient;
 // use crate::routes::confirm;
 // use crate::routes::health_check;
 // use crate::routes::log_out;
-// use crate::routes::login;
-// use crate::routes::login_form;
+use crate::routes::login::login;
+use crate::routes::login::login_form;
 // use crate::routes::publish_newsletter;
 // use crate::routes::publish_newsletter_form;
 // use crate::routes::subscribe;
@@ -162,8 +162,8 @@ async fn run(
             //         .route("/password", web::post().to(change_password))
             //         .route("/logout", web::post().to(log_out)),
             // )
-            // .route("/login", web::get().to(login_form))
-            // .route("/login", web::post().to(login))
+            .route("/login", web::get().to(login_form))
+            .route("/login", web::post().to(login))
             // .route("/health_check", web::get().to(health_check))
             // .route("/subscriptions", web::post().to(subscribe))
             // .route("/subscriptions/confirm", web::get().to(confirm))
