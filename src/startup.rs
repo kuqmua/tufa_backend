@@ -4,16 +4,18 @@ use crate::email_client::EmailClient;
 // use crate::authentication::reject_anonymous_users;
 // use crate::configuration::{DatabaseSettings, Settings};
 // use crate::email_client::EmailClient;
-// use crate::routes::{
-//     admin_dashboard, 
-//     change_password, 
-//     change_password_form, 
-//     confirm, 
-//     health_check, home, log_out,
-//     login, login_form, publish_newsletter, publish_newsletter_form, subscribe,
-// };
+// use crate::routes::admin_dashboard;
+// use crate::routes::change_password;
+// use crate::routes::change_password_form;
+// use crate::routes::confirm;
+// use crate::routes::health_check;
+// use crate::routes::log_out;
+// use crate::routes::login;
+// use crate::routes::login_form;
+// use crate::routes::publish_newsletter;
+// use crate::routes::publish_newsletter_form;
+// use crate::routes::subscribe;
 use crate::routes::home::home;
-use crate::routes::login::login_handle::login_form;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
 use actix_web::cookie::Key;
@@ -160,16 +162,16 @@ async fn run(
             //         .route("/password", web::post().to(change_password))
             //         .route("/logout", web::post().to(log_out)),
             // )
-            .route("/login", web::get().to(login_form))
+            // .route("/login", web::get().to(login_form))
             // .route("/login", web::post().to(login))
             // .route("/health_check", web::get().to(health_check))
             // .route("/subscriptions", web::post().to(subscribe))
             // .route("/subscriptions/confirm", web::get().to(confirm))
             // .route("/newsletters", web::post().to(publish_newsletter))
-            // .app_data(db_pool.clone())
+            .app_data(db_pool.clone())
             .app_data(email_client.clone())
-            // .app_data(base_url.clone())
-            // .app_data(Data::new(HmacSecret(hmac_secret.clone())))
+            .app_data(base_url.clone())
+            .app_data(Data::new(HmacSecret(hmac_secret.clone())))
     })
     .listen(listener) {
         Ok(server) => server,
