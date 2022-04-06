@@ -64,10 +64,6 @@ impl Application {
             sender_email: "test@gmail.com".to_string(),
             authorization_token: Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
-            // http_client: Client,
-            // base_url: String,
-            // sender: SubscriberEmail,
-            // authorization_token: Secret<String>,
         }.client();
         let listener = match TcpListener::bind(&format!(
             "{}:{}",
@@ -100,11 +96,9 @@ impl Application {
         };
         Ok(Self { port, server })
     }
-
     pub fn port(&self) -> u16 {
         self.port
     }
-
     pub async fn run_until_stopped(self) -> Result<(), std::io::Error> {
         self.server.await
     }
