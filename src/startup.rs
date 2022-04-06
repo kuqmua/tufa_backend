@@ -12,6 +12,7 @@ use crate::email_client::EmailClient;
 //     health_check, home, log_out,
 //     login, login_form, publish_newsletter, publish_newsletter_form, subscribe,
 // };
+use crate::routes::home::home;
 use crate::routes::login::login_handle::login_form;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -148,13 +149,13 @@ async fn run(
     };
     let server = match HttpServer::new(move || {
         App::new()
-            // .wrap(message_framework.clone())
-            // .wrap(SessionMiddleware::new(
-            //     redis_store.clone(),
-            //     secret_key.clone(),
-            // ))
-            // .wrap(TracingLogger::default())
-            // .route("/", web::get().to(home))
+            .wrap(message_framework.clone())
+            .wrap(SessionMiddleware::new(
+                redis_store.clone(),
+                secret_key.clone(),
+            ))
+            .wrap(TracingLogger::default())
+            .route("/", web::get().to(home))
             // .service(
             //     web::scope("/admin")
             //         .wrap(from_fn(reject_anonymous_users))
