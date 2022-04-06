@@ -1,4 +1,6 @@
-use crate::configuration::DatabaseSettings;
+use crate::configuration::{DatabaseSettings, EmailClientSettings};
+use crate::email_client::EmailClient;
+// use crate::domain::SubscriberEmail;
 // use crate::authentication::reject_anonymous_users;
 // use crate::configuration::{DatabaseSettings, Settings};
 // use crate::email_client::EmailClient;
@@ -26,6 +28,7 @@ use sqlx::PgPool;
 use std::net::TcpListener;
 use tracing_actix_web::TracingLogger;
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::domain::SubscriberEmail;
 
 pub struct Application {
     port: u16,
@@ -55,7 +58,16 @@ impl Application {
             require_ssl: CONFIG.require_ssl,
         };
         let connection_pool = get_connection_pool(db.with_db());
-        // let email_client = configuration.email_client.client();
+        let email_client = EmailClientSettings {
+            base_url: CONFIG.base_url.clone(),
+            sender_email: "test@gmail.com".to_string(),
+            authorization_token: Secret::new("my-secret-token".to_string()),
+            timeout_milliseconds: 10000,
+            // http_client: Client,
+            // base_url: String,
+            // sender: SubscriberEmail,
+            // authorization_token: Secret<String>,
+        }.client();
         let listener = match TcpListener::bind(&format!(
             "{}:{}",
             CONFIG.server_ip, CONFIG.server_port
@@ -74,7 +86,7 @@ impl Application {
         let server = match run(
             listener,
             connection_pool,
-            // email_client,
+            email_client,
             format!("http://{}", CONFIG.server_ip),//configuration.application.base_url,
             Secret::new("super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string()), //"configuration.application.hmac_secret,
             Secret::new("redis://127.0.0.1:6379".to_string())//configuration.redis_uri,
@@ -117,13 +129,13 @@ pub enum ApplicationRunErrorEnum {
 async fn run(
     listener: TcpListener,
     db_pool: PgPool,
-    // email_client: EmailClient,
+    email_client: EmailClient,
     base_url: String,
     hmac_secret: Secret<String>,
     redis_uri: Secret<String>,
 ) -> Result<Server, Box<ApplicationRunErrorEnum>> {
     let db_pool = Data::new(db_pool);
-    // let email_client = Data::new(email_client);
+    let email_client = Data::new(email_client);
     let base_url = Data::new(ApplicationBaseUrl(base_url));
     let secret_key = Key::from(hmac_secret.expose_secret().as_bytes());
     let message_store = CookieMessageStore::builder(secret_key.clone()).build();
@@ -160,7 +172,7 @@ async fn run(
             // .route("/subscriptions/confirm", web::get().to(confirm))
             // .route("/newsletters", web::post().to(publish_newsletter))
             // .app_data(db_pool.clone())
-            // .app_data(email_client.clone())
+            .app_data(email_client.clone())
             // .app_data(base_url.clone())
             // .app_data(Data::new(HmacSecret(hmac_secret.clone())))
     })
