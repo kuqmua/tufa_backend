@@ -38,6 +38,7 @@ pub struct Application {
     server: Server,
 }
 
+#[derive(Debug)]
 pub enum ApplicationBuildErrorEnum {
     TcpListenerBind {
         source: std::io::Error,
@@ -53,11 +54,11 @@ pub enum ApplicationBuildErrorEnum {
 impl Application {
     pub async fn build() -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let db = DatabaseSettings {
-            host: &CONFIG.postgres_ip,
+            host: CONFIG.postgres_ip.clone(),
             port: CONFIG.postgres_port,
-            username: &CONFIG.postgres_login,
+            username: CONFIG.postgres_login.clone(),
             password: Secret::new(CONFIG.postgres_password.clone()),
-            database_name: &CONFIG.postgres_db,
+            database_name: CONFIG.postgres_db.clone(),
             require_ssl: CONFIG.require_ssl,
         };
         let connection_pool = get_connection_pool(db.with_db());
@@ -114,6 +115,7 @@ pub fn get_connection_pool(pg_connection_options: PgConnectOptions) -> PgPool {
 
 pub struct ApplicationBaseUrl(pub String);
 
+#[derive(Debug)]
 pub enum ApplicationRunErrorEnum {
     NewRedisSessionStore {
         source: anyhow::Error,
