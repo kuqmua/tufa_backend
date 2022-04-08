@@ -54,7 +54,7 @@ pub enum ApplicationBuildErrorEnum {
 }
 
 impl Application {
-    pub async fn build(configuration: &Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    pub async fn build(configuration: Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let connection_pool = get_connection_pool(&configuration.database);
         let email_client = EmailClientSettings {
             base_url: CONFIG.base_url.clone(),
@@ -85,11 +85,9 @@ impl Application {
             listener,
             connection_pool,
             email_client,
-            format!("http://{}", CONFIG.server_ip), //configuration.application.base_url,
-            Secret::new(
-                "super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string(),
-            ), //"configuration.application.hmac_secret,
-            Secret::new("redis://127.0.0.1:6379".to_string()), //configuration.redis_uri,
+            configuration.application.base_url,
+            configuration.application.hmac_secret,
+            configuration.redis_uri,
         )
         .await
         {
