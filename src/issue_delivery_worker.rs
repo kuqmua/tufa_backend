@@ -1,6 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::configuration::{DatabaseSettings, Settings};
 use crate::startup::get_connection_pool;
-use crate::configuration::{Settings, DatabaseSettings};
 use crate::{domain::SubscriberEmail, email_client::EmailClient};
 use secrecy::Secret;
 use sqlx::{PgPool, Postgres, Transaction};
@@ -9,14 +9,7 @@ use tracing::{field::display, Span};
 use uuid::Uuid;
 
 pub async fn run_worker_until_stopped(configuration: Settings) -> Result<(), anyhow::Error> {
-    let connection_pool = get_connection_pool(        DatabaseSettings {
-        host: CONFIG.postgres_ip.clone(),
-        port: CONFIG.postgres_port,
-        username: CONFIG.postgres_login.clone(),
-        password: Secret::new(CONFIG.postgres_password.clone()),
-        database_name: CONFIG.postgres_db.clone(),
-        require_ssl: CONFIG.require_ssl,
-    }.with_db());
+    let connection_pool = get_connection_pool(&configuration.database);
     let email_client = configuration.email_client.client();
     worker_loop(connection_pool, email_client).await
 }

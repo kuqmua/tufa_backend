@@ -1,6 +1,6 @@
 use crate::authentication::reject_anonymous_users;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::configuration::{DatabaseSettings, EmailClientSettings};
+use crate::configuration::{DatabaseSettings, EmailClientSettings, Settings};
 use crate::email_client::EmailClient;
 use crate::routes::admin_dashboard;
 use crate::routes::change_password;
@@ -49,16 +49,8 @@ pub enum ApplicationBuildErrorEnum {
 }
 
 impl Application {
-    pub async fn build() -> Result<Self, Box<ApplicationBuildErrorEnum>> {
-        let db = DatabaseSettings {
-            host: CONFIG.postgres_ip.clone(),
-            port: CONFIG.postgres_port,
-            username: CONFIG.postgres_login.clone(),
-            password: Secret::new(CONFIG.postgres_password.clone()),
-            database_name: CONFIG.postgres_db.clone(),
-            require_ssl: CONFIG.require_ssl,
-        };
-        let connection_pool = get_connection_pool(db.with_db());
+    pub async fn build(configuration: &Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+        let connection_pool = get_connection_pool(&configuration.database);
         let email_client = EmailClientSettings {
             base_url: CONFIG.base_url.clone(),
             sender_email: "test@gmail.com".to_string(),
@@ -113,10 +105,10 @@ impl Application {
     }
 }
 
-pub fn get_connection_pool(pg_connection_options: PgConnectOptions) -> PgPool {
+pub fn get_connection_pool(configuration: &DatabaseSettings) -> PgPool {
     PgPoolOptions::new()
         .connect_timeout(std::time::Duration::from_secs(2))
-        .connect_lazy_with(pg_connection_options)
+        .connect_lazy_with(configuration.with_db())
 }
 
 pub struct ApplicationBaseUrl(pub String);

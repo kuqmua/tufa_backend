@@ -23,12 +23,6 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
         std::io::stdout,
     );
     init_subscriber(subscriber);
-    // let configuration = get_configuration().expect("Failed to read configuration.");
-    let application = match Application::build().await {
-        Ok(app) => app,
-        Err(e) => return Err(e),
-    };
-    let application_task = tokio::spawn(application.run_until_stopped());
     let configuration = Settings {
         database: DatabaseSettings {
             host: CONFIG.postgres_ip.clone(),
@@ -54,6 +48,11 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
         },
         redis_uri: Secret::new("redis://127.0.0.1:6379".to_string()),
     };
+    let application = match Application::build(&configuration).await {
+        Ok(app) => app,
+        Err(e) => return Err(e),
+    };
+    let application_task = tokio::spawn(application.run_until_stopped());
     let worker_task = tokio::spawn(run_worker_until_stopped(configuration));
     tokio::select! {
         o = application_task => report_exit("API", o),
