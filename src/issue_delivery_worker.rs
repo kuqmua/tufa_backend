@@ -1,8 +1,6 @@
-use crate::config_mods::lazy_static_config::CONFIG;
-use crate::configuration::{DatabaseSettings, Settings};
+use crate::configuration::Settings;
 use crate::startup::get_connection_pool;
 use crate::{domain::SubscriberEmail, email_client::EmailClient};
-use secrecy::Secret;
 use sqlx::{PgPool, Postgres, Transaction};
 use std::time::Duration;
 use tracing::{field::display, Span};

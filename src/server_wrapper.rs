@@ -1,12 +1,9 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::configuration;
 use crate::configuration::ApplicationSettings;
 use crate::configuration::DatabaseSettings;
 use crate::configuration::EmailClientSettings;
 use crate::configuration::Settings;
-use crate::helpers::get_server_address::get_server_address;
 use crate::issue_delivery_worker::run_worker_until_stopped;
-use crate::routes::get_providers_posts_route::get_providers_posts_route;
 use crate::startup::Application;
 use crate::startup::ApplicationBuildErrorEnum;
 use crate::telemetry::get_subscriber;

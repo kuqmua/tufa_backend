@@ -1,26 +1,16 @@
+use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::get_providers_posts::get_providers_posts;
-use crate::{authentication::UserId, helpers::get_git_source_file_link::get_git_source_file_link};
 use actix_web::HttpResponse;
-use actix_web::{
-    get,
-    web::{self, ReqData},
-    Responder,
-};
 use std::time::Instant;
-
-// use super::FormData;
 
 // #[tracing::instrument(
 //     name = "get_providers_posts_routee",
 //     skip_all,
 //     fields(user_id=%*user_id)
 // )]
-pub async fn get_providers_posts_route(// form: web::Form<FormData>,
-    // user_id: ReqData<UserId>,
-    // pool: web::Data<PgPool>,
-) -> Result<HttpResponse, actix_web::Error> {
+pub async fn get_providers_posts_route() -> Result<HttpResponse, actix_web::Error> {
     let time = Instant::now();
     get_providers_posts().await;
     let message = format!(
@@ -32,8 +22,7 @@ pub async fn get_providers_posts_route(// form: web::Form<FormData>,
         PrintType::TimeMeasurement,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![get_git_source_file_link(file!(), line!())],
-        message.clone(),
+        message,
     );
-    // message
     Ok(HttpResponse::Ok().finish())
 }
