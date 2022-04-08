@@ -6,6 +6,7 @@ use crate::routes::admin_dashboard;
 use crate::routes::change_password;
 use crate::routes::change_password_form;
 use crate::routes::confirm;
+use crate::routes::get_providers_posts_route::get_providers_posts_route;
 use crate::routes::health_check;
 use crate::routes::home::home;
 use crate::routes::log_out;
@@ -173,6 +174,10 @@ async fn run(
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
             .route("/newsletters", web::post().to(publish_newsletter))
+            .route(
+                "/get_providers_posts",
+                web::post().to(get_providers_posts_route),
+            )
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
