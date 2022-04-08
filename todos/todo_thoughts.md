@@ -789,3 +789,8 @@ buffer_unordered
 gen rust files
 https://matklad.github.io/2022/03/26/self-modifying-code.html
 <br/>
+    
+### -------------------
+Building REST API's with Rust, Actix Web and MongoDB
+https://dev.to/feezyhendrix/building-rest-apis-with-rust-actix-web-and-mongodb-4lbf?utm_campaign=Rust%2BNigeria%2BNewsletter&utm_medium=web&utm_source=Rust_Nigeria_Newsletter_4
+<br/>
