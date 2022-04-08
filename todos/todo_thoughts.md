@@ -800,3 +800,7 @@ disable unsafe code
 #![forbid(unsafe_code)]
 <br/>
     
+### -------------------
+Tiny and Fast Docker image for Rust Application
+https://azzamsa.com/n/rust-docker/
+<br/>
