@@ -4,6 +4,7 @@ use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::server_wrapper::server_wrapper;
+use crate::startup::Application;
 use crate::telemetry::{get_subscriber, init_subscriber};
 use std::time::Instant;
 
@@ -60,15 +61,16 @@ pub fn entry() {
                 vec![get_git_source_file_link(file!(), line!())],
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
-            if let Err(e) = server_wrapper() {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
-                    format!("Cannot run actix-web HttpServer {e}"),
-                );
-            }
+            server_wrapper();
+            // if let None =  {
+            //     print_colorful_message(
+            //         None,
+            //         PrintType::Error,
+            //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
+            //         vec![get_git_source_file_link(file!(), line!())],
+            //         format!("Cannot run actix-web HttpServer"),
+            //     );
+            // }
         }
     }
 }
