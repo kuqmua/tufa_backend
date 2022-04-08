@@ -12,7 +12,9 @@ use std::time::Instant;
 // )]
 pub async fn get_providers_posts_route() -> Result<HttpResponse, actix_web::Error> {
     let time = Instant::now();
-    get_providers_posts().await;
+    if let Err(e) = get_providers_posts().await {
+        return Ok(HttpResponse::InternalServerError().finish());
+    };
     let message = format!(
         "get_providers_posts done in {} seconds",
         time.elapsed().as_secs()
