@@ -1,21 +1,19 @@
+use crate::authentication::reject_anonymous_users;
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::configuration::{DatabaseSettings, EmailClientSettings};
 use crate::email_client::EmailClient;
-// use crate::domain::SubscriberEmail;
-// use crate::authentication::reject_anonymous_users;
-// use crate::configuration::{DatabaseSettings, Settings};
-// use crate::email_client::EmailClient;
-// use crate::routes::admin_dashboard;
-// use crate::routes::change_password;
-// use crate::routes::change_password_form;
-// use crate::routes::confirm;
-// use crate::routes::health_check;
-// use crate::routes::log_out;
+use crate::routes::admin_dashboard;
+use crate::routes::change_password;
+use crate::routes::change_password_form;
+use crate::routes::confirm;
+use crate::routes::health_check;
+use crate::routes::home::home;
+use crate::routes::log_out;
 use crate::routes::login::login;
 use crate::routes::login::login_form;
-// use crate::routes::publish_newsletter;
-// use crate::routes::publish_newsletter_form;
-// use crate::routes::subscribe;
-use crate::routes::home::home;
+use crate::routes::publish_newsletter;
+use crate::routes::publish_newsletter_form;
+use crate::routes::subscribe;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
 use actix_web::cookie::Key;
@@ -26,12 +24,10 @@ use actix_web_flash_messages::storage::CookieMessageStore;
 use actix_web_flash_messages::FlashMessagesFramework;
 use actix_web_lab::middleware::from_fn;
 use secrecy::{ExposeSecret, Secret};
-use sqlx::postgres::{PgPoolOptions, PgConnectOptions};
+use sqlx::postgres::{PgConnectOptions, PgPoolOptions};
 use sqlx::PgPool;
 use std::net::TcpListener;
 use tracing_actix_web::TracingLogger;
-use crate::config_mods::lazy_static_config::CONFIG;
-use crate::domain::SubscriberEmail;
 
 pub struct Application {
     port: u16,
@@ -47,8 +43,8 @@ pub enum ApplicationBuildErrorEnum {
         source: std::io::Error,
     },
     ApplicationRun {
-        source: Box<ApplicationRunErrorEnum>
-    }
+        source: Box<ApplicationRunErrorEnum>,
+    },
 }
 
 impl Application {
@@ -67,35 +63,44 @@ impl Application {
             sender_email: "test@gmail.com".to_string(),
             authorization_token: Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
-        }.client();
-        let listener = match TcpListener::bind(&format!(
-            "{}:{}",
-            CONFIG.server_ip, CONFIG.server_port
-        )) {
-            Ok(listener) => listener,
-            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
-                source: e
-            })),
-        };
+        }
+        .client();
+        let listener =
+            match TcpListener::bind(&format!("{}:{}", CONFIG.server_ip, CONFIG.server_port)) {
+                Ok(listener) => listener,
+                Err(e) => {
+                    return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
+                        source: e,
+                    }))
+                }
+            };
         let port = match listener.local_addr() {
             Ok(address) => address,
-            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerLocalAddress  {
-                source: e
-            })),
-        }.port();
+            Err(e) => {
+                return Err(Box::new(
+                    ApplicationBuildErrorEnum::TcpListenerLocalAddress { source: e },
+                ))
+            }
+        }
+        .port();
         let server = match run(
             listener,
             connection_pool,
             email_client,
-            format!("http://{}", CONFIG.server_ip),//configuration.application.base_url,
-            Secret::new("super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string()), //"configuration.application.hmac_secret,
-            Secret::new("redis://127.0.0.1:6379".to_string())//configuration.redis_uri,
+            format!("http://{}", CONFIG.server_ip), //configuration.application.base_url,
+            Secret::new(
+                "super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string(),
+            ), //"configuration.application.hmac_secret,
+            Secret::new("redis://127.0.0.1:6379".to_string()), //configuration.redis_uri,
         )
-        .await {
+        .await
+        {
             Ok(server) => server,
-            Err(e) => return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
-                source: e
-            })),
+            Err(e) => {
+                return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
+                    source: e,
+                }))
+            }
         };
         Ok(Self { port, server })
     }
@@ -117,12 +122,8 @@ pub struct ApplicationBaseUrl(pub String);
 
 #[derive(Debug)]
 pub enum ApplicationRunErrorEnum {
-    NewRedisSessionStore {
-        source: anyhow::Error,
-    },
-    HttpServerListen {
-        source: std::io::Error,
-    }
+    NewRedisSessionStore { source: anyhow::Error },
+    HttpServerListen { source: std::io::Error },
 }
 
 async fn run(
@@ -141,9 +142,11 @@ async fn run(
     let message_framework = FlashMessagesFramework::builder(message_store).build();
     let redis_store = match RedisSessionStore::new(redis_uri.expose_secret()).await {
         Ok(redis_session_store) => redis_session_store,
-        Err(e) => return Err(Box::new(ApplicationRunErrorEnum::NewRedisSessionStore {
-            source: e
-        })),
+        Err(e) => {
+            return Err(Box::new(ApplicationRunErrorEnum::NewRedisSessionStore {
+                source: e,
+            }))
+        }
     };
     let server = match HttpServer::new(move || {
         App::new()
@@ -154,32 +157,35 @@ async fn run(
             ))
             .wrap(TracingLogger::default())
             .route("/", web::get().to(home))
-            // .service(
-            //     web::scope("/admin")
-            //         .wrap(from_fn(reject_anonymous_users))
-            //         .route("/dashboard", web::get().to(admin_dashboard))
-            //         .route("/newsletters", web::get().to(publish_newsletter_form))
-            //         .route("/newsletters", web::post().to(publish_newsletter))
-            //         .route("/password", web::get().to(change_password_form))
-            //         .route("/password", web::post().to(change_password))
-            //         .route("/logout", web::post().to(log_out)),
-            // )
+            .service(
+                web::scope("/admin")
+                    .wrap(from_fn(reject_anonymous_users))
+                    .route("/dashboard", web::get().to(admin_dashboard))
+                    .route("/newsletters", web::get().to(publish_newsletter_form))
+                    .route("/newsletters", web::post().to(publish_newsletter))
+                    .route("/password", web::get().to(change_password_form))
+                    .route("/password", web::post().to(change_password))
+                    .route("/logout", web::post().to(log_out)),
+            )
             .route("/login", web::get().to(login_form))
             .route("/login", web::post().to(login))
-            // .route("/health_check", web::get().to(health_check))
-            // .route("/subscriptions", web::post().to(subscribe))
-            // .route("/subscriptions/confirm", web::get().to(confirm))
-            // .route("/newsletters", web::post().to(publish_newsletter))
+            .route("/health_check", web::get().to(health_check))
+            .route("/subscriptions", web::post().to(subscribe))
+            .route("/subscriptions/confirm", web::get().to(confirm))
+            .route("/newsletters", web::post().to(publish_newsletter))
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
             .app_data(Data::new(HmacSecret(hmac_secret.clone())))
     })
-    .listen(listener) {
+    .listen(listener)
+    {
         Ok(server) => server,
-        Err(e) => return Err(Box::new(ApplicationRunErrorEnum::HttpServerListen {
-            source: e
-        })),
+        Err(e) => {
+            return Err(Box::new(ApplicationRunErrorEnum::HttpServerListen {
+                source: e,
+            }))
+        }
     }
     .run();
     Ok(server)
