@@ -30,12 +30,10 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
             require_ssl: CONFIG.require_ssl,
         },
         application: ApplicationSettings {
-            port: 8080,
-            host: "127.0.0.1".to_string(),
-            base_url: "http://127.0.0.1".to_string(),
-            hmac_secret: Secret::new(
-                "super-long-and-secret-random-key-needed-to-verify-message-integrity".to_string(),
-            ),
+            port: CONFIG.server_port,
+            host: CONFIG.server_ip.clone(),
+            base_url: CONFIG.base_url.clone(),
+            hmac_secret: Secret::new(CONFIG.hmac_secret.clone()),
         },
         email_client: EmailClientSettings {
             base_url: CONFIG.base_url.clone(),
@@ -45,7 +43,7 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
         },
         redis_uri: Secret::new("redis://127.0.0.1:6379".to_string()),
     };
-    let application = match Application::build(&configuration).await {
+    let application = match Application::build(configuration.clone()).await {
         Ok(app) => app,
         Err(e) => return Err(e),
     };
