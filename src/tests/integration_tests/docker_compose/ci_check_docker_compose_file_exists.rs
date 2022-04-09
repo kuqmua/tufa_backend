@@ -1,5 +1,5 @@
-use crate::constants::DOCKER_COMPOSE_FILE_NAME;
-use crate::constants::PATH_TO_DOCKER_COMPOSE_FILE;
+use crate::tests::constants::DOCKER_COMPOSE_FILE_NAME;
+use crate::tests::constants::PATH_TO_DOCKER_COMPOSE_FILE;
 use std::fs;
 
 #[deny(

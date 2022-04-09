@@ -333,8 +333,8 @@ mod tests {
     }
 
     use crate::config_mods::config_struct::ConfigStructEnumWithoutValues;
-    use crate::unit_tests::constants::DOCKER_COMPOSE_FILE_NAME;
-    use crate::unit_tests::constants::PATH_TO_DOCKER_COMPOSE_FILE;
+    use crate::tests::constants::DOCKER_COMPOSE_FILE_NAME;
+    use crate::tests::constants::PATH_TO_DOCKER_COMPOSE_FILE;
     use std::fs;
     use strum::IntoEnumIterator;
 

@@ -23,7 +23,8 @@ mod server_wrapper;
 mod session_state;
 pub mod startup;
 pub mod telemetry;
+#[cfg(test)]
+pub mod tests;
 pub mod traits;
-pub mod unit_tests;
 mod utils;
 pub mod write_error_posts_wrapper;
