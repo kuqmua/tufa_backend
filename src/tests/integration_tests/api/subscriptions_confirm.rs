@@ -37,13 +37,13 @@ async fn integration_clicking_on_the_confirmation_link_confirms_a_subscriber() {
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
-    let email_request = &app.email_server.received_requests().await.unwrap()[0];
+    let email_request = &app.email_server.received_requests().await.expect("inside integration_clicking_on_the_confirmation_link_confirms_a_subscriber app.email_server.received_requests() failed")[0];
     let confirmation_links = app.get_confirmation_links(email_request);
     reqwest::get(confirmation_links.html)
         .await
-        .unwrap()
+        .expect("inside integration_clicking_on_the_confirmation_link_confirms_a_subscriber reqwest::get().await failed")
         .error_for_status()
-        .unwrap();
+        .expect("inside integration_clicking_on_the_confirmation_link_confirms_a_subscriber reqwest::get().await.error_for_status() failed");
     let saved = sqlx::query!("SELECT email, name, status FROM subscriptions",)
         .fetch_one(&app.db_pool)
         .await
