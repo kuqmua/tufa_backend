@@ -73,7 +73,7 @@ async fn integration_subscribe_returns_a_400_when_fields_are_present_but_invalid
 }
 
 #[tokio::test]
-async fn subscribe_sends_a_confirmation_email_for_valid_data() {
+async fn integration_subscribe_sends_a_confirmation_email_for_valid_data() {
     let app = spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     Mock::given(path("/email"))
@@ -100,7 +100,7 @@ async fn subscribe_sends_a_confirmation_email_for_valid_data() {
 }
 
 #[tokio::test]
-async fn subscribe_sends_a_confirmation_email_with_a_link() {
+async fn integration_subscribe_sends_a_confirmation_email_with_a_link() {
     let app = spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     Mock::given(path("/email"))
@@ -115,7 +115,7 @@ async fn subscribe_sends_a_confirmation_email_with_a_link() {
 }
 
 #[tokio::test]
-async fn subscribe_fails_if_there_is_a_fatal_database_error() {
+async fn integration_subscribe_fails_if_there_is_a_fatal_database_error() {
     let app = spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     sqlx::query!("ALTER TABLE subscriptions DROP COLUMN email;",)
