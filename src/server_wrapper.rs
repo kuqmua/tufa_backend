@@ -21,11 +21,7 @@ pub enum ServerWrapperErrorEnum {
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> Result<(), Box<ServerWrapperErrorEnum>> {
-    let subscriber = get_subscriber(
-        "session_based_authentication".into(),
-        "info".into(),
-        std::io::stdout,
-    );
+    let subscriber = get_subscriber("tufa_backend".into(), "info".into(), std::io::stdout);
     if let Err(e) = init_subscriber(subscriber) {
         return Err(Box::new(ServerWrapperErrorEnum::InitSubcriber {
             source: e,
