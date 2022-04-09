@@ -16,7 +16,7 @@ async fn create_unconfirmed_subscriber(app: &TestApp) -> ConfirmationLinks {
         "name": name,
         "email": email
     }))
-    .unwrap();
+    .expect("inside create_unconfirmed_subscriber serde_urlencoded::to_string failed");
     let _mock_guard = Mock::given(path("/email"))
         .and(method("POST"))
         .respond_with(ResponseTemplate::new(200))
@@ -27,14 +27,14 @@ async fn create_unconfirmed_subscriber(app: &TestApp) -> ConfirmationLinks {
     app.post_subscriptions(body)
         .await
         .error_for_status()
-        .unwrap();
+        .expect("inside create_unconfirmed_subscriber app.post_subscriptions().await().error_for_status() failed");
     let email_request = &app
         .email_server
         .received_requests()
         .await
-        .unwrap()
+        .expect("inside create_unconfirmed_subscriber app.email_server.received_requests().await failed")
         .pop()
-        .unwrap();
+        .expect("inside create_unconfirmed_subscriber app.email_server.received_requests().await.pop() failed");
     app.get_confirmation_links(email_request)
 }
 
@@ -42,9 +42,11 @@ async fn create_confirmed_subscriber(app: &TestApp) {
     let confirmation_link = create_unconfirmed_subscriber(app).await.html;
     reqwest::get(confirmation_link)
         .await
-        .unwrap()
+        .expect("inside create_confirmed_subscriber reqwest::get().await failed")
         .error_for_status()
-        .unwrap();
+        .expect(
+            "inside create_confirmed_subscriber reqwest::get().await.error_for_status() failed",
+        );
 }
 
 #[tokio::test]
@@ -176,8 +178,8 @@ async fn integration_concurrent_form_submission_is_handled_gracefully() {
     let (response1, response2) = tokio::join!(response1, response2);
     assert_eq!(response1.status(), response2.status());
     assert_eq!(
-        response1.text().await.unwrap(),
-        response2.text().await.unwrap()
+        response1.text().await.expect("inside integration_concurrent_form_submission_is_handled_gracefully response1.text().await failed"),
+        response2.text().await.expect("inside integration_concurrent_form_submission_is_handled_gracefully response2.text().await failed")
     );
     app.dispatch_all_pending_emails().await;
 }
