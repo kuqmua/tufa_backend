@@ -83,8 +83,8 @@ async fn integration_subscribe_sends_a_confirmation_email_for_valid_data() {
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
-    let email_request = &app.email_server.received_requests().await.unwrap()[0];
-    let body: serde_json::Value = serde_json::from_slice(&email_request.body).unwrap();
+    let email_request = &app.email_server.received_requests().await.expect("inside integration_subscribe_sends_a_confirmation_email_for_valid_data app.email_server.received_requests() failed")[0];
+    let body: serde_json::Value = serde_json::from_slice(&email_request.body).expect("inside integration_subscribe_sends_a_confirmation_email_for_valid_data serde_json::from_slice failed");
     let get_link = |s: &str| {
         let links: Vec<_> = linkify::LinkFinder::new()
             .links(s)
@@ -94,8 +94,8 @@ async fn integration_subscribe_sends_a_confirmation_email_for_valid_data() {
         links[0].as_str().to_owned()
     };
 
-    let html_link = get_link(body["HtmlBody"].as_str().unwrap());
-    let text_link = get_link(body["TextBody"].as_str().unwrap());
+    let html_link = get_link(body["HtmlBody"].as_str().expect("inside integration_subscribe_sends_a_confirmation_email_for_valid_data get_link(body[\"HtmlBody\"].as_str() failed"));
+    let text_link = get_link(body["TextBody"].as_str().expect("inside integration_subscribe_sends_a_confirmation_email_for_valid_data get_link(body[\"TextBody\"].as_str() failed"));
     assert_eq!(html_link, text_link);
 }
 
@@ -109,7 +109,7 @@ async fn integration_subscribe_sends_a_confirmation_email_with_a_link() {
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
-    let email_request = &app.email_server.received_requests().await.unwrap()[0];
+    let email_request = &app.email_server.received_requests().await.expect("inside  integration_subscribe_sends_a_confirmation_email_with_a_link app.email_server.received_requests().await failed")[0];
     let confirmation_links = app.get_confirmation_links(email_request);
     assert_eq!(confirmation_links.html, confirmation_links.plain_text);
 }
@@ -121,7 +121,7 @@ async fn integration_subscribe_fails_if_there_is_a_fatal_database_error() {
     sqlx::query!("ALTER TABLE subscriptions DROP COLUMN email;",)
         .execute(&app.db_pool)
         .await
-        .unwrap();
+        .expect("inside integration_subscribe_fails_if_there_is_a_fatal_database_error sqlx::query!().execute().await failed");
     let response = app.post_subscriptions(body.into()).await;
     assert_eq!(response.status().as_u16(), 500);
 }
