@@ -4,8 +4,8 @@ application:
 database:
   host: "localhost"
   port: 5432
-  username: "postgres"
-  password: "postgres"
+  username: "postgreslocalusername"
+  password: "postgreslocalpassword"
   database_name: "newsletter"
 email_client:
   base_url: "localhost"
