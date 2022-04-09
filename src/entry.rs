@@ -1,10 +1,10 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::get_git_source_file_link::get_git_source_file_link;
 use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::server_wrapper::server_wrapper;
-use crate::telemetry::{get_subscriber, init_subscriber};
+use crate::telemetry::get_subscriber;
+use crate::telemetry::init_subscriber;
 use std::time::Instant;
 
 #[deny(
@@ -14,21 +14,8 @@ use std::time::Instant;
     clippy::float_arithmetic
 )]
 pub fn entry() {
-    let subscriber = get_subscriber("tufa_backend".into(), "info".into(), std::io::stdout);
-    if let Err(e) = init_subscriber(subscriber) {
-        print_colorful_message(
-            None,
-            PrintType::Error,
-            vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
-            format!("Failed to init_subscriber {e}"),
-        );
-        return;
-    }
-    let time = Instant::now();
-    let cpus = num_cpus::get();
     match tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(cpus)
+        .worker_threads(num_cpus::get())
         .enable_all()
         .build()
     {
@@ -42,16 +29,21 @@ pub fn entry() {
             );
         }
         Ok(runtime) => {
-            print_colorful_message(
-                None,
-                PrintType::Info,
-                vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![get_git_source_file_link(file!(), line!())],
-                format!(
-                    "server running on {}:{} with {cpus} CPUs",
-                    CONFIG.server_ip, CONFIG.server_port
-                ),
-            );
+            if let Err(e) = init_subscriber(get_subscriber(
+                "tufa_backend".into(),
+                "info".into(),
+                std::io::stdout,
+            )) {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
+                    format!("tracing init_subscriber error: {:#?}", e),
+                );
+                return;
+            };
+            let time = Instant::now();
             runtime.block_on(preparation());
             print_colorful_message(
                 None,
@@ -60,16 +52,15 @@ pub fn entry() {
                 vec![get_git_source_file_link(file!(), line!())],
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
-            server_wrapper();
-            // if let None =  {
-            //     print_colorful_message(
-            //         None,
-            //         PrintType::Error,
-            //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            //         vec![get_git_source_file_link(file!(), line!())],
-            //         format!("Cannot run actix-web HttpServer"),
-            //     );
-            // }
+            if let Err(e) = server_wrapper() {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                    vec![get_git_source_file_link(file!(), line!())],
+                    format!("Cannot run actix-web HttpServer, errror: {:#?}", e),
+                );
+            }
         }
     }
 }
