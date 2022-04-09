@@ -1,7 +1,6 @@
 use crate::authentication::reject_anonymous_users;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::configuration::DatabaseSettings;
-use crate::configuration::EmailClientSettings;
 use crate::configuration::Settings;
 use crate::email_client::EmailClient;
 use crate::routes::admin_dashboard;
@@ -56,13 +55,6 @@ pub enum ApplicationBuildErrorEnum {
 impl Application {
     pub async fn build(configuration: Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let connection_pool = get_connection_pool(&configuration.database);
-        let email_client = EmailClientSettings {
-            base_url: CONFIG.base_url.clone(),
-            sender_email: "test@gmail.com".to_string(),
-            authorization_token: Secret::new("my-secret-token".to_string()),
-            timeout_milliseconds: 10000,
-        }
-        .client();
         let listener =
             match TcpListener::bind(&format!("{}:{}", CONFIG.server_ip, CONFIG.server_port)) {
                 Ok(listener) => listener,
@@ -84,7 +76,7 @@ impl Application {
         let server = match run(
             listener,
             connection_pool,
-            email_client,
+            configuration.email_client.client(),
             configuration.application.base_url,
             configuration.application.hmac_secret,
             configuration.redis_uri,
