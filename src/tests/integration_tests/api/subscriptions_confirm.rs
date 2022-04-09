@@ -7,7 +7,7 @@ async fn integration_confirmations_without_token_are_rejected_with_a_400() {
     let app = spawn_app().await;
     let response = reqwest::get(&format!("{}/subscriptions/confirm", app.address))
         .await
-        .unwrap();
+        .expect("inside integration_confirmations_without_token_are_rejected_with_a_400 reqwest::get().await failed");
     assert_eq!(response.status().as_u16(), 400);
 }
 
@@ -21,9 +21,9 @@ async fn integration_the_link_returned_by_subscribe_returns_a_200_if_called() {
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
-    let email_request = &app.email_server.received_requests().await.unwrap()[0];
+    let email_request = &app.email_server.received_requests().await.expect("inside integration_the_link_returned_by_subscribe_returns_a_200_if_called app.email_server.received_requests().await failed")[0];
     let confirmation_links = app.get_confirmation_links(email_request);
-    let response = reqwest::get(confirmation_links.html).await.unwrap();
+    let response = reqwest::get(confirmation_links.html).await.expect("inside integration_the_link_returned_by_subscribe_returns_a_200_if_called reqwest::get().await failed");
     assert_eq!(response.status().as_u16(), 200);
 }
 
