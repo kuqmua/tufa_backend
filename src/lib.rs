@@ -24,7 +24,7 @@ mod session_state;
 pub mod startup;
 pub mod telemetry;
 #[cfg(test)]
-pub mod tests;
+mod tests;
 pub mod traits;
 mod utils;
 pub mod write_error_posts_wrapper;

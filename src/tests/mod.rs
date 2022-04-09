@@ -1,3 +1,3 @@
 pub mod constants;
-pub mod integration_tests;
-pub mod unit_tests;
+mod integration_tests;
+mod unit_tests;

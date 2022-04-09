@@ -1,12 +1,11 @@
+use crate::configuration::{get_configuration, DatabaseSettings};
+use crate::email_client::EmailClient;
+use crate::issue_delivery_worker::{try_execute_task, ExecutionOutcome};
+use crate::startup::{get_connection_pool, Application};
+use crate::telemetry::{get_subscriber, init_subscriber};
 use argon2::password_hash::SaltString;
 use argon2::{Algorithm, Argon2, Params, PasswordHasher, Version};
 use once_cell::sync::Lazy;
-use secrecy::Secret;
-use tufa_backend::configuration::{get_configuration, DatabaseSettings};
-use tufa_backend::email_client::EmailClient;
-use tufa_backend::issue_delivery_worker::{try_execute_task, ExecutionOutcome};
-use tufa_backend::startup::{get_connection_pool, Application};
-use tufa_backend::telemetry::{get_subscriber, init_subscriber};
 use sqlx::{Connection, Executor, PgConnection, PgPool};
 use uuid::Uuid;
 use wiremock::MockServer;
@@ -16,10 +15,10 @@ static TRACING: Lazy<()> = Lazy::new(|| {
     let subscriber_name = "test".to_string();
     if std::env::var("TEST_LOG").is_ok() {
         let subscriber = get_subscriber(subscriber_name, default_filter_level, std::io::stdout);
-        init_subscriber(subscriber);
+        init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::stdout");
     } else {
         let subscriber = get_subscriber(subscriber_name, default_filter_level, std::io::sink);
-        init_subscriber(subscriber);
+        init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::sink");
     };
 });
 
@@ -170,7 +169,7 @@ pub async fn spawn_app() -> TestApp {
         c
     };
     configure_database(&configuration.database).await;
-    let application = Application::build()//configuration.clone()
+    let application = Application::build(configuration.clone()) //configuration.clone()
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
@@ -183,14 +182,7 @@ pub async fn spawn_app() -> TestApp {
     let test_app = TestApp {
         address: format!("http://localhost:{}", application_port),
         port: application_port,
-        db_pool: get_connection_pool(DatabaseSettings {
-            host: String::from("127.0.0.1"),
-            port: 5432,
-            username: String::from("postgres"),
-            password: Secret::new(String::from("postgres")),
-            database_name: String::from("newsletter"),
-            require_ssl: false,
-        }.with_db()),
+        db_pool: get_connection_pool(&configuration.database),
         email_server,
         test_user: TestUser::generate(),
         api_client: client,

@@ -1,4 +1,7 @@
-use crate::helpers::{assert_is_redirect_to, spawn_app, ConfirmationLinks, TestApp};
+use crate::tests::integration_tests::api::helpers::assert_is_redirect_to;
+use crate::tests::integration_tests::api::helpers::spawn_app;
+use crate::tests::integration_tests::api::helpers::ConfirmationLinks;
+use crate::tests::integration_tests::api::helpers::TestApp;
 use fake::faker::internet::en::SafeEmail;
 use fake::faker::name::en::Name;
 use fake::Fake;
