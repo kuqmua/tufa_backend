@@ -48,7 +48,7 @@ pub struct ConfigStruct {
 
     pub mongo_login: String,
     pub mongo_password: String,
-    pub mongo_ip: String,   //todo: 4x u8
+    pub mongo_ip: String, //todo: 4x u8
     pub mongo_port: u16,
     pub mongo_params: String,
 
@@ -118,7 +118,7 @@ pub struct ConfigStruct {
 
     pub postgres_login: String,
     pub postgres_password: String,
-    pub postgres_ip: String,   //todo: 4x u8
+    pub postgres_ip: String, //todo: 4x u8
     pub postgres_port: u16,
     pub postgres_db: String,
     pub postgres_params: String,
@@ -333,8 +333,8 @@ mod tests {
     }
 
     use crate::config_mods::config_struct::ConfigStructEnumWithoutValues;
-    use crate::project_constants::DOCKER_COMPOSE_FILE_NAME;
-    use crate::project_constants::PATH_TO_DOCKER_COMPOSE_FILE;
+    use crate::unit_tests::constants::DOCKER_COMPOSE_FILE_NAME;
+    use crate::unit_tests::constants::PATH_TO_DOCKER_COMPOSE_FILE;
     use std::fs;
     use strum::IntoEnumIterator;
 
