@@ -48,7 +48,7 @@ async fn create_confirmed_subscriber(app: &TestApp) {
 }
 
 #[tokio::test]
-async fn newsletters_are_not_delivered_to_unconfirmed_subscribers() {
+async fn integration_newsletters_are_not_delivered_to_unconfirmed_subscribers() {
     let app = spawn_app().await;
     create_unconfirmed_subscriber(&app).await;
     app.test_user.login(&app).await;
@@ -74,7 +74,7 @@ async fn newsletters_are_not_delivered_to_unconfirmed_subscribers() {
 }
 
 #[tokio::test]
-async fn newsletters_are_delivered_to_confirmed_subscribers() {
+async fn integration_newsletters_are_delivered_to_confirmed_subscribers() {
     let app = spawn_app().await;
     create_confirmed_subscriber(&app).await;
     app.test_user.login(&app).await;
@@ -101,14 +101,14 @@ async fn newsletters_are_delivered_to_confirmed_subscribers() {
 }
 
 #[tokio::test]
-async fn you_must_be_logged_in_to_see_the_newsletter_form() {
+async fn integration_you_must_be_logged_in_to_see_the_newsletter_form() {
     let app = spawn_app().await;
     let response = app.get_publish_newsletter().await;
     assert_is_redirect_to(&response, "/login");
 }
 
 #[tokio::test]
-async fn you_must_be_logged_in_to_publish_a_newsletter() {
+async fn integration_you_must_be_logged_in_to_publish_a_newsletter() {
     let app = spawn_app().await;
     let newsletter_request_body = serde_json::json!({
         "title": "Newsletter title",
@@ -121,7 +121,7 @@ async fn you_must_be_logged_in_to_publish_a_newsletter() {
 }
 
 #[tokio::test]
-async fn newsletter_creation_is_idempotent() {
+async fn integration_newsletter_creation_is_idempotent() {
     let app = spawn_app().await;
     create_confirmed_subscriber(&app).await;
     app.test_user.login(&app).await;
@@ -155,7 +155,7 @@ async fn newsletter_creation_is_idempotent() {
 }
 
 #[tokio::test]
-async fn concurrent_form_submission_is_handled_gracefully() {
+async fn integration_concurrent_form_submission_is_handled_gracefully() {
     let app = spawn_app().await;
     create_confirmed_subscriber(&app).await;
     app.test_user.login(&app).await;

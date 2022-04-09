@@ -2,7 +2,7 @@ use crate::tests::integration_tests::api::helpers::assert_is_redirect_to;
 use crate::tests::integration_tests::api::helpers::spawn_app;
 
 #[tokio::test]
-async fn an_error_flash_message_is_set_on_failure() {
+async fn integration_an_error_flash_message_is_set_on_failure() {
     let app = spawn_app().await;
     let login_body = serde_json::json!({
         "username": "random-username",
@@ -17,7 +17,7 @@ async fn an_error_flash_message_is_set_on_failure() {
 }
 
 #[tokio::test]
-async fn redirect_to_admin_dashboard_after_login_success() {
+async fn integration_redirect_to_admin_dashboard_after_login_success() {
     let app = spawn_app().await;
     let login_body = serde_json::json!({
         "username": &app.test_user.username,

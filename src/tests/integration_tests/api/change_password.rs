@@ -3,14 +3,14 @@ use crate::tests::integration_tests::api::helpers::spawn_app;
 use uuid::Uuid;
 
 #[tokio::test]
-async fn you_must_be_logged_in_to_see_the_change_password_form() {
+async fn integration_you_must_be_logged_in_to_see_the_change_password_form() {
     let app = spawn_app().await;
     let response = app.get_change_password().await;
     assert_is_redirect_to(&response, "/login");
 }
 
 #[tokio::test]
-async fn you_must_be_logged_in_to_change_your_password() {
+async fn integration_you_must_be_logged_in_to_change_your_password() {
     let app = spawn_app().await;
     let new_password = Uuid::new_v4().to_string();
     let response = app
@@ -24,7 +24,7 @@ async fn you_must_be_logged_in_to_change_your_password() {
 }
 
 #[tokio::test]
-async fn new_password_fields_must_match() {
+async fn integration_new_password_fields_must_match() {
     let app = spawn_app().await;
     let new_password = Uuid::new_v4().to_string();
     let another_new_password = Uuid::new_v4().to_string();
@@ -48,7 +48,7 @@ async fn new_password_fields_must_match() {
 }
 
 #[tokio::test]
-async fn current_password_must_be_valid() {
+async fn integration_current_password_must_be_valid() {
     let app = spawn_app().await;
     let new_password = Uuid::new_v4().to_string();
     let wrong_password = Uuid::new_v4().to_string();
@@ -70,7 +70,7 @@ async fn current_password_must_be_valid() {
 }
 
 #[tokio::test]
-async fn changing_password_works() {
+async fn integration_changing_password_works() {
     let app = spawn_app().await;
     let new_password = Uuid::new_v4().to_string();
     let login_body = serde_json::json!({

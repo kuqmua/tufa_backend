@@ -2,14 +2,14 @@ use crate::tests::integration_tests::api::helpers::assert_is_redirect_to;
 use crate::tests::integration_tests::api::helpers::spawn_app;
 
 #[tokio::test]
-async fn you_must_be_logged_in_to_access_the_admin_dashboard() {
+async fn integration_you_must_be_logged_in_to_access_the_admin_dashboard() {
     let app = spawn_app().await;
     let response = app.get_admin_dashboard().await;
     assert_is_redirect_to(&response, "/login");
 }
 
 #[tokio::test]
-async fn logout_clears_session_state() {
+async fn integration_logout_clears_session_state() {
     let app = spawn_app().await;
     let login_body = serde_json::json!({
         "username": &app.test_user.username,
