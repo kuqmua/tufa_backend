@@ -1,5 +1,5 @@
-pub mod get_providers_posts_route;
 mod admin;
+pub mod get_providers_posts_route;
 mod health_check;
 pub mod home;
 pub mod login;
