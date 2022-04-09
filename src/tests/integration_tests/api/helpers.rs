@@ -43,7 +43,7 @@ impl TestApp {
             if let ExecutionOutcome::EmptyQueue =
                 try_execute_task(&self.db_pool, &self.email_client)
                     .await
-                    .unwrap()
+                    .expect("try_execute_task failed")
             {
                 break;
             }
@@ -77,7 +77,7 @@ impl TestApp {
             .expect("Failed to execute request.")
             .text()
             .await
-            .unwrap()
+            .expect("inside get_login_html .text().await failed")
     }
     pub async fn get_admin_dashboard(&self) -> reqwest::Response {
         self.api_client
@@ -87,7 +87,11 @@ impl TestApp {
             .expect("Failed to execute request.")
     }
     pub async fn get_admin_dashboard_html(&self) -> String {
-        self.get_admin_dashboard().await.text().await.unwrap()
+        self.get_admin_dashboard()
+            .await
+            .text()
+            .await
+            .expect("get_admin_dashboard().await.text().await failed")
     }
     pub async fn get_change_password(&self) -> reqwest::Response {
         self.api_client
@@ -97,7 +101,9 @@ impl TestApp {
             .expect("Failed to execute request.")
     }
     pub async fn get_change_password_html(&self) -> String {
-        self.get_change_password().await.text().await.unwrap()
+        self.get_change_password().await.text().await.expect(
+            "inside get_change_password_html get_change_password().await.text().await failed",
+        )
     }
     pub async fn post_logout(&self) -> reqwest::Response {
         self.api_client
@@ -125,7 +131,9 @@ impl TestApp {
             .expect("Failed to execute request.")
     }
     pub async fn get_publish_newsletter_html(&self) -> String {
-        self.get_publish_newsletter().await.text().await.unwrap()
+        self.get_publish_newsletter().await.text().await.expect(
+            "inside get_publish_newsletter_html get_publish_newsletter().await.text().await failed",
+        )
     }
     pub async fn post_publish_newsletter<Body>(&self, body: &Body) -> reqwest::Response
     where
@@ -139,7 +147,8 @@ impl TestApp {
             .expect("Failed to execute request.")
     }
     pub fn get_confirmation_links(&self, email_request: &wiremock::Request) -> ConfirmationLinks {
-        let body: serde_json::Value = serde_json::from_slice(&email_request.body).unwrap();
+        let body: serde_json::Value = serde_json::from_slice(&email_request.body)
+            .expect("inside get_confirmation_links serde_json::from_slice failed");
         let get_link = |s: &str| {
             let links: Vec<_> = linkify::LinkFinder::new()
                 .links(s)
@@ -147,13 +156,27 @@ impl TestApp {
                 .collect();
             assert_eq!(links.len(), 1);
             let raw_link = links[0].as_str().to_owned();
-            let mut confirmation_link = reqwest::Url::parse(&raw_link).unwrap();
-            assert_eq!(confirmation_link.host_str().unwrap(), "127.0.0.1");
-            confirmation_link.set_port(Some(self.port)).unwrap();
+            let mut confirmation_link = reqwest::Url::parse(&raw_link)
+                .expect("inside get_confirmation_links reqwest::Url::parse failed");
+            assert_eq!(
+                confirmation_link
+                    .host_str()
+                    .expect("inside get_confirmation_links confirmation_link.host_str() failed"),
+                "127.0.0.1"
+            );
+            confirmation_link
+                .set_port(Some(self.port))
+                .expect("inside get_confirmation_links confirmation_link.set_port failed");
             confirmation_link
         };
-        let html = get_link(body["HtmlBody"].as_str().unwrap());
-        let plain_text = get_link(body["TextBody"].as_str().unwrap());
+        let html =
+            get_link(body["HtmlBody"].as_str().expect(
+                "inside get_confirmation_links get_link(body[\"HtmlBody\"].as_str() failed",
+            ));
+        let plain_text =
+            get_link(body["TextBody"].as_str().expect(
+                "inside get_confirmation_links get_link(body[\"TextBody\"].as_str() failed",
+            ));
         ConfirmationLinks { html, plain_text }
     }
 }
@@ -178,7 +201,7 @@ pub async fn spawn_app() -> TestApp {
         .redirect(reqwest::redirect::Policy::none())
         .cookie_store(true)
         .build()
-        .unwrap();
+        .expect("inside spawn_app Client::builder().redirect().cookie_store().build() failed");
     let test_app = TestApp {
         address: format!("http://localhost:{}", application_port),
         port: application_port,
@@ -236,10 +259,11 @@ impl TestUser {
         let password_hash = Argon2::new(
             Algorithm::Argon2id,
             Version::V0x13,
-            Params::new(15000, 2, 1, None).unwrap(),
+            Params::new(15000, 2, 1, None)
+                .expect("inside store Params::new(15000, 2, 1, None) failed"),
         )
         .hash_password(self.password.as_bytes(), &salt)
-        .unwrap()
+        .expect("inside store Argon2::new().hash_password() failed")
         .to_string();
         sqlx::query!(
             "INSERT INTO users (user_id, username, password_hash)
@@ -256,5 +280,10 @@ impl TestUser {
 
 pub fn assert_is_redirect_to(response: &reqwest::Response, location: &str) {
     assert_eq!(response.status().as_u16(), 303);
-    assert_eq!(response.headers().get("Location").unwrap(), location);
+    assert_eq!(
+        response.headers().get("Location").expect(
+            "inside assert_is_redirect_to assert_eq!(response.headers().get(\"Location\") failed"
+        ),
+        location
+    );
 }
