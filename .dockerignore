@@ -10,6 +10,7 @@
 /proc_macro_libs/Cargo.lock
 /proc_macro_libs/*/target
 /proc_macro_libs/*/Cargo.lock
+/redis_volume
 /target
 /vscode
 /todos
