@@ -11,7 +11,7 @@ services:
     env_file:
       - ./dbs.env
     volumes:
-      - ./postgresql_volume:/data/db
+      - ./volumes/postgresql_volume:/data/db
     ports:
       - 5432:5432
   mongodb_service:
@@ -26,7 +26,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./mongodb_volume:/data/db
+      - ./volumes/mongodb_volume:/data/db
   redis_service:
     container_name: redis_container
     image: 'redis:latest'
@@ -36,7 +36,7 @@ services:
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
-      - ./redis_volume/:/data
+      - ./volumes/redis_volume/:/data
   # tufa_backend_service:
   #   container_name: tufa_backend-container
   #   image: tufa_backend-image
