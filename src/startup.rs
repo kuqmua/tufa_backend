@@ -53,43 +53,63 @@ pub enum ApplicationBuildErrorEnum {
 }
 
 impl Application {
-    pub async fn build(configuration: Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    // pub async fn build(configuration: Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    //     let connection_pool = get_connection_pool(&configuration.database);
+    //     let listener =
+    //         match TcpListener::bind(&format!("{}:{}", CONFIG.server_ip, CONFIG.server_port)) {
+    //             Ok(listener) => listener,
+    //             Err(e) => {
+    //                 return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
+    //                     source: e,
+    //                 }))
+    //             }
+    //         };
+    //     let port = match listener.local_addr() {
+    //         Ok(address) => address,
+    //         Err(e) => {
+    //             return Err(Box::new(
+    //                 ApplicationBuildErrorEnum::TcpListenerLocalAddress { source: e },
+    //             ))
+    //         }
+    //     }
+    //     .port();
+    //     let server = match run(
+    //         listener,
+    //         connection_pool,
+    //         configuration.email_client.client(),
+    //         configuration.application.base_url,
+    //         configuration.application.hmac_secret,
+    //         configuration.redis_uri,
+    //     )
+    //     .await
+    //     {
+    //         Ok(server) => server,
+    //         Err(e) => {
+    //             return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
+    //                 source: e,
+    //             }))
+    //         }
+    //     };
+    //     Ok(Self { port, server })
+    // }
+    pub async fn build(configuration: Settings) -> Result<Self, anyhow::Error> {
         let connection_pool = get_connection_pool(&configuration.database);
-        let listener =
-            match TcpListener::bind(&format!("{}:{}", CONFIG.server_ip, CONFIG.server_port)) {
-                Ok(listener) => listener,
-                Err(e) => {
-                    return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
-                        source: e,
-                    }))
-                }
-            };
-        let port = match listener.local_addr() {
-            Ok(address) => address,
-            Err(e) => {
-                return Err(Box::new(
-                    ApplicationBuildErrorEnum::TcpListenerLocalAddress { source: e },
-                ))
-            }
-        }
-        .port();
-        let server = match run(
+        let email_client = configuration.email_client.client();
+        let address = format!(
+            "{}:{}",
+            configuration.application.host, configuration.application.port
+        );
+        let listener = TcpListener::bind(&address)?;
+        let port = listener.local_addr().unwrap().port();
+        let server = run(
             listener,
             connection_pool,
-            configuration.email_client.client(),
+            email_client,
             configuration.application.base_url,
             configuration.application.hmac_secret,
             configuration.redis_uri,
         )
-        .await
-        {
-            Ok(server) => server,
-            Err(e) => {
-                return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
-                    source: e,
-                }))
-            }
-        };
+        .await?;
         Ok(Self { port, server })
     }
     pub fn port(&self) -> u16 {
@@ -121,22 +141,15 @@ async fn run(
     base_url: String,
     hmac_secret: Secret<String>,
     redis_uri: Secret<String>,
-) -> Result<Server, Box<ApplicationRunErrorEnum>> {
+) -> Result<Server, anyhow::Error> {
     let db_pool = Data::new(db_pool);
     let email_client = Data::new(email_client);
     let base_url = Data::new(ApplicationBaseUrl(base_url));
     let secret_key = Key::from(hmac_secret.expose_secret().as_bytes());
     let message_store = CookieMessageStore::builder(secret_key.clone()).build();
     let message_framework = FlashMessagesFramework::builder(message_store).build();
-    let redis_store = match RedisSessionStore::new(redis_uri.expose_secret()).await {
-        Ok(redis_session_store) => redis_session_store,
-        Err(e) => {
-            return Err(Box::new(ApplicationRunErrorEnum::NewRedisSessionStore {
-                source: e,
-            }))
-        }
-    };
-    let server = match HttpServer::new(move || {
+    let redis_store = RedisSessionStore::new(redis_uri.expose_secret()).await?;
+    let server = HttpServer::new(move || {
         App::new()
             .wrap(message_framework.clone())
             .wrap(SessionMiddleware::new(
@@ -161,27 +174,83 @@ async fn run(
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
             .route("/newsletters", web::post().to(publish_newsletter))
-            .route(
-                "/get_providers_posts",
-                web::post().to(get_providers_posts_route),
-            )
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
             .app_data(Data::new(HmacSecret(hmac_secret.clone())))
     })
-    .listen(listener)
-    {
-        Ok(server) => server,
-        Err(e) => {
-            return Err(Box::new(ApplicationRunErrorEnum::HttpServerListen {
-                source: e,
-            }))
-        }
-    }
+    .listen(listener)?
     .run();
     Ok(server)
 }
+// async fn run(
+//     listener: TcpListener,
+//     db_pool: PgPool,
+//     email_client: EmailClient,
+//     base_url: String,
+//     hmac_secret: Secret<String>,
+//     redis_uri: Secret<String>,
+// ) -> Result<Server, Box<ApplicationRunErrorEnum>> {
+//     let db_pool = Data::new(db_pool);
+//     let email_client = Data::new(email_client);
+//     let base_url = Data::new(ApplicationBaseUrl(base_url));
+//     let secret_key = Key::from(hmac_secret.expose_secret().as_bytes());
+//     let message_store = CookieMessageStore::builder(secret_key.clone()).build();
+//     let message_framework = FlashMessagesFramework::builder(message_store).build();
+//     let redis_store = match RedisSessionStore::new(redis_uri.expose_secret()).await {
+//         Ok(redis_session_store) => redis_session_store,
+//         Err(e) => {
+//             return Err(Box::new(ApplicationRunErrorEnum::NewRedisSessionStore {
+//                 source: e,
+//             }))
+//         }
+//     };
+//     let server = match HttpServer::new(move || {
+//         App::new()
+//             .wrap(message_framework.clone())
+//             .wrap(SessionMiddleware::new(
+//                 redis_store.clone(),
+//                 secret_key.clone(),
+//             ))
+//             .wrap(TracingLogger::default())
+//             .route("/", web::get().to(home))
+//             .service(
+//                 web::scope("/admin")
+//                     .wrap(from_fn(reject_anonymous_users))
+//                     .route("/dashboard", web::get().to(admin_dashboard))
+//                     .route("/newsletters", web::get().to(publish_newsletter_form))
+//                     .route("/newsletters", web::post().to(publish_newsletter))
+//                     .route("/password", web::get().to(change_password_form))
+//                     .route("/password", web::post().to(change_password))
+//                     .route("/logout", web::post().to(log_out)),
+//             )
+//             .route("/login", web::get().to(login_form))
+//             .route("/login", web::post().to(login))
+//             .route("/health_check", web::get().to(health_check))
+//             .route("/subscriptions", web::post().to(subscribe))
+//             .route("/subscriptions/confirm", web::get().to(confirm))
+//             .route("/newsletters", web::post().to(publish_newsletter))
+//             .route(
+//                 "/get_providers_posts",
+//                 web::post().to(get_providers_posts_route),
+//             )
+//             .app_data(db_pool.clone())
+//             .app_data(email_client.clone())
+//             .app_data(base_url.clone())
+//             .app_data(Data::new(HmacSecret(hmac_secret.clone())))
+//     })
+//     .listen(listener)
+//     {
+//         Ok(server) => server,
+//         Err(e) => {
+//             return Err(Box::new(ApplicationRunErrorEnum::HttpServerListen {
+//                 source: e,
+//             }))
+//         }
+//     }
+//     .run();
+//     Ok(server)
+// }
 
 #[derive(Clone)]
 pub struct HmacSecret(pub Secret<String>);
