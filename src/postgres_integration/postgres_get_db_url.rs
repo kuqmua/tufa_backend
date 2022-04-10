@@ -7,7 +7,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
     clippy::float_arithmetic
 )]
 pub fn postgres_get_db_url() -> String {
-    let f = format!(
+    format!(
         "{}{}{}{}{}{}{}{}{}{}{}{}",
         CONFIG.postgres_first_handle_url_part,
         CONFIG.postgres_login,
@@ -21,7 +21,5 @@ pub fn postgres_get_db_url() -> String {
         CONFIG.postgres_db,
         CONFIG.postgres_sixth_handle_url_part,
         CONFIG.postgres_params
-    );
-    println!("f {}", f);
-    f
+    )
 }
