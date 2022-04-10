@@ -192,7 +192,7 @@ pub async fn spawn_app() -> TestApp {
         c
     };
     configure_database(&configuration.database).await;
-    let application = Application::build(configuration.clone()) //configuration.clone()
+    let application = Application::build(configuration.clone())
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
