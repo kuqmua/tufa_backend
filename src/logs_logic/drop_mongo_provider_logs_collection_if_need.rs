@@ -1,5 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_collection;
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;

@@ -1,4 +1,4 @@
-use crate::helpers::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[deny(
     clippy::indexing_slicing,

@@ -1,5 +1,5 @@
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
-use crate::helpers::get_git_source_file_link::get_git_source_file_link;
+use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use html_parser::{Dom, Node};
