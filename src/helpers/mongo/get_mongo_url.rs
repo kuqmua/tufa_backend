@@ -6,8 +6,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub fn mongo_get_db_url() -> String {
-    //maybe rename it into get mongo_url?
+pub fn get_mongo_url() -> String {
     format!(
         "{}{}{}{}{}{}{}{}{}{}",
         &CONFIG.mongo_first_handle_url_part,

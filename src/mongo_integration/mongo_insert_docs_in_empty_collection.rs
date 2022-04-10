@@ -1,6 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use mongodb::{
     bson::{doc, Document},
@@ -43,7 +43,7 @@ pub async fn mongo_insert_docs_in_empty_collection(
     db_collection_handle: String,
     vec_of_values: Vec<String>,
 ) -> Result<(), Box<MongoInsertDocsInEmptyCollectionErrorEnum>> {
-    match ClientOptions::parse(mongo_get_db_url()).await {
+    match ClientOptions::parse(get_mongo_url()).await {
         Err(e) => Err(Box::new(
             MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,

@@ -1,13 +1,13 @@
 use crate::check_net::check_net_availability::check_net_availability;
 use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::mongo::get_mongo_url::get_mongo_url;
+use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use error_display::ErrorDisplay;
 use std::fmt;
@@ -47,8 +47,8 @@ impl CheckNet {
     pub fn get_url(&self) -> String {
         match self {
             CheckNet::Net => CONFIG.starting_check_link.clone(),
-            CheckNet::Mongo => mongo_get_db_url(),
-            CheckNet::Postgres => postgres_get_db_url(),
+            CheckNet::Mongo => get_mongo_url(),
+            CheckNet::Postgres => get_postgres_url(),
         }
     }
     pub async fn check(self) -> Result<(), CheckNetError> {

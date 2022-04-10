@@ -1,13 +1,10 @@
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum;
+use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
-use crate::{
-    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
-};
-use crate::{
-    mongo_integration::mongo_get_db_url::mongo_get_db_url,
-    providers::provider_kind::provider_kind_enum::ProviderKind,
-};
+use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use futures::future::join_all;
 use mongodb::{bson::Document, options::ClientOptions, Client};
@@ -50,7 +47,7 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
 )]
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
-    match ClientOptions::parse(mongo_get_db_url()).await {
+    match ClientOptions::parse(get_mongo_url()).await {
         Err(e) => Err(MongoGetProvidersLinkPartsError {
             source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                 source: e,

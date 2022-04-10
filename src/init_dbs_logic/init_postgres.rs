@@ -13,7 +13,7 @@ use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
-use crate::postgres_integration::postgres_get_db_url::postgres_get_db_url;
+use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
@@ -57,7 +57,7 @@ pub async fn init_postgres(
     match PgPoolOptions::new()
         .max_connections(providers_json_local_data_hashmap.len() as u32)
         .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
-        .connect(&postgres_get_db_url())
+        .connect(&get_postgres_url())
         .await
     {
         Err(e) => Err(Box::new(PostgresInitErrorEnum::EstablishConnection {

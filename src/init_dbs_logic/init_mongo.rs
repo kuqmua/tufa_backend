@@ -1,5 +1,5 @@
+use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
-use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::{
     config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
@@ -49,7 +49,7 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<(), Box<InitMongoErrorEnum>> {
-    match ClientOptions::parse(&mongo_get_db_url()).await {
+    match ClientOptions::parse(&get_mongo_url()).await {
         Err(e) => Err(Box::new(InitMongoErrorEnum::ClientOptionsParse {
             source: e,
             where_was: WhereWas {

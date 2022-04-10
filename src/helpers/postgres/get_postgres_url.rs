@@ -6,7 +6,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub fn postgres_get_db_url() -> String {
+pub fn get_postgres_url() -> String {
     format!(
         "{}{}{}{}{}{}{}{}{}{}{}{}",
         CONFIG.postgres_first_handle_url_part,

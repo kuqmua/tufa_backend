@@ -1,13 +1,11 @@
+use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::{
     config_mods::lazy_static_config::CONFIG,
     mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum,
     traits::provider_kind_trait::ProviderKindTrait,
-};
-use crate::{
-    mongo_integration::mongo_get_db_url::mongo_get_db_url,
-    providers::provider_kind::provider_kind_enum::ProviderKind,
 };
 use chrono::{DateTime, FixedOffset, Local, Utc};
 use mongodb::{bson::Document, options::ClientOptions, Client};
@@ -44,7 +42,7 @@ impl ProviderKind {
     pub async fn mongo_get_provider_link_parts(
         pk: ProviderKind,
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
-        match ClientOptions::parse(mongo_get_db_url()).await {
+        match ClientOptions::parse(get_mongo_url()).await {
             Err(e) => Err(MongoGetProviderLinkPartsError {
                 source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
                     source: e,
