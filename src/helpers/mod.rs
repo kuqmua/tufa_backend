@@ -5,6 +5,7 @@ pub mod get_git_commit_string;
 pub mod get_git_source_file_link;
 pub mod get_server_address;
 pub mod lazy_static_git_info;
+pub mod redis;
 pub mod resource;
 pub mod where_was;
 pub mod write_json_into_file;

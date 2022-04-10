@@ -3,6 +3,7 @@ use crate::configuration::ApplicationSettings;
 use crate::configuration::DatabaseSettings;
 use crate::configuration::EmailClientSettings;
 use crate::configuration::Settings;
+use crate::helpers::redis::get_redis_uri::get_redis_uri;
 use crate::issue_delivery_worker::run_worker_until_stopped;
 use crate::startup::Application;
 use crate::startup::ApplicationBuildErrorEnum;
@@ -33,7 +34,7 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
             authorization_token: Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
         },
-        redis_uri: Secret::new("redis://127.0.0.1:6379".to_string()),
+        redis_uri: Secret::new(get_redis_uri()),
     };
     let application = match Application::build(configuration.clone()).await {
         Ok(app) => app,
