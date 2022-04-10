@@ -205,3 +205,7 @@ chmod +x ./scripts/init_redis.sh
 
 ### see logs with cargo test
 cargo test -- --nocapture
+
+### run integration tests
+cargo test integration
+(integration tests will fail if they run with unit tests)
