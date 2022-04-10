@@ -185,7 +185,6 @@ Another option to reduce the size of our binary further is stripping symbols fro
 ### property-based testing
 There are two mainstream options for property-based testing in the Rust ecosystem: quickcheck and proptest.
 
-
 ### if tests will be more than 1024
 If you have large test suite with a flat file structure, you'll soon be building tens of executable every time you run cargo test. While each executable is compiled in parallel, the linking phase is instead entirely sequential! Bundling all your test cases in a single executable reduces the time spent compiling your test suite in CI3.
 If you are running Linux, you might see errors like
@@ -209,3 +208,9 @@ cargo test -- --nocapture
 ### run integration tests
 cargo test integration
 (integration tests will fail if they run with unit tests)
+
+### run unit tests
+cargo test unit
+
+### run continious integration tests
+cargo test ci
