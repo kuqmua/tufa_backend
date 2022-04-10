@@ -1,5 +1,6 @@
+use std::fs::File;
+use std::io::Write;
 use std::path::Path;
-use std::{fs::File, io::Write};
 
 #[deny(
     clippy::indexing_slicing,

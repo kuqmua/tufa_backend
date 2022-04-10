@@ -1,17 +1,18 @@
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::{
-    config_mods::lazy_static_config::CONFIG, traits::provider_kind_trait::ProviderKindTrait,
-};
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use crate::traits::provider_kind_trait::ProviderKindTrait;
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use futures::future::join_all;
-use mongodb::{
-    bson::{doc, Document},
-    error::Error,
-    options::ClientOptions,
-    Client,
-};
+use mongodb::bson::doc;
+use mongodb::bson::Document;
+use mongodb::error::Error;
+use mongodb::options::ClientOptions;
+use mongodb::Client;
 use std::collections::HashMap;
 
 #[derive(Debug)]

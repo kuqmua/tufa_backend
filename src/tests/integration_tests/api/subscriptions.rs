@@ -1,6 +1,8 @@
 use crate::tests::integration_tests::api::helpers::spawn_app;
-use wiremock::matchers::{method, path};
-use wiremock::{Mock, ResponseTemplate};
+use wiremock::matchers::method;
+use wiremock::matchers::path;
+use wiremock::Mock;
+use wiremock::ResponseTemplate;
 
 #[tokio::test]
 async fn integration_subscribe_returns_a_200_for_valid_form_data() {

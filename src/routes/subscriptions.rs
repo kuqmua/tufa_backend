@@ -1,14 +1,22 @@
-use crate::domain::{NewSubscriber, SubscriberEmail, SubscriberName};
+use crate::domain::NewSubscriber;
+use crate::domain::SubscriberEmail;
+use crate::domain::SubscriberName;
 use crate::email_client::EmailClient;
 use crate::startup::ApplicationBaseUrl;
 use actix_web::http::StatusCode;
-use actix_web::{web, HttpResponse, ResponseError};
+use actix_web::web;
+use actix_web::HttpResponse;
+use actix_web::ResponseError;
 use anyhow::Context;
 use chrono::Utc;
 use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
-use sqlx::{PgPool, Postgres, Transaction};
-use std::convert::{TryFrom, TryInto};
+use rand::thread_rng;
+use rand::Rng;
+use sqlx::PgPool;
+use sqlx::Postgres;
+use sqlx::Transaction;
+use std::convert::TryFrom;
+use std::convert::TryInto;
 use uuid::Uuid;
 
 #[derive(serde::Deserialize)]

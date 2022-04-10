@@ -1,9 +1,13 @@
 use crate::configuration::Settings;
+use crate::domain::SubscriberEmail;
+use crate::email_client::EmailClient;
 use crate::startup::get_connection_pool;
-use crate::{domain::SubscriberEmail, email_client::EmailClient};
-use sqlx::{PgPool, Postgres, Transaction};
+use sqlx::PgPool;
+use sqlx::Postgres;
+use sqlx::Transaction;
 use std::time::Duration;
-use tracing::{field::display, Span};
+use tracing::field::display;
+use tracing::Span;
 use uuid::Uuid;
 
 pub async fn run_worker_until_stopped(configuration: Settings) -> Result<(), anyhow::Error> {

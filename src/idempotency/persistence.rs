@@ -4,7 +4,8 @@ use actix_web::http::StatusCode;
 use actix_web::HttpResponse;
 use sqlx::postgres::PgHasArrayType;
 use sqlx::PgPool;
-use sqlx::{Postgres, Transaction};
+use sqlx::Postgres;
+use sqlx::Transaction;
 use uuid::Uuid;
 
 #[derive(Debug, sqlx::Type)]

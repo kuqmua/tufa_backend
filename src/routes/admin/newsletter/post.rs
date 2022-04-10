@@ -1,15 +1,19 @@
 use crate::authentication::UserId;
 use crate::idempotency::save_response;
+use crate::idempotency::try_processing;
 use crate::idempotency::IdempotencyKey;
-use crate::idempotency::{try_processing, NextAction};
+use crate::idempotency::NextAction;
 use crate::utils::e400;
-use crate::utils::{e500, see_other};
+use crate::utils::e500;
+use crate::utils::see_other;
+use actix_web::web;
 use actix_web::web::ReqData;
-use actix_web::{web, HttpResponse};
+use actix_web::HttpResponse;
 use actix_web_flash_messages::FlashMessage;
 use anyhow::Context;
 use sqlx::PgPool;
-use sqlx::{Postgres, Transaction};
+use sqlx::Postgres;
+use sqlx::Transaction;
 use uuid::Uuid;
 
 #[derive(serde::Deserialize)]

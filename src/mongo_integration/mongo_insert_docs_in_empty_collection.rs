@@ -1,12 +1,14 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
-use chrono::{DateTime, FixedOffset, Local, Utc};
-use mongodb::{
-    bson::{doc, Document},
-    options::ClientOptions,
-    Client,
-};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
+use mongodb::bson::doc;
+use mongodb::bson::Document;
+use mongodb::options::ClientOptions;
+use mongodb::Client;
 
 #[derive(Debug)]
 pub enum MongoInsertDocsInEmptyCollectionErrorEnum {

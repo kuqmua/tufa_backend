@@ -6,7 +6,10 @@ use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::F
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::git_info_trait::GitInfo;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 

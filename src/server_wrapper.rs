@@ -8,7 +8,8 @@ use crate::issue_delivery_worker::run_worker_until_stopped;
 use crate::startup::Application;
 use crate::startup::ApplicationBuildErrorEnum;
 use secrecy::Secret;
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
+use std::fmt::Display;
 use tokio::task::JoinError;
 
 #[actix_web::main] // or #[tokio::main]

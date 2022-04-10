@@ -2,9 +2,13 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use futures::future::join_all;
-use sqlx::{Pool, Postgres};
+use sqlx::Pool;
+use sqlx::Postgres;
 use std::collections::HashMap;
 
 #[derive(Debug)]

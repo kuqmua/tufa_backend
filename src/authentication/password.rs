@@ -1,8 +1,15 @@
 use crate::telemetry::spawn_blocking_with_tracing;
 use anyhow::Context;
 use argon2::password_hash::SaltString;
-use argon2::{Algorithm, Argon2, Params, PasswordHash, PasswordHasher, PasswordVerifier, Version};
-use secrecy::{ExposeSecret, Secret};
+use argon2::Algorithm;
+use argon2::Argon2;
+use argon2::Params;
+use argon2::PasswordHash;
+use argon2::PasswordHasher;
+use argon2::PasswordVerifier;
+use argon2::Version;
+use secrecy::ExposeSecret;
+use secrecy::Secret;
 use sqlx::PgPool;
 
 #[derive(thiserror::Error, Debug)]

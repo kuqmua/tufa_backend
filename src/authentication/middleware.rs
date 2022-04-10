@@ -1,5 +1,6 @@
 use crate::session_state::TypedSession;
-use crate::utils::{e500, see_other};
+use crate::utils::e500;
+use crate::utils::see_other;
 use actix_web::body::MessageBody;
 use actix_web::dev::{ServiceRequest, ServiceResponse};
 use actix_web::error::InternalError;

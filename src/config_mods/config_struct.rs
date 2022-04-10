@@ -1,4 +1,7 @@
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use gen_enum::GenEnumDerive;
 use gen_enum_without_values::GenEnumWithoutValuesDerive;
 use std::collections::HashMap;

@@ -3,7 +3,8 @@ use crate::{
     config_mods::lazy_static_config::CONFIG,
     providers::provider_kind::provider_kind_enum::ProviderKind,
 };
-use mongodb::bson::{doc, Document};
+use mongodb::bson::doc;
+use mongodb::bson::Document;
 
 impl ProviderKind {
     #[deny(

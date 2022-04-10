@@ -5,9 +5,14 @@ use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use futures::future::join_all;
-use mongodb::{bson::Document, options::ClientOptions, Client};
+use mongodb::bson::Document;
+use mongodb::options::ClientOptions;
+use mongodb::Client;
 use std::collections::HashMap;
 
 #[derive(Debug)]

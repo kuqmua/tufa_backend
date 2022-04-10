@@ -6,8 +6,11 @@ use fake::faker::internet::en::SafeEmail;
 use fake::faker::name::en::Name;
 use fake::Fake;
 use std::time::Duration;
-use wiremock::matchers::{any, method, path};
-use wiremock::{Mock, ResponseTemplate};
+use wiremock::matchers::any;
+use wiremock::matchers::method;
+use wiremock::matchers::path;
+use wiremock::Mock;
+use wiremock::ResponseTemplate;
 
 async fn create_unconfirmed_subscriber(app: &TestApp) -> ConfirmationLinks {
     let name: String = Name().fake();

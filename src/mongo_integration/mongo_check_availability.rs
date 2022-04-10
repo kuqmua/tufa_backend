@@ -1,8 +1,12 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-use chrono::{DateTime, FixedOffset, Local, Utc};
+use chrono::DateTime;
+use chrono::FixedOffset;
+use chrono::Local;
+use chrono::Utc;
 use error_display::ErrorDisplay;
-use mongodb::{options::ClientOptions, Client};
+use mongodb::options::ClientOptions;
+use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
 
