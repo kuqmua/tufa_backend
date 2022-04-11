@@ -1,3 +1,3 @@
 fn main() {
-    tufa_backend::entry::entry();
+    tufa_server::entry::entry();
 }

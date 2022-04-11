@@ -1,5 +1,5 @@
 Status of last deployment: <br/>
-<img src="https://github.com/kuqmua/tufa_backend/workflows/CI/badge.svg?branch=master"><br/>
+<img src="https://github.com/kuqmua/tufa_server/workflows/CI/badge.svg?branch=master"><br/>
 
 ### simple route request
 curl http://127.0.0.1:8080/kekw/index.html
@@ -20,16 +20,16 @@ sudo dockerd
 (maybe?) rustup install nightly
 (maybe?) rustup target add x86_64-unknown-linux-musl
 (maybe?) cargo +nightly build --release
-sudo docker build -t tufa_backend-image .
+sudo docker build -t tufa_server-image .
 
 ### run docker container
-docker run --env-file .env --name tufa_backend-container -p 8000:8000 --rm -it tufa_backend-image
+docker run --env-file .env --name tufa_server-container -p 8000:8000 --rm -it tufa_server-image
 
 ### stop docker container
-sudo docker stop tufa_backend-container
+sudo docker stop tufa_server-container
 
 ### remove docker container
-sudo docker rm tufa_backend-container
+sudo docker rm tufa_server-container
 
 ### remove all unused right now docker containers and images
 sudo docker system prune -f 
@@ -45,7 +45,7 @@ sudo docker-compose down
 
 ### pull and run mongodb docker container
 (need to write path to your project directory)
-sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_backend/mongodb_volume:/data/db -d mongo:latest
+sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_server/mongodb_volume:/data/db -d mongo:latest
 
 ### How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)
 https://www.youtube.com/watch?v=t_X7qFMmWhI
@@ -101,7 +101,7 @@ cargo audit
 
 ### fix Error: I/O error: Permission denied (os error 13) error
 cd ..
-sudo chmod -R 777 tufa_backend
+sudo chmod -R 777 tufa_server
 
 ### cargo watch 
 cargo watch -x check -x test -x "run | bunyan"

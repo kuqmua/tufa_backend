@@ -7,9 +7,9 @@ URL:           https://rustsec.org/advisories/RUSTSEC-2020-0159
 Solution:      No safe upgrade is available!
 Dependency tree: 
 chrono 0.4.19
-├── tufa_backend 0.1.0
+├── tufa_server 0.1.0
 ├── mongodb 2.1.0
-│   └── tufa_backend 0.1.0
+│   └── tufa_server 0.1.0
 └── bson 2.1.0
     └── mongodb 2.1.0
 
@@ -23,9 +23,9 @@ Solution:      Upgrade to >=0.2.23
 Dependency tree: 
 time 0.1.43
 └── chrono 0.4.19
-    ├── tufa_backend 0.1.0
+    ├── tufa_server 0.1.0
     ├── mongodb 2.1.0
-    │   └── tufa_backend 0.1.0
+    │   └── tufa_server 0.1.0
     └── bson 2.1.0
         └── mongodb 2.1.0
 
@@ -37,7 +37,7 @@ crossbeam-utils 0.8.6
 ├── sqlx-core 0.5.10
 │   ├── sqlx-macros 0.5.10
 │   │   └── sqlx 0.5.10
-│   │       └── tufa_backend 0.1.0
+│   │       └── tufa_server 0.1.0
 │   └── sqlx 0.5.10
 ├── crossbeam-queue 0.3.3
 │   └── sqlx-core 0.5.10

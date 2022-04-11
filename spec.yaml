@@ -1,5 +1,5 @@
 #! spec.yaml
-name: tufa_backend
+name: tufa_server
 # Check https://www.digitalocean.com/docs/app-platform/#regional-availability 
 # for a list of all the available options.
 # You can get region slugs from 
@@ -8,7 +8,7 @@ name: tufa_backend
 # `fra` stands for Frankfurt (Germany - EU)
 region: fra
 services:
-  - name: tufa_backend
+  - name: tufa_server
     # Relative to the repository root
     dockerfile_path: Dockerfile
     source_dir: .

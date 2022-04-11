@@ -36,4 +36,4 @@ pub const TWITTER_LINK_FIRST_PART: &str = "https://";
 pub const TWITTER_LINK_SECOND_PART: &str = "/";
 pub const TWITTER_LINK_THIRD_PART: &str = "/rss";
 
-pub const PROJECT_NAME: &str = "tufa_backend";
+pub const PROJECT_NAME: &str = "tufa_server";

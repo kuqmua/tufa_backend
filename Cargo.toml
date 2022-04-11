@@ -1,7 +1,7 @@
 [package]
 authors = ["sergey shmakov <tyfaproject@gmail.com>"] 
 edition = "2021" #maybe cant compile but switch from 2018 to 2021
-name = "tufa_backend" 
+name = "tufa_server" 
 version = "0.1.0" 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -13,7 +13,7 @@ version = "0.1.0"
 path = "src/lib.rs"
 
 [[bin]]
-name = "tufa_backend"
+name = "tufa_server"
 path = "src/main.rs"
 
 [dependencies]
