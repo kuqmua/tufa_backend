@@ -6,7 +6,7 @@ Status of last deployment: <br/>
 2. [Some paragraph](#paragraph1)
     1. [Sub paragraph](#subparagraph1)
 3. [Another paragraph](#paragraph2)
-4. [simple route request](#simple route request)
+4. [simple route request](#simple_route_request)
 
 ## This is the introduction <a name="introduction"></a>
 Some introduction text, formatted in heading 2 style
@@ -75,7 +75,7 @@ The second paragraph text
 52. [run continious integration tests](run continious integration tests)
 53. [links](links) -->
 
-## simple route request <a name="simple route request"></a>
+## simple route request <a name="simple_route_request"></a>
 ```
 curl http://127.0.0.1:8080/kekw/index.html
 ```
