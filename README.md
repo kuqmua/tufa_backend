@@ -289,5 +289,5 @@ cargo test unit
 cargo test ci
 ```
 ### links
-[How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)](https://www.youtube.com/watch?v=t_X7qFMmWhI) </br>
-[pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q) </br>
+* [How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)](https://www.youtube.com/watch?v=t_X7qFMmWhI) </br>
+* [pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q) </br>
