@@ -270,6 +270,7 @@ impl TestUser {
         let password_hash = Argon2::new(
             Algorithm::Argon2id,
             Version::V0x13,
+            //todo- move it into config
             Params::new(15000, 2, 1, None)
                 .expect("inside store Params::new(15000, 2, 1, None) failed"),
         )
