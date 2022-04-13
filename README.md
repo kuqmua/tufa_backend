@@ -143,7 +143,7 @@ cd .. sudo chmod -R 777 tufa_server && cd tufa_server
 cargo watch -x check -x test -x "run | bunyan"
 ```
 ### install custom linker dependencies
-[page](https://www.lpalmieri.com/posts/session-based-authentication-in-rust/)
+[page](https://www.lpalmieri.com/posts/session-based-authentication-in-rust/) </br>
 On Windows: <br/>
 ```
 cargo install -f cargo-binutils
