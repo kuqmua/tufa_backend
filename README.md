@@ -22,8 +22,14 @@ sudo dockerd
 ### build docker container (maybe some steps can be ignored)
 ```
 rustup install nightly
+```
+```
 rustup target add x86_64-unknown-linux-musl
+```
+```
 cargo +nightly build --release
+```
+```
 sudo docker build -t tufa_server-image .
 ```
 ### run docker container
