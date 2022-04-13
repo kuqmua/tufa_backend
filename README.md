@@ -3,7 +3,7 @@ Status of last deployment: <br/>
 
 # Table of contents
 1. [simple route request](simple route request)
-2. [get_providers_posts route request](get_providers_posts route request)
+<!-- 2. [get_providers_posts route request](get_providers_posts route request)
 3. [change project config](change project config)
 4. [change tests constants](change tests constants)
 5. [start docker daemon](start docker daemon)
@@ -54,7 +54,7 @@ Status of last deployment: <br/>
 50. [run integration tests](run integration tests)
 51. [run unit tests](run unit tests)
 52. [run continious integration tests](run continious integration tests)
-53. [links](links)
+53. [links](links) -->
 
 ## simple route request <a name="simple route request"></a>
 ```
