@@ -64,9 +64,6 @@ sudo docker-compose down
 ```
 sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_server/mongodb_volume:/data/db -d mongo:latest
 ```
-### How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)
-https://www.youtube.com/watch?v=t_X7qFMmWhI
-
 ### start mongodb docker container
 with docker: <br/>
 ```
@@ -93,8 +90,6 @@ with docker-compose(other services too): <br/>
 ```
 sudo docker-compose -f docker-compose.yml up -d
 ```
-[pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q)
-
 ### shutdown wsl(if db clients cannot connect to db in wsl2)
 windows console: <br/>
 ```
@@ -125,8 +120,8 @@ cd libs/tests_lib && cargo test local -- --show-output
 cargo tree
 ```
 ### how to tune rustfmt
-You can tune rustfmt for a project with a configuration file, rustfmt.toml. Details can be found in
-rustfmt’s https://github.com/rust-lang/rustfmt#configuring-rustfmt
+You can tune rustfmt for a project with a configuration file, rustfmt.toml. </br> 
+Details can be found in [rustfmt’s](https://github.com/rust-lang/rustfmt#configuring-rustfmt)
 
 ### check vulnerabilities in project
 cargo-audit, a convenient cargo sub-command to check if vulnerabilities have <br/>
@@ -148,7 +143,7 @@ cd .. sudo chmod -R 777 tufa_server && cd tufa_server
 cargo watch -x check -x test -x "run | bunyan"
 ```
 ### install custom linker dependencies
-page https://www.lpalmieri.com/posts/session-based-authentication-in-rust/l
+[page](https://www.lpalmieri.com/posts/session-based-authentication-in-rust/)
 On Windows: <br/>
 ```
 cargo install -f cargo-binutils
@@ -293,3 +288,6 @@ cargo test unit
 ```
 cargo test ci
 ```
+### links
+[How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)](https://www.youtube.com/watch?v=t_X7qFMmWhI) </br>
+[pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q) </br>
