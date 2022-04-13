@@ -93,8 +93,7 @@ with docker-compose(other services too): <br/>
 ```
 sudo docker-compose -f docker-compose.yml up -d
 ```
-### postgres create table
-https://www.youtube.com/watch?v=h5wgbJiSy7Q
+[pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q)
 
 ### shutdown wsl(if db clients cannot connect to db in wsl2)
 windows console: <br/>
