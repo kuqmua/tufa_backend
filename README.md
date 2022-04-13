@@ -1,8 +1,6 @@
 Status of last deployment: <br/>
 <img src="https://github.com/kuqmua/tufa_server/workflows/CI/badge.svg?branch=master"><br/>
 
-<a name="give priviligies to volumes folder">something</a> 
-
 ### simple route request
 ```
 curl http://127.0.0.1:8080/kekw/index.html
