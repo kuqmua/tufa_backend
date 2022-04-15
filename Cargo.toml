@@ -17,6 +17,7 @@ name = "tufa_server"
 path = "src/main.rs"
 
 [dependencies]
+actix-cors = "0.6.1"
 actix-session = {version = "0.6", features = ["redis-rs-tls-session"]}
 actix-web = "4.0.1"
 actix-web-flash-messages = {version = "0.3", features = ["cookies"]}

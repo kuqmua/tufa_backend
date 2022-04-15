@@ -15,6 +15,7 @@ use crate::routes::login::login_form;
 use crate::routes::publish_newsletter;
 use crate::routes::publish_newsletter_form;
 use crate::routes::subscribe;
+use actix_cors::Cors;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
 use actix_web::cookie::Key;
@@ -147,6 +148,7 @@ async fn run(
                 secret_key.clone(),
             ))
             .wrap(TracingLogger::default())
+            .wrap(Cors::permissive()) //todo concrete host \ domain
             .route("/", web::get().to(home))
             .service(
                 web::scope("/admin")
