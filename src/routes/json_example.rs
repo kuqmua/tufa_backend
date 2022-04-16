@@ -9,14 +9,8 @@ struct JsonExample {
 
 pub async fn json_example() -> impl Responder {
     println!("json example");
-    let mut vec: Vec<JsonExample> = Vec::new();
-    vec.push(JsonExample {
-        first: "1".to_string(),
-        second: "value1".to_string(),
-    });
-    vec.push(JsonExample {
+    web::Json(JsonExample {
         first: "2".to_string(),
         second: "value2".to_string(),
-    });
-    web::Json(vec)
+    })
 }
