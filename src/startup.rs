@@ -20,6 +20,7 @@ use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
 use actix_web::cookie::Key;
 use actix_web::dev::Server;
+use actix_web::http;
 use actix_web::web;
 use actix_web::web::Data;
 use actix_web::App;
@@ -148,7 +149,15 @@ async fn run(
                 secret_key.clone(),
             ))
             .wrap(TracingLogger::default())
-            .wrap(Cors::permissive()) //todo concrete host \ domain
+            .wrap(
+                Cors::default()
+                    .supports_credentials()
+                    .allowed_origin("http://127.0.0.1:8080")
+                    .allow_any_method()
+                    .allow_any_header()
+                    .expose_any_header()
+                    .max_age(3600),
+            ) //todo concrete host \ domain
             .route("/", web::get().to(home))
             .service(
                 web::scope("/admin")
