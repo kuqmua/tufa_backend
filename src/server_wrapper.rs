@@ -41,12 +41,17 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
         Ok(app) => app,
         Err(e) => return Err(e),
     };
-    let application_task = tokio::spawn(application.run_until_stopped());
-    let worker_task = tokio::spawn(run_worker_until_stopped(configuration));
-    tokio::select! {
-        o = application_task => report_exit("API", o),
-        o = worker_task => report_exit("Background worker", o),
-    };
+    let application_task = tokio::spawn(application.run_until_stopped()).await;
+    //remove this coz too much spam
+    // match application_task {
+    //     Ok(_) => todo!(),
+    //     Err(_) => todo!(),
+    // }
+    // let worker_task = tokio::spawn(run_worker_until_stopped(configuration));
+    // tokio::select! {
+    //     o = application_task => report_exit("API", o),
+    //     o = worker_task => report_exit("Background worker", o),
+    // };
     Ok(())
 }
 
