@@ -18,5 +18,5 @@ pub async fn json_example() -> impl Responder {
         first: "2".to_string(),
         second: "value2".to_string(),
     });
-    return web::Json(vec);
+    web::Json(vec)
 }
