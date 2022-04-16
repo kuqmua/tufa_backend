@@ -9,6 +9,7 @@ use crate::routes::confirm;
 use crate::routes::get_providers_posts_route::get_providers_posts_route;
 use crate::routes::health_check;
 use crate::routes::home::home;
+use crate::routes::json_example::json_example;
 use crate::routes::log_out;
 use crate::routes::login::login;
 use crate::routes::login::login_form;
@@ -172,6 +173,7 @@ async fn run(
             .route("/login", web::get().to(login_form))
             .route("/login", web::post().to(login))
             .route("/health_check", web::get().to(health_check))
+            .route("/json_example", web::get().to(json_example))
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
             .route("/newsletters", web::post().to(publish_newsletter))
