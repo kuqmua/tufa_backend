@@ -1,11 +1,6 @@
 use actix_web::{web, Responder};
 use serde::Serialize;
-
-#[derive(Serialize)]
-struct JsonExample {
-    first: String,
-    second: String,
-}
+use tufa_common::json_example::JsonExample;
 
 pub async fn json_example() -> impl Responder {
     println!("json example");

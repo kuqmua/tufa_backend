@@ -74,6 +74,8 @@ tracing-actix-web = "0.5"
 tracing-bunyan-formatter = "0.3"
 tracing-log = "0.1"
 tracing-subscriber = {version = "0.3", features = ["registry", "env-filter"]}
+tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
+# tufa_common = {path = "../tufa_common"}# local dev test without commits version
 unicode-segmentation = "1"
 urlencoding = "2"
 uuid = {version = "0.8.1", features = ["v4", "serde"]}
