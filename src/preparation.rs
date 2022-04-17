@@ -1,9 +1,9 @@
 use crate::check_net::check_net_wrapper::check_net_wrapper;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
+use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 #[deny(
     clippy::indexing_slicing,

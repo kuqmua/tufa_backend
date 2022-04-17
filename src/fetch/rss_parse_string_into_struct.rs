@@ -9,7 +9,6 @@ use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsin
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 use crate::fetch::parse_github_html::parse_github_html;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::project_constants::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
@@ -34,6 +33,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use regex::Regex;
 use serde_xml_rs::from_str;
+use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 #[deny(
     clippy::indexing_slicing,

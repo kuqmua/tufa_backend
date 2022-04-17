@@ -1,4 +1,3 @@
-use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
@@ -7,6 +6,7 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber;
 use crate::telemetry::init_subscriber;
 use std::time::Instant;
+use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 #[deny(
     clippy::indexing_slicing,

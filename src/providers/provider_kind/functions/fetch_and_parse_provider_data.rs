@@ -5,8 +5,6 @@ use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
-use crate::helpers::git::get_git_commit_string::get_git_commit_string;
-use crate::helpers::git::get_git_source_file_link::get_git_source_file_link;
 use crate::helpers::where_was::WhereWas;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
@@ -19,6 +17,8 @@ use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfoDerive;
 use std::time::Instant;
+use tufa_common::helpers::git::get_git_commit_string::get_git_commit_string;
+use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {

@@ -3,6 +3,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use std::sync::{Arc, Mutex};
 use std::thread;
+use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Vec<String> {
     let mut threads_vector = Vec::with_capacity(twitter_providers_names.len());
