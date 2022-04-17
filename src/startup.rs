@@ -21,7 +21,6 @@ use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
 use actix_web::cookie::Key;
 use actix_web::dev::Server;
-use actix_web::http;
 use actix_web::web;
 use actix_web::web::Data;
 use actix_web::App;
