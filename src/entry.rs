@@ -30,20 +30,21 @@ pub fn entry() {
             );
         }
         Ok(runtime) => {
-            if let Err(e) = init_subscriber(get_subscriber(
-                PROJECT_NAME.into(),
-                "info".into(),
-                std::io::stdout,
-            )) {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
-                    format!("tracing init_subscriber error: {:#?}", e),
-                );
-                return;
-            };
+            //disable tracing to remove useless spam for now
+            // if let Err(e) = init_subscriber(get_subscriber(
+            //     PROJECT_NAME.into(),
+            //     "info".into(),
+            //     std::io::stdout,
+            // )) {
+            //     print_colorful_message(
+            //         None,
+            //         PrintType::Error,
+            //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
+            //         vec![get_git_source_file_link(file!(), line!())],
+            //         format!("tracing init_subscriber error: {:#?}", e),
+            //     );
+            //     return;
+            // };
             let time = Instant::now();
             runtime.block_on(preparation());
             print_colorful_message(
