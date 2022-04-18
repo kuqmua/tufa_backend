@@ -23,11 +23,11 @@ pub async fn git_info() -> HttpResponse {
     <title>Login</title>
 </head>
 <body>
-<div style="display:flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
-<div>{commit_message}</div>
-<div>{commit_id}</div>
-<div>{branch}</div>
-<div>{repo_link}</div>
+<div style="display:flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; height: 100%;">
+<div>Commit message:{commit_message}</div>
+<div>Commit id: {commit_id}</div>
+<div>Branch: {branch}</div>
+<div>Repo link: {repo_link}</div>
 </div>
     
 </body>
