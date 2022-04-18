@@ -1,0 +1,36 @@
+use actix_web::http::header::ContentType;
+use actix_web::HttpResponse;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+
+pub struct GitCommitInfo {
+    pub commit_message: String,
+    pub commit_id: String,
+    pub branch: String,
+    pub repo_link: String,
+}
+pub async fn git_info() -> HttpResponse {
+    let commit_message = GIT_INFO.commit_message.clone();
+    let commit_id = GIT_INFO.commit_id.clone();
+    let branch = GIT_INFO.branch.clone();
+    let repo_link = GIT_INFO.repo_link.clone();
+    HttpResponse::Ok()
+        .content_type(ContentType::html())
+        .body(format!(
+            r#"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Login</title>
+</head>
+<body>
+<div style="display:flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+<div>{commit_message}</div>
+<div>{commit_id}</div>
+<div>{branch}</div>
+<div>{repo_link}</div>
+</div>
+    
+</body>
+</html>"#,
+        ))
+}

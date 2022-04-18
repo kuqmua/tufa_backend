@@ -16,6 +16,7 @@ use crate::routes::login::login_form;
 use crate::routes::publish_newsletter;
 use crate::routes::publish_newsletter_form;
 use crate::routes::subscribe;
+use crate::routes::git_info::git_info;
 use actix_cors::Cors;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -173,6 +174,7 @@ async fn run(
             .route("/login", web::post().to(login))
             .route("/health_check", web::get().to(health_check))
             .route("/json_example", web::get().to(json_example))
+            .route("/git_info", web::get().to(git_info))
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
             .route("/newsletters", web::post().to(publish_newsletter))
