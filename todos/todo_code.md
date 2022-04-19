@@ -505,3 +505,10 @@ there is a function to handle request error status inside reqwest crate
 ### -------------------
 add check on ports fields from env or config to be not equal 0-1000 range
 <br/>
+  
+### -------------------
+routes 
+/api/html/info
+/api/json/info
+/api/protobuf/info
+<br/>
