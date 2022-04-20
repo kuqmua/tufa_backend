@@ -6,7 +6,8 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber;
 use crate::telemetry::init_subscriber;
 use std::time::Instant;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 #[deny(
     clippy::indexing_slicing,

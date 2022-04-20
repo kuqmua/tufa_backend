@@ -17,7 +17,8 @@ use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfoDerive;
 use std::time::Instant;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {

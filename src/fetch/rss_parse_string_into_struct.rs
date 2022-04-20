@@ -33,7 +33,8 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use regex::Regex;
 use serde_xml_rs::from_str;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 #[deny(
     clippy::indexing_slicing,

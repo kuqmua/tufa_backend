@@ -5,7 +5,8 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 #[deny(
     clippy::indexing_slicing,

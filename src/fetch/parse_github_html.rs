@@ -3,7 +3,8 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use html_parser::Dom;
 use html_parser::Node;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 //todo: think about renaming
 pub type GithubPostInfoVec = Vec<(

@@ -1,4 +1,5 @@
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;

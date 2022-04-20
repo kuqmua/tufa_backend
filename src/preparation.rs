@@ -3,7 +3,8 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 #[deny(
     clippy::indexing_slicing,

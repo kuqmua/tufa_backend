@@ -1,6 +1,7 @@
 use actix_web::http::header::ContentType;
 use actix_web::HttpResponse;
-use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
+use crate::helpers::git_info::GIT_INFO;
+
 
 pub struct GitCommitInfo {
     pub commit_message: String,
