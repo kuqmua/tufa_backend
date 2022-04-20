@@ -9,3 +9,4 @@ pub mod where_was;
 pub mod write_json_into_file;
 pub mod write_string_into_file;
 pub mod write_string_into_file_with_tokio;
+pub mod git_info;
