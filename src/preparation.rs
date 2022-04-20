@@ -3,7 +3,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[deny(
     clippy::indexing_slicing,
@@ -92,7 +92,7 @@ pub async fn preparation() {
                 None,
                 PrintType::WarningLow,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 String::from("db initialization for mongo and postgres are disabled"),
             );
         } else if let Err(e) = init_dbs().await {

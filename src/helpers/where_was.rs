@@ -1,4 +1,4 @@
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
@@ -46,7 +46,7 @@ impl WhereWas {
         clippy::float_arithmetic
     )]
     pub fn github_source_place(&self) -> String {
-        get_git_source_file_link(self.file, self.line)
+        GIT_INFO.get_git_source_file_link(self.file, self.line)
     }
     #[deny(
         clippy::indexing_slicing,

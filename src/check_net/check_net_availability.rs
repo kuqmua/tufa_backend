@@ -10,7 +10,7 @@ use chrono::Utc;
 use error_display::ErrorDisplay;
 use git_info::GitInfoDerive;
 use std::fmt;
-use tufa_common::helpers::git::get_git_commit_string::get_git_commit_string;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[derive(Debug, GitInfoDerive, ErrorDisplay)]
 pub enum CheckNetAvailabilityErrorEnum {

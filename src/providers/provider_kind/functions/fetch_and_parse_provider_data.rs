@@ -17,8 +17,7 @@ use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfoDerive;
 use std::time::Instant;
-use tufa_common::helpers::git::get_git_commit_string::get_git_commit_string;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[derive(Debug, GitInfoDerive)]
 pub enum FetchAndParseProviderDataErrorEnum {
@@ -51,7 +50,7 @@ impl ProviderKind {
                 None,
                 PrintType::TimeMeasurement,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 format!(
                     "fetch_link {link} in {}.{}ms",
                     time.elapsed().as_secs(),

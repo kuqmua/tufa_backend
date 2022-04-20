@@ -3,7 +3,7 @@ use crate::prints::print_type_enum::PrintType;
 use crate::providers::get_providers_posts::get_providers_posts;
 use actix_web::HttpResponse;
 use std::time::Instant;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 // #[tracing::instrument(
 //     name = "get_providers_posts_routee",
@@ -23,7 +23,7 @@ pub async fn get_providers_posts_route() -> Result<HttpResponse, actix_web::Erro
         None,
         PrintType::TimeMeasurement,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         message,
     );
     Ok(HttpResponse::Ok().finish())

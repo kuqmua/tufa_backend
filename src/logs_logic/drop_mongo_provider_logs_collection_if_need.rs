@@ -5,7 +5,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[deny(
     clippy::indexing_slicing,
@@ -34,7 +34,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             Some(pk),
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             format!("drop fail with error {e:#?}"),
         );
         return Err(e);

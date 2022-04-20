@@ -1,7 +1,6 @@
 use actix_web::http::header::ContentType;
 use actix_web::HttpResponse;
 use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
-use tufa_common::helpers::git::get_git_commit_string::get_git_commit_string;
 
 pub struct GitCommitInfo {
     pub commit_message: String,
@@ -14,7 +13,7 @@ pub async fn git_info() -> HttpResponse {
     let commit_id = GIT_INFO.commit_id.clone();
     let branch = GIT_INFO.branch.clone();
     let repo_link = GIT_INFO.repo_link.clone();
-    let commit_string = get_git_commit_string();
+    let commit_string = GIT_INFO.get_git_commit_string();
     HttpResponse::Ok()
         .content_type(ContentType::html())
         .body(format!(

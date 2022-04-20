@@ -6,7 +6,7 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber;
 use crate::telemetry::init_subscriber;
 use std::time::Instant;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[deny(
     clippy::indexing_slicing,
@@ -15,6 +15,13 @@ use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_lin
     clippy::float_arithmetic
 )]
 pub fn entry() {
+    // print_colorful_message(
+    //     None,
+    //     PrintType::Error,
+    //     vec![format!("{}:{}:{}", file!(), line!(), column!())],
+    //     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+    //     format!("Cannot build tokio runtime {}",GIT_INFO.get_git_source_file_link(file!(), line!())),
+    // );
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()
@@ -25,7 +32,7 @@ pub fn entry() {
                 None,
                 PrintType::Error,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {e:#?}"),
             );
         }
@@ -40,7 +47,7 @@ pub fn entry() {
             //         None,
             //         PrintType::Error,
             //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            //         vec![get_git_source_file_link(file!(), line!())],
+            //         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             //         format!("tracing init_subscriber error: {:#?}", e),
             //     );
             //     return;
@@ -51,7 +58,7 @@ pub fn entry() {
                 None,
                 PrintType::TimeMeasurement,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 format!("preparation done in {} seconds", time.elapsed().as_secs()),
             );
             if let Err(e) = server_wrapper() {
@@ -59,7 +66,7 @@ pub fn entry() {
                     None,
                     PrintType::Error,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     format!("Cannot run actix-web HttpServer, errror: {:#?}", e),
                 );
             }

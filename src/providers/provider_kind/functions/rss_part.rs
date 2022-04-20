@@ -1,6 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use tufa_common::helpers::git::get_git_commit_string::get_git_commit_string;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
@@ -12,6 +11,7 @@ use chrono::Local;
 use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 #[derive(Debug, GitInfoDerive)]
 pub enum RssPartErrorEnum {

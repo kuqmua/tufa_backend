@@ -3,7 +3,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use html_parser::Dom;
 use html_parser::Node;
-use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
+use tufa_common::helpers::git::lazy_static_git_info::GIT_INFO;
 
 //todo: think about renaming
 pub type GithubPostInfoVec = Vec<(
@@ -106,7 +106,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                                 None,
                                                                 PrintType::WarningHigh,
                                                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                                                vec![get_git_source_file_link(file!(), line!())],
+                                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             );
                                                         }
@@ -116,7 +116,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -129,7 +129,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             );
                                             }
@@ -139,7 +139,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                                 },
@@ -150,7 +150,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                                 }
@@ -160,7 +160,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -171,7 +171,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -183,7 +183,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                         None,
                         PrintType::Error,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         error_message,
                     )
                 }
@@ -193,7 +193,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "option content is None".to_string(),
         ),
     }
@@ -262,7 +262,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -272,7 +272,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     },
@@ -285,7 +285,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             warning_message,
                         )
                     }
@@ -294,7 +294,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -305,7 +305,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -314,7 +314,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -405,7 +405,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -426,7 +426,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -439,7 +439,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -453,7 +453,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -476,7 +476,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -497,7 +497,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -510,7 +510,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -549,7 +549,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -574,7 +574,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 "different node".to_string(),
                                                             ),
                                                             }
@@ -588,7 +588,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                             }
@@ -603,7 +603,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -625,7 +625,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -638,7 +638,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -669,7 +669,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -684,7 +684,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -699,7 +699,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -727,7 +727,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -741,7 +741,7 @@ fn parse_github_html_second_part(
                                                     None,
                                     PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                             }
@@ -756,7 +756,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -787,7 +787,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -802,7 +802,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -817,7 +817,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -839,7 +839,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -852,7 +852,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -877,7 +877,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -898,7 +898,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -911,7 +911,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -934,7 +934,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -955,7 +955,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -968,7 +968,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -982,7 +982,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1005,7 +1005,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1026,7 +1026,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1039,7 +1039,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1078,7 +1078,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -1100,7 +1100,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1116,7 +1116,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -1131,7 +1131,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -1153,7 +1153,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1166,7 +1166,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1197,7 +1197,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1212,7 +1212,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1227,7 +1227,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -1255,7 +1255,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1269,7 +1269,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1284,7 +1284,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -1315,7 +1315,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1329,7 +1329,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1344,7 +1344,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -1366,7 +1366,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1379,7 +1379,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1393,7 +1393,7 @@ fn parse_github_html_second_part(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1403,7 +1403,7 @@ fn parse_github_html_second_part(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1484,7 +1484,7 @@ fn parse_github_html_second_part(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -1497,7 +1497,7 @@ fn parse_github_html_second_part(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1521,7 +1521,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1542,7 +1542,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1555,7 +1555,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1569,7 +1569,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1593,7 +1593,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1614,7 +1614,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1627,7 +1627,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1641,7 +1641,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1664,7 +1664,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1685,7 +1685,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1698,7 +1698,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1735,7 +1735,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -1756,7 +1756,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1770,7 +1770,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1785,7 +1785,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -1807,7 +1807,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1820,7 +1820,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1834,7 +1834,7 @@ fn parse_github_html_second_part(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1844,7 +1844,7 @@ fn parse_github_html_second_part(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1904,7 +1904,7 @@ fn parse_github_html_second_part(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -1917,7 +1917,7 @@ fn parse_github_html_second_part(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1942,7 +1942,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1965,7 +1965,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1978,7 +1978,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -1992,7 +1992,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2018,7 +2018,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2041,7 +2041,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2054,7 +2054,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2068,7 +2068,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2093,7 +2093,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2116,7 +2116,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2129,7 +2129,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2168,7 +2168,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -2191,7 +2191,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                             },
@@ -2205,7 +2205,7 @@ fn parse_github_html_second_part(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -2220,7 +2220,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -2244,7 +2244,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2257,7 +2257,7 @@ fn parse_github_html_second_part(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             "different node".to_string(),
                                         ),
                                     }
@@ -2271,7 +2271,7 @@ fn parse_github_html_second_part(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2281,7 +2281,7 @@ fn parse_github_html_second_part(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2296,7 +2296,7 @@ fn parse_github_html_second_part(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2306,7 +2306,7 @@ fn parse_github_html_second_part(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2381,7 +2381,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -2394,7 +2394,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -2404,7 +2404,7 @@ fn parse_github_html_second_part_inner_one_element(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -2436,7 +2436,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![get_git_source_file_link(
+                                                            vec![GIT_INFO.get_git_source_file_link(
                                                                 file!(),
                                                                 line!(),
                                                             )],
@@ -2481,7 +2481,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     line!(),
                                                                     column!()
                                                                 )],
-                                                                vec![get_git_source_file_link(
+                                                                vec![GIT_INFO.get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
                                                                 )],
@@ -2499,7 +2499,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2520,7 +2520,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2534,7 +2534,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2547,7 +2547,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2557,7 +2557,7 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2592,7 +2592,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2605,7 +2605,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2618,7 +2618,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2628,7 +2628,7 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2705,7 +2705,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                                 PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                 }
@@ -2717,7 +2717,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                                 PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                     }
@@ -2730,7 +2730,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                         PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                             },
@@ -2745,7 +2745,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![get_git_source_file_link(
+                                                        vec![GIT_INFO.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2822,7 +2822,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![get_git_source_file_link(
+                                                    vec![GIT_INFO.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2835,7 +2835,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2848,7 +2848,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2858,7 +2858,7 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2870,7 +2870,7 @@ fn parse_github_html_second_part_inner_one_element(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2880,7 +2880,7 @@ fn parse_github_html_second_part_inner_one_element(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2915,7 +2915,7 @@ fn handle_text_element(node: &Node) -> Option<String> {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3007,7 +3007,7 @@ fn second_element(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3020,7 +3020,7 @@ fn second_element(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3030,7 +3030,7 @@ fn second_element(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -3041,7 +3041,7 @@ fn second_element(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -3051,7 +3051,7 @@ fn second_element(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3107,7 +3107,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3120,7 +3120,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3130,7 +3130,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3144,7 +3144,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3171,7 +3171,7 @@ fn two_elements_one_child(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                             }
@@ -3181,7 +3181,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3212,7 +3212,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3233,7 +3233,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3251,7 +3251,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3261,7 +3261,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3274,7 +3274,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3284,7 +3284,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3303,7 +3303,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3316,7 +3316,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3326,7 +3326,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3340,7 +3340,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3367,7 +3367,7 @@ fn two_elements_one_child(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3377,7 +3377,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3391,7 +3391,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3414,7 +3414,7 @@ fn two_elements_one_child(
                                             None,
                                             PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                            vec![get_git_source_file_link(file!(), line!())],
+                                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                             format!("no {attribute} attrubite"),
                                         ),
                                     }
@@ -3434,7 +3434,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3452,7 +3452,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3462,7 +3462,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3475,7 +3475,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3485,7 +3485,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3504,7 +3504,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3517,7 +3517,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3527,7 +3527,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3541,7 +3541,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3569,7 +3569,7 @@ fn two_elements_one_child(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     );
                                         }
@@ -3587,7 +3587,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3600,7 +3600,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3610,7 +3610,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3624,7 +3624,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3650,7 +3650,7 @@ fn two_elements_one_child(
                                                     None,
         PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3660,7 +3660,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3693,7 +3693,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3714,7 +3714,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -3732,7 +3732,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -3742,7 +3742,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3755,7 +3755,7 @@ fn two_elements_one_child(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3765,7 +3765,7 @@ fn two_elements_one_child(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3777,7 +3777,7 @@ fn two_elements_one_child(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3786,7 +3786,7 @@ fn two_elements_one_child(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3825,7 +3825,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3836,7 +3836,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3845,7 +3845,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3865,7 +3865,7 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3887,7 +3887,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3898,7 +3898,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3907,7 +3907,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3938,7 +3938,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -3954,7 +3954,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -3967,7 +3967,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -3977,7 +3977,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3988,7 +3988,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3997,7 +3997,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4040,7 +4040,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4053,7 +4053,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4063,7 +4063,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4077,7 +4077,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4094,7 +4094,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4107,7 +4107,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4117,7 +4117,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4148,7 +4148,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4169,7 +4169,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -4187,7 +4187,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4197,7 +4197,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4210,7 +4210,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4220,7 +4220,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4242,7 +4242,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4255,7 +4255,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4265,7 +4265,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4279,7 +4279,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4296,7 +4296,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4309,7 +4309,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4319,7 +4319,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4333,7 +4333,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4351,7 +4351,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4364,7 +4364,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4374,7 +4374,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4405,7 +4405,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4426,7 +4426,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
                                         },
@@ -4444,7 +4444,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![get_git_source_file_link(file!(), line!())],
+                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                         }
@@ -4454,7 +4454,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4467,7 +4467,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -4477,7 +4477,7 @@ fn parse_github_html_second_part_two_children_first(
                         None,
                         PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -4489,7 +4489,7 @@ fn parse_github_html_second_part_two_children_first(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4498,7 +4498,7 @@ fn parse_github_html_second_part_two_children_first(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4546,7 +4546,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4557,7 +4557,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4566,7 +4566,7 @@ fn four_cases(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4580,7 +4580,7 @@ fn four_cases(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4596,7 +4596,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4607,7 +4607,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4616,7 +4616,7 @@ fn four_cases(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4640,7 +4640,7 @@ fn four_cases(
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4657,7 +4657,7 @@ fn four_cases(
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -4670,7 +4670,7 @@ fn four_cases(
                                 None,
                                 PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4680,7 +4680,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4693,7 +4693,7 @@ fn four_cases(
                     None,
                     PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4702,7 +4702,7 @@ fn four_cases(
             None,
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
