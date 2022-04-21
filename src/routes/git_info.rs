@@ -3,14 +3,7 @@ use actix_web::HttpResponse;
 use crate::helpers::git_info::GIT_INFO;
 
 
-pub struct GitCommitInfo {
-    pub commit_message: String,
-    pub commit_id: String,
-    pub branch: String,
-    pub repo_link: String,
-}
 pub async fn git_info() -> HttpResponse {
-    let commit_message = GIT_INFO.commit_message.clone();
     let commit_id = GIT_INFO.commit_id.clone();
     let branch = GIT_INFO.branch.clone();
     let repo_link = GIT_INFO.repo_link.clone();
@@ -5630,8 +5623,6 @@ pub async fn git_info() -> HttpResponse {
             </head>
             
             <body id="preview">
-                <h3 class="code-line" data-line-start=0 data-line-end=1><a id="commit_message_0"></a>commit message</h3>
-                <pre><code class="has-line-data" data-line-start="2" data-line-end="4">{commit_message}</code></pre>
                 <h3 class="code-line" data-line-start=4 data-line-end=5><a id="commit_id_4"></a>commit id</h3>
                 <pre><code class="has-line-data" data-line-start="6" data-line-end="8">{commit_id}</code></pre>
                 <h3 class="code-line" data-line-start=8 data-line-end=9><a id="branch_8"></a>branch</h3>
