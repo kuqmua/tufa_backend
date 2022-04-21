@@ -16,13 +16,6 @@ use crate::helpers::git_info::GIT_INFO;
     clippy::float_arithmetic
 )]
 pub fn entry() {
-    // print_colorful_message(
-    //     None,
-    //     PrintType::Error,
-    //     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-    //     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-    //     format!("Cannot build tokio runtime {}",GIT_INFO.get_git_source_file_link(file!(), line!())),
-    // );
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()
