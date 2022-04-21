@@ -15,7 +15,7 @@ pub fn derive_git_info(input: TokenStream) -> TokenStream {
                 clippy::float_arithmetic
             )]
             fn git_info(&self) -> String {
-                GIT_INFO.get_git_commit_string()
+                GIT_INFO.get_git_fetch_head()
             }
         }
     };
