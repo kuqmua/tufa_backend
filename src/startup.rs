@@ -176,7 +176,10 @@ async fn run(
             .route("/json_example", web::get().to(json_example))
             .service(
                 web::scope("/api")
-                .route("/git_info", web::get().to(git_info))
+                .service(
+                    web::scope("/md")
+                    .route("/git_info", web::get().to(git_info))
+                )
             )
             .route("/subscriptions", web::post().to(subscribe))
             .route("/subscriptions/confirm", web::get().to(confirm))
