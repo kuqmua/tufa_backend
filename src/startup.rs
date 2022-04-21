@@ -173,12 +173,15 @@ async fn run(
             .route("/login", web::get().to(login_form))
             .route("/login", web::post().to(login))
             .route("/health_check", web::get().to(health_check))
-            .route("/json_example", web::get().to(json_example))
             .service(
                 web::scope("/api")
                 .service(
                     web::scope("/md")
                     .route("/git_info", web::get().to(git_info))
+                )
+                .service(
+                    web::scope("/json")
+                    .route("/json_example", web::get().to(json_example))
                 )
             )
             .route("/subscriptions", web::post().to(subscribe))
