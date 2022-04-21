@@ -14,7 +14,7 @@ pub async fn git_info() -> HttpResponse {
     let commit_id = GIT_INFO.commit_id.clone();
     let branch = GIT_INFO.branch.clone();
     let repo_link = GIT_INFO.repo_link.clone();
-    let commit_string = GIT_INFO.get_git_commit_string();
+    let commit_string = GIT_INFO.get_git_fetch_head();
     HttpResponse::Ok()
         .content_type(ContentType::html())
         .body(format!(
