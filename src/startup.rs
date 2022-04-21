@@ -59,7 +59,6 @@ impl Application {
         let connection_pool = get_connection_pool(&configuration.database);
         let listener = match TcpListener::bind(&format!(
             "{}:{}",
-            // CONFIG.server_ip, CONFIG.server_port
             configuration.application.host,
             configuration.application.port
         )) {
