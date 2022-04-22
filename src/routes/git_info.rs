@@ -5,9 +5,8 @@ use crate::helpers::git_info::GIT_INFO;
 
 pub async fn git_info() -> HttpResponse {
     let commit_id = GIT_INFO.commit_id.clone();
-    let branch = GIT_INFO.branch.clone();
     let repo_link = GIT_INFO.repo_link.clone();
-    let commit_string = GIT_INFO.get_git_fetch_head();
+    let commit_link = GIT_INFO.get_commit_link();
     HttpResponse::Ok()
         .content_type(ContentType::html())
         .body(format!(
@@ -5625,12 +5624,10 @@ pub async fn git_info() -> HttpResponse {
             <body id="preview">
                 <h3 class="code-line" data-line-start=4 data-line-end=5><a id="commit_id_4"></a>commit id</h3>
                 <pre><code class="has-line-data" data-line-start="6" data-line-end="8">{commit_id}</code></pre>
-                <h3 class="code-line" data-line-start=8 data-line-end=9><a id="branch_8"></a>branch</h3>
-                <pre><code class="has-line-data" data-line-start="10" data-line-end="12">{branch}</code></pre>
                 <h3 class="code-line" data-line-start=12 data-line-end=13><a id="repo_link_12"></a>repo link</h3>
                 <pre><code class="has-line-data" data-line-start="14" data-line-end="16">{repo_link}</code></pre>
-                <h3 class="code-line" data-line-start=16 data-line-end=17><a id="commit_string_16"></a>commit string</h3>
-                <pre><code class="has-line-data" data-line-start="18" data-line-end="20">{commit_string}</code></pre>
+                <h3 class="code-line" data-line-start=16 data-line-end=17><a id="commit_string_16"></a>commit link</h3>
+                <pre><code class="has-line-data" data-line-start="18" data-line-end="20">{commit_link}</code></pre>
             </body>
             
             </html>"#,
