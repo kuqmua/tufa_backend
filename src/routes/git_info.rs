@@ -6,7 +6,6 @@ pub async fn git_info() -> HttpResponse {
     {
         let commit_id = GIT_INFO.commit_id.clone();
         let repo_link = GIT_INFO.repo_link.clone();
-        let last_commit = GIT_INFO.last_commit.clone();
         let author = GIT_INFO.author.clone();
         let author_email = GIT_INFO.author_email.clone();
         let commit_unix_time = GIT_INFO.commit_unix_time.clone();
@@ -5633,9 +5632,6 @@ pub async fn git_info() -> HttpResponse {
 </code></pre>
     <h3 class="code-line" data-line-start=4 data-line-end=5><a id="repo_link_4"></a>repo link</h3>
     <pre><code class="has-line-data" data-line-start="6" data-line-end="8">{repo_link}
-</code></pre>
-    <h3 class="code-line" data-line-start=8 data-line-end=9><a id="last_commit_8"></a>last commit</h3>
-    <pre><code class="has-line-data" data-line-start="10" data-line-end="12">{last_commit}
 </code></pre>
     <h3 class="code-line" data-line-start=12 data-line-end=13><a id="author_12"></a>author</h3>
     <pre><code class="has-line-data" data-line-start="14" data-line-end="16">{author}
