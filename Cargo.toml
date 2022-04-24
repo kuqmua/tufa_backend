@@ -74,25 +74,25 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #
 provider_kind_from_config = {path = "./proc_macro_libs/provider_kind_from_config"}
 #prod
-box_err_from_err = {git = "https://github.com/kuqmua/box_err_from_err"}
-enum_extention = {git = "https://github.com/kuqmua/enum_extention"}
-error_display = {git = "https://github.com/kuqmua/error_display"}
-gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
-gen_enum_without_values = {git = "https://github.com/kuqmua/gen_enum_without_values"}
-git_info = {git = "https://github.com/kuqmua/git_info"}
-impl_display = {git = "https://github.com/kuqmua/impl_display"}
-impl_from_for_upper_struct = {git = "https://github.com/kuqmua/impl_from_for_upper_struct"}
-init_from_env = {git = "https://github.com/kuqmua/init_from_env"}
+# box_err_from_err = {git = "https://github.com/kuqmua/box_err_from_err"}
+# enum_extention = {git = "https://github.com/kuqmua/enum_extention"}
+# error_display = {git = "https://github.com/kuqmua/error_display"}
+# gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
+# gen_enum_without_values = {git = "https://github.com/kuqmua/gen_enum_without_values"}
+# git_info = {git = "https://github.com/kuqmua/git_info"}
+# impl_display = {git = "https://github.com/kuqmua/impl_display"}
+# impl_from_for_upper_struct = {git = "https://github.com/kuqmua/impl_from_for_upper_struct"}
+# init_from_env = {git = "https://github.com/kuqmua/init_from_env"}
 #dev
-# box_err_from_err = {path = "../proc_macros/box_err_from_err"}
-# enum_extention = {path = "../proc_macros/enum_extention"}
-# error_display = {path = "../proc_macros/error_display"}
-# gen_enum = {path = "../proc_macros/gen_enum"}
-# gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
-# git_info = {path = "../proc_macros/git_info"}
-# impl_display = {path = "../proc_macros/impl_display"}
-# impl_from_for_upper_struct = {path = "../proc_macros/impl_from_for_upper_struct"}
-# init_from_env = {path = "../proc_macros/init_from_env"}
+box_err_from_err = {path = "../proc_macros/box_err_from_err"}
+enum_extention = {path = "../proc_macros/enum_extention"}
+error_display = {path = "../proc_macros/error_display"}
+gen_enum = {path = "../proc_macros/gen_enum"}
+gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
+git_info = {path = "../proc_macros/git_info"}
+impl_display = {path = "../proc_macros/impl_display"}
+impl_from_for_upper_struct = {path = "../proc_macros/impl_from_for_upper_struct"}
+init_from_env = {path = "../proc_macros/init_from_env"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"

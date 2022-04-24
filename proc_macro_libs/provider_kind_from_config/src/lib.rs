@@ -3,7 +3,6 @@ use convert_case::Casing;
 use proc_macro::TokenStream;
 use quote::quote;
 use std::fs;
-use syn;
 use syn::Data;
 use syn::Ident;
 use syn::ReturnType;
@@ -19,7 +18,9 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
     let trait_name: Ident;
     let function_vec_idents: Vec<(Ident, ReturnType)>;
     //todo: how to match it without fs::read_to_string("./src/traits/provider_kind_from_config_trait.rs") ? import CONFIG type somehow?
-    match fs::read_to_string("./src/traits/provider_kind_from_config_trait.rs") {
+    match fs::read_to_string("./tufa_server/src/traits/provider_kind_from_config_trait.rs") {
+        //as tufa_project submodule "./tufa_server/src/traits/provider_kind_from_config_trait.rs"
+        //as separate repo "./src/traits/provider_kind_from_config_trait.rs"
         Err(e) => panic!("file:  error: {e}"),
         Ok(file) => {
             let token_stream: proc_macro::TokenStream = file
@@ -53,7 +54,7 @@ pub fn derive_provider_kind_from_config(input: TokenStream) -> TokenStream {
             if let syn::Type::Reference(type_reference) = &**box_type {
                 if let syn::Type::Path(reference_type_path) = &*type_reference.elem {
                     for i in &reference_type_path.path.segments {
-                        if i.ident.to_string() == "str" {
+                        if i.ident == "str" {
                             is_str = true;
                         }
                     }
