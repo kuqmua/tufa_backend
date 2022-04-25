@@ -2,7 +2,7 @@ use crate::helpers::git_info::GIT_INFO;
 use actix_web::http::header::ContentType;
 use actix_web::HttpResponse;
 
-pub async fn git_info() -> HttpResponse {
+pub async fn git_info_html() -> HttpResponse {
     {
         let commit_id = GIT_INFO.commit_id.clone();
         let repo_link = GIT_INFO.repo_link.clone();

@@ -16,7 +16,7 @@ use crate::routes::login::login_form;
 use crate::routes::publish_newsletter;
 use crate::routes::publish_newsletter_form;
 use crate::routes::subscribe;
-use crate::routes::git_info::git_info;
+use crate::routes::git::git_info_html::git_info_html;
 use actix_cors::Cors;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -175,8 +175,8 @@ async fn run(
             .service(
                 web::scope("/api")
                 .service(
-                    web::scope("/md")
-                    .route("/git_info", web::get().to(git_info))
+                    web::scope("/html")//or maybe .md ?
+                    .route("/git_info", web::get().to(git_info_html))
                 )
                 .service(
                     web::scope("/json")
