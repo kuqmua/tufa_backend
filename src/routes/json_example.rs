@@ -1,5 +1,4 @@
 use actix_web::{web, Responder};
-use serde::Serialize;
 use tufa_common::json_example::JsonExample;
 
 pub async fn json_example() -> impl Responder {
