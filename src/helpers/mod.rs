@@ -1,4 +1,3 @@
-pub mod create_dir_if_it_doesnt_exist;
 pub mod fetch;
 pub mod get_server_address;
 pub mod mongo;
