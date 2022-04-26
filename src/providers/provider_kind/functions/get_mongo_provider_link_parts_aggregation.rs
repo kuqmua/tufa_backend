@@ -1,4 +1,4 @@
-use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::{
     config_mods::lazy_static_config::CONFIG,
     providers::provider_kind::provider_kind_enum::ProviderKind,
