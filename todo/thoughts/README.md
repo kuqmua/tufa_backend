@@ -9,13 +9,16 @@ println!("Find 2 in vec1: {:?}", iter .find(|&&x| x == 2));
 its items, so we have to destructure `&i32` to `i32`
 println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
 
-* extern crate rayon;
+* 
+```
+extern crate rayon;
 use rayon::prelude::*;
 fn main() {
     let mut arr = [0, 7, 9, 11];
     arr.par_iter_mut().for_each(|p| *p -= 1);
     println!("{:?}", arr);
 }
+```
 
 * for loop into iterators?
 
