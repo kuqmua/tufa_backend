@@ -1,108 +1,64 @@
-# todo_thoughts
-
-### -------------------
-`iter()` for vecs yields `&i32`.
+* `iter()` for vecs yields `&i32`.
 let mut iter = vec1.iter();
 `into_iter()` for vecs yields `i32`.
 let mut into_iter = vec2.into_iter();
-
 `iter()` for vecs yields `&i32`, and we want to reference one of its
 items, so we have to destructure `&&i32` to `i32`
 println!("Find 2 in vec1: {:?}", iter .find(|&&x| x == 2));
 `into_iter()` for vecs yields `i32`, and we want to reference one of
 its items, so we have to destructure `&i32` to `i32`
 println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
-<br/>
 
-### -------------------
-extern crate rayon;
-
+* extern crate rayon;
 use rayon::prelude::*;
-
 fn main() {
     let mut arr = [0, 7, 9, 11];
     arr.par_iter_mut().for_each(|p| *p -= 1);
     println!("{:?}", arr);
 }
-<br/>
 
-### -------------------
-for loop into iterators?
-<br/>
+* for loop into iterators?
 
-### -------------------
-add everywhere explicit types
+* add everywhere explicit types
 Except maybe functional way 
-<br/>
 
-### -------------------
-std::stringify
-<br/>
+* std::stringify
 
-### -------------------
-std::str::SplitN
-<br/>
+* std::str::SplitN
 
-### -------------------
-split().map()
+* split().map()
 instead of find(<item></item>)
-<br/>
 
-### -------------------
-error had .description method
+* error had .description method
 maybe rewrite error messages?
 But description is depreciated
-<br/>
 
-### -------------------
-hashmaps into vecs
-<br/>
+* hashmaps into vecs
 
-### -------------------
-&str instead of String everywhere if possible
-<br/>
+* &str instead of String everywhere if possible
 
-### -------------------
-'static remove if possible or maybe add if its better 
-<br/>
+* 'static remove if possible or maybe add if its better 
 
-### -------------------
-ensure! macros
-<br/>
+* ensure! macros
 
-### -------------------
-RES.STATUS: 521 <unknown status code>
-<br/>
+* RES.STATUS: 521 <unknown status code>
 
-### -------------------
-operation timed out print time elapsed
-<br/>
+* operation timed out print time elapsed
 
-### -------------------
-Rc<RefCell<Data>>
+* Rc<RefCell<Data>>
 Rc::new(<RefCell::new(Data { value: 42}))
-<br/>
 
-### -------------------
-find out why constants which used in tests looks like unused
-<br/>
+* find out why constants which used in tests looks like unused
 
-### -------------------
-google some style guide variable naming for project(parsing espesially) and rename variables
-<br/>
+* google some style guide variable naming for project(parsing espesially) and rename variables
 
-### -------------------
-[dependencies] and [dev-dependencies] read about it
-<br/>
+* [dependencies] and [dev-dependencies] read about it
 
-### -------------------
-impl UserCredentialsStruct {
+* impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
         maybe add different user logic later ?
-<br/>
 
-### -------------------
-thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
+* thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
     Finished dev [unoptimized + debuginfo] target(s) in 0.10s
      Running `target/debug/tufa_server`
@@ -116,197 +72,112 @@ UnhandledFetchStatusInfo::Failureerror sending request for url (https://nitter.f
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
-<br/>
 
-### -------------------
-parts of config as feature flags? 
-<br/>
+* parts of config as feature flags? 
 
-### -------------------
-is there some service whats run postgres and mongo in cloud for free like 100mb for free?
-<br/>
+* is there some service whats run postgres and mongo in cloud for free like 100mb for free?
 
-### -------------------
-Dynamic library (dylib)
+* Dynamic library (dylib)
 Find out about it 
 crate-type = ["dylib"]
-<br/>
 
-### -------------------
-difference between "".to_string() and String::new()
-<br/>
+* difference between "".to_string() and String::new()
 
-### -------------------
-refactor project into rust workspaces to reuse dependencies
-<br/>
+* refactor project into rust workspaces to reuse dependencies
 
-### -------------------
-caret requirements 
+* caret requirements 
 tilde requirements
 wildcard requirements
-<br/>
 
-### -------------------
-different user_credentials files for project databases and providers
+* different user_credentials files for project databases and providers
 Move all from user_credentials into .env file
-<br/>
 
-### -------------------
-config as dynamic library maybe?
-<br/>
+* config as dynamic library maybe?
 
-### -------------------
-Faster docker build 
+* Faster docker build 
 Cargo chef
 https://github.com/LukeMathWalker/cargo-chef
-<br/>
 
-### -------------------
-Redis rust library
+* Redis rust library
 https://github.com/mitsuhiko/redis-rs
-<br/>
 
-### -------------------
-AVIF imag format in some cases better than webp, png and jpeg
-<br/>
+* AVIF imag format in some cases better than webp, png and jpeg
 
-### -------------------
-clippy rust flags (can use deny for them - code would be more safe)
+* clippy rust flags (can use deny for them - code would be more safe)
 https://efanzh.org/2021/05/25/rust-lints.html
-<br/>
 
-### -------------------
-global .gitignore
+* global .gitignore
 https://www.youtube.com/watch?v=D97rnxDqq1I
-<br/>
 
-### -------------------
-#[deny(clippy::unwrap_used)]
+* #[deny(clippy::unwrap_used)]
 Find out why its triggers for tokio:main functions
-<br/>
 
-### -------------------
-rewrite something with "from" and "into" traits
-<br/>
+* rewrite something with "from" and "into" traits
 
-### -------------------
-check rust-analyzer flags to enable
-<br/>
+* check rust-analyzer flags to enable
     
-### -------------------
-"Rust Doc Viewer" vscode extension
-<br/>
+* "Rust Doc Viewer" vscode extension
 
-### -------------------
-check if i have dependency with std::net in code. (vulnerability in std::net), after Rust 1.53.0 no problem with that
-<br/>
+* check if i have dependency with std::net in code. (vulnerability in std::net), after Rust 1.53.0 no problem with that
     
-### -------------------
-find out how to use ngnix
-<br/>
+* find out how to use ngnix
+    
+* add to each function return bool if its not returning yet
 
-### -------------------
-add to each function return bool if its not returning yet
-<br/>
+* how to solve problem with two different versions of tokio runtime? main 1.7.1, for mongo 0.2.25
 
-### -------------------
-how to solve problem with two different versions of tokio runtime? main 1.7.1, for mongo 0.2.25
-<br/>
+* find out dofference between diesel vs tokio-postgres vs sqlx
 
-### -------------------
-find out dofference between diesel vs tokio-postgres vs sqlx
-<br/>
+* find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
 
-### -------------------
-find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
-<br/>
-
-
-### -------------------
-Compile on save
+* Compile on save
 cargo watch -q -c -x run 
-<br/>
     
-### -------------------
-add stackoverflow provider
+* add stackoverflow provider
 https://stackoverflow.com/feeds/question/23412033
-<br/>
     
-### -------------------
-difference between usage in global scope and local scope
+* difference between usage in global scope and local scope
 use lib_or_crate_or_something::something;
-<br/>
 
-### -------------------
-https://github.com/tangramdotdev/tangram
+* https://github.com/tangramdotdev/tangram
 train, deploy, and monitor machine learning models
-<br/>
 
-### -------------------
-Add different project in inner folder of tufa backend 
+* Add different project in inner folder of tufa backend 
 what parse few rust files, dockerfile, docker-compose and .env 
 And add new env variable and logic around it in all that files
 Then run tests and cargo check
-<br/>
     
-### -------------------
-pull requests instead of commits (+ github actions) - do not add changes if test fail
-<br/>
+* pull requests instead of commits (+ github actions) - do not add changes if test fail
     
-### -------------------
-move from ubuntu to alphine linux on wsl2
-<br/>
+* move from ubuntu to alphine linux on wsl2
     
-### -------------------
-if i go into docker container and modify file, will changes be saved after container restart?
+* if i go into docker container and modify file, will changes be saved after container restart?
 if yes then maybe write some send logs logic around it?
 like check last logs send date and time then decide send or not send
-<br/>
 
-### -------------------
-add to dockerfile or before docker build test what check valid env data fields
-<br/>
+* add to dockerfile or before docker build test what check valid env data fields
 
-### -------------------
-pm2 instead of docker?
-<br/>
+* pm2 instead of docker?
     
-### -------------------
-commit message and hash in file inside docker container
+* commit message and hash in file inside docker container
 for more information about code inside container
-<br/>
     
-### -------------------
-red hat / openshift / reg.ru postgres cloud cluster
-<br/>
+* red hat / openshift / reg.ru postgres cloud cluster
 
-### -------------------
-rename ERROR_RED="255" # u8 into ERROR_PRINT_COLOR_RED and others
-<br/>
+* rename ERROR_RED="255" # u8 into ERROR_PRINT_COLOR_RED and others
 
-### -------------------
-rust language detection library
+* rust language detection library
 https://github.com/pemistahl/lingua-rs
-<br/>
 
-### -------------------
-https://doc.rust-lang.org/std/macro.stringify.html
-<br/>
+* https://doc.rust-lang.org/std/macro.stringify.html
 
-### -------------------
-find some "try to remove .clone() from rust code" exercises
-<br/>
+* find some "try to remove .clone() from rust code" exercises
 
-### -------------------
-This week in rust check 
-<br/>
+* This week in rust check 
 
-### -------------------
-Hazard pointer https://youtu.be/2Iu2BnO9iHg
-<br/>
+* Hazard pointer https://youtu.be/2Iu2BnO9iHg
 
-### -------------------
-Type safe relationship between enums.
+* Type safe relationship between enums.
 We have two different enums Number and ErrorNumber
 And we can write some matching for them
 Like Number::One => ErrorNumber::One
@@ -318,21 +189,15 @@ Number::Two => ErrorNumber::One
 Its not a  TYPE SAFE Graph, coz it's compiled successfully
 It must be many to many Graph-enum-type-system
 Ask someone about it
-<br/>
 
-### -------------------
-find out what happens in function can return some error
+* find out what happens in function can return some error
 but you use ? operator on result and await cases
-<br/>
 
-### -------------------
-Complete all exercises
+* Complete all exercises
 https://github.com/rust-lang/rustlings
-<br/>
 
-### -------------------
-learn more about iterator methods
-
+* learn more about iterator methods
+    
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     map.into_iter().filter(|pair| pair.1 == &value).count()
     --------------
@@ -344,27 +209,21 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
         result + map.into_iter().filter(|pair| pair.1 == &value).count()
     })
 }
-<br/>
 
-### -------------------
-learn more about rust macro system
+* learn more about rust macro system
 #[macro_export]
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!")
     };
 }
-<br/>
 
-### -------------------
-AsRef trait find out more
+* AsRef trait find out more
 fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().as_bytes().len()
 }
-<br/>
 
-### -------------------
-error conversion with ? example
+* error conversion with ? example
 
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -438,18 +297,12 @@ mod test {
         assert_eq!(PositiveNonzeroInteger::from_str("42"), Ok(x.unwrap()));
     }
 }
-<br/>
 
-### -------------------
-find out more about downcast errors
-<br/>
+* find out more about downcast errors
 
-### -------------------
-.map_err() function in code examples
-<br/>
+* .map_err() function in code examples
 
-### -------------------
-use Option ref to remove borrow error
+* use Option ref to remove borrow error
 struct Point {
     x: i32,
     y: i32,
@@ -462,75 +315,46 @@ fn main() {
     }
     y; // Fix without deleting this line.
 }
-<br/>
     
-### -------------------
-rewrite error handling like this?
+* rewrite error handling like this?
     if let Err(merge_errors) = builder.merge_pipelines() {
         errors.extend(merge_errors);
     }
-<br/>
 
+* how to clone custom error? which contains std error or lib errors
 
-### -------------------
-how to clone custom error? which contains std error or lib errors
-<br/>
-
-### -------------------
-crate for git repos integration 
+* crate for git repos integration 
 git2 = "0.13"
-<br/>
     
-### -------------------
-impl serde::Serialize and deserialize for structs and enums
-<br/>
+* impl serde::Serialize and deserialize for structs and enums
 
-### -------------------
-learn https://github.com/Amanieu/parking_lot
-<br/>
+* learn https://github.com/Amanieu/parking_lot
     
-### -------------------
-systemclt is-enabled docker
-<br/>
+* systemclt is-enabled docker
     
-### -------------------
-read about async cancelation
+* read about async cancelation
 https://blog.yoshuawuyts.com/async-cancellation-1/
-<br/>
 
-### -------------------
-read about debugging Rust application inside linux container
+* read about debugging Rust application inside linux container
 https://blog.erebe.dev/blog/debug-rust-aplication-inside-container/index.html
-<br/>
 
-### -------------------
-read how to write async tests
+* read how to write async tests
 https://docs.rs/tokio/1.14.0/tokio/attr.test.html
-<br/>
   
-### -------------------
-Checking Unused Dependencies in a Rust Project with Github Actions
+* Checking Unused Dependencies in a Rust Project with Github Actions
 https://erayerdin.com/checking-unused-dependencies-in-a-rust-project-with-github-actions-ckwm3yov901cwlvs1h48z54xi
-<br/>
     
-### -------------------
-write about dbs, tables in postgres and clusters dbs and collections in mongo
+* write about dbs, tables in postgres and clusters dbs and collections in mongo
 should i create table for each provider?
 should i create collection for each provider?
-<br/>
     
-### -------------------
-rust cache github action
+* rust cache github action
 https://github.com/marketplace/actions/rust-cache
-<br/>
     
-### -------------------
-rust macros book
+* rust macros book
 https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
-<br/>
 
-### -------------------
-how to do error handling:
+* how to do error handling:
 
 pub struct Error(Box<ErrorImpl>);
 
@@ -551,10 +375,8 @@ https://github.com/serde-rs/json/blob/3f459308f5055e9a4b1b611a77dad07132011e8d/s
 
 https://rust-lang.github.io/rust-clippy/master/index.html#large_enum_variant 
 linter for it big error enums
-<br/>
 
-### -------------------
-while using Result<SomeType, SomeError>
+* while using Result<SomeType, SomeError>
 if size_of::<SomeError> > size_of::<Box<SomeError>> (i think its == usize (32 or 64))
 then using Box version will be allocation on runtime.
 so if errors will be inside loop or multiple parallel tasks
@@ -572,20 +394,14 @@ like
 big error version for lower allocation statistics
 small error (yeah with less info about error) version for high allocation statistics
 (in small version still allocate big error version from time to time - for more info)
-<br/>
     
-### -------------------
-rust zero to production book 
+* rust zero to production book 
 https://github.com/LukeMathWalker/zero-to-production
-<br/>
     
-### -------------------
-tokio::fs::metadata
+* tokio::fs::metadata
 check path exists in file system
-<br/>
     
- ### -------------------
-let a = async { 10 }.delay(Duration::from_secs(10));
+* let a = async { 10 }.delay(Duration::from_secs(10));
 let b = async { 11 };
 try using race for different dbs or local files.
 for example get provider link parts from mongo postgres local using race
@@ -596,80 +412,52 @@ join - wait for all ouputs, continue on error
 try_join - wait for all outputs, return early on error
 try race - wait for first output, continue on error
 https://www.youtube.com/watch?v=QlPDI9IsSXU&list=WL&index=99
-<br/>
     
-### -------------------
-Overriding Rust Dependencies
+* Overriding Rust Dependencies
 https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html
-<br/>
     
-### -------------------
-add tracing::error? https://crates.io/crates/tracing-error
+* add tracing::error? https://crates.io/crates/tracing-error
 *update* dont know how to use it
-<br/>
 
-### -------------------
-find about rust type erasure. write some examples
-<br/>
+* find about rust type erasure. write some examples
 
-### -------------------
-rust error handling from zero to prod rust author https://www.youtube.com/watch?v=yLGLKKFFc3g  
-<br/>
+* rust error handling from zero to prod rust author https://www.youtube.com/watch?v=yLGLKKFFc3g  
    
-### -------------------
-find out difference between sqlx and tokio-postgres
+* find out difference between sqlx and tokio-postgres
 https://crates.io/crates/tokio-postgres
 https://crates.io/crates/sqlx
-<br/>
     
-### -------------------
-show github link to code repo from error  
-<br/>
+* show github link to code repo from error  
     
-### -------------------
-add field how_to_fix  error into error  
-<br/>
+* add field how_to_fix  error into error  
 
-### -------------------
-async runtime error handling state for write/dont write/partially write into console error info
+* async runtime error handling state for write/dont write/partially write into console error info
 for example in case then error repeats
 first time write all error 
 then write partially.
 or maybe write only error increment
 or make more time between function exection that can return this error
-<br/>
     
-### -------------------
-do not use Mutex.lock() with match expression
+* do not use Mutex.lock() with match expression
 like match mutex.lock() {}
 explanation https://fasterthanli.me/articles/a-rust-match-made-in-hell
-<br/>
 
-### -------------------
-deadlock detection with parking_lot
+* deadlock detection with parking_lot
 parking_lot = { version = "0.12.0", features = ["deadlock_detection"] } 
 just find this inside page to see example
 https://fasterthanli.me/articles/a-rust-match-made-in-hell
-<br/>
   
-### -------------------
-Rust Macro Expand vscode extension
+* Rust Macro Expand vscode extension
 https://marketplace.visualstudio.com/items?itemName=Odiriuss.rust-macro-expand
-<br/>
    
-### -------------------
-https://rust-lang.github.io/rustfmt/?version=v1.4.38&search=
-<br/>
+* https://rust-lang.github.io/rustfmt/?version=v1.4.38&search=
  
-### -------------------
-Cargo now shows you warnings when a dependency will be rejected by a future version of Rust. After running cargo build or cargo check, you might see:
+* Cargo now shows you warnings when a dependency will be rejected by a future version of Rust. After running cargo build or cargo check, you might see:
 warning: the following packages contain code that will be rejected by a future version of Rust: old_dep v0.1.0
 note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
 You can run the cargo report command mentioned in the warning to see a full report of the code that will be rejected. This gives you time to upgrade your dependency before it breaks your build.
-<br/>
     
-### -------------------
-On Linux, you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you’re going to try this you probably want to use a VM):
+* On Linux, you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you’re going to try this you probably want to use a VM):
 echo b > /proc/sysrq-trigger
 We can sort of simulate an operating system level crash (or having the plug pulled on our server rack) by using this:
 
@@ -679,28 +467,18 @@ pub fn reboot_kernel() {
         .write_all(b"b")
         .unwrap();
 }
-<br/>
 
-### -------------------
-Rust exposes this system call via the File::sync_all method. If we call sync_all, when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I’ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, let’s keep things simple and assume syncing is a reliable process.
-<br/>
+* Rust exposes this system call via the File::sync_all method. If we call sync_all, when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I’ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, let’s keep things simple and assume syncing is a reliable process.
 
-### -------------------
-show llvm ir command
+* show llvm ir command
 rustc simple1.rs --emit=llvm-ir
-<br/>
     
-### -------------------
-open api routes ?
-<br/>
+* open api routes ?
 
-### -------------------
-rust template gitignore
+* rust template gitignore
 https://github.com/github/gitignore/blob/main/Rust.gitignore
-<br/>
     
-### -------------------
-Sometimes you need to write methods that accept a string slice (&str) and conditionally return either a modified version of it or the original one. For these cases, you might use Cow<str>, so that you only allocate new memory when necessary.
+* Sometimes you need to write methods that accept a string slice (&str) and conditionally return either a modified version of it or the original one. For these cases, you might use Cow<str>, so that you only allocate new memory when necessary.
 use std::borrow::Cow;
 fn capitalize(name: &str) -> Cow<str> {
     match name.chars().nth(0) {
@@ -725,56 +503,36 @@ fn main() {
     println!("{}", capitalize("John"));  // No allocation
 }
 If you’re using VSCode + Rust Analyzer, I highly suggest going into the settings > Rust Analyzer > Check On Save: Command and setting "clippy" as the new default instead of "check". Same UX, better warnings.
-<br/>
 
-### -------------------
-rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
-<br/>
+* rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
     
-### -------------------
-inside cargo.toml
+* inside cargo.toml
 use the “*” to pull the latest version of the dependency.
-<br/>
     
-### -------------------
-more readable tracing like a tree https://lib.rs/crates/tracing-tree
+* more readable tracing like a tree https://lib.rs/crates/tracing-tree
 examples https://fasterthanli.me/articles/request-coalescing-in-async-rust
-<br/>
     
-### -------------------
-usefull crates:
+* usefull crates:
 https://crates.io/crates/base64 (encodes and decodes base64 as bytes or utf8)
 https://crates.io/crates/clap (command line parser)
 https://crates.io/crates/signal-hook (Unix signal handling)
-<br/>
 
-### -------------------
-If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error. It can, if it makes sense, add more context to it.
-<br/>
+* If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error. It can, if it makes sense, add more context to it.
     
-### -------------------
-algebraic data types inside postgres
+* algebraic data types inside postgres
 https://stackoverflow.com/questions/44431740/algebraic-data-types-in-postgres
-<br/>
     
-### -------------------
-This library provides implementations of Mutex, RwLock, Condvar and Once that are smaller, faster and more flexible than those in the Rust standard library, as well as a ReentrantMutex type which supports recursive locking. It also exposes a low-level API for creating your own efficient synchronization primitives.
+* This library provides implementations of Mutex, RwLock, Condvar and Once that are smaller, faster and more flexible than those in the Rust standard library, as well as a ReentrantMutex type which supports recursive locking. It also exposes a low-level API for creating your own efficient synchronization primitives.
 https://lib.rs/crates/parking_lot
-<br/>
     
-### -------------------
-let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
+* let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
 let _: HashMap<u64, u64> = HashMap::from_iter(x);
-<br/>
     
-### -------------------
-writing cross-platform “bash” scripts in Rust
+* writing cross-platform “bash” scripts in Rust
 https://docs.rs/xshell/latest/xshell/
 maybe rewrite shell scripts for service init in xshell?
-<br/>
 
-### -------------------
-some useful methods
+* some useful methods
 let v = vec!["Hello", "World", "!"].into_iter();
 let w: Vec<String> = v.map(String::from).collect();
 into_par_iter()
@@ -783,24 +541,15 @@ chain
 fold
 for_each_concurrent
 buffer_unordered
-<br/>
  
-### -------------------
-gen rust files
+* gen rust files
 https://matklad.github.io/2022/03/26/self-modifying-code.html
-<br/>
     
-### -------------------
-Building REST API's with Rust, Actix Web and MongoDB
+* Building REST API's with Rust, Actix Web and MongoDB
 https://dev.to/feezyhendrix/building-rest-apis-with-rust-actix-web-and-mongodb-4lbf?utm_campaign=Rust%2BNigeria%2BNewsletter&utm_medium=web&utm_source=Rust_Nigeria_Newsletter_4
-<br/>
 
-### -------------------
-disable unsafe code
+* disable unsafe code
 #![forbid(unsafe_code)]
-<br/>
     
-### -------------------
-Tiny and Fast Docker image for Rust Application
+* Tiny and Fast Docker image for Rust Application
 https://azzamsa.com/n/rust-docker/
-<br/>
