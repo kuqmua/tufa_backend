@@ -1,5 +1,3 @@
-# todo_code
-
 * write logs into db in different service
 Try two dbs: postgres and mongo. 
 To write logs inside postgres need to add migrations
