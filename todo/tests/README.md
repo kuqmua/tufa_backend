@@ -1,11 +1,9 @@
 # todo_tests
 
-### -------------------
-parsing providers posts tests
+* parsing providers posts tests
 <br/>
 
-### -------------------
-server what running web tests every hour like http requests and get valid data or not
+* server what running web tests every hour like http requests and get valid data or not
 github parsing version to check different structs of posts as test in the loop
 <br/>
 
