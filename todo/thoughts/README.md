@@ -25,12 +25,21 @@ fn main() {
 * add everywhere explicit types
 Except maybe functional way 
 
-* std::stringify
+* 
+```
+std::stringify
+```
 
-* std::str::SplitN
+* 
+```
+std::str::SplitN
+```
 
-* split().map()
+* 
+```
+split().map()
 instead of find(<item></item>)
+```
 
 * error had .description method
 maybe rewrite error messages?
@@ -48,8 +57,11 @@ But description is depreciated
 
 * operation timed out print time elapsed
 
-* Rc<RefCell<Data>>
+* 
+```
+Rc<RefCell<Data>>
 Rc::new(<RefCell::new(Data { value: 42}))
+```
 
 * find out why constants which used in tests looks like unused
 
@@ -57,14 +69,17 @@ Rc::new(<RefCell::new(Data { value: 42}))
 
 * [dependencies] and [dev-dependencies] read about it
 
-* impl UserCredentialsStruct {
+* 
+```
+impl UserCredentialsStruct {
     pub fn new() -> Result<Self, ConfigError> {
         maybe add different user logic later ?
+```
 
 * thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
-    Finished dev [unoptimized + debuginfo] target(s) in 0.10s
-     Running `target/debug/tufa_server`
+Finished dev [unoptimized + debuginfo] target(s) in 0.10s
+Running `target/debug/tufa_server`
 We are on a multicore system with 12 CPUs
 ENV: Development
 server can reach https://www.google.com/
@@ -134,7 +149,9 @@ Find out why its triggers for tokio:main functions
 * find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
 
 * Compile on save
+```
 cargo watch -q -c -x run 
+```
     
 * add stackoverflow provider
 https://stackoverflow.com/feeds/question/23412033
@@ -200,7 +217,7 @@ but you use ? operator on result and await cases
 https://github.com/rust-lang/rustlings
 
 * learn more about iterator methods
-    
+```
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     map.into_iter().filter(|pair| pair.1 == &value).count()
     --------------
@@ -212,22 +229,27 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
         result + map.into_iter().filter(|pair| pair.1 == &value).count()
     })
 }
+```
 
 * learn more about rust macro system
+```
 #[macro_export]
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!")
     };
 }
+```
 
 * AsRef trait find out more
+```
 fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
     arg.as_ref().as_bytes().len()
 }
+``` 
 
 * error conversion with ? example
-
+```
 use std::num::ParseIntError;
 use std::str::FromStr;
 #[derive(PartialEq, Debug)]
@@ -300,12 +322,14 @@ mod test {
         assert_eq!(PositiveNonzeroInteger::from_str("42"), Ok(x.unwrap()));
     }
 }
-
+```
+    
 * find out more about downcast errors
 
 * .map_err() function in code examples
 
 * use Option ref to remove borrow error
+```
 struct Point {
     x: i32,
     y: i32,
@@ -318,16 +342,21 @@ fn main() {
     }
     y; // Fix without deleting this line.
 }
+```
     
 * rewrite error handling like this?
+```
     if let Err(merge_errors) = builder.merge_pipelines() {
         errors.extend(merge_errors);
     }
+```
 
 * how to clone custom error? which contains std error or lib errors
 
 * crate for git repos integration 
+```
 git2 = "0.13"
+```
     
 * impl serde::Serialize and deserialize for structs and enums
 
@@ -358,14 +387,14 @@ https://github.com/marketplace/actions/rust-cache
 https://veykril.github.io/tlborm/syntax-extensions/source-analysis.html
 
 * how to do error handling:
-
+```
 pub struct Error(Box<ErrorImpl>);
 
 enum ErrorImpl {
      EverythingWentBad,
      Aaaaaaaaaaa,
 }
-
+```
 if size_of::<ErrorImpl>() > size_of::<usize>() - its rare
 and it is assumed that errors are rare 
 and it is assumed that with such an error T inside Result<T, Error> 
@@ -446,7 +475,9 @@ like match mutex.lock() {}
 explanation https://fasterthanli.me/articles/a-rust-match-made-in-hell
 
 * deadlock detection with parking_lot
+```
 parking_lot = { version = "0.12.0", features = ["deadlock_detection"] } 
+```
 just find this inside page to see example
 https://fasterthanli.me/articles/a-rust-match-made-in-hell
   
@@ -463,13 +494,14 @@ You can run the cargo report command mentioned in the warning to see a full repo
 * On Linux, you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you’re going to try this you probably want to use a VM):
 echo b > /proc/sysrq-trigger
 We can sort of simulate an operating system level crash (or having the plug pulled on our server rack) by using this:
-
+```
 pub fn reboot_kernel() {
     File::create("/proc/sysrq-trigger")
         .unwrap()
         .write_all(b"b")
         .unwrap();
 }
+```
 
 * Rust exposes this system call via the File::sync_all method. If we call sync_all, when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I’ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, let’s keep things simple and assume syncing is a reliable process.
 
@@ -482,6 +514,7 @@ rustc simple1.rs --emit=llvm-ir
 https://github.com/github/gitignore/blob/main/Rust.gitignore
     
 * Sometimes you need to write methods that accept a string slice (&str) and conditionally return either a modified version of it or the original one. For these cases, you might use Cow<str>, so that you only allocate new memory when necessary.
+```
 use std::borrow::Cow;
 fn capitalize(name: &str) -> Cow<str> {
     match name.chars().nth(0) {
@@ -505,6 +538,7 @@ fn main() {
     println!("{}", capitalize("bob"));   // Allocation
     println!("{}", capitalize("John"));  // No allocation
 }
+```
 If you’re using VSCode + Rust Analyzer, I highly suggest going into the settings > Rust Analyzer > Check On Save: Command and setting "clippy" as the new default instead of "check". Same UX, better warnings.
 
 * rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
@@ -528,8 +562,11 @@ https://stackoverflow.com/questions/44431740/algebraic-data-types-in-postgres
 * This library provides implementations of Mutex, RwLock, Condvar and Once that are smaller, faster and more flexible than those in the Rust standard library, as well as a ReentrantMutex type which supports recursive locking. It also exposes a low-level API for creating your own efficient synchronization primitives.
 https://lib.rs/crates/parking_lot
     
-* let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
+* 
+```
+let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
 let _: HashMap<u64, u64> = HashMap::from_iter(x);
+```
     
 * writing cross-platform “bash” scripts in Rust
 https://docs.rs/xshell/latest/xshell/
