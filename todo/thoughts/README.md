@@ -76,7 +76,9 @@ impl UserCredentialsStruct {
         maybe add different user logic later ?
 ```
 
-* thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
+* 
+```
+thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
 Finished dev [unoptimized + debuginfo] target(s) in 0.10s
 Running `target/debug/tufa_server`
@@ -90,6 +92,7 @@ UnhandledFetchStatusInfo::Failureerror sending request for url (https://nitter.f
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', src/check_new_posts_threads_parts.rs:418:18ed
+```
 
 * parts of config as feature flags? 
 
