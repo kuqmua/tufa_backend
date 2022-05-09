@@ -7,17 +7,18 @@ use crate::routes::change_password;
 use crate::routes::change_password_form;
 use crate::routes::confirm;
 use crate::routes::get_providers_posts_route::get_providers_posts_route;
+use crate::routes::git::git_info_html::git_info_html;
+use crate::routes::git::git_info_json::git_info_json;
 use crate::routes::health_check;
 use crate::routes::home::home;
 use crate::routes::json_example::json_example;
+use crate::routes::json_example_post::json_example_post;
 use crate::routes::log_out;
 use crate::routes::login::login;
 use crate::routes::login::login_form;
 use crate::routes::publish_newsletter;
 use crate::routes::publish_newsletter_form;
 use crate::routes::subscribe;
-use crate::routes::git::git_info_html::git_info_html;
-use crate::routes::git::git_info_json::git_info_json;
 use actix_cors::Cors;
 use actix_session::storage::RedisSessionStore;
 use actix_session::SessionMiddleware;
@@ -60,8 +61,7 @@ impl Application {
         let connection_pool = get_connection_pool(&configuration.database);
         let listener = match TcpListener::bind(&format!(
             "{}:{}",
-            configuration.application.host,
-            configuration.application.port
+            configuration.application.host, configuration.application.port
         )) {
             Ok(listener) => listener,
             Err(e) => {
@@ -183,6 +183,7 @@ async fn run(
                     web::scope("/json")
                     .route("/git_info", web::get().to(git_info_json))
                     .route("/json_example", web::get().to(json_example))
+                    .route("/json_example_post", web::post().to(json_example_post))
                 )
             )
             .route("/subscriptions", web::post().to(subscribe))

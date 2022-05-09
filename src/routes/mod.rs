@@ -11,5 +11,6 @@ pub use home::*;
 pub use login::*;
 pub use subscriptions::*;
 pub use subscriptions_confirm::*;
-pub mod json_example;
 pub mod git;
+pub mod json_example;
+pub mod json_example_post;
