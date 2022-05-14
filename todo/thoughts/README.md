@@ -596,3 +596,6 @@ https://dev.to/feezyhendrix/building-rest-apis-with-rust-actix-web-and-mongodb-4
     
 * Tiny and Fast Docker image for Rust Application
 https://azzamsa.com/n/rust-docker/
+
+* Rust grpc tutorial
+https://youtu.be/JkSa-qA2jnY
