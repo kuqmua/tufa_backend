@@ -1,6 +1,7 @@
 use crate::check_net::check_status_code::check_status_code;
 use crate::check_net::check_status_code::CheckStatusCodeError;
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
@@ -10,7 +11,6 @@ use chrono::Utc;
 use error_display::ErrorDisplay;
 use git_info::GitInfoDerive;
 use std::fmt;
-use crate::helpers::git_info::GIT_INFO;
 
 #[derive(Debug, GitInfoDerive, ErrorDisplay)]
 pub enum CheckNetAvailabilityErrorEnum {

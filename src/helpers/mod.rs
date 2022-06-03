@@ -1,5 +1,6 @@
 pub mod fetch;
 pub mod get_server_address;
+pub mod git_info;
 pub mod mongo;
 pub mod postgres;
 pub mod redis;
@@ -8,4 +9,3 @@ pub mod where_was;
 pub mod write_json_into_file;
 pub mod write_string_into_file;
 pub mod write_string_into_file_with_tokio;
-pub mod git_info;

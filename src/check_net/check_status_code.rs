@@ -1,4 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
@@ -8,8 +9,6 @@ use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 use std::fmt;
-use crate::helpers::git_info::GIT_INFO;
-
 
 #[derive(Debug, GitInfoDerive)]
 pub struct CheckStatusCodeError {

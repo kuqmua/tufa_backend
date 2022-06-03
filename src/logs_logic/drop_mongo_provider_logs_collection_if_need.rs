@@ -1,12 +1,11 @@
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::git_info::GIT_INFO;
 use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_collection;
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
-use crate::helpers::git_info::GIT_INFO;
-
 
 #[deny(
     clippy::indexing_slicing,

@@ -1,18 +1,17 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::git_info_trait::GitInfo;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
-use crate::helpers::git_info::GIT_INFO;
-
 
 #[derive(Debug, GitInfoDerive)]
 pub enum RssPartErrorEnum {

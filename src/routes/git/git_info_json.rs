@@ -1,5 +1,5 @@
-use actix_web::{web, Responder};
 use crate::helpers::git_info::GIT_INFO;
+use actix_web::{web, Responder};
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 
