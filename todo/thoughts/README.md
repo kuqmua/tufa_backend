@@ -576,6 +576,6 @@ https://azzamsa.com/n/rust-docker/
 * Rust grpc tutorial
 https://youtu.be/JkSa-qA2jnY
 
-* [onnx runtime for neural net](https://docs.rs/onnxruntime/latest/onnxruntime/)
+* [onnx-common NN format standart, runtime for neural net](https://docs.rs/onnxruntime/latest/onnxruntime/)
 
 * [2 neural nets for text and images](https://openai.com/blog/clip/)
