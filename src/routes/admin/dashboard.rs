@@ -1,5 +1,5 @@
 use crate::session_state::TypedSession;
-use crate::utils::e500;
+use crate::utils::status_codes::e500;
 use actix_web::http::header::ContentType;
 use actix_web::http::header::LOCATION;
 use actix_web::web;
