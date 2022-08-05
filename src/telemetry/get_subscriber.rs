@@ -13,15 +13,6 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::EnvFilter;
 use tracing_subscriber::Registry;
 
-pub fn spawn_blocking_with_tracing<F, R>(f: F) -> JoinHandle<R>
-where
-    F: FnOnce() -> R + Send + 'static,
-    R: Send + 'static,
-{
-    let current_span = tracing::Span::current();
-    tokio::task::spawn_blocking(move || current_span.in_scope(f))
-}
-
 pub fn get_subscriber<Sink>(
     name: String,
     env_filter: String,
@@ -42,24 +33,4 @@ where
         .with(env_filter)
         .with(JsonStorageLayer)
         .with(formatting_layer)
-}
-
-#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
-pub enum InitSubcriberErrorEnum {
-    SetLogger {
-        #[from]
-        source: SetLoggerError,
-    },
-    SetGlobalDefault {
-        #[from]
-        source: SetGlobalDefaultError,
-    },
-}
-
-pub fn init_subscriber(
-    subscriber: impl Subscriber + Send + Sync,
-) -> Result<(), InitSubcriberErrorEnum> {
-    LogTracer::init()?;
-    set_global_default(subscriber)?;
-    Ok(())
 }
