@@ -1,13 +1,6 @@
-use impl_display::ImplDisplayDerive;
-use std::fmt;
-use tokio::task::JoinHandle;
-use tracing::dispatcher::SetGlobalDefaultError;
-use tracing::log::SetLoggerError;
-use tracing::subscriber::set_global_default;
 use tracing::Subscriber;
 use tracing_bunyan_formatter::BunyanFormattingLayer;
 use tracing_bunyan_formatter::JsonStorageLayer;
-use tracing_log::LogTracer;
 use tracing_subscriber::fmt::MakeWriter;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::EnvFilter;
