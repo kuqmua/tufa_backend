@@ -1,9 +1,20 @@
-use crate::check_net::check_net_wrapper::check_net_wrapper;
+use crate::check_net::check_net_wrapper::{check_net_wrapper, CheckNetWrapperError};
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
 use crate::init_dbs_logic::init_dbs::init_dbs;
+use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
+
+#[derive(Debug)]
+pub enum PreparationErrorEnum {
+    CheckNet {
+        source: Box<CheckNetWrapperError>,
+    },
+    InitDbs {
+        source: Vec<Box<InitTablesEnumError>>,
+    },
+}
 
 #[deny(
     clippy::indexing_slicing,
@@ -11,7 +22,7 @@ use crate::prints::print_type_enum::PrintType;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn preparation() {
+pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
     if let Err(e) = check_net_wrapper().await {
         println!("{e}");
         // let sources = e
@@ -83,20 +94,17 @@ pub async fn preparation() {
         //     github_sources,
         //     format!("{e:#?}"),
         // );
-        return;
+        return Err(Box::new(PreparationErrorEnum::CheckNet { source: e }));
     };
-    if CONFIG.is_dbs_initialization_enabled {
-        //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
-        if !CONFIG.is_mongo_initialization_enabled && !CONFIG.is_postgres_initialization_enabled {
-            print_colorful_message(
-                None,
-                PrintType::WarningLow,
-                vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                String::from("db initialization for mongo and postgres are disabled"),
-            );
-        } else if let Err(e) = init_dbs().await {
-            print_colorful_message(None, PrintType::Error, vec![], vec![], format!("{e:#?}"));
-        }
+    //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
+    if !CONFIG.is_dbs_initialization_enabled
+        || (!CONFIG.is_mongo_initialization_enabled && !CONFIG.is_postgres_initialization_enabled)
+    {
+        return Ok(());
     }
+    if let Err(e) = init_dbs().await {
+        print_colorful_message(None, PrintType::Error, vec![], vec![], format!("{e:#?}"));
+        return Err(Box::new(PreparationErrorEnum::InitDbs { source: e }));
+    }
+    Ok(())
 }
