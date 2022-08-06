@@ -45,22 +45,23 @@ pub fn entry() {
             //     );
             //     return;
             // };
-            let time = Instant::now();
-            runtime.block_on(preparation());
-            print_colorful_message(
-                None,
-                PrintType::TimeMeasurement,
-                vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                format!("preparation done in {} seconds", time.elapsed().as_secs()),
-            );
+            if let Err(e) = runtime.block_on(preparation()) {
+                print_colorful_message(
+                    None,
+                    PrintType::Error,
+                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    format!("preparation failed, error: {:#?}", e),
+                );
+                return;
+            }
             if let Err(e) = server_wrapper() {
                 print_colorful_message(
                     None,
                     PrintType::Error,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                    format!("Cannot run actix-web HttpServer, errror: {:#?}", e),
+                    format!("Cannot run actix-web HttpServer, error: {:#?}", e),
                 );
             }
         }

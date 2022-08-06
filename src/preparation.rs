@@ -1,6 +1,5 @@
 use crate::check_net::check_net_wrapper::{check_net_wrapper, CheckNetWrapperError};
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::git_info::GIT_INFO;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::prints::print_colorful_message::print_colorful_message;
