@@ -34,7 +34,7 @@ pub fn entry() {
             if let true = CONFIG.is_tracing_enabled {
                 if let Err(e) = init_subscriber(get_subscriber(
                     PROJECT_NAME.into(),
-                    "info".into(),
+                    "error".into(),
                     std::io::stdout,
                 )) {
                     print_colorful_message(
@@ -49,18 +49,19 @@ pub fn entry() {
             }
             if let true = CONFIG.is_preparation_enabled {
                 if let Err(e) = runtime.block_on(preparation()) {
-                    let f = format!("{e}");
-                    match *e {
-                        crate::preparation::PreparationErrorEnum::CheckNet {
-                            source,
-                            where_was,
-                        } => {
-                            error!(where_was = format!("{}", where_was));
-                        }
-                        crate::preparation::PreparationErrorEnum::InitDbs { source, where_was } => {
-                            error!(where_was = format!("{}", where_was));
-                        }
-                    }
+                    // match *e {
+                    //     crate::preparation::PreparationErrorEnum::CheckNet {
+                    //         source: source_1,
+                    //         where_was: where_was_1,
+                    //     } => {
+                    //         let source_2 = source_1.source;
+                    //         let where_was_2 = source_1.where_was;
+                    //         error!(where_was = format!("{}", where_was_1));
+                    //     }
+                    //     crate::preparation::PreparationErrorEnum::InitDbs { source, where_was } => {
+                    //         error!(where_was = format!("{}", where_was));
+                    //     }
+                    // }
 
                     // println!("{e}");
 

@@ -11,6 +11,7 @@ use chrono::Utc;
 use error_display::ErrorDisplay;
 use git_info::GitInfoDerive;
 use std::fmt;
+use tracing::error;
 
 #[derive(Debug, GitInfoDerive)] //, ErrorDisplay
 pub enum CheckNetAvailabilityErrorEnum {
@@ -48,31 +49,44 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
 )]
 pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityErrorEnum>> {
     match reqwest::get(link).await {
-        Err(e) => Err(Box::new(
-            CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
-                source: e,
-                where_was: WhereWas {
+        Err(e) => {
+            let where_was = WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            };
+            error!(
+                error = format!("{}", e),
+                where_was = format!("{}", where_was)
+            );
+            Err(Box::new(
+                CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                    source: e,
+                    where_was: where_was,
+                },
+            ))
+        }
+        Ok(res) => {
+            if let Err(e) = check_status_code(res.status()) {
+                let where_was = WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
-                },
-            },
-        )),
-        Ok(res) => {
-            if let Err(e) = check_status_code(res.status()) {
+                };
+                error!(
+                    error = format!("{}", e),
+                    where_was = format!("{}", where_was)
+                );
                 return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
                     source: *e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                    where_was: where_was,
                 }));
             }
+            println!("okkkk");
             Ok(())
         }
     }
