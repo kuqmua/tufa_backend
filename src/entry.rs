@@ -51,7 +51,7 @@ pub fn entry() {
                     PrintType::Error,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                    format!("preparation failed, error: {:#?}", e),
+                    format!("preparation failed, error: {}", *e),
                 );
                 return;
             }

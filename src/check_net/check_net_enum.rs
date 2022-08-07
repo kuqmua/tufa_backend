@@ -23,10 +23,21 @@ pub enum CheckNet {
     Mongo,
 }
 
-#[derive(Debug, ErrorDisplay)]
+#[derive(Debug)] //ErrorDisplay
 pub struct CheckNetError {
     source: Box<CheckNetErrorEnum>,
     where_was: WhereWas,
+}
+
+impl fmt::Display for CheckNetError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => {
+                write!(f, "{}\n{}", self.source, self.where_was)
+            }
+        }
+    }
 }
 
 #[derive(Debug)]

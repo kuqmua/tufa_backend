@@ -12,7 +12,7 @@ use error_display::ErrorDisplay;
 use git_info::GitInfoDerive;
 use std::fmt;
 
-#[derive(Debug, GitInfoDerive, ErrorDisplay)]
+#[derive(Debug, GitInfoDerive)] //, ErrorDisplay
 pub enum CheckNetAvailabilityErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,
@@ -22,6 +22,22 @@ pub enum CheckNetAvailabilityErrorEnum {
         source: CheckStatusCodeError,
         where_was: WhereWas,
     },
+}
+
+impl fmt::Display for CheckNetAvailabilityErrorEnum {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => match self {
+                CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+                    write!(f, "{}\n{}", source, where_was)
+                }
+                CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+                    write!(f, "{}\n{}", source, where_was)
+                }
+            },
+        }
+    }
 }
 
 #[deny(

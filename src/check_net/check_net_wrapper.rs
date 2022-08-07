@@ -31,35 +31,16 @@ pub struct CheckNetWrapperError {
 
 impl fmt::Display for CheckNetWrapperError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let stringified_errors = self
-            .source
-            .iter()
-            .map(|e| format!("{e}\n"))
-            .collect::<String>();
-        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                self.where_was.github_source_place_with_readable_time(),
-                stringified_errors
-            )
-        } else if CONFIG.is_show_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                stringified_errors
-            )
-        } else if CONFIG.is_show_github_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}",
-                self.where_was.github_source_place_with_readable_time(),
-                stringified_errors
-            )
-        } else {
-            write!(f, "{}", stringified_errors)
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => {
+                let stringified_errors = self
+                    .source
+                    .iter()
+                    .map(|e| format!("{e}\n"))
+                    .collect::<String>();
+                write!(f, "{}\n{}", stringified_errors, self.where_was)
+            }
         }
     }
 }

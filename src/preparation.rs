@@ -2,8 +2,7 @@ use crate::check_net::check_net_wrapper::{check_net_wrapper, CheckNetWrapperErro
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
+use std::fmt::Display;
 
 #[derive(Debug)]
 pub enum PreparationErrorEnum {
@@ -15,6 +14,18 @@ pub enum PreparationErrorEnum {
     },
 }
 
+impl Display for PreparationErrorEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => match self {
+                PreparationErrorEnum::CheckNet { source } => write!(f, "{}", *source),
+                PreparationErrorEnum::InitDbs { source } => write!(f, "{:#?}", source), //todo
+            },
+        }
+    }
+}
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -23,7 +34,6 @@ pub enum PreparationErrorEnum {
 )]
 pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
     if let Err(e) = check_net_wrapper().await {
-        println!("{e}");
         // let sources = e
         //     .source
         //     .iter()
@@ -102,7 +112,6 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
         return Ok(());
     }
     if let Err(e) = init_dbs().await {
-        print_colorful_message(None, PrintType::Error, vec![], vec![], format!("{e:#?}"));
         return Err(Box::new(PreparationErrorEnum::InitDbs { source: e }));
     }
     Ok(())

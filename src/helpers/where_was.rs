@@ -1,5 +1,6 @@
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
-
+use std::fmt::Display;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
@@ -11,6 +12,58 @@ pub struct WhereWas {
     pub line: u32,
     pub column: u32,
 }
+
+impl Display for WhereWas {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    write!(
+                        f,
+                        "{}\n{}",
+                        self.source_place_with_readable_time(),
+                        self.github_source_place_with_readable_time()
+                    )
+                } else if CONFIG.is_show_source_place_enabled {
+                    write!(f, "{}", self.source_place_with_readable_time())
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    write!(f, "{}", self.github_source_place_with_readable_time())
+                } else {
+                    write!(f, "")
+                }
+            }
+        }
+    }
+}
+
+// impl fmt::Display for CheckNetWrapperError {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}\n{}",
+//                 self.where_was.source_place_with_readable_time(),
+//                 self.where_was.github_source_place_with_readable_time(),
+//                 stringified_errors
+//             )
+//         } else if CONFIG.is_show_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}",
+//                 self.where_was.source_place_with_readable_time(),
+//                 stringified_errors
+//             )
+//         } else if CONFIG.is_show_github_source_place_enabled {
+//             write!(
+//                 f,
+//                 "{}\n{}",
+//                 self.where_was.github_source_place_with_readable_time(),
+//                 stringified_errors
+//             )
+//     }
+// }
 
 impl WhereWas {
     #[deny(

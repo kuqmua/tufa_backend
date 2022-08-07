@@ -1,5 +1,3 @@
-pub const LOAD_CONFIG_FILE_ERROR_MESSAGE: &str = "cannot create config";
-
 // pub const LOGS_COMMON_FOLDER_NAME: &str = "common_folder";
 
 pub const TWITTER_FILTER_HANDLE_TO_REMOVE_1: &str = "<dc:creator>";
