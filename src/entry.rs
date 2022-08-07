@@ -7,6 +7,7 @@ use crate::project_constants::PROJECT_NAME;
 use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
+use tracing::error;
 
 #[deny(
     clippy::indexing_slicing,
@@ -48,7 +49,10 @@ pub fn entry() {
             }
             if let true = CONFIG.is_preparation_enabled {
                 if let Err(e) = runtime.block_on(preparation()) {
-                    println!("{e}");
+                    let f = format!("{e}");
+                    error!(g = f);
+                    // println!("{e}");
+
                     // print_colorful_message(
                     //     None,
                     //     PrintType::Error,
