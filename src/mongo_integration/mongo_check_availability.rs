@@ -9,7 +9,6 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
-use tracing::error;
 
 #[derive(Debug, ErrorDisplay)]
 pub enum MongoCheckAvailabilityErrorEnum {
@@ -38,17 +37,18 @@ pub async fn mongo_check_availability(
 ) -> Result<(), Box<MongoCheckAvailabilityErrorEnum>> {
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
-            println!("1111");
+            let where_was = WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            };
+            where_was.tracing_error(format!("{}", e));
             Err(Box::new(
                 MongoCheckAvailabilityErrorEnum::ClientOptionsParse {
                     source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                    where_was,
                 },
             ))
         }
@@ -57,17 +57,18 @@ pub async fn mongo_check_availability(
                 Some(Duration::from_millis(CONFIG.mongo_connection_timeout));
             match Client::with_options(client_options) {
                 Err(e) => {
-                    println!("2222");
+                    let where_was = WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    };
+                    where_was.tracing_error(format!("{}", e));
                     Err(Box::new(
                         MongoCheckAvailabilityErrorEnum::ClientWithOptions {
                             source: e,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
+                            where_was,
                         },
                     ))
                 }
@@ -84,14 +85,11 @@ pub async fn mongo_check_availability(
                             line: line!(),
                             column: column!(),
                         };
-                        error!(
-                            error = format!("{}", e),
-                            where_was = format!("{}", where_was)
-                        );
+                        where_was.tracing_error(format!("{}", e));
                         return Err(Box::new(
                             MongoCheckAvailabilityErrorEnum::ListCollectionNames {
                                 source: e,
-                                where_was: where_was,
+                                where_was,
                             },
                         ));
                     }

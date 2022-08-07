@@ -4,6 +4,7 @@ use std::fmt::Display;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
+use tracing::error;
 
 #[derive(Debug)]
 pub struct WhereWas {
@@ -66,5 +67,24 @@ impl WhereWas {
     )]
     pub fn github_source_place(&self) -> String {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
+    }
+    pub fn tracing_error(&self, e: String) {
+        //impl std::error::Error
+        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+            error!(
+                error = format!("{}", e),
+                source = self.source_place(),
+                github_source = self.github_source_place(),
+            );
+        } else if CONFIG.is_show_source_place_enabled {
+            error!(error = format!("{}", e), source = self.source_place(),);
+        } else if CONFIG.is_show_github_source_place_enabled {
+            error!(
+                error = format!("{}", e),
+                github_source = self.github_source_place(),
+            );
+        } else {
+            error!(error = format!("{}", e),);
+        }
     }
 }
