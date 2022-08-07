@@ -22,22 +22,17 @@ impl fmt::Display for CheckStatusCodeError {
             write!(
                 f,
                 "{}\n{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                self.where_was.github_source_place_with_readable_time(),
+                self.where_was.source_place(),
+                self.where_was.github_source_place(),
                 self.source
             )
         } else if CONFIG.is_show_source_place_enabled {
-            write!(
-                f,
-                "{}\n{}",
-                self.where_was.source_place_with_readable_time(),
-                self.source
-            )
+            write!(f, "{}\n{}", self.where_was.source_place(), self.source)
         } else if CONFIG.is_show_github_source_place_enabled {
             write!(
                 f,
                 "{}\n{}",
-                self.where_was.github_source_place_with_readable_time(),
+                self.where_was.github_source_place(),
                 self.source
             )
         } else {

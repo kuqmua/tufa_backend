@@ -20,16 +20,11 @@ impl Display for WhereWas {
             false => {
                 if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
                 {
-                    write!(
-                        f,
-                        "{}\n{}",
-                        self.source_place_with_readable_time(),
-                        self.github_source_place_with_readable_time()
-                    )
+                    write!(f, "{}\n{}", self.source_place(), self.github_source_place())
                 } else if CONFIG.is_show_source_place_enabled {
-                    write!(f, "{}", self.source_place_with_readable_time())
+                    write!(f, "{}", self.source_place())
                 } else if CONFIG.is_show_github_source_place_enabled {
-                    write!(f, "{}", self.github_source_place_with_readable_time())
+                    write!(f, "{}", self.github_source_place())
                 } else {
                     write!(f, "")
                 }
@@ -37,33 +32,6 @@ impl Display for WhereWas {
         }
     }
 }
-
-// impl fmt::Display for CheckNetWrapperError {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-//             write!(
-//                 f,
-//                 "{}\n{}\n{}",
-//                 self.where_was.source_place_with_readable_time(),
-//                 self.where_was.github_source_place_with_readable_time(),
-//                 stringified_errors
-//             )
-//         } else if CONFIG.is_show_source_place_enabled {
-//             write!(
-//                 f,
-//                 "{}\n{}",
-//                 self.where_was.source_place_with_readable_time(),
-//                 stringified_errors
-//             )
-//         } else if CONFIG.is_show_github_source_place_enabled {
-//             write!(
-//                 f,
-//                 "{}\n{}",
-//                 self.where_was.github_source_place_with_readable_time(),
-//                 stringified_errors
-//             )
-//     }
-// }
 
 impl WhereWas {
     #[deny(
@@ -90,9 +58,6 @@ impl WhereWas {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub fn source_place_with_readable_time(&self) -> String {
-        format!("{} {}", self.source_place(), self.readable_time())
-    }
     #[deny(
         clippy::indexing_slicing,
         clippy::unwrap_used,
@@ -101,14 +66,5 @@ impl WhereWas {
     )]
     pub fn github_source_place(&self) -> String {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
-    }
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
-    pub fn github_source_place_with_readable_time(&self) -> String {
-        format!("{} {}", self.github_source_place(), self.readable_time())
     }
 }

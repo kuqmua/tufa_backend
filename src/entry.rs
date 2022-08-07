@@ -50,7 +50,18 @@ pub fn entry() {
             if let true = CONFIG.is_preparation_enabled {
                 if let Err(e) = runtime.block_on(preparation()) {
                     let f = format!("{e}");
-                    error!(g = f);
+                    match *e {
+                        crate::preparation::PreparationErrorEnum::CheckNet {
+                            source,
+                            where_was,
+                        } => {
+                            error!(where_was = format!("{}", where_was));
+                        }
+                        crate::preparation::PreparationErrorEnum::InitDbs { source, where_was } => {
+                            error!(where_was = format!("{}", where_was));
+                        }
+                    }
+
                     // println!("{e}");
 
                     // print_colorful_message(
