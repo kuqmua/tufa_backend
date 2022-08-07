@@ -1,3 +1,4 @@
+use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
 use crate::preparation::preparation;
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -33,20 +34,22 @@ pub fn entry() {
         }
         Ok(runtime) => {
             //disable tracing to remove useless spam for now
-            if let Err(e) = init_subscriber(get_subscriber(
-                PROJECT_NAME.into(),
-                "info".into(),
-                std::io::stdout,
-            )) {
-                print_colorful_message(
-                    None,
-                    PrintType::Error,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                    format!("tracing init_subscriber error: {:#?}", e),
-                );
-                return;
-            };
+            if let true = CONFIG.is_tracing_enabled {
+                if let Err(e) = init_subscriber(get_subscriber(
+                    PROJECT_NAME.into(),
+                    "info".into(),
+                    std::io::stdout,
+                )) {
+                    print_colorful_message(
+                        None,
+                        PrintType::Error,
+                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        format!("tracing init_subscriber error: {:#?}", e),
+                    );
+                    return;
+                };
+            }
             if let Err(e) = runtime.block_on(preparation()) {
                 println!("{e}");
                 // print_colorful_message(
