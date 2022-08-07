@@ -289,6 +289,7 @@ pub struct ConfigStruct {
     pub links_limit_reddit: i64,
     pub links_limit_twitter: i64,
 
+    pub is_preparation_enabled: bool,
     pub is_tracing_enabled: bool,
     pub is_debug_implementation_enable: bool,
     pub is_show_source_place_enabled: bool,
