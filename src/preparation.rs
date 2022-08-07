@@ -1,5 +1,8 @@
+use chrono::{DateTime, FixedOffset, Local, Utc};
+
 use crate::check_net::check_net_wrapper::{check_net_wrapper, CheckNetWrapperError};
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use std::fmt::Display;
@@ -8,9 +11,11 @@ use std::fmt::Display;
 pub enum PreparationErrorEnum {
     CheckNet {
         source: Box<CheckNetWrapperError>,
+        where_was: WhereWas,
     },
     InitDbs {
         source: Vec<Box<InitTablesEnumError>>,
+        where_was: WhereWas,
     },
 }
 
@@ -19,8 +24,12 @@ impl Display for PreparationErrorEnum {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
-                PreparationErrorEnum::CheckNet { source } => write!(f, "{}", *source),
-                PreparationErrorEnum::InitDbs { source } => write!(f, "{:#?}", source), //todo
+                PreparationErrorEnum::CheckNet { source, where_was } => {
+                    write!(f, "{}\n{}", *source, where_was)
+                }
+                PreparationErrorEnum::InitDbs { source, where_was } => {
+                    write!(f, "{:#?}\n{}", source, where_was)
+                } //todo
             },
         }
     }
@@ -103,7 +112,16 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
         //     github_sources,
         //     format!("{e:#?}"),
         // );
-        return Err(Box::new(PreparationErrorEnum::CheckNet { source: e }));
+        return Err(Box::new(PreparationErrorEnum::CheckNet {
+            source: e,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        }));
     };
     //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
     if !CONFIG.is_dbs_initialization_enabled
@@ -112,7 +130,16 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
         return Ok(());
     }
     if let Err(e) = init_dbs().await {
-        return Err(Box::new(PreparationErrorEnum::InitDbs { source: e }));
+        return Err(Box::new(PreparationErrorEnum::InitDbs {
+            source: e,
+            where_was: WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+        }));
     }
     Ok(())
 }
