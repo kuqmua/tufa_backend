@@ -1,5 +1,5 @@
 use crate::check_net::check_net_availability::check_net_availability;
-use crate::check_net::check_net_availability::CheckNetAvailabilityErrorEnum;
+use crate::check_net::check_net_availability::CheckNetAvailabilityError;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
@@ -20,7 +20,7 @@ use std::fmt::Display;
 #[derive(Debug)]
 pub enum PreparationErrorEnum {
     Net {
-        source: Box<CheckNetAvailabilityErrorEnum>,
+        source: Box<CheckNetAvailabilityError>,
         where_was: WhereWas,
     },
     Postgres {
@@ -32,12 +32,12 @@ pub enum PreparationErrorEnum {
         where_was: WhereWas,
     },
     NetAndMongo {
-        net_source: Box<CheckNetAvailabilityErrorEnum>,
+        net_source: Box<CheckNetAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityErrorEnum>,
         where_was: WhereWas,
     },
     NetAndPostgres {
-        net_source: Box<CheckNetAvailabilityErrorEnum>,
+        net_source: Box<CheckNetAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
         where_was: WhereWas,
     },
@@ -47,7 +47,7 @@ pub enum PreparationErrorEnum {
         where_was: WhereWas,
     },
     NetAndMongoAndPostgres {
-        net_source: Box<CheckNetAvailabilityErrorEnum>,
+        net_source: Box<CheckNetAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityErrorEnum>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
         where_was: WhereWas,

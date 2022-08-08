@@ -11,20 +11,26 @@ use reqwest::StatusCode;
 use std::fmt;
 // use error_display::ErrorDisplay;
 
+#[derive(Debug)] //, ErrorDisplay
+pub struct CheckNetAvailabilityError {
+    source: CheckNetAvailabilityErrorEnum,
+    where_was: WhereWas,
+}
+
+impl fmt::Display for CheckNetAvailabilityError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => write!(f, "{}\n{}", self.source, self.where_was),
+        }
+    }
+}
+
 #[derive(Debug, GitInfoDerive)] //, ErrorDisplay
 pub enum CheckNetAvailabilityErrorEnum {
-    CheckLinkStatusCode {
-        source: reqwest::Error,
-        where_was: WhereWas,
-    },
-    Client {
-        source: StatusCode,
-        where_was: WhereWas,
-    },
-    Server {
-        source: StatusCode,
-        where_was: WhereWas,
-    },
+    ReqwestGet(reqwest::Error),
+    Client(StatusCode),
+    Server(StatusCode),
 }
 
 impl fmt::Display for CheckNetAvailabilityErrorEnum {
@@ -32,14 +38,14 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
-                CheckNetAvailabilityErrorEnum::CheckLinkStatusCode { source, where_was } => {
-                    write!(f, "{}\n{}", source, where_was)
+                CheckNetAvailabilityErrorEnum::ReqwestGet(e) => {
+                    write!(f, "{}", e)
                 }
-                CheckNetAvailabilityErrorEnum::Client { source, where_was } => {
-                    write!(f, "{}\n{}", source, where_was)
+                CheckNetAvailabilityErrorEnum::Client(e) => {
+                    write!(f, "{}", e)
                 }
-                CheckNetAvailabilityErrorEnum::Server { source, where_was } => {
-                    write!(f, "{}\n{}", source, where_was)
+                CheckNetAvailabilityErrorEnum::Server(e) => {
+                    write!(f, "{}", e)
                 }
             },
         }
@@ -52,7 +58,7 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityErrorEnum>> {
+pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityError>> {
     match reqwest::get(link).await {
         Err(e) => {
             let where_was = WhereWas {
@@ -63,12 +69,10 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 column: column!(),
             };
             where_was.tracing_error(format!("{}", e));
-            Err(Box::new(
-                CheckNetAvailabilityErrorEnum::CheckLinkStatusCode {
-                    source: e,
-                    where_was,
-                },
-            ))
+            Err(Box::new(CheckNetAvailabilityError {
+                source: CheckNetAvailabilityErrorEnum::ReqwestGet(e),
+                where_was,
+            }))
         }
         Ok(res) => {
             let status = res.status();
@@ -81,8 +85,8 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     column: column!(),
                 };
                 where_was.tracing_error(format!("check net client error: {}", status));
-                return Err(Box::new(CheckNetAvailabilityErrorEnum::Client {
-                    source: status,
+                return Err(Box::new(CheckNetAvailabilityError {
+                    source: CheckNetAvailabilityErrorEnum::Client(status),
                     where_was,
                 }));
             }
@@ -95,8 +99,8 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     column: column!(),
                 };
                 where_was.tracing_error(format!("check net server error: {}", status));
-                return Err(Box::new(CheckNetAvailabilityErrorEnum::Server {
-                    source: status,
+                return Err(Box::new(CheckNetAvailabilityError {
+                    source: CheckNetAvailabilityErrorEnum::Server(status),
                     where_was,
                 }));
             }
