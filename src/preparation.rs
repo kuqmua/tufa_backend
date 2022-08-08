@@ -182,7 +182,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from("check_net_availability"));
+            where_was.tracing_error(format!("{}", n.where_was));
             return Err(Box::new(PreparationErrorEnum::Net {
                 source: n,
                 where_was,

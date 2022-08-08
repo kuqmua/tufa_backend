@@ -13,8 +13,8 @@ use std::fmt;
 
 #[derive(Debug)] //, ErrorDisplay
 pub struct CheckNetAvailabilityError {
-    source: CheckNetAvailabilityErrorEnum,
-    where_was: WhereWas,
+    pub source: CheckNetAvailabilityErrorEnum,
+    pub where_was: WhereWas,
 }
 
 impl fmt::Display for CheckNetAvailabilityError {
