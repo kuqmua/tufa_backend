@@ -1,5 +1,3 @@
-use crate::check_net::check_status_code::check_status_code;
-use crate::check_net::check_status_code::CheckStatusCodeError;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
@@ -8,19 +6,23 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use error_display::ErrorDisplay;
 use git_info::GitInfoDerive;
+use reqwest::StatusCode;
 use std::fmt;
-use tracing::error;
+// use error_display::ErrorDisplay;
 
 #[derive(Debug, GitInfoDerive)] //, ErrorDisplay
 pub enum CheckNetAvailabilityErrorEnum {
-    CheckLinkStatusCodeError {
+    CheckLinkStatusCode {
         source: reqwest::Error,
         where_was: WhereWas,
     },
-    StatusCodeError {
-        source: CheckStatusCodeError,
+    Client {
+        source: StatusCode,
+        where_was: WhereWas,
+    },
+    Server {
+        source: StatusCode,
         where_was: WhereWas,
     },
 }
@@ -30,10 +32,13 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
-                CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError { source, where_was } => {
+                CheckNetAvailabilityErrorEnum::CheckLinkStatusCode { source, where_was } => {
                     write!(f, "{}\n{}", source, where_was)
                 }
-                CheckNetAvailabilityErrorEnum::StatusCodeError { source, where_was } => {
+                CheckNetAvailabilityErrorEnum::Client { source, where_was } => {
+                    write!(f, "{}\n{}", source, where_was)
+                }
+                CheckNetAvailabilityErrorEnum::Server { source, where_was } => {
                     write!(f, "{}\n{}", source, where_was)
                 }
             },
@@ -57,19 +62,17 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 line: line!(),
                 column: column!(),
             };
-            error!(
-                error = format!("{}", e),
-                where_was = format!("{}", where_was)
-            );
+            where_was.tracing_error(format!("{}", e));
             Err(Box::new(
-                CheckNetAvailabilityErrorEnum::CheckLinkStatusCodeError {
+                CheckNetAvailabilityErrorEnum::CheckLinkStatusCode {
                     source: e,
-                    where_was: where_was,
+                    where_was,
                 },
             ))
         }
         Ok(res) => {
-            if let Err(e) = check_status_code(res.status()) {
+            let status = res.status();
+            if status.is_client_error() {
                 let where_was = WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -77,16 +80,26 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                error!(
-                    error = format!("{}", e),
-                    where_was = format!("{}", where_was)
-                );
-                return Err(Box::new(CheckNetAvailabilityErrorEnum::StatusCodeError {
-                    source: *e,
-                    where_was: where_was,
+                where_was.tracing_error(format!("check net client error: {}", status));
+                return Err(Box::new(CheckNetAvailabilityErrorEnum::Client {
+                    source: status,
+                    where_was,
                 }));
             }
-            println!("okkkk");
+            if status.is_server_error() {
+                let where_was = WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                };
+                where_was.tracing_error(format!("check net server error: {}", status));
+                return Err(Box::new(CheckNetAvailabilityErrorEnum::Server {
+                    source: status,
+                    where_was,
+                }));
+            }
             Ok(())
         }
     }
