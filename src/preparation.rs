@@ -4,10 +4,11 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasTracing;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
-use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityErrorEnum;
+use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use chrono::DateTime;
@@ -28,12 +29,12 @@ pub enum PreparationErrorEnum {
         where_was: WhereWas,
     },
     Mongo {
-        source: Box<MongoCheckAvailabilityErrorEnum>,
+        source: Box<MongoCheckAvailabilityError>,
         where_was: WhereWas,
     },
     NetAndMongo {
         net_source: Box<CheckNetAvailabilityError>,
-        mongo_source: Box<MongoCheckAvailabilityErrorEnum>,
+        mongo_source: Box<MongoCheckAvailabilityError>,
         where_was: WhereWas,
     },
     NetAndPostgres {
@@ -42,13 +43,13 @@ pub enum PreparationErrorEnum {
         where_was: WhereWas,
     },
     MongoAndPostgres {
-        mongo_source: Box<MongoCheckAvailabilityErrorEnum>,
+        mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
         where_was: WhereWas,
     },
     NetAndMongoAndPostgres {
         net_source: Box<CheckNetAvailabilityError>,
-        mongo_source: Box<MongoCheckAvailabilityErrorEnum>,
+        mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
         where_was: WhereWas,
     },
@@ -137,7 +138,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from("mongo_check_availability"));
+            where_was.tracing_error(WhereWasTracing::Child(Some(m.where_was.clone())));
             return Err(Box::new(PreparationErrorEnum::Mongo {
                 source: m,
                 where_was,
@@ -151,7 +152,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from("postgres_check_availability"));
+            where_was.tracing_error(WhereWasTracing::Child(Some(p.where_was.clone())));
             return Err(Box::new(PreparationErrorEnum::Postgres {
                 source: p,
                 where_was,
@@ -165,9 +166,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from(
-                "mongo_check_availability and postgres_check_availability",
-            ));
+            where_was.tracing_error(Some(m.where_was.clone()));
             return Err(Box::new(PreparationErrorEnum::MongoAndPostgres {
                 mongo_source: m,
                 postgres_source: p,
@@ -182,7 +181,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(format!("{}", n.where_was));
+            where_was.tracing_error(Some(n.where_was.clone()));
             return Err(Box::new(PreparationErrorEnum::Net {
                 source: n,
                 where_was,
@@ -196,9 +195,10 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from(
-                "check_net_availability and mongo_check_availability",
-            ));
+            where_was.tracing_error(
+                String::from("check_net_availability and mongo_check_availability"),
+                None,
+            );
             return Err(Box::new(PreparationErrorEnum::NetAndMongo {
                 net_source: n,
                 mongo_source: m,
@@ -213,9 +213,10 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from(
-                "check_net_availability and postgres_check_availability",
-            ));
+            where_was.tracing_error(
+                String::from("check_net_availability and postgres_check_availability"),
+                None,
+            );
             return Err(Box::new(PreparationErrorEnum::NetAndPostgres {
                 net_source: n,
                 postgres_source: p,
@@ -231,7 +232,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 column: column!(),
             };
             where_was.tracing_error(String::from(
-                "check_net_availability and mongo_check_availability and postgres_check_availability"));
+                "check_net_availability and mongo_check_availability and postgres_check_availability"), None);
             return Err(Box::new(PreparationErrorEnum::NetAndMongoAndPostgres {
                 net_source: n,
                 postgres_source: p,

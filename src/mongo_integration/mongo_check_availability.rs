@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -12,8 +13,8 @@ use std::time::Duration;
 
 #[derive(Debug)]
 pub struct MongoCheckAvailabilityError {
-    source: MongoCheckAvailabilityErrorEnum,
-    where_was: WhereWas,
+    pub source: MongoCheckAvailabilityErrorEnum,
+    pub where_was: WhereWas,
 }
 
 impl fmt::Display for MongoCheckAvailabilityError {
@@ -37,9 +38,9 @@ impl fmt::Display for MongoCheckAvailabilityErrorEnum {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
-                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e) => write!(f, "{}", self),
-                MongoCheckAvailabilityErrorEnum::ClientWithOptions(e) => write!(f, "{}", self),
-                MongoCheckAvailabilityErrorEnum::ListCollectionNames(e) => write!(f, "{}", self),
+                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e) => write!(f, "{}", e),
+                MongoCheckAvailabilityErrorEnum::ClientWithOptions(e) => write!(f, "{}", e),
+                MongoCheckAvailabilityErrorEnum::ListCollectionNames(e) => write!(f, "{}", e),
             },
         }
     }
@@ -63,7 +64,7 @@ pub async fn mongo_check_availability(
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(format!("{}", e));
+            where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
             Err(Box::new(MongoCheckAvailabilityError {
                 source: MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
                 where_was,
@@ -81,7 +82,7 @@ pub async fn mongo_check_availability(
                         line: line!(),
                         column: column!(),
                     };
-                    where_was.tracing_error(format!("{}", e));
+                    where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
                     Err(Box::new(MongoCheckAvailabilityError {
                         source: MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
                         where_was,
@@ -100,7 +101,7 @@ pub async fn mongo_check_availability(
                             line: line!(),
                             column: column!(),
                         };
-                        where_was.tracing_error(format!("{}", e));
+                        where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
                         return Err(Box::new(MongoCheckAvailabilityError {
                             source: MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
                             where_was,

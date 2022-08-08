@@ -6,7 +6,7 @@ use chrono::prelude::DateTime;
 use chrono::FixedOffset;
 use tracing::error;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct WhereWas {
     pub time: DateTime<FixedOffset>,
     pub file: &'static str,
@@ -32,6 +32,12 @@ impl Display for WhereWas {
             }
         }
     }
+}
+
+#[derive(Debug, Clone)]
+pub enum WhereWasTracing {
+    Error(String),
+    Child(WhereWas),
 }
 
 impl WhereWas {
@@ -68,23 +74,51 @@ impl WhereWas {
     pub fn github_source_place(&self) -> String {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
     }
-    pub fn tracing_error(&self, e: String) {
+    pub fn tracing_error(&self, child_or_error: WhereWasTracing) {
         //impl std::error::Error
-        if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-            error!(
-                error = format!("{}", e),
-                source = self.source_place(),
-                github_source = self.github_source_place(),
-            );
-        } else if CONFIG.is_show_source_place_enabled {
-            error!(error = format!("{}", e), source = self.source_place(),);
-        } else if CONFIG.is_show_github_source_place_enabled {
-            error!(
-                error = format!("{}", e),
-                github_source = self.github_source_place(),
-            );
-        } else {
-            error!(error = format!("{}", e),);
+        match child_or_error {
+            WhereWasTracing::Error(e) => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    error!(
+                        error = format!("{}", e),
+                        source = self.source_place(),
+                        github_source = self.github_source_place(),
+                    );
+                } else if CONFIG.is_show_source_place_enabled {
+                    error!(error = format!("{}", e), source = self.source_place(),);
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    error!(
+                        error = format!("{}", e),
+                        github_source = self.github_source_place(),
+                    );
+                } else {
+                    error!(error = format!("{}", e),);
+                }
+            }
+            WhereWasTracing::Child(c) => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    error!(
+                        source = self.source_place(),
+                        github_source = self.github_source_place(),
+                        child_source = c.source_place(),
+                        child_github_source = c.github_source_place(),
+                    );
+                } else if CONFIG.is_show_source_place_enabled {
+                    error!(
+                        source = self.source_place(),
+                        child_source = c.source_place(),
+                    );
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    error!(
+                        github_source = self.github_source_place(),
+                        child_github_source = c.github_source_place(),
+                    );
+                } else {
+                    error!(source = String::from("disabled"));
+                }
+            }
         }
     }
 }

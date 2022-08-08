@@ -1,6 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasTracing;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -68,7 +69,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(format!("{}", e));
+            where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
             Err(Box::new(CheckNetAvailabilityError {
                 source: CheckNetAvailabilityErrorEnum::ReqwestGet(e),
                 where_was,
@@ -84,7 +85,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                where_was.tracing_error(format!("check net client error: {}", status));
+                where_was.tracing_error(WhereWasTracing::Error(format!("{}", status)));
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Client(status),
                     where_was,
@@ -98,7 +99,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                where_was.tracing_error(format!("check net server error: {}", status));
+                where_was.tracing_error(WhereWasTracing::Error(format!("{}", status)));
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Server(status),
                     where_was,

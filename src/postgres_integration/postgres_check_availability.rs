@@ -1,18 +1,28 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use error_display::ErrorDisplay;
 use sqlx::postgres::PgPoolOptions;
 use std::fmt;
 use std::time::Duration;
+// use error_display::ErrorDisplay;
 
-#[derive(Debug, ErrorDisplay)]
+#[derive(Debug)] //, ErrorDisplay
 pub struct PostgresCheckAvailabilityError {
     pub source: sqlx::Error,
     pub where_was: WhereWas,
+}
+
+impl fmt::Display for PostgresCheckAvailabilityError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => write!(f, "{}\n{}", self.source, self.where_was),
+        }
+    }
 }
 
 #[deny(
@@ -37,7 +47,7 @@ pub async fn postgres_check_availability(
             line: line!(),
             column: column!(),
         };
-        where_was.tracing_error(format!("{}", e));
+        where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
         return Err(Box::new(PostgresCheckAvailabilityError {
             source: e,
             where_was,
