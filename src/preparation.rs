@@ -138,7 +138,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(WhereWasTracing::Child(Some(m.where_was.clone())));
+            where_was.tracing_error(WhereWasTracing::Child(vec![m.where_was.clone()]));
             return Err(Box::new(PreparationErrorEnum::Mongo {
                 source: m,
                 where_was,
@@ -152,7 +152,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(WhereWasTracing::Child(Some(p.where_was.clone())));
+            where_was.tracing_error(WhereWasTracing::Child(vec![p.where_was.clone()]));
             return Err(Box::new(PreparationErrorEnum::Postgres {
                 source: p,
                 where_was,
@@ -166,7 +166,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(Some(m.where_was.clone()));
+            where_was.tracing_error(WhereWasTracing::Child(vec![m.where_was.clone()]));
             return Err(Box::new(PreparationErrorEnum::MongoAndPostgres {
                 mongo_source: m,
                 postgres_source: p,
@@ -181,7 +181,7 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(Some(n.where_was.clone()));
+            where_was.tracing_error(WhereWasTracing::Child(vec![n.where_was.clone()]));
             return Err(Box::new(PreparationErrorEnum::Net {
                 source: n,
                 where_was,
@@ -195,10 +195,10 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(
-                String::from("check_net_availability and mongo_check_availability"),
-                None,
-            );
+            where_was.tracing_error(WhereWasTracing::Child(vec![
+                n.where_was.clone(),
+                m.where_was.clone(),
+            ]));
             return Err(Box::new(PreparationErrorEnum::NetAndMongo {
                 net_source: n,
                 mongo_source: m,
@@ -213,10 +213,10 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(
-                String::from("check_net_availability and postgres_check_availability"),
-                None,
-            );
+            where_was.tracing_error(WhereWasTracing::Child(vec![
+                n.where_was.clone(),
+                p.where_was.clone(),
+            ]));
             return Err(Box::new(PreparationErrorEnum::NetAndPostgres {
                 net_source: n,
                 postgres_source: p,
@@ -231,8 +231,11 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 line: line!(),
                 column: column!(),
             };
-            where_was.tracing_error(String::from(
-                "check_net_availability and mongo_check_availability and postgres_check_availability"), None);
+            where_was.tracing_error(WhereWasTracing::Child(vec![
+                n.where_was.clone(),
+                p.where_was.clone(),
+                m.where_was.clone(),
+            ]));
             return Err(Box::new(PreparationErrorEnum::NetAndMongoAndPostgres {
                 net_source: n,
                 postgres_source: p,

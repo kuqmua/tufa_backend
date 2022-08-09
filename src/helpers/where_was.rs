@@ -37,7 +37,7 @@ impl Display for WhereWas {
 #[derive(Debug, Clone)]
 pub enum WhereWasTracing {
     Error(String),
-    Child(WhereWas),
+    Child(Vec<WhereWas>),
 }
 
 impl WhereWas {
@@ -97,23 +97,36 @@ impl WhereWas {
                 }
             }
             WhereWasTracing::Child(c) => {
+                let child_sources =
+                    c.iter()
+                        .enumerate()
+                        .fold(String::from(""), |mut acc, (index, where_was)| {
+                            let elem = format!(" {} {}", index, where_was.source_place());
+                            acc.push_str(&elem);
+                            acc
+                        });
+                let github_sources =
+                    c.iter()
+                        .enumerate()
+                        .fold(String::from(""), |mut acc, (index, where_was)| {
+                            let elem = format!(" {} {}", index, where_was.github_source_place());
+                            acc.push_str(&elem);
+                            acc
+                        });
                 if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
                 {
                     error!(
                         source = self.source_place(),
                         github_source = self.github_source_place(),
-                        child_source = c.source_place(),
-                        child_github_source = c.github_source_place(),
+                        child_sources = child_sources,
+                        child_github_sources = github_sources,
                     );
                 } else if CONFIG.is_show_source_place_enabled {
-                    error!(
-                        source = self.source_place(),
-                        child_source = c.source_place(),
-                    );
+                    error!(source = self.source_place(), child_sources = child_sources,);
                 } else if CONFIG.is_show_github_source_place_enabled {
                     error!(
                         github_source = self.github_source_place(),
-                        child_github_source = c.github_source_place(),
+                        child_github_sources = github_sources,
                     );
                 } else {
                     error!(source = String::from("disabled"));
