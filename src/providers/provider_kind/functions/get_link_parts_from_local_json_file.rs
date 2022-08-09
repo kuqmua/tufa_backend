@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasTracing;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
@@ -9,7 +10,6 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use itertools::Itertools;
-
 #[derive(Debug)]
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen {
@@ -37,18 +37,22 @@ impl ProviderKind {
         self,
     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileErrorEnum>> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
-            Err(e) => Err(Box::new(
-                GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
-                    source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
+            Err(e) => {
+                let where_was = WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                };
+                where_was.tracing_error(WhereWasTracing::Child(vec![where_was.clone()]));
+                Err(Box::new(
+                    GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
+                        source: e,
+                        where_was,
                     },
-                },
-            )),
+                ))
+            }
             Ok(mut file) => {
                 let mut content = Vec::new();
                 if let Err(e) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
