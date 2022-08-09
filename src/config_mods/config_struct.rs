@@ -291,6 +291,7 @@ pub struct ConfigStruct {
 
     pub is_preparation_enabled: bool,
     pub is_tracing_enabled: bool,
+    pub is_parent_tracing_enabled: bool,
     pub is_debug_implementation_enable: bool,
     pub is_show_source_place_enabled: bool,
     pub is_show_github_source_place_enabled: bool,
