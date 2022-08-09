@@ -86,13 +86,14 @@ impl ProviderKind {
             return Err(Box::new(
                 FetchAndParseProviderDataErrorEnum::AsyncFetchLinks {
                     source: async_fetch_links_error_vec,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 },
             ));
         }
@@ -109,13 +110,14 @@ impl ProviderKind {
         if !no_items_error_vec.is_empty() {
             return Err(Box::new(FetchAndParseProviderDataErrorEnum::NoItems {
                 source: no_items_error_vec,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
+                    file!(),
+                    line!(),
+                    column!(),
+                    None,
+                ),
             }));
         }
         Ok(success_vec)

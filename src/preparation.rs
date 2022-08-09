@@ -131,42 +131,42 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
     ) {
         (Ok(_), Ok(_), Ok(_)) => (),
         (Ok(_), Ok(_), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![m.where_was.clone()]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![m.where_was.clone()])),
+            );
             return Err(Box::new(PreparationErrorEnum::Mongo {
                 source: m,
                 where_was,
             }));
         }
         (Ok(_), Err(p), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![p.where_was.clone()]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![p.where_was.clone()])),
+            );
             return Err(Box::new(PreparationErrorEnum::Postgres {
                 source: p,
                 where_was,
             }));
         }
         (Ok(_), Err(p), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![m.where_was.clone()]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![m.where_was.clone()])),
+            );
             return Err(Box::new(PreparationErrorEnum::MongoAndPostgres {
                 mongo_source: m,
                 postgres_source: p,
@@ -174,31 +174,31 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
             }));
         }
         (Err(n), Ok(_), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![n.where_was.clone()]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![n.where_was.clone()])),
+            );
             return Err(Box::new(PreparationErrorEnum::Net {
                 source: n,
                 where_was,
             }));
         }
         (Err(n), Ok(_), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![
-                n.where_was.clone(),
-                m.where_was.clone(),
-            ]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![
+                    n.where_was.clone(),
+                    m.where_was.clone(),
+                ])),
+            );
             return Err(Box::new(PreparationErrorEnum::NetAndMongo {
                 net_source: n,
                 mongo_source: m,
@@ -206,17 +206,17 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
             }));
         }
         (Err(n), Err(p), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![
-                n.where_was.clone(),
-                p.where_was.clone(),
-            ]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![
+                    n.where_was.clone(),
+                    p.where_was.clone(),
+                ])),
+            );
             return Err(Box::new(PreparationErrorEnum::NetAndPostgres {
                 net_source: n,
                 postgres_source: p,
@@ -224,18 +224,18 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
             }));
         }
         (Err(n), Err(p), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Child(vec![
-                n.where_was.clone(),
-                p.where_was.clone(),
-                m.where_was.clone(),
-            ]));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Child(vec![
+                    n.where_was.clone(),
+                    p.where_was.clone(),
+                    m.where_was.clone(),
+                ])),
+            );
             return Err(Box::new(PreparationErrorEnum::NetAndMongoAndPostgres {
                 net_source: n,
                 postgres_source: p,
@@ -253,13 +253,14 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
     if let Err(e) = init_dbs().await {
         return Err(Box::new(PreparationErrorEnum::InitDbs {
             source: e,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         }));
     }
     Ok(())

@@ -42,38 +42,41 @@ pub async fn rss_part(
     match reqwest::get(pk.check_link()).await {
         Err(e) => Err(Box::new(RssPartErrorEnum::CheckLinkStatusCodeError {
             source: e,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         })),
         Ok(res) => {
             let status_code = res.status();
             if !StatusCode::is_success(&status_code) {
                 return Err(Box::new(RssPartErrorEnum::StatusCode {
                     source: status_code,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 }));
             }
             match ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
                 Err(e) => Err(Box::new(RssPartErrorEnum::FetchAndParseProviderData {
                     source: *e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 })),
                 Ok(vec) => Ok(vec),
             }

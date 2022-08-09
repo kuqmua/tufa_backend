@@ -43,26 +43,28 @@ pub async fn mongo_check_collection_is_empty(
         Err(e) => Err(Box::new(
             MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse {
                 source: e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
+                    file!(),
+                    line!(),
+                    column!(),
+                    None,
+                ),
             },
         )),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(Box::new(
                 MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions {
                     source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 },
             )),
             Ok(client) => {
@@ -75,26 +77,28 @@ pub async fn mongo_check_collection_is_empty(
                     Err(e) => Err(Box::new(
                         MongoCheckCollectionIsEmptyErrorEnum::CountDocuments {
                             source: e,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            where_was: WhereWas::new(
+                                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
+                                file!(),
+                                line!(),
+                                column!(),
+                                None,
+                            ),
                         },
                     )),
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             return Err(Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty {
                                 source: documents_number,
-                                where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                where_was: WhereWas::new(
+                                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                                    file!(),
+                                    line!(),
+                                    column!(),
+                                    None,
+                                ),
                             }));
                         }
                         Ok(())

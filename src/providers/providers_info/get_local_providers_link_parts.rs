@@ -52,13 +52,14 @@ pub async fn get_local_providers_link_parts(
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
             source: Box::new(errors_hashmap),
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         });
     }
     Ok(success_hashmap)

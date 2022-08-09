@@ -29,13 +29,14 @@ pub fn check_providers_link_parts_on_empty(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyError>> {
     if providers_link_parts.is_empty() {
         return Err(Box::new(CheckProvidersLinkPartsEmptyError::Full {
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         }));
     }
     let mut non_empty_providers_link_parts = HashMap::with_capacity(providers_link_parts.len());
@@ -54,13 +55,14 @@ pub fn check_providers_link_parts_on_empty(
         }
         return Err(Box::new(CheckProvidersLinkPartsEmptyError::Partially {
             source: pk_vec,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         }));
     }
     Ok(non_empty_providers_link_parts)

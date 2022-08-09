@@ -36,36 +36,39 @@ pub async fn mongo_drop_db(
     match ClientOptions::parse(mongo_url).await {
         Err(e) => Err(Box::new(MongoDropDbErrorEnum::ClientOptionsParse {
             source: e,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         })),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(Box::new(MongoDropDbErrorEnum::ClientWithOptions {
                 source: e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
+                    file!(),
+                    line!(),
+                    column!(),
+                    None,
+                ),
             })),
             Ok(client) => {
                 if let Err(e) = client.database(db_name).drop(None).await {
                     return Err(Box::new(MongoDropDbErrorEnum::DatabaseDrop {
                         source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        where_was: WhereWas::new(
+                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
+                            file!(),
+                            line!(),
+                            column!(),
+                            None,
+                        ),
                     }));
                 }
                 Ok(())

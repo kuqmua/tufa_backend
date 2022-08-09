@@ -44,13 +44,14 @@ pub async fn mongo_get_documents_as_string_vector(
         Err(e) => Err(Box::new(
             MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
                 source: e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
+                    file!(),
+                    line!(),
+                    column!(),
+                    None,
+                ),
             },
         )),
         Ok(mut cursor) => {
@@ -61,13 +62,14 @@ pub async fn mongo_get_documents_as_string_vector(
                         return Err(Box::new(
                             MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                                 source: e,
-                                where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                where_was: WhereWas::new(
+                                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                                    file!(),
+                                    line!(),
+                                    column!(),
+                                    None,
+                                ),
                             },
                         ));
                     }
@@ -82,16 +84,17 @@ pub async fn mongo_get_documents_as_string_vector(
                                         MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
                                             source: db_collection_document_field_name_handle
                                                 .to_string(),
-                                            where_was: WhereWas {
-                                                time: DateTime::<Utc>::from_utc(
+                                            where_was: WhereWas::new(
+                                                DateTime::<Utc>::from_utc(
                                                     Local::now().naive_utc(),
                                                     Utc,
                                                 )
                                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                                file: file!(),
-                                                line: line!(),
-                                                column: column!(),
-                                            },
+                                                file!(),
+                                                line!(),
+                                                column!(),
+                                                None,
+                                            ),
                                         },
                                     )),
                                     Some(bson_handle) => match bson_handle {
@@ -102,16 +105,14 @@ pub async fn mongo_get_documents_as_string_vector(
                                             return Err(Box::new(
                                             MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                                 source: other_bson_type.clone(),
-                                                where_was: WhereWas {
-                                                    time: DateTime::<Utc>::from_utc(
-                                                        Local::now().naive_utc(),
-                                                        Utc,
-                                                    )
-                                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                                    file: file!(),
-                                                    line: line!(),
-                                                    column: column!(),
-                                                },
+                where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file!(),
+                line!(),
+                column!(),
+                None
+            ),
                                             },
                                         ));
                                         }

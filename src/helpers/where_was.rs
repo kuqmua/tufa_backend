@@ -8,10 +8,10 @@ use tracing::error;
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {
-    pub time: DateTime<FixedOffset>,
-    pub file: &'static str,
-    pub line: u32,
-    pub column: u32,
+    time: DateTime<FixedOffset>,
+    file: &'static str,
+    line: u32,
+    column: u32,
 }
 
 impl Display for WhereWas {
@@ -41,6 +41,38 @@ pub enum WhereWasTracing {
 }
 
 impl WhereWas {
+    pub fn new(
+        time: DateTime<FixedOffset>,
+        file: &'static str,
+        line: u32,
+        column: u32,
+        option_child_or_error: Option<WhereWasTracing>,
+    ) -> Self {
+        let s = Self {
+            time,
+            file,
+            line,
+            column,
+        };
+        if let Some(child_or_error) = option_child_or_error {
+            // if CONFIG.is_custom_trace_type_tracing_enabled {
+            //     s.tracing_trace(child_or_error);
+            // }
+            // if CONFIG.is_custom_debug_type_tracing_enabled {
+            //     s.tracing_debug(child_or_error);
+            // }
+            // if CONFIG.is_custom_info_type_tracing_enabled {
+            //     s.tracing_info(child_or_error);
+            // }
+            // if CONFIG.is_custom_warn_type_tracing_enabled {
+            //     s.tracing_warn(child_or_error);
+            // }
+            if CONFIG.is_custom_error_type_tracing_enabled {
+                s.tracing_error(child_or_error);
+            }
+        }
+        s
+    }
     #[deny(
         clippy::indexing_slicing,
         clippy::unwrap_used,
@@ -74,7 +106,7 @@ impl WhereWas {
     pub fn github_source_place(&self) -> String {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
     }
-    pub fn tracing_error(&self, child_or_error: WhereWasTracing) {
+    fn tracing_error(&self, child_or_error: WhereWasTracing) {
         //impl std::error::Error
         match child_or_error {
             WhereWasTracing::Error(e) => {

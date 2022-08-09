@@ -48,26 +48,28 @@ pub async fn mongo_drop_empty_collection(
         Err(e) => Err(Box::new(
             MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
+                    file!(),
+                    line!(),
+                    column!(),
+                    None,
+                ),
             },
         )),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(Box::new(
                 MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
                     source: e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 },
             )),
             Ok(client) => {
@@ -77,42 +79,45 @@ pub async fn mongo_drop_empty_collection(
                     Err(e) => Err(Box::new(
                         MongoDropEmptyCollectionErrorEnum::CountDocuments {
                             source: e,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            where_was: WhereWas::new(
+                                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
+                                file!(),
+                                line!(),
+                                column!(),
+                                None,
+                            ),
                         },
                     )),
                     Ok(documents_number) => {
                         if documents_number > 0 {
                             Err(Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty {
                                 source: documents_number,
-                                where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                where_was: WhereWas::new(
+                                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                                    file!(),
+                                    line!(),
+                                    column!(),
+                                    None,
+                                ),
                             }))
                         } else {
                             if let Err(e) = collection.drop(None).await {
                                 return Err(Box::new(
                                     MongoDropEmptyCollectionErrorEnum::DatabaseDrop {
                                         source: e,
-                                        where_was: WhereWas {
-                                            time: DateTime::<Utc>::from_utc(
+                                        where_was: WhereWas::new(
+                                            DateTime::<Utc>::from_utc(
                                                 Local::now().naive_utc(),
                                                 Utc,
                                             )
                                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                            file: file!(),
-                                            line: line!(),
-                                            column: column!(),
-                                        },
+                                            file!(),
+                                            line!(),
+                                            column!(),
+                                            None,
+                                        ),
                                     },
                                 ));
                             }

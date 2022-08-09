@@ -57,13 +57,14 @@ pub async fn mongo_insert_data(
     if !error_hashmap.is_empty() {
         return Err(Box::new(MongoInsertDataError {
             source: error_hashmap,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         }));
     }
     Ok(())

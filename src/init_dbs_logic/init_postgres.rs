@@ -65,13 +65,14 @@ pub async fn init_postgres(
     {
         Err(e) => Err(Box::new(PostgresInitErrorEnum::EstablishConnection {
             source: e,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            where_was: WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
+                file!(),
+                line!(),
+                column!(),
+                None,
+            ),
         })),
         Ok(pool) => {
             if let Err(e) = postgres_create_providers_tables_if_not_exists(
@@ -82,13 +83,14 @@ pub async fn init_postgres(
             {
                 return Err(Box::new(PostgresInitErrorEnum::CreateTableQueries {
                     source: *e,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
+                        file!(),
+                        line!(),
+                        column!(),
+                        None,
+                    ),
                 }));
             }
             if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
@@ -100,13 +102,14 @@ pub async fn init_postgres(
                 return Err(Box::new(
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty {
                         source: *e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        where_was: WhereWas::new(
+                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
+                            file!(),
+                            line!(),
+                            column!(),
+                            None,
+                        ),
                     },
                 ));
             }
@@ -119,13 +122,14 @@ pub async fn init_postgres(
                 return Err(Box::new(
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables {
                         source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        where_was: WhereWas::new(
+                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
+                            file!(),
+                            line!(),
+                            column!(),
+                            None,
+                        ),
                     },
                 ));
             }
@@ -152,13 +156,14 @@ pub async fn init_postgres(
                 return Err(Box::new(
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables {
                         source: e,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        where_was: WhereWas::new(
+                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
+                            file!(),
+                            line!(),
+                            column!(),
+                            None,
+                        ),
                     },
                 ));
             }

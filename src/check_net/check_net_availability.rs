@@ -62,14 +62,14 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
 pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityError>> {
     match reqwest::get(link).await {
         Err(e) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Error(format!("{}", e))),
+            );
             Err(Box::new(CheckNetAvailabilityError {
                 source: CheckNetAvailabilityErrorEnum::ReqwestGet(e),
                 where_was,
@@ -78,28 +78,28 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
         Ok(res) => {
             let status = res.status();
             if status.is_client_error() {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                let where_was = WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                where_was.tracing_error(WhereWasTracing::Error(format!("{}", status)));
+                    file!(),
+                    line!(),
+                    column!(),
+                    Some(WhereWasTracing::Error(format!("{}", status))),
+                );
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Client(status),
                     where_was,
                 }));
             }
             if status.is_server_error() {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                let where_was = WhereWas::new(
+                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                where_was.tracing_error(WhereWasTracing::Error(format!("{}", status)));
+                    file!(),
+                    line!(),
+                    column!(),
+                    Some(WhereWasTracing::Error(format!("{}", status))),
+                );
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Server(status),
                     where_was,

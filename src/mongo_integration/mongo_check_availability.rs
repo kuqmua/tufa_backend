@@ -57,14 +57,14 @@ pub async fn mongo_check_availability(
 ) -> Result<(), Box<MongoCheckAvailabilityError>> {
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            let where_was = WhereWas::new(
+                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
+                file!(),
+                line!(),
+                column!(),
+                Some(WhereWasTracing::Error(format!("{}", e))),
+            );
             Err(Box::new(MongoCheckAvailabilityError {
                 source: MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
                 where_was,
@@ -75,14 +75,14 @@ pub async fn mongo_check_availability(
                 Some(Duration::from_millis(CONFIG.mongo_connection_timeout));
             match Client::with_options(client_options) {
                 Err(e) => {
-                    let where_was = WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    let where_was = WhereWas::new(
+                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    };
-                    where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
+                        file!(),
+                        line!(),
+                        column!(),
+                        Some(WhereWasTracing::Error(format!("{}", e))),
+                    );
                     Err(Box::new(MongoCheckAvailabilityError {
                         source: MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
                         where_was,
@@ -94,14 +94,14 @@ pub async fn mongo_check_availability(
                         .list_collection_names(None)
                         .await
                     {
-                        let where_was = WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        let where_was = WhereWas::new(
+                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        };
-                        where_was.tracing_error(WhereWasTracing::Error(format!("{}", e)));
+                            file!(),
+                            line!(),
+                            column!(),
+                            Some(WhereWasTracing::Error(format!("{}", e))),
+                        );
                         return Err(Box::new(MongoCheckAvailabilityError {
                             source: MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
                             where_was,
