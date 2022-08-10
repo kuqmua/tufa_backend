@@ -292,11 +292,6 @@ pub struct ConfigStruct {
     pub is_preparation_enabled: bool,
     pub is_tracing_enabled: bool,
     // pub tracing_type: "error" # trace|debug|info|warn|error
-    pub is_custom_trace_type_tracing_enabled: bool,
-    pub is_custom_debug_type_tracing_enabled: bool,
-    pub is_custom_info_type_tracing_enabled: bool,
-    pub is_custom_warn_type_tracing_enabled: bool,
-    pub is_custom_error_type_tracing_enabled: bool,
     pub is_parent_tracing_enabled: bool,
     pub is_debug_implementation_enable: bool,
     pub is_show_source_place_enabled: bool,

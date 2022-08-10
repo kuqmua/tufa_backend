@@ -34,7 +34,7 @@ pub fn entry() {
             if let true = CONFIG.is_tracing_enabled {
                 if let Err(e) = init_subscriber(get_subscriber(
                     PROJECT_NAME.into(),
-                    "error".into(),
+                    "warn".into(),
                     std::io::stdout,
                 )) {
                     print_colorful_message(

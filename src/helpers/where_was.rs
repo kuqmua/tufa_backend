@@ -4,7 +4,7 @@ use std::fmt::Display;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
-use tracing::error;
+use tracing::{error, warn};
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {
@@ -55,21 +55,11 @@ impl WhereWas {
             column,
         };
         if let Some(child_or_error) = option_child_or_error {
-            // if CONFIG.is_custom_trace_type_tracing_enabled {
-            //     s.tracing_trace(child_or_error);
-            // }
-            // if CONFIG.is_custom_debug_type_tracing_enabled {
-            //     s.tracing_debug(child_or_error);
-            // }
-            // if CONFIG.is_custom_info_type_tracing_enabled {
-            //     s.tracing_info(child_or_error);
-            // }
-            // if CONFIG.is_custom_warn_type_tracing_enabled {
-            //     s.tracing_warn(child_or_error);
-            // }
-            if CONFIG.is_custom_error_type_tracing_enabled {
-                s.tracing_error(child_or_error);
-            }
+            // s.tracing_trace(child_or_error);
+            // s.tracing_debug(child_or_error);
+            // s.tracing_info(child_or_error);
+            // s.tracing_warn(child_or_error);
+            s.tracing_error(child_or_error);
         }
         s
     }
