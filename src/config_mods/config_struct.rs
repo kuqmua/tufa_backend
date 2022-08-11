@@ -4,21 +4,19 @@ use chrono::Local;
 use chrono::Utc;
 use gen_enum::GenEnumDerive;
 use gen_enum_without_values::GenEnumWithoutValuesDerive;
-use std::collections::HashMap;
 extern crate toml;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::resource::Resource;
 use crate::helpers::where_was::WhereWas;
-use convert_case::Case;
-use convert_case::Casing;
-use dotenv::dotenv;
-use enum_extension::EnumExtension;
-use init_from_env::InitFromEnv;
-use strum::IntoEnumIterator;
-use strum_macros::EnumIter;
 
 #[derive(
-    Debug, Clone, InitFromEnv, GenEnumDerive, GenEnumWithoutValuesDerive, Default, PartialEq,
+    Debug,
+    Clone,
+    init_from_env::InitFromEnv,
+    GenEnumDerive,
+    GenEnumWithoutValuesDerive,
+    Default,
+    PartialEq,
 )]
 pub struct ConfigStruct {
     pub server_ip: String,
