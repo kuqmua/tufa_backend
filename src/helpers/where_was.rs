@@ -4,7 +4,7 @@ use std::fmt::Display;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
-use tracing::{error, warn};
+use tracing::error;
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {

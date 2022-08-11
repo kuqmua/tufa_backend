@@ -6,6 +6,7 @@ use gen_enum::GenEnumDerive;
 use gen_enum_without_values::GenEnumWithoutValuesDerive;
 extern crate toml;
 use crate::config_mods::lazy_static_config::CONFIG;
+use crate::config_mods::tracing_type::TracingType;
 use crate::helpers::resource::Resource;
 use crate::helpers::where_was::WhereWas;
 
@@ -289,7 +290,7 @@ pub struct ConfigStruct {
 
     pub is_preparation_enabled: bool,
     pub is_tracing_enabled: bool,
-    // pub tracing_type: "error" # trace|debug|info|warn|error
+    pub tracing_type: TracingType,
     pub is_parent_tracing_enabled: bool,
     pub is_debug_implementation_enable: bool,
     pub is_show_source_place_enabled: bool,
