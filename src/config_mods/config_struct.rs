@@ -12,7 +12,7 @@ use crate::helpers::where_was::WhereWas;
 use convert_case::Case;
 use convert_case::Casing;
 use dotenv::dotenv;
-use enum_extention::EnumExtenstion;
+use enum_extension::EnumExtension;
 use init_from_env::InitFromEnv;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
