@@ -18,45 +18,44 @@ use chrono::Utc;
 use futures::join;
 use std::fmt::Display;
 
+#[derive(Debug)] //, ErrorDisplay
+pub struct PreparationError {
+    pub source: PreparationErrorEnum,
+    pub where_was: WhereWas,
+}
+
 #[derive(Debug)]
 pub enum PreparationErrorEnum {
-    Net {
-        source: Box<CheckNetAvailabilityError>,
-        where_was: WhereWas,
-    },
-    Postgres {
-        source: Box<PostgresCheckAvailabilityError>,
-        where_was: WhereWas,
-    },
-    Mongo {
-        source: Box<MongoCheckAvailabilityError>,
-        where_was: WhereWas,
-    },
+    Net(CheckNetAvailabilityError),
+    Postgres(PostgresCheckAvailabilityError),
+    Mongo(MongoCheckAvailabilityError),
     NetAndMongo {
         net_source: Box<CheckNetAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityError>,
-        where_was: WhereWas,
     },
     NetAndPostgres {
         net_source: Box<CheckNetAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
-        where_was: WhereWas,
     },
     MongoAndPostgres {
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
-        where_was: WhereWas,
     },
     NetAndMongoAndPostgres {
         net_source: Box<CheckNetAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
-        where_was: WhereWas,
     },
-    InitDbs {
-        source: Vec<Box<InitTablesEnumError>>,
-        where_was: WhereWas,
-    },
+    InitDbs(Vec<Box<InitTablesEnumError>>),
+}
+
+impl Display for PreparationError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => write!(f, "{} {}", self.where_was, self.source),
+        }
+    }
 }
 
 impl Display for PreparationErrorEnum {
@@ -64,50 +63,42 @@ impl Display for PreparationErrorEnum {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
-                PreparationErrorEnum::Net { source, where_was } => {
-                    write!(f, "{}\n{}", *source, where_was)
+                PreparationErrorEnum::Net(source) => {
+                    write!(f, "{}", *source)
                 }
-                PreparationErrorEnum::Postgres { source, where_was } => {
-                    write!(f, "{}\n{}", *source, where_was)
+                PreparationErrorEnum::Postgres(source) => {
+                    write!(f, "{}", *source)
                 }
-                PreparationErrorEnum::Mongo { source, where_was } => {
-                    write!(f, "{}\n{}", *source, where_was)
+                PreparationErrorEnum::Mongo(source) => {
+                    write!(f, "{}", *source)
                 }
                 PreparationErrorEnum::NetAndMongo {
                     net_source,
                     mongo_source,
-                    where_was,
                 } => {
-                    write!(f, "{}\n{}\n{}", net_source, mongo_source, where_was)
+                    write!(f, "{}\n{}", net_source, mongo_source)
                 }
                 PreparationErrorEnum::NetAndPostgres {
                     net_source,
                     postgres_source,
-                    where_was,
                 } => {
-                    write!(f, "{}\n{}\n{}", net_source, postgres_source, where_was)
+                    write!(f, "{}\n{}", net_source, postgres_source)
                 }
                 PreparationErrorEnum::MongoAndPostgres {
                     mongo_source,
                     postgres_source,
-                    where_was,
                 } => {
-                    write!(f, "{}\n{}\n{}", mongo_source, postgres_source, where_was)
+                    write!(f, "{}\n{}", mongo_source, postgres_source)
                 }
                 PreparationErrorEnum::NetAndMongoAndPostgres {
                     net_source,
                     mongo_source,
                     postgres_source,
-                    where_was,
                 } => {
-                    write!(
-                        f,
-                        "{}\n{}\n{}\n{}",
-                        net_source, mongo_source, postgres_source, where_was
-                    )
+                    write!(f, "{}\n{}\n{}", net_source, mongo_source, postgres_source)
                 }
-                PreparationErrorEnum::InitDbs { source, where_was } => {
-                    write!(f, "{:#?}\n{}", source, where_was)
+                PreparationErrorEnum::InitDbs(source) => {
+                    write!(f, "{:#?}", *source)
                 }
             },
         }
@@ -120,7 +111,7 @@ impl Display for PreparationErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
+pub async fn preparation() -> Result<(), Box<PreparationError>> {
     let net_url = &CONFIG.starting_check_link.clone();
     let postgres_url = &get_postgres_url();
     let mongo_url = &get_mongo_url();
@@ -139,8 +130,8 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 column!(),
                 Some(WhereWasTracing::Child(vec![m.where_was.clone()])),
             );
-            return Err(Box::new(PreparationErrorEnum::Mongo {
-                source: m,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::Mongo(*m),
                 where_was,
             }));
         }
@@ -153,8 +144,8 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 column!(),
                 Some(WhereWasTracing::Child(vec![p.where_was.clone()])),
             );
-            return Err(Box::new(PreparationErrorEnum::Postgres {
-                source: p,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::Postgres(*p),
                 where_was,
             }));
         }
@@ -167,9 +158,11 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 column!(),
                 Some(WhereWasTracing::Child(vec![m.where_was.clone()])),
             );
-            return Err(Box::new(PreparationErrorEnum::MongoAndPostgres {
-                mongo_source: m,
-                postgres_source: p,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::MongoAndPostgres {
+                    mongo_source: m,
+                    postgres_source: p,
+                },
                 where_was,
             }));
         }
@@ -182,8 +175,8 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                 column!(),
                 Some(WhereWasTracing::Child(vec![n.where_was.clone()])),
             );
-            return Err(Box::new(PreparationErrorEnum::Net {
-                source: n,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::Net(*n),
                 where_was,
             }));
         }
@@ -199,9 +192,11 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                     m.where_was.clone(),
                 ])),
             );
-            return Err(Box::new(PreparationErrorEnum::NetAndMongo {
-                net_source: n,
-                mongo_source: m,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::NetAndMongo {
+                    net_source: n,
+                    mongo_source: m,
+                },
                 where_was,
             }));
         }
@@ -217,9 +212,11 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                     p.where_was.clone(),
                 ])),
             );
-            return Err(Box::new(PreparationErrorEnum::NetAndPostgres {
-                net_source: n,
-                postgres_source: p,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::NetAndPostgres {
+                    net_source: n,
+                    postgres_source: p,
+                },
                 where_was,
             }));
         }
@@ -236,10 +233,12 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
                     m.where_was.clone(),
                 ])),
             );
-            return Err(Box::new(PreparationErrorEnum::NetAndMongoAndPostgres {
-                net_source: n,
-                postgres_source: p,
-                mongo_source: m,
+            return Err(Box::new(PreparationError {
+                source: PreparationErrorEnum::NetAndMongoAndPostgres {
+                    net_source: n,
+                    postgres_source: p,
+                    mongo_source: m,
+                },
                 where_was,
             }));
         }
@@ -251,16 +250,17 @@ pub async fn preparation() -> Result<(), Box<PreparationErrorEnum>> {
         return Ok(());
     }
     if let Err(e) = init_dbs().await {
-        return Err(Box::new(PreparationErrorEnum::InitDbs {
-            source: e,
-            where_was: WhereWas::new(
-                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file!(),
-                line!(),
-                column!(),
-                None,
-            ),
+        let where_was = WhereWas::new(
+            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file!(),
+            line!(),
+            column!(),
+            None,
+        );
+        return Err(Box::new(PreparationError {
+            source: PreparationErrorEnum::InitDbs(e),
+            where_was,
         }));
     }
     Ok(())
