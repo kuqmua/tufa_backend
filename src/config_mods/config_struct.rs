@@ -295,6 +295,7 @@ pub struct ConfigStruct {
     pub is_debug_implementation_enable: bool,
     pub is_show_source_place_enabled: bool,
     pub is_show_github_source_place_enabled: bool,
+    pub is_tracing_time_enabled: bool,
 
     pub error_red: u8,
     pub error_green: u8,
