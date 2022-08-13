@@ -318,3 +318,5 @@ https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 /api/html/info
 /api/json/info
 /api/protobuf/info
+
+* cut enum extension into few different proc macroses
