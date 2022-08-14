@@ -10,11 +10,12 @@ use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 use std::fmt;
+use tracing::error;
 // use error_display::ErrorDisplay;
 
 #[derive(Debug)] //, ErrorDisplay
 pub struct CheckNetAvailabilityError {
-    pub source: CheckNetAvailabilityErrorEnum,
+    source: CheckNetAvailabilityErrorEnum,
     pub where_was: WhereWas,
 }
 
@@ -52,6 +53,103 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
         }
     }
 }
+
+//
+
+#[derive(Debug, Clone)]
+pub enum CheckNetAvailabilityErrorTracing {
+    Message(String),
+    Child(Vec<WhereWas>),
+}
+
+impl CheckNetAvailabilityError {
+    pub fn new(
+        source: CheckNetAvailabilityErrorEnum,
+        where_was: WhereWas,
+        option_child_or_message: Option<WhereWasTracing>,
+    ) -> Self {
+        let s = Self { source, where_was };
+        if let Some(child_or_message) = option_child_or_message {
+            // s.tracing_trace(child_or_message);
+            // s.tracing_debug(child_or_message);
+            // s.tracing_info(child_or_message);
+            // s.tracing_warn(child_or_message);
+            s.tracing_error(child_or_message);
+        }
+        s
+    }
+    fn tracing_error(&self, child_or_error: WhereWasTracing) {
+        //impl std::error::Error
+        match child_or_error {
+            WhereWasTracing::Message(e) => {
+                if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
+                {
+                    error!(
+                        error = format!("{}", e),
+                        source = self.where_was.source_place(),
+                        github_source = self.where_was.github_source_place(),
+                    );
+                } else if CONFIG.is_show_source_place_enabled {
+                    error!(
+                        error = format!("{}", e),
+                        source = self.where_was.source_place(),
+                    );
+                } else if CONFIG.is_show_github_source_place_enabled {
+                    error!(
+                        error = format!("{}", e),
+                        github_source = self.where_was.github_source_place(),
+                    );
+                } else {
+                    error!(error = format!("{}", e),);
+                }
+            }
+            WhereWasTracing::Child(c) => {
+                if CONFIG.is_parent_tracing_enabled {
+                    let child_sources = c.iter().enumerate().fold(
+                        String::from(""),
+                        |mut acc, (index, where_was)| {
+                            let elem = format!(" {} {}", index, where_was.source_place());
+                            acc.push_str(&elem);
+                            acc
+                        },
+                    );
+                    let github_sources = c.iter().enumerate().fold(
+                        String::from(""),
+                        |mut acc, (index, where_was)| {
+                            let elem = format!(" {} {}", index, where_was.github_source_place());
+                            acc.push_str(&elem);
+                            acc
+                        },
+                    );
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        error!(
+                            source = self.where_was.source_place(),
+                            github_source = self.where_was.github_source_place(),
+                            child_sources = child_sources,
+                            child_github_sources = github_sources,
+                        );
+                    } else if CONFIG.is_show_source_place_enabled {
+                        error!(
+                            source = self.where_was.source_place(),
+                            child_sources = child_sources,
+                        );
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        error!(
+                            github_source = self.where_was.github_source_place(),
+                            child_github_sources = github_sources,
+                        );
+                    } else {
+                        error!(source = String::from("disabled"));
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
 
 #[deny(
     clippy::indexing_slicing,
@@ -100,10 +198,11 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     column!(),
                     Some(WhereWasTracing::Message(format!("{}", status))),
                 );
-                return Err(Box::new(CheckNetAvailabilityError {
-                    source: CheckNetAvailabilityErrorEnum::Server(status),
+                return Err(Box::new(CheckNetAvailabilityError::new(
+                    CheckNetAvailabilityErrorEnum::Server(status),
                     where_was,
-                }));
+                    None,
+                )));
             }
             Ok(())
         }
