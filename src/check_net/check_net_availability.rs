@@ -68,7 +68,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 file!(),
                 line!(),
                 column!(),
-                Some(WhereWasTracing::Error(format!("{}", e))),
+                Some(WhereWasTracing::Message(format!("{}", e))),
             );
             Err(Box::new(CheckNetAvailabilityError {
                 source: CheckNetAvailabilityErrorEnum::ReqwestGet(e),
@@ -84,7 +84,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     file!(),
                     line!(),
                     column!(),
-                    Some(WhereWasTracing::Error(format!("{}", status))),
+                    Some(WhereWasTracing::Message(format!("{}", status))),
                 );
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Client(status),
@@ -98,7 +98,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     file!(),
                     line!(),
                     column!(),
-                    Some(WhereWasTracing::Error(format!("{}", status))),
+                    Some(WhereWasTracing::Message(format!("{}", status))),
                 );
                 return Err(Box::new(CheckNetAvailabilityError {
                     source: CheckNetAvailabilityErrorEnum::Server(status),

@@ -44,7 +44,7 @@ impl ProviderKind {
                     file!(),
                     line!(),
                     column!(),
-                    Some(WhereWasTracing::Error(format!("{}", e))),
+                    Some(WhereWasTracing::Message(format!("{}", e))),
                 );
                 Err(Box::new(
                     GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {

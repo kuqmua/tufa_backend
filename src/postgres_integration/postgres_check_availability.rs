@@ -46,7 +46,7 @@ pub async fn postgres_check_availability(
             file!(),
             line!(),
             column!(),
-            Some(WhereWasTracing::Error(format!("{}", e))),
+            Some(WhereWasTracing::Message(format!("{}", e))),
         );
         return Err(Box::new(PostgresCheckAvailabilityError {
             source: e,

@@ -36,7 +36,7 @@ impl Display for WhereWas {
 
 #[derive(Debug, Clone)]
 pub enum WhereWasTracing {
-    Error(String),
+    Message(String),
     Child(Vec<WhereWas>),
 }
 
@@ -99,7 +99,7 @@ impl WhereWas {
     fn tracing_error(&self, child_or_error: WhereWasTracing) {
         //impl std::error::Error
         match child_or_error {
-            WhereWasTracing::Error(e) => {
+            WhereWasTracing::Message(e) => {
                 if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled
                 {
                     error!(

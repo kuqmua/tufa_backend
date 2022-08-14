@@ -63,7 +63,7 @@ pub async fn mongo_check_availability(
                 file!(),
                 line!(),
                 column!(),
-                Some(WhereWasTracing::Error(format!("{}", e))),
+                Some(WhereWasTracing::Message(format!("{}", e))),
             );
             Err(Box::new(MongoCheckAvailabilityError {
                 source: MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
@@ -81,7 +81,7 @@ pub async fn mongo_check_availability(
                         file!(),
                         line!(),
                         column!(),
-                        Some(WhereWasTracing::Error(format!("{}", e))),
+                        Some(WhereWasTracing::Message(format!("{}", e))),
                     );
                     Err(Box::new(MongoCheckAvailabilityError {
                         source: MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
@@ -100,7 +100,7 @@ pub async fn mongo_check_availability(
                             file!(),
                             line!(),
                             column!(),
-                            Some(WhereWasTracing::Error(format!("{}", e))),
+                            Some(WhereWasTracing::Message(format!("{}", e))),
                         );
                         return Err(Box::new(MongoCheckAvailabilityError {
                             source: MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
