@@ -46,7 +46,7 @@ impl WhereWas {
         file: &'static str,
         line: u32,
         column: u32,
-        option_child_or_error: Option<WhereWasTracing>,
+        option_child_or_message: Option<WhereWasTracing>,
     ) -> Self {
         let s = Self {
             time,
@@ -54,12 +54,12 @@ impl WhereWas {
             line,
             column,
         };
-        if let Some(child_or_error) = option_child_or_error {
-            // s.tracing_trace(child_or_error);
-            // s.tracing_debug(child_or_error);
-            // s.tracing_info(child_or_error);
-            // s.tracing_warn(child_or_error);
-            s.tracing_error(child_or_error);
+        if let Some(child_or_message) = option_child_or_message {
+            // s.tracing_trace(child_or_message);
+            // s.tracing_debug(child_or_message);
+            // s.tracing_info(child_or_message);
+            // s.tracing_warn(child_or_message);
+            s.tracing_error(child_or_message);
         }
         s
     }
