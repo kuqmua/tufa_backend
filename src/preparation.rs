@@ -173,7 +173,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 file!(),
                 line!(),
                 column!(),
-                Some(WhereWasTracing::Child(vec![n.where_was.clone()])),
+                Some(WhereWasTracing::Child(vec![n.get_where_was().clone()])),
             );
             return Err(Box::new(PreparationError {
                 source: PreparationErrorEnum::Net(*n),
@@ -188,7 +188,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line!(),
                 column!(),
                 Some(WhereWasTracing::Child(vec![
-                    n.where_was.clone(),
+                    n.get_where_was().clone(),
                     m.where_was.clone(),
                 ])),
             );
@@ -208,7 +208,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line!(),
                 column!(),
                 Some(WhereWasTracing::Child(vec![
-                    n.where_was.clone(),
+                    n.get_where_was().clone(),
                     p.where_was.clone(),
                 ])),
             );
@@ -228,7 +228,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line!(),
                 column!(),
                 Some(WhereWasTracing::Child(vec![
-                    n.where_was.clone(),
+                    n.get_where_was().clone(),
                     p.where_was.clone(),
                     m.where_was.clone(),
                 ])),

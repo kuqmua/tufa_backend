@@ -16,7 +16,7 @@ use tracing::error;
 #[derive(Debug)] //, ErrorDisplay
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
-    pub where_was: WhereWas,
+    where_was: WhereWas,
 }
 
 impl fmt::Display for CheckNetAvailabilityError {
@@ -146,6 +146,9 @@ impl CheckNetAvailabilityError {
                 }
             }
         }
+    }
+    pub fn get_where_was(&self) -> &WhereWas {
+        &self.where_was
     }
 }
 
