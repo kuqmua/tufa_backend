@@ -10,10 +10,11 @@ use chrono::Utc;
 use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 use std::fmt;
+use struct_field_getter::DeriveStructFieldGetter;
 use tracing::error;
 // use error_display::ErrorDisplay;
 
-#[derive(Debug)] //, ErrorDisplay
+#[derive(Debug, DeriveStructFieldGetter)] //, ErrorDisplay
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
     where_was: WhereWas,
@@ -147,15 +148,7 @@ impl CheckNetAvailabilityError {
             }
         }
     }
-    pub fn get_where_was(&self) -> &WhereWas {
-        &self.where_was
-    }
-    pub fn get_source(&self) -> &CheckNetAvailabilityErrorEnum {
-        &self.source
-    }
 }
-
-//
 
 #[deny(
     clippy::indexing_slicing,
