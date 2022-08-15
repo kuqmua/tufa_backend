@@ -150,6 +150,9 @@ impl CheckNetAvailabilityError {
     pub fn get_where_was(&self) -> &WhereWas {
         &self.where_was
     }
+    pub fn get_source(&self) -> &CheckNetAvailabilityErrorEnum {
+        &self.source
+    }
 }
 
 //
