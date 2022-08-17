@@ -11,10 +11,11 @@ use git_info::GitInfoDerive;
 use reqwest::StatusCode;
 use std::fmt;
 use struct_field_getter::DeriveStructFieldGetter;
+use struct_field_setter::DeriveStructFieldSetter;
 use tracing::error;
 // use error_display::ErrorDisplay;
 
-#[derive(Debug, DeriveStructFieldGetter)] //, ErrorDisplay
+#[derive(Debug, DeriveStructFieldGetter, DeriveStructFieldSetter)] //, ErrorDisplay
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
     where_was: WhereWas,
