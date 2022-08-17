@@ -12,6 +12,15 @@ pub struct WhereWas {
     file: &'static str,
     line: u32,
     column: u32,
+    stack: Vec<TimeFileLineColumn>,
+}
+
+#[derive(Debug, Clone)]
+pub struct TimeFileLineColumn {
+    pub time: DateTime<FixedOffset>,
+    pub file: &'static str,
+    pub line: u32,
+    pub column: u32,
 }
 
 impl Display for WhereWas {
@@ -48,20 +57,96 @@ impl WhereWas {
         column: u32,
         option_child_or_message: Option<WhereWasTracing>,
     ) -> Self {
-        let s = Self {
-            time,
-            file,
-            line,
-            column,
-        };
-        if let Some(child_or_message) = option_child_or_message {
-            // s.tracing_trace(child_or_message);
-            // s.tracing_debug(child_or_message);
-            // s.tracing_info(child_or_message);
-            // s.tracing_warn(child_or_message);
-            s.tracing_error(child_or_message);
+        match option_child_or_message {
+            Some(child_or_message) => match child_or_message {
+                WhereWasTracing::Message(e) => {
+                    let self_handle = Self {
+                        time,
+                        file,
+                        line,
+                        column,
+                        stack: vec![TimeFileLineColumn {
+                            time,
+                            file,
+                            line,
+                            column,
+                        }],
+                    };
+                    if CONFIG.is_show_source_place_enabled
+                        && CONFIG.is_show_github_source_place_enabled
+                    {
+                        error!(
+                            error = format!("{}", e),
+                            source = self_handle.source_place(),
+                            github_source = self_handle.github_source_place(),
+                        );
+                    } else if CONFIG.is_show_source_place_enabled {
+                        error!(
+                            error = format!("{}", e),
+                            source = self_handle.source_place(),
+                        );
+                    } else if CONFIG.is_show_github_source_place_enabled {
+                        error!(
+                            error = format!("{}", e),
+                            github_source = self_handle.github_source_place(),
+                        );
+                    } else {
+                        error!(error = format!("{}", e),);
+                    }
+                    self_handle
+                }
+                WhereWasTracing::Child(where_was_vec) => {
+                    let mut children_stack = where_was_vec
+                        .iter()
+                        .map(|e| TimeFileLineColumn {
+                            time: e.time,
+                            file: e.file,
+                            line: e.line,
+                            column: e.column,
+                        })
+                        .collect::<Vec<TimeFileLineColumn>>();
+                    children_stack.push(TimeFileLineColumn {
+                        time,
+                        file,
+                        line,
+                        column,
+                    });
+                    Self {
+                        time,
+                        file,
+                        line,
+                        column,
+                        stack: children_stack,
+                    }
+                }
+            },
+            None => Self {
+                time,
+                file,
+                line,
+                column,
+                stack: vec![TimeFileLineColumn {
+                    time,
+                    file,
+                    line,
+                    column,
+                }],
+            },
         }
-        s
+        // let s = Self {
+        //     time,
+        //     file,
+        //     line,
+        //     column,
+        // };
+        // if let Some(child_or_message) = option_child_or_message {
+        //     // s.tracing_trace(child_or_message);
+        //     // s.tracing_debug(child_or_message);
+        //     // s.tracing_info(child_or_message);
+        //     // s.tracing_warn(child_or_message);
+        //     s.tracing_error(child_or_message);
+        // }
+        // s
     }
     #[deny(
         clippy::indexing_slicing,
