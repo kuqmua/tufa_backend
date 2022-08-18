@@ -56,28 +56,26 @@ pub async fn mongo_get_providers_link_parts(
         Err(e) => Err(MongoGetProvidersLinkPartsError {
             source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                 source: e,
-                where_was: WhereWas::new(
-                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file!(),
-                    line!(),
-                    column!(),
-                    None,
-                ),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(client_options) => match Client::with_options(client_options) {
             Err(e) => Err(MongoGetProvidersLinkPartsError {
                 source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientWithOptions {
                     source: e,
-                    where_was: WhereWas::new(
-                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file!(),
-                        line!(),
-                        column!(),
-                        None,
-                    ),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             }),
             Ok(client) => {
@@ -87,14 +85,13 @@ pub async fn mongo_get_providers_link_parts(
                         source: Box::new(
                             MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
                                 source: e,
-                                where_was: WhereWas::new(
-                                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                where_was: WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file!(),
-                                    line!(),
-                                    column!(),
-                                    None,
-                                ),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
                             },
                         ),
                     }),
@@ -114,17 +111,16 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
                                         source: no_collection_error_hashmap,
-                                        where_was: WhereWas::new(
-                                            DateTime::<Utc>::from_utc(
+                                        where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
                                                 Local::now().naive_utc(),
                                                 Utc,
                                             )
                                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                            file!(),
-                                            line!(),
-                                            column!(),
-                                            None,
-                                        ),
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     },
                                 ),
                             });
@@ -164,17 +160,16 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
                                         source: error_hashmap,
-                                        where_was: WhereWas::new(
-                                            DateTime::<Utc>::from_utc(
+                                        where_was: WhereWas {
+                                            time: DateTime::<Utc>::from_utc(
                                                 Local::now().naive_utc(),
                                                 Utc,
                                             )
                                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                            file!(),
-                                            line!(),
-                                            column!(),
-                                            None,
-                                        ),
+                                            file: file!(),
+                                            line: line!(),
+                                            column: column!(),
+                                        },
                                     },
                                 ),
                             });

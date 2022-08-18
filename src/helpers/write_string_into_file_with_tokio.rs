@@ -45,14 +45,13 @@ pub async fn write_string_into_file_with_tokio(
             return Err(WriteStringIntoFileWithTokioError {
                 source: Box::new(WriteStringIntoFileWithTokioErrorEnum::StdFsCreateDirAll {
                     source: e,
-                    where_was: WhereWas::new(
-                        DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    where_was: WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file!(),
-                        line!(),
-                        column!(),
-                        None,
-                    ),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
                 }),
             });
         }
@@ -61,14 +60,13 @@ pub async fn write_string_into_file_with_tokio(
         Err(e) => Err(WriteStringIntoFileWithTokioError {
             source: Box::new(WriteStringIntoFileWithTokioErrorEnum::TokioFsFileOpen {
                 source: e,
-                where_was: WhereWas::new(
-                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                where_was: WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file!(),
-                    line!(),
-                    column!(),
-                    None,
-                ),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
             }),
         }),
         Ok(mut file) => {
@@ -76,14 +74,13 @@ pub async fn write_string_into_file_with_tokio(
                 return Err(WriteStringIntoFileWithTokioError {
                     source: Box::new(WriteStringIntoFileWithTokioErrorEnum::FileWriteAll {
                         source: e,
-                        where_was: WhereWas::new(
-                            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        where_was: WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file!(),
-                            line!(),
-                            column!(),
-                            None,
-                        ),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
                     }),
                 });
             }

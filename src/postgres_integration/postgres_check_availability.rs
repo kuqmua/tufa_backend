@@ -40,14 +40,13 @@ pub async fn postgres_check_availability(
         .connect(postgres_url)
         .await
     {
-        let where_was = WhereWas::new(
-            DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file!(),
-            line!(),
-            column!(),
-            Some(WhereWasTracing::Message(format!("{}", e))),
-        );
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
         return Err(Box::new(PostgresCheckAvailabilityError {
             source: e,
             where_was,

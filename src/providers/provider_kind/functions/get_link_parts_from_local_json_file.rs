@@ -38,14 +38,13 @@ impl ProviderKind {
     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileErrorEnum>> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
             Err(e) => {
-                let where_was = WhereWas::new(
-                    DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                let where_was = WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file!(),
-                    line!(),
-                    column!(),
-                    Some(WhereWasTracing::Message(format!("{}", e))),
-                );
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                };
                 Err(Box::new(
                     GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen {
                         source: e,
@@ -60,14 +59,13 @@ impl ProviderKind {
                     return Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd {
                             source: e,
-                            where_was: WhereWas::new(
-                                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file!(),
-                                line!(),
-                                column!(),
-                                None,
-                            ),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
                     ));
                 }
@@ -75,14 +73,13 @@ impl ProviderKind {
                     Err(e) => Err(Box::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice {
                             source: e,
-                            where_was: WhereWas::new(
-                                DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            where_was: WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file!(),
-                                line!(),
-                                column!(),
-                                None,
-                            ),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
                         },
                     )),
                     Ok(file_content_as_struct) => {
