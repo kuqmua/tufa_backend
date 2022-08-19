@@ -4,42 +4,16 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use init_error_with_tracing::DeriveInitErrorWithTracing;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
 
-#[derive(Debug)]
+#[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: Vec<WhereWas>,
-}
-
-impl MongoCheckAvailabilityError {
-    pub fn new(source: MongoCheckAvailabilityErrorEnum, where_was: Vec<WhereWas>) -> Self {
-        if where_was.len() == 1 {
-            if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else if CONFIG.is_show_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                );
-            } else if CONFIG.is_show_github_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else {
-                tracing::error!(error = format!("{}", source),);
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 impl fmt::Display for MongoCheckAvailabilityError {
@@ -89,7 +63,7 @@ pub async fn mongo_check_availability(
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(MongoCheckAvailabilityError::new(
+            Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                 MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
                 vec![where_was],
             )))
@@ -106,7 +80,7 @@ pub async fn mongo_check_availability(
                         line: line!(),
                         column: column!(),
                     };
-                    Err(Box::new(MongoCheckAvailabilityError::new(
+                    Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                         MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
                         vec![where_was],
                     )))
@@ -124,7 +98,7 @@ pub async fn mongo_check_availability(
                             line: line!(),
                             column: column!(),
                         };
-                        return Err(Box::new(MongoCheckAvailabilityError::new(
+                        return Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                             MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
                             vec![where_was],
                         )));
