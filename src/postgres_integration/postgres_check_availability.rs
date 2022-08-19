@@ -17,18 +17,23 @@ pub struct PostgresCheckAvailabilityError {
 impl PostgresCheckAvailabilityError {
     pub fn new(source: sqlx::Error, where_was: Vec<WhereWas>) -> Self {
         if where_was.len() == 1 {
-            if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+            if crate::config_mods::lazy_static_config::CONFIG.is_show_source_place_enabled
+                && crate::config_mods::lazy_static_config::CONFIG
+                    .is_show_github_source_place_enabled
+            {
                 tracing::error!(
                     error = format!("{}", source),
                     source = where_was[0].source_place(),
                     github_source = where_was[0].github_source_place(),
                 );
-            } else if CONFIG.is_show_source_place_enabled {
+            } else if crate::config_mods::lazy_static_config::CONFIG.is_show_source_place_enabled {
                 tracing::error!(
                     error = format!("{}", source),
                     source = where_was[0].source_place(),
                 );
-            } else if CONFIG.is_show_github_source_place_enabled {
+            } else if crate::config_mods::lazy_static_config::CONFIG
+                .is_show_github_source_place_enabled
+            {
                 tracing::error!(
                     error = format!("{}", source),
                     github_source = where_was[0].github_source_place(),
