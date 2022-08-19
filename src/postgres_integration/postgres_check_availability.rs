@@ -4,46 +4,16 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use init_error_with_tracing::DeriveInitErrorWithTracing;
 use sqlx::postgres::PgPoolOptions;
+use sqlx::Error;
 use std::fmt;
 use std::time::Duration;
 
-#[derive(Debug)]
+#[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct PostgresCheckAvailabilityError {
-    source: sqlx::Error,
+    source: Error,
     where_was: Vec<WhereWas>,
-}
-
-impl PostgresCheckAvailabilityError {
-    pub fn new(source: sqlx::Error, where_was: Vec<WhereWas>) -> Self {
-        if where_was.len() == 1 {
-            if crate::config_mods::lazy_static_config::CONFIG.is_show_source_place_enabled
-                && crate::config_mods::lazy_static_config::CONFIG
-                    .is_show_github_source_place_enabled
-            {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else if crate::config_mods::lazy_static_config::CONFIG.is_show_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                );
-            } else if crate::config_mods::lazy_static_config::CONFIG
-                .is_show_github_source_place_enabled
-            {
-                tracing::error!(
-                    error = format!("{}", source),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else {
-                tracing::error!(error = format!("{}", source),);
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 impl fmt::Display for PostgresCheckAvailabilityError {
@@ -77,7 +47,7 @@ pub async fn postgres_check_availability(
             line: line!(),
             column: column!(),
         };
-        return Err(Box::new(PostgresCheckAvailabilityError::new(
+        return Err(Box::new(PostgresCheckAvailabilityError::with_tracing(
             e,
             vec![where_was],
         )));

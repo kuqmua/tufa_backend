@@ -7,41 +7,15 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use git_info::GitInfoDerive;
+use init_error_with_tracing::DeriveInitErrorWithTracing;
 use reqwest::StatusCode;
 use std::fmt;
 extern crate chrono;
 
-#[derive(Debug)] //, ErrorDisplay
+#[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
     where_was: Vec<WhereWas>,
-}
-
-impl CheckNetAvailabilityError {
-    pub fn new(source: CheckNetAvailabilityErrorEnum, where_was: Vec<WhereWas>) -> Self {
-        if where_was.len() == 1 {
-            if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else if CONFIG.is_show_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was[0].source_place(),
-                );
-            } else if CONFIG.is_show_github_source_place_enabled {
-                tracing::error!(
-                    error = format!("{}", source),
-                    github_source = where_was[0].github_source_place(),
-                );
-            } else {
-                tracing::error!(error = format!("{}", source),);
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 impl fmt::Display for CheckNetAvailabilityError {
@@ -95,7 +69,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckNetAvailabilityError::new(
+            Err(Box::new(CheckNetAvailabilityError::with_tracing(
                 CheckNetAvailabilityErrorEnum::ReqwestGet(e),
                 vec![where_was],
             )))
@@ -110,7 +84,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                return Err(Box::new(CheckNetAvailabilityError::new(
+                return Err(Box::new(CheckNetAvailabilityError::with_tracing(
                     CheckNetAvailabilityErrorEnum::Client(status),
                     vec![where_was],
                 )));
@@ -123,7 +97,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                return Err(Box::new(CheckNetAvailabilityError::new(
+                return Err(Box::new(CheckNetAvailabilityError::with_tracing(
                     CheckNetAvailabilityErrorEnum::Server(status),
                     vec![where_was],
                 )));

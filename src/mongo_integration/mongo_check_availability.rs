@@ -9,7 +9,6 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
-
 #[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
