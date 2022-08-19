@@ -1,6 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -8,19 +7,45 @@ use chrono::Utc;
 use sqlx::postgres::PgPoolOptions;
 use std::fmt;
 use std::time::Duration;
-// use error_display::ErrorDisplay;
 
-#[derive(Debug)] //, ErrorDisplay
+#[derive(Debug)]
 pub struct PostgresCheckAvailabilityError {
-    pub source: sqlx::Error,
-    pub where_was: WhereWas,
+    source: sqlx::Error,
+    where_was: Vec<WhereWas>,
+}
+
+impl PostgresCheckAvailabilityError {
+    pub fn new(source: sqlx::Error, where_was: Vec<WhereWas>) -> Self {
+        if where_was.len() == 1 {
+            if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    source = where_was[0].source_place(),
+                    github_source = where_was[0].github_source_place(),
+                );
+            } else if CONFIG.is_show_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    source = where_was[0].source_place(),
+                );
+            } else if CONFIG.is_show_github_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    github_source = where_was[0].github_source_place(),
+                );
+            } else {
+                tracing::error!(error = format!("{}", source),);
+            }
+        }
+        Self { source, where_was }
+    }
 }
 
 impl fmt::Display for PostgresCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}\n{}", self.source, self.where_was),
+            false => write!(f, "{}\n{:?}", self.source, self.where_was),
         }
     }
 }
@@ -47,10 +72,10 @@ pub async fn postgres_check_availability(
             line: line!(),
             column: column!(),
         };
-        return Err(Box::new(PostgresCheckAvailabilityError {
-            source: e,
-            where_was,
-        }));
+        return Err(Box::new(PostgresCheckAvailabilityError::new(
+            e,
+            vec![where_was],
+        )));
     }
     Ok(())
 }
