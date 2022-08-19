@@ -1,6 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -9,19 +8,45 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
-// use error_display::ErrorDisplay;
 
 #[derive(Debug)]
 pub struct MongoCheckAvailabilityError {
-    pub source: MongoCheckAvailabilityErrorEnum,
-    pub where_was: WhereWas,
+    source: MongoCheckAvailabilityErrorEnum,
+    where_was: Vec<WhereWas>,
+}
+
+impl MongoCheckAvailabilityError {
+    pub fn new(source: MongoCheckAvailabilityErrorEnum, where_was: Vec<WhereWas>) -> Self {
+        if where_was.len() == 1 {
+            if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    source = where_was[0].source_place(),
+                    github_source = where_was[0].github_source_place(),
+                );
+            } else if CONFIG.is_show_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    source = where_was[0].source_place(),
+                );
+            } else if CONFIG.is_show_github_source_place_enabled {
+                tracing::error!(
+                    error = format!("{}", source),
+                    github_source = where_was[0].github_source_place(),
+                );
+            } else {
+                tracing::error!(error = format!("{}", source),);
+            }
+        }
+        Self { source, where_was }
+    }
 }
 
 impl fmt::Display for MongoCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}\n{}", self.source, self.where_was),
+            false => write!(f, "{}\n{:?}", self.source, self.where_was),
         }
     }
 }
@@ -64,10 +89,10 @@ pub async fn mongo_check_availability(
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(MongoCheckAvailabilityError {
-                source: MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                where_was,
-            }))
+            Err(Box::new(MongoCheckAvailabilityError::new(
+                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
+                vec![where_was],
+            )))
         }
         Ok(mut client_options) => {
             client_options.connect_timeout =
@@ -81,10 +106,10 @@ pub async fn mongo_check_availability(
                         line: line!(),
                         column: column!(),
                     };
-                    Err(Box::new(MongoCheckAvailabilityError {
-                        source: MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
-                        where_was,
-                    }))
+                    Err(Box::new(MongoCheckAvailabilityError::new(
+                        MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
+                        vec![where_was],
+                    )))
                 }
                 Ok(client) => {
                     if let Err(e) = client
@@ -99,10 +124,10 @@ pub async fn mongo_check_availability(
                             line: line!(),
                             column: column!(),
                         };
-                        return Err(Box::new(MongoCheckAvailabilityError {
-                            source: MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
-                            where_was,
-                        }));
+                        return Err(Box::new(MongoCheckAvailabilityError::new(
+                            MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
+                            vec![where_was],
+                        )));
                     }
                     Ok(())
                 }

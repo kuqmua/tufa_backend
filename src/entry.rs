@@ -63,7 +63,7 @@ pub fn entry() {
                     //     }
                     // }
 
-                    println!("{e}");
+                    // println!("{e}");
 
                     // print_colorful_message(
                     //     None,

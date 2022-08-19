@@ -4,7 +4,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasTracing;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
