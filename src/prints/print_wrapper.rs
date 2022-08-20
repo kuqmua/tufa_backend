@@ -1,4 +1,3 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use ansi_term::Colour;
 
 #[deny(
@@ -13,26 +12,23 @@ pub fn print_wrapper(
     github_sources_track: String,
     message: String,
 ) {
-    if CONFIG.is_show_source_place_enabled && CONFIG.is_show_github_source_place_enabled {
-        eprintln!(
-            "{}{}\n{}",
-            color.bold().paint(sources_track),
-            color.bold().paint(github_sources_track),
-            color.bold().paint(message)
-        );
-    } else if CONFIG.is_show_source_place_enabled {
-        eprintln!(
-            "{}\n{}",
-            color.bold().paint(sources_track),
-            color.bold().paint(message)
-        );
-    } else if CONFIG.is_show_github_source_place_enabled {
-        eprintln!(
-            "{}\n{}",
-            color.bold().paint(github_sources_track),
-            color.bold().paint(message)
-        );
-    } else {
-        eprintln!("{}", color.bold().paint(message));
+    match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        crate::config_mods::source_place_type::SourcePlaceType::Source => {
+            eprintln!(
+                "{}\n{}",
+                color.bold().paint(sources_track),
+                color.bold().paint(message)
+            );
+        }
+        crate::config_mods::source_place_type::SourcePlaceType::Github => {
+            eprintln!(
+                "{}\n{}",
+                color.bold().paint(github_sources_track),
+                color.bold().paint(message)
+            );
+        }
+        crate::config_mods::source_place_type::SourcePlaceType::None => {
+            eprintln!("{}", color.bold().paint(message));
+        }
     }
 }

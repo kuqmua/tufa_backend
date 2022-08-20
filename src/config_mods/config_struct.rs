@@ -1,14 +1,9 @@
-use chrono::DateTime;
-use chrono::FixedOffset;
-use chrono::Local;
-use chrono::Utc;
 use gen_enum::GenEnumDerive;
 use gen_enum_without_values::GenEnumWithoutValuesDerive;
-extern crate toml;
-use crate::config_mods::lazy_static_config::CONFIG;
+extern crate toml; //??
+use crate::config_mods::source_place_type::SourcePlaceType;
 use crate::config_mods::tracing_type::TracingType;
 use crate::helpers::resource::Resource;
-use crate::helpers::where_was::WhereWas;
 
 #[derive(
     Debug,
@@ -293,8 +288,7 @@ pub struct ConfigStruct {
     pub tracing_type: TracingType,
     pub is_parent_tracing_enabled: bool,
     pub is_debug_implementation_enable: bool,
-    pub is_show_source_place_enabled: bool,
-    pub is_show_github_source_place_enabled: bool,
+    pub source_place_type: SourcePlaceType,
     pub is_tracing_time_enabled: bool,
 
     pub error_red: u8,
