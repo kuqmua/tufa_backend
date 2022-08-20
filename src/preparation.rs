@@ -4,6 +4,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
@@ -21,7 +22,7 @@ use std::fmt::Display;
 #[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct PreparationError {
     source: PreparationErrorEnum,
-    where_was: Vec<WhereWas>,
+    where_was: Vec<WhereWasOneOrFew>,
 }
 
 #[derive(Debug)]
@@ -131,7 +132,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
             };
             return Err(Box::new(PreparationError::with_tracing(
                 PreparationErrorEnum::Mongo(*m),
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Ok(_), Err(p), Ok(_)) => {
@@ -144,7 +145,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
             };
             return Err(Box::new(PreparationError::with_tracing(
                 PreparationErrorEnum::Postgres(*p),
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Ok(_), Err(p), Err(m)) => {
@@ -160,7 +161,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                     mongo_source: m,
                     postgres_source: p,
                 },
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Err(n), Ok(_), Ok(_)) => {
@@ -173,7 +174,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
             };
             return Err(Box::new(PreparationError::with_tracing(
                 PreparationErrorEnum::Net(*n),
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Err(n), Ok(_), Err(m)) => {
@@ -189,7 +190,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                     net_source: n,
                     mongo_source: m,
                 },
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Err(n), Err(p), Ok(_)) => {
@@ -205,7 +206,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                     net_source: n,
                     postgres_source: p,
                 },
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
         (Err(n), Err(p), Err(m)) => {
@@ -222,7 +223,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                     postgres_source: p,
                     mongo_source: m,
                 },
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )));
         }
     }
@@ -242,7 +243,7 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
         };
         return Err(Box::new(PreparationError::with_tracing(
             PreparationErrorEnum::InitDbs(e),
-            vec![where_was],
+            vec![WhereWasOneOrFew::One(where_was)],
         )));
     }
     Ok(())

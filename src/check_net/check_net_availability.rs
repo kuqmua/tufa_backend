@@ -1,6 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -15,14 +16,14 @@ extern crate chrono;
 #[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
-    where_was: Vec<WhereWas>,
+    where_was: Vec<WhereWasOneOrFew>,
 }
 
 impl fmt::Display for CheckNetAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}\n{:?}", self.source, self.where_was),
+            false => write!(f, "{}\n{:#?}", self.source, self.where_was),
         }
     }
 }
@@ -71,7 +72,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
             };
             Err(Box::new(CheckNetAvailabilityError::with_tracing(
                 CheckNetAvailabilityErrorEnum::ReqwestGet(e),
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )))
         }
         Ok(res) => {
@@ -86,7 +87,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 };
                 return Err(Box::new(CheckNetAvailabilityError::with_tracing(
                     CheckNetAvailabilityErrorEnum::Client(status),
-                    vec![where_was],
+                    vec![WhereWasOneOrFew::One(where_was)],
                 )));
             }
             if status.is_server_error() {
@@ -99,7 +100,7 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 };
                 return Err(Box::new(CheckNetAvailabilityError::with_tracing(
                     CheckNetAvailabilityErrorEnum::Server(status),
-                    vec![where_was],
+                    vec![WhereWasOneOrFew::One(where_was)],
                 )));
             }
             Ok(())

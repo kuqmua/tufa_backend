@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasOneOrFew;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -12,7 +13,7 @@ use std::time::Duration;
 #[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
-    where_was: Vec<WhereWas>,
+    where_was: Vec<WhereWasOneOrFew>,
 }
 
 impl fmt::Display for MongoCheckAvailabilityError {
@@ -24,7 +25,7 @@ impl fmt::Display for MongoCheckAvailabilityError {
     }
 }
 
-#[derive(Debug)] //, ErrorDisplay
+#[derive(Debug)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
@@ -64,7 +65,7 @@ pub async fn mongo_check_availability(
             };
             Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                 MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                vec![where_was],
+                vec![WhereWasOneOrFew::One(where_was)],
             )))
         }
         Ok(mut client_options) => {
@@ -81,7 +82,7 @@ pub async fn mongo_check_availability(
                     };
                     Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                         MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
-                        vec![where_was],
+                        vec![WhereWasOneOrFew::One(where_was)],
                     )))
                 }
                 Ok(client) => {
@@ -99,7 +100,7 @@ pub async fn mongo_check_availability(
                         };
                         return Err(Box::new(MongoCheckAvailabilityError::with_tracing(
                             MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
-                            vec![where_was],
+                            vec![WhereWasOneOrFew::One(where_was)],
                         )));
                     }
                     Ok(())

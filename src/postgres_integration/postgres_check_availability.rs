@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasOneOrFew;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -13,7 +14,7 @@ use std::time::Duration;
 #[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct PostgresCheckAvailabilityError {
     source: Error,
-    where_was: Vec<WhereWas>,
+    where_was: Vec<WhereWasOneOrFew>,
 }
 
 impl fmt::Display for PostgresCheckAvailabilityError {
@@ -49,7 +50,7 @@ pub async fn postgres_check_availability(
         };
         return Err(Box::new(PostgresCheckAvailabilityError::with_tracing(
             e,
-            vec![where_was],
+            vec![WhereWasOneOrFew::One(where_was)],
         )));
     }
     Ok(())
