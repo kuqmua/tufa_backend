@@ -21,7 +21,17 @@ impl fmt::Display for MongoCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}\n{:?}", self.source, self.where_was),
+            false => {
+                let content =
+                    self.where_was
+                        .clone()
+                        .iter()
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&format!("{}\n", elem));
+                            acc
+                        });
+                write!(f, "{}\n{}", self.source, content)
+            }
         }
     }
 }
