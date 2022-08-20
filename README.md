@@ -352,3 +352,8 @@ cargo test ci
 ### links <a name="heading53"></a>
 * [How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)](https://www.youtube.com/watch?v=t_X7qFMmWhI) </br>
 * [pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q) </br>
+
+### run server with modified like js tracing
+```
+cargo run -q | bunyan
+```
