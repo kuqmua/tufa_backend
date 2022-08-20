@@ -15,12 +15,13 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::join;
+use init_error_with_tracing::DeriveInitErrorWithTracing;
 use std::fmt::Display;
 
-#[derive(Debug)] //, ErrorDisplay
+#[derive(Debug, DeriveInitErrorWithTracing)]
 pub struct PreparationError {
-    pub source: PreparationErrorEnum,
-    pub where_was: WhereWas,
+    source: PreparationErrorEnum,
+    where_was: Vec<WhereWas>,
 }
 
 #[derive(Debug)]
@@ -52,7 +53,7 @@ impl Display for PreparationError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{} {}", self.where_was, self.source),
+            false => write!(f, "{:?} {}", self.where_was, self.source),
         }
     }
 }
@@ -128,10 +129,10 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::Mongo(*m),
-                where_was,
-            }));
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::Mongo(*m),
+                vec![where_was],
+            )));
         }
         (Ok(_), Err(p), Ok(_)) => {
             let where_was = WhereWas {
@@ -141,10 +142,10 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::Postgres(*p),
-                where_was,
-            }));
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::Postgres(*p),
+                vec![where_was],
+            )));
         }
         (Ok(_), Err(p), Err(m)) => {
             let where_was = WhereWas {
@@ -154,13 +155,13 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::MongoAndPostgres {
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::MongoAndPostgres {
                     mongo_source: m,
                     postgres_source: p,
                 },
-                where_was,
-            }));
+                vec![where_was],
+            )));
         }
         (Err(n), Ok(_), Ok(_)) => {
             let where_was = WhereWas {
@@ -170,10 +171,10 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::Net(*n),
-                where_was,
-            }));
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::Net(*n),
+                vec![where_was],
+            )));
         }
         (Err(n), Ok(_), Err(m)) => {
             let where_was = WhereWas {
@@ -183,13 +184,13 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::NetAndMongo {
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::NetAndMongo {
                     net_source: n,
                     mongo_source: m,
                 },
-                where_was,
-            }));
+                vec![where_was],
+            )));
         }
         (Err(n), Err(p), Ok(_)) => {
             let where_was = WhereWas {
@@ -199,13 +200,13 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::NetAndPostgres {
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::NetAndPostgres {
                     net_source: n,
                     postgres_source: p,
                 },
-                where_was,
-            }));
+                vec![where_was],
+            )));
         }
         (Err(n), Err(p), Err(m)) => {
             let where_was = WhereWas {
@@ -215,14 +216,14 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
                 line: line!(),
                 column: column!(),
             };
-            return Err(Box::new(PreparationError {
-                source: PreparationErrorEnum::NetAndMongoAndPostgres {
+            return Err(Box::new(PreparationError::with_tracing(
+                PreparationErrorEnum::NetAndMongoAndPostgres {
                     net_source: n,
                     postgres_source: p,
                     mongo_source: m,
                 },
-                where_was,
-            }));
+                vec![where_was],
+            )));
         }
     }
     //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
@@ -239,10 +240,10 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
             line: line!(),
             column: column!(),
         };
-        return Err(Box::new(PreparationError {
-            source: PreparationErrorEnum::InitDbs(e),
-            where_was,
-        }));
+        return Err(Box::new(PreparationError::with_tracing(
+            PreparationErrorEnum::InitDbs(e),
+            vec![where_was],
+        )));
     }
     Ok(())
 }
