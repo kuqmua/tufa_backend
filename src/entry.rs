@@ -7,7 +7,6 @@ use crate::project_constants::PROJECT_NAME;
 use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
-use tracing::error;
 
 #[deny(
     clippy::indexing_slicing,
@@ -48,30 +47,7 @@ pub fn entry() {
                 };
             }
             if let true = CONFIG.is_preparation_enabled {
-                if let Err(e) = runtime.block_on(preparation()) {
-                    // match *e {
-                    //     crate::preparation::PreparationErrorEnum::CheckNet {
-                    //         source: source_1,
-                    //         where_was: where_was_1,
-                    //     } => {
-                    //         let source_2 = source_1.source;
-                    //         let where_was_2 = source_1.where_was;
-                    //         error!(where_was = format!("{}", where_was_1));
-                    //     }
-                    //     crate::preparation::PreparationErrorEnum::InitDbs { source, where_was } => {
-                    //         error!(where_was = format!("{}", where_was));
-                    //     }
-                    // }
-
-                    // println!("{e}");
-
-                    // print_colorful_message(
-                    //     None,
-                    //     PrintType::Error,
-                    //     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    //     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                    //     format!("preparation failed, error:\n {}", *e),
-                    // );
+                if runtime.block_on(preparation()).is_err() {
                     return;
                 }
             }
@@ -83,7 +59,6 @@ pub fn entry() {
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     format!("Cannot run actix-web HttpServer, error: {:#?}", e),
                 );
-                return;
             }
         }
     }

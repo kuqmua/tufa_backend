@@ -8,12 +8,13 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use git_info::GitInfoDerive;
+use init_error::DeriveInitError;
 use init_error_with_tracing::DeriveInitErrorWithTracing;
 use reqwest::StatusCode;
 use std::fmt;
 extern crate chrono;
 
-#[derive(Debug, DeriveInitErrorWithTracing)]
+#[derive(Debug, DeriveInitErrorWithTracing, DeriveInitError)]
 pub struct CheckNetAvailabilityError {
     source: CheckNetAvailabilityErrorEnum,
     where_was: Vec<WhereWasOneOrFew>,
@@ -28,7 +29,7 @@ impl fmt::Display for CheckNetAvailabilityError {
     }
 }
 
-#[derive(Debug, GitInfoDerive)] //, ErrorDisplay
+#[derive(Debug, GitInfoDerive)]
 pub enum CheckNetAvailabilityErrorEnum {
     ReqwestGet(reqwest::Error),
     Client(StatusCode),
@@ -60,7 +61,10 @@ impl fmt::Display for CheckNetAvailabilityErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvailabilityError>> {
+pub async fn check_net_availability(
+    link: &str,
+    should_trace: bool,
+) -> Result<(), Box<CheckNetAvailabilityError>> {
     match reqwest::get(link).await {
         Err(e) => {
             let where_was = WhereWas {
@@ -70,10 +74,16 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckNetAvailabilityError::with_tracing(
-                CheckNetAvailabilityErrorEnum::ReqwestGet(e),
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckNetAvailabilityError::with_tracing(
+                    CheckNetAvailabilityErrorEnum::ReqwestGet(e),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckNetAvailabilityError::new(
+                    CheckNetAvailabilityErrorEnum::ReqwestGet(e),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         Ok(res) => {
             let status = res.status();
@@ -85,10 +95,20 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                return Err(Box::new(CheckNetAvailabilityError::with_tracing(
-                    CheckNetAvailabilityErrorEnum::Client(status),
-                    vec![WhereWasOneOrFew::One(where_was)],
-                )));
+                match should_trace {
+                    true => {
+                        return Err(Box::new(CheckNetAvailabilityError::with_tracing(
+                            CheckNetAvailabilityErrorEnum::Client(status),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        )));
+                    }
+                    false => {
+                        return Err(Box::new(CheckNetAvailabilityError::new(
+                            CheckNetAvailabilityErrorEnum::Client(status),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        )));
+                    }
+                }
             }
             if status.is_server_error() {
                 let where_was = WhereWas {
@@ -98,12 +118,41 @@ pub async fn check_net_availability(link: &str) -> Result<(), Box<CheckNetAvaila
                     line: line!(),
                     column: column!(),
                 };
-                return Err(Box::new(CheckNetAvailabilityError::with_tracing(
-                    CheckNetAvailabilityErrorEnum::Server(status),
-                    vec![WhereWasOneOrFew::One(where_was)],
-                )));
+                match should_trace {
+                    true => {
+                        return Err(Box::new(CheckNetAvailabilityError::with_tracing(
+                            CheckNetAvailabilityErrorEnum::Server(status),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        )));
+                    }
+                    false => {
+                        return Err(Box::new(CheckNetAvailabilityError::new(
+                            CheckNetAvailabilityErrorEnum::Server(status),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        )));
+                    }
+                }
             }
             Ok(())
         }
     }
 }
+
+// pub fn one() -> Result<(), SomeError> {
+//     if let Err(e) = library_function_one() {
+//         tracing::error!(error = e);
+//         return Err(e)
+//     }
+//     Ok(())
+// }
+// pub fn two() -> Result<(), AnotherError> {
+//     if let Err(e) = one() {
+//         tracing::error!(error = e);
+//         return Err(AnotherError::One(e))
+//     }
+//     if let Err(e) = library_function_two() {
+//         tracing::error!(error = e);
+//         return Err(AnotherError::Two(e));
+//     }
+//     Ok(())
+// }

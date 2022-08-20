@@ -117,9 +117,9 @@ pub async fn preparation() -> Result<(), Box<PreparationError>> {
     let postgres_url = &get_postgres_url();
     let mongo_url = &get_mongo_url();
     match join!(
-        check_net_availability(net_url),
-        postgres_check_availability(postgres_url),
-        mongo_check_availability(mongo_url),
+        check_net_availability(net_url, false),
+        postgres_check_availability(postgres_url, false),
+        mongo_check_availability(mongo_url, false),
     ) {
         (Ok(_), Ok(_), Ok(_)) => (),
         (Ok(_), Ok(_), Err(m)) => {

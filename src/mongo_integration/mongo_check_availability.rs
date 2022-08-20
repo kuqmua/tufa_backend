@@ -5,12 +5,13 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use init_error::DeriveInitError;
 use init_error_with_tracing::DeriveInitErrorWithTracing;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
-#[derive(Debug, DeriveInitErrorWithTracing)]
+#[derive(Debug, DeriveInitErrorWithTracing, DeriveInitError)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: Vec<WhereWasOneOrFew>,
@@ -53,6 +54,7 @@ impl fmt::Display for MongoCheckAvailabilityErrorEnum {
 )]
 pub async fn mongo_check_availability(
     mongo_url: &str,
+    should_trace: bool,
 ) -> Result<(), Box<MongoCheckAvailabilityError>> {
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
@@ -63,10 +65,16 @@ pub async fn mongo_check_availability(
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(MongoCheckAvailabilityError::with_tracing(
+                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(MongoCheckAvailabilityError::new(
+                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         Ok(mut client_options) => {
             client_options.connect_timeout =
@@ -80,10 +88,16 @@ pub async fn mongo_check_availability(
                         line: line!(),
                         column: column!(),
                     };
-                    Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                        MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
-                        vec![WhereWasOneOrFew::One(where_was)],
-                    )))
+                    match should_trace {
+                        true => Err(Box::new(MongoCheckAvailabilityError::with_tracing(
+                            MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        ))),
+                        false => Err(Box::new(MongoCheckAvailabilityError::new(
+                            MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
+                            vec![WhereWasOneOrFew::One(where_was)],
+                        ))),
+                    }
                 }
                 Ok(client) => {
                     if let Err(e) = client
@@ -98,10 +112,20 @@ pub async fn mongo_check_availability(
                             line: line!(),
                             column: column!(),
                         };
-                        return Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                            MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
-                            vec![WhereWasOneOrFew::One(where_was)],
-                        )));
+                        match should_trace {
+                            true => {
+                                return Err(Box::new(MongoCheckAvailabilityError::with_tracing(
+                                    MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
+                                    vec![WhereWasOneOrFew::One(where_was)],
+                                )));
+                            }
+                            false => {
+                                return Err(Box::new(MongoCheckAvailabilityError::new(
+                                    MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
+                                    vec![WhereWasOneOrFew::One(where_was)],
+                                )));
+                            }
+                        }
                     }
                     Ok(())
                 }
