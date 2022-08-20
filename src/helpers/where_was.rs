@@ -1,9 +1,16 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
+use std::collections::HashMap;
 use std::fmt::Display;
 extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
+
+#[derive(Debug, Clone)]
+pub enum WhereWasOneOrFew {
+    One(WhereWas),
+    Few(HashMap<String, WhereWas>),
+}
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {
