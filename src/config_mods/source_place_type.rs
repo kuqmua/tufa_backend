@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SourcePlaceType {
     Source,
     Github,
@@ -14,7 +14,7 @@ impl Default for SourcePlaceType {
 }
 
 pub struct ParseSourcePlaceTypeError {
-    incorrect_str: String,
+    _incorrect_str: String,
 }
 
 impl FromStr for SourcePlaceType {
@@ -35,7 +35,7 @@ impl FromStr for SourcePlaceType {
             return Ok(SourcePlaceType::None);
         }
         Err(ParseSourcePlaceTypeError {
-            incorrect_str: e.to_string(),
+            _incorrect_str: e.to_string(),
         })
     }
 }

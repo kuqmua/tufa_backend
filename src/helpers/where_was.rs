@@ -12,65 +12,54 @@ pub enum WhereWasOneOrFew {
     Few(HashMap<String, WhereWas>),
 }
 
-// impl Display for WhereWasOneOrFew {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         match self {
-//             WhereWasOneOrFew::One(where_was) => match CONFIG.is_debug_implementation_enable {
-//                 true => write!(f, "{:#?}", self),
-//                 false => {
-//                     if CONFIG.is_show_source_place_enabled
-//                         && CONFIG.is_show_github_source_place_enabled
-//                     {
-//                         write!(
-//                             f,
-//                             "{}\n{}",
-//                             where_was.source_place(),
-//                             where_was.github_source_place()
-//                         )
-//                     } else if CONFIG.is_show_source_place_enabled {
-//                         write!(f, "{}", where_was.source_place())
-//                     } else if CONFIG.is_show_github_source_place_enabled {
-//                         write!(f, "{}", where_was.github_source_place())
-//                     } else {
-//                         write!(f, "")
-//                     }
-//                 }
-//             },
-//             WhereWasOneOrFew::Few(hm_where_was) => match CONFIG.is_debug_implementation_enable {
-//                 true => write!(f, "{:#?}", self),
-//                 false => {
-//                     if CONFIG.is_show_source_place_enabled
-//                         && CONFIG.is_show_github_source_place_enabled
-//                     {
-//                         let content = hm_where_was.clone().iter().fold(
-//                             String::from(""),
-//                             |mut acc, (key, value)| {
-//                                 acc.push_str(format!(
-//                                     "{}\n{}",
-//                                     where_was.source_place(),
-//                                     where_was.github_source_place()
-//                                 ));
-//                                 acc
-//                             },
-//                         );
-//                         write!(
-//                             f,
-//                             "{}\n{}",
-//                             where_was.source_place(),
-//                             where_was.github_source_place()
-//                         )
-//                     } else if CONFIG.is_show_source_place_enabled {
-//                         write!(f, "{}", where_was.source_place())
-//                     } else if CONFIG.is_show_github_source_place_enabled {
-//                         write!(f, "{}", where_was.github_source_place())
-//                     } else {
-//                         write!(f, "")
-//                     }
-//                 }
-//             },
-//         }
-//     }
-// }
+impl Display for WhereWasOneOrFew {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            WhereWasOneOrFew::One(where_was) => match CONFIG.is_debug_implementation_enable {
+                true => write!(f, "{:#?}", self),
+                false => match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+                    crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                        write!(f, "{}", where_was.source_place(),)
+                    }
+                    crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                        write!(f, "{}", where_was.github_source_place())
+                    }
+                    crate::config_mods::source_place_type::SourcePlaceType::None => {
+                        write!(f, "")
+                    }
+                },
+            },
+            WhereWasOneOrFew::Few(hm_where_was) => match CONFIG.is_debug_implementation_enable {
+                true => write!(f, "{:#?}", self),
+                false => match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+                    crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                        let content = hm_where_was.clone().iter().fold(
+                            String::from(""),
+                            |mut acc, (key, value)| {
+                                acc.push_str(&format!("{} {}\n", value.source_place(), key));
+                                acc
+                            },
+                        );
+                        write!(f, "{}", content)
+                    }
+                    crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                        let content = hm_where_was.clone().iter().fold(
+                            String::from(""),
+                            |mut acc, (key, value)| {
+                                acc.push_str(&format!("{} {}\n", value.github_source_place(), key));
+                                acc
+                            },
+                        );
+                        write!(f, "{}", content)
+                    }
+                    crate::config_mods::source_place_type::SourcePlaceType::None => {
+                        write!(f, "")
+                    }
+                },
+            },
+        }
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {
