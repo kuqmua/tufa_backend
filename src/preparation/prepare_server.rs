@@ -34,15 +34,21 @@ impl PreparationError {
                             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                                 tracing::error!(
                                     error = format!("{}", source.get_source()),
-                                    children_source = format!("{}", source.get_where_was()),
-                                    source_place = where_was_one.source_place(),
+                                    source = format!(
+                                        "{}, {}",
+                                        where_was_one.source_place(),
+                                        source.get_where_was()
+                                    ),
                                 );
                             }
                             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                                 tracing::error!(
                                     error = format!("{}", source.get_source()),
-                                    children_source = format!("{}", source.get_where_was()),
-                                    github_source_place = where_was_one.github_source_place(),
+                                    source = format!(
+                                        "{}, {}",
+                                        where_was_one.github_source_place(),
+                                        source.get_where_was()
+                                    ),
                                 );
                             }
                             crate::config_mods::source_place_type::SourcePlaceType::None => {

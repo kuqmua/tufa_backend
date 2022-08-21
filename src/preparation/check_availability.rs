@@ -1,6 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
+use crate::helpers::where_was;
 use crate::helpers::where_was::WhereWas;
 use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
@@ -28,7 +29,7 @@ pub struct CheckAvailabilityError {
 
 impl TufaError for CheckAvailabilityError {
     fn get_source(&self) -> String {
-        format!("{}", self.source.get_source())
+        self.source.get_source()
     }
     fn get_where_was(&self) -> String {
         match CONFIG.is_debug_implementation_enable {
@@ -45,7 +46,11 @@ impl TufaError for CheckAvailabilityError {
                 if !content.is_empty() {
                     content.pop();
                 }
-                content
+                let child_where_was = self.source.get_where_was();
+                match child_where_was.is_empty() {
+                    true => content,
+                    false => format!("{}, {}", content, child_where_was),
+                }
             }
         }
     }
