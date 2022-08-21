@@ -15,11 +15,12 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::join;
+use init_error::DeriveInitError;
 use std::fmt::Display;
 // use init_error_with_tracing::DeriveInitErrorWithTracing;
 
 //DeriveInitErrorWithTracing
-#[derive(Debug)]
+#[derive(Debug, DeriveInitError)]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: Vec<WhereWasOneOrFew>,
@@ -27,7 +28,7 @@ pub struct CheckAvailabilityError {
 
 impl TufaError for CheckAvailabilityError {
     fn get_source(&self) -> String {
-        format!("{}", self.source)
+        format!("{}", self.source.get_source())
     }
     fn get_where_was(&self) -> String {
         match CONFIG.is_debug_implementation_enable {
@@ -241,7 +242,7 @@ impl Display for CheckAvailabilityErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
+pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvailabilityError>> {
     let net_url = &CONFIG.starting_check_link.clone();
     let postgres_url = &get_postgres_url();
     let mongo_url = &get_mongo_url();
@@ -259,11 +260,16 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            println!("{}", *m);
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::Mongo(*m),
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::Mongo(*m),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::Mongo(*m),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Ok(_), Err(p), Ok(_)) => {
             let where_was = WhereWas {
@@ -273,10 +279,16 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::Postgres(*p),
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::Postgres(*p),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::Postgres(*p),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Ok(_), Err(p), Err(m)) => {
             let where_was = WhereWas {
@@ -286,13 +298,22 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::MongoAndPostgres {
-                    mongo_source: m,
-                    postgres_source: p,
-                },
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::MongoAndPostgres {
+                        mongo_source: m,
+                        postgres_source: p,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::MongoAndPostgres {
+                        mongo_source: m,
+                        postgres_source: p,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Err(n), Ok(_), Ok(_)) => {
             let where_was = WhereWas {
@@ -302,10 +323,16 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::Net(*n),
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::Net(*n),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::Net(*n),
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Err(n), Ok(_), Err(m)) => {
             let where_was = WhereWas {
@@ -315,13 +342,22 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::NetAndMongo {
-                    net_source: n,
-                    mongo_source: m,
-                },
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::NetAndMongo {
+                        net_source: n,
+                        mongo_source: m,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::NetAndMongo {
+                        net_source: n,
+                        mongo_source: m,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Err(n), Err(p), Ok(_)) => {
             let where_was = WhereWas {
@@ -331,13 +367,22 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::NetAndPostgres {
-                    net_source: n,
-                    postgres_source: p,
-                },
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::NetAndPostgres {
+                        net_source: n,
+                        postgres_source: p,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::new(
+                    CheckAvailabilityErrorEnum::NetAndPostgres {
+                        net_source: n,
+                        postgres_source: p,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
         (Err(n), Err(p), Err(m)) => {
             let where_was = WhereWas {
@@ -347,14 +392,24 @@ pub async fn check_availability() -> Result<(), Box<CheckAvailabilityError>> {
                 line: line!(),
                 column: column!(),
             };
-            Err(Box::new(CheckAvailabilityError::with_tracing(
-                CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                    net_source: n,
-                    postgres_source: p,
-                    mongo_source: m,
-                },
-                vec![WhereWasOneOrFew::One(where_was)],
-            )))
+            match should_trace {
+                true => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
+                        net_source: n,
+                        postgres_source: p,
+                        mongo_source: m,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+                false => Err(Box::new(CheckAvailabilityError::with_tracing(
+                    CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
+                        net_source: n,
+                        postgres_source: p,
+                        mongo_source: m,
+                    },
+                    vec![WhereWasOneOrFew::One(where_was)],
+                ))),
+            }
         }
     }
 }
