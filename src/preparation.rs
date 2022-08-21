@@ -41,7 +41,7 @@ impl PreparationError {
                                 tracing::error!(
                                     // error = format!("{}", source),
                                     error = format!("{}", source.get_source()),
-                                    // children_source = format!("{}", source.get_where_was()),
+                                    children_source = format!("{}", source.get_where_was()),
                                     source = where_was_one.source_place(),
                                 );
                             }
@@ -49,7 +49,7 @@ impl PreparationError {
                                 tracing::error!(
                                     error = format!("{}", source.get_source()),
                                     // error = format!("{}", &self.get_source()),
-                                    // children_source = format!("{}", &self.get_where_was()),
+                                    children_source = format!("{}", source.get_where_was()),
                                     github_source = where_was_one.github_source_place(),
                                 );
                             }
@@ -127,7 +127,7 @@ impl TufaError for PreparationErrorEnum {
         match self {
             PreparationErrorEnum::Net(e) => format!("{}", e),
             PreparationErrorEnum::Postgres(e) => format!("{}", e),
-            PreparationErrorEnum::Mongo(e) => format!("{}", e),
+            PreparationErrorEnum::Mongo(e) => format!("{}", e.get_source()),
             PreparationErrorEnum::NetAndMongo {
                 net_source,
                 mongo_source,
@@ -158,24 +158,38 @@ impl TufaError for PreparationErrorEnum {
         }
     }
     fn get_where_was(&self) -> String {
-        // match CONFIG.is_debug_implementation_enable {
-        //     true => format!("{:#?}", self.where_was),
-        //     false => {
-        //         let mut content =
-        //             self.where_was
-        //                 .clone()
-        //                 .iter()
-        //                 .fold(String::from(""), |mut acc, elem| {
-        //                     acc.push_str(&format!("{},", elem));
-        //                     acc
-        //                 });
-        //         if !content.is_empty() {
-        //             content.pop();
-        //         }
-        //         content
-        //     }
-        // }
-        String::from("todo")
+        match self {
+            PreparationErrorEnum::Net(e) => format!("{}", e),
+            PreparationErrorEnum::Postgres(e) => format!("{}", e),
+            PreparationErrorEnum::Mongo(e) => format!("{}", e.get_where_was()),
+            PreparationErrorEnum::NetAndMongo {
+                net_source,
+                mongo_source,
+            } => format!("{}, {}", *net_source, *mongo_source), //todo
+            PreparationErrorEnum::NetAndPostgres {
+                net_source,
+                postgres_source,
+            } => format!("{}, {}", *net_source, *postgres_source), //todo
+            PreparationErrorEnum::MongoAndPostgres {
+                mongo_source,
+                postgres_source,
+            } => format!("{}, {}", *mongo_source, *postgres_source), //todo
+            PreparationErrorEnum::NetAndMongoAndPostgres {
+                net_source,
+                mongo_source,
+                postgres_source,
+            } => format!("{}, {}, {}", *net_source, *mongo_source, *postgres_source), //todo
+            PreparationErrorEnum::InitDbs(e) => {
+                let mut content = e.iter().fold(String::from(""), |mut acc, elem| {
+                    acc.push_str(&format!("{:?},", *elem)); //todo
+                    acc
+                });
+                if !content.is_empty() {
+                    content.pop();
+                }
+                content
+            }
+        }
     }
 }
 
