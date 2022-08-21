@@ -7,16 +7,40 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use init_error::DeriveInitError;
-use init_error_with_tracing::DeriveInitErrorWithTracing;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use std::fmt;
 use std::time::Duration;
-//DeriveInitErrorWithTracing,
+
 #[derive(Debug, DeriveInitError)]
 pub struct PostgresCheckAvailabilityError {
     source: Error,
     where_was: Vec<WhereWasOneOrFew>,
+}
+
+impl TufaError for PostgresCheckAvailabilityError {
+    fn get_source(&self) -> String {
+        format!("{}", self.source)
+    }
+    fn get_where_was(&self) -> String {
+        match CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.where_was),
+            false => {
+                let mut content =
+                    self.where_was
+                        .clone()
+                        .iter()
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&format!("{},", elem));
+                            acc
+                        });
+                if !content.is_empty() {
+                    content.pop();
+                }
+                content
+            }
+        }
+    }
 }
 
 impl PostgresCheckAvailabilityError {
@@ -28,7 +52,6 @@ impl PostgresCheckAvailabilityError {
             if let Some(first_value) = where_was.get(0) {
                 match first_value {
                     crate::helpers::where_was::WhereWasOneOrFew::One(where_was_one) => {
-                        //todo different formating for source impl
                         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
                             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                                 tracing::error!(
@@ -57,37 +80,9 @@ impl PostgresCheckAvailabilityError {
             }
             //todo next elements
         }
-        Self {
-            source: source,
-            where_was: where_was,
-        }
+        Self { source, where_was }
     }
 }
-
-// impl TufaError for PostgresCheckAvailabilityError {
-//     fn get_source(&self) -> String {
-//         format!("{}", self.source)
-//     }
-//     fn get_where_was(&self) -> String {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?}", self.where_was),
-//             false => {
-//                 let mut content =
-//                     self.where_was
-//                         .clone()
-//                         .iter()
-//                         .fold(String::from(""), |mut acc, elem| {
-//                             acc.push_str(&format!("{},", elem));
-//                             acc
-//                         });
-//                 if !content.is_empty() {
-//                     content.pop();
-//                 }
-//                 content
-//             }
-//         }
-//     }
-// }
 
 impl fmt::Display for PostgresCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

@@ -66,31 +66,30 @@ impl CheckNetAvailabilityError {
     }
 }
 
-// impl TufaError for CheckNetAvailabilityError {
-//     fn get_source(&self) -> String {
-//         format!("{}", self.source)
-//     }
-//     fn get_where_was(&self) -> String {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?}", &self.where_was),
-//             false => {
-//                 let mut content =
-//                     &self
-//                         .where_was
-//                         .clone()
-//                         .iter()
-//                         .fold(String::from(""), |mut acc, elem| {
-//                             acc.push_str(&format!("{},", elem));
-//                             acc
-//                         });
-//                 if !content.is_empty() {
-//                     content.pop();
-//                 }
-//                 content.to_string()
-//             }
-//         }
-//     }
-// }
+impl TufaError for CheckNetAvailabilityError {
+    fn get_source(&self) -> String {
+        format!("{}", self.source)
+    }
+    fn get_where_was(&self) -> String {
+        match CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.where_was),
+            false => {
+                let mut content =
+                    self.where_was
+                        .clone()
+                        .iter()
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&format!("{},", elem));
+                            acc
+                        });
+                if !content.is_empty() {
+                    content.pop();
+                }
+                content
+            }
+        }
+    }
+}
 
 impl fmt::Display for CheckNetAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

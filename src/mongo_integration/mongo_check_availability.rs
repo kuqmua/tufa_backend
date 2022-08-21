@@ -7,11 +7,11 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use init_error::DeriveInitError;
-use init_error_with_tracing::DeriveInitErrorWithTracing;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
+// use init_error_with_tracing::DeriveInitErrorWithTracing;
 //DeriveInitErrorWithTracing,
 #[derive(Debug, DeriveInitError)]
 pub struct MongoCheckAvailabilityError {
