@@ -1,5 +1,3 @@
-use crate::check_net::check_net_availability::check_net_availability;
-use crate::check_net::check_net_availability::CheckNetAvailabilityError;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
@@ -9,6 +7,8 @@ use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
+use crate::net_check::net_check_availability::net_check_availability;
+use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::traits::tufa_error::TufaError;
@@ -69,15 +69,15 @@ impl PreparationError {
 
 #[derive(Debug)]
 pub enum PreparationErrorEnum {
-    Net(CheckNetAvailabilityError),
+    Net(NetCheckAvailabilityError),
     Postgres(PostgresCheckAvailabilityError),
     Mongo(MongoCheckAvailabilityError),
     NetAndMongo {
-        net_source: Box<CheckNetAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityError>,
     },
     NetAndPostgres {
-        net_source: Box<CheckNetAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
     MongoAndPostgres {
@@ -85,7 +85,7 @@ pub enum PreparationErrorEnum {
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
     NetAndMongoAndPostgres {
-        net_source: Box<CheckNetAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
@@ -247,7 +247,7 @@ pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
     let postgres_url = &get_postgres_url();
     let mongo_url = &get_mongo_url();
     match join!(
-        check_net_availability(net_url, false),
+        net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),
         mongo_check_availability(mongo_url, false),
     ) {

@@ -1,5 +1,4 @@
 mod authentication;
-mod check_net;
 mod check_new_providers_posts;
 mod config_mods;
 pub mod configuration;
@@ -13,6 +12,7 @@ mod init_dbs_logic;
 pub mod issue_delivery_worker;
 mod logs_logic;
 mod mongo_integration;
+mod net_check;
 mod postgres_integration;
 mod preparation;
 mod prints;
