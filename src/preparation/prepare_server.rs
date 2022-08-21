@@ -242,7 +242,7 @@ impl Display for PreparationErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn preparation() -> Result<(), Box<PreparationError>> {
+pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
     let net_url = &CONFIG.starting_check_link.clone();
     let postgres_url = &get_postgres_url();
     let mongo_url = &get_mongo_url();

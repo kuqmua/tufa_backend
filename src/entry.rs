@@ -1,6 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
-use crate::preparation::preparation;
+use crate::preparation::prepare_server::prepare_server;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::project_constants::PROJECT_NAME;
@@ -47,7 +47,7 @@ pub fn entry() {
                 };
             }
             if let true = CONFIG.is_preparation_enabled {
-                if runtime.block_on(preparation()).is_err() {
+                if runtime.block_on(prepare_server()).is_err() {
                     return;
                 }
             }
