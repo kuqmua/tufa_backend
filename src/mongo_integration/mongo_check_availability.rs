@@ -8,6 +8,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_source::ImplGetSource;
+use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
@@ -66,7 +67,7 @@ impl fmt::Display for MongoCheckAvailabilityError {
     }
 }
 
-#[derive(Debug, ImplGetSource)]
+#[derive(Debug, ImplGetSourceForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
