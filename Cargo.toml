@@ -92,6 +92,7 @@ git_info = {path = "../proc_macros/git_info"}
 impl_display = {path = "../proc_macros/impl_display"}
 impl_from_for_upper_struct = {path = "../proc_macros/impl_from_for_upper_struct"}
 impl_get_source = {path = "../proc_macros/impl_get_source"}
+impl_get_source_for_simple_error_enum = {path = "../proc_macros/impl_get_source_for_simple_error_enum"}
 init_error = {path = "../proc_macros/init_error"}
 init_error_with_tracing = {path = "../proc_macros/init_error_with_tracing"}
 init_from_env = {path = "../proc_macros/init_from_env"}
