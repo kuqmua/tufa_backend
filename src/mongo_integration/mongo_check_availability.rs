@@ -2,7 +2,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 // use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was::GetWhereWas;
+// use crate::traits::get_where_was::GetWhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -47,15 +47,18 @@ impl MongoCheckAvailabilityError {
     }
 }
 
-impl GetSource for MongoCheckAvailabilityError {
+impl crate::traits::get_source::GetSource for MongoCheckAvailabilityError {
     fn get_source(&self) -> String {
-        format!("{}", self.source)
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.source),
+            false => format!("{}", self.source),
+        }
     }
 }
 
-impl GetWhereWas for MongoCheckAvailabilityError {
+impl crate::traits::get_where_was::GetWhereWas for MongoCheckAvailabilityError {
     fn get_where_was(&self) -> String {
-        match CONFIG.is_debug_implementation_enable {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.where_was),
             false => format!("{}", self.where_was),
         }
@@ -111,7 +114,6 @@ pub async fn mongo_check_availability(
     mongo_url: &str,
     should_trace: bool,
 ) -> Result<(), Box<MongoCheckAvailabilityError>> {
-    //MongoCheckAvailabilityError
     match ClientOptions::parse(mongo_url).await {
         Err(e) => {
             let where_was = WhereWas {
