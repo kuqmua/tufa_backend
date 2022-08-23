@@ -7,6 +7,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source::ImplGetSource;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
@@ -15,7 +16,7 @@ use std::time::Duration;
 //DeriveInitErrorWithTracing,
 // use init_error::DeriveInitError;
 // , DeriveInitError
-#[derive(Debug)]
+#[derive(Debug, ImplGetSource)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: WhereWas,
@@ -47,15 +48,6 @@ impl MongoCheckAvailabilityError {
     }
 }
 
-impl crate::traits::get_source::GetSource for MongoCheckAvailabilityError {
-    fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => format!("{}", self.source),
-        }
-    }
-}
-
 impl crate::traits::get_where_was::GetWhereWas for MongoCheckAvailabilityError {
     fn get_where_was(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
@@ -69,26 +61,16 @@ impl fmt::Display for MongoCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}", self.where_was),
+            false => write!(f, "{}", self.where_was), //todo source and where was
         }
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetSource)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
     ListCollectionNames(mongodb::error::Error),
-}
-
-impl GetSource for MongoCheckAvailabilityErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e) => format!("{}", e),
-            MongoCheckAvailabilityErrorEnum::ClientWithOptions(e) => format!("{}", e),
-            MongoCheckAvailabilityErrorEnum::ListCollectionNames(e) => format!("{}", e),
-        }
-    }
 }
 
 impl fmt::Display for MongoCheckAvailabilityErrorEnum {
