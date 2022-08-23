@@ -10,6 +10,8 @@ use crate::net_check::net_check_availability::net_check_availability;
 use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
+use crate::traits::get_source::GetSource;
+use crate::traits::get_where_was::GetWhereWas;
 use crate::traits::tufa_error::TufaError;
 use chrono::DateTime;
 use chrono::FixedOffset;
