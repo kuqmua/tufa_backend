@@ -28,20 +28,16 @@ impl MongoCheckAvailabilityError {
             if let Some(first_value) = where_was.get(0) {
                 match first_value {
                     crate::helpers::where_was::WhereWasOneOrFew::One(where_was_one) => {
-                        //todo different formating for source impl
                         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
                             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                                 tracing::error!(
                                     error = format!("{}", source),
-                                    // children_source = format!("{}", &self.get_where_was()),
                                     source = where_was_one.source_place(),
                                 );
                             }
                             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                                 tracing::error!(
                                     error = format!("{}", source),
-                                    // error = format!("{}", &self.get_source()),
-                                    // children_source = format!("{}", &self.get_where_was()),
                                     github_source = where_was_one.github_source_place(),
                                 );
                             }
@@ -57,10 +53,7 @@ impl MongoCheckAvailabilityError {
             }
             //todo next elements
         }
-        Self {
-            source: source,
-            where_was: where_was,
-        }
+        Self { source, where_was }
     }
 }
 
