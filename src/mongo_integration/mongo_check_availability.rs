@@ -2,6 +2,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 // use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::traits::get_source::GetSource;
+use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 // use crate::traits::get_where_was::GetWhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -67,24 +68,11 @@ impl fmt::Display for MongoCheckAvailabilityError {
     }
 }
 
-#[derive(Debug, ImplGetSourceForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
     ClientWithOptions(mongodb::error::Error),
     ListCollectionNames(mongodb::error::Error),
-}
-
-impl fmt::Display for MongoCheckAvailabilityErrorEnum {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => match self {
-                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e) => write!(f, "{}", e),
-                MongoCheckAvailabilityErrorEnum::ClientWithOptions(e) => write!(f, "{}", e),
-                MongoCheckAvailabilityErrorEnum::ListCollectionNames(e) => write!(f, "{}", e),
-            },
-        }
-    }
 }
 
 #[deny(
