@@ -320,4 +320,4 @@ https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 /api/protobuf/info
 
 * cut enum extension into few different proc macroses
-* implement setter proc macro for structs
+* remove lazy_static! from git file open logic(lazy_static! works on runtime, but logic work on compile time)
