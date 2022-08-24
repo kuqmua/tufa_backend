@@ -10,6 +10,7 @@ use chrono::Local;
 use chrono::Utc;
 use impl_get_source::ImplGetSource;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
@@ -18,7 +19,7 @@ use std::time::Duration;
 //DeriveInitErrorWithTracing,
 // use init_error::DeriveInitError;
 // , DeriveInitError
-#[derive(Debug, ImplGetSource)]
+#[derive(Debug, ImplGetSource, ImplGetWhereWasForErrorStruct)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: WhereWas,
@@ -50,20 +51,11 @@ impl MongoCheckAvailabilityError {
     }
 }
 
-impl crate::traits::get_where_was::GetWhereWas for MongoCheckAvailabilityError {
-    fn get_where_was(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.where_was),
-            false => format!("{}", self.where_was),
-        }
-    }
-}
-
 impl fmt::Display for MongoCheckAvailabilityError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
-            false => write!(f, "{}", self.where_was), //todo source and where was
+            false => write!(f, "{} {}", self.where_was, self.source),
         }
     }
 }
