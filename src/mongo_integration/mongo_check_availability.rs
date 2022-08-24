@@ -10,6 +10,8 @@ use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_get_source::ImplGetSource;
+use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -21,7 +23,12 @@ use std::time::Duration;
 //DeriveInitErrorWithTracing,
 // use init_error::DeriveInitError;
 // , DeriveInitError
-#[derive(Debug, ImplGetSource, ImplGetWhereWasForErrorStruct, ImplDisplayForErrorStruct)]
+#[derive(
+    Debug,
+    ImplGetSourceForParentErrorStruct,
+    ImplGetWhereWasForErrorStruct,
+    ImplDisplayForErrorStruct,
+)]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: WhereWas,
