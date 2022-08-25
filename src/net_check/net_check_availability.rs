@@ -13,7 +13,6 @@ use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use reqwest::StatusCode;
-use std::fmt;
 
 //DeriveInitErrorWithTracing,
 // DeriveInitError
@@ -54,65 +53,12 @@ impl NetCheckAvailabilityError {
     }
 }
 
-// impl TufaError for NetCheckAvailabilityError {
-//     fn get_source(&self) -> String {
-//         format!("{}", self.source)
-//     }
-//     fn get_where_was(&self) -> String {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?}", self.where_was),
-//             false => {
-//                 let mut content =
-//                     self.where_was
-//                         .clone()
-//                         .iter()
-//                         .fold(String::from(""), |mut acc, elem| {
-//                             acc.push_str(&format!("{},", elem));
-//                             acc
-//                         });
-//                 if !content.is_empty() {
-//                     content.pop();
-//                 }
-//                 content
-//             }
-//         }
-//     }
-// }
-
-// impl fmt::Display for NetCheckAvailabilityError {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => write!(f, "{:#?}", self),
-//             false => write!(f, "{}\n{:#?}", self.source, self.where_was),
-//         }
-//     }
-// }
-
 #[derive(Debug, GitInfoDerive, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]
 pub enum NetCheckAvailabilityErrorEnum {
     ReqwestGet(reqwest::Error),
     Client(StatusCode),
     Server(StatusCode),
 }
-
-// impl fmt::Display for NetCheckAvailabilityErrorEnum {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => write!(f, "{:#?}", self),
-//             false => match self {
-//                 NetCheckAvailabilityErrorEnum::ReqwestGet(e) => {
-//                     write!(f, "{}", e)
-//                 }
-//                 NetCheckAvailabilityErrorEnum::Client(e) => {
-//                     write!(f, "{}", e)
-//                 }
-//                 NetCheckAvailabilityErrorEnum::Server(e) => {
-//                     write!(f, "{}", e)
-//                 }
-//             },
-//         }
-//     }
-// }
 
 #[deny(
     clippy::indexing_slicing,
