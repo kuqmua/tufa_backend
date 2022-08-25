@@ -1,19 +1,17 @@
 use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-use git_info::GitInfoDerive;
+use git_info::GitInfo;
 use std::collections::HashMap;
 
-#[derive(Debug, GitInfoDerive)]
+#[derive(Debug, GitInfo)]
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
     where_was: WhereWas,

@@ -10,16 +10,15 @@ use crate::helpers::where_was::WhereWas;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-use git_info::GitInfoDerive;
+use git_info::GitInfo;
 use std::time::Instant;
 
-#[derive(Debug, GitInfoDerive)]
+#[derive(Debug, GitInfo)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
         source: Vec<(String, Box<FetchLinkErrorEnum>)>, //link, error

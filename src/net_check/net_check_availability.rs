@@ -1,12 +1,12 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::git_info::GIT_INFO;
+// use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
-use crate::traits::git_info_trait::GitInfo;
+// use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use git_info::GitInfoDerive;
+use git_info::GitInfo;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
@@ -53,7 +53,7 @@ impl NetCheckAvailabilityError {
     }
 }
 
-#[derive(Debug, GitInfoDerive, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]
+#[derive(Debug, GitInfo, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]
 pub enum NetCheckAvailabilityErrorEnum {
     ReqwestGet(reqwest::Error),
     Client(StatusCode),
