@@ -1,8 +1,7 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 // use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use enum_extension::EnumExtension;
 use mongodb::bson::doc;
-use provider_kind_from_config::ProviderKindFromConfigTraitDerive;
+use provider_kind_from_config::ProviderKindFromConfigTrait;
 use strum_macros::Display;
 use strum_macros::EnumIter;
 
@@ -30,7 +29,7 @@ impl From<std::io::Error> for CleanLogsDirError {
 }
 
 #[derive(
-    ProviderKindFromConfigTraitDerive,
+    ProviderKindFromConfigTrait,
     EnumExtension,
     EnumIter,
     Clone,

@@ -1,7 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-// use crate::helpers::git_info::GIT_INFO;
 use crate::helpers::where_was::WhereWas;
-// use crate::traits::git_info_trait::GitInfo;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;

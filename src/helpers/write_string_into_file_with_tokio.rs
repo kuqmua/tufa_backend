@@ -4,17 +4,16 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_display::ImplDisplayDerive;
-use std::fmt;
+use impl_display::ImplDisplay;
 use std::path::Path;
 use tokio::io::AsyncWriteExt;
 
-#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
+#[derive(thiserror::Error, Debug, ImplDisplay)]
 pub struct WriteStringIntoFileWithTokioError {
     pub source: Box<WriteStringIntoFileWithTokioErrorEnum>,
 }
 
-#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
+#[derive(thiserror::Error, Debug, ImplDisplay)]
 pub enum WriteStringIntoFileWithTokioErrorEnum {
     StdFsCreateDirAll {
         source: std::io::Error,

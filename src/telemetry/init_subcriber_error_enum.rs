@@ -1,9 +1,8 @@
-use impl_display::ImplDisplayDerive;
-use std::fmt;
+use impl_display::ImplDisplay;
 use tracing::dispatcher::SetGlobalDefaultError;
 use tracing::log::SetLoggerError;
 
-#[derive(thiserror::Error, Debug, ImplDisplayDerive)]
+#[derive(thiserror::Error, Debug, ImplDisplay)]
 pub enum InitSubcriberErrorEnum {
     SetLogger {
         #[from]

@@ -1,17 +1,11 @@
 use crate::config_mods::source_place_type::SourcePlaceType;
 use crate::config_mods::tracing_type::TracingType;
 use crate::helpers::resource::Resource;
-use gen_enum::GenEnumDerive;
-use gen_enum_without_values::GenEnumWithoutValuesDerive;
+use gen_enum::GenEnum;
+use gen_enum_without_values::GenEnumWithoutValues;
 
 #[derive(
-    Debug,
-    Clone,
-    init_from_env::InitFromEnv,
-    GenEnumDerive,
-    GenEnumWithoutValuesDerive,
-    Default,
-    PartialEq,
+    Debug, Clone, init_from_env::InitFromEnv, GenEnum, GenEnumWithoutValues, Default, PartialEq,
 )]
 pub struct ConfigStruct {
     pub server_ip: String,
