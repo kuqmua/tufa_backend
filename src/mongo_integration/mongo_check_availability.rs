@@ -1,14 +1,12 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-// use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::traits::get_source::GetSource;
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-// use crate::traits::get_where_was::GetWhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
+use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
@@ -18,6 +16,9 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::fmt;
 use std::time::Duration;
+
+// use crate::helpers::where_was::WhereWasOneOrFew;
+// use crate::traits::get_where_was::GetWhereWas;
 // use init_error_with_tracing::DeriveInitErrorWithTracing;
 //DeriveInitErrorWithTracing,
 // use init_error::DeriveInitError;
