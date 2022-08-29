@@ -1,7 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
-use crate::helpers::where_was;
 use crate::helpers::where_was::WhereWas;
 use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
@@ -18,9 +17,12 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::join;
+use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use init_error::DeriveInitError;
 use std::fmt::Display;
-// use init_error_with_tracing::DeriveInitErrorWithTracing;
+// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+// use crate::helpers::where_was;
+// // use init_error_with_tracing::DeriveInitErrorWithTracing;
 
 //DeriveInitErrorWithTracing
 #[derive(Debug, DeriveInitError)]
@@ -98,7 +100,7 @@ impl CheckAvailabilityError {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetSourceForSimpleErrorEnum)] //
 pub enum CheckAvailabilityErrorEnum {
     Net(NetCheckAvailabilityError),
     Postgres(PostgresCheckAvailabilityError),
@@ -122,31 +124,7 @@ pub enum CheckAvailabilityErrorEnum {
     },
 }
 
-impl TufaError for CheckAvailabilityErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            CheckAvailabilityErrorEnum::Net(e) => e.get_source(),
-            CheckAvailabilityErrorEnum::Postgres(e) => e.get_source(),
-            CheckAvailabilityErrorEnum::Mongo(e) => e.get_source(),
-            CheckAvailabilityErrorEnum::NetAndMongo {
-                net_source,
-                mongo_source,
-            } => format!("{}, {}", *net_source, *mongo_source), //todo iteration on vec instead of format
-            CheckAvailabilityErrorEnum::NetAndPostgres {
-                net_source,
-                postgres_source,
-            } => format!("{}, {}", *net_source, *postgres_source), //todo iteration on vec instead of format
-            CheckAvailabilityErrorEnum::MongoAndPostgres {
-                mongo_source,
-                postgres_source,
-            } => format!("{}, {}", *mongo_source, *postgres_source), //todo iteration on vec instead of format
-            CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                net_source,
-                mongo_source,
-                postgres_source,
-            } => format!("{}, {}, {}", *net_source, *mongo_source, *postgres_source), //todo iteration on vec instead of format
-        }
-    }
+impl CheckAvailabilityErrorEnum {
     fn get_where_was(&self) -> String {
         match self {
             CheckAvailabilityErrorEnum::Net(e) => e.get_where_was(),
