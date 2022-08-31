@@ -2,7 +2,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
@@ -11,7 +10,6 @@ use crate::postgres_integration::postgres_check_availability::postgres_check_ava
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was::GetWhereWas;
-use crate::traits::tufa_error::TufaError;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -23,14 +21,13 @@ use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-use init_error::DeriveInitError;
-use std::fmt::Display;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-// use crate::helpers::where_was;
-// // use init_error_with_tracing::DeriveInitErrorWithTracing;
 
-//DeriveInitErrorWithTracing
-#[derive(Debug, ImplGetWhereWasForErrorStruct, ImplGetSourceForParentErrorStruct)] //DeriveInitError, ImplDisplayForErrorStruct
+#[derive(
+    Debug,
+    ImplGetWhereWasForErrorStruct,
+    ImplGetSourceForParentErrorStruct,
+    ImplDisplayForErrorStruct,
+)] //DeriveInitError, DeriveInitErrorWithTracing
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
@@ -88,15 +85,6 @@ pub enum CheckAvailabilityErrorEnum {
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
-}
-
-impl Display for CheckAvailabilityError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => write!(f, "{:?} {}", self.where_was, self.source),
-        }
-    }
 }
 
 #[deny(
