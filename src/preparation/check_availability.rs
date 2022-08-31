@@ -17,6 +17,8 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::join;
+use impl_display_for_error_struct::ImplDisplayForErrorStruct;
+use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::DeriveInitError;
@@ -26,7 +28,7 @@ use std::fmt::Display;
 // // use init_error_with_tracing::DeriveInitErrorWithTracing;
 
 //DeriveInitErrorWithTracing
-#[derive(Debug, DeriveInitError)]
+#[derive(Debug, DeriveInitError)] //, ImplDisplayForErrorStruct
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: Vec<WhereWasOneOrFew>,
@@ -101,7 +103,9 @@ impl CheckAvailabilityError {
     }
 }
 
-#[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplGetWhereWasForEnum)]
+#[derive(
+    Debug, ImplGetSourceForSimpleErrorEnum, ImplGetWhereWasForEnum, ImplDisplayForSimpleErrorEnum,
+)]
 pub enum CheckAvailabilityErrorEnum {
     Net(NetCheckAvailabilityError),
     Postgres(PostgresCheckAvailabilityError),
@@ -130,50 +134,6 @@ impl Display for CheckAvailabilityError {
         match CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => write!(f, "{:?} {}", self.where_was, self.source),
-        }
-    }
-}
-
-impl Display for CheckAvailabilityErrorEnum {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => match self {
-                CheckAvailabilityErrorEnum::Net(source) => {
-                    write!(f, "{}", *source)
-                }
-                CheckAvailabilityErrorEnum::Postgres(source) => {
-                    write!(f, "{}", *source)
-                }
-                CheckAvailabilityErrorEnum::Mongo(source) => {
-                    write!(f, "{}", *source)
-                }
-                CheckAvailabilityErrorEnum::NetAndMongo {
-                    net_source,
-                    mongo_source,
-                } => {
-                    write!(f, "{}\n{}", net_source, mongo_source)
-                }
-                CheckAvailabilityErrorEnum::NetAndPostgres {
-                    net_source,
-                    postgres_source,
-                } => {
-                    write!(f, "{}\n{}", net_source, postgres_source)
-                }
-                CheckAvailabilityErrorEnum::MongoAndPostgres {
-                    mongo_source,
-                    postgres_source,
-                } => {
-                    write!(f, "{}\n{}", mongo_source, postgres_source)
-                }
-                CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                    net_source,
-                    mongo_source,
-                    postgres_source,
-                } => {
-                    write!(f, "{}\n{}\n{}", net_source, mongo_source, postgres_source)
-                }
-            },
         }
     }
 }
