@@ -19,6 +19,7 @@ use chrono::Utc;
 use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -29,43 +30,11 @@ use std::fmt::Display;
 // // use init_error_with_tracing::DeriveInitErrorWithTracing;
 
 //DeriveInitErrorWithTracing
-#[derive(Debug, ImplGetWhereWasForErrorStruct)] //DeriveInitError, ImplDisplayForErrorStruct
+#[derive(Debug, ImplGetWhereWasForErrorStruct, ImplGetSourceForParentErrorStruct)] //DeriveInitError, ImplDisplayForErrorStruct
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
 }
-
-impl GetSource for CheckAvailabilityError {
-    fn get_source(&self) -> String {
-        self.source.get_source()
-    }
-}
-
-// impl GetWhereWas for CheckAvailabilityError {
-//     fn get_where_was(&self) -> String {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?}", self.where_was),
-//             false => {
-//                 let mut content =
-//                     self.where_was
-//                         .clone()
-//                         .iter()
-//                         .fold(String::from(""), |mut acc, elem| {
-//                             acc.push_str(&format!("{},", elem));
-//                             acc
-//                         });
-//                 if !content.is_empty() {
-//                     content.pop();
-//                 }
-//                 let child_where_was = self.source.get_where_was();
-//                 match child_where_was.is_empty() {
-//                     true => content,
-//                     false => format!("{}, {}", content, child_where_was),
-//                 }
-//             }
-//         }
-//     }
-// }
 
 impl CheckAvailabilityError {
     pub fn with_tracing(source: CheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
