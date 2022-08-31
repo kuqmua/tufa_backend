@@ -18,6 +18,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::join;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::DeriveInitError;
 use std::fmt::Display;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -100,7 +101,7 @@ impl CheckAvailabilityError {
     }
 }
 
-#[derive(Debug, ImplGetSourceForSimpleErrorEnum)] //
+#[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplGetWhereWasForEnum)]
 pub enum CheckAvailabilityErrorEnum {
     Net(NetCheckAvailabilityError),
     Postgres(PostgresCheckAvailabilityError),
@@ -122,50 +123,6 @@ pub enum CheckAvailabilityErrorEnum {
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
-}
-
-impl CheckAvailabilityErrorEnum {
-    fn get_where_was(&self) -> String {
-        match self {
-            CheckAvailabilityErrorEnum::Net(e) => e.get_where_was(),
-            CheckAvailabilityErrorEnum::Postgres(e) => e.get_where_was(),
-            CheckAvailabilityErrorEnum::Mongo(e) => e.get_where_was(),
-            CheckAvailabilityErrorEnum::NetAndMongo {
-                net_source,
-                mongo_source,
-            } => format!(
-                "{}, {}",
-                net_source.get_where_was(),
-                mongo_source.get_where_was()
-            ), //todo
-            CheckAvailabilityErrorEnum::NetAndPostgres {
-                net_source,
-                postgres_source,
-            } => format!(
-                "{}, {}",
-                net_source.get_where_was(),
-                postgres_source.get_where_was()
-            ), //todo
-            CheckAvailabilityErrorEnum::MongoAndPostgres {
-                mongo_source,
-                postgres_source,
-            } => format!(
-                "{}, {}",
-                mongo_source.get_where_was(),
-                postgres_source.get_where_was()
-            ), //todo
-            CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                net_source,
-                mongo_source,
-                postgres_source,
-            } => format!(
-                "{}, {}, {}",
-                net_source.get_where_was(),
-                mongo_source.get_where_was(),
-                postgres_source.get_where_was()
-            ), //todo
-        }
-    }
 }
 
 impl Display for CheckAvailabilityError {
