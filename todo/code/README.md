@@ -253,7 +253,7 @@ its maybe bad practice but must work
 https://crates.io/crates/snafu
 
 * how to write proc macro argument?
-for derive_box_err_from_err
+for derive_impl_box_err_source_from_err
 EXISTS INSIDE AST!!!
 
 * LINKS_LIMIT_PROVIDERS not working now. fix it

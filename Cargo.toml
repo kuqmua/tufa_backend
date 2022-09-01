@@ -72,7 +72,7 @@ validator = "0.14"
 # tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
 tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #prod
-# box_err_from_err = {git = "https://github.com/kuqmua/box_err_from_err"}
+# impl_box_err_source_from_err = {git = "https://github.com/kuqmua/impl_box_err_source_from_err"}
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 # error_display = {git = "https://github.com/kuqmua/error_display"}
 # gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
@@ -83,12 +83,12 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 # init_from_env = {git = "https://github.com/kuqmua/init_from_env"}
 # provider_kind_from_config = {path = "https://github.com/kuqmua/provider_kind_from_config"}
 #dev
-box_err_from_err = {path = "../proc_macros/box_err_from_err"}
 enum_extension = {path = "../proc_macros/enum_extension"}
 error_display = {path = "../proc_macros/error_display"}
 gen_enum = {path = "../proc_macros/gen_enum"}
 gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
 git_info = {path = "../proc_macros/git_info"}
+impl_box_err_source_from_err = {path = "../proc_macros/impl_box_err_source_from_err"}
 impl_display = {path = "../proc_macros/impl_display"}
 impl_display_for_error_struct = {path = "../proc_macros/impl_display_for_error_struct"}
 impl_display_for_simple_error_enum = {path = "../proc_macros/impl_display_for_simple_error_enum"}
