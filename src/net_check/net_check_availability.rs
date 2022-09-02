@@ -10,15 +10,16 @@ use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use reqwest::StatusCode;
 
 //DeriveInitErrorWithTracing,
-// DeriveInitError
 #[derive(
     Debug,
     ImplDisplayForErrorStruct,
     ImplGetSourceForParentErrorStruct,
     ImplGetWhereWasForErrorStruct,
+    InitError,
 )]
 pub struct NetCheckAvailabilityError {
     source: NetCheckAvailabilityErrorEnum,
@@ -44,9 +45,6 @@ impl NetCheckAvailabilityError {
                 tracing::error!(error = format!("{}", source));
             }
         }
-        Self { source, where_was }
-    }
-    pub fn new(source: NetCheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }

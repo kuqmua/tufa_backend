@@ -7,27 +7,20 @@ use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
-use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
-use std::fmt;
 use std::time::Duration;
 
-// use crate::helpers::where_was::WhereWasOneOrFew;
-// use crate::traits::get_where_was::GetWhereWas;
-// use init_error_with_tracing::DeriveInitErrorWithTracing;
-//DeriveInitErrorWithTracing,
-// use init_error::DeriveInitError;
-// , DeriveInitError
 #[derive(
     Debug,
     ImplGetSourceForParentErrorStruct,
     ImplGetWhereWasForErrorStruct,
     ImplDisplayForErrorStruct,
+    InitError,
 )]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
@@ -53,9 +46,6 @@ impl MongoCheckAvailabilityError {
                 tracing::error!(error = format!("{}", source.get_source()));
             }
         }
-        Self { source, where_was }
-    }
-    pub fn new(source: MongoCheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }

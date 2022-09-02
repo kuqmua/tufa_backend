@@ -7,7 +7,9 @@ use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use sqlx::postgres::PgPoolOptions;
+use sqlx::Error;
 use std::time::Duration;
 
 #[derive(
@@ -15,9 +17,10 @@ use std::time::Duration;
     ImplDisplayForErrorStruct,
     ImplGetSourceForOriginalErrorStruct,
     ImplGetWhereWasForErrorStruct,
+    InitError,
 )]
 pub struct PostgresCheckAvailabilityError {
-    source: sqlx::Error,
+    source: Error,
     where_was: WhereWas,
 }
 
@@ -45,9 +48,9 @@ impl PostgresCheckAvailabilityError {
         }
         Self { source, where_was }
     }
-    pub fn new(source: sqlx::Error, where_was: WhereWas) -> Self {
-        Self { source, where_was }
-    }
+    // pub fn new(source: sqlx::Error, where_was: WhereWas) -> Self {
+    //     Self { source, where_was }
+    // }
 }
 
 #[deny(

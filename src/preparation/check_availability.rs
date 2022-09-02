@@ -21,13 +21,15 @@ use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 
 #[derive(
     Debug,
     ImplGetWhereWasForErrorStruct,
     ImplGetSourceForParentErrorStruct,
     ImplDisplayForErrorStruct,
-)] //DeriveInitError, DeriveInitErrorWithTracing
+    InitError,
+)] //DeriveInitErrorWithTracing
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
@@ -54,9 +56,6 @@ impl CheckAvailabilityError {
                 tracing::error!(error = format!("{}", source));
             }
         }
-        Self { source, where_was }
-    }
-    pub fn new(source: CheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }
