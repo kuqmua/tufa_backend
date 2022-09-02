@@ -11,6 +11,7 @@ use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::time::Duration;
@@ -21,33 +22,11 @@ use std::time::Duration;
     ImplGetWhereWasForErrorStruct,
     ImplDisplayForErrorStruct,
     InitError,
+    InitErrorWithTracingForOriginalErrorStruct,
 )]
 pub struct MongoCheckAvailabilityError {
     source: MongoCheckAvailabilityErrorEnum,
     where_was: WhereWas,
-}
-
-impl MongoCheckAvailabilityError {
-    pub fn with_tracing(source: MongoCheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    source = where_was.source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    github_source = where_was.github_source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source.get_source()));
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 #[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplDisplayForSimpleErrorEnum)]

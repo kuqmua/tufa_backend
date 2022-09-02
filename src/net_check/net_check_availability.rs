@@ -11,42 +11,20 @@ use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use reqwest::StatusCode;
 
-//DeriveInitErrorWithTracing,
 #[derive(
     Debug,
     ImplDisplayForErrorStruct,
     ImplGetSourceForParentErrorStruct,
     ImplGetWhereWasForErrorStruct,
     InitError,
+    InitErrorWithTracingForOriginalErrorStruct,
 )]
 pub struct NetCheckAvailabilityError {
     source: NetCheckAvailabilityErrorEnum,
     where_was: WhereWas,
-}
-
-impl NetCheckAvailabilityError {
-    pub fn with_tracing(source: NetCheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was.source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    github_source = where_was.github_source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source));
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 #[derive(Debug, GitInfo, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]

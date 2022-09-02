@@ -8,6 +8,7 @@ use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use std::time::Duration;
@@ -18,39 +19,11 @@ use std::time::Duration;
     ImplGetSourceForOriginalErrorStruct,
     ImplGetWhereWasForErrorStruct,
     InitError,
+    InitErrorWithTracingForOriginalErrorStruct,
 )]
 pub struct PostgresCheckAvailabilityError {
     source: Error,
     where_was: WhereWas,
-}
-
-impl PostgresCheckAvailabilityError {
-    pub fn with_tracing(
-        source: sqlx::Error,
-        where_was: crate::helpers::where_was::WhereWas,
-    ) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    source = where_was.source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    github_source = where_was.github_source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source));
-            }
-        }
-        Self { source, where_was }
-    }
-    // pub fn new(source: sqlx::Error, where_was: WhereWas) -> Self {
-    //     Self { source, where_was }
-    // }
 }
 
 #[deny(

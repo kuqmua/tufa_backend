@@ -22,6 +22,7 @@ use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing::InitErrorWithTracing;
 
 #[derive(
     Debug,
@@ -29,35 +30,11 @@ use init_error::InitError;
     ImplGetSourceForParentErrorStruct,
     ImplDisplayForErrorStruct,
     InitError,
-)] //DeriveInitErrorWithTracing
+    InitErrorWithTracing,
+)]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
-}
-
-impl CheckAvailabilityError {
-    pub fn with_tracing(source: CheckAvailabilityErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    children_source = format!("{}", source.get_where_was()),
-                    source_place = where_was.source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    children_source = format!("{}", source.get_where_was()),
-                    github_source_place = where_was.github_source_place(),
-                );
-            }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source));
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 #[derive(
