@@ -101,6 +101,7 @@ impl_get_where_was_for_enum = {path = "../proc_macros/impl_get_where_was_for_enu
 impl_get_where_was_for_error_struct = {path = "../proc_macros/impl_get_where_was_for_error_struct"}
 init_error = {path = "../proc_macros/init_error"}
 init_error_with_tracing = {path = "../proc_macros/init_error_with_tracing"}
+init_error_with_tracing_for_original_error_struct = {path = "../proc_macros/init_error_with_tracing_for_original_error_struct"}
 init_from_env = {path = "../proc_macros/init_from_env"}
 provider_kind_from_config = {path = "../proc_macros/provider_kind_from_config"}
 struct_field_getter = {path = "../proc_macros/struct_field_getter"}
