@@ -5,10 +5,10 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
+use impl_error_with_tracing_for_original_error_struct_without_source_enum::InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum;
 use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
-use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use std::time::Duration;
@@ -19,7 +19,7 @@ use std::time::Duration;
     ImplGetSourceForOriginalErrorStruct,
     ImplGetWhereWasForErrorStruct,
     InitError,
-    InitErrorWithTracingForOriginalErrorStruct,
+    InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum,
 )]
 pub struct PostgresCheckAvailabilityError {
     source: Error,

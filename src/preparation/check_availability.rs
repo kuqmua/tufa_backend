@@ -41,9 +41,9 @@ pub struct CheckAvailabilityError {
     Debug, ImplGetSourceForSimpleErrorEnum, ImplGetWhereWasForEnum, ImplDisplayForSimpleErrorEnum,
 )]
 pub enum CheckAvailabilityErrorEnum {
-    Net(NetCheckAvailabilityError),
-    Postgres(PostgresCheckAvailabilityError),
-    Mongo(MongoCheckAvailabilityError),
+    Net(Box<NetCheckAvailabilityError>),
+    Postgres(Box<PostgresCheckAvailabilityError>),
+    Mongo(Box<MongoCheckAvailabilityError>),
     NetAndMongo {
         net_source: Box<NetCheckAvailabilityError>,
         mongo_source: Box<MongoCheckAvailabilityError>,
@@ -89,11 +89,11 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             };
             match should_trace {
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Mongo(*m),
+                    CheckAvailabilityErrorEnum::Mongo(m),
                     where_was,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Mongo(*m),
+                    CheckAvailabilityErrorEnum::Mongo(m),
                     where_was,
                 ))),
             }
@@ -108,11 +108,11 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             };
             match should_trace {
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Postgres(*p),
+                    CheckAvailabilityErrorEnum::Postgres(p),
                     where_was,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Postgres(*p),
+                    CheckAvailabilityErrorEnum::Postgres(p),
                     where_was,
                 ))),
             }
@@ -152,11 +152,11 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             };
             match should_trace {
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Net(*n),
+                    CheckAvailabilityErrorEnum::Net(n),
                     where_was,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Net(*n),
+                    CheckAvailabilityErrorEnum::Net(n),
                     where_was,
                 ))),
             }
