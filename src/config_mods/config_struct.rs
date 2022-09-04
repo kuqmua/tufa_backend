@@ -267,14 +267,14 @@ pub struct ConfigStruct {
     pub is_links_limit_enabled_reddit: bool,
     pub is_links_limit_enabled_twitter: bool,
 
-    pub links_limit_providers: i64, //override links limit for providers. this value applied for each provider
-    pub links_limit_arxiv: i64,
-    pub links_limit_biorxiv: i64,
-    pub links_limit_github: i64,
-    pub links_limit_habr: i64,
-    pub links_limit_medrxiv: i64,
-    pub links_limit_reddit: i64,
-    pub links_limit_twitter: i64,
+    pub links_limit_providers: usize, //override links limit for providers. this value applied for each provider
+    pub links_limit_arxiv: usize,
+    pub links_limit_biorxiv: usize,
+    pub links_limit_github: usize,
+    pub links_limit_habr: usize,
+    pub links_limit_medrxiv: usize,
+    pub links_limit_reddit: usize,
+    pub links_limit_twitter: usize,
 
     pub is_preparation_enabled: bool,
     pub is_tracing_enabled: bool,

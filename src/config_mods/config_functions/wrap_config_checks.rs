@@ -31,7 +31,7 @@ pub enum WrapConfigChecksErrorEnum {
     PathToProviderLinkPartsFolder { source: String, where_was: WhereWas },
     ProvidersDbCollectionDocumentFieldName { source: String, where_was: WhereWas },
     WarningLogsDirectoryName { source: String, where_was: WhereWas },
-    LinksLimitProviderse { source: i64, where_was: WhereWas },
+    LinksLimitProviderse { source: usize, where_was: WhereWas },
 }
 
 impl WrapConfigChecks for ConfigStruct {

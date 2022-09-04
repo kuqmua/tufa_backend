@@ -103,9 +103,16 @@ impl ProviderKind {
                         let return_vec: Vec<String>;
                         //todo - add correct impl for is_links_limit_enabled - like is_links_limit_enabled_providers && is_links_limit_enabled_arxiv
                         if self.is_links_limit_enabled() {
-                            let limit = self.links_limit().try_into().unwrap(); //todo i64 type change?
+                            let limit = self.links_limit(); //todo i64 type change?
                             if unique_vec.len() > limit {
-                                return_vec = unique_vec[..limit].to_vec();
+                                return_vec = unique_vec
+                                    .into_iter()
+                                    .enumerate()
+                                    .filter_map(|(index, element)| match index > limit {
+                                        false => None,
+                                        true => Some(element),
+                                    })
+                                    .collect::<Vec<String>>();
                             } else {
                                 return_vec = unique_vec;
                             }

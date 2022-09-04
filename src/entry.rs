@@ -190,6 +190,7 @@ pub fn entry() {
                     return;
                 };
             }
+            println!("f");
             // let hello_world = HelloWorld {
             //     message: Message::HelloWorld,
             // };
