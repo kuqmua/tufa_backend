@@ -579,3 +579,5 @@ https://youtu.be/JkSa-qA2jnY
 * [onnx-common NN format standart, runtime for neural net](https://docs.rs/onnxruntime/latest/onnxruntime/)
 
 * [2 neural nets for text and images](https://openai.com/blog/clip/)
+
+* using vector in tracing macro example https://github.com/tokio-rs/tracing/blob/v0.1.x/examples/examples/valuable_json.rs
