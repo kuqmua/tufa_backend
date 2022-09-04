@@ -51,6 +51,7 @@ impl ProviderKind {
     )]
     pub async fn get_link_parts_from_local_json_file(
         self,
+        should_trace: bool,
     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileError>> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
             Err(e) => {
@@ -61,10 +62,16 @@ impl ProviderKind {
                     line: line!(),
                     column: column!(),
                 };
-                Err(Box::new(GetLinkPartsFromLocalJsonFileError {
-                    source: GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
-                    where_was,
-                }))
+                match should_trace {
+                    true => Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
+                        GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
+                        where_was,
+                    ))),
+                    false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                        GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
+                        where_was,
+                    ))),
+                }
             }
             Ok(mut file) => {
                 let mut content = Vec::new();
@@ -77,11 +84,20 @@ impl ProviderKind {
                         line: line!(),
                         column: column!(),
                     };
-                    return Err(Box::new(GetLinkPartsFromLocalJsonFileError {
-                        source:
+                    match should_trace {
+                        true => {
+                            return Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
-                        where_was,
-                    }));
+                            where_was,
+                        )));
+                        }
+                        false => {
+                            return Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                            GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
+                            where_was,
+                        )));
+                        }
+                    }
                 }
                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
                     Err(e) => {
@@ -92,17 +108,32 @@ impl ProviderKind {
                             line: line!(),
                             column: column!(),
                         };
-                        Err(Box::new(GetLinkPartsFromLocalJsonFileError {
-                            source: GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
-                            where_was,
-                        }))
+                        match should_trace {
+                            true => {
+                                return Err(Box::new(
+                                    GetLinkPartsFromLocalJsonFileError::with_tracing(
+                                        GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(
+                                            e,
+                                        ),
+                                        where_was,
+                                    ),
+                                ));
+                            }
+                            false => {
+                                return Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                                    GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
+                                    where_was,
+                                )));
+                            }
+                        }
                     }
                     Ok(file_content_as_struct) => {
                         let unique_vec: Vec<String> =
                             file_content_as_struct.data.into_iter().unique().collect();
                         let return_vec: Vec<String>;
                         //todo - add correct impl for is_links_limit_enabled - like is_links_limit_enabled_providers && is_links_limit_enabled_arxiv
-                        if self.is_links_limit_enabled() {
+                        if CONFIG.is_links_limit_enabled_providers && self.is_links_limit_enabled()
+                        {
                             let limit = self.links_limit();
                             if unique_vec.len() > limit {
                                 return_vec = unique_vec

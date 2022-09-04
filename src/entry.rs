@@ -238,8 +238,8 @@ pub fn entry() {
 
             // If the `valuable` feature is enabled, record `user` using its'
             // `valuable::Valuable` implementation:
-            #[cfg(tracing_unstable)]
-            tracing::error!(valuable = true, user = valuable(&user));
+            // #[cfg(tracing_unstable)]
+            // tracing::error!(valuable = true, user = valuable(&user));
 
             // #[cfg(not(tracing_unstable))]
             // tracing::error!(

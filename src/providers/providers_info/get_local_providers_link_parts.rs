@@ -30,7 +30,7 @@ pub async fn get_local_providers_link_parts(
             .map(|pk| async move {
                 (
                     pk,
-                    ProviderKind::get_link_parts_from_local_json_file(pk).await,
+                    ProviderKind::get_link_parts_from_local_json_file(pk, false).await,
                 )
             }),
     )
