@@ -8,6 +8,24 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
 
+#[cfg(tracing_unstable)]
+use tracing::field::valuable;
+use valuable::Valuable;
+
+#[derive(Clone, Debug, Valuable)]
+struct User {
+    name: String,
+    age: u32,
+    something: Vec<bool>,
+    address: Address,
+}
+
+#[derive(Clone, Debug, Valuable)]
+struct Address {
+    country: String,
+    city: String,
+    street: String,
+}
 // use valuable::{NamedValues, Valuable, Value, Visit};
 
 // #[derive(Valuable)]
@@ -190,15 +208,47 @@ pub fn entry() {
                     return;
                 };
             }
-            println!("f");
+            // println!("f");
             // let hello_world = HelloWorld {
             //     message: Message::HelloWorld,
             // };
             // hello_world.visit(&mut Print);
+            // let f = hello_world.as_value();
+            // let custom_error = std::io::Error::new(std::io::ErrorKind::Other, "oh no!");
+            // tracing::error!(error = custom_error);
+            //as &dyn Valuable
             // // let f = Something {
             // // source: vec![true, false],
             // // };
-            // tracing::info!(kekw = hello_world);
+
+            //
+            let user = User {
+                name: "Arwen Undomiel".to_string(),
+                age: 3000,
+                something: vec![true, false],
+                address: Address {
+                    country: "Middle Earth".to_string(),
+                    city: "Rivendell".to_string(),
+                    street: "leafy lane".to_string(),
+                },
+            };
+
+            // for comparison, record `user` without using its `Valuable`
+            // implementation:
+            tracing::info!(valuable = false, user = ?user);
+
+            // If the `valuable` feature is enabled, record `user` using its'
+            // `valuable::Valuable` implementation:
+            #[cfg(tracing_unstable)]
+            tracing::info!(valuable = true, user = valuable(&user));
+
+            #[cfg(not(tracing_unstable))]
+            tracing::warn!(
+                "note: this example was run without `valuable` support enabled!\n\
+        rerun with `RUSTFLAGS=\"--cfg tracing_unstable\" to enable `valuable`",
+            );
+            //
+
             if let true = CONFIG.is_preparation_enabled {
                 if runtime.block_on(prepare_server()).is_err() {
                     return;
