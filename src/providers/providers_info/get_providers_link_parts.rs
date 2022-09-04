@@ -40,7 +40,7 @@ pub async fn get_providers_link_parts(
     resource: &Resource,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorEnum>> {
     match resource {
-        Resource::Local => match get_local_providers_link_parts().await {
+        Resource::Local => match get_local_providers_link_parts(false).await {
             Err(error_hashmap) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Local {
                 source: error_hashmap,
                 where_was: WhereWas {

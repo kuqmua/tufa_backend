@@ -75,7 +75,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
 )]
 pub async fn init_dbs_with_providers_link_parts(
 ) -> Result<(), Box<InitDbsProvidersLinkPartsErrorEnum>> {
-    match get_local_providers_link_parts().await {
+    match get_local_providers_link_parts(false).await {
         Err(errors_hashmap) => Err(Box::new(
             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts {
                 source: errors_hashmap,

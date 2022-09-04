@@ -2,6 +2,8 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::get_source::GetSource;
+use crate::traits::get_where_was::GetWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -9,11 +11,66 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use std::collections::HashMap;
+use valuable::Valuable;
 
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
+}
+
+#[derive(Clone, Debug, Valuable)]
+pub struct TracingVec {
+    pub vec: Vec<String>,
+}
+impl GetLocalProvidersLinkPartsError {
+    pub fn with_tracing(
+        source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
+        where_was: crate::helpers::where_was::WhereWas,
+    ) -> Self {
+        let error_vec_struct = TracingVec {
+            vec: source
+                .iter()
+                .map(|(pk, error)| format!("{} {}", pk, error.get_source()))
+                .collect::<Vec<String>>(),
+        };
+        //maybe add provider_kind for where_was_vec?
+        let where_was_vec_struct = TracingVec {
+            vec: source
+                .iter()
+                .map(|(_pk, error)| error.get_where_was())
+                .collect::<Vec<String>>(),
+        };
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(
+                    error = ?error_vec_struct,
+                    children_where_was = ?where_was_vec_struct,
+                    source_place = where_was.source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = ?error_vec_struct,
+                    children_where_was = ?where_was_vec_struct,
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = ?error_vec_struct);
+            }
+        }
+        Self { source, where_was }
+    }
+}
+
+impl GetLocalProvidersLinkPartsError {
+    pub fn new(
+        source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
+        where_was: crate::helpers::where_was::WhereWas,
+    ) -> Self {
+        Self { source, where_was }
+    }
 }
 
 #[deny(
@@ -23,6 +80,7 @@ pub struct GetLocalProvidersLinkPartsError {
     clippy::float_arithmetic
 )]
 pub async fn get_local_providers_link_parts(
+    should_trace: bool,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
     let result_vec = join_all(
         ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
@@ -50,16 +108,27 @@ pub async fn get_local_providers_link_parts(
         }
     }
     if !errors_hashmap.is_empty() {
-        return Err(GetLocalProvidersLinkPartsError {
-            source: errors_hashmap,
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-        });
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(GetLocalProvidersLinkPartsError::with_tracing(
+                    errors_hashmap,
+                    where_was,
+                ));
+            }
+            false => {
+                return Err(GetLocalProvidersLinkPartsError::new(
+                    errors_hashmap,
+                    where_was,
+                ));
+            }
+        }
     }
     Ok(success_hashmap)
 }
