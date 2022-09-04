@@ -1,6 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileErrorEnum;
+use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -12,7 +12,7 @@ use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct GetLocalProvidersLinkPartsError {
-    pub source: Box<HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum>>,
+    pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
 }
 
@@ -35,7 +35,7 @@ pub async fn get_local_providers_link_parts(
             }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileErrorEnum> =
+    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> =
         HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
@@ -51,7 +51,7 @@ pub async fn get_local_providers_link_parts(
     }
     if !errors_hashmap.is_empty() {
         return Err(GetLocalProvidersLinkPartsError {
-            source: Box::new(errors_hashmap),
+            source: errors_hashmap,
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
