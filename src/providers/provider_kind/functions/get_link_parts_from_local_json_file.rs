@@ -103,7 +103,7 @@ impl ProviderKind {
                         let return_vec: Vec<String>;
                         //todo - add correct impl for is_links_limit_enabled - like is_links_limit_enabled_providers && is_links_limit_enabled_arxiv
                         if self.is_links_limit_enabled() {
-                            let limit = self.links_limit(); //todo i64 type change?
+                            let limit = self.links_limit();
                             if unique_vec.len() > limit {
                                 return_vec = unique_vec
                                     .into_iter()
