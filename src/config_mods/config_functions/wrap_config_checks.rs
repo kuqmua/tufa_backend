@@ -248,20 +248,22 @@ impl WrapConfigChecks for ConfigStruct {
                 }),
             });
         }
-        if !self.links_limit_providers > 0 {
-            return Err(WrapConfigChecksError {
-                source: Box::new(WrapConfigChecksErrorEnum::LinksLimitProviderse {
-                    source: self.links_limit_providers,
-                    where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    },
-                }),
-            });
-        }
+        //useless coz usize must be not negative
+        // if self.links_limit_providers <= 0 {
+        //     println!("fak");
+        //     return Err(WrapConfigChecksError {
+        //         source: Box::new(WrapConfigChecksErrorEnum::LinksLimitProviderse {
+        //             source: self.links_limit_providers,
+        //             where_was: WhereWas {
+        //                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        //                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //                 file: file!(),
+        //                 line: line!(),
+        //                 column: column!(),
+        //             },
+        //         }),
+        //     });
+        // }
         /////////////
         //     pub fn east_opt(secs: i32) -> Option<FixedOffset> {
         //     if -86_400 < secs && secs < 86_400 {

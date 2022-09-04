@@ -208,7 +208,6 @@ pub fn entry() {
                     return;
                 };
             }
-            // println!("f");
             // let hello_world = HelloWorld {
             //     message: Message::HelloWorld,
             // };
@@ -235,19 +234,18 @@ pub fn entry() {
 
             // for comparison, record `user` without using its `Valuable`
             // implementation:
-            tracing::info!(valuable = false, user = ?user);
+            tracing::error!(valuable = false, user = ?user);
 
             // If the `valuable` feature is enabled, record `user` using its'
             // `valuable::Valuable` implementation:
             #[cfg(tracing_unstable)]
-            tracing::info!(valuable = true, user = valuable(&user));
+            tracing::error!(valuable = true, user = valuable(&user));
 
-            #[cfg(not(tracing_unstable))]
-            tracing::warn!(
-                "note: this example was run without `valuable` support enabled!\n\
-        rerun with `RUSTFLAGS=\"--cfg tracing_unstable\" to enable `valuable`",
-            );
-            //
+            // #[cfg(not(tracing_unstable))]
+            // tracing::error!(
+            //     "note: this example was run without `valuable` support enabled!\n\
+            // rerun with `RUSTFLAGS=\"--cfg tracing_unstable\" to enable `valuable`",
+            // );
 
             if let true = CONFIG.is_preparation_enabled {
                 if runtime.block_on(prepare_server()).is_err() {
