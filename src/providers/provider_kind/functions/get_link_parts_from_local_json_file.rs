@@ -110,21 +110,15 @@ impl ProviderKind {
                         };
                         match should_trace {
                             true => {
-                                return Err(Box::new(
-                                    GetLinkPartsFromLocalJsonFileError::with_tracing(
-                                        GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(
-                                            e,
-                                        ),
-                                        where_was,
-                                    ),
-                                ));
-                            }
-                            false => {
-                                return Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                                Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
                                     GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                                     where_was,
-                                )));
+                                )))
                             }
+                            false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                                GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
+                                where_was,
+                            ))),
                         }
                     }
                     Ok(file_content_as_struct) => {
