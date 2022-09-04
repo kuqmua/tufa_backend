@@ -8,6 +8,150 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
 
+// use valuable::{NamedValues, Valuable, Value, Visit};
+
+// #[derive(Valuable)]
+// struct HelloWorld {
+//     message: Message,
+// }
+
+// #[derive(Valuable)]
+// enum Message {
+//     HelloWorld,
+//     Custom(String),
+// }
+
+// struct Print;
+
+// impl Visit for Print {
+//     fn visit_value(&mut self, value: Value<'_>) {
+//         match value {
+//             Value::Structable(v) => {
+//                 println!("struct {}", v.definition().name());
+//                 v.visit(self);
+//             }
+//             Value::Enumerable(v) => {
+//                 println!("enum {}::{}", v.definition().name(), v.variant().name());
+//                 v.visit(self);
+//             }
+//             Value::Listable(v) => {
+//                 println!("list");
+//                 v.visit(self);
+//             }
+//             Value::Mappable(v) => {
+//                 println!("map");
+//                 v.visit(self);
+//             }
+//             _ => {
+//                 println!("value {:?}", value);
+//             }
+//         }
+//     }
+
+//     fn visit_named_fields(&mut self, named_fields: &NamedValues<'_>) {
+//         for (field, value) in named_fields.iter() {
+//             println!("named field {}", field.name());
+//             value.visit(self);
+//         }
+//     }
+
+//     fn visit_unnamed_fields(&mut self, values: &[Value<'_>]) {
+//         for value in values {
+//             value.visit(self);
+//         }
+//     }
+
+//     fn visit_entry(&mut self, key: Value<'_>, value: Value<'_>) {
+//         println!("key / value");
+//         key.visit(self);
+//         value.visit(self);
+//     }
+// }
+// #[derive(Debug, Valuable)]
+// pub struct Something {
+//     source: Vec<bool>,
+// }
+
+// #[derive(Valuable)]
+// enum SomethingEnum {
+//     Something,
+//     Custom(String),
+// }
+
+// impl Visit for Something {
+//     fn visit_value(&mut self, value: Value<'_>) {
+//         match value {
+//             Value::Structable(v) => {
+//                 // println!("struct {}", v.definition().name());
+//                 v.visit(self);
+//             }
+//             Value::Enumerable(v) => {
+//                 // println!("enum {}::{}", v.definition().name(), v.variant().name());
+//                 v.visit(self);
+//             }
+//             Value::Listable(v) => {
+//                 // println!("list");
+//                 v.visit(self);
+//             }
+//             Value::Mappable(v) => {
+//                 // println!("map");
+//                 v.visit(self);
+//             }
+//             _ => {
+//                 // println!("value {:?}", value);
+//             }
+//         }
+//     }
+
+//     fn visit_named_fields(&mut self, named_fields: &NamedValues<'_>) {
+//         for (field, value) in named_fields.iter() {
+//             // println!("named field {}", field.name());
+//             value.visit(self);
+//         }
+//     }
+
+//     fn visit_unnamed_fields(&mut self, values: &[Value<'_>]) {
+//         for value in values {
+//             value.visit(self);
+//         }
+//     }
+
+//     fn visit_entry(&mut self, key: Value<'_>, value: Value<'_>) {
+//         println!("key / value");
+//         key.visit(self);
+//         value.visit(self);
+//     }
+// }
+
+// // #[cfg(all(tracing_unstable, feature = "valuable"))]
+// // #[cfg_attr(docsrs, doc(cfg(all(tracing_unstable, feature = "valuable"))))]
+// // impl tracing::Value for Something {
+// //     fn record(&self, key: &tracing::field::Field, visitor: &mut dyn Visit) {
+// //         visitor.record_value(key, self.as_value())
+// //     }
+// // }
+
+// // impl tracing::sealed::Sealed for Something {}
+
+// // impl tracing::Value for Something {
+// //     fn record(
+// //         &self,
+// //         key: &tracing::field::Field,
+// //         visitor: &mut dyn tracing_subscriber::field::Visit,
+// //     ) {
+// //         visitor.record_str(key, self.source[0])
+// //     }
+// // }
+
+// // impl Valuable for Something {
+// //     // fn as_value(&self) -> Value<'_>;
+// //     // fn visit(&self, visit: &mut dyn Visit);
+
+// //     // fn visit_slice(slice: &[Self], visit: &mut dyn Visit)
+// //     // where
+// //     //     Self: Sized,
+// // }
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -46,6 +190,14 @@ pub fn entry() {
                     return;
                 };
             }
+            // let hello_world = HelloWorld {
+            //     message: Message::HelloWorld,
+            // };
+            // hello_world.visit(&mut Print);
+            // // let f = Something {
+            // // source: vec![true, false],
+            // // };
+            // tracing::info!(kekw = hello_world);
             if let true = CONFIG.is_preparation_enabled {
                 if runtime.block_on(prepare_server()).is_err() {
                     return;
