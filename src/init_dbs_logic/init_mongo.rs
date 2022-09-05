@@ -2,12 +2,15 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::get_source::GetSource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 use mongodb::error::Error;
@@ -15,30 +18,127 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 
+#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+pub struct InitMongoError {
+    source: InitMongoErrorEnum,
+    where_was: WhereWas,
+}
+
+impl InitMongoError {
+    pub fn with_tracing(
+        source: InitMongoErrorEnum,
+        where_was: crate::helpers::where_was::WhereWas,
+    ) -> Self {
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(
+                    error = source.get_source(),
+                    source_place = where_was.source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = source.get_source(),
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = source.get_source());
+            }
+        }
+        Self { source, where_was }
+    }
+}
+
 #[derive(Debug)]
 pub enum InitMongoErrorEnum {
-    ClientOptionsParse {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    ClientWithOptions {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    CollectionCountDocumentsOrIsNotEmpty {
-        source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-        where_was: WhereWas,
-    },
-    InsertManyError {
-        source: HashMap<ProviderKind, Error>,
-        where_was: WhereWas,
-    },
+    ClientOptionsParse(mongodb::error::Error),
+    ClientWithOptions(mongodb::error::Error),
+    CollectionCountDocumentsOrIsNotEmpty(
+        HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
+    ),
+    InsertManyError(HashMap<ProviderKind, Error>),
+}
+
+impl crate::traits::get_source::GetSource for InitMongoErrorEnum {
+    fn get_source(&self) -> String {
+        match self {
+            InitMongoErrorEnum::ClientOptionsParse(e) => {
+                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
+                {
+                    true => format!("{:#?}", e),
+                    false => format!("{}", e),
+                }
+            }
+            InitMongoErrorEnum::ClientWithOptions(e) => {
+                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
+                {
+                    true => format!("{:#?}", e),
+                    false => format!("{}", e),
+                }
+            }
+            InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(e) => {
+                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
+                {
+                    true => format!("{:#?}", e),
+                    false => {
+                        let mut formatted = e
+                            .iter()
+                            .map(|(pk, error)| format!("{} {},", pk, error))
+                            .collect::<Vec<String>>()
+                            .iter()
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(elem);
+                                acc
+                            });
+                        if !formatted.is_empty() {
+                            formatted.pop();
+                        }
+                        formatted
+                    }
+                }
+            }
+            InitMongoErrorEnum::InsertManyError(e) => {
+                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
+                {
+                    true => format!("{:#?}", e),
+                    false => {
+                        let mut formatted = e
+                            .iter()
+                            .map(|(pk, error)| format!("{} {},", pk, error))
+                            .collect::<Vec<String>>()
+                            .iter()
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(elem);
+                                acc
+                            });
+                        if !formatted.is_empty() {
+                            formatted.pop();
+                        }
+                        formatted
+                    }
+                }
+            }
+        }
+    }
 }
 
 #[derive(Debug)]
 pub enum CollectionCountDocumentsOrIsNotEmpty {
     CountDocuments(Error),
     IsNotEmpty(u64),
+}
+
+impl std::fmt::Display for CollectionCountDocumentsOrIsNotEmpty {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => write!(f, "{:#?}", self),
+            false => match self {
+                CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e) => write!(f, "{}", e),
+                CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(e) => write!(f, "{}", e),
+            },
+        }
+    }
 }
 
 #[deny(
@@ -49,29 +149,48 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
 )]
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), Box<InitMongoErrorEnum>> {
+    should_trace: bool,
+) -> Result<(), Box<InitMongoError>> {
     match ClientOptions::parse(&get_mongo_url()).await {
-        Err(e) => Err(Box::new(InitMongoErrorEnum::ClientOptionsParse {
-            source: e,
-            where_was: WhereWas {
+        Err(e) => {
+            let where_was = WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            },
-        })),
+            };
+            match should_trace {
+                true => Err(Box::new(InitMongoError::with_tracing(
+                    InitMongoErrorEnum::ClientOptionsParse(e),
+                    where_was,
+                ))),
+                false => Err(Box::new(InitMongoError::new(
+                    InitMongoErrorEnum::ClientOptionsParse(e),
+                    where_was,
+                ))),
+            }
+        }
         Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(Box::new(InitMongoErrorEnum::ClientWithOptions {
-                source: e,
-                where_was: WhereWas {
+            Err(e) => {
+                let where_was = WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
-                },
-            })),
+                };
+                match should_trace {
+                    true => Err(Box::new(InitMongoError::with_tracing(
+                        InitMongoErrorEnum::ClientWithOptions(e),
+                        where_was,
+                    ))),
+                    false => Err(Box::new(InitMongoError::new(
+                        InitMongoErrorEnum::ClientWithOptions(e),
+                        where_was,
+                    ))),
+                }
+            }
             Ok(client) => {
                 // let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
                 // let client = Client::with_options(client_options)?;
@@ -105,18 +224,31 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
                 if !error_vec_count_documents.is_empty() {
-                    return Err(Box::new(
-                        InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty {
-                            source: error_vec_count_documents,
-                            where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            },
-                        },
-                    ));
+                    let where_was = WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    };
+                    match should_trace {
+                        true => {
+                            return Err(Box::new(InitMongoError::with_tracing(
+                                InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
+                                    error_vec_count_documents,
+                                ),
+                                where_was,
+                            )));
+                        }
+                        false => {
+                            return Err(Box::new(InitMongoError::new(
+                                InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
+                                    error_vec_count_documents,
+                                ),
+                                where_was,
+                            )));
+                        }
+                    }
                 }
                 drop(error_vec_count_documents);
                 let error_vec_insert_many = join_all(providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
@@ -132,16 +264,27 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, Error>>();
                 if !error_vec_insert_many.is_empty() {
-                    return Err(Box::new(InitMongoErrorEnum::InsertManyError {
-                        source: error_vec_insert_many,
-                        where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    }));
+                    let where_was = WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    };
+                    match should_trace {
+                        true => {
+                            return Err(Box::new(InitMongoError::with_tracing(
+                                InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
+                                where_was,
+                            )));
+                        }
+                        false => {
+                            return Err(Box::new(InitMongoError::new(
+                                InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
+                                where_was,
+                            )));
+                        }
+                    }
                 }
                 Ok(())
             }
