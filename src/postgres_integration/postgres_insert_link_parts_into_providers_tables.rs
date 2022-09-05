@@ -7,14 +7,75 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasForErrorStruct)]
 pub struct PostgresInsertLinkPartsIntoProvidersTablesError {
-    pub source: Box<HashMap<ProviderKind, sqlx::Error>>,
-    pub where_was: WhereWas,
+    source: HashMap<ProviderKind, sqlx::Error>,
+    where_was: WhereWas,
+}
+
+impl PostgresInsertLinkPartsIntoProvidersTablesError {
+    pub fn with_tracing(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
+        let mut formatted = source
+            .iter()
+            .map(|(pk, error)| format!("{} {},", pk, error))
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(&elem);
+                acc
+            });
+        if !formatted.is_empty() {
+            formatted.pop();
+        }
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(error = formatted, source_place = where_was.source_place(),);
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = formatted,
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = formatted);
+            }
+        }
+        Self { source, where_was }
+    }
+}
+//todo implement better type support for derive(InitError)
+impl PostgresInsertLinkPartsIntoProvidersTablesError {
+    pub fn new(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
+        Self { source, where_was }
+    }
+}
+
+impl crate::traits::get_source::GetSource for PostgresInsertLinkPartsIntoProvidersTablesError {
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.source),
+            false => {
+                let mut formatted = self
+                    .source
+                    .iter()
+                    .map(|(pk, error)| format!("{} {},", pk, error))
+                    .collect::<Vec<String>>()
+                    .iter()
+                    .fold(String::from(""), |mut acc, elem| {
+                        acc.push_str(elem);
+                        acc
+                    });
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
+    }
 }
 
 #[deny(
@@ -26,7 +87,8 @@ pub struct PostgresInsertLinkPartsIntoProvidersTablesError {
 pub async fn postgres_insert_link_parts_into_providers_tables(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     pool: &Pool<Postgres>,
-) -> Result<(), PostgresInsertLinkPartsIntoProvidersTablesError> {
+    should_trace: bool,
+) -> Result<(), Box<PostgresInsertLinkPartsIntoProvidersTablesError>> {
     let insertion_error_hashmap = join_all(providers_json_local_data_hashmap.iter().map(
         |(pk, string_vec)| async {
             let mut values_string = String::from("");
@@ -53,16 +115,31 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     })
     .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !insertion_error_hashmap.is_empty() {
-        return Err(PostgresInsertLinkPartsIntoProvidersTablesError {
-            source: Box::new(insertion_error_hashmap),
-            where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-        });
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(Box::new(
+                    PostgresInsertLinkPartsIntoProvidersTablesError::with_tracing(
+                        insertion_error_hashmap,
+                        where_was,
+                    ),
+                ));
+            }
+            false => {
+                return Err(Box::new(
+                    PostgresInsertLinkPartsIntoProvidersTablesError::new(
+                        insertion_error_hashmap,
+                        where_was,
+                    ),
+                ));
+            }
+        }
     }
     Ok(())
 }
