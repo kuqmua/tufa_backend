@@ -10,10 +10,11 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use std::collections::HashMap;
 use valuable::Valuable;
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasForErrorStruct)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
@@ -70,6 +71,30 @@ impl GetLocalProvidersLinkPartsError {
         where_was: crate::helpers::where_was::WhereWas,
     ) -> Self {
         Self { source, where_was }
+    }
+}
+
+impl crate::traits::get_source::GetSource for GetLocalProvidersLinkPartsError {
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.source),
+            false => {
+                let mut formatted = self
+                    .source
+                    .iter()
+                    .map(|(pk, error)| format!("{} {},", pk, error.get_source()))
+                    .collect::<Vec<String>>()
+                    .iter()
+                    .fold(String::from(""), |mut acc, elem| {
+                        acc.push_str(elem);
+                        acc
+                    });
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
     }
 }
 

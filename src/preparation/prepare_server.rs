@@ -142,7 +142,6 @@ impl Display for PreparationErrorEnum {
 )]
 pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
     if let Err(e) = check_availability(false).await {
-        println!("{}", e);
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
