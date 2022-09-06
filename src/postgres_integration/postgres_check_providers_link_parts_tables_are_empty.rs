@@ -7,20 +7,102 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 
+#[derive(Debug, ImplGetWhereWasForErrorStruct)]
+pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
+    source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
+    where_was: WhereWas,
+}
+
 #[derive(Debug)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
-    SelectCount {
-        source: HashMap<ProviderKind, sqlx::Error>,
+    SelectCount(HashMap<ProviderKind, sqlx::Error>),
+    NotEmpty(HashMap<ProviderKind, i64>),
+}
+
+impl PostgresCheckProvidersLinkPartsTablesEmptyError {
+    pub fn with_tracing(
+        source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
-    },
-    NotEmpty {
-        source: HashMap<ProviderKind, i64>,
+    ) -> Self {
+        let mut formatted = match source {
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
+                .iter()
+                .map(|(pk, error)| format!("{} {},", pk, error))
+                .fold(String::from(""), |mut acc, elem| {
+                    acc.push_str(&elem);
+                    acc
+                }),
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
+                .iter()
+                .map(|(pk, error)| format!("{} {},", pk, error))
+                .fold(String::from(""), |mut acc, elem| {
+                    acc.push_str(&elem);
+                    acc
+                }),
+        };
+        if !formatted.is_empty() {
+            formatted.pop();
+        }
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(error = formatted, source_place = where_was.source_place(),);
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = formatted,
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = formatted);
+            }
+        }
+        Self { source, where_was }
+    }
+}
+//todo implement better type support for derive(InitError)
+impl PostgresCheckProvidersLinkPartsTablesEmptyError {
+    pub fn new(
+        source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
-    },
+    ) -> Self {
+        Self { source, where_was }
+    }
+}
+
+impl crate::traits::get_source::GetSource for PostgresCheckProvidersLinkPartsTablesEmptyError {
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.source),
+            false => {
+                let mut formatted = match self.source {
+                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                };
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
+    }
 }
 
 #[deny(
@@ -32,7 +114,8 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
 pub async fn postgres_check_providers_link_parts_tables_are_empty(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<(), Box<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>> {
+    should_trace: bool,
+) -> Result<(), Box<PostgresCheckProvidersLinkPartsTablesEmptyError>> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap.keys().map(|pk| async {
             let query_string = format!(
@@ -60,32 +143,66 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
         }
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount {
-                source: count_provider_links_tables_error_hashmap,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            },
-        ));
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinkPartsTablesEmptyError::with_tracing(
+                        PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(
+                            count_provider_links_tables_error_hashmap,
+                        ),
+                        where_was,
+                    ),
+                ));
+            }
+            false => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinkPartsTablesEmptyError::new(
+                        PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(
+                            count_provider_links_tables_error_hashmap,
+                        ),
+                        where_was,
+                    ),
+                ));
+            }
+        }
     }
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty {
-                source: provider_links_tables_not_empty_error_hashmap,
-                where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-            },
-        ));
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinkPartsTablesEmptyError::with_tracing(
+                        PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(
+                            provider_links_tables_not_empty_error_hashmap,
+                        ),
+                        where_was,
+                    ),
+                ));
+            }
+            false => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinkPartsTablesEmptyError::new(
+                        PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(
+                            provider_links_tables_not_empty_error_hashmap,
+                        ),
+                        where_was,
+                    ),
+                ));
+            }
+        }
     }
     Ok(())
 }
