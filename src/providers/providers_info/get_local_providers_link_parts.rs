@@ -11,6 +11,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use std::collections::HashMap;
 use valuable::Valuable;
 
@@ -64,7 +65,7 @@ impl GetLocalProvidersLinkPartsError {
         Self { source, where_was }
     }
 }
-
+//todo implement better type support for derive(InitError)
 impl GetLocalProvidersLinkPartsError {
     pub fn new(
         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
@@ -106,7 +107,7 @@ impl crate::traits::get_source::GetSource for GetLocalProvidersLinkPartsError {
 )]
 pub async fn get_local_providers_link_parts(
     should_trace: bool,
-) -> Result<HashMap<ProviderKind, Vec<String>>, GetLocalProvidersLinkPartsError> {
+) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsError>> {
     let result_vec = join_all(
         ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
             .into_iter()
@@ -142,16 +143,16 @@ pub async fn get_local_providers_link_parts(
         };
         match should_trace {
             true => {
-                return Err(GetLocalProvidersLinkPartsError::with_tracing(
+                return Err(Box::new(GetLocalProvidersLinkPartsError::with_tracing(
                     errors_hashmap,
                     where_was,
-                ));
+                )));
             }
             false => {
-                return Err(GetLocalProvidersLinkPartsError::new(
+                return Err(Box::new(GetLocalProvidersLinkPartsError::new(
                     errors_hashmap,
                     where_was,
-                ));
+                )));
             }
         }
     }

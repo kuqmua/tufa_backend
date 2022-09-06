@@ -45,7 +45,11 @@ impl crate::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum
                     InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
                         mongo: mongo_error,
                         postgres: postgres_error,
-                    } => format!("{} {}", mongo_error.get_source(), mongo_error.get_source()),
+                    } => format!(
+                        "{} {}",
+                        mongo_error.get_source(),
+                        postgres_error.get_source()
+                    ),
                 };
                 if !formatted.is_empty() {
                     formatted.pop();

@@ -9,6 +9,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use mongodb::bson::doc;
@@ -18,7 +19,7 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError, ImplGetSourceForParentErrorStruct)]
 pub struct InitMongoError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,

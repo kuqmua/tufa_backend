@@ -1,6 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::get_source::GetSource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -119,7 +120,7 @@ impl crate::traits::get_source::GetSource
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => {
-                let mut formatted = match self.source {
+                let mut formatted = match &self.source {
                     PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(hm) => hm
                         .iter()
                         .map(|(pk, error)| format!("{} {},", pk, error))

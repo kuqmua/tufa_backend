@@ -42,7 +42,7 @@ pub async fn get_providers_link_parts(
     match resource {
         Resource::Local => match get_local_providers_link_parts(false).await {
             Err(error_hashmap) => Err(Box::new(GetProvidersLinkPartsErrorEnum::Local {
-                source: error_hashmap,
+                source: *error_hashmap,
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),

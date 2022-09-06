@@ -1,6 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::get_source::GetSource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -24,42 +25,56 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     NotEmpty(HashMap<ProviderKind, i64>),
 }
 
+impl crate::traits::get_source::GetSource for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self),
+            false => {
+                let mut formatted = match self {
+                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                };
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
+    }
+}
+
 impl PostgresCheckProvidersLinkPartsTablesEmptyError {
     pub fn with_tracing(
         source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
     ) -> Self {
-        let mut formatted = match source {
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-        };
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(error = formatted, source_place = where_was.source_place(),);
+                tracing::error!(
+                    error = source.get_source(),
+                    source_place = where_was.source_place(),
+                );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
-                    error = formatted,
+                    error = source.get_source(),
                     github_source_place = where_was.github_source_place(),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = formatted);
+                tracing::error!(error = source.get_source());
             }
         }
         Self { source, where_was }
@@ -80,7 +95,7 @@ impl crate::traits::get_source::GetSource for PostgresCheckProvidersLinkPartsTab
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => {
-                let mut formatted = match self.source {
+                let mut formatted = match &self.source {
                     PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
                         .iter()
                         .map(|(pk, error)| format!("{} {},", pk, error))

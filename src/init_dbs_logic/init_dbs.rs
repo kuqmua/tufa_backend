@@ -10,16 +10,17 @@ use strum::IntoEnumIterator;
     clippy::float_arithmetic
 )]
 pub async fn init_dbs() -> Result<(), Vec<Box<InitTablesEnumError>>> {
-    let results = join_all(InitTablesEnum::iter().map(|table| async move { table.init().await }))
-        .await
-        .into_iter()
-        .filter_map(|result| {
-            if let Err(e) = result {
-                return Some(e);
-            }
-            None
-        })
-        .collect::<Vec<Box<InitTablesEnumError>>>();
+    let results =
+        join_all(InitTablesEnum::iter().map(|table| async move { table.init(false).await }))
+            .await
+            .into_iter()
+            .filter_map(|result| {
+                if let Err(e) = result {
+                    return Some(e);
+                }
+                None
+            })
+            .collect::<Vec<Box<InitTablesEnumError>>>();
     if !results.is_empty() {
         return Err(results);
     }
