@@ -1,7 +1,7 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
-use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsErrorEnum;
+use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -16,7 +16,7 @@ pub enum InitTablesEnum {
 #[derive(Debug)]
 pub enum InitTablesEnumError {
     ProvidersLinkParts {
-        source: InitDbsProvidersLinkPartsErrorEnum,
+        source: InitDbsProvidersLinkPartsError,
         where_was: WhereWas,
     },
 }
@@ -28,10 +28,10 @@ impl InitTablesEnum {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub async fn init(&self) -> Result<(), Box<InitTablesEnumError>> {
+    pub async fn init(&self, should_trace: bool) -> Result<(), Box<InitTablesEnumError>> {
         match self {
             InitTablesEnum::ProvidersLinkParts => {
-                if let Err(e) = init_dbs_with_providers_link_parts().await {
+                if let Err(e) = init_dbs_with_providers_link_parts(false).await {
                     return Err(Box::new(InitTablesEnumError::ProvidersLinkParts {
                         source: *e,
                         where_was: WhereWas {
