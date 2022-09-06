@@ -7,27 +7,141 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 
+#[derive(Debug, ImplGetWhereWasForErrorStruct)]
+pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
+    source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
+    where_was: WhereWas,
+}
 #[derive(Debug)]
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum {
-    SelectCount {
-        source: HashMap<ProviderKind, sqlx::Error>,
-        where_was: WhereWas,
-    },
-    ProviderLinksTablesRowsLengthNotEqual {
-        source:
-            HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
-        where_was: WhereWas,
-    },
+    SelectCount(HashMap<ProviderKind, sqlx::Error>),
+    ProviderLinksTablesRowsLengthNotEqual(
+        HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
+    ),
 }
 
 #[derive(Debug)]
 pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
     pub table_rows_length: i64,
     pub initialization_data_length: usize,
+}
+
+impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(
+            f,
+            "table_rows_length: {}, initialization_data_length: {}",
+            self.table_rows_length, self.initialization_data_length
+        )
+    }
+}
+
+impl crate::traits::get_source::GetSource
+    for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum
+{
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self),
+            false => {
+                let mut formatted = match self {
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(hm) => {
+                    hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        })
+                    },
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(hm) => {
+                        hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        })
+                    },
+                };
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
+    }
+}
+
+impl PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
+    pub fn with_tracing(
+        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
+        where_was: WhereWas,
+    ) -> Self {
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(
+                    error = source.get_source(),
+                    source_place = where_was.source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = source.get_source(),
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = source.get_source());
+            }
+        }
+        Self { source, where_was }
+    }
+}
+//todo implement better type support for derive(InitError)
+impl PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
+    pub fn new(
+        source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
+        where_was: WhereWas,
+    ) -> Self {
+        Self { source, where_was }
+    }
+}
+
+impl crate::traits::get_source::GetSource
+    for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError
+{
+    fn get_source(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?}", self.source),
+            false => {
+                let mut formatted = match self.source {
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(hm) => hm
+                        .iter()
+                        .map(|(pk, error)| format!("{} {},", pk, error))
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        }),
+                };
+                if !formatted.is_empty() {
+                    formatted.pop();
+                }
+                formatted
+            }
+        }
+    }
 }
 
 #[deny(
@@ -39,10 +153,9 @@ pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
-) -> Result<
-    (),
-    Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum>,
-> {
+    should_trace: bool,
+) -> Result<(), Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError>>
+{
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap
             .iter()
@@ -87,32 +200,54 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
         }
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount {
-                source: count_provider_links_tables_error_hashmap,
-                where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-            },
-        ));
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::with_tracing(
+                        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(count_provider_links_tables_error_hashmap),
+                        where_was
+                )));
+            }
+            false => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::new(
+                        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(count_provider_links_tables_error_hashmap),
+                        where_was
+                )));
+            }
+        }
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual {
-                source: provider_links_tables_rows_length_not_equal_error_hashmap,
-                where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            },
-            },
-        ));
+        let where_was = WhereWas {
+            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            file: file!(),
+            line: line!(),
+            column: column!(),
+        };
+        match should_trace {
+            true => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::with_tracing(
+                        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(provider_links_tables_rows_length_not_equal_error_hashmap),
+                        where_was
+                )));
+            }
+            false => {
+                return Err(Box::new(
+                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::new(
+                        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(provider_links_tables_rows_length_not_equal_error_hashmap),
+                        where_was
+                )));
+            }
+        }
     }
     Ok(())
 }
