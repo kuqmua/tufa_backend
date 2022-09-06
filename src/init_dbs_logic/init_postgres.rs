@@ -215,16 +215,24 @@ pub async fn init_postgres(
             // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
             //     &providers_json_local_data_hashmap,
             //     &pool,
+            //     false,
             // )
             // .await {
-            //     return Err(PostgresInitError{
-            //         source: Box::new(PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength{
-            //             source: e,
-            //             file: file!(),
-            //             line: line!(),
-            //             column: column!(),
-            //         })
-            //     });
+            //     let where_was = WhereWas {
+            //         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+            //             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            //         file: file!(),
+            //         line: line!(),
+            //         column: column!(),
+            //     };
+            //     match should_trace {
+            //         true => {
+            //             return Err(Box::new(PostgresInitError::with_tracing(PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e), where_was)));
+            //         }
+            //         false => {
+            //             return Err(Box::new(PostgresInitError::new(PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e), where_was)));
+            //         }
+            //     }
             // }
             if let Err(e) = postgres_insert_link_parts_into_providers_tables(
                 &providers_json_local_data_hashmap,
