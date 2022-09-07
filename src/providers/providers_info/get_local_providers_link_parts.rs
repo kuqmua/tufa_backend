@@ -15,10 +15,32 @@ use init_error::InitError;
 use std::collections::HashMap;
 use valuable::Valuable;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct)]
+#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was::GetWhereWas for GetLocalProvidersLinkPartsError {
+    fn get_where_was(&self) -> String {
+        let mut formatted_vec = self
+            .source
+            .iter()
+            .map(|(pk, error)| format!("{} {}, ", pk, error.get_where_was()))
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(&elem);
+                acc
+            });
+        if !formatted_vec.is_empty() {
+            formatted_vec.pop();
+            formatted_vec.pop();
+        }
+        let formatted = format!("[{}]", formatted_vec);
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, formatted),
+            false => format!("{} {}", self.where_was, formatted),
+        }
+    }
 }
 
 #[derive(Clone, Debug, Valuable)]

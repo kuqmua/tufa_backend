@@ -7,14 +7,35 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
-use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::types::chrono::Local;
 use strum::IntoEnumIterator;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct)]
+#[derive(Debug)] //ImplGetWhereWasForErrorStruct
 pub struct InitDbsError {
     source: Vec<InitTablesError>,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was::GetWhereWas for InitDbsError {
+    fn get_where_was(&self) -> String {
+        let mut formatted_vec = self
+            .source
+            .iter()
+            .map(|error| format!("{} ", error.get_where_was()))
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(&elem);
+                acc
+            });
+        if !formatted_vec.is_empty() {
+            formatted_vec.pop();
+        }
+        let formatted = format!("[{}]", formatted_vec);
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, formatted),
+            false => format!("{} {}", self.where_was, formatted),
+        }
+    }
 }
 
 impl InitDbsError {

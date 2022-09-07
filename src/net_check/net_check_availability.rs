@@ -117,22 +117,3 @@ pub async fn net_check_availability(
         }
     }
 }
-
-// pub fn one() -> Result<(), SomeError> {
-//     if let Err(e) = library_function_one() {
-//         tracing::error!(error = e);
-//         return Err(e)
-//     }
-//     Ok(())
-// }
-// pub fn two() -> Result<(), AnotherError> {
-//     if let Err(e) = one() {
-//         tracing::error!(error = e);
-//         return Err(AnotherError::One(e))
-//     }
-//     if let Err(e) = library_function_two() {
-//         tracing::error!(error = e);
-//         return Err(AnotherError::Two(e));
-//     }
-//     Ok(())
-// }

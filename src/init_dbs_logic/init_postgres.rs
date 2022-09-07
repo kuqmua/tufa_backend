@@ -23,10 +23,19 @@ use crate::traits::get_source::GetSource;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresInitError {
     source: PostgresInitErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was::GetWhereWas for PostgresInitError {
+    fn get_where_was(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+            false => format!("{} {}", self.where_was, self.source.get_where_was()),
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -53,6 +62,19 @@ impl crate::traits::get_source::GetSource for PostgresInitErrorEnum {
                 PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_source(),
                 PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_source(),
             },
+        }
+    }
+}
+
+impl crate::traits::get_where_was::GetWhereWas for PostgresInitErrorEnum {
+    fn get_where_was(&self) -> String {
+        match self {
+            PostgresInitErrorEnum::EstablishConnection(_e) => String::from(""),
+            PostgresInitErrorEnum::CreateTableQueries(e) => e.get_where_was(),
+            PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_where_was(),
+            PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_where_was(),
+            PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_where_was(),
+            PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_where_was(),
         }
     }
 }

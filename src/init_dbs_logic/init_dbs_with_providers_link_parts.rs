@@ -14,10 +14,19 @@ use chrono::Utc;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct InitDbsProvidersLinkPartsError {
     source: InitDbsProvidersLinkPartsErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was::GetWhereWas for InitDbsProvidersLinkPartsError {
+    fn get_where_was(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+            false => format!("{} {}", self.where_was, self.source.get_where_was()),
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -29,6 +38,23 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
         mongo: InitMongoError,
         postgres: PostgresInitError,
     },
+}
+
+impl crate::traits::get_where_was::GetWhereWas for InitDbsProvidersLinkPartsErrorEnum {
+    fn get_where_was(&self) -> String {
+        match self {
+            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_where_was(),
+            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was(),
+            InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was(),
+            InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
+                format!(
+                    "[ {}, {} ]",
+                    mongo.get_where_was(),
+                    postgres.get_where_was()
+                )
+            }
+        }
+    }
 }
 
 impl crate::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {

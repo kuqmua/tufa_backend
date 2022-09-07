@@ -7,6 +7,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use strum_macros::EnumIter;
@@ -16,13 +17,22 @@ pub enum InitTablesEnum {
     ProvidersLinkParts,
 }
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct InitTablesError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug)]
+impl crate::traits::get_where_was::GetWhereWas for InitTablesError {
+    fn get_where_was(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+            false => format!("{} {}", self.where_was, self.source.get_where_was()),
+        }
+    }
+}
+
+#[derive(Debug, ImplGetWhereWasForEnum)]
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
 }
