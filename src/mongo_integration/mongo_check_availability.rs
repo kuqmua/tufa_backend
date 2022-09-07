@@ -60,48 +60,32 @@ pub async fn mongo_check_availability(
     should_trace: bool,
 ) -> Result<(), Box<MongoCheckAvailabilityError>> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => {
-            let where_was = WhereWas {
+        Err(e) => Err(Box::new(MongoCheckAvailabilityError::init(
+            MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
+            WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                    where_was,
-                ))),
-                false => Err(Box::new(MongoCheckAvailabilityError::new(
-                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                    where_was,
-                ))),
-            }
-        }
+            },
+            should_trace,
+        ))),
         Ok(mut client_options) => {
             client_options.connect_timeout =
                 Some(Duration::from_millis(CONFIG.mongo_connection_timeout));
             match Client::with_options(client_options) {
-                Err(e) => {
-                    let where_was = WhereWas {
+                Err(e) => Err(Box::new(MongoCheckAvailabilityError::init(
+                    MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
+                    WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    };
-                    match should_trace {
-                        true => Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                            MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
-                            where_was,
-                        ))),
-                        false => Err(Box::new(MongoCheckAvailabilityError::new(
-                            MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
-                            where_was,
-                        ))),
-                    }
-                }
+                    },
+                    should_trace,
+                ))),
                 Ok(client) => {
                     if let Err(e) = client
                         .database(&CONFIG.mongo_providers_logs_db_name)
