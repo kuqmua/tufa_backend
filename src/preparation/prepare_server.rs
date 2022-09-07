@@ -5,6 +5,7 @@ use crate::init_dbs_logic::init_dbs::InitDbsError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_source::GetSource;
+use crate::traits::get_where_was::GetWhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -14,10 +15,19 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use std::fmt::Display;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
+#[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct,
 pub struct PreparationError {
     source: PreparationErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was::GetWhereWas for PreparationError {
+    fn get_where_was(&self) -> String {
+        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+            false => format!("{} {}", self.where_was, self.source.get_where_was()),
+        }
+    }
 }
 
 impl PreparationError {
@@ -26,12 +36,14 @@ impl PreparationError {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
+                    children_where_was = format!("{}", source.get_where_was()),
                     source_place = where_was.source_place(),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
+                    children_where_was = format!("{}", source.get_where_was()),
                     github_source_place = where_was.github_source_place(),
                 );
             }
