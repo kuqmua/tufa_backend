@@ -1,110 +1,67 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::mongo::get_mongo_url::get_mongo_url;
-use crate::helpers::postgres::get_postgres_url::get_postgres_url;
+// use crate::helpers::mongo::get_mongo_url::get_mongo_url;
+// use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasOneOrFew;
+// use crate::helpers::where_was::WhereWasOneOrFew;
 use crate::init_dbs_logic::init_dbs::init_dbs;
-use crate::init_dbs_logic::init_tables_enum::InitTablesEnumError;
+use crate::init_dbs_logic::init_dbs::InitDbsError;
+// use crate::init_dbs_logic::init_tables_enum::InitTablesError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was::GetWhereWas;
-use crate::traits::tufa_error::TufaError;
+// use crate::traits::get_where_was::GetWhereWas;
+// use crate::traits::tufa_error::TufaError;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
+use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use std::fmt::Display;
 
 // use init_error_with_tracing::DeriveInitErrorWithTracing;
 //DeriveInitErrorWithTracing
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError)]
 pub struct PreparationError {
     source: PreparationErrorEnum,
-    where_was: Vec<WhereWasOneOrFew>,
+    where_was: WhereWas,
 }
 
 impl PreparationError {
-    pub fn with_tracing(
-        source: PreparationErrorEnum,
-        where_was: Vec<crate::helpers::where_was::WhereWasOneOrFew>,
-    ) -> Self {
-        if where_was.len() == 1 {
-            if let Some(first_value) = where_was.get(0) {
-                match first_value {
-                    crate::helpers::where_was::WhereWasOneOrFew::One(where_was_one) => {
-                        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-                            crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                                tracing::error!(
-                                    error = format!("{}", source.get_source()),
-                                    source = format!(
-                                        "{}, {}",
-                                        where_was_one.source_place(),
-                                        source.get_where_was()
-                                    ),
-                                );
-                            }
-                            crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                                tracing::error!(
-                                    error = format!("{}", source.get_source()),
-                                    source = format!(
-                                        "{}, {}",
-                                        where_was_one.github_source_place(),
-                                        source.get_where_was()
-                                    ),
-                                );
-                            }
-                            crate::config_mods::source_place_type::SourcePlaceType::None => {
-                                tracing::error!(error = format!("{}", source));
-                            }
-                        }
-                    }
-                    crate::helpers::where_was::WhereWasOneOrFew::Few(hs_where_was) => {
-                        tracing::error!(error = "todo WhereWasOneOrFew::Few",)
-                    }
-                }
+    pub fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(
+                    error = source.get_source(),
+                    source_place = where_was.source_place(),
+                );
             }
-            //todo next elements
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = source.get_source(),
+                    github_source_place = where_was.github_source_place(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = source.get_source());
+            }
         }
         Self { source, where_was }
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasForEnum)]
 pub enum PreparationErrorEnum {
-    CheckAvailability(Box<CheckAvailabilityError>),
-    InitDbs(Vec<Box<InitTablesEnumError>>),
+    CheckAvailability(CheckAvailabilityError),
+    InitDbs(InitDbsError),
 }
 
-impl TufaError for PreparationErrorEnum {
+impl PreparationErrorEnum {
     fn get_source(&self) -> String {
         match self {
             PreparationErrorEnum::CheckAvailability(e) => e.get_source(),
-            PreparationErrorEnum::InitDbs(e) => {
-                let mut content = e.iter().fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&format!("{:?},", *elem)); //todo
-                    acc
-                });
-                if !content.is_empty() {
-                    content.pop();
-                }
-                content
-            }
-        }
-    }
-    fn get_where_was(&self) -> String {
-        match self {
-            PreparationErrorEnum::CheckAvailability(e) => e.get_where_was(),
-            PreparationErrorEnum::InitDbs(e) => {
-                let mut content = e.iter().fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&format!("{:?},", *elem)); //todo .get_where_was()
-                    acc
-                });
-                if !content.is_empty() {
-                    content.pop();
-                }
-                content
-            }
+            PreparationErrorEnum::InitDbs(e) => e.get_source(),
         }
     }
 }
@@ -140,7 +97,7 @@ impl Display for PreparationErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
+pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationError>> {
     if let Err(e) = check_availability(false).await {
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -149,10 +106,20 @@ pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
             line: line!(),
             column: column!(),
         };
-        return Err(Box::new(PreparationError::with_tracing(
-            PreparationErrorEnum::CheckAvailability(e),
-            vec![WhereWasOneOrFew::One(where_was)],
-        )));
+        match should_trace {
+            true => {
+                return Err(Box::new(PreparationError::with_tracing(
+                    PreparationErrorEnum::CheckAvailability(*e),
+                    where_was,
+                )));
+            }
+            false => {
+                return Err(Box::new(PreparationError::new(
+                    PreparationErrorEnum::CheckAvailability(*e),
+                    where_was,
+                )));
+            }
+        }
     }
     //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
     if !CONFIG.is_dbs_initialization_enabled
@@ -160,7 +127,7 @@ pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
     {
         return Ok(());
     }
-    if let Err(e) = init_dbs().await {
+    if let Err(e) = init_dbs(false).await {
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -168,10 +135,20 @@ pub async fn prepare_server() -> Result<(), Box<PreparationError>> {
             line: line!(),
             column: column!(),
         };
-        return Err(Box::new(PreparationError::with_tracing(
-            PreparationErrorEnum::InitDbs(e),
-            vec![WhereWasOneOrFew::One(where_was)],
-        )));
+        match should_trace {
+            true => {
+                return Err(Box::new(PreparationError::with_tracing(
+                    PreparationErrorEnum::InitDbs(*e),
+                    where_was,
+                )));
+            }
+            false => {
+                return Err(Box::new(PreparationError::new(
+                    PreparationErrorEnum::InitDbs(*e),
+                    where_was,
+                )));
+            }
+        }
     }
     Ok(())
 }

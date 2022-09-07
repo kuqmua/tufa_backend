@@ -74,7 +74,7 @@ pub fn entry() {
             };
             tracing::error!(valuable = false, user = ?user);
             if let true = CONFIG.is_preparation_enabled {
-                if runtime.block_on(prepare_server()).is_err() {
+                if runtime.block_on(prepare_server(true)).is_err() {
                     return;
                 }
             }
