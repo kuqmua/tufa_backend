@@ -29,6 +29,19 @@ pub struct MongoCheckAvailabilityError {
     where_was: WhereWas,
 }
 
+impl MongoCheckAvailabilityError {
+    fn init(
+        source: MongoCheckAvailabilityErrorEnum,
+        where_was: WhereWas,
+        should_trace: bool,
+    ) -> Self {
+        match should_trace {
+            true => Self::with_tracing(source, where_was),
+            false => Self::new(source, where_was),
+        }
+    }
+}
+
 #[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(mongodb::error::Error),
@@ -95,29 +108,17 @@ pub async fn mongo_check_availability(
                         .list_collection_names(None)
                         .await
                     {
-                        let where_was = WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        };
-                        match should_trace {
-                            true => {
-                                return {
-                                    Err(Box::new(MongoCheckAvailabilityError::with_tracing(
-                                        MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
-                                        where_was,
-                                    )))
-                                };
-                            }
-                            false => {
-                                return Err(Box::new(MongoCheckAvailabilityError::new(
-                                    MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
-                                    where_was,
-                                )));
-                            }
-                        }
+                        return Err(Box::new(MongoCheckAvailabilityError::init(
+                            MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
+                            WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                            should_trace,
+                        )));
                     }
                     Ok(())
                 }
