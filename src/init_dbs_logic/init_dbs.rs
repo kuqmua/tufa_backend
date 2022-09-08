@@ -3,6 +3,7 @@ use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesError;
 use crate::traits::get_source::GetSource;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
@@ -38,8 +39,8 @@ impl crate::traits::get_where_was::GetWhereWas for InitDbsError {
     }
 }
 
-impl InitDbsError {
-    pub fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
+impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
+    fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
         let mut errors = source
             .iter()
             .map(|error| format!("{},", error.get_source()))

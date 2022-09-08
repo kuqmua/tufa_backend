@@ -4,6 +4,7 @@ use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_source::GetSource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -25,8 +26,8 @@ pub struct InitMongoError {
     where_was: WhereWas,
 }
 
-impl InitMongoError {
-    pub fn with_tracing(
+impl crate::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {
+    fn with_tracing(
         source: InitMongoErrorEnum,
         where_was: crate::helpers::where_was::WhereWas,
     ) -> Self {

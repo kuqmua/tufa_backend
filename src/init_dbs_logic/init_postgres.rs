@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::time::Duration;
-use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::postgres::PgPoolOptions;
 use chrono::Utc;
 use chrono::Local;
@@ -20,6 +20,7 @@ use crate::postgres_integration::postgres_create_providers_tables_if_not_exists:
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use crate::traits::get_source::GetSource;
+use crate::traits::with_tracing::WithTracing;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
@@ -79,8 +80,8 @@ impl crate::traits::get_where_was::GetWhereWas for PostgresInitErrorEnum {
     }
 }
 
-impl PostgresInitError {
-    pub fn with_tracing(source: PostgresInitErrorEnum, where_was: WhereWas) -> Self {
+impl crate::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for PostgresInitError {
+    fn with_tracing(source: PostgresInitErrorEnum, where_was: WhereWas) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(

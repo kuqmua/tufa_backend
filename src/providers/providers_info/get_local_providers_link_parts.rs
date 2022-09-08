@@ -5,13 +5,14 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was::GetWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-use init_error::InitError;
+// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+// use init_error::InitError;
 use std::collections::HashMap;
 use valuable::Valuable;
 
@@ -47,8 +48,12 @@ impl crate::traits::get_where_was::GetWhereWas for GetLocalProvidersLinkPartsErr
 pub struct TracingVec {
     pub vec: Vec<String>,
 }
-impl GetLocalProvidersLinkPartsError {
-    pub fn with_tracing(
+impl
+    crate::traits::with_tracing::WithTracing<
+        HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
+    > for GetLocalProvidersLinkPartsError
+{
+    fn with_tracing(
         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
         where_was: crate::helpers::where_was::WhereWas,
     ) -> Self {

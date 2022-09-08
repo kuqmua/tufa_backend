@@ -2,6 +2,7 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -18,8 +19,10 @@ pub struct PostgresDeleteAllFromProvidersTablesError {
     pub where_was: WhereWas,
 }
 
-impl PostgresDeleteAllFromProvidersTablesError {
-    pub fn with_tracing(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
+impl crate::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
+    for PostgresDeleteAllFromProvidersTablesError
+{
+    fn with_tracing(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
         let mut formatted = source
             .iter()
             .map(|(pk, error)| format!("{} {},", pk, error))
