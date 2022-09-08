@@ -19,7 +19,7 @@ impl Display for WhereWas {
             true => write!(f, "{:#?}", self),
             false => match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
                 crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                    write!(f, "{}", self.source_place())
+                    write!(f, "{}", self.file_line_column())
                 }
                 crate::config_mods::source_place_type::SourcePlaceType::Github => {
                     write!(f, "{}", self.github_source_place())
@@ -48,7 +48,7 @@ impl WhereWas {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub fn source_place(&self) -> String {
+    pub fn file_line_column(&self) -> String {
         format!("{}:{}:{}", self.file, self.line, self.column)
     }
     #[deny(

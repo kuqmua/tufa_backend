@@ -54,7 +54,7 @@ impl InitDbsError {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
-                    source_place = format!("{}", where_was.source_place())
+                    source_place = format!("{}", where_was.file_line_column())
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {

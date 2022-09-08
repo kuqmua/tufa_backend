@@ -32,7 +32,10 @@ impl PostgresCreateProvidersDbsError {
         }
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(error = formatted, source_place = where_was.source_place(),);
+                tracing::error!(
+                    error = formatted,
+                    source_place = where_was.file_line_column(),
+                );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
