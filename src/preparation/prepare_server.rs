@@ -6,14 +6,15 @@ use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was::GetWhereWas;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
-use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use std::fmt::Display;
+// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 
 #[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct,
 pub struct PreparationError {
@@ -30,8 +31,8 @@ impl crate::traits::get_where_was::GetWhereWas for PreparationError {
     }
 }
 
-impl PreparationError {
-    pub fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
+impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
+    fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
