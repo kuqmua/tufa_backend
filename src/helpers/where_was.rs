@@ -22,7 +22,7 @@ impl Display for WhereWas {
                     write!(f, "{}", self.file_line_column())
                 }
                 crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                    write!(f, "{}", self.github_source_place())
+                    write!(f, "{}", self.github_file_line_column())
                 }
                 crate::config_mods::source_place_type::SourcePlaceType::None => {
                     write!(f, "")
@@ -63,7 +63,7 @@ impl WhereWas {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub fn github_source_place(&self) -> String {
+    pub fn github_file_line_column(&self) -> String {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
     }
 }

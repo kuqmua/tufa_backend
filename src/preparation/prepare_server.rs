@@ -48,7 +48,7 @@ impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for Preparat
                 tracing::error!(
                     error = source.get_source(),
                     children_where_was = format!("{}", source.get_where_was()),
-                    github_source_place = where_was.github_source_place(),
+                    github_source_place = where_was.github_file_line_column(),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {
