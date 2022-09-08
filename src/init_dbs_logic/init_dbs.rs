@@ -40,28 +40,31 @@ impl crate::traits::get_where_was::GetWhereWas for InitDbsError {
 
 impl InitDbsError {
     pub fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
-        let mut formatted = source
+        let mut errors = source
             .iter()
             .map(|error| format!("{},", error.get_source()))
             .fold(String::from(""), |mut acc, elem| {
                 acc.push_str(&elem);
                 acc
             });
-        if !formatted.is_empty() {
-            formatted.pop();
+        if !errors.is_empty() {
+            errors.pop();
         }
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(error = formatted, source_place = where_was.source_place(),);
+                tracing::error!(
+                    error = errors,
+                    source_place = format!("{}", where_was.source_place())
+                );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
-                    error = formatted,
+                    error = errors,
                     github_source_place = where_was.github_source_place(),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = formatted);
+                tracing::error!(error = errors);
             }
         }
         Self { source, where_was }

@@ -36,8 +36,7 @@ impl PreparationError {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
-                    children_where_was = format!("{}", source.get_where_was()),
-                    source_place = where_was.source_place(),
+                    where_was = format!("{} {}", where_was.source_place(), source.get_where_was()),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {

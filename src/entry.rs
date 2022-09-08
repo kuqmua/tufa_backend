@@ -7,22 +7,22 @@ use crate::project_constants::PROJECT_NAME;
 use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
-use valuable::Valuable;
+// use valuable::Valuable;
 
-#[derive(Clone, Debug, Valuable)]
-struct User {
-    name: String,
-    age: u32,
-    something: Vec<bool>,
-    address: Address,
-}
+// #[derive(Clone, Debug, Valuable)]
+// struct User {
+//     name: String,
+//     age: u32,
+//     something: Vec<bool>,
+//     address: Address,
+// }
 
-#[derive(Clone, Debug, Valuable)]
-struct Address {
-    country: String,
-    city: String,
-    street: String,
-}
+// #[derive(Clone, Debug, Valuable)]
+// struct Address {
+//     country: String,
+//     city: String,
+//     street: String,
+// }
 
 #[deny(
     clippy::indexing_slicing,
@@ -62,17 +62,17 @@ pub fn entry() {
                     return;
                 };
             }
-            let user = User {
-                name: "Arwen Undomiel".to_string(),
-                age: 3000,
-                something: vec![true, false],
-                address: Address {
-                    country: "Middle Earth".to_string(),
-                    city: "Rivendell".to_string(),
-                    street: "leafy lane".to_string(),
-                },
-            };
-            tracing::error!(valuable = false, user = ?user);
+            // let user = User {
+            //     name: "Arwen Undomiel".to_string(),
+            //     age: 3000,
+            //     something: vec![true, false],
+            //     address: Address {
+            //         country: "Middle Earth".to_string(),
+            //         city: "Rivendell".to_string(),
+            //         street: "leafy lane".to_string(),
+            //     },
+            // };
+            // tracing::error!(valuable = false, user = ?user);
             if let true = CONFIG.is_preparation_enabled {
                 if runtime.block_on(prepare_server(true)).is_err() {
                     return;
