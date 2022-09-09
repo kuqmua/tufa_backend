@@ -3,7 +3,7 @@ use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was::GetWhereWas;
+use crate::traits::get_where_was_one_or_many::GetWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
@@ -22,7 +22,7 @@ pub struct GetLocalProvidersLinkPartsError {
     pub where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for GetLocalProvidersLinkPartsError {
+impl crate::traits::get_where_was_one_or_many::GetWhereWas for GetLocalProvidersLinkPartsError {
     fn get_where_was(&self) -> String {
         let mut formatted_vec = self
             .source

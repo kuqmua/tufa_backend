@@ -67,3 +67,15 @@ impl WhereWas {
         GIT_INFO.get_git_source_file_link(self.file, self.line)
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum WhereWasOneOrMany {
+    One(WhereWas),
+    Many(Vec<WhereWasWithAddition>),
+}
+
+#[derive(Debug, Clone)]
+pub struct WhereWasWithAddition {
+    pub additional_info: Option<String>,
+    pub where_was: WhereWas,
+}

@@ -30,7 +30,7 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for PostgresInitError {
+impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitError {
     fn get_where_was(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
@@ -67,7 +67,7 @@ impl crate::traits::get_source::GetSource for PostgresInitErrorEnum {
     }
 }
 
-impl crate::traits::get_where_was::GetWhereWas for PostgresInitErrorEnum {
+impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitErrorEnum {
     fn get_where_was(&self) -> String {
         match self {
             PostgresInitErrorEnum::EstablishConnection(_e) => String::from(""),

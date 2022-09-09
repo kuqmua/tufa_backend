@@ -9,7 +9,7 @@ use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was::GetWhereWas;
+use crate::traits::get_where_was_one_or_many::GetWhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -37,17 +37,25 @@ pub struct CheckAvailabilityError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for CheckAvailabilityError {
-    fn get_where_was(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-            false => format!("{} {}", self.where_was, self.source.get_where_was()),
-        }
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
     }
 }
 
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for CheckAvailabilityError {
+//     fn get_where_was(&self) -> String {
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
+//         }
+//     }
+// }
+
 #[derive(
-    Debug, ImplGetSourceForSimpleErrorEnum, ImplGetWhereWasForEnum, ImplDisplayForSimpleErrorEnum,
+    Debug,
+    ImplGetSourceForSimpleErrorEnum,
+    ImplDisplayForSimpleErrorEnum, //ImplGetWhereWasForEnum,
 )]
 pub enum CheckAvailabilityErrorEnum {
     Net(Box<NetCheckAvailabilityError>),
@@ -70,6 +78,46 @@ pub enum CheckAvailabilityErrorEnum {
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityErrorEnum {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        match self {
+            CheckAvailabilityErrorEnum::Net(e) => *e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::Postgres(e) => *e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::Mongo(e) => *e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::NetAndMongo {
+                net_source,
+                mongo_source,
+            } => {
+                let net_source_vec = *net_source.get_where_was_one_or_many();
+
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
+                    *net_source.get_where_was_one_or_many()
+                ])
+            }
+            CheckAvailabilityErrorEnum::NetAndPostgres {
+                net_source,
+                postgres_source,
+            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
+                *net_source.get_where_was_one_or_many()
+            ]),
+            CheckAvailabilityErrorEnum::MongoAndPostgres {
+                mongo_source,
+                postgres_source,
+            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
+                *net_source.get_where_was_one_or_many()
+            ]),
+            CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
+                net_source,
+                mongo_source,
+                postgres_source,
+            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
+                *net_source.get_where_was_one_or_many()
+            ]),
+        }
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+    }
 }
 
 #[deny(

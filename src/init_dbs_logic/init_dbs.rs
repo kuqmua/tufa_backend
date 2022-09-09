@@ -18,8 +18,8 @@ pub struct InitDbsError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for InitDbsError {
-    fn get_where_was(&self) -> String {
+impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsError {
+    fn get_where_was(&self) -> crate::helpers::where_was::WhereWas {
         let mut formatted_vec = self
             .source
             .iter()

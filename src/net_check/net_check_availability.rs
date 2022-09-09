@@ -19,13 +19,19 @@ use reqwest::StatusCode;
     Debug,
     ImplDisplayForErrorStruct,
     ImplGetSourceForParentErrorStruct,
-    ImplGetWhereWasForErrorStruct,
+    // ImplGetWhereWasForErrorStruct,
     InitError,
     InitErrorWithTracingForOriginalErrorStruct,
 )]
 pub struct NetCheckAvailabilityError {
     source: NetCheckAvailabilityErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for NetCheckAvailabilityError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+    }
 }
 
 #[derive(Debug, GitInfo, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]

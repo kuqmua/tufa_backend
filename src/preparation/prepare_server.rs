@@ -5,7 +5,7 @@ use crate::init_dbs_logic::init_dbs::InitDbsError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was::GetWhereWas;
+use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -22,12 +22,18 @@ pub struct PreparationError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for PreparationError {
-    fn get_where_was(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-            false => format!("{} {}", self.where_was, self.source.get_where_was()),
-        }
+// impl crate::traits::get_where_was::GetWhereWas for PreparationError {
+//     fn get_where_was(&self) -> String {
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
+//         }
+//     }
+// }
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
     }
 }
 

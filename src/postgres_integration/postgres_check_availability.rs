@@ -17,13 +17,21 @@ use std::time::Duration;
     Debug,
     ImplDisplayForErrorStruct,
     ImplGetSourceForOriginalErrorStruct,
-    ImplGetWhereWasForErrorStruct,
+    // ImplGetWhereWasForErrorStruct,
     InitError,
     InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum,
 )]
 pub struct PostgresCheckAvailabilityError {
     source: Error,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for PostgresCheckAvailabilityError
+{
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+    }
 }
 
 #[deny(
