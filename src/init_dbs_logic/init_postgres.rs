@@ -12,6 +12,8 @@ use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_t
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
+use crate::postgres_integration::postgres_establish_connection::PostgresEstablishConnectionError;
+use crate::postgres_integration::postgres_establish_connection::postgres_establish_connection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
@@ -51,7 +53,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Postgres
 
 #[derive(Debug)]
 pub enum PostgresInitErrorEnum {
-    EstablishConnection(sqlx::Error),
+    EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
     CheckProviderLinksTablesAreEmpty(PostgresCheckProvidersLinkPartsTablesEmptyError),
     DeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
@@ -66,7 +68,7 @@ impl crate::traits::get_source::GetSource for PostgresInitErrorEnum {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
             false => match self {
-                PostgresInitErrorEnum::EstablishConnection(e) => e.to_string(),
+                PostgresInitErrorEnum::EstablishConnection(e) => e.get_source(),
                 PostgresInitErrorEnum::CreateTableQueries(e) => e.get_source(),
                 PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_source(),
                 PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_source(),
@@ -147,12 +149,7 @@ pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
 ) -> Result<(), Box<PostgresInitError>> {
-    match PgPoolOptions::new()
-        .max_connections(providers_json_local_data_hashmap.len() as u32)
-        .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
-        .connect(&get_postgres_url())
-        .await
-    {
+    match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
         Err(e) => {
             let where_was = WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
@@ -163,11 +160,11 @@ pub async fn init_postgres(
             };
             match should_trace {
                 true => Err(Box::new(PostgresInitError::with_tracing(
-                    PostgresInitErrorEnum::EstablishConnection(e),
+                    PostgresInitErrorEnum::EstablishConnection(*e),
                     where_was,
                 ))),
                 false => Err(Box::new(PostgresInitError::new(
-                    PostgresInitErrorEnum::EstablishConnection(e),
+                    PostgresInitErrorEnum::EstablishConnection(*e),
                     where_was,
                 ))),
             }

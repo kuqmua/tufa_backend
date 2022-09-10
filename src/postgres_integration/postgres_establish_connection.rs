@@ -76,7 +76,7 @@ impl crate::traits::get_source::GetSource for PostgresEstablishConnectionError {
     clippy::float_arithmetic
 )]
 pub async fn postgres_establish_connection(
-    providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
 ) -> Result<sqlx::Pool<Postgres>, Box<PostgresEstablishConnectionError>> {
     match PgPoolOptions::new()
