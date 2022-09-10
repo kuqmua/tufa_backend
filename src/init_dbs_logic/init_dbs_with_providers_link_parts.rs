@@ -187,18 +187,18 @@ pub async fn init_dbs_with_providers_link_parts(
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
                 async {
-                    if CONFIG.is_mongo_initialization_enabled {
-                        return Some(init_mongo(providers_json_local_data_hashmap, false).await);
+                    match CONFIG.is_mongo_initialization_enabled {
+                        false => None,
+                        true => Some(init_mongo(providers_json_local_data_hashmap, false).await),
                     }
-                    None
                 },
                 async {
-                    if CONFIG.is_postgres_initialization_enabled {
-                        return Some(
+                    match CONFIG.is_postgres_initialization_enabled {
+                        false => None,
+                        true => Some(
                             init_postgres(providers_json_local_data_hashmap_clone, false).await,
-                        );
+                        ),
                     }
-                    None
                 }
             );
             match (
