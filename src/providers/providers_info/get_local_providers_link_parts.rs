@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasWithAddition;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
@@ -49,12 +50,22 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for GetLocalProvidersLinkPartsError
 {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
+        let mut vec = Vec::new();
+        self.source.iter().for_each(|(pk, error)| {
+            error
+                .get_where_was_one_or_many()
+                .into_vec()
+                .into_iter()
+                .for_each(|mut w| {
+                    w.additional_info = Some(format!("{}", pk)); //todo
+                    vec.push(w);
+                });
+        });
+        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+            additional_info: None,
+            where_was: self.where_was.clone(),
+        });
+        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 

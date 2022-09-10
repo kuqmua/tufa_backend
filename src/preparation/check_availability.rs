@@ -180,7 +180,6 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                 postgres_source,
             } => {
                 let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
-                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
                 mongo_source
                     .get_where_was_one_or_many()
                     .into_vec()
@@ -227,7 +226,6 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                 crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
         }
-        // crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
