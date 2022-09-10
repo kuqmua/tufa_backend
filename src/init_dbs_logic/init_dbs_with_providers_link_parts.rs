@@ -27,12 +27,19 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for InitDbsProvidersLinkPartsError
 {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
+        let mut vec = Vec::new();
+        self.source
+            .get_where_was_one_or_many()
+            .into_vec()
+            .into_iter()
+            .for_each(|w| {
+                vec.push(w);
+            });
+        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+            additional_info: None,
+            where_was: self.where_was.clone(),
+        });
+        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -67,8 +74,22 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was_one_or_many(),
             InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was_one_or_many(),
             InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
-                // todo!();
-                WhereWasOneOrMany::Many(vec![])
+                let mut vec = Vec::new();
+                mongo
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                postgres
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
         }
     }
