@@ -8,8 +8,10 @@ use crate::net_check::net_check_availability::net_check_availability;
 use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
+use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was_one_or_many::GetWhereWas;
+use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
+use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -30,16 +32,49 @@ use init_error_with_tracing::InitErrorWithTracing;
     ImplGetSourceForParentErrorStruct,
     ImplDisplayForErrorStruct,
     InitError,
-    InitErrorWithTracing,
+    // InitErrorWithTracing,
 )]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
 }
 
+impl crate::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
+    for CheckAvailabilityError
+{
+    fn with_tracing(
+        source: CheckAvailabilityErrorEnum,
+        where_was: crate::helpers::where_was::WhereWas,
+    ) -> Self {
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                tracing::error!(
+                    error = format!("{}", source.get_source()),
+                    where_was = format!(
+                        "{} {}",
+                        where_was.file_line_column(),
+                        source.get_bunyan_format(),
+                    ),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                tracing::error!(
+                    error = format!("{}", source.get_source()),
+                    children_where_was = format!("{}", source.get_bunyan_format()),
+                    github_source_place = where_was.github_file_line_column(),
+                );
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                tracing::error!(error = format!("{}", source));
+            }
+        }
+        Self { source, where_was }
+    }
+}
+
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityError {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
@@ -83,40 +118,48 @@ pub enum CheckAvailabilityErrorEnum {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityErrorEnum {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
         match self {
-            CheckAvailabilityErrorEnum::Net(e) => *e.get_where_was_one_or_many(),
-            CheckAvailabilityErrorEnum::Postgres(e) => *e.get_where_was_one_or_many(),
-            CheckAvailabilityErrorEnum::Mongo(e) => *e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::Net(e) => e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::Postgres(e) => e.get_where_was_one_or_many(),
+            CheckAvailabilityErrorEnum::Mongo(e) => e.get_where_was_one_or_many(),
             CheckAvailabilityErrorEnum::NetAndMongo {
                 net_source,
                 mongo_source,
             } => {
-                let net_source_vec = *net_source.get_where_was_one_or_many();
-
+                let net_source_enum = net_source.get_where_was_one_or_many();
+                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
                 crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
-                    *net_source.get_where_was_one_or_many()
+                    // net_source.get_where_was_one_or_many()
                 ])
             }
             CheckAvailabilityErrorEnum::NetAndPostgres {
                 net_source,
                 postgres_source,
-            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
-                *net_source.get_where_was_one_or_many()
-            ]),
+            } => {
+                let net_source_enum = net_source.get_where_was_one_or_many();
+                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+            }
             CheckAvailabilityErrorEnum::MongoAndPostgres {
                 mongo_source,
                 postgres_source,
-            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
-                *net_source.get_where_was_one_or_many()
-            ]),
+            } => {
+                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
+                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+            }
             CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
                 net_source,
                 mongo_source,
                 postgres_source,
-            } => crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
-                *net_source.get_where_was_one_or_many()
-            ]),
+            } => {
+                let net_source_enum = net_source.get_where_was_one_or_many();
+                // match net_source_enum {}
+                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
+                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+            }
         }
-        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+        // crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 

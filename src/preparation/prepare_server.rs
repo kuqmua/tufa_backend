@@ -4,6 +4,7 @@ use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_dbs::InitDbsError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
+use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::with_tracing::WithTracing;
@@ -33,7 +34,7 @@ pub struct PreparationError {
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was)
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
@@ -46,14 +47,14 @@ impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for Preparat
                     where_was = format!(
                         "{} {}",
                         where_was.file_line_column(),
-                        source.get_where_was()
+                        source.get_bunyan_format()
                     ),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    children_where_was = format!("{}", source.get_where_was()),
+                    children_where_was = format!("{}", source.get_bunyan_format()),
                     github_source_place = where_was.github_file_line_column(),
                 );
             }
@@ -65,10 +66,19 @@ impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for Preparat
     }
 }
 
-#[derive(Debug, ImplGetWhereWasForEnum)]
+#[derive(Debug)] //, ImplGetWhereWasForEnum
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),
     InitDbs(InitDbsError),
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationErrorEnum {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        match self {
+            PreparationErrorEnum::CheckAvailability(e) => e.get_where_was_one_or_many(),
+            PreparationErrorEnum::InitDbs(e) => e.get_where_was_one_or_many(),
+        }
+    }
 }
 
 impl PreparationErrorEnum {

@@ -14,10 +14,18 @@ use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct)]
+#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for PostgresCheckProvidersLinkPartsTablesEmptyError
+{
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+    }
 }
 
 #[derive(Debug)]

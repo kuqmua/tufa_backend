@@ -7,12 +7,12 @@ pub trait GetBunyanWhereWas {
 
 impl<T> GetBunyanWhereWas for T
 where
-    Option<T>: GetWhereWasOneOrMany,
+    T: GetWhereWasOneOrMany,
 {
-    fn get_bunyan_format(self) {
+    fn get_bunyan_format(&self) -> String {
         match self.get_where_was_one_or_many() {
-            WhereWasOneOrMany::One(where_was) => todo!(),
-            WhereWasOneOrMany::Many(vec_where_was_with_addition) => todo!(),
+            WhereWasOneOrMany::One(where_was) => String::from("todo"),
+            WhereWasOneOrMany::Many(vec_where_was_with_addition) => String::from("todo"),
         }
     }
 }

@@ -2,8 +2,9 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::get_source::GetSource;
-use crate::traits::get_where_was_one_or_many::GetWhereWas;
+use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
@@ -22,25 +23,33 @@ pub struct GetLocalProvidersLinkPartsError {
     pub where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWas for GetLocalProvidersLinkPartsError {
-    fn get_where_was(&self) -> String {
-        let mut formatted_vec = self
-            .source
-            .iter()
-            .map(|(pk, error)| format!("{} {}, ", pk, error.get_where_was()))
-            .fold(String::from(""), |mut acc, elem| {
-                acc.push_str(&elem);
-                acc
-            });
-        if !formatted_vec.is_empty() {
-            formatted_vec.pop();
-            formatted_vec.pop();
-        }
-        let formatted = format!("[{}]", formatted_vec);
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, formatted),
-            false => format!("{} {}", self.where_was, formatted),
-        }
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for GetLocalProvidersLinkPartsError {
+//     fn get_where_was(&self) -> String {
+//         let mut formatted_vec = self
+//             .source
+//             .iter()
+//             .map(|(pk, error)| format!("{} {}, ", pk, error.get_where_was()))
+//             .fold(String::from(""), |mut acc, elem| {
+//                 acc.push_str(&elem);
+//                 acc
+//             });
+//         if !formatted_vec.is_empty() {
+//             formatted_vec.pop();
+//             formatted_vec.pop();
+//         }
+//         let formatted = format!("[{}]", formatted_vec);
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, formatted),
+//             false => format!("{} {}", self.where_was, formatted),
+//         }
+//     }
+// }
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for GetLocalProvidersLinkPartsError
+{
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
@@ -67,7 +76,7 @@ impl
         let where_was_vec_struct = TracingVec {
             vec: source
                 .iter()
-                .map(|(_pk, error)| error.get_where_was())
+                .map(|(_pk, error)| error.get_bunyan_format())
                 .collect::<Vec<String>>(),
         };
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {

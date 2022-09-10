@@ -24,18 +24,31 @@ pub struct InitTablesError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitTablesError {
-    fn get_where_was(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-            false => format!("{} {}", self.where_was, self.source.get_where_was()),
-        }
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
-#[derive(Debug, ImplGetWhereWasForEnum)]
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitTablesError {
+//     fn get_where_was(&self) -> String {
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
+//         }
+//     }
+// }
+
+#[derive(Debug)] //, ImplGetWhereWasForEnum
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesErrorEnum {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        todo!();
+        // crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+    }
 }
 
 impl crate::traits::get_source::GetSource for InitTablesErrorEnum {

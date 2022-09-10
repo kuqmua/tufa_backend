@@ -1,5 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
+use crate::helpers::where_was::WhereWasOneOrMany;
 use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
@@ -7,6 +8,7 @@ use crate::init_dbs_logic::init_postgres::PostgresInitError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 use crate::traits::get_source::GetSource;
+use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -21,14 +23,22 @@ pub struct InitDbsProvidersLinkPartsError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was::GetWhereWas for InitDbsProvidersLinkPartsError {
-    fn get_where_was(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-            false => format!("{} {}", self.where_was, self.source.get_where_was()),
-        }
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for InitDbsProvidersLinkPartsError
+{
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
+
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsProvidersLinkPartsError {
+//     fn get_where_was(&self) -> String {
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
+//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
+//         }
+//     }
+// }
 
 #[derive(Debug)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
@@ -41,22 +51,40 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     },
 }
 
-impl crate::traits::get_where_was::GetWhereWas for InitDbsProvidersLinkPartsErrorEnum {
-    fn get_where_was(&self) -> String {
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for InitDbsProvidersLinkPartsErrorEnum
+{
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
         match self {
-            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_where_was(),
-            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was(),
-            InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was(),
+            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
+                e.get_where_was_one_or_many()
+            }
+            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was_one_or_many(),
+            InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was_one_or_many(),
             InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
-                format!(
-                    "[ {}, {} ]",
-                    mongo.get_where_was(),
-                    postgres.get_where_was()
-                )
+                // todo!();
+                WhereWasOneOrMany::Many(vec![])
             }
         }
     }
 }
+
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsProvidersLinkPartsErrorEnum {
+//     fn get_where_was(&self) -> String {
+//         match self {
+//             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_where_was(),
+//             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was(),
+//             InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was(),
+//             InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
+//                 format!(
+//                     "[ {}, {} ]",
+//                     mongo.get_where_was(),
+//                     postgres.get_where_was()
+//                 )
+//             }
+//         }
+//     }
+// }
 
 impl crate::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {

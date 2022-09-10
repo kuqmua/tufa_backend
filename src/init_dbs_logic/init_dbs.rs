@@ -18,26 +18,32 @@ pub struct InitDbsError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsError {
-    fn get_where_was(&self) -> crate::helpers::where_was::WhereWas {
-        let mut formatted_vec = self
-            .source
-            .iter()
-            .map(|error| format!("{} ", error.get_where_was()))
-            .fold(String::from(""), |mut acc, elem| {
-                acc.push_str(&elem);
-                acc
-            });
-        if !formatted_vec.is_empty() {
-            formatted_vec.pop();
-        }
-        let formatted = format!("[{}]", formatted_vec);
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?} {:#?}", self.where_was, formatted),
-            false => format!("{} {}", self.where_was, formatted),
-        }
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
+
+// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsError {
+//     fn get_where_was(&self) -> crate::helpers::where_was::WhereWas {
+//         let mut formatted_vec = self
+//             .source
+//             .iter()
+//             .map(|error| format!("{} ", error.get_where_was()))
+//             .fold(String::from(""), |mut acc, elem| {
+//                 acc.push_str(&elem);
+//                 acc
+//             });
+//         if !formatted_vec.is_empty() {
+//             formatted_vec.pop();
+//         }
+//         let formatted = format!("[{}]", formatted_vec);
+//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//             true => format!("{:#?} {:#?}", self.where_was, formatted),
+//             false => format!("{} {}", self.where_was, formatted),
+//         }
+//     }
+// }
 
 impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
     fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {

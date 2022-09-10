@@ -20,10 +20,16 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 
-#[derive(Debug, ImplGetWhereWasForErrorStruct, InitError, ImplGetSourceForParentErrorStruct)]
+#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //ImplGetWhereWasForErrorStruct,
 pub struct InitMongoError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,
+}
+
+impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitMongoError {
+    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+    }
 }
 
 impl crate::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {
