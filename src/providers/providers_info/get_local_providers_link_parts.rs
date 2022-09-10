@@ -76,7 +76,7 @@ impl
         let where_was_vec_struct = TracingVec {
             vec: source
                 .iter()
-                .map(|(_pk, error)| error.get_bunyan_format())
+                .map(|(_pk, error)| error.get_bunyan_where_was())
                 .collect::<Vec<String>>(),
         };
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {

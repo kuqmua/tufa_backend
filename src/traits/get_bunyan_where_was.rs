@@ -2,14 +2,14 @@ use crate::helpers::where_was::WhereWasOneOrMany;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 
 pub trait GetBunyanWhereWas {
-    fn get_bunyan_format(&self) -> String;
+    fn get_bunyan_where_was(&self) -> String;
 }
 
 impl<T> GetBunyanWhereWas for T
 where
     T: GetWhereWasOneOrMany,
 {
-    fn get_bunyan_format(&self) -> String {
+    fn get_bunyan_where_was(&self) -> String {
         match self.get_where_was_one_or_many() {
             WhereWasOneOrMany::One(where_was) => where_was.file_line_column(),
             WhereWasOneOrMany::Many(vec_where_was_with_addition) => {

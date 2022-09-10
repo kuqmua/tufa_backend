@@ -47,14 +47,14 @@ impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for Preparat
                     where_was = format!(
                         "{} {}",
                         where_was.file_line_column(),
-                        source.get_bunyan_format()
+                        source.get_bunyan_where_was()
                     ),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    children_where_was = format!("{}", source.get_bunyan_format()),
+                    children_where_was = format!("{}", source.get_bunyan_where_was()),
                     github_source_place = where_was.github_file_line_column(),
                 );
             }
