@@ -79,3 +79,23 @@ pub struct WhereWasWithAddition {
     pub additional_info: Option<String>,
     pub where_was: WhereWas,
 }
+
+impl Display for WhereWasWithAddition {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let as_string = match &self.additional_info {
+            None => self.where_was.file_line_column(),
+            Some(additional) => format!("{} {}", additional, self.where_was.file_line_column()),
+        };
+        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                write!(f, "{}", as_string)
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                write!(f, "{}", as_string)
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => {
+                write!(f, "{}", as_string)
+            }
+        }
+    }
+}
