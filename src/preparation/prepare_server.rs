@@ -34,12 +34,19 @@ pub struct PreparationError {
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
+        let mut vec = Vec::new();
+        self.source
+            .get_where_was_one_or_many()
+            .into_vec()
+            .into_iter()
+            .for_each(|w| {
+                vec.push(w);
+            });
+        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+            additional_info: None,
+            where_was: self.where_was.clone(),
+        });
+        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
