@@ -20,7 +20,12 @@ pub struct InitDbsError {
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+        crate::helpers::where_was::WhereWasOneOrMany::One(
+            crate::helpers::where_was::WhereWasWithAddition {
+                additional_info: None,
+                where_was: self.where_was.clone(),
+            },
+        )
     }
 }
 

@@ -75,15 +75,15 @@ pub enum WhereWasOneOrMany {
 }
 
 impl WhereWasOneOrMany {
-    pub fn into_vec(&self) -> Vec<WhereWasWithAddition> {
-        let vec = Vec::new();
-        match &self {
+    pub fn into_vec(self) -> Vec<WhereWasWithAddition> {
+        let mut vec = Vec::new();
+        match self {
             crate::helpers::where_was::WhereWasOneOrMany::One(where_was_with_addition) => {
-                vec.push(*where_was_with_addition);
+                vec.push(where_was_with_addition);
             }
             crate::helpers::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
                 where_was_with_addition_vec.into_iter().for_each(|w| {
-                    vec.push(*w);
+                    vec.push(w);
                 });
             }
         }

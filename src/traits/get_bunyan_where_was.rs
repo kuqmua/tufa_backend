@@ -11,7 +11,9 @@ where
 {
     fn get_bunyan_where_was(&self) -> String {
         match self.get_where_was_one_or_many() {
-            WhereWasOneOrMany::One(where_was) => where_was.file_line_column(),
+            WhereWasOneOrMany::One(where_was_with_addition) => {
+                where_was_with_addition.where_was.file_line_column()
+            }
             WhereWasOneOrMany::Many(vec_where_was_with_addition) => {
                 let mut formatted_into_string_vec = vec_where_was_with_addition
                     .iter()

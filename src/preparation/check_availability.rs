@@ -74,7 +74,19 @@ impl crate::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityError {
     fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+        let mut vec = Vec::new();
+        self.source
+            .get_where_was_one_or_many()
+            .into_vec()
+            .into_iter()
+            .for_each(|w| {
+                vec.push(w);
+            });
+        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+            additional_info: None,
+            where_was: self.where_was.clone(),
+        });
+        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -125,38 +137,94 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                 net_source,
                 mongo_source,
             } => {
-                let net_source_enum = net_source.get_where_was_one_or_many();
-                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![
-                    // net_source.get_where_was_one_or_many()
-                ])
+                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                net_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                mongo_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::NetAndPostgres {
                 net_source,
                 postgres_source,
             } => {
-                let net_source_enum = net_source.get_where_was_one_or_many();
-                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                net_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                postgres_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::MongoAndPostgres {
                 mongo_source,
                 postgres_source,
             } => {
+                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
                 let mongo_source_enum = mongo_source.get_where_was_one_or_many();
-                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+                mongo_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                postgres_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
                 net_source,
                 mongo_source,
                 postgres_source,
             } => {
-                let net_source_enum = net_source.get_where_was_one_or_many();
-                // match net_source_enum {}
-                let mongo_source_enum = mongo_source.get_where_was_one_or_many();
-                let postgres_source_enum = postgres_source.get_where_was_one_or_many();
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec![])
+                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                net_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                mongo_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                postgres_source
+                    .get_where_was_one_or_many()
+                    .into_vec()
+                    .into_iter()
+                    .for_each(|w| {
+                        vec.push(w);
+                    });
+                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
             }
         }
         // crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
