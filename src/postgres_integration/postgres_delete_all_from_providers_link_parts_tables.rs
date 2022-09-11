@@ -9,11 +9,12 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 
-#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: HashMap<ProviderKind, sqlx::Error>,
     pub where_was: WhereWas,
@@ -63,12 +64,6 @@ impl crate::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>
                 tracing::error!(error = formatted);
             }
         }
-        Self { source, where_was }
-    }
-}
-//todo implement better type support for derive(InitError)
-impl PostgresDeleteAllFromProvidersTablesError {
-    pub fn new(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }

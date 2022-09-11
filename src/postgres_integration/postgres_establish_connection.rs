@@ -7,12 +7,13 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use init_error::InitError;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
 
-#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresEstablishConnectionError {
     pub source: sqlx::Error,
     pub where_was: WhereWas,
@@ -50,12 +51,6 @@ impl crate::traits::with_tracing::WithTracing<sqlx::Error> for PostgresEstablish
                 tracing::error!(error = format!("{}", source));
             }
         }
-        Self { source, where_was }
-    }
-}
-//todo implement better type support for derive(InitError)
-impl PostgresEstablishConnectionError {
-    pub fn new(source: sqlx::Error, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }

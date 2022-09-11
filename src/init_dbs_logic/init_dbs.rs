@@ -9,10 +9,11 @@ use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use init_error::InitError;
 use sqlx::types::chrono::Local;
 use strum::IntoEnumIterator;
 
-#[derive(Debug)] //ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct
 pub struct InitDbsError {
     source: Vec<InitTablesError>,
     where_was: WhereWas,
@@ -87,12 +88,6 @@ impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsE
                 tracing::error!(error = errors);
             }
         }
-        Self { source, where_was }
-    }
-}
-//todo implement better type support for derive(InitError)
-impl InitDbsError {
-    pub fn new(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
         Self { source, where_was }
     }
 }
