@@ -6,7 +6,6 @@ extern crate toml;
 use crate::config_mods::config_struct::ConfigStruct;
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
-use crate::traits::wrap_config_checks_trait::WrapConfigChecks;
 
 #[derive(Debug)]
 pub struct WrapConfigChecksError {
@@ -34,14 +33,14 @@ pub enum WrapConfigChecksErrorEnum {
     LinksLimitProviderse { source: usize, where_was: WhereWas },
 }
 
-impl WrapConfigChecks for ConfigStruct {
+impl ConfigStruct {
     #[deny(
         clippy::indexing_slicing,
         clippy::unwrap_used,
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
+    pub fn wrap_config_checks(self) -> Result<Self, WrapConfigChecksError> {
         //its important to check timezone first coz it will be used later. it must be valid
         if !(-86_400 < self.timezone && self.timezone < 86_400) {
             return Err(WrapConfigChecksError {

@@ -7,4 +7,3 @@ pub mod new_error;
 pub mod print_type_trait;
 pub mod provider_kind_trait;
 pub mod with_tracing;
-pub mod wrap_config_checks_trait;
