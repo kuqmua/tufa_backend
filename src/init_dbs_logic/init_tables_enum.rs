@@ -2,13 +2,13 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
-use crate::traits::get_source::GetSource;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
+use tufa_traits::get_source::GetSource;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use strum_macros::EnumIter;
@@ -64,7 +64,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTabl
     }
 }
 
-impl crate::traits::get_source::GetSource for InitTablesErrorEnum {
+impl tufa_traits::get_source::GetSource for InitTablesErrorEnum {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
@@ -104,7 +104,7 @@ impl crate::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTable
     }
 }
 
-impl crate::traits::get_source::GetSource for InitTablesError {
+impl tufa_traits::get_source::GetSource for InitTablesError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),

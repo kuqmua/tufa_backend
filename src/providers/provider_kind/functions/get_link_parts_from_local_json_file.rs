@@ -3,7 +3,7 @@ use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
-use crate::traits::get_source::GetSource;
+use tufa_traits::get_source::GetSource;
 // use crate::traits::get_where_was::GetWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;

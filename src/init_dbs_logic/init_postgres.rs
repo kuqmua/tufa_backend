@@ -21,7 +21,7 @@ use crate::postgres_integration::postgres_create_providers_tables_if_not_exists:
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
-use crate::traits::get_source::GetSource;
+use tufa_traits::get_source::GetSource;
 use crate::traits::with_tracing::WithTracing;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
@@ -63,7 +63,7 @@ pub enum PostgresInitErrorEnum {
     InsertLinkPartsIntoProvidersTables(PostgresInsertLinkPartsIntoProvidersTablesError),
 }
 
-impl crate::traits::get_source::GetSource for PostgresInitErrorEnum {
+impl tufa_traits::get_source::GetSource for PostgresInitErrorEnum {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
@@ -130,7 +130,7 @@ impl crate::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for Postgre
     }
 }
 
-impl crate::traits::get_source::GetSource for PostgresInitError {
+impl tufa_traits::get_source::GetSource for PostgresInitError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),

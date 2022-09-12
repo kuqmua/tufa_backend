@@ -2,7 +2,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::get_source::GetSource;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
@@ -19,6 +18,7 @@ use mongodb::error::Error;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
+use tufa_traits::get_source::GetSource;
 
 #[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //ImplGetWhereWasForErrorStruct,
 pub struct InitMongoError {
@@ -73,7 +73,7 @@ pub enum InitMongoErrorEnum {
     InsertManyError(HashMap<ProviderKind, Error>),
 }
 
-impl crate::traits::get_source::GetSource for InitMongoErrorEnum {
+impl tufa_traits::get_source::GetSource for InitMongoErrorEnum {
     fn get_source(&self) -> String {
         match self {
             InitMongoErrorEnum::ClientOptionsParse(e) => {

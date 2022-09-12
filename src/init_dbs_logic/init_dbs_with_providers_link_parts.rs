@@ -7,13 +7,13 @@ use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
-use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use tufa_traits::get_source::GetSource;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 
@@ -112,7 +112,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 //     }
 // }
 
-impl crate::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
+impl tufa_traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
@@ -166,7 +166,7 @@ impl crate::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErrorEnum
     }
 }
 
-impl crate::traits::get_source::GetSource for InitDbsProvidersLinkPartsError {
+impl tufa_traits::get_source::GetSource for InitDbsProvidersLinkPartsError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),

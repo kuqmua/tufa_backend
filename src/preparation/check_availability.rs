@@ -9,7 +9,6 @@ use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
-use crate::traits::get_source::GetSource;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
@@ -25,6 +24,7 @@ use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
+use tufa_traits::get_source::GetSource;
 
 #[derive(
     Debug,

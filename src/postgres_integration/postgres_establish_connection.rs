@@ -55,7 +55,7 @@ impl crate::traits::with_tracing::WithTracing<sqlx::Error> for PostgresEstablish
     }
 }
 
-impl crate::traits::get_source::GetSource for PostgresEstablishConnectionError {
+impl tufa_traits::get_source::GetSource for PostgresEstablishConnectionError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
