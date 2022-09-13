@@ -1,4 +1,4 @@
-use crate::traits::new_error::NewError;
+use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
