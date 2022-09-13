@@ -1,13 +1,13 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
