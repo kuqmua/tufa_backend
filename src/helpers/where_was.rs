@@ -1,9 +1,8 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::git_info::GIT_INFO;
-use std::fmt::Display;
-extern crate chrono;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
+use std::fmt::Display;
+use tufa_common::helpers::git::git_info::GitInformation;
 
 #[derive(Debug, Clone)]
 pub struct WhereWas {
@@ -30,24 +29,24 @@ impl WhereWas {
     }
 }
 
-impl Display for WhereWas {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
-                crate::config_mods::source_place_type::SourcePlaceType::Source => {
-                    write!(f, "{}", self.file_line_column())
-                }
-                crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                    write!(f, "{}", self.github_file_line_column())
-                }
-                crate::config_mods::source_place_type::SourcePlaceType::None => {
-                    write!(f, "")
-                }
-            },
-        }
-    }
-}
+// impl Display for WhereWas {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         match CONFIG.is_debug_implementation_enable {
+//             true => write!(f, "{:#?}", self),
+//             false => match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+//                 crate::config_mods::source_place_type::SourcePlaceType::Source => {
+//                     write!(f, "{}", self.file_line_column())
+//                 }
+//                 crate::config_mods::source_place_type::SourcePlaceType::Github => {
+//                     write!(f, "{}", self.github_file_line_column())
+//                 }
+//                 crate::config_mods::source_place_type::SourcePlaceType::None => {
+//                     write!(f, "")
+//                 }
+//             },
+//         }
+//     }
+// }
 
 impl WhereWas {
     #[deny(
