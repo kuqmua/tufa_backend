@@ -1,13 +1,13 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
@@ -81,7 +81,7 @@ impl tufa_common::traits::get_source::GetSource for InitTablesErrorEnum {
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTablesError {
+impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTablesError {
     fn with_tracing(source: InitTablesErrorEnum, where_was: WhereWas) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {

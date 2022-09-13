@@ -1,7 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -12,6 +11,7 @@ use init_error::InitError;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
@@ -33,7 +33,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
+impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
     for PostgresDeleteAllFromProvidersTablesError
 {
     fn with_tracing(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {

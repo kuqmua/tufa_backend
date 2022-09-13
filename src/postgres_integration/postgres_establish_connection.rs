@@ -1,7 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -11,6 +10,7 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
@@ -32,7 +32,9 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<sqlx::Error> for PostgresEstablishConnectionError {
+impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
+    for PostgresEstablishConnectionError
+{
     fn with_tracing(source: sqlx::Error, where_was: WhereWas) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {

@@ -2,7 +2,6 @@ use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -18,6 +17,7 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //ImplGetWhereWasForErrorStruct,
@@ -37,7 +37,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitMong
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {
+impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {
     fn with_tracing(
         source: InitMongoErrorEnum,
         where_was: tufa_common::where_was::WhereWas,

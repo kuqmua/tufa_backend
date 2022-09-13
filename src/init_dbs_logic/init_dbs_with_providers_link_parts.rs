@@ -6,12 +6,12 @@ use crate::init_dbs_logic::init_postgres::PostgresInitError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasOneOrMany;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -141,7 +141,7 @@ impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErr
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErrorEnum>
+impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErrorEnum>
     for InitDbsProvidersLinkPartsError
 {
     fn with_tracing(source: InitDbsProvidersLinkPartsErrorEnum, where_was: WhereWas) -> Self {

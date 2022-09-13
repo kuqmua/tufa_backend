@@ -1,7 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -12,6 +11,7 @@ use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug)] //, ImplGetWhereWasForErrorStruct
@@ -71,8 +71,10 @@ impl tufa_common::traits::get_source::GetSource
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum>
-    for PostgresCheckProvidersLinkPartsTablesEmptyError
+impl
+    tufa_common::traits::with_tracing::WithTracing<
+        PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
+    > for PostgresCheckProvidersLinkPartsTablesEmptyError
 {
     fn with_tracing(
         source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,

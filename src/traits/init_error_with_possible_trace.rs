@@ -1,5 +1,5 @@
 use crate::traits::new_error::NewError;
-use crate::traits::with_tracing::WithTracing;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 pub trait InitErrorWithPossibleTrace<GenericErrorStruct, GenericErrorStructSource>

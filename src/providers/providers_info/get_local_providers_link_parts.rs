@@ -4,13 +4,13 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasWithAddition;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -74,7 +74,7 @@ pub struct TracingVec {
     pub vec: Vec<String>,
 }
 impl
-    crate::traits::with_tracing::WithTracing<
+    tufa_common::traits::with_tracing::WithTracing<
         HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     > for GetLocalProvidersLinkPartsError
 {

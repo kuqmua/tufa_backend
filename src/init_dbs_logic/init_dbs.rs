@@ -1,12 +1,12 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesError;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
@@ -59,7 +59,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsE
 //     }
 // }
 
-impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
+impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
     fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
         let mut errors = source
             .iter()

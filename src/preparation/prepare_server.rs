@@ -5,7 +5,6 @@ use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
-use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -14,6 +13,7 @@ use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
 use std::fmt::Display;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 
@@ -50,7 +50,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Preparat
     }
 }
 
-impl crate::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
+impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
     fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
