@@ -5,7 +5,7 @@ use chrono::Utc;
 extern crate toml;
 use crate::config_mods::config_struct::ConfigStruct;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
+use tufa_common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub struct WrapConfigChecksError {

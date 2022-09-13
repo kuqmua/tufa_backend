@@ -1,6 +1,5 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
-use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::with_tracing::WithTracing;
 use chrono::DateTime;
@@ -12,6 +11,7 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
+use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresEstablishConnectionError {
@@ -22,9 +22,9 @@ pub struct PostgresEstablishConnectionError {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for PostgresEstablishConnectionError
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
+        tufa_common::where_was::WhereWasOneOrMany::One(
+            tufa_common::where_was::WhereWasWithAddition {
                 additional_info: None,
                 where_was: self.where_was.clone(),
             },

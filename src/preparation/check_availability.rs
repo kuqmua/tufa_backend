@@ -1,7 +1,6 @@
 use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::helpers::postgres::get_postgres_url::get_postgres_url;
-use crate::helpers::where_was::WhereWas;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
@@ -25,6 +24,7 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
@@ -44,7 +44,7 @@ impl crate::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
 {
     fn with_tracing(
         source: CheckAvailabilityErrorEnum,
-        where_was: crate::helpers::where_was::WhereWas,
+        where_was: tufa_common::where_was::WhereWas,
     ) -> Self {
         match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
@@ -74,7 +74,7 @@ impl crate::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityError {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
             .get_where_was_one_or_many()
@@ -83,11 +83,11 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
             .for_each(|w| {
                 vec.push(w);
             });
-        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+        vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
             where_was: self.where_was.clone(),
         });
-        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -129,7 +129,7 @@ pub enum CheckAvailabilityErrorEnum {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityErrorEnum {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             CheckAvailabilityErrorEnum::Net(e) => e.get_where_was_one_or_many(),
             CheckAvailabilityErrorEnum::Postgres(e) => e.get_where_was_one_or_many(),
@@ -138,7 +138,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                 net_source,
                 mongo_source,
             } => {
-                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
                 net_source
                     .get_where_was_one_or_many()
                     .into_vec()
@@ -153,13 +153,13 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                     .for_each(|w| {
                         vec.push(w);
                     });
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::NetAndPostgres {
                 net_source,
                 postgres_source,
             } => {
-                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
                 net_source
                     .get_where_was_one_or_many()
                     .into_vec()
@@ -174,13 +174,13 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                     .for_each(|w| {
                         vec.push(w);
                     });
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::MongoAndPostgres {
                 mongo_source,
                 postgres_source,
             } => {
-                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
                 mongo_source
                     .get_where_was_one_or_many()
                     .into_vec()
@@ -195,14 +195,14 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                     .for_each(|w| {
                         vec.push(w);
                     });
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
             }
             CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
                 net_source,
                 mongo_source,
                 postgres_source,
             } => {
-                let mut vec = Vec::<crate::helpers::where_was::WhereWasWithAddition>::new();
+                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
                 net_source
                     .get_where_was_one_or_many()
                     .into_vec()
@@ -224,7 +224,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAva
                     .for_each(|w| {
                         vec.push(w);
                     });
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
             }
         }
     }

@@ -7,7 +7,7 @@ use chrono::Local;
 use chrono::FixedOffset;
 use chrono::DateTime;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
+use tufa_common::where_was::WhereWas;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
@@ -33,9 +33,9 @@ pub struct PostgresInitError {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitError {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
+        tufa_common::where_was::WhereWasOneOrMany::One(
+            tufa_common::where_was::WhereWasWithAddition {
                 additional_info: None,
                 where_was: self.where_was.clone(),
             },
@@ -80,7 +80,7 @@ impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitErrorEnum {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         todo!()
         //         match self {
         //     PostgresInitErrorEnum::EstablishConnection(_e) => String::from(""),
@@ -90,7 +90,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Postgres
         //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_where_was(),
         //     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_where_was(),
         // }
-        // crate::helpers::where_was::WhereWasOneOrMany::One(self.where_was.clone())
+        // tufa_common::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 

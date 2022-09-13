@@ -1,6 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasOneOrMany;
 use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
@@ -14,6 +12,8 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasOneOrMany;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 
@@ -26,7 +26,7 @@ pub struct InitDbsProvidersLinkPartsError {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for InitDbsProvidersLinkPartsError
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
             .get_where_was_one_or_many()
@@ -35,11 +35,11 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
             .for_each(|w| {
                 vec.push(w);
             });
-        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+        vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
             where_was: self.where_was.clone(),
         });
-        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -66,7 +66,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for InitDbsProvidersLinkPartsErrorEnum
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
                 e.get_where_was_one_or_many()
@@ -89,7 +89,7 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
                     .for_each(|w| {
                         vec.push(w);
                     });
-                crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
             }
         }
     }

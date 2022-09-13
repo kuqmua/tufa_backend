@@ -1,5 +1,5 @@
-use crate::helpers::where_was::WhereWasOneOrMany;
 use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
+use tufa_common::where_was::WhereWasOneOrMany;
 
 pub trait GetBunyanWhereWas {
     fn get_bunyan_where_was(&self) -> String;

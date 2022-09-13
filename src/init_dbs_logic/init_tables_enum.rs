@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 use crate::traits::with_tracing::WithTracing;
@@ -9,6 +8,7 @@ use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use strum_macros::EnumIter;
@@ -25,7 +25,7 @@ pub struct InitTablesError {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesError {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
             .get_where_was_one_or_many()
@@ -34,11 +34,11 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTabl
             .for_each(|w| {
                 vec.push(w);
             });
-        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+        vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
             where_was: self.where_was.clone(),
         });
-        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -57,7 +57,7 @@ pub enum InitTablesErrorEnum {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesErrorEnum {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             InitTablesErrorEnum::ProvidersLinkParts(e) => e.get_where_was_one_or_many(),
         }

@@ -1,11 +1,11 @@
 use super::provider_kind::provider_kind_enum::ProviderKind;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use std::collections::HashMap;
+use tufa_common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub enum CheckProvidersLinkPartsEmptyError {

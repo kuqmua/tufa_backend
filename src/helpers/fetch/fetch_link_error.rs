@@ -1,4 +1,4 @@
-use crate::helpers::where_was::WhereWas;
+use tufa_common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub enum FetchLinkErrorEnum {

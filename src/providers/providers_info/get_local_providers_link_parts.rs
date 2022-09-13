@@ -1,6 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
-use crate::helpers::where_was::WhereWasWithAddition;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
@@ -13,6 +11,8 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasWithAddition;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 // use init_error::InitError;
 use std::collections::HashMap;
@@ -49,7 +49,7 @@ pub struct GetLocalProvidersLinkPartsError {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for GetLocalProvidersLinkPartsError
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source.iter().for_each(|(pk, error)| {
             error
@@ -61,11 +61,11 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
                     vec.push(w);
                 });
         });
-        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+        vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
             where_was: self.where_was.clone(),
         });
-        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
@@ -80,7 +80,7 @@ impl
 {
     fn with_tracing(
         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
-        where_was: crate::helpers::where_was::WhereWas,
+        where_was: tufa_common::where_was::WhereWas,
     ) -> Self {
         let error_vec_struct = TracingVec {
             vec: source
@@ -121,7 +121,7 @@ impl
 impl GetLocalProvidersLinkPartsError {
     pub fn new(
         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
-        where_was: crate::helpers::where_was::WhereWas,
+        where_was: tufa_common::where_was::WhereWas,
     ) -> Self {
         Self { source, where_was }
     }

@@ -1,9 +1,9 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
 // use crate::traits::get_where_was::GetWhereWas;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -37,9 +37,9 @@ pub struct GetLinkPartsFromLocalJsonFileError {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for GetLinkPartsFromLocalJsonFileError
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
+        tufa_common::where_was::WhereWasOneOrMany::One(
+            tufa_common::where_was::WhereWasWithAddition {
                 additional_info: None,
                 where_was: self.where_was.clone(),
             },

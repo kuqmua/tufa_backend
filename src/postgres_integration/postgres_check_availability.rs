@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -12,6 +11,7 @@ use init_error::InitError;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use std::time::Duration;
+use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
@@ -29,9 +29,9 @@ pub struct PostgresCheckAvailabilityError {
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for PostgresCheckAvailabilityError
 {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
-        crate::helpers::where_was::WhereWasOneOrMany::One(
-            crate::helpers::where_was::WhereWasWithAddition {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
+        tufa_common::where_was::WhereWasOneOrMany::One(
+            tufa_common::where_was::WhereWasWithAddition {
                 additional_info: None,
                 where_was: self.where_was.clone(),
             },

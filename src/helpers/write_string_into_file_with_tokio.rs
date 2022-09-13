@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -7,6 +6,7 @@ use chrono::Utc;
 use impl_display::ImplDisplay;
 use std::path::Path;
 use tokio::io::AsyncWriteExt;
+use tufa_common::where_was::WhereWas;
 
 #[derive(thiserror::Error, Debug, ImplDisplay)]
 pub struct WriteStringIntoFileWithTokioError {

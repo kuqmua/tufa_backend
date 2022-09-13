@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::where_was::WhereWas;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesError;
 use crate::traits::with_tracing::WithTracing;
@@ -8,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
@@ -20,7 +20,7 @@ pub struct InitDbsError {
 }
 
 impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
-    fn get_where_was_one_or_many(&self) -> crate::helpers::where_was::WhereWasOneOrMany {
+    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source.iter().for_each(|e| {
             e.get_where_was_one_or_many()
@@ -30,16 +30,16 @@ impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsE
                     vec.push(w);
                 });
         });
-        vec.push(crate::helpers::where_was::WhereWasWithAddition {
+        vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
             where_was: self.where_was.clone(),
         });
-        crate::helpers::where_was::WhereWasOneOrMany::Many(vec)
+        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
 
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsError {
-//     fn get_where_was(&self) -> crate::helpers::where_was::WhereWas {
+//     fn get_where_was(&self) -> tufa_common::where_was::WhereWas {
 //         let mut formatted_vec = self
 //             .source
 //             .iter()
