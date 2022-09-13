@@ -14,7 +14,7 @@ use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOr
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::time::Duration;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 
 #[derive(
     Debug,

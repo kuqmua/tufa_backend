@@ -7,7 +7,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
@@ -92,7 +92,7 @@ impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsE
     }
 }
 
-impl tufa_traits::get_source::GetSource for InitDbsError {
+impl tufa_common::traits::get_source::GetSource for InitDbsError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),

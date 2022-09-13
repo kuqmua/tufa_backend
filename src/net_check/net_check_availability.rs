@@ -13,7 +13,7 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use reqwest::StatusCode;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 
 #[derive(
     Debug,

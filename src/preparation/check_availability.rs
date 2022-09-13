@@ -24,7 +24,7 @@ use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 
 #[derive(
     Debug,

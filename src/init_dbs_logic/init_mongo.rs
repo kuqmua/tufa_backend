@@ -18,7 +18,7 @@ use mongodb::error::Error;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 
 #[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //ImplGetWhereWasForErrorStruct,
 pub struct InitMongoError {
@@ -73,7 +73,7 @@ pub enum InitMongoErrorEnum {
     InsertManyError(HashMap<ProviderKind, Error>),
 }
 
-impl tufa_traits::get_source::GetSource for InitMongoErrorEnum {
+impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
     fn get_source(&self) -> String {
         match self {
             InitMongoErrorEnum::ClientOptionsParse(e) => {

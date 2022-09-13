@@ -12,7 +12,7 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 
 #[derive(Debug)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
@@ -57,7 +57,7 @@ impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDa
     }
 }
 
-impl tufa_traits::get_source::GetSource
+impl tufa_common::traits::get_source::GetSource
     for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum
 {
     fn get_source(&self) -> String {
@@ -132,7 +132,7 @@ impl PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErr
     }
 }
 
-impl tufa_traits::get_source::GetSource
+impl tufa_common::traits::get_source::GetSource
     for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError
 {
     fn get_source(&self) -> String {

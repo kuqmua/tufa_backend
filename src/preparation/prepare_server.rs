@@ -14,7 +14,7 @@ use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
 use std::fmt::Display;
-use tufa_traits::get_source::GetSource;
+use tufa_common::traits::get_source::GetSource;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 
 #[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct,

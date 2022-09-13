@@ -68,7 +68,7 @@ impl crate::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>
     }
 }
 
-impl tufa_traits::get_source::GetSource for PostgresDeleteAllFromProvidersTablesError {
+impl tufa_common::traits::get_source::GetSource for PostgresDeleteAllFromProvidersTablesError {
     fn get_source(&self) -> String {
         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
