@@ -108,7 +108,6 @@ init_from_env = {path = "../proc_macros/init_from_env"}
 provider_kind_from_config = {path = "../proc_macros/provider_kind_from_config"}
 struct_field_getter = {path = "../proc_macros/struct_field_getter"}
 struct_field_setter = {path = "../proc_macros/struct_field_setter"}
-tufa_traits = {path = "../tufa_traits"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
