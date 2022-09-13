@@ -32,7 +32,7 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         tufa_common::where_was::WhereWasOneOrMany::One(
             tufa_common::where_was::WhereWasWithAddition {
@@ -79,7 +79,9 @@ impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
     }
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitErrorEnum {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for PostgresInitErrorEnum
+{
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         todo!()
         //         match self {

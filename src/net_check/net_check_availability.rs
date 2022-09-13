@@ -28,7 +28,9 @@ pub struct NetCheckAvailabilityError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for NetCheckAvailabilityError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for NetCheckAvailabilityError
+{
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         tufa_common::where_was::WhereWasOneOrMany::One(
             tufa_common::where_was::WhereWasWithAddition {

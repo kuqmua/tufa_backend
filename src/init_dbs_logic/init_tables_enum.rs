@@ -24,7 +24,7 @@ pub struct InitTablesError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
@@ -56,7 +56,7 @@ pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesErrorEnum {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitTablesErrorEnum {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             InitTablesErrorEnum::ProvidersLinkParts(e) => e.get_where_was_one_or_many(),

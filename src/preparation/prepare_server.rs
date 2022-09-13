@@ -4,7 +4,6 @@ use crate::init_dbs_logic::init_dbs::InitDbsError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
-use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -13,6 +12,7 @@ use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
 use std::fmt::Display;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -32,7 +32,7 @@ pub struct PreparationError {
 //     }
 // }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
@@ -85,7 +85,7 @@ pub enum PreparationErrorEnum {
     InitDbs(InitDbsError),
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationErrorEnum {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationErrorEnum {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             PreparationErrorEnum::CheckAvailability(e) => e.get_where_was_one_or_many(),

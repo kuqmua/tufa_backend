@@ -19,7 +19,7 @@ pub struct PostgresEstablishConnectionError {
     pub where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for PostgresEstablishConnectionError
 {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {

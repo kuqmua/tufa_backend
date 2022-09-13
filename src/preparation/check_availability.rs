@@ -8,7 +8,6 @@ use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use crate::traits::get_bunyan_where_was::GetBunyanWhereWas;
-use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -23,6 +22,7 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
@@ -73,7 +73,9 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
     }
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for CheckAvailabilityError
+{
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source
@@ -128,7 +130,9 @@ pub enum CheckAvailabilityErrorEnum {
     },
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for CheckAvailabilityErrorEnum {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+    for CheckAvailabilityErrorEnum
+{
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         match self {
             CheckAvailabilityErrorEnum::Net(e) => e.get_where_was_one_or_many(),

@@ -5,12 +5,12 @@ use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
-use crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasOneOrMany;
@@ -23,7 +23,7 @@ pub struct InitDbsProvidersLinkPartsError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for InitDbsProvidersLinkPartsError
 {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
@@ -63,7 +63,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     },
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for InitDbsProvidersLinkPartsErrorEnum
 {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {

@@ -19,7 +19,7 @@ pub struct InitDbsError {
     where_was: WhereWas,
 }
 
-impl crate::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
+impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
         self.source.iter().for_each(|e| {
