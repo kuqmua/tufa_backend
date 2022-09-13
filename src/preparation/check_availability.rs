@@ -61,7 +61,8 @@ impl crate::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
                 tracing::error!(
                     error = format!("{}", source.get_source()),
                     children_where_was = format!("{}", source.get_bunyan_where_was()),
-                    github_source_place = where_was.github_file_line_column(),
+                    github_source_place =
+                        where_was.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {

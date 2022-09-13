@@ -81,7 +81,8 @@ impl crate::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsE
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = errors,
-                    github_source_place = where_was.github_file_line_column(),
+                    github_source_place =
+                        where_was.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {

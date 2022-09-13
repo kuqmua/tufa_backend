@@ -112,7 +112,8 @@ impl
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    github_source_place = where_was.github_file_line_column(),
+                    github_source_place =
+                        where_was.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {

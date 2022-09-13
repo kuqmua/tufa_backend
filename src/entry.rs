@@ -41,7 +41,7 @@ pub fn entry() {
                 None,
                 PrintType::Error,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {e:#?}"),
             );
         }
@@ -56,7 +56,7 @@ pub fn entry() {
                         None,
                         PrintType::Error,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
                         format!("tracing init_subscriber error: {:#?}", e),
                     );
                     return;
@@ -83,7 +83,7 @@ pub fn entry() {
                     None,
                     PrintType::Error,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
                     format!("Cannot run actix-web HttpServer, error: {:#?}", e),
                 );
             }

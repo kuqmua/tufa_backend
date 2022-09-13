@@ -49,7 +49,7 @@ impl ProviderKind {
                 None,
                 PrintType::TimeMeasurement,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
                 format!(
                     "fetch_link {link} in {}.{}ms",
                     time.elapsed().as_secs(),

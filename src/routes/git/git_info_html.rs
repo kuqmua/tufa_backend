@@ -8,14 +8,14 @@ pub async fn git_info_html() -> HttpResponse {
         HttpResponse::Ok()
             .content_type(ContentType::html())
             .body(get_git_html_info(
-                GIT_INFO.commit_id.clone(),
-                GIT_INFO.repo_link.clone(),
-                GIT_INFO.author.clone(),
-                GIT_INFO.author_email.clone(),
-                GIT_INFO.commit_unix_time.clone(),
-                GIT_INFO.timezone.clone(),
-                GIT_INFO.message.clone(),
-                GIT_INFO.get_commit_link(),
+                GIT_INFO.data.commit_id.clone(),
+                GIT_INFO.data.repo_link.clone(),
+                GIT_INFO.data.author.clone(),
+                GIT_INFO.data.author_email.clone(),
+                GIT_INFO.data.commit_unix_time.clone(),
+                GIT_INFO.data.timezone.clone(),
+                GIT_INFO.data.message.clone(),
+                GIT_INFO.data.get_commit_link(),
             ))
     }
 }

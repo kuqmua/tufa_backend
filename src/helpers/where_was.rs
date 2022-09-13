@@ -1,4 +1,3 @@
-use crate::helpers::git_info::GIT_INFO;
 use chrono::prelude::DateTime;
 use chrono::FixedOffset;
 use std::fmt::Display;
@@ -22,7 +21,7 @@ impl WhereWas {
                 self.file_line_column()
             }
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
-                self.github_file_line_column()
+                self.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data)
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => String::from(""),
         }
@@ -38,7 +37,7 @@ impl WhereWas {
 //                     write!(f, "{}", self.file_line_column())
 //                 }
 //                 crate::config_mods::source_place_type::SourcePlaceType::Github => {
-//                     write!(f, "{}", self.github_file_line_column())
+//                     write!(f, "{}", self.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data))
 //                 }
 //                 crate::config_mods::source_place_type::SourcePlaceType::None => {
 //                     write!(f, "")
@@ -79,8 +78,8 @@ impl WhereWas {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub fn github_file_line_column(&self) -> String {
-        GIT_INFO.get_git_source_file_link(self.file, self.line)
+    pub fn github_file_line_column(&self, git_info: &GitInformation) -> String {
+        git_info.get_git_source_file_link(self.file, self.line)
     }
 }
 
