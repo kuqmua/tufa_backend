@@ -13,6 +13,23 @@ pub struct WhereWas {
     pub column: u32,
 }
 
+impl WhereWas {
+    pub fn get_place_type(
+        &self,
+        place_type: crate::config_mods::source_place_type::SourcePlaceType,
+    ) -> String {
+        match place_type {
+            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+                self.file_line_column()
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+                self.github_file_line_column()
+            }
+            crate::config_mods::source_place_type::SourcePlaceType::None => String::from(""),
+        }
+    }
+}
+
 impl Display for WhereWas {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match CONFIG.is_debug_implementation_enable {
