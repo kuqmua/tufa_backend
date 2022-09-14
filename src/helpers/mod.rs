@@ -6,4 +6,3 @@ pub mod postgres;
 pub mod redis;
 pub mod resource;
 pub mod write_json_into_file;
-pub mod write_string_into_file_with_tokio;
