@@ -35,7 +35,7 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
             authorization_token: Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
         },
-        redis_uri: Secret::new(get_redis_url()),
+        redis_uri: Secret::new(get_redis_url(&CONFIG.redis_ip, CONFIG.redis_port)),
     };
     let application = match Application::build(configuration.clone()).await {
         Ok(app) => app,
