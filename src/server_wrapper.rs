@@ -3,7 +3,6 @@ use crate::configuration::ApplicationSettings;
 use crate::configuration::DatabaseSettings;
 use crate::configuration::EmailClientSettings;
 use crate::configuration::Settings;
-use crate::helpers::redis::get_redis_url::get_redis_url;
 use crate::issue_delivery_worker::run_worker_until_stopped;
 use crate::startup::Application;
 use crate::startup::ApplicationBuildErrorEnum;
@@ -11,6 +10,7 @@ use secrecy::Secret;
 use std::fmt::Debug;
 use std::fmt::Display;
 use tokio::task::JoinError;
+use tufa_common::helpers::redis::get_redis_url::get_redis_url;
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
