@@ -5,7 +5,7 @@ use gen_enum::GenEnum;
 use gen_enum_without_values::GenEnumWithoutValues;
 
 #[derive(
-    Debug, Clone, init_from_env::InitFromEnv, GenEnum, GenEnumWithoutValues, Default, PartialEq,
+    Debug, Clone, init_from_env::InitFromEnv, GenEnum, GenEnumWithoutValues, Default, PartialEq, Eq,
 )]
 pub struct ConfigStruct {
     pub server_ip: String,
