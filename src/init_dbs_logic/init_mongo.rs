@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -165,7 +164,7 @@ pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
 ) -> Result<(), Box<InitMongoError>> {
-    match ClientOptions::parse(&get_mongo_url()).await {
+    match ClientOptions::parse(&CONFIG.get_mongo_url()).await {
         Err(e) => {
             let where_was = WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)

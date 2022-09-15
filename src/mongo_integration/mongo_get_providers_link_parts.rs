@@ -1,6 +1,5 @@
 use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum;
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
@@ -52,7 +51,7 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
 )]
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
-    match ClientOptions::parse(get_mongo_url()).await {
+    match ClientOptions::parse(CONFIG.get_mongo_url()).await {
         Err(e) => Err(MongoGetProvidersLinkPartsError {
             source: Box::new(MongoGetProvidersLinkPartsErrorEnum::ClientOptionsParse {
                 source: e,

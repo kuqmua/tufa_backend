@@ -1,6 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::mongo::get_mongo_url::get_mongo_url;
-use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
@@ -242,8 +240,8 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 )]
 pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvailabilityError>> {
     let net_url = &CONFIG.starting_check_link.clone();
-    let postgres_url = &get_postgres_url();
-    let mongo_url = &get_mongo_url();
+    let postgres_url = &CONFIG.get_postgres_url();
+    let mongo_url = &CONFIG.get_mongo_url();
     match join!(
         net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),

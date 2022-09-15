@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::mongo::get_mongo_url::get_mongo_url;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
@@ -45,7 +44,7 @@ impl ProviderKind {
     pub async fn mongo_get_provider_link_parts(
         pk: ProviderKind,
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {
-        match ClientOptions::parse(get_mongo_url()).await {
+        match ClientOptions::parse(CONFIG.get_mongo_url()).await {
             Err(e) => Err(MongoGetProviderLinkPartsError {
                 source: Box::new(MongoGetProviderLinkPartsErrorEnum::ClientOptionsParse {
                     source: e,

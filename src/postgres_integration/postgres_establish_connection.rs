@@ -1,5 +1,4 @@
 use crate::config_mods::lazy_static_config::CONFIG;
-use crate::helpers::postgres::get_postgres_url::get_postgres_url;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -80,7 +79,7 @@ pub async fn postgres_establish_connection(
     match PgPoolOptions::new()
         .max_connections(providers_json_local_data_hashmap.len() as u32)
         .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
-        .connect(&get_postgres_url())
+        .connect(&CONFIG.get_postgres_url())
         .await
     {
         Err(e) => {
