@@ -5,4 +5,3 @@ pub mod mongo;
 pub mod postgres;
 pub mod redis;
 pub mod resource;
-pub mod write_json_into_file;
