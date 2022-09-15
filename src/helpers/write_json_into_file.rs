@@ -1,7 +1,6 @@
-use crate::helpers::write_string_into_file_with_tokio::write_string_into_file_with_tokio;
-use crate::helpers::write_string_into_file_with_tokio::WriteStringIntoFileWithTokioError;
 use serde_json::Value;
 use std::path::Path;
+use tufa_common::helpers::write_bytes_into_file_async_tokio::write_bytes_into_file_async_tokio;
 
 #[derive(thiserror::Error, Debug)]
 pub enum WriteJsonIntoFileError {
@@ -15,7 +14,7 @@ pub enum WriteJsonIntoFileError {
     StdIoError(
         #[from]
         #[source]
-        WriteStringIntoFileWithTokioError,
+        std::io::Error,
     ),
 }
 
@@ -30,5 +29,5 @@ pub async fn write_json_into_file(
     json_object: Value,
 ) -> Result<(), WriteJsonIntoFileError> {
     let stringified_json = serde_json::to_string_pretty(&json_object)?;
-    Ok(write_string_into_file_with_tokio(path, stringified_json).await?)
+    Ok(write_bytes_into_file_async_tokio(path, stringified_json.as_bytes()).await?)
 }
