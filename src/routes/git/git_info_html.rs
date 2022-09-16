@@ -1,4 +1,4 @@
-use crate::helpers::git_info::GIT_INFO;
+use crate::lazy_static::git_info::GIT_INFO;
 use actix_web::http::header::ContentType;
 use actix_web::HttpResponse;
 use tufa_common::helpers::git::get_git_html_info::get_git_html_info;

@@ -57,8 +57,8 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
             crate::config_mods::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = formatted,
-                    github_source_place =
-                        where_was.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data),
+                    github_source_place = where_was
+                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {

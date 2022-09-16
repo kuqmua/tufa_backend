@@ -107,7 +107,7 @@ impl
                 tracing::error!(
                     error = ?error_vec_struct,
                     children_where_was = ?where_was_vec_struct,
-                    github_source_place = where_was.github_file_line_column(&crate::helpers::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
             crate::config_mods::source_place_type::SourcePlaceType::None => {

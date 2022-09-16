@@ -10,6 +10,7 @@ mod helpers;
 mod idempotency;
 mod init_dbs_logic;
 pub mod issue_delivery_worker;
+pub mod lazy_static;
 mod logs_logic;
 mod mongo_integration;
 mod net_check;
