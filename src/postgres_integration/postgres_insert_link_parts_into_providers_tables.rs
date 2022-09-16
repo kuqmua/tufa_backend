@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -47,7 +47,7 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
         if !formatted.is_empty() {
             formatted.pop();
         }
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = formatted,
@@ -73,7 +73,7 @@ impl tufa_common::traits::get_source::GetSource
     for PostgresInsertLinkPartsIntoProvidersTablesError
 {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => {
                 let mut formatted = self

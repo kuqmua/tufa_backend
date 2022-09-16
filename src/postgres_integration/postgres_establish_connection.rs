@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -35,7 +35,7 @@ impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
     for PostgresEstablishConnectionError
 {
     fn with_tracing(source: sqlx::Error, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = format!("{}", source),
@@ -59,7 +59,7 @@ impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
 
 impl tufa_common::traits::get_source::GetSource for PostgresEstablishConnectionError {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => format!("{}", self.source),
         }

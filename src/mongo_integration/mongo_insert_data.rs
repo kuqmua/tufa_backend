@@ -1,5 +1,5 @@
 use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use chrono::DateTime;

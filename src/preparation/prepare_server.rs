@@ -1,6 +1,6 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_dbs::InitDbsError;
+use crate::lazy_static::config::CONFIG;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use chrono::DateTime;
@@ -25,7 +25,7 @@ pub struct PreparationError {
 
 // impl crate::traits::get_where_was::GetWhereWas for PreparationError {
 //     fn get_where_was(&self) -> String {
-//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
 //             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
 //             false => format!("{} {}", self.where_was, self.source.get_where_was()),
 //         }
@@ -52,7 +52,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 
 impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
     fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),

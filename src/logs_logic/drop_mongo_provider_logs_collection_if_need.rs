@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_collection;
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;

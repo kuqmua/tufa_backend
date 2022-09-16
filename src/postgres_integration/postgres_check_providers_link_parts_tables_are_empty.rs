@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -43,7 +43,7 @@ impl tufa_common::traits::get_source::GetSource
     for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum
 {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
             false => {
                 let mut formatted = match self {
@@ -80,7 +80,7 @@ impl
         source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
     ) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -115,7 +115,7 @@ impl tufa_common::traits::get_source::GetSource
     for PostgresCheckProvidersLinkPartsTablesEmptyError
 {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => {
                 let mut formatted = match &self.source {

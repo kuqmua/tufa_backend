@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
@@ -44,7 +44,7 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
         source: CheckAvailabilityErrorEnum,
         where_was: tufa_common::where_was::WhereWas,
     ) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = format!("{}", source.get_source()),
@@ -93,7 +93,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for CheckAvailabilityError {
 //     fn get_where_was(&self) -> String {
-//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
 //             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
 //             false => format!("{} {}", self.where_was, self.source.get_where_was()),
 //         }

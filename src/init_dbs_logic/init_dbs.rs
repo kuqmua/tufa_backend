@@ -1,6 +1,6 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesError;
+use crate::lazy_static::config::CONFIG;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
@@ -52,7 +52,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 //             formatted_vec.pop();
 //         }
 //         let formatted = format!("[{}]", formatted_vec);
-//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
 //             true => format!("{:#?} {:#?}", self.where_was, formatted),
 //             false => format!("{} {}", self.where_was, formatted),
 //         }
@@ -71,7 +71,7 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
         if !errors.is_empty() {
             errors.pop();
         }
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
@@ -95,7 +95,7 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
 
 impl tufa_common::traits::get_source::GetSource for InitDbsError {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => {
                 let mut formatted = self

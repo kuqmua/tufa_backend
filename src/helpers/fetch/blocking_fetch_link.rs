@@ -1,5 +1,5 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
+use crate::lazy_static::config::CONFIG;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;

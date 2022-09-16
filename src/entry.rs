@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::preparation::prepare_server::prepare_server;
 use crate::prints::print_colorful_message::print_colorful_message;

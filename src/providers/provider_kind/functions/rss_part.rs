@@ -1,5 +1,5 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;

@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use ansi_term::Colour;
 use ansi_term::Colour::RGB;
 use tufa_common::traits::print_type_trait::PrintTypeTrait;

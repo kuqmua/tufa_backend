@@ -12,7 +12,7 @@ pub fn print_wrapper(
     github_sources_track: String,
     message: String,
 ) {
-    match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+    match crate::lazy_static::config::CONFIG.source_place_type {
         crate::config_mods::source_place_type::SourcePlaceType::Source => {
             eprintln!(
                 "{}\n{}",

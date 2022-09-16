@@ -1,6 +1,6 @@
-use crate::config_mods::lazy_static_config::CONFIG;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
+use crate::lazy_static::config::CONFIG;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -44,7 +44,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitTablesError {
 //     fn get_where_was(&self) -> String {
-//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
 //             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
 //             false => format!("{} {}", self.where_was, self.source.get_where_was()),
 //         }
@@ -66,7 +66,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 
 impl tufa_common::traits::get_source::GetSource for InitTablesErrorEnum {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
             false => {
                 let mut formatted = match self {
@@ -83,7 +83,7 @@ impl tufa_common::traits::get_source::GetSource for InitTablesErrorEnum {
 
 impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTablesError {
     fn with_tracing(source: InitTablesErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -107,7 +107,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for Ini
 
 impl tufa_common::traits::get_source::GetSource for InitTablesError {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => self.source.get_source(),
         }

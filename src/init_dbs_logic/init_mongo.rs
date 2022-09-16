@@ -1,4 +1,4 @@
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -41,7 +41,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for Init
         source: InitMongoErrorEnum,
         where_was: tufa_common::where_was::WhereWas,
     ) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -77,22 +77,19 @@ impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
     fn get_source(&self) -> String {
         match self {
             InitMongoErrorEnum::ClientOptionsParse(e) => {
-                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
-                {
+                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
                     true => format!("{:#?}", e),
                     false => format!("{}", e),
                 }
             }
             InitMongoErrorEnum::ClientWithOptions(e) => {
-                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
-                {
+                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
                     true => format!("{:#?}", e),
                     false => format!("{}", e),
                 }
             }
             InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(e) => {
-                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
-                {
+                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
                     true => format!("{:#?}", e),
                     false => {
                         let mut formatted = e
@@ -112,8 +109,7 @@ impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
                 }
             }
             InitMongoErrorEnum::InsertManyError(e) => {
-                match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable
-                {
+                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
                     true => format!("{:#?}", e),
                     false => {
                         let mut formatted = e
@@ -144,7 +140,7 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
 
 impl std::fmt::Display for CollectionCountDocumentsOrIsNotEmpty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => write!(f, "{:#?}", self),
             false => match self {
                 CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e) => write!(f, "{}", e),

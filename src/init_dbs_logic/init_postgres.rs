@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::time::Duration;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-use crate::config_mods::lazy_static_config::CONFIG;
+use crate::lazy_static::config::CONFIG;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
@@ -44,7 +44,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Po
 }
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitError {
 //     fn get_where_was(&self) -> String {
-//         match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
 //             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
 //             false => format!("{} {}", self.where_was, self.source.get_where_was()),
 //         }
@@ -65,7 +65,7 @@ pub enum PostgresInitErrorEnum {
 
 impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self),
             false => match self {
                 PostgresInitErrorEnum::EstablishConnection(e) => e.get_source(),
@@ -111,7 +111,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 
 impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for PostgresInitError {
     fn with_tracing(source: PostgresInitErrorEnum, where_was: WhereWas) -> Self {
-        match crate::config_mods::lazy_static_config::CONFIG.source_place_type {
+        match crate::lazy_static::config::CONFIG.source_place_type {
             crate::config_mods::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -135,7 +135,7 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
 
 impl tufa_common::traits::get_source::GetSource for PostgresInitError {
     fn get_source(&self) -> String {
-        match crate::config_mods::lazy_static_config::CONFIG.is_debug_implementation_enable {
+        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
             true => format!("{:#?}", self.source),
             false => self.get_source(),
         }
