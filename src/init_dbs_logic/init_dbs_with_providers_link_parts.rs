@@ -3,12 +3,14 @@ use crate::init_dbs_logic::init_mongo::InitMongoError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitError;
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
@@ -155,8 +157,12 @@ impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErr
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    where_was = format!(
+                        "{} {}",
+                        where_was
+                            .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+                    ),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

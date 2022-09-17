@@ -59,12 +59,12 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = format!("{}", source.get_source()),
-                    children_where_was = format!(
-                        "{}",
+                    where_was = format!(
+                        "{} {}",
+                        where_was
+                            .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                         source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
                     ),
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
