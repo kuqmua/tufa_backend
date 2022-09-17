@@ -1,6 +1,7 @@
 use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_dbs::InitDbsError;
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
 use chrono::DateTime;
@@ -53,25 +54,28 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
     fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+            tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
                     where_was = format!(
                         "{} {}",
                         where_was.file_line_column(),
-                        source.get_bunyan_where_was()
+                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
                     ),
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+            tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    children_where_was = format!("{}", source.get_bunyan_where_was()),
+                    children_where_was = format!(
+                        "{}",
+                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+                    ),
                     github_source_place = where_was
                         .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
+            tufa_common::config::source_place_type::SourcePlaceType::None => {
                 tracing::error!(error = source.get_source());
             }
         }
@@ -103,30 +107,30 @@ impl PreparationErrorEnum {
     }
 }
 
-impl Display for PreparationError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => write!(f, "{:?} {}", self.where_was, self.source),
-        }
-    }
-}
+// impl Display for PreparationError {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         match CONFIG.is_debug_implementation_enable {
+//             true => write!(f, "{:#?}", self),
+//             false => write!(f, "{:?} {}", self.where_was, self.source),
+//         }
+//     }
+// }
 
-impl Display for PreparationErrorEnum {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => match self {
-                PreparationErrorEnum::CheckAvailability(source) => {
-                    write!(f, "{}", *source)
-                }
-                PreparationErrorEnum::InitDbs(source) => {
-                    write!(f, "{:#?}", *source)
-                }
-            },
-        }
-    }
-}
+// impl Display for PreparationErrorEnum {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         match CONFIG.is_debug_implementation_enable {
+//             true => write!(f, "{:#?}", self),
+//             false => match self {
+//                 PreparationErrorEnum::CheckAvailability(source) => {
+//                     write!(f, "{}", *source)
+//                 }
+//                 PreparationErrorEnum::InitDbs(source) => {
+//                     write!(f, "{:#?}", *source)
+//                 }
+//             },
+//         }
+//     }
+// }
 
 #[deny(
     clippy::indexing_slicing,

@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
@@ -92,25 +93,27 @@ impl
         let where_was_vec_struct = TracingVec {
             vec: source
                 .iter()
-                .map(|(_pk, error)| error.get_bunyan_where_was())
+                .map(|(_pk, error)| {
+                    error.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+                })
                 .collect::<Vec<String>>(),
         };
         match crate::lazy_static::config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+            tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = ?error_vec_struct,
                     children_where_was = ?where_was_vec_struct,
                     source_place = where_was.file_line_column(),
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+            tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = ?error_vec_struct,
                     children_where_was = ?where_was_vec_struct,
                     github_source_place = where_was.github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
+            tufa_common::config::source_place_type::SourcePlaceType::None => {
                 tracing::error!(error = ?error_vec_struct);
             }
         }

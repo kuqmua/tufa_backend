@@ -72,20 +72,20 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
             errors.pop();
         }
         match crate::lazy_static::config::CONFIG.source_place_type {
-            crate::config_mods::source_place_type::SourcePlaceType::Source => {
+            tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
                     source_place = format!("{}", where_was.file_line_column())
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::Github => {
+            tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = errors,
                     github_source_place = where_was
                         .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
                 );
             }
-            crate::config_mods::source_place_type::SourcePlaceType::None => {
+            tufa_common::config::source_place_type::SourcePlaceType::None => {
                 tracing::error!(error = errors);
             }
         }

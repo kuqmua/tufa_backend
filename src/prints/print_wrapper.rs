@@ -13,21 +13,21 @@ pub fn print_wrapper(
     message: String,
 ) {
     match crate::lazy_static::config::CONFIG.source_place_type {
-        crate::config_mods::source_place_type::SourcePlaceType::Source => {
+        tufa_common::config::source_place_type::SourcePlaceType::Source => {
             eprintln!(
                 "{}\n{}",
                 color.bold().paint(sources_track),
                 color.bold().paint(message)
             );
         }
-        crate::config_mods::source_place_type::SourcePlaceType::Github => {
+        tufa_common::config::source_place_type::SourcePlaceType::Github => {
             eprintln!(
                 "{}\n{}",
                 color.bold().paint(github_sources_track),
                 color.bold().paint(message)
             );
         }
-        crate::config_mods::source_place_type::SourcePlaceType::None => {
+        tufa_common::config::source_place_type::SourcePlaceType::None => {
             eprintln!("{}", color.bold().paint(message));
         }
     }
