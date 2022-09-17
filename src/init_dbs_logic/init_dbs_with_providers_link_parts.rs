@@ -146,8 +146,13 @@ impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErr
 impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErrorEnum>
     for InitDbsProvidersLinkPartsError
 {
-    fn with_tracing(source: InitDbsProvidersLinkPartsErrorEnum, where_was: WhereWas) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+    fn with_tracing(
+        source: InitDbsProvidersLinkPartsErrorEnum,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -204,6 +209,8 @@ pub async fn init_dbs_with_providers_link_parts(
                 true => Err(Box::new(InitDbsProvidersLinkPartsError::with_tracing(
                     InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(InitDbsProvidersLinkPartsError::new(
                     InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
@@ -249,6 +256,8 @@ pub async fn init_dbs_with_providers_link_parts(
                                     InitDbsProvidersLinkPartsError::with_tracing(
                                         InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
                                         where_was,
+                                        &CONFIG.source_place_type,
+                                        &GIT_INFO.data,
                                     ),
                                 ));
                             }
@@ -276,6 +285,8 @@ pub async fn init_dbs_with_providers_link_parts(
                                     InitDbsProvidersLinkPartsError::with_tracing(
                                         InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
                                         where_was,
+                                        &CONFIG.source_place_type,
+                                        &GIT_INFO.data,
                                     ),
                                 ));
                             }
@@ -305,6 +316,8 @@ pub async fn init_dbs_with_providers_link_parts(
                                         InitDbsProvidersLinkPartsError::with_tracing(
                                             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
                                             where_was,
+                                            &CONFIG.source_place_type,
+                                            &GIT_INFO.data,
                                         ),
                                     ));
                                 }
@@ -330,6 +343,8 @@ pub async fn init_dbs_with_providers_link_parts(
                                         InitDbsProvidersLinkPartsError::with_tracing(
                                             InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
                                             where_was,
+                                            &CONFIG.source_place_type,
+                                            &GIT_INFO.data,
                                         ),
                                     ));
                                 }
@@ -357,6 +372,8 @@ pub async fn init_dbs_with_providers_link_parts(
                                         postgres: *postgres_error,
                                     },
                                     where_was,
+                                    &CONFIG.source_place_type,
+                                    &GIT_INFO.data,
                                 )));
                                 }
                                 false => {

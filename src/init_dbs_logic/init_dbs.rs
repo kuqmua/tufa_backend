@@ -1,6 +1,7 @@
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesError;
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
@@ -60,7 +61,12 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 // }
 
 impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
-    fn with_tracing(source: Vec<InitTablesError>, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: Vec<InitTablesError>,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         let mut errors = source
             .iter()
             .map(|error| format!("{},", error.get_source()))
@@ -143,7 +149,12 @@ pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsError>> {
         };
         match should_trace {
             true => {
-                return Err(Box::new(InitDbsError::with_tracing(results, where_was)));
+                return Err(Box::new(InitDbsError::with_tracing(
+                    results,
+                    where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                )));
             }
             false => {
                 return Err(Box::new(InitDbsError::new(results, where_was)));

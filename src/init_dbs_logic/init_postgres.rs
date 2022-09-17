@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::time::Duration;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
@@ -110,7 +111,12 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 // }
 
 impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for PostgresInitError {
-    fn with_tracing(source: PostgresInitErrorEnum, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: PostgresInitErrorEnum,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
@@ -165,6 +171,8 @@ pub async fn init_postgres(
                 true => Err(Box::new(PostgresInitError::with_tracing(
                     PostgresInitErrorEnum::EstablishConnection(*e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(PostgresInitError::new(
                     PostgresInitErrorEnum::EstablishConnection(*e),
@@ -192,6 +200,8 @@ pub async fn init_postgres(
                         return Err(Box::new(PostgresInitError::with_tracing(
                             PostgresInitErrorEnum::CreateTableQueries(*e),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {
@@ -221,6 +231,8 @@ pub async fn init_postgres(
                         return Err(Box::new(PostgresInitError::with_tracing(
                             PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {
@@ -250,6 +262,8 @@ pub async fn init_postgres(
                         return Err(Box::new(PostgresInitError::with_tracing(
                             PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {
@@ -301,6 +315,8 @@ pub async fn init_postgres(
                         return Err(Box::new(PostgresInitError::with_tracing(
                             PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {

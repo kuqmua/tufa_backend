@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -65,7 +66,10 @@ pub async fn postgres_check_availability(
         match should_trace {
             true => {
                 return Err(Box::new(PostgresCheckAvailabilityError::with_tracing(
-                    e, where_was,
+                    e,
+                    where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {

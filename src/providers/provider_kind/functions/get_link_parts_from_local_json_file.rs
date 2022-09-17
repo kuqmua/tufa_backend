@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
@@ -78,6 +79,8 @@ impl ProviderKind {
                     true => Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
                         where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
                     ))),
                     false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
                         GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
@@ -101,6 +104,8 @@ impl ProviderKind {
                             return Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
                             where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                         )));
                         }
                         false => {
@@ -125,6 +130,8 @@ impl ProviderKind {
                                 Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
                                     GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                                     where_was,
+                                    &CONFIG.source_place_type,
+                                    &GIT_INFO.data,
                                 )))
                             }
                             false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(

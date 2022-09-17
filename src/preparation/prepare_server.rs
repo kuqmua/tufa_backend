@@ -66,7 +66,12 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 // }
 
 impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
-    fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: PreparationErrorEnum,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
@@ -165,6 +170,8 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
                 return Err(Box::new(PreparationError::with_tracing(
                     PreparationErrorEnum::CheckAvailability(*e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {
@@ -194,6 +201,8 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
                 return Err(Box::new(PreparationError::with_tracing(
                     PreparationErrorEnum::InitDbs(*e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {

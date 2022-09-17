@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -101,6 +102,8 @@ impl
     fn with_tracing(
         source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
         where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
@@ -233,7 +236,9 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 return Err(Box::new(
                     PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::with_tracing(
                         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(count_provider_links_tables_error_hashmap),
-                        where_was
+                        where_was,
+                                            &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {
@@ -258,7 +263,9 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 return Err(Box::new(
                     PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::with_tracing(
                         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(provider_links_tables_rows_length_not_equal_error_hashmap),
-                        where_was
+                        where_was,
+                                            &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {

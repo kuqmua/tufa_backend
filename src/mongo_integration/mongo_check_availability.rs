@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -46,10 +47,12 @@ impl MongoCheckAvailabilityError {
     fn init(
         source: MongoCheckAvailabilityErrorEnum,
         where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
         should_trace: bool,
     ) -> Self {
         match should_trace {
-            true => Self::with_tracing(source, where_was),
+            true => Self::with_tracing(source, where_was, source_place_type, git_info),
             false => Self::new(source, where_was),
         }
     }
@@ -82,6 +85,8 @@ pub async fn mongo_check_availability(
                 line: line!(),
                 column: column!(),
             },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
             should_trace,
         ))),
         Ok(mut client_options) => {
@@ -97,6 +102,8 @@ pub async fn mongo_check_availability(
                         line: line!(),
                         column: column!(),
                     },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                     should_trace,
                 ))),
                 Ok(client) => {
@@ -114,6 +121,8 @@ pub async fn mongo_check_availability(
                                 line: line!(),
                                 column: column!(),
                             },
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                             should_trace,
                         )));
                     }

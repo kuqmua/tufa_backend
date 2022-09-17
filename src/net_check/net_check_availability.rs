@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -71,6 +72,8 @@ pub async fn net_check_availability(
                 true => Err(Box::new(NetCheckAvailabilityError::with_tracing(
                     NetCheckAvailabilityErrorEnum::ReqwestGet(e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(NetCheckAvailabilityError::new(
                     NetCheckAvailabilityErrorEnum::ReqwestGet(e),
@@ -93,6 +96,8 @@ pub async fn net_check_availability(
                         return Err(Box::new(NetCheckAvailabilityError::with_tracing(
                             NetCheckAvailabilityErrorEnum::Client(status),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {
@@ -116,6 +121,8 @@ pub async fn net_check_availability(
                         return Err(Box::new(NetCheckAvailabilityError::with_tracing(
                             NetCheckAvailabilityErrorEnum::Server(status),
                             where_was,
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
                         )));
                     }
                     false => {

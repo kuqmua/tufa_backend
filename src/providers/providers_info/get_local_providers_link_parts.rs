@@ -82,6 +82,8 @@ impl
     fn with_tracing(
         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
         where_was: tufa_common::where_was::WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
         let error_vec_struct = TracingVec {
             vec: source
@@ -201,6 +203,8 @@ pub async fn get_local_providers_link_parts(
                 return Err(Box::new(GetLocalProvidersLinkPartsError::with_tracing(
                     errors_hashmap,
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {

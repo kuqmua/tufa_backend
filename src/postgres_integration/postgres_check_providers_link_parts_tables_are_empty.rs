@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -79,6 +80,8 @@ impl
     fn with_tracing(
         source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
         where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
@@ -196,6 +199,8 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
                             count_provider_links_tables_error_hashmap,
                         ),
                         where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
                     ),
                 ));
             }
@@ -227,6 +232,8 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
                             provider_links_tables_not_empty_error_hashmap,
                         ),
                         where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
                     ),
                 ));
             }

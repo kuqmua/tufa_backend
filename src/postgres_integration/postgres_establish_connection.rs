@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use chrono::DateTime;
 use chrono::FixedOffset;
@@ -34,7 +35,12 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
     for PostgresEstablishConnectionError
 {
-    fn with_tracing(source: sqlx::Error, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: sqlx::Error,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
@@ -92,7 +98,10 @@ pub async fn postgres_establish_connection(
             };
             match should_trace {
                 true => Err(Box::new(PostgresEstablishConnectionError::with_tracing(
-                    e, where_was,
+                    e,
+                    where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(PostgresEstablishConnectionError::new(
                     e, where_was,

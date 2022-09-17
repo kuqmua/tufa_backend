@@ -44,15 +44,17 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
     fn with_tracing(
         source: CheckAvailabilityErrorEnum,
         where_was: tufa_common::where_was::WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = format!("{}", source.get_source()),
                     where_was = format!(
                         "{} {}",
                         where_was.file_line_column(),
-                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data),
+                        source.get_bunyan_where_was(source_place_type, git_info),
                     ),
                 );
             }
@@ -63,7 +65,7 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
                         "{} {}",
                         where_was
                             .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
-                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+                        source.get_bunyan_where_was(source_place_type, git_info)
                     ),
                 );
             }
@@ -264,6 +266,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
                     CheckAvailabilityErrorEnum::Mongo(m),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::Mongo(m),
@@ -283,6 +287,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
                     CheckAvailabilityErrorEnum::Postgres(p),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::Postgres(p),
@@ -305,6 +311,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                         postgres_source: p,
                     },
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::MongoAndPostgres {
@@ -327,6 +335,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                 true => Err(Box::new(CheckAvailabilityError::with_tracing(
                     CheckAvailabilityErrorEnum::Net(n),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::Net(n),
@@ -349,6 +359,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                         mongo_source: m,
                     },
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::NetAndMongo {
@@ -374,6 +386,8 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                         postgres_source: p,
                     },
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::NetAndPostgres {
@@ -400,8 +414,10 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                         mongo_source: m,
                     },
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
-                false => Err(Box::new(CheckAvailabilityError::with_tracing(
+                false => Err(Box::new(CheckAvailabilityError::new(
                     CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
                         net_source: n,
                         postgres_source: p,

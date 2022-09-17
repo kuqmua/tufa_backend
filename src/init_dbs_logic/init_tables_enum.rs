@@ -1,6 +1,7 @@
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
@@ -82,7 +83,12 @@ impl tufa_common::traits::get_source::GetSource for InitTablesErrorEnum {
 }
 
 impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTablesError {
-    fn with_tracing(source: InitTablesErrorEnum, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: InitTablesErrorEnum,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
@@ -137,6 +143,8 @@ impl InitTablesEnum {
                             return Err(Box::new(InitTablesError::with_tracing(
                                 InitTablesErrorEnum::ProvidersLinkParts(*e),
                                 where_was,
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
                             )));
                         }
                         false => {

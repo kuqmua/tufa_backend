@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -36,7 +37,12 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
     for PostgresCreateProvidersDbsError
 {
-    fn with_tracing(source: HashMap<ProviderKind, sqlx::Error>, where_was: WhereWas) -> Self {
+    fn with_tracing(
+        source: HashMap<ProviderKind, sqlx::Error>,
+        where_was: WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
+    ) -> Self {
         let mut formatted = source
             .iter()
             .map(|(pk, error)| format!("{} {},", pk, error))
@@ -133,6 +139,8 @@ pub async fn postgres_create_providers_tables_if_not_exists(
                 return Err(Box::new(PostgresCreateProvidersDbsError::with_tracing(
                     table_creation_error_hashmap,
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 )));
             }
             false => {

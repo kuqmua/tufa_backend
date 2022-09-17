@@ -1,4 +1,5 @@
 use crate::lazy_static::config::CONFIG;
+use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use chrono::DateTime;
@@ -40,6 +41,8 @@ impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for Init
     fn with_tracing(
         source: InitMongoErrorEnum,
         where_was: tufa_common::where_was::WhereWas,
+        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+        git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
@@ -173,6 +176,8 @@ pub async fn init_mongo(
                 true => Err(Box::new(InitMongoError::with_tracing(
                     InitMongoErrorEnum::ClientOptionsParse(e),
                     where_was,
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
                 ))),
                 false => Err(Box::new(InitMongoError::new(
                     InitMongoErrorEnum::ClientOptionsParse(e),
@@ -193,6 +198,8 @@ pub async fn init_mongo(
                     true => Err(Box::new(InitMongoError::with_tracing(
                         InitMongoErrorEnum::ClientWithOptions(e),
                         where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
                     ))),
                     false => Err(Box::new(InitMongoError::new(
                         InitMongoErrorEnum::ClientWithOptions(e),
@@ -247,6 +254,8 @@ pub async fn init_mongo(
                                     error_vec_count_documents,
                                 ),
                                 where_was,
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
                             )));
                         }
                         false => {
@@ -285,6 +294,8 @@ pub async fn init_mongo(
                             return Err(Box::new(InitMongoError::with_tracing(
                                 InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
                                 where_was,
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
                             )));
                         }
                         false => {
