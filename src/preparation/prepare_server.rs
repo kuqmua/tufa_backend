@@ -72,14 +72,14 @@ impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for Pr
         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
                     where_was = source.get_bunyan_with_additional_where_was(
                         &where_was,
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
+                        source_place_type,
+                        git_info,
                     )
                 );
             }
@@ -88,8 +88,8 @@ impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for Pr
                     error = source.get_source(),
                     where_was = source.get_bunyan_with_additional_where_was(
                         &where_was,
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
+                        source_place_type,
+                        git_info,
                     )
                 );
             }
