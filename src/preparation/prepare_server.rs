@@ -12,6 +12,7 @@ use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
 use std::fmt::Display;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
+use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
@@ -51,28 +52,40 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
     }
 }
 
+// impl PreparationError {
+//     pub fn where_was_error_with_tracing_as_string(
+//         source: PreparationErrorEnum,
+//         where_was: WhereWas,
+//     ) -> String {
+//         format!(
+//             "{} {}",
+//             where_was.file_line_column(),
+//             source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+//         )
+//     }
+// }
+
 impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
     fn with_tracing(source: PreparationErrorEnum, where_was: WhereWas) -> Self {
         match crate::lazy_static::config::CONFIG.source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
-                    where_was = format!(
-                        "{} {}",
-                        where_was.file_line_column(),
-                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
-                    ),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    where_was = format!(
-                        "{} {}",
-                        where_was
-                            .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
-                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
-                    ),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
