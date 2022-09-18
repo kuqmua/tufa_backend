@@ -17,6 +17,7 @@ use tufa_common::where_was::WhereWasWithAddition;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 // use init_error::InitError;
 use std::collections::HashMap;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use valuable::Valuable;
 
 #[derive(Debug)] //, ImplGetWhereWasForErrorStruct
@@ -191,6 +192,22 @@ pub async fn get_local_providers_link_parts(
         }
     }
     if !errors_hashmap.is_empty() {
+        // return Err(Box::new(
+        //     GetLocalProvidersLinkPartsError::init_error_with_possible_trace(
+        //         errors_hashmap,
+        //         WhereWas {
+        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //             file: file!(),
+        //             line: line!(),
+        //             column: column!(),
+        //         },
+        //         &CONFIG.source_place_type,
+        //         &GIT_INFO.data,
+        //         should_trace,
+        //     ),
+        // ));
+
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

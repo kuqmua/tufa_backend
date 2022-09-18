@@ -18,6 +18,7 @@ use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasOneOrMany;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
 #[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct InitDbsProvidersLinkPartsError {
@@ -197,27 +198,21 @@ pub async fn init_dbs_with_providers_link_parts(
     should_trace: bool,
 ) -> Result<(), Box<InitDbsProvidersLinkPartsError>> {
     match get_local_providers_link_parts(false).await {
-        Err(e) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(InitDbsProvidersLinkPartsError::with_tracing(
-                    InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                    InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
-                    where_was,
-                ))),
-            }
-        }
+        Err(e) => Err(Box::new(
+            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
         Ok(providers_json_local_data_hashmap) => {
             let providers_json_local_data_hashmap_clone = providers_json_local_data_hashmap.clone();
             let (mongo_insert_data_option_result, postgres_insert_data_option_result) = tokio::join!(
@@ -243,152 +238,99 @@ pub async fn init_dbs_with_providers_link_parts(
                 (None, None) => (),
                 (None, Some(pg_result)) => {
                     if let Err(e) = pg_result {
-                        let where_was = WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        };
-                        match should_trace {
-                            true => {
-                                return Err(Box::new(
-                                    InitDbsProvidersLinkPartsError::with_tracing(
-                                        InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
-                                        where_was,
-                                        &CONFIG.source_place_type,
-                                        &GIT_INFO.data,
-                                    ),
-                                ));
-                            }
-                            false => {
-                                return Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                                    InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
-                                    where_was,
-                                )));
-                            }
-                        }
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                                InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
+                                WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
+                                should_trace,
+                            ),
+                        ));
                     }
                 }
                 (Some(mongo_result), None) => {
                     if let Err(e) = mongo_result {
-                        let where_was = WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        };
-                        match should_trace {
-                            true => {
-                                return Err(Box::new(
-                                    InitDbsProvidersLinkPartsError::with_tracing(
-                                        InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
-                                        where_was,
-                                        &CONFIG.source_place_type,
-                                        &GIT_INFO.data,
-                                    ),
-                                ));
-                            }
-                            false => {
-                                return Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                                    InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
-                                    where_was,
-                                )));
-                            }
-                        }
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
+                                WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
+                                should_trace,
+                            ),
+                        ));
                     }
                 }
-                (Some(mongo_result), Some(pg_result)) => {
-                    match (mongo_result, pg_result) {
-                        (Ok(_), Ok(_)) => (),
-                        (Ok(_), Err(e)) => {
-                            let where_was = WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            };
-                            match should_trace {
-                                true => {
-                                    return Err(Box::new(
-                                        InitDbsProvidersLinkPartsError::with_tracing(
-                                            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
-                                            where_was,
-                                            &CONFIG.source_place_type,
-                                            &GIT_INFO.data,
-                                        ),
-                                    ));
-                                }
-                                false => {
-                                    return Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                                        InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
-                                        where_was,
-                                    )));
-                                }
-                            }
-                        }
-                        (Err(e), Ok(_)) => {
-                            let where_was = WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            };
-                            match should_trace {
-                                true => {
-                                    return Err(Box::new(
-                                        InitDbsProvidersLinkPartsError::with_tracing(
-                                            InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
-                                            where_was,
-                                            &CONFIG.source_place_type,
-                                            &GIT_INFO.data,
-                                        ),
-                                    ));
-                                }
-                                false => {
-                                    return Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                                        InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
-                                        where_was,
-                                    )));
-                                }
-                            }
-                        }
-                        (Err(mongo_error), Err(postgres_error)) => {
-                            let where_was = WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
-                            };
-                            match should_trace {
-                                true => {
-                                    return Err(Box::new(InitDbsProvidersLinkPartsError::with_tracing(
-                                    InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
-                                        mongo: *mongo_error,
-                                        postgres: *postgres_error,
-                                    },
-                                    where_was,
-                                    &CONFIG.source_place_type,
-                                    &GIT_INFO.data,
-                                )));
-                                }
-                                false => {
-                                    return Err(Box::new(InitDbsProvidersLinkPartsError::new(
-                                        InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
-                                            mongo: *mongo_error,
-                                            postgres: *postgres_error,
-                                        },
-                                        where_was,
-                                    )));
-                                }
-                            }
-                        }
+                (Some(mongo_result), Some(pg_result)) => match (mongo_result, pg_result) {
+                    (Ok(_), Ok(_)) => (),
+                    (Ok(_), Err(e)) => {
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                                InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
+                                WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
+                                should_trace,
+                            ),
+                        ));
                     }
-                }
+                    (Err(e), Ok(_)) => {
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
+                                WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
+                                should_trace,
+                            ),
+                        ));
+                    }
+                    (Err(mongo_error), Err(postgres_error)) => {
+                        return Err(Box::new(
+                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                                InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
+                                    mongo: *mongo_error,
+                                    postgres: *postgres_error,
+                                },
+                                WhereWas {
+                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    file: file!(),
+                                    line: line!(),
+                                    column: column!(),
+                                },
+                                &CONFIG.source_place_type,
+                                &GIT_INFO.data,
+                                should_trace,
+                            ),
+                        ));
+                    }
+                },
             }
             Ok(())
         }
