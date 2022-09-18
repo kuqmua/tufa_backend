@@ -96,9 +96,7 @@ impl
         let where_was_vec_struct = TracingVec {
             vec: source
                 .iter()
-                .map(|(_pk, error)| {
-                    error.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
-                })
+                .map(|(_pk, error)| error.get_bunyan_where_was(source_place_type, git_info))
                 .collect::<Vec<String>>(),
         };
         match crate::lazy_static::config::CONFIG.source_place_type {
@@ -113,7 +111,7 @@ impl
                 tracing::error!(
                     error = ?error_vec_struct,
                     children_where_was = ?where_was_vec_struct,
-                    github_source_place = where_was.github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

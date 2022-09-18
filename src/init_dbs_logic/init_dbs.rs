@@ -13,6 +13,7 @@ use tufa_common::where_was::WhereWas;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
 use strum::IntoEnumIterator;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
 #[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct
 pub struct InitDbsError {
@@ -77,7 +78,7 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
         if !errors.is_empty() {
             errors.pop();
         }
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
@@ -87,8 +88,7 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = errors,
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
@@ -140,26 +140,19 @@ pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsError>> {
             })
             .collect::<Vec<InitTablesError>>();
     if !results.is_empty() {
-        let where_was = WhereWas {
-            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file: file!(),
-            line: line!(),
-            column: column!(),
-        };
-        match should_trace {
-            true => {
-                return Err(Box::new(InitDbsError::with_tracing(
-                    results,
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                )));
-            }
-            false => {
-                return Err(Box::new(InitDbsError::new(results, where_was)));
-            }
-        }
+        return Err(Box::new(InitDbsError::init_error_with_possible_trace(
+            results,
+            WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
+            should_trace,
+        )));
     }
     Ok(())
 }

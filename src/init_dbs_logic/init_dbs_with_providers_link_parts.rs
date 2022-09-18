@@ -165,9 +165,8 @@ impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErr
                     error = source.get_source(),
                     where_was = format!(
                         "{} {}",
-                        where_was
-                            .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
-                        source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
+                        where_was.github_file_line_column(git_info),
+                        source.get_bunyan_where_was(source_place_type, git_info)
                     ),
                 );
             }

@@ -15,6 +15,7 @@ use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -158,29 +159,19 @@ impl PreparationErrorEnum {
 )]
 pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationError>> {
     if let Err(e) = check_availability(false).await {
-        let where_was = WhereWas {
-            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file: file!(),
-            line: line!(),
-            column: column!(),
-        };
-        match should_trace {
-            true => {
-                return Err(Box::new(PreparationError::with_tracing(
-                    PreparationErrorEnum::CheckAvailability(*e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                )));
-            }
-            false => {
-                return Err(Box::new(PreparationError::new(
-                    PreparationErrorEnum::CheckAvailability(*e),
-                    where_was,
-                )));
-            }
-        }
+        return Err(Box::new(PreparationError::init_error_with_possible_trace(
+            PreparationErrorEnum::CheckAvailability(*e),
+            WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
+            should_trace,
+        )));
     }
     //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
     if !CONFIG.is_dbs_initialization_enabled
@@ -189,29 +180,19 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
         return Ok(());
     }
     if let Err(e) = init_dbs(false).await {
-        let where_was = WhereWas {
-            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file: file!(),
-            line: line!(),
-            column: column!(),
-        };
-        match should_trace {
-            true => {
-                return Err(Box::new(PreparationError::with_tracing(
-                    PreparationErrorEnum::InitDbs(*e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                )));
-            }
-            false => {
-                return Err(Box::new(PreparationError::new(
-                    PreparationErrorEnum::InitDbs(*e),
-                    where_was,
-                )));
-            }
-        }
+        return Err(Box::new(PreparationError::init_error_with_possible_trace(
+            PreparationErrorEnum::InitDbs(*e),
+            WhereWas {
+                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                file: file!(),
+                line: line!(),
+                column: column!(),
+            },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
+            should_trace,
+        )));
     }
     Ok(())
 }

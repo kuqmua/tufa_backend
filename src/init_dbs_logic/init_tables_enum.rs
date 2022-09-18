@@ -13,6 +13,7 @@ use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use strum_macros::EnumIter;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
 #[derive(Debug, EnumIter)]
 pub enum InitTablesEnum {
@@ -89,7 +90,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for Ini
         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -99,8 +100,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for Ini
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
@@ -131,29 +131,19 @@ impl InitTablesEnum {
         match self {
             InitTablesEnum::ProvidersLinkParts => {
                 if let Err(e) = init_dbs_with_providers_link_parts(false).await {
-                    let where_was = WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    };
-                    match should_trace {
-                        true => {
-                            return Err(Box::new(InitTablesError::with_tracing(
-                                InitTablesErrorEnum::ProvidersLinkParts(*e),
-                                where_was,
-                                &CONFIG.source_place_type,
-                                &GIT_INFO.data,
-                            )));
-                        }
-                        false => {
-                            return Err(Box::new(InitTablesError::new(
-                                InitTablesErrorEnum::ProvidersLinkParts(*e),
-                                where_was,
-                            )));
-                        }
-                    }
+                    return Err(Box::new(InitTablesError::init_error_with_possible_trace(
+                        InitTablesErrorEnum::ProvidersLinkParts(*e),
+                        WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                        should_trace,
+                    )));
                 }
             }
         }
