@@ -14,6 +14,7 @@ use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use reqwest::StatusCode;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
 #[derive(
@@ -60,78 +61,56 @@ pub async fn net_check_availability(
     should_trace: bool,
 ) -> Result<(), Box<NetCheckAvailabilityError>> {
     match reqwest::get(link).await {
-        Err(e) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(NetCheckAvailabilityError::with_tracing(
-                    NetCheckAvailabilityErrorEnum::ReqwestGet(e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(NetCheckAvailabilityError::new(
-                    NetCheckAvailabilityErrorEnum::ReqwestGet(e),
-                    where_was,
-                ))),
-            }
-        }
+        Err(e) => Err(Box::new(
+            NetCheckAvailabilityError::init_error_with_possible_trace(
+                NetCheckAvailabilityErrorEnum::ReqwestGet(e),
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
         Ok(res) => {
             let status = res.status();
             if status.is_client_error() {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(NetCheckAvailabilityError::with_tracing(
-                            NetCheckAvailabilityErrorEnum::Client(status),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(NetCheckAvailabilityError::new(
-                            NetCheckAvailabilityErrorEnum::Client(status),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(
+                    NetCheckAvailabilityError::init_error_with_possible_trace(
+                        NetCheckAvailabilityErrorEnum::Client(status),
+                        WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                        should_trace,
+                    ),
+                ));
             }
             if status.is_server_error() {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(NetCheckAvailabilityError::with_tracing(
-                            NetCheckAvailabilityErrorEnum::Server(status),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(NetCheckAvailabilityError::new(
-                            NetCheckAvailabilityErrorEnum::Server(status),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(
+                    NetCheckAvailabilityError::init_error_with_possible_trace(
+                        NetCheckAvailabilityErrorEnum::Server(status),
+                        WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                        should_trace,
+                    ),
+                ));
             }
             Ok(())
         }
