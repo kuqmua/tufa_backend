@@ -21,6 +21,7 @@ use init_error::InitError;
 // use init_error_with_tracing::InitErrorWithTracing;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use itertools::Itertools;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
 #[derive(
     Debug,
@@ -67,79 +68,57 @@ impl ProviderKind {
         should_trace: bool,
     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileError>> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
-            Err(e) => {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
-                        GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
-                        where_was,
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                    ))),
-                    false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
-                        GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
-                        where_was,
-                    ))),
-                }
-            }
-            Ok(mut file) => {
-                let mut content = Vec::new();
-                if let Err(e) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
-                {
-                    let where_was = WhereWas {
+            Err(e) => Err(Box::new(
+                GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
+                    GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
+                    WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                         file: file!(),
                         line: line!(),
                         column: column!(),
-                    };
-                    match should_trace {
-                        true => {
-                            return Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
-                            GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
-                            where_was,
+                    },
                     &CONFIG.source_place_type,
                     &GIT_INFO.data,
-                        )));
-                        }
-                        false => {
-                            return Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
+                    should_trace,
+                ),
+            )),
+            Ok(mut file) => {
+                let mut content = Vec::new();
+                if let Err(e) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
+                {
+                    return Err(Box::new(
+                        GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
-                            where_was,
-                        )));
-                        }
-                    }
+                            WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
+                            should_trace,
+                        ),
+                    ));
                 }
                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
-                    Err(e) => {
-                        let where_was = WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        };
-                        match should_trace {
-                            true => {
-                                Err(Box::new(GetLinkPartsFromLocalJsonFileError::with_tracing(
-                                    GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
-                                    where_was,
-                                    &CONFIG.source_place_type,
-                                    &GIT_INFO.data,
-                                )))
-                            }
-                            false => Err(Box::new(GetLinkPartsFromLocalJsonFileError::new(
-                                GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
-                                where_was,
-                            ))),
-                        }
-                    }
+                    Err(e) => Err(Box::new(
+                        GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
+                            GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
+                            WhereWas {
+                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                file: file!(),
+                                line: line!(),
+                                column: column!(),
+                            },
+                            &CONFIG.source_place_type,
+                            &GIT_INFO.data,
+                            should_trace,
+                        ),
+                    )),
                     Ok(file_content_as_struct) => {
                         let unique_vec: Vec<String> =
                             file_content_as_struct.data.into_iter().unique().collect();
