@@ -20,6 +20,7 @@ use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
+use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
@@ -51,22 +52,21 @@ impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = format!("{}", source.get_source()),
-                    where_was = format!(
-                        "{} {}",
-                        where_was.file_line_column(),
-                        source.get_bunyan_where_was(source_place_type, git_info),
-                    ),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        source_place_type,
+                        git_info,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = format!("{}", source.get_source()),
-                    where_was = format!(
-                        "{} {}",
-                        where_was
-                            .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
-                        source.get_bunyan_where_was(source_place_type, git_info)
-                    ),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        source_place_type,
+                        git_info,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
