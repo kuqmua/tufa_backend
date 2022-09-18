@@ -23,6 +23,7 @@ use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
@@ -254,178 +255,123 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
         mongo_check_availability(mongo_url, false),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
-        (Ok(_), Ok(_), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Mongo(m),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Mongo(m),
-                    where_was,
-                ))),
-            }
-        }
-        (Ok(_), Err(p), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Postgres(p),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Postgres(p),
-                    where_was,
-                ))),
-            }
-        }
-        (Ok(_), Err(p), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::MongoAndPostgres {
-                        mongo_source: m,
-                        postgres_source: p,
-                    },
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::MongoAndPostgres {
-                        mongo_source: m,
-                        postgres_source: p,
-                    },
-                    where_was,
-                ))),
-            }
-        }
-        (Err(n), Ok(_), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::Net(n),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::Net(n),
-                    where_was,
-                ))),
-            }
-        }
-        (Err(n), Ok(_), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::NetAndMongo {
-                        net_source: n,
-                        mongo_source: m,
-                    },
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::NetAndMongo {
-                        net_source: n,
-                        mongo_source: m,
-                    },
-                    where_was,
-                ))),
-            }
-        }
-        (Err(n), Err(p), Ok(_)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::NetAndPostgres {
-                        net_source: n,
-                        postgres_source: p,
-                    },
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::NetAndPostgres {
-                        net_source: n,
-                        postgres_source: p,
-                    },
-                    where_was,
-                ))),
-            }
-        }
-        (Err(n), Err(p), Err(m)) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(CheckAvailabilityError::with_tracing(
-                    CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                        net_source: n,
-                        postgres_source: p,
-                        mongo_source: m,
-                    },
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(CheckAvailabilityError::new(
-                    CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                        net_source: n,
-                        postgres_source: p,
-                        mongo_source: m,
-                    },
-                    where_was,
-                ))),
-            }
-        }
+        (Ok(_), Ok(_), Err(m)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::Mongo(m),
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Ok(_), Err(p), Ok(_)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::Postgres(p),
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Ok(_), Err(p), Err(m)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::MongoAndPostgres {
+                    mongo_source: m,
+                    postgres_source: p,
+                },
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Err(n), Ok(_), Ok(_)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::Net(n),
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Err(n), Ok(_), Err(m)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::NetAndMongo {
+                    net_source: n,
+                    mongo_source: m,
+                },
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Err(n), Err(p), Ok(_)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::NetAndPostgres {
+                    net_source: n,
+                    postgres_source: p,
+                },
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
+        (Err(n), Err(p), Err(m)) => Err(Box::new(
+            CheckAvailabilityError::init_error_with_possible_trace(
+                CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
+                    net_source: n,
+                    postgres_source: p,
+                    mongo_source: m,
+                },
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
     }
 }
