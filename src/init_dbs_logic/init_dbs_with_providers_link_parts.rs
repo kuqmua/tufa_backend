@@ -11,6 +11,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
+use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::with_tracing::WithTracing;
@@ -45,12 +46,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
         tufa_common::where_was::WhereWasOneOrMany::Many(vec)
     }
 }
-
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsProvidersLinkPartsError {
-//     fn get_where_was(&self) -> String {
-//         format!("{} {}", self.where_was, self.source.get_where_was())
-//     }
-// }
 
 #[derive(Debug)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
@@ -147,17 +142,21 @@ impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErr
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
-                    source_place = where_was.file_line_column(),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        source_place_type,
+                        git_info,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    where_was = format!(
-                        "{} {}",
-                        where_was.github_file_line_column(git_info),
-                        source.get_bunyan_where_was(source_place_type, git_info)
-                    ),
+                    where_was = source.get_bunyan_with_additional_where_was(
+                        &where_was,
+                        source_place_type,
+                        git_info,
+                    )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

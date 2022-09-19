@@ -44,7 +44,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for Init
         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -54,8 +54,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for Init
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

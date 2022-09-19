@@ -42,15 +42,12 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
         }
         match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = formatted,
-                    source_place = where_was.file_line_column(),
-                );
+                tracing::error!(error = formatted, where_was = where_was.file_line_column(),);
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = formatted,
-                    github_source_place = where_was.github_file_line_column(git_info),
+                    where_was = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

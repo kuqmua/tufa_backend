@@ -111,7 +111,7 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = source.get_source(),
@@ -121,8 +121,7 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = source.get_source(),
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
@@ -135,7 +134,7 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
 
 impl tufa_common::traits::get_source::GetSource for PostgresInitError {
     fn get_source(&self) -> String {
-        self.get_source()
+        self.source.get_source()
     }
 }
 

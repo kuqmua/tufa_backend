@@ -21,6 +21,11 @@ pub struct InitDbsError {
     where_was: WhereWas,
 }
 
+// #[derive(Debug)]
+// pub enum InitDbsErrorEnum {
+//     InitTables(Vec<InitTablesError>),
+// }
+
 impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
         let mut vec = Vec::new();
@@ -65,6 +70,7 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
+        //todo iteration over vec must be in another impl to use .get_bunyan_with_additional_where_was()
         let mut errors = source
             .iter()
             .map(|error| format!("{},", error.get_source()))
@@ -79,13 +85,22 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
-                    source_place = format!("{}", where_was.file_line_column())
+                    where_was = format!("{}", where_was.file_line_column()) // where_was = source.get_bunyan_with_additional_where_was(
+                                                                            //     &where_was,
+                                                                            //     source_place_type,
+                                                                            //     git_info,
+                                                                            // )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = errors,
-                    github_source_place = where_was.github_file_line_column(git_info),
+                    where_was = where_was.github_file_line_column(git_info),
+                    // where_was = source.get_bunyan_with_additional_where_was(
+                    //     &where_was,
+                    //     source_place_type,
+                    //     git_info,
+                    // )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {
