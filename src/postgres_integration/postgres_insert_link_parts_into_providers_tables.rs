@@ -7,7 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-//use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use sqlx::Pool;
 use sqlx::Postgres;
@@ -15,23 +15,10 @@ use std::collections::HashMap;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, ImplGetWhereWasOneOrManyOneForErrorStruct)]
 pub struct PostgresInsertLinkPartsIntoProvidersTablesError {
     source: HashMap<ProviderKind, sqlx::Error>,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for PostgresInsertLinkPartsIntoProvidersTablesError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
@@ -53,7 +40,7 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
         if !formatted.is_empty() {
             formatted.pop();
         }
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = formatted,
@@ -63,8 +50,7 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
                 tracing::error!(
                     error = formatted,
-                    github_source_place = where_was
-                        .github_file_line_column(&crate::lazy_static::git_info::GIT_INFO.data),
+                    github_source_place = where_was.github_file_line_column(git_info),
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::None => {

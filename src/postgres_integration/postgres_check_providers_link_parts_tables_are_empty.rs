@@ -7,7 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-//use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
@@ -15,23 +15,10 @@ use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, ImplGetWhereWasOneOrManyOneForErrorStruct)]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for PostgresCheckProvidersLinkPartsTablesEmptyError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 #[derive(Debug)]

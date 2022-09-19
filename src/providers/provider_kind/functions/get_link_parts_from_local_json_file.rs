@@ -16,7 +16,7 @@ use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
 // use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
-//use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 // use init_error_with_tracing::InitErrorWithTracing;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
@@ -25,7 +25,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 
 #[derive(
     Debug,
-    // ImplGetWhereWasForErrorStruct,
+    ImplGetWhereWasOneOrManyOneForErrorStruct,
     ImplGetSourceForParentErrorStruct,
     ImplDisplayForErrorStruct,
     InitError,
@@ -34,19 +34,6 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 pub struct GetLinkPartsFromLocalJsonFileError {
     source: GetLinkPartsFromLocalJsonFileErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for GetLinkPartsFromLocalJsonFileError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 #[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplDisplayForSimpleErrorEnum)]
