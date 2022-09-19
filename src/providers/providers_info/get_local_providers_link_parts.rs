@@ -41,10 +41,7 @@ pub struct GetLocalProvidersLinkPartsError {
 //             formatted_vec.pop();
 //         }
 //         let formatted = format!("[{}]", formatted_vec);
-//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?} {:#?}", self.where_was, formatted),
-//             false => format!("{} {}", self.where_was, formatted),
-//         }
+//         format!("{} {}", self.where_was, formatted)
 //     }
 // }
 
@@ -133,25 +130,20 @@ impl GetLocalProvidersLinkPartsError {
 
 impl tufa_common::traits::get_source::GetSource for GetLocalProvidersLinkPartsError {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => {
-                let mut formatted = self
-                    .source
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error.get_source()))
-                    .collect::<Vec<String>>()
-                    .iter()
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(elem);
-                        acc
-                    });
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
+        let mut formatted = self
+            .source
+            .iter()
+            .map(|(pk, error)| format!("{} {},", pk, error.get_source()))
+            .collect::<Vec<String>>()
+            .iter()
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(elem);
+                acc
+            });
+        if !formatted.is_empty() {
+            formatted.pop();
         }
+        formatted
     }
 }
 

@@ -54,10 +54,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 //             formatted_vec.pop();
 //         }
 //         let formatted = format!("[{}]", formatted_vec);
-//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?} {:#?}", self.where_was, formatted),
-//             false => format!("{} {}", self.where_was, formatted),
-//         }
+//         format!("{} {}", self.where_was, formatted)
 //     }
 // }
 
@@ -101,23 +98,18 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
 
 impl tufa_common::traits::get_source::GetSource for InitDbsError {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => {
-                let mut formatted = self
-                    .source
-                    .iter()
-                    .map(|error| format!("{},", error.get_source()))
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(&elem);
-                        acc
-                    });
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
+        let mut formatted = self
+            .source
+            .iter()
+            .map(|error| format!("{},", error.get_source()))
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(&elem);
+                acc
+            });
+        if !formatted.is_empty() {
+            formatted.pop();
         }
+        formatted
     }
 }
 

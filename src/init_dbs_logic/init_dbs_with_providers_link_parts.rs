@@ -48,10 +48,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsProvidersLinkPartsError {
 //     fn get_where_was(&self) -> String {
-//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
-//         }
+//         format!("{} {}", self.where_was, self.source.get_where_was())
 //     }
 // }
 
@@ -117,30 +114,23 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 
 impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self),
-            false => {
-                let mut formatted = match self {
-                    InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
-                        e.get_source()
-                    }
-                    InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_source(),
-                    InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_source(),
-                    InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
-                        mongo: mongo_error,
-                        postgres: postgres_error,
-                    } => format!(
-                        "{} {}",
-                        mongo_error.get_source(),
-                        postgres_error.get_source()
-                    ),
-                };
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
+        let mut formatted = match self {
+            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_source(),
+            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_source(),
+            InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_source(),
+            InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
+                mongo: mongo_error,
+                postgres: postgres_error,
+            } => format!(
+                "{} {}",
+                mongo_error.get_source(),
+                postgres_error.get_source()
+            ),
+        };
+        if !formatted.is_empty() {
+            formatted.pop();
         }
+        formatted
     }
 }
 
@@ -180,10 +170,7 @@ impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErr
 
 impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsError {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => self.source.get_source(),
-        }
+        self.source.get_source()
     }
 }
 

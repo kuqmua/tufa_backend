@@ -80,56 +80,40 @@ impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
     fn get_source(&self) -> String {
         match self {
             InitMongoErrorEnum::ClientOptionsParse(e) => {
-                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-                    true => format!("{:#?}", e),
-                    false => format!("{}", e),
-                }
+                format!("{}", e)
             }
             InitMongoErrorEnum::ClientWithOptions(e) => {
-                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-                    true => format!("{:#?}", e),
-                    false => format!("{}", e),
-                }
+                format!("{}", e)
             }
             InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(e) => {
-                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-                    true => format!("{:#?}", e),
-                    false => {
-                        let mut formatted = e
-                            .iter()
-                            .map(|(pk, error)| format!("{} {},", pk, error))
-                            .collect::<Vec<String>>()
-                            .iter()
-                            .fold(String::from(""), |mut acc, elem| {
-                                acc.push_str(elem);
-                                acc
-                            });
-                        if !formatted.is_empty() {
-                            formatted.pop();
-                        }
-                        formatted
-                    }
+                let mut formatted = e
+                    .iter()
+                    .map(|(pk, error)| format!("{} {},", pk, error))
+                    .collect::<Vec<String>>()
+                    .iter()
+                    .fold(String::from(""), |mut acc, elem| {
+                        acc.push_str(elem);
+                        acc
+                    });
+                if !formatted.is_empty() {
+                    formatted.pop();
                 }
+                formatted
             }
             InitMongoErrorEnum::InsertManyError(e) => {
-                match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-                    true => format!("{:#?}", e),
-                    false => {
-                        let mut formatted = e
-                            .iter()
-                            .map(|(pk, error)| format!("{} {},", pk, error))
-                            .collect::<Vec<String>>()
-                            .iter()
-                            .fold(String::from(""), |mut acc, elem| {
-                                acc.push_str(elem);
-                                acc
-                            });
-                        if !formatted.is_empty() {
-                            formatted.pop();
-                        }
-                        formatted
-                    }
+                let mut formatted = e
+                    .iter()
+                    .map(|(pk, error)| format!("{} {},", pk, error))
+                    .collect::<Vec<String>>()
+                    .iter()
+                    .fold(String::from(""), |mut acc, elem| {
+                        acc.push_str(elem);
+                        acc
+                    });
+                if !formatted.is_empty() {
+                    formatted.pop();
                 }
+                formatted
             }
         }
     }

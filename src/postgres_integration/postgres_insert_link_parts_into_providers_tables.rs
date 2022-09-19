@@ -65,25 +65,20 @@ impl tufa_common::traits::get_source::GetSource
     for PostgresInsertLinkPartsIntoProvidersTablesError
 {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => {
-                let mut formatted = self
-                    .source
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error))
-                    .collect::<Vec<String>>()
-                    .iter()
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(elem);
-                        acc
-                    });
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
+        let mut formatted = self
+            .source
+            .iter()
+            .map(|(pk, error)| format!("{} {},", pk, error))
+            .collect::<Vec<String>>()
+            .iter()
+            .fold(String::from(""), |mut acc, elem| {
+                acc.push_str(elem);
+                acc
+            });
+        if !formatted.is_empty() {
+            formatted.pop();
         }
+        formatted
     }
 }
 

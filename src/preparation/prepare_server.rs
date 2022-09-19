@@ -28,10 +28,7 @@ pub struct PreparationError {
 
 // impl crate::traits::get_where_was::GetWhereWas for PreparationError {
 //     fn get_where_was(&self) -> String {
-//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
-//         }
+//         format!("{} {}", self.where_was, self.source.get_where_was())
 //     }
 // }
 

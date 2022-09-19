@@ -45,10 +45,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Po
 }
 // impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitError {
 //     fn get_where_was(&self) -> String {
-//         match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-//             true => format!("{:#?} {:#?}", self.where_was, self.source.get_where_was()),
-//             false => format!("{} {}", self.where_was, self.source.get_where_was()),
-//         }
+//         format!("{} {}", self.where_was, self.source.get_where_was())
 //     }
 // }
 
@@ -66,17 +63,14 @@ pub enum PostgresInitErrorEnum {
 
 impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self),
-            false => match self {
+        match self {
                 PostgresInitErrorEnum::EstablishConnection(e) => e.get_source(),
                 PostgresInitErrorEnum::CreateTableQueries(e) => e.get_source(),
                 PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_source(),
                 PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_source(),
                 PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_source(),
                 PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_source(),
-            },
-        }
+            }
     }
 }
 
@@ -141,10 +135,7 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
 
 impl tufa_common::traits::get_source::GetSource for PostgresInitError {
     fn get_source(&self) -> String {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => format!("{:#?}", self.source),
-            false => self.get_source(),
-        }
+        self.get_source()
     }
 }
 
