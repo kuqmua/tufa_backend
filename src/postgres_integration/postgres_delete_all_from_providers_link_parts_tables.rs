@@ -7,7 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
-use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+//use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use sqlx::Pool;
 use sqlx::Postgres;
