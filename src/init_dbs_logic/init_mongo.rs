@@ -17,6 +17,7 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
@@ -147,52 +148,34 @@ pub async fn init_mongo(
     should_trace: bool,
 ) -> Result<(), Box<InitMongoError>> {
     match ClientOptions::parse(&CONFIG.get_mongo_url()).await {
-        Err(e) => {
-            let where_was = WhereWas {
+        Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
+            InitMongoErrorEnum::ClientOptionsParse(e),
+            WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(InitMongoError::with_tracing(
-                    InitMongoErrorEnum::ClientOptionsParse(e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(InitMongoError::new(
-                    InitMongoErrorEnum::ClientOptionsParse(e),
-                    where_was,
-                ))),
-            }
-        }
+            },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
+            should_trace,
+        ))),
         Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => {
-                let where_was = WhereWas {
+            Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
+                InitMongoErrorEnum::ClientWithOptions(e),
+                WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                     file: file!(),
                     line: line!(),
                     column: column!(),
-                };
-                match should_trace {
-                    true => Err(Box::new(InitMongoError::with_tracing(
-                        InitMongoErrorEnum::ClientWithOptions(e),
-                        where_was,
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                    ))),
-                    false => Err(Box::new(InitMongoError::new(
-                        InitMongoErrorEnum::ClientWithOptions(e),
-                        where_was,
-                    ))),
-                }
-            }
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ))),
             Ok(client) => {
-                // let client_options = ClientOptions::parse(&mongo_get_db_url()).await?;
-                // let client = Client::with_options(client_options)?;
                 let db = client.database(&CONFIG.mongo_providers_link_parts_db_name);
                 let error_vec_count_documents =
                     join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
@@ -223,33 +206,21 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
                 if !error_vec_count_documents.is_empty() {
-                    let where_was = WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    };
-                    match should_trace {
-                        true => {
-                            return Err(Box::new(InitMongoError::with_tracing(
-                                InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
-                                    error_vec_count_documents,
-                                ),
-                                where_was,
-                                &CONFIG.source_place_type,
-                                &GIT_INFO.data,
-                            )));
-                        }
-                        false => {
-                            return Err(Box::new(InitMongoError::new(
-                                InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
-                                    error_vec_count_documents,
-                                ),
-                                where_was,
-                            )));
-                        }
-                    }
+                    return Err(Box::new(InitMongoError::init_error_with_possible_trace(
+                        InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
+                            error_vec_count_documents,
+                        ),
+                        WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                        should_trace,
+                    )));
                 }
                 drop(error_vec_count_documents);
                 let error_vec_insert_many = join_all(providers_json_local_data_hashmap.iter().map(|(pk, data_vec)| async {
@@ -265,29 +236,19 @@ pub async fn init_mongo(
                     })
                     .collect::<HashMap<ProviderKind, Error>>();
                 if !error_vec_insert_many.is_empty() {
-                    let where_was = WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                        file: file!(),
-                        line: line!(),
-                        column: column!(),
-                    };
-                    match should_trace {
-                        true => {
-                            return Err(Box::new(InitMongoError::with_tracing(
-                                InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
-                                where_was,
-                                &CONFIG.source_place_type,
-                                &GIT_INFO.data,
-                            )));
-                        }
-                        false => {
-                            return Err(Box::new(InitMongoError::new(
-                                InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
-                                where_was,
-                            )));
-                        }
-                    }
+                    return Err(Box::new(InitMongoError::init_error_with_possible_trace(
+                        InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
+                        WhereWas {
+                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            file: file!(),
+                            line: line!(),
+                            column: column!(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO.data,
+                        should_trace,
+                    )));
                 }
                 Ok(())
             }

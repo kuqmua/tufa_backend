@@ -19,6 +19,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use sqlx::postgres::PgPoolOptions;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
@@ -149,27 +150,19 @@ pub async fn init_postgres(
     should_trace: bool,
 ) -> Result<(), Box<PostgresInitError>> {
     match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
-        Err(e) => {
-            let where_was = WhereWas {
+        Err(e) => Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+            PostgresInitErrorEnum::EstablishConnection(*e),
+            WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
                 file: file!(),
                 line: line!(),
                 column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(PostgresInitError::with_tracing(
-                    PostgresInitErrorEnum::EstablishConnection(*e),
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(PostgresInitError::new(
-                    PostgresInitErrorEnum::EstablishConnection(*e),
-                    where_was,
-                ))),
-            }
-        }
+            },
+            &CONFIG.source_place_type,
+            &GIT_INFO.data,
+            should_trace,
+        ))),
         Ok(pool) => {
             if let Err(e) = postgres_create_providers_tables_if_not_exists(
                 &providers_json_local_data_hashmap,
@@ -178,29 +171,19 @@ pub async fn init_postgres(
             )
             .await
             {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(PostgresInitError::with_tracing(
-                            PostgresInitErrorEnum::CreateTableQueries(*e),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(PostgresInitError::new(
-                            PostgresInitErrorEnum::CreateTableQueries(*e),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+                    PostgresInitErrorEnum::CreateTableQueries(*e),
+                    WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                )));
             }
             if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
                 &providers_json_local_data_hashmap,
@@ -209,29 +192,19 @@ pub async fn init_postgres(
             )
             .await
             {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(PostgresInitError::with_tracing(
-                            PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(PostgresInitError::new(
-                            PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
+                    WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                )));
             }
             if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(
                 &providers_json_local_data_hashmap,
@@ -240,29 +213,19 @@ pub async fn init_postgres(
             )
             .await
             {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(PostgresInitError::with_tracing(
-                            PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(PostgresInitError::new(
-                            PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+                    PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
+                    WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                )));
             }
             // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
             //     &providers_json_local_data_hashmap,
@@ -270,21 +233,19 @@ pub async fn init_postgres(
             //     false,
             // )
             // .await {
-            //     let where_was = WhereWas {
+            //                                                                             return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+            //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
+            //     WhereWas {
             //         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
             //             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
             //         file: file!(),
             //         line: line!(),
             //         column: column!(),
-            //     };
-            //     match should_trace {
-            //         true => {
-            //             return Err(Box::new(PostgresInitError::with_tracing(PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e), where_was)));
-            //         }
-            //         false => {
-            //             return Err(Box::new(PostgresInitError::new(PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e), where_was)));
-            //         }
-            //     }
+            //     },
+            //     &CONFIG.source_place_type,
+            //     &GIT_INFO.data,
+            //     should_trace,
+            // )));
             // }
             if let Err(e) = postgres_insert_link_parts_into_providers_tables(
                 &providers_json_local_data_hashmap,
@@ -293,29 +254,19 @@ pub async fn init_postgres(
             )
             .await
             {
-                let where_was = WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                };
-                match should_trace {
-                    true => {
-                        return Err(Box::new(PostgresInitError::with_tracing(
-                            PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
-                            where_was,
-                            &CONFIG.source_place_type,
-                            &GIT_INFO.data,
-                        )));
-                    }
-                    false => {
-                        return Err(Box::new(PostgresInitError::new(
-                            PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
-                            where_was,
-                        )));
-                    }
-                }
+                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
+                    WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        file: file!(),
+                        line: line!(),
+                        column: column!(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                )));
             }
             Ok(())
         }

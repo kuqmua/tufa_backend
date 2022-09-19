@@ -105,6 +105,23 @@ pub async fn postgres_create_providers_tables_if_not_exists(
         })
         .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !table_creation_error_hashmap.is_empty() {
+        //todo iter over hashmap to support init_error_with_possible_trace
+        //         return Err(Box::new(
+        //     PostgresCreateProvidersDbsError::init_error_with_possible_trace(
+        //         table_creation_error_hashmap,
+        //         WhereWas {
+        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //             file: file!(),
+        //             line: line!(),
+        //             column: column!(),
+        //         },
+        //         &CONFIG.source_place_type,
+        //         &GIT_INFO.data,
+        //         should_trace,
+        //     ),
+        // ));
+
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

@@ -103,6 +103,22 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
         })
         .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !delete_from_tables_error_hashmap.is_empty() {
+        //         return Err(Box::new(
+        //     PostgresDeleteAllFromProvidersTablesError::init_error_with_possible_trace(
+        //         delete_from_tables_error_hashmap,
+        //         WhereWas {
+        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //             file: file!(),
+        //             line: line!(),
+        //             column: column!(),
+        //         },
+        //         &CONFIG.source_place_type,
+        //         &GIT_INFO.data,
+        //         should_trace,
+        //     ),
+        // ));
+
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

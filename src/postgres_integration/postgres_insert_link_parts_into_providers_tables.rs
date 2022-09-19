@@ -116,6 +116,21 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     })
     .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !insertion_error_hashmap.is_empty() {
+        //         return Err(Box::new(
+        //     PostgresInsertLinkPartsIntoProvidersTablesError::init_error_with_possible_trace(
+        //         insertion_error_hashmap,
+        //         WhereWas {
+        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //             file: file!(),
+        //             line: line!(),
+        //             column: column!(),
+        //         },
+        //         &CONFIG.source_place_type,
+        //         &GIT_INFO.data,
+        //         should_trace,
+        //     ),
+        // ));
         let where_was = WhereWas {
             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),

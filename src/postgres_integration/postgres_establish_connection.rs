@@ -10,6 +10,7 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
@@ -84,26 +85,21 @@ pub async fn postgres_establish_connection(
         .connect(&CONFIG.get_postgres_url())
         .await
     {
-        Err(e) => {
-            let where_was = WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
-            };
-            match should_trace {
-                true => Err(Box::new(PostgresEstablishConnectionError::with_tracing(
-                    e,
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                ))),
-                false => Err(Box::new(PostgresEstablishConnectionError::new(
-                    e, where_was,
-                ))),
-            }
-        }
+        Err(e) => Err(Box::new(
+            PostgresEstablishConnectionError::init_error_with_possible_trace(
+                e,
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        )),
         Ok(pool) => Ok(pool),
     }
 }
