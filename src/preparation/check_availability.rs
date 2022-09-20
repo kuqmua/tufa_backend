@@ -15,7 +15,6 @@ use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
-// use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
@@ -100,7 +99,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
 #[derive(
     Debug,
     ImplGetSourceForSimpleErrorEnum,
-    ImplDisplayForSimpleErrorEnum, //ImplGetWhereWasForEnum,
+    ImplDisplayForSimpleErrorEnum,
 )]
 pub enum CheckAvailabilityErrorEnum {
     Net(Box<NetCheckAvailabilityError>),
