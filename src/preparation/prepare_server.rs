@@ -10,17 +10,19 @@ use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use init_error::InitError;
+use init_error_with_tracing::InitErrorWithTracing;
 use std::fmt::Display;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::with_tracing::WithTracing;
+// use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasWithAddition;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 
-#[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct,
+#[derive(Debug, InitError, InitErrorWithTracing)] //ImplGetWhereWasForErrorStruct,
 pub struct PreparationError {
     source: PreparationErrorEnum,
     where_was: WhereWas,
@@ -34,13 +36,14 @@ pub struct PreparationError {
 
 impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        let mut vec = Vec::new();
-        self.source
+        let mut vec: Vec<WhereWasWithAddition> = self
+            .source
             .get_where_was_one_or_many()
             .into_vec()
             .into_iter()
-            .for_each(|w| {
-                vec.push(w);
+            .fold(vec![], |mut acc, elem| {
+                acc.push(elem);
+                acc
             });
         vec.push(tufa_common::where_was::WhereWasWithAddition {
             additional_info: None,
@@ -63,41 +66,41 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 //     }
 // }
 
-impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
-    fn with_tracing(
-        source: PreparationErrorEnum,
-        where_was: WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = source.get_source(),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = source.get_source(),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = source.get_source());
-            }
-        }
-        Self { source, where_was }
-    }
-}
+// impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
+//     fn with_tracing(
+//         source: PreparationErrorEnum,
+//         where_was: WhereWas,
+//         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+//         git_info: &tufa_common::helpers::git::git_info::GitInformation,
+//     ) -> Self {
+//         match source_place_type {
+//             tufa_common::config::source_place_type::SourcePlaceType::Source => {
+//                 tracing::error!(
+//                     error = source.get_source(),
+//                     where_was = source.get_bunyan_with_additional_where_was(
+//                         &where_was,
+//                         source_place_type,
+//                         git_info,
+//                     )
+//                 );
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::Github => {
+//                 tracing::error!(
+//                     error = source.get_source(),
+//                     where_was = source.get_bunyan_with_additional_where_was(
+//                         &where_was,
+//                         source_place_type,
+//                         git_info,
+//                     )
+//                 );
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::None => {
+//                 tracing::error!(error = source.get_source());
+//             }
+//         }
+//         Self { source, where_was }
+//     }
+// }
 
 #[derive(Debug)] //, ImplGetWhereWasForEnum
 pub enum PreparationErrorEnum {
