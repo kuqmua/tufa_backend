@@ -6,7 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
+// use impl_get_where_was_for_enum::ImplGetWhereWasForEnum;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::with_tracing::WithTracing;

@@ -99,15 +99,6 @@ impl
         Self { source, where_was }
     }
 }
-//todo implement better type support for derive(InitError)
-// impl GetLocalProvidersLinkPartsError {
-//     pub fn new(
-//         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
-//         where_was: tufa_common::where_was::WhereWas,
-//     ) -> Self {
-//         Self { source, where_was }
-//     }
-// }
 
 impl tufa_common::traits::get_source::GetSource for GetLocalProvidersLinkPartsError {
     fn get_source(&self) -> String {
