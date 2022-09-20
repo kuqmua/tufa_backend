@@ -66,42 +66,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 //     }
 // }
 
-// impl tufa_common::traits::with_tracing::WithTracing<PreparationErrorEnum> for PreparationError {
-//     fn with_tracing(
-//         source: PreparationErrorEnum,
-//         where_was: WhereWas,
-//         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-//         git_info: &tufa_common::helpers::git::git_info::GitInformation,
-//     ) -> Self {
-//         match source_place_type {
-//             tufa_common::config::source_place_type::SourcePlaceType::Source => {
-//                 tracing::error!(
-//                     error = source.get_source(),
-//                     where_was = source.get_bunyan_with_additional_where_was(
-//                         &where_was,
-//                         source_place_type,
-//                         git_info,
-//                     )
-//                 );
-//             }
-//             tufa_common::config::source_place_type::SourcePlaceType::Github => {
-//                 tracing::error!(
-//                     error = source.get_source(),
-//                     where_was = source.get_bunyan_with_additional_where_was(
-//                         &where_was,
-//                         source_place_type,
-//                         git_info,
-//                     )
-//                 );
-//             }
-//             tufa_common::config::source_place_type::SourcePlaceType::None => {
-//                 tracing::error!(error = source.get_source());
-//             }
-//         }
-//         Self { source, where_was }
-//     }
-// }
-
 #[derive(Debug)] //, ImplGetWhereWasForEnum
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),

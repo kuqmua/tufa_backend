@@ -8,10 +8,10 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use init_error::InitError;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
-use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasWithAddition;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
@@ -20,7 +20,7 @@ use std::collections::HashMap;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use valuable::Valuable;
 
-#[derive(Debug)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
@@ -100,14 +100,14 @@ impl
     }
 }
 //todo implement better type support for derive(InitError)
-impl GetLocalProvidersLinkPartsError {
-    pub fn new(
-        source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
-        where_was: tufa_common::where_was::WhereWas,
-    ) -> Self {
-        Self { source, where_was }
-    }
-}
+// impl GetLocalProvidersLinkPartsError {
+//     pub fn new(
+//         source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
+//         where_was: tufa_common::where_was::WhereWas,
+//     ) -> Self {
+//         Self { source, where_was }
+//     }
+// }
 
 impl tufa_common::traits::get_source::GetSource for GetLocalProvidersLinkPartsError {
     fn get_source(&self) -> String {
@@ -163,45 +163,21 @@ pub async fn get_local_providers_link_parts(
         }
     }
     if !errors_hashmap.is_empty() {
-        // return Err(Box::new(
-        //     GetLocalProvidersLinkPartsError::init_error_with_possible_trace(
-        //         errors_hashmap,
-        //         WhereWas {
-        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-        //             file: file!(),
-        //             line: line!(),
-        //             column: column!(),
-        //         },
-        //         &CONFIG.source_place_type,
-        //         &GIT_INFO.data,
-        //         should_trace,
-        //     ),
-        // ));
-
-        let where_was = WhereWas {
-            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file: file!(),
-            line: line!(),
-            column: column!(),
-        };
-        match should_trace {
-            true => {
-                return Err(Box::new(GetLocalProvidersLinkPartsError::with_tracing(
-                    errors_hashmap,
-                    where_was,
-                    &CONFIG.source_place_type,
-                    &GIT_INFO.data,
-                )));
-            }
-            false => {
-                return Err(Box::new(GetLocalProvidersLinkPartsError::new(
-                    errors_hashmap,
-                    where_was,
-                )));
-            }
-        }
+        return Err(Box::new(
+            GetLocalProvidersLinkPartsError::init_error_with_possible_trace(
+                errors_hashmap,
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        ));
     }
     Ok(success_hashmap)
 }

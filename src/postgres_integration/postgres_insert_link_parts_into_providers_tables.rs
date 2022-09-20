@@ -12,7 +12,7 @@ use init_error::InitError;
 use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
-use tufa_common::traits::with_tracing::WithTracing;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, InitError, ImplGetWhereWasOneOrManyOneForErrorStruct)]
@@ -116,48 +116,21 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     })
     .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !insertion_error_hashmap.is_empty() {
-        //         return Err(Box::new(
-        //     PostgresInsertLinkPartsIntoProvidersTablesError::init_error_with_possible_trace(
-        //         insertion_error_hashmap,
-        //         WhereWas {
-        //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-        //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-        //             file: file!(),
-        //             line: line!(),
-        //             column: column!(),
-        //         },
-        //         &CONFIG.source_place_type,
-        //         &GIT_INFO.data,
-        //         should_trace,
-        //     ),
-        // ));
-        let where_was = WhereWas {
-            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-            file: file!(),
-            line: line!(),
-            column: column!(),
-        };
-        match should_trace {
-            true => {
-                return Err(Box::new(
-                    PostgresInsertLinkPartsIntoProvidersTablesError::with_tracing(
-                        insertion_error_hashmap,
-                        where_was,
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                    ),
-                ));
-            }
-            false => {
-                return Err(Box::new(
-                    PostgresInsertLinkPartsIntoProvidersTablesError::new(
-                        insertion_error_hashmap,
-                        where_was,
-                    ),
-                ));
-            }
-        }
+        return Err(Box::new(
+            PostgresInsertLinkPartsIntoProvidersTablesError::init_error_with_possible_trace(
+                insertion_error_hashmap,
+                WhereWas {
+                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO.data,
+                should_trace,
+            ),
+        ));
     }
     Ok(())
 }
