@@ -90,23 +90,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     }
 }
 
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsProvidersLinkPartsErrorEnum {
-//     fn get_where_was(&self) -> String {
-//         match self {
-//             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_where_was(),
-//             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was(),
-//             InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was(),
-//             InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
-//                 format!(
-//                     "[ {}, {} ]",
-//                     mongo.get_where_was(),
-//                     postgres.get_where_was()
-//                 )
-//             }
-//         }
-//     }
-// }
-
 impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {
         let mut formatted = match self {

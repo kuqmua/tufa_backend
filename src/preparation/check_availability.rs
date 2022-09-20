@@ -97,12 +97,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     }
 }
 
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for CheckAvailabilityError {
-//     fn get_where_was(&self) -> String {
-//         format!("{} {}", self.where_was, self.source.get_where_was())
-//     }
-// }
-
 #[derive(
     Debug,
     ImplGetSourceForSimpleErrorEnum,

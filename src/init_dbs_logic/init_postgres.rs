@@ -44,11 +44,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Po
         )
     }
 }
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitError {
-//     fn get_where_was(&self) -> String {
-//         format!("{} {}", self.where_was, self.source.get_where_was())
-//     }
-// }
 
 #[derive(Debug)]
 pub enum PostgresInitErrorEnum {
@@ -91,19 +86,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
         // tufa_common::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
-
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for PostgresInitErrorEnum {
-//     fn get_where_was(&self) -> String {
-//         match self {
-//             PostgresInitErrorEnum::EstablishConnection(_e) => String::from(""),
-//             PostgresInitErrorEnum::CreateTableQueries(e) => e.get_where_was(),
-//             PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_where_was(),
-//             PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_where_was(),
-//             PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_where_was(),
-//             PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_where_was(),
-//         }
-//     }
-// }
 
 impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for PostgresInitError {
     fn with_tracing(

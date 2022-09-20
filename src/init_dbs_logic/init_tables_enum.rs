@@ -45,12 +45,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
     }
 }
 
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitTablesError {
-//     fn get_where_was(&self) -> String {
-//         format!("{} {}", self.where_was, self.source.get_where_was())
-//     }
-// }
-
 #[derive(Debug)] //, ImplGetWhereWasForEnum
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),

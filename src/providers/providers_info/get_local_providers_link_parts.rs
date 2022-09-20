@@ -26,25 +26,6 @@ pub struct GetLocalProvidersLinkPartsError {
     pub where_was: WhereWas,
 }
 
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for GetLocalProvidersLinkPartsError {
-//     fn get_where_was(&self) -> String {
-//         let mut formatted_vec = self
-//             .source
-//             .iter()
-//             .map(|(pk, error)| format!("{} {}, ", pk, error.get_where_was()))
-//             .fold(String::from(""), |mut acc, elem| {
-//                 acc.push_str(&elem);
-//                 acc
-//             });
-//         if !formatted_vec.is_empty() {
-//             formatted_vec.pop();
-//             formatted_vec.pop();
-//         }
-//         let formatted = format!("[{}]", formatted_vec);
-//         format!("{} {}", self.where_was, formatted)
-//     }
-// }
-
 impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     for GetLocalProvidersLinkPartsError
 {
@@ -96,7 +77,7 @@ impl
                 .map(|(_pk, error)| error.get_bunyan_where_was(source_place_type, git_info))
                 .collect::<Vec<String>>(),
         };
-        match crate::lazy_static::config::CONFIG.source_place_type {
+        match source_place_type {
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = ?error_vec_struct,

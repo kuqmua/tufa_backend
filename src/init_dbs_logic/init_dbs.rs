@@ -45,24 +45,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
     }
 }
 
-// impl crate::traits::get_where_was_one_or_many::GetWhereWas for InitDbsError {
-//     fn get_where_was(&self) -> tufa_common::where_was::WhereWas {
-//         let mut formatted_vec = self
-//             .source
-//             .iter()
-//             .map(|error| format!("{} ", error.get_where_was()))
-//             .fold(String::from(""), |mut acc, elem| {
-//                 acc.push_str(&elem);
-//                 acc
-//             });
-//         if !formatted_vec.is_empty() {
-//             formatted_vec.pop();
-//         }
-//         let formatted = format!("[{}]", formatted_vec);
-//         format!("{} {}", self.where_was, formatted)
-//     }
-// }
-
 impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
     fn with_tracing(
         source: Vec<InitTablesError>,
