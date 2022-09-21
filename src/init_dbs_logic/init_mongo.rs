@@ -8,6 +8,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
 use mongodb::bson::doc;
@@ -21,21 +22,12 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //ImplGetWhereWasForErrorStruct,
+#[derive(
+    Debug, InitError, ImplGetSourceForParentErrorStruct, ImplGetWhereWasOneOrManyOneForErrorStruct,
+)]
 pub struct InitMongoError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitMongoError {
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {

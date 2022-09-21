@@ -21,6 +21,7 @@ use chrono::Utc;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use sqlx::postgres::PgPoolOptions;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -31,21 +32,12 @@ use tufa_common::traits::with_tracing::WithTracing;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
-#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //, ImplGetWhereWasForErrorStruct
+#[derive(
+    Debug, InitError, ImplGetSourceForParentErrorStruct, ImplGetWhereWasOneOrManyOneForErrorStruct,
+)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresInitError {
     source: PostgresInitErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PostgresInitError {
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 #[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]

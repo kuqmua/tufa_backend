@@ -5,32 +5,22 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(
+    Debug, InitError, ImplGetSourceForOriginalErrorStruct, ImplGetWhereWasOneOrManyOneForErrorStruct,
+)]
 pub struct PostgresEstablishConnectionError {
     pub source: sqlx::Error,
     pub where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for PostgresEstablishConnectionError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        tufa_common::where_was::WhereWasOneOrMany::One(
-            tufa_common::where_was::WhereWasWithAddition {
-                additional_info: None,
-                where_was: self.where_was.clone(),
-            },
-        )
-    }
 }
 
 impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
@@ -60,12 +50,6 @@ impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
             }
         }
         Self { source, where_was }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for PostgresEstablishConnectionError {
-    fn get_source(&self) -> String {
-        format!("{}", self.source)
     }
 }
 
