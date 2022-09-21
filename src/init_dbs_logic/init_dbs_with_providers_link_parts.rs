@@ -18,11 +18,12 @@ use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasOneOrMany;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use init_error::InitError;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //, ImplGetWhereWasForErrorStruct
 pub struct InitDbsProvidersLinkPartsError {
     source: InitDbsProvidersLinkPartsErrorEnum,
     where_was: WhereWas,
@@ -61,7 +62,7 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
 
 impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {
-        let mut formatted = match self {
+        match self {
             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_source(),
             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_source(),
             InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_source(),
@@ -73,11 +74,7 @@ impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErr
                 mongo_error.get_source(),
                 postgres_error.get_source()
             ),
-        };
-        if !formatted.is_empty() {
-            formatted.pop();
         }
-        formatted
     }
 }
 
@@ -116,12 +113,6 @@ impl tufa_common::traits::with_tracing::WithTracing<InitDbsProvidersLinkPartsErr
             }
         }
         Self { source, where_was }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsError {
-    fn get_source(&self) -> String {
-        self.source.get_source()
     }
 }
 
