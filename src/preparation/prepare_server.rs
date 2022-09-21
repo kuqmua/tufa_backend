@@ -17,22 +17,14 @@ use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAddi
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-// use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasWithAddition;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 
 #[derive(Debug, InitError, InitErrorWithTracing)] //ImplGetWhereWasForErrorStruct,
 pub struct PreparationError {
     source: PreparationErrorEnum,
     where_was: WhereWas,
 }
-
-// impl crate::traits::get_where_was::GetWhereWas for PreparationError {
-//     fn get_where_was(&self) -> String {
-//         format!("{} {}", self.where_was, self.source.get_where_was())
-//     }
-// }
 
 impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
