@@ -32,49 +32,11 @@ use tufa_common::where_was::WhereWas;
     ImplGetSourceForParentErrorStruct,
     ImplDisplayForErrorStruct,
     InitError,
-    // InitErrorWithTracing,
+    InitErrorWithTracing,
 )]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::with_tracing::WithTracing<CheckAvailabilityErrorEnum>
-    for CheckAvailabilityError
-{
-    fn with_tracing(
-        source: CheckAvailabilityErrorEnum,
-        where_was: tufa_common::where_was::WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source.get_source()),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source));
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany

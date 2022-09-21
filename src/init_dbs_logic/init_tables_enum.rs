@@ -7,9 +7,9 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
+use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
@@ -21,7 +21,7 @@ pub enum InitTablesEnum {
     ProvidersLinkParts,
 }
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, InitErrorWithTracing)] //, ImplGetWhereWasForErrorStruct
 pub struct InitTablesError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
@@ -59,42 +59,6 @@ impl tufa_common::traits::get_source::GetSource for InitTablesErrorEnum {
             formatted.pop();
         }
         formatted
-    }
-}
-
-impl tufa_common::traits::with_tracing::WithTracing<InitTablesErrorEnum> for InitTablesError {
-    fn with_tracing(
-        source: InitTablesErrorEnum,
-        where_was: WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = source.get_source(),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = source.get_source(),
-                    where_was = source.get_bunyan_with_additional_where_was(
-                        &where_was,
-                        source_place_type,
-                        git_info,
-                    )
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = source.get_source());
-            }
-        }
-        Self { source, where_was }
     }
 }
 
