@@ -45,19 +45,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
     }
 }
 
-// impl PreparationError {
-//     pub fn where_was_error_with_tracing_as_string(
-//         source: PreparationErrorEnum,
-//         where_was: WhereWas,
-//     ) -> String {
-//         format!(
-//             "{} {}",
-//             where_was.file_line_column(),
-//             source.get_bunyan_where_was(&CONFIG.source_place_type, &GIT_INFO.data)
-//         )
-//     }
-// }
-
 #[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),

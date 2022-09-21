@@ -9,8 +9,8 @@ use chrono::Utc;
 use futures::future::join_all;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 use mongodb::error::Error;
@@ -19,43 +19,18 @@ use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
 
 #[derive(
-    Debug, InitError, ImplGetSourceForParentErrorStruct, ImplGetWhereWasOneOrManyOneForErrorStruct,
+    Debug,
+    InitError,
+    ImplGetSourceForParentErrorStruct,
+    ImplGetWhereWasOneOrManyOneForErrorStruct,
+    InitErrorWithTracingForOriginalErrorStruct,
 )]
 pub struct InitMongoError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::with_tracing::WithTracing<InitMongoErrorEnum> for InitMongoError {
-    fn with_tracing(
-        source: InitMongoErrorEnum,
-        where_was: tufa_common::where_was::WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = source.get_source(),
-                    source_place = where_was.file_line_column(),
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = source.get_source(),
-                    github_source_place = where_was.github_file_line_column(git_info),
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = source.get_source());
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 #[derive(Debug)]
