@@ -11,6 +11,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_error_with_tracing_for_original_error_struct_without_source_enum::InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum;
+use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
@@ -50,7 +51,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     }
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
     PostgresInit(PostgresInitError),
@@ -59,24 +60,6 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
         mongo: InitMongoError,
         postgres: PostgresInitError,
     },
-}
-
-impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => e.get_source(),
-            InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_source(),
-            InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_source(),
-            InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
-                mongo: mongo_error,
-                postgres: postgres_error,
-            } => format!(
-                "{} {}",
-                mongo_error.get_source(),
-                postgres_error.get_source()
-            ),
-        }
-    }
 }
 
 #[deny(

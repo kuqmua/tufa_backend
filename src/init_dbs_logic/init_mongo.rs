@@ -86,6 +86,7 @@ impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
                 format!("{}", e)
             }
             InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(e) => {
+                //todo impl for get_source like deps hashmap iter fold support
                 let mut formatted = e
                     .iter()
                     .map(|(pk, error)| format!("{} {},", pk, error))

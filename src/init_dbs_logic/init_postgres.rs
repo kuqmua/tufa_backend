@@ -18,6 +18,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use sqlx::postgres::PgPoolOptions;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
@@ -46,7 +47,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Po
     }
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
@@ -56,19 +57,6 @@ pub enum PostgresInitErrorEnum {
         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
     ),
     InsertLinkPartsIntoProvidersTables(PostgresInsertLinkPartsIntoProvidersTablesError),
-}
-
-impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-                PostgresInitErrorEnum::EstablishConnection(e) => e.get_source(),
-                PostgresInitErrorEnum::CreateTableQueries(e) => e.get_source(),
-                PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_source(),
-                PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_source(),
-                PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_source(),
-                PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_source(),
-            }
-    }
 }
 
 impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for PostgresInitError {
