@@ -18,6 +18,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use sqlx::postgres::PgPoolOptions;
@@ -30,7 +31,7 @@ use tufa_common::traits::with_tracing::WithTracing;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct)] //, ImplGetWhereWasForErrorStruct
 pub struct PostgresInitError {
     source: PostgresInitErrorEnum,
     where_was: WhereWas,
@@ -84,12 +85,6 @@ impl tufa_common::traits::with_tracing::WithTracing<PostgresInitErrorEnum> for P
             }
         }
         Self { source, where_was }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for PostgresInitError {
-    fn get_source(&self) -> String {
-        self.source.get_source()
     }
 }
 

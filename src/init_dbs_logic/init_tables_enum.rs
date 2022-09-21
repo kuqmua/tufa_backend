@@ -6,6 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use init_error_with_tracing::InitErrorWithTracing;
@@ -22,7 +23,7 @@ pub enum InitTablesEnum {
     ProvidersLinkParts,
 }
 
-#[derive(Debug, InitError, InitErrorWithTracing)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, InitErrorWithTracing, ImplGetSourceForParentErrorStruct)] //, ImplGetWhereWasForErrorStruct
 pub struct InitTablesError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
@@ -49,12 +50,6 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for In
 #[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
-}
-
-impl tufa_common::traits::get_source::GetSource for InitTablesError {
-    fn get_source(&self) -> String {
-        self.source.get_source()
-    }
 }
 
 impl InitTablesEnum {
