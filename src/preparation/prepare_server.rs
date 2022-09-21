@@ -8,6 +8,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use std::fmt::Display;
@@ -65,19 +66,10 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Pr
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),
     InitDbs(InitDbsError),
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationErrorEnum {
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        match self {
-            PreparationErrorEnum::CheckAvailability(e) => e.get_where_was_one_or_many(),
-            PreparationErrorEnum::InitDbs(e) => e.get_where_was_one_or_many(),
-        }
-    }
 }
 
 impl PreparationErrorEnum {

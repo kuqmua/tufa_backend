@@ -59,38 +59,6 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
     },
 }
 
-// impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-//     for InitDbsProvidersLinkPartsErrorEnum
-// {
-//     fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-//         match self {
-//             InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(e) => {
-//                 e.get_where_was_one_or_many()
-//             }
-//             InitDbsProvidersLinkPartsErrorEnum::PostgresInit(e) => e.get_where_was_one_or_many(),
-//             InitDbsProvidersLinkPartsErrorEnum::MongoInit(e) => e.get_where_was_one_or_many(),
-//             InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit { mongo, postgres } => {
-//                 let mut vec = Vec::new();
-//                 mongo
-//                     .get_where_was_one_or_many()
-//                     .into_vec()
-//                     .into_iter()
-//                     .for_each(|w| {
-//                         vec.push(w);
-//                     });
-//                 postgres
-//                     .get_where_was_one_or_many()
-//                     .into_vec()
-//                     .into_iter()
-//                     .for_each(|w| {
-//                         vec.push(w);
-//                     });
-//                 tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-//             }
-//         }
-//     }
-// }
-
 impl tufa_common::traits::get_source::GetSource for InitDbsProvidersLinkPartsErrorEnum {
     fn get_source(&self) -> String {
         let mut formatted = match self {

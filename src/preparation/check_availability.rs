@@ -15,6 +15,7 @@ use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
@@ -100,6 +101,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
     Debug,
     ImplGetSourceForSimpleErrorEnum,
     ImplDisplayForSimpleErrorEnum,
+    ImplGetWhereWasOneOrManyForEnum,
 )]
 pub enum CheckAvailabilityErrorEnum {
     Net(Box<NetCheckAvailabilityError>),
@@ -122,110 +124,6 @@ pub enum CheckAvailabilityErrorEnum {
         mongo_source: Box<MongoCheckAvailabilityError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for CheckAvailabilityErrorEnum
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        match self {
-            CheckAvailabilityErrorEnum::Net(e) => e.get_where_was_one_or_many(),
-            CheckAvailabilityErrorEnum::Postgres(e) => e.get_where_was_one_or_many(),
-            CheckAvailabilityErrorEnum::Mongo(e) => e.get_where_was_one_or_many(),
-            CheckAvailabilityErrorEnum::NetAndMongo {
-                net_source,
-                mongo_source,
-            } => {
-                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
-                net_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                mongo_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-            }
-            CheckAvailabilityErrorEnum::NetAndPostgres {
-                net_source,
-                postgres_source,
-            } => {
-                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
-                net_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                postgres_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-            }
-            CheckAvailabilityErrorEnum::MongoAndPostgres {
-                mongo_source,
-                postgres_source,
-            } => {
-                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
-                mongo_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                postgres_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-            }
-            CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
-                net_source,
-                mongo_source,
-                postgres_source,
-            } => {
-                let mut vec = Vec::<tufa_common::where_was::WhereWasWithAddition>::new();
-                net_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                mongo_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                postgres_source
-                    .get_where_was_one_or_many()
-                    .into_vec()
-                    .into_iter()
-                    .for_each(|w| {
-                        vec.push(w);
-                    });
-                tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-            }
-        }
-    }
 }
 
 #[deny(

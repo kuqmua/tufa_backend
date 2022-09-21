@@ -18,6 +18,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use sqlx::postgres::PgPoolOptions;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -45,7 +46,7 @@ impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for Po
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
@@ -67,23 +68,6 @@ impl tufa_common::traits::get_source::GetSource for PostgresInitErrorEnum {
                 PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_source(),
                 PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_source(),
             }
-    }
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for PostgresInitErrorEnum
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        todo!()
-        //         match self {
-        //     PostgresInitErrorEnum::EstablishConnection(_e) => String::from(""),
-        //     PostgresInitErrorEnum::CreateTableQueries(e) => e.get_where_was(),
-        //     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(e) => e.get_where_was(),
-        //     PostgresInitErrorEnum::DeleteAllFromProvidersTables(e) => e.get_where_was(),
-        //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e) => e.get_where_was(),
-        //     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(e) => e.get_where_was(),
-        // }
-        // tufa_common::where_was::WhereWasOneOrMany::One(self.where_was.clone())
     }
 }
 
