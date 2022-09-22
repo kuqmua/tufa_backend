@@ -28,36 +28,6 @@ pub struct PostgresEstablishConnectionError {
     pub where_was: WhereWas,
 }
 
-// impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
-//     for PostgresEstablishConnectionError
-// {
-//     fn with_tracing(
-//         source: sqlx::Error,
-//         where_was: WhereWas,
-//         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-//         git_info: &tufa_common::helpers::git::git_info::GitInformation,
-//     ) -> Self {
-//         match source_place_type {
-//             tufa_common::config::source_place_type::SourcePlaceType::Source => {
-//                 tracing::error!(
-//                     error = format!("{}", source),
-//                     where_was = where_was.file_line_column(),
-//                 );
-//             }
-//             tufa_common::config::source_place_type::SourcePlaceType::Github => {
-//                 tracing::error!(
-//                     error = format!("{}", source),
-//                     where_was = where_was.github_file_line_column(git_info),
-//                 );
-//             }
-//             tufa_common::config::source_place_type::SourcePlaceType::None => {
-//                 tracing::error!(error = format!("{}", source));
-//             }
-//         }
-//         Self { source, where_was }
-//     }
-// }
-
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
