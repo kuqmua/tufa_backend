@@ -21,33 +21,20 @@ use tufa_common::where_was::WhereWasOneOrMany;
 // use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
+use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
-#[derive(Debug, InitError, ImplGetSourceForParentErrorStruct, InitErrorWithTracing)] //, ImplGetWhereWasForErrorStruct
+#[derive(
+    Debug,
+    InitError,
+    ImplGetSourceForParentErrorStruct,
+    InitErrorWithTracing,
+    ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
+)]
 pub struct InitDbsProvidersLinkPartsError {
     source: InitDbsProvidersLinkPartsErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for InitDbsProvidersLinkPartsError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        let mut vec = Vec::new();
-        self.source
-            .get_where_was_one_or_many()
-            .into_vec()
-            .into_iter()
-            .for_each(|w| {
-                vec.push(w);
-            });
-        vec.push(tufa_common::where_was::WhereWasWithAddition {
-            additional_info: None,
-            where_was: self.where_was.clone(),
-        });
-        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-    }
 }
 
 #[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]

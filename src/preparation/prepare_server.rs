@@ -9,40 +9,20 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
+use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
 use init_error_with_tracing::InitErrorWithTracing;
-use std::fmt::Display;
-use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
-use tufa_common::where_was::WhereWasWithAddition;
 
-#[derive(Debug, InitError, InitErrorWithTracing)] //ImplGetWhereWasForErrorStruct,
+#[derive(
+    Debug, InitError, InitErrorWithTracing, ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
+)]
 pub struct PreparationError {
     source: PreparationErrorEnum,
     where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for PreparationError {
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        let mut vec: Vec<WhereWasWithAddition> = self
-            .source
-            .get_where_was_one_or_many()
-            .into_vec()
-            .into_iter()
-            .fold(vec![], |mut acc, elem| {
-                acc.push(elem);
-                acc
-            });
-        vec.push(tufa_common::where_was::WhereWasWithAddition {
-            additional_info: None,
-            where_was: self.where_was.clone(),
-        });
-        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-    }
 }
 
 #[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
