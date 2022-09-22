@@ -8,6 +8,7 @@ use chrono::Utc;
 use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
+use init_error_with_tracing_for_original_error_struct_without_source_enum::InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Postgres;
 use std::collections::HashMap;
@@ -16,42 +17,46 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 use tufa_common::where_was::WhereWas;
 
 #[derive(
-    Debug, InitError, ImplGetSourceForOriginalErrorStruct, ImplGetWhereWasOneOrManyOneForErrorStruct,
+    Debug,
+    InitError,
+    ImplGetSourceForOriginalErrorStruct,
+    ImplGetWhereWasOneOrManyOneForErrorStruct,
+    InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum,
 )]
 pub struct PostgresEstablishConnectionError {
     pub source: sqlx::Error,
     pub where_was: WhereWas,
 }
 
-impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
-    for PostgresEstablishConnectionError
-{
-    fn with_tracing(
-        source: sqlx::Error,
-        where_was: WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    where_was = where_was.file_line_column(),
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = format!("{}", source),
-                    where_was = where_was.github_file_line_column(git_info),
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = format!("{}", source));
-            }
-        }
-        Self { source, where_was }
-    }
-}
+// impl tufa_common::traits::with_tracing::WithTracing<sqlx::Error>
+//     for PostgresEstablishConnectionError
+// {
+//     fn with_tracing(
+//         source: sqlx::Error,
+//         where_was: WhereWas,
+//         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+//         git_info: &tufa_common::helpers::git::git_info::GitInformation,
+//     ) -> Self {
+//         match source_place_type {
+//             tufa_common::config::source_place_type::SourcePlaceType::Source => {
+//                 tracing::error!(
+//                     error = format!("{}", source),
+//                     where_was = where_was.file_line_column(),
+//                 );
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::Github => {
+//                 tracing::error!(
+//                     error = format!("{}", source),
+//                     where_was = where_was.github_file_line_column(git_info),
+//                 );
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::None => {
+//                 tracing::error!(error = format!("{}", source));
+//             }
+//         }
+//         Self { source, where_was }
+//     }
+// }
 
 #[deny(
     clippy::indexing_slicing,
