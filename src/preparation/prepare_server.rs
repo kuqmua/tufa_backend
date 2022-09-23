@@ -8,6 +8,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
@@ -25,19 +26,10 @@ pub struct PreparationError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),
     InitDbs(InitDbsError),
-}
-
-impl PreparationErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            PreparationErrorEnum::CheckAvailability(e) => e.get_source(),
-            PreparationErrorEnum::InitDbs(e) => e.get_source(),
-        }
-    }
 }
 
 // impl Display for PreparationError {
