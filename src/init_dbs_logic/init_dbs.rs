@@ -6,16 +6,15 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
-use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::with_tracing::WithTracing;
-use tufa_common::where_was::WhereWas;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
+use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
 use strum::IntoEnumIterator;
+use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError)] //ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource)] //
 pub struct InitDbsError {
     source: Vec<InitTablesError>,
     where_was: WhereWas,
@@ -25,25 +24,6 @@ pub struct InitDbsError {
 // pub enum InitDbsErrorEnum {
 //     InitTables(Vec<InitTablesError>),
 // }
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany for InitDbsError {
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        let mut vec = Vec::new();
-        self.source.iter().for_each(|e| {
-            e.get_where_was_one_or_many()
-                .into_vec()
-                .into_iter()
-                .for_each(|w| {
-                    vec.push(w);
-                });
-        });
-        vec.push(tufa_common::where_was::WhereWasWithAddition {
-            additional_info: None,
-            where_was: self.where_was.clone(),
-        });
-        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-    }
-}
 
 impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
     fn with_tracing(

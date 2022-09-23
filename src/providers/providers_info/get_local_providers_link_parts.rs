@@ -8,45 +8,19 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource;
 use init_error::InitError;
+use std::collections::HashMap;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
-use tufa_common::where_was::WhereWas;
-use tufa_common::where_was::WhereWasWithAddition;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-// use init_error::InitError;
-use std::collections::HashMap;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::where_was::WhereWas;
 use valuable::Valuable;
 
-#[derive(Debug, InitError)] //, ImplGetWhereWasForErrorStruct
+#[derive(Debug, InitError, ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource)]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
     pub where_was: WhereWas,
-}
-
-impl tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany
-    for GetLocalProvidersLinkPartsError
-{
-    fn get_where_was_one_or_many(&self) -> tufa_common::where_was::WhereWasOneOrMany {
-        let mut vec = Vec::new();
-        self.source.iter().for_each(|(pk, error)| {
-            error
-                .get_where_was_one_or_many()
-                .into_vec()
-                .into_iter()
-                .for_each(|mut w| {
-                    w.additional_info = Some(format!("{}", pk)); //todo
-                    vec.push(w);
-                });
-        });
-        vec.push(tufa_common::where_was::WhereWasWithAddition {
-            additional_info: None,
-            where_was: self.where_was.clone(),
-        });
-        tufa_common::where_was::WhereWasOneOrMany::Many(vec)
-    }
 }
 
 #[derive(Clone, Debug, Valuable)]
