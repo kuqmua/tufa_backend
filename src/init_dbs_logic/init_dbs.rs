@@ -20,11 +20,6 @@ pub struct InitDbsError {
     where_was: WhereWas,
 }
 
-// #[derive(Debug)]
-// pub enum InitDbsErrorEnum {
-//     InitTables(Vec<InitTablesError>),
-// }
-
 impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
     fn with_tracing(
         source: Vec<InitTablesError>,
@@ -33,13 +28,13 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
         git_info: &tufa_common::helpers::git::git_info::GitInformation,
     ) -> Self {
         //todo iteration over vec must be in another impl to use .get_bunyan_with_additional_where_was()
-        let mut errors = source
-            .iter()
-            .map(|error| format!("{},", error.get_source()))
-            .fold(String::from(""), |mut acc, elem| {
+        let mut errors = source.iter().map(|error| error.get_source()).fold(
+            String::from(""),
+            |mut acc, elem| {
                 acc.push_str(&elem);
                 acc
-            });
+            },
+        );
         if !errors.is_empty() {
             errors.pop();
         }

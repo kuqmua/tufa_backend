@@ -43,6 +43,50 @@ pub enum InitMongoErrorEnum {
     InsertManyError(HashMap<ProviderKind, Error>),
 }
 
+// use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
+
+// #[derive(Debug, ImplGetSourceForEnumWithMethod)]
+// pub enum FFF {
+//     HandleOneUnnamed(One),
+//     HandleTwoUnnamed(Vec<Two>),
+//     HandleThreeUnnamed(HashMap<String, Three>),
+//     HandleOneNamed{ sfgd: One },
+//     HandleTwoNamed{ dsgdfg: Vec<Two> },
+//     HandleThreeNamed{ dfjgdfj: HashMap<String, Three> },
+//     HandleMultiple{
+//         sdgfsd: One,
+//         sfdhsh: Vec<Two>,
+//         rerurt: HashMap<String, Three>,
+//     }
+// }
+
+// #[derive(Debug)]
+// pub struct One {}
+
+// #[derive(Debug)]
+// pub struct Two {}
+
+// #[derive(Debug)]
+// pub struct Three {}
+
+// impl tufa_common::traits::get_source::GetSource for One {
+//     fn get_source(&self) -> String {
+//         String::from("one")
+//     }
+// }
+
+// impl tufa_common::traits::get_source::GetSource for Two {
+//     fn get_source(&self) -> String {
+//         String::from("two")
+//     }
+// }
+
+// impl tufa_common::traits::get_source::GetSource for Three {
+//     fn get_source(&self) -> String {
+//         String::from("three")
+//     }
+// }
+
 impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
     fn get_source(&self) -> String {
         match self {
