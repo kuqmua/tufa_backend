@@ -47,9 +47,9 @@ use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 
 #[derive(ImplGetSourceForEnumWithMethod)] //Debug,
 pub enum FFF {
-    // HandleOneUnnamed(One),
+    HandleOneUnnamed(One),
     HandleTwoUnnamed(Vec<Two>),
-    // HandleThreeUnnamed(HashMap<String, Three>),
+    HandleThreeUnnamed(HashMap<String, Three>),
     // HandleOneNamed {
     //     sfgd: One,
     // },
