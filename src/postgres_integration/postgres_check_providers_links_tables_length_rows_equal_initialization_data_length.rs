@@ -7,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
@@ -28,7 +29,7 @@ pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLen
     where_was: WhereWas,
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetSourceForEnumWithoutMethod)]
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum {
     SelectCount(HashMap<ProviderKind, sqlx::Error>),
     ProviderLinksTablesRowsLengthNotEqual(
@@ -80,37 +81,6 @@ impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDa
             "table_rows_length: {}, initialization_data_length: {}",
             self.table_rows_length, self.initialization_data_length
         )
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource
-    for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum
-{
-    fn get_source(&self) -> String {
-        let mut formatted = match self {
-                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(hm) => {
-                    hm
-                        .iter()
-                        .map(|(pk, error)| format!("{} {},", pk, error))
-                        .fold(String::from(""), |mut acc, elem| {
-                            acc.push_str(&elem);
-                            acc
-                        })
-                    },
-                    PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(hm) => {
-                        hm
-                        .iter()
-                        .map(|(pk, error)| format!("{} {},", pk, error))
-                        .fold(String::from(""), |mut acc, elem| {
-                            acc.push_str(&elem);
-                            acc
-                        })
-                    },
-                };
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        formatted
     }
 }
 
