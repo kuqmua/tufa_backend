@@ -5,7 +5,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
-use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
+use impl_get_source_for_struct_without_method::ImplGetSourceForStructWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct_without_source_enum::InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum;
@@ -18,7 +18,7 @@ use tufa_common::where_was::WhereWas;
 #[derive(
     Debug,
     ImplDisplayForErrorStruct,
-    ImplGetSourceForOriginalErrorStruct,
+    ImplGetSourceForStructWithoutMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     InitError,
     InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum,

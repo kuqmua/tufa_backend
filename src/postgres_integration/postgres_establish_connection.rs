@@ -5,11 +5,12 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_get_source_for_original_error_struct::ImplGetSourceForOriginalErrorStruct;
+use impl_get_source_for_struct_without_method::ImplGetSourceForStructWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct_without_source_enum::InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum;
 use sqlx::postgres::PgPoolOptions;
+use sqlx::Error;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
@@ -19,12 +20,12 @@ use tufa_common::where_was::WhereWas;
 #[derive(
     Debug,
     InitError,
-    ImplGetSourceForOriginalErrorStruct,
+    ImplGetSourceForStructWithoutMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     InitErrorWithTracingForOriginalErrorStructWithoutSourceEnum,
 )]
 pub struct PostgresEstablishConnectionError {
-    pub source: sqlx::Error,
+    pub source: Error,
     pub where_was: WhereWas,
 }
 

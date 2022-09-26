@@ -1,6 +1,4 @@
 use std::collections::HashMap;
-use std::time::Duration;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
@@ -19,16 +17,14 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
-use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-use sqlx::postgres::PgPoolOptions;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
+use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::with_tracing::WithTracing;
 use init_error::InitError;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
@@ -44,7 +40,7 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForEnumWithMethod)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
