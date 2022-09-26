@@ -45,29 +45,30 @@ pub enum InitMongoErrorEnum {
 
 use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 
-#[derive(ImplGetSourceForEnumWithMethod)] //Debug,
+#[derive(Debug, ImplGetSourceForEnumWithMethod)] //,
 pub enum FFF {
-    HandleOneUnnamed(One),
-    HandleTwoUnnamed(Vec<Two>),
-    HandleThreeUnnamed(HashMap<String, Three>),
-    // HandleOneNamed {
-    //     sfgd: One,
-    // },
-    // HandleTwoNamed {
-    //     dsgdfg: Vec<Two>,
-    // },
-    // HandleThreeNamed {
-    //     dfjgdfj: HashMap<String, Three>,
-    // },
-    // HandleMultiple {
-    //     sdgfsd: One,
-    //     sfdhsh: Vec<Two>,
-    //     rerurt: HashMap<String, Three>,
-    // },
+    // HandleOneUnnamed(One),
+    // HandleTwoUnnamed(Vec<Two>),
+    // HandleThreeUnnamed(HashMap<String, Three>),
+    HandleOneNamed {
+        sfgd: OneEnum,
+    },
+    HandleTwoNamed {
+        dsgdfg: Vec<Two>,
+    },
+    HandleThreeNamed {
+        dfjgdfj: HashMap<String, Three>,
+    },
+    HandleMultiple {
+        sdgfsd: OneEnum,
+        sfdhsh: Vec<Two>,
+        rerurt: HashMap<String, Three>,
+    },
+    // HandleMultiple { sdgfsd: One, sfdhsh: Vec<Two> },
 }
 
 #[derive(Debug)]
-pub struct One {}
+pub struct OneEnum {}
 
 #[derive(Debug)]
 pub struct Two {}
@@ -75,7 +76,7 @@ pub struct Two {}
 #[derive(Debug)]
 pub struct Three {}
 
-impl tufa_common::traits::get_source::GetSource for One {
+impl tufa_common::traits::get_source::GetSource for OneEnum {
     fn get_source(&self) -> String {
         String::from("one")
     }
