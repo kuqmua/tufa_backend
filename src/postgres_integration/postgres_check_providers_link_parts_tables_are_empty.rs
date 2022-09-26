@@ -7,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
@@ -15,9 +16,7 @@ use sqlx::Postgres;
 use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-// use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::where_was::WhereWas;
-
 #[derive(
     Debug,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
@@ -29,7 +28,7 @@ pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     where_was: WhereWas,
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetSourceForEnumWithoutMethod)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     SelectCount(HashMap<ProviderKind, sqlx::Error>),
     NotEmpty(HashMap<ProviderKind, i64>),
@@ -62,33 +61,6 @@ impl std::fmt::Display for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
                 write!(f, "{}", formatted)
             }
         }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource
-    for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum
-{
-    fn get_source(&self) -> String {
-        let mut formatted = match self {
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-        };
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        formatted
     }
 }
 

@@ -7,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
@@ -33,109 +34,14 @@ pub struct InitMongoError {
     where_was: WhereWas,
 }
 
-#[derive(Debug)]
+#[derive(Debug, ImplGetSourceForEnumWithoutMethod)]
 pub enum InitMongoErrorEnum {
-    ClientOptionsParse(mongodb::error::Error),
-    ClientWithOptions(mongodb::error::Error),
+    ClientOptionsParse(Error),
+    ClientWithOptions(Error),
     CollectionCountDocumentsOrIsNotEmpty(
         HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
     ),
     InsertManyError(HashMap<ProviderKind, Error>),
-}
-
-use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
-
-#[derive(Debug, ImplGetSourceForEnumWithMethod)] //,
-pub enum FFF {
-    // HandleOneUnnamed(One),
-    // HandleTwoUnnamed(Vec<Two>),
-    // HandleThreeUnnamed(HashMap<String, Three>),
-    HandleOneNamed {
-        sfgd: OneEnum,
-    },
-    HandleTwoNamed {
-        dsgdfg: Vec<Two>,
-    },
-    HandleThreeNamed {
-        dfjgdfj: HashMap<String, Three>,
-    },
-    HandleMultiple {
-        sdgfsd: OneEnum,
-        sfdhsh: Vec<Two>,
-        rerurt: HashMap<String, Three>,
-    },
-    // HandleMultiple { sdgfsd: One, sfdhsh: Vec<Two> },
-}
-
-#[derive(Debug)]
-pub struct OneEnum {}
-
-#[derive(Debug)]
-pub struct Two {}
-
-#[derive(Debug)]
-pub struct Three {}
-
-impl tufa_common::traits::get_source::GetSource for OneEnum {
-    fn get_source(&self) -> String {
-        String::from("one")
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for Two {
-    fn get_source(&self) -> String {
-        String::from("two")
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for Three {
-    fn get_source(&self) -> String {
-        String::from("three")
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for InitMongoErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            InitMongoErrorEnum::ClientOptionsParse(e) => {
-                format!("{}", e)
-            }
-            InitMongoErrorEnum::ClientWithOptions(e) => {
-                format!("{}", e)
-            }
-            InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(e) => {
-                //todo impl for get_source like deps hashmap iter fold support
-                let mut formatted = e
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error))
-                    .collect::<Vec<String>>()
-                    .iter()
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(elem);
-                        acc
-                    });
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
-            InitMongoErrorEnum::InsertManyError(e) => {
-                let mut formatted = e
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error))
-                    .collect::<Vec<String>>()
-                    .iter()
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(elem);
-                        acc
-                    });
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                formatted
-            }
-        }
-    }
 }
 
 #[derive(Debug)]
