@@ -8,6 +8,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
@@ -17,11 +18,13 @@ use std::collections::HashMap;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
+
 #[derive(
     Debug,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     InitErrorWithTracingForOriginalErrorStruct,
     InitError,
+    ImplGetSourceForStructWithMethod,
 )]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
     source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
@@ -61,14 +64,6 @@ impl std::fmt::Display for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
                 write!(f, "{}", formatted)
             }
         }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource
-    for PostgresCheckProvidersLinkPartsTablesEmptyError
-{
-    fn get_source(&self) -> String {
-        self.source.get_source()
     }
 }
 

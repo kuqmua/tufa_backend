@@ -6,6 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
@@ -14,7 +15,12 @@ use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError, ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod)]
+#[derive(
+    Debug,
+    InitError,
+    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
+    ImplGetSourceForStructWithMethod,
+)]
 pub struct InitDbsError {
     source: Vec<InitTablesError>,
     where_was: WhereWas,
@@ -65,23 +71,6 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
             }
         }
         Self { source, where_was }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for InitDbsError {
-    fn get_source(&self) -> String {
-        let mut formatted = self
-            .source
-            .iter()
-            .map(|error| format!("{},", error.get_source()))
-            .fold(String::from(""), |mut acc, elem| {
-                acc.push_str(&elem);
-                acc
-            });
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        formatted
     }
 }
 

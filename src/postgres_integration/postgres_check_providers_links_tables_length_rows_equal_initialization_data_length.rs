@@ -8,6 +8,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
@@ -23,6 +24,7 @@ use tufa_common::where_was::WhereWas;
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     InitErrorWithTracingForOriginalErrorStruct,
     InitError,
+    ImplGetSourceForStructWithMethod,
 )]
 pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
     source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
@@ -81,14 +83,6 @@ impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDa
             "table_rows_length: {}, initialization_data_length: {}",
             self.table_rows_length, self.initialization_data_length
         )
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource
-    for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError
-{
-    fn get_source(&self) -> String {
-        self.source.get_source()
     }
 }
 
