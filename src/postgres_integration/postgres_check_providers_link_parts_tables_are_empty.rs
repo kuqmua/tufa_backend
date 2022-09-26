@@ -68,26 +68,7 @@ impl tufa_common::traits::get_source::GetSource
     for PostgresCheckProvidersLinkPartsTablesEmptyError
 {
     fn get_source(&self) -> String {
-        let mut formatted = match &self.source {
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
-                .iter()
-                .map(|(pk, error)| format!("{} {},", pk, error))
-                .fold(String::from(""), |mut acc, elem| {
-                    acc.push_str(&elem);
-                    acc
-                }),
-        };
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        formatted
+        self.source.get_source()
     }
 }
 
