@@ -7,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_get_source_for_struct_without_method::ImplGetSourceForStructWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use sqlx::Pool;
@@ -15,7 +16,9 @@ use std::collections::HashMap;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, InitError, ImplGetWhereWasOneOrManyOneForErrorStruct)]
+#[derive(
+    Debug, InitError, ImplGetWhereWasOneOrManyOneForErrorStruct, ImplGetSourceForStructWithoutMethod,
+)]
 pub struct PostgresDeleteAllFromProvidersTablesError {
     pub source: HashMap<ProviderKind, sqlx::Error>,
     pub where_was: WhereWas,
@@ -55,25 +58,6 @@ impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::
             }
         }
         Self { source, where_was }
-    }
-}
-
-impl tufa_common::traits::get_source::GetSource for PostgresDeleteAllFromProvidersTablesError {
-    fn get_source(&self) -> String {
-        let mut formatted = self
-            .source
-            .iter()
-            .map(|(pk, error)| format!("{} {},", pk, error))
-            .collect::<Vec<String>>()
-            .iter()
-            .fold(String::from(""), |mut acc, elem| {
-                acc.push_str(elem);
-                acc
-            });
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        formatted
     }
 }
 
