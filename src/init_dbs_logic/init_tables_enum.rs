@@ -6,8 +6,8 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
@@ -27,7 +27,7 @@ pub enum InitTablesEnum {
     Debug,
     InitError,
     InitErrorWithTracing,
-    ImplGetSourceForParentErrorStruct,
+    ImplGetSourceForStructWithMethod,
     ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
 )]
 pub struct InitTablesError {

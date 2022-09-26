@@ -13,8 +13,8 @@ use chrono::Utc;
 use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
 use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
@@ -26,7 +26,7 @@ use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
-    ImplGetSourceForParentErrorStruct,
+    ImplGetSourceForStructWithMethod,
     ImplDisplayForErrorStruct,
     InitError,
     InitErrorWithTracing,

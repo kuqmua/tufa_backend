@@ -11,24 +11,20 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
-use init_error_with_tracing::InitErrorWithTracing;
-use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
-use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
-use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
-use tufa_common::where_was::WhereWas;
-use tufa_common::where_was::WhereWasOneOrMany;
-// use impl_get_where_was_for_error_struct::ImplGetWhereWasForErrorStruct;
-use impl_get_source_for_parent_error_struct::ImplGetSourceForParentErrorStruct;
+use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
+use init_error_with_tracing::InitErrorWithTracing;
+use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
+use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
     InitError,
-    ImplGetSourceForParentErrorStruct,
+    ImplGetSourceForStructWithMethod,
     InitErrorWithTracing,
     ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
 )]
