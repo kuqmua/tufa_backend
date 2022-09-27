@@ -6,11 +6,12 @@ use chrono::Local;
 use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
+use mongodb::error::Error;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::time::Duration;
@@ -31,11 +32,11 @@ pub struct MongoCheckAvailabilityError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceForSimpleErrorEnum, ImplDisplayForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceForEnumWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
-    ClientOptionsParse(mongodb::error::Error),
-    ClientWithOptions(mongodb::error::Error),
-    ListCollectionNames(mongodb::error::Error),
+    ClientOptionsParse(Error),
+    ClientWithOptions(Error),
+    ListCollectionNames(Error),
 }
 
 #[deny(

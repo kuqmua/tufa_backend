@@ -7,11 +7,12 @@ use chrono::Utc;
 use git_info::GitInfo;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_get_source_for_simple_error_enum::ImplGetSourceForSimpleErrorEnum;
+use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use init_error_with_tracing_for_original_error_struct::InitErrorWithTracingForOriginalErrorStruct;
+use reqwest::Error;
 use reqwest::StatusCode;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
@@ -30,9 +31,9 @@ pub struct NetCheckAvailabilityError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, GitInfo, ImplDisplayForSimpleErrorEnum, ImplGetSourceForSimpleErrorEnum)]
+#[derive(Debug, GitInfo, ImplDisplayForSimpleErrorEnum, ImplGetSourceForEnumWithoutMethod)]
 pub enum NetCheckAvailabilityErrorEnum {
-    ReqwestGet(reqwest::Error),
+    ReqwestGet(Error),
     Client(StatusCode),
     Server(StatusCode),
 }
