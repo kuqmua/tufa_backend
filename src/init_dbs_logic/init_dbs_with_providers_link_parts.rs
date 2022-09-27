@@ -10,7 +10,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_get_source_for_source_error_enum::ImplGetSourceForSourceErrorEnum;
+use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
@@ -33,7 +33,7 @@ pub struct InitDbsProvidersLinkPartsError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForSourceErrorEnum)]
+#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForEnumWithMethod)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
     PostgresInit(PostgresInitError),
