@@ -52,12 +52,9 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
 
 impl std::fmt::Display for CollectionCountDocumentsOrIsNotEmpty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => match self {
-                CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e) => write!(f, "{}", e),
-                CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(e) => write!(f, "{}", e),
-            },
+        match self {
+            CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e) => write!(f, "{}", e),
+            CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(e) => write!(f, "{}", e),
         }
     }
 }

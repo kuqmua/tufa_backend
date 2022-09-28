@@ -280,7 +280,6 @@ pub struct ConfigStruct {
     pub is_tracing_enabled: bool,
     pub tracing_type: TracingType,
     pub is_parent_tracing_enabled: bool,
-    pub is_debug_implementation_enable: bool,
     pub source_place_type: SourcePlaceType,
     pub is_tracing_time_enabled: bool,
 

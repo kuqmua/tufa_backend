@@ -39,31 +39,26 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
 
 impl std::fmt::Display for PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match crate::lazy_static::config::CONFIG.is_debug_implementation_enable {
-            true => write!(f, "{:#?}", self),
-            false => {
-                let mut formatted = match self {
-                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
-                        .iter()
-                        .map(|(pk, error)| format!("{} {},", pk, error))
-                        .fold(String::from(""), |mut acc, elem| {
-                            acc.push_str(&elem);
-                            acc
-                        }),
-                    PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
-                        .iter()
-                        .map(|(pk, error)| format!("{} {},", pk, error))
-                        .fold(String::from(""), |mut acc, elem| {
-                            acc.push_str(&elem);
-                            acc
-                        }),
-                };
-                if !formatted.is_empty() {
-                    formatted.pop();
-                }
-                write!(f, "{}", formatted)
-            }
+        let mut formatted = match self {
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(hm) => hm
+                .iter()
+                .map(|(pk, error)| format!("{} {},", pk, error))
+                .fold(String::from(""), |mut acc, elem| {
+                    acc.push_str(&elem);
+                    acc
+                }),
+            PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(hm) => hm
+                .iter()
+                .map(|(pk, error)| format!("{} {},", pk, error))
+                .fold(String::from(""), |mut acc, elem| {
+                    acc.push_str(&elem);
+                    acc
+                }),
+        };
+        if !formatted.is_empty() {
+            formatted.pop();
         }
+        write!(f, "{}", formatted)
     }
 }
 
