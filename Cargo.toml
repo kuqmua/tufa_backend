@@ -93,6 +93,8 @@ impl_box_err_source_from_err = {path = "../proc_macros/impl_box_err_source_from_
 impl_display = {path = "../proc_macros/impl_display"}
 impl_display_for_error_struct = {path = "../proc_macros/impl_display_for_error_struct"}
 impl_display_for_simple_error_enum = {path = "../proc_macros/impl_display_for_simple_error_enum"}
+impl_error_with_tracing_for_struct_with_method = {path = "../proc_macros/impl_error_with_tracing_for_struct_with_method"}
+impl_error_with_tracing_for_struct_without_method = {path = "../proc_macros/impl_error_with_tracing_for_struct_without_method"}
 impl_from_for_upper_struct = {path = "../proc_macros/impl_from_for_upper_struct"}
 impl_get_source_for_enum_with_method = {path = "../proc_macros/impl_get_source_for_enum_with_method"}
 impl_get_source_for_enum_without_method = {path = "../proc_macros/impl_get_source_for_enum_without_method"}
@@ -110,6 +112,7 @@ init_from_env = {path = "../proc_macros/init_from_env"}
 provider_kind_from_config = {path = "../proc_macros/provider_kind_from_config"}
 struct_field_getter = {path = "../proc_macros/struct_field_getter"}
 struct_field_setter = {path = "../proc_macros/struct_field_setter"}
+
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
