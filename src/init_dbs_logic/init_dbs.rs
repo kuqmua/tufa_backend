@@ -48,11 +48,11 @@ impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for In
             tufa_common::config::source_place_type::SourcePlaceType::Source => {
                 tracing::error!(
                     error = errors,
-                    where_was = format!("{}", where_was.file_line_column()) // where_was = source.get_bunyan_with_additional_where_was(
-                                                                            //     &where_was,
-                                                                            //     source_place_type,
-                                                                            //     git_info,
-                                                                            // )
+                    where_was = where_was.file_line_column() // where_was = source.get_bunyan_with_additional_where_was(
+                                                             //     &where_was,
+                                                             //     source_place_type,
+                                                             //     git_info,
+                                                             // )
                 );
             }
             tufa_common::config::source_place_type::SourcePlaceType::Github => {
