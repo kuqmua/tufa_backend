@@ -7,6 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
+use impl_error_with_tracing_for_struct_without_method::ImplErrorWithTracingForStructWithoutMethod;
 use impl_get_source_for_struct_without_method::ImplGetSourceForStructWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
@@ -17,48 +18,15 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 use tufa_common::where_was::WhereWas;
 
 #[derive(
-    Debug, InitError, ImplGetWhereWasOneOrManyOneForErrorStruct, ImplGetSourceForStructWithoutMethod,
+    Debug,
+    InitError,
+    ImplGetWhereWasOneOrManyOneForErrorStruct,
+    ImplGetSourceForStructWithoutMethod,
+    ImplErrorWithTracingForStructWithoutMethod,
 )]
 pub struct PostgresCreateProvidersDbsError {
     pub source: HashMap<ProviderKind, sqlx::Error>,
     pub where_was: WhereWas,
-}
-
-impl tufa_common::traits::with_tracing::WithTracing<HashMap<ProviderKind, sqlx::Error>>
-    for PostgresCreateProvidersDbsError
-{
-    fn with_tracing(
-        source: HashMap<ProviderKind, sqlx::Error>,
-        where_was: WhereWas,
-        source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
-        git_info: &tufa_common::helpers::git::git_info::GitInformation,
-    ) -> Self {
-        let mut formatted = source
-            .iter()
-            .map(|(pk, error)| format!("{} {},", pk, error))
-            .fold(String::from(""), |mut acc, elem| {
-                acc.push_str(&elem);
-                acc
-            });
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        match source_place_type {
-            tufa_common::config::source_place_type::SourcePlaceType::Source => {
-                tracing::error!(error = formatted, where_was = where_was.file_line_column(),);
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::Github => {
-                tracing::error!(
-                    error = formatted,
-                    where_was = where_was.github_file_line_column(git_info),
-                );
-            }
-            tufa_common::config::source_place_type::SourcePlaceType::None => {
-                tracing::error!(error = formatted);
-            }
-        }
-        Self { source, where_was }
-    }
 }
 
 #[deny(
