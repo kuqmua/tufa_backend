@@ -6,14 +6,14 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
 use init_error::InitError;
 use sqlx::types::chrono::Local;
 use strum::IntoEnumIterator;
+use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::get_where_was_one_or_many::GetWhereWasOneOrMany;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
@@ -22,12 +22,104 @@ use tufa_common::where_was::WhereWas;
     InitError,
     ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
     ImplGetSourceForStructWithMethod,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
 )]
 pub struct InitDbsError {
     source: Vec<InitTablesError>,
     where_was: WhereWas,
 }
+
+// impl tufa_common::traits::with_tracing::WithTracing<Vec<InitTablesError>> for InitDbsError {
+//     fn with_tracing(
+//         source: Vec<InitTablesError>,
+//         where_was: tufa_common::where_was::WhereWas,
+//         source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
+//         git_info: &tufa_common::helpers::git::git_info::GitInformation,
+//     ) -> Self {
+//         match source_place_type {
+//             tufa_common::config::source_place_type::SourcePlaceType::Source => {
+//                 let mut error_handle = source.iter().map(|e| e.get_source()).fold(
+//                     String::from(""),
+//                     |mut acc, elem| {
+//                         acc.push_str(&elem);
+//                         acc
+//                     },
+//                 );
+//                 if !error_handle.is_empty() {
+//                     error_handle.pop();
+//                     error_handle.pop();
+//                 }
+//                 let mut where_was_vec_as_string = source
+//                     .iter()
+//                     .map(|(key, e)| {
+//                         format!("{}, ", e.get_bunyan_where_was(source_place_type, git_info))
+//                     })
+//                     .fold(String::from(""), |mut acc, elem| {
+//                         acc.push_str(&elem);
+//                         acc
+//                     });
+//                 if !where_was_vec_as_string.is_empty() {
+//                     where_was_vec_as_string.pop();
+//                     where_was_vec_as_string.pop();
+//                 }
+//                 let where_was_handle = format!(
+//                     "[{} from [{}]]",
+//                     where_was.file_line_column(),
+//                     where_was_vec_as_string
+//                 );
+//                 let where_was_handle = String::from("kekw");
+//                 tracing::error!(error = error_handle, where_was = where_was_handle,);
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::Github => {
+//                 let mut error_handle = source.iter().map(|e| e.get_source()).fold(
+//                     String::from(""),
+//                     |mut acc, elem| {
+//                         acc.push_str(&elem);
+//                         acc
+//                     },
+//                 );
+//                 if !error_handle.is_empty() {
+//                     error_handle.pop();
+//                     error_handle.pop();
+//                 }
+//                 let mut where_was_vec_as_string = source
+//                     .iter()
+//                     .map(|(key, e)| {
+//                         format!("{}, ", e.get_bunyan_where_was(source_place_type, git_info))
+//                     })
+//                     .fold(String::from(""), |mut acc, elem| {
+//                         acc.push_str(&elem);
+//                         acc
+//                     });
+//                 if !where_was_vec_as_string.is_empty() {
+//                     where_was_vec_as_string.pop();
+//                     where_was_vec_as_string.pop();
+//                 }
+//                 let where_was_handle = format!(
+//                     "[{} from [{}]]",
+//                     where_was.file_line_column(),
+//                     where_was_vec_as_string
+//                 );
+//                 tracing::error!(error = error_handle, where_was = where_was_handle,);
+//             }
+//             tufa_common::config::source_place_type::SourcePlaceType::None => {
+//                 let mut error_handle = source.iter().map(|e| format!("{}, ", e.get_source())).fold(
+//                     String::from(""),
+//                     |mut acc, elem| {
+//                         acc.push_str(&elem);
+//                         acc
+//                     },
+//                 );
+//                 if !error_handle.is_empty() {
+//                     error_handle.pop();
+//                     error_handle.pop();
+//                 }
+//                 tracing::error!(error = error_handle);
+//             }
+//         };
+//         Self { source, where_was }
+//     }
+// }
 
 #[deny(
     clippy::indexing_slicing,
