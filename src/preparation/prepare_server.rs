@@ -8,7 +8,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
 use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
@@ -21,7 +21,7 @@ use tufa_common::where_was::WhereWas;
 #[derive(
     Debug,
     InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
     ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
 )]
 pub struct PreparationError {

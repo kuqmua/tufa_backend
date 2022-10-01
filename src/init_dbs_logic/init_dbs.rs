@@ -6,7 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Utc;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
 use init_error::InitError;
@@ -22,7 +22,7 @@ use tufa_common::where_was::WhereWas;
     InitError,
     ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
     ImplGetSourceForStructWithMethod,
-    ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
 )]
 pub struct InitDbsError {
     source: Vec<InitTablesError>,

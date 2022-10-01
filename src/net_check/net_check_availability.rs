@@ -7,7 +7,7 @@ use chrono::Utc;
 use git_info::GitInfo;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
 use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
@@ -24,7 +24,7 @@ use tufa_common::where_was::WhereWas;
     ImplGetSourceForStructWithMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithoutWhereWas,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
 )]
 pub struct NetCheckAvailabilityError {
     source: NetCheckAvailabilityErrorEnum,
