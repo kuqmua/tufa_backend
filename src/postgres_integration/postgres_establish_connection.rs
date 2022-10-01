@@ -5,7 +5,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_error_with_tracing_for_struct_without_method::ImplErrorWithTracingForStructWithoutMethod;
+use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSource;
 use impl_get_source_for_struct_without_method::ImplGetSourceForStructWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
@@ -22,7 +22,7 @@ use tufa_common::where_was::WhereWas;
     InitError,
     ImplGetSourceForStructWithoutMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplErrorWithTracingForStructWithoutMethod,
+    ImplErrorWithTracingForStructWithoutGetSource,
 )]
 pub struct PostgresEstablishConnectionError {
     pub source: Error,
