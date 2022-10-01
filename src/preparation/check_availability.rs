@@ -13,12 +13,12 @@ use chrono::Utc;
 use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
 use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
-use init_error_with_tracing::InitErrorWithTracing;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
@@ -29,7 +29,7 @@ use tufa_common::where_was::WhereWas;
     ImplGetSourceForStructWithMethod,
     ImplDisplayForErrorStruct,
     InitError,
-    InitErrorWithTracing,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
     ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
 )]
 pub struct CheckAvailabilityError {
