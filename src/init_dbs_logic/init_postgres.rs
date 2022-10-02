@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
@@ -17,7 +16,8 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
-use impl_get_where_was_one_or_many_for_enum::ImplGetWhereWasOneOrManyForEnum;
+use std::collections::HashMap;
+use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -41,7 +41,11 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyForEnum, ImplGetSourceForEnumWithMethod)]
+#[derive(
+    Debug,
+    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
+    ImplGetSourceForEnumWithMethod,
+)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
