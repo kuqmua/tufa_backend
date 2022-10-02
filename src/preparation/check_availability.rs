@@ -17,7 +17,6 @@ use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplE
 use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
-use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
@@ -30,7 +29,7 @@ use tufa_common::where_was::WhereWas;
     ImplDisplayForErrorStruct,
     InitError,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
-    ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
+    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
 )]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,

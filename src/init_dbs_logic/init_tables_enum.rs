@@ -10,7 +10,6 @@ use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplE
 use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
-use impl_get_where_was_one_or_many_for_struct_with_source_enum_method::ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod;
 use init_error::InitError;
 use strum_macros::EnumIter;
 use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
@@ -28,7 +27,7 @@ pub enum InitTablesEnum {
     InitError,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
     ImplGetSourceForStructWithMethod,
-    ImplGetWhereWasOneOrManyForStructWithSourceEnumMethod,
+    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
 )]
 pub struct InitTablesError {
     source: InitTablesErrorEnum,
