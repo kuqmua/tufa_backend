@@ -17,7 +17,7 @@ use chrono::Local;
 use chrono::Utc;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use std::collections::HashMap;
-use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -43,7 +43,7 @@ pub struct PostgresInitError {
 
 #[derive(
     Debug,
-    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
+    ImplGetWhereWasOneOrManyWithMethod,
     ImplGetSourceForEnumWithMethod,
 )]
 pub enum PostgresInitErrorEnum {

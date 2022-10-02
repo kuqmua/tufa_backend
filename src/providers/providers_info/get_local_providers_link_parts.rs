@@ -9,7 +9,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
-use impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method::ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
 use std::collections::HashMap;
 use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
@@ -19,10 +19,7 @@ use tufa_common::where_was::WhereWas;
 use valuable::Valuable;
 
 #[derive(
-    Debug,
-    InitError,
-    ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod,
-    ImplGetSourceForStructWithMethod,
+    Debug, InitError, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceForStructWithMethod,
 )]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
