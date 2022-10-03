@@ -1,8 +1,8 @@
-use crate::config_mods::tracing_type::TracingType;
 use crate::helpers::resource::Resource;
 use gen_enum::GenEnum;
 use gen_enum_without_values::GenEnumWithoutValues;
 use tufa_common::config::source_place_type::SourcePlaceType;
+use tufa_common::config::tracing_type::TracingType;
 
 #[derive(
     Debug, Clone, init_from_env::InitFromEnv, GenEnum, GenEnumWithoutValues, Default, PartialEq, Eq,
