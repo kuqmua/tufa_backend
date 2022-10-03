@@ -282,6 +282,7 @@ pub struct ConfigStruct {
     pub is_parent_tracing_enabled: bool,
     pub source_place_type: SourcePlaceType,
     pub is_tracing_time_enabled: bool,
+    pub is_bunyan_separated_by_line_enabled: bool,
 
     pub error_red: u8,
     pub error_green: u8,
