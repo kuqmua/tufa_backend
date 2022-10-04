@@ -15,9 +15,10 @@ use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
-use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
+use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[derive(
@@ -32,11 +33,7 @@ pub struct InitDbsProvidersLinkPartsError {
     where_was: WhereWas,
 }
 
-#[derive(
-    Debug,
-    ImplGetWhereWasOneOrManyWithMethod,
-    ImplGetSourceForEnumWithMethod,
-)]
+#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceForEnumWithMethod)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
     PostgresInit(PostgresInitError),

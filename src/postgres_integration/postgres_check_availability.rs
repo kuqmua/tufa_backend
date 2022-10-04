@@ -13,6 +13,7 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use std::time::Duration;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[derive(

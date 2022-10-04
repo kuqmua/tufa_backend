@@ -26,7 +26,7 @@ use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitError;
-use tufa_common::traits::get_bunyan_with_additional_where_was::GetBunyanWithAdditionalWhereWas;
+use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
 #[derive(
@@ -41,11 +41,7 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-#[derive(
-    Debug,
-    ImplGetWhereWasOneOrManyWithMethod,
-    ImplGetSourceForEnumWithMethod,
-)]
+#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceForEnumWithMethod)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),
