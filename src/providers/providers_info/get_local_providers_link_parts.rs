@@ -13,7 +13,7 @@ use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
 use std::collections::HashMap;
-use tufa_common::traits::get_bunyan_where_was::GetBunyanWhereWas;
+use tufa_common::traits::get_log_where_was::GetLogWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
