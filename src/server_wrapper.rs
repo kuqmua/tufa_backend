@@ -55,26 +55,26 @@ pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
     Ok(())
 }
 
-fn report_exit(task_name: &str, outcome: Result<Result<(), impl Debug + Display>, JoinError>) {
-    match outcome {
-        Ok(Ok(())) => {
-            tracing::info!("{} has exited", task_name)
-        }
-        Ok(Err(e)) => {
-            tracing::error!(
-                error.cause_chain = ?e,
-                error.message = %e,
-                "{} failed",
-                task_name
-            )
-        }
-        Err(e) => {
-            tracing::error!(
-                error.cause_chain = ?e,
-                error.message = %e,
-                "{}' task failed to complete",
-                task_name
-            )
-        }
-    }
-}
+// fn report_exit(task_name: &str, outcome: Result<Result<(), impl Debug + Display>, JoinError>) {
+//     match outcome {
+//         Ok(Ok(())) => {
+//             tracing::info!("{} has exited", task_name)
+//         }
+//         Ok(Err(e)) => {
+//             tracing::error!(
+//                 error.cause_chain = ?e,
+//                 error.message = %e,
+//                 "{} failed",
+//                 task_name
+//             )
+//         }
+//         Err(e) => {
+//             tracing::error!(
+//                 error.cause_chain = ?e,
+//                 error.message = %e,
+//                 "{}' task failed to complete",
+//                 task_name
+//             )
+//         }
+//     }
+// }

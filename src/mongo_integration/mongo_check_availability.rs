@@ -33,13 +33,10 @@ pub struct MongoCheckAvailabilityError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceForEnumWithoutMethod, thiserror::Error)] //ImplDisplayForSimpleErrorEnum,
+#[derive(Debug, ImplGetSourceForEnumWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
-    #[error("ClientOptions::parse(mongo_url) failed: `{0}`")]
     ClientOptionsParse(Error),
-    #[error("ClientOptions::parse(mongo_url) failed: `{0}`")]
     ClientWithOptions(Error),
-    #[error("client.database(&CONFIG.mongo_providers_logs_db_name).list_collection_names(None) failed: `{0}`")]
     ListCollectionNames(Error),
 }
 
