@@ -1,11 +1,19 @@
 use crate::helpers::resource::Resource;
 use gen_enum::GenEnum;
 use gen_enum_without_values::GenEnumWithoutValues;
+use init_from_env_with_panic_if_failed::InitFromEnvWithPanicIfFailedWithPanicIfFailed;
 use tufa_common::config::source_place_type::SourcePlaceType;
 use tufa_common::config::tracing_type::TracingType;
 
 #[derive(
-    Debug, Clone, init_from_env::InitFromEnv, GenEnum, GenEnumWithoutValues, Default, PartialEq, Eq,
+    Debug,
+    Clone,
+    InitFromEnvWithPanicIfFailedWithPanicIfFailed,
+    GenEnum,
+    GenEnumWithoutValues,
+    Default,
+    PartialEq,
+    Eq,
 )]
 pub struct ConfigStruct {
     pub server_ip: String,
@@ -282,7 +290,6 @@ pub struct ConfigStruct {
     pub is_parent_tracing_enabled: bool,
     pub source_place_type: SourcePlaceType,
     pub is_tracing_time_enabled: bool,
-    pub is_bunyan_separated_by_line_enabled: bool,
 
     pub error_red: u8,
     pub error_green: u8,
