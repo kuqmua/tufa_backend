@@ -7,8 +7,7 @@ use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
 use strum_macros::EnumIter;
@@ -26,7 +25,7 @@ pub enum InitTablesEnum {
     Debug,
     InitError,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplGetWhereWasOneOrManyWithMethod,
 )]
 pub struct InitTablesError {
@@ -34,7 +33,7 @@ pub struct InitTablesError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceForEnumWithMethod)]
+#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
 }

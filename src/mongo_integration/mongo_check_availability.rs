@@ -7,8 +7,8 @@ use chrono::Utc;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
-use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_source_without_method::ImplGetSourceWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use mongodb::error::Error;
@@ -22,7 +22,7 @@ use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplDisplayForErrorStruct,
     InitError,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
@@ -33,7 +33,7 @@ pub struct MongoCheckAvailabilityError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceForEnumWithoutMethod, ImplDisplayForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckAvailabilityErrorEnum {
     ClientOptionsParse(Error),
     ClientWithOptions(Error),

@@ -14,8 +14,8 @@ use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_source_without_method::ImplGetSourceWithoutMethod;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
@@ -25,7 +25,7 @@ use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplDisplayForErrorStruct,
     InitError,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
@@ -38,7 +38,7 @@ pub struct CheckAvailabilityError {
 
 #[derive(
     Debug,
-    ImplGetSourceForEnumWithoutMethod,
+    ImplGetSourceWithoutMethod,
     ImplDisplayForSimpleErrorEnum,
     ImplGetWhereWasOneOrManyWithMethod,
 )]

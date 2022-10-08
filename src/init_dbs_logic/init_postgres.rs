@@ -15,14 +15,13 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
 use std::collections::HashMap;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_for_enum_with_method::ImplGetSourceForEnumWithMethod;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitError;
@@ -32,7 +31,7 @@ use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditional
 #[derive(
     Debug,
     InitError,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
 )]
@@ -41,7 +40,7 @@ pub struct PostgresInitError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceForEnumWithMethod)]
+#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),

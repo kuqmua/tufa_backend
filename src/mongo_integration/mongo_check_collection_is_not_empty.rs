@@ -8,8 +8,8 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
-use impl_get_source_for_enum_without_method::ImplGetSourceForEnumWithoutMethod;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_source_without_method::ImplGetSourceWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use mongodb::bson::doc;
@@ -27,7 +27,7 @@ use tufa_common::where_was::WhereWas;
 #[derive(
     Debug,
     InitError,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
 )]
@@ -36,7 +36,7 @@ pub struct MongoCheckCollectionsIsNotEmptyError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceForEnumWithoutMethod)]
+#[derive(Debug, ImplGetSourceWithoutMethod)]
 pub enum CollectionCountDocumentsOrIsNotEmpty {
     CountDocuments(Error),
     IsNotEmpty(u64),

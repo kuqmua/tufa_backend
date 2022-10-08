@@ -9,7 +9,7 @@ use chrono::Local;
 use chrono::Utc;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_for_struct_with_method::ImplGetSourceForStructWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
 use std::collections::HashMap;
@@ -24,7 +24,7 @@ use valuable::Valuable;
     Debug,
     InitError,
     ImplGetWhereWasOneOrManyWithMethod,
-    ImplGetSourceForStructWithMethod,
+    ImplGetSourceWithMethod,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
 )]
 pub struct GetLocalProvidersLinkPartsError {
