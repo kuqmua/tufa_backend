@@ -40,37 +40,6 @@ pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengt
     ),
 }
 
-impl std::fmt::Display
-    for PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let mut formatted = match self {
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(hm) => {
-                hm
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error))
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(&elem);
-                        acc
-                })
-            },
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(hm) => {
-                hm
-                    .iter()
-                    .map(|(pk, error)| format!("{} {},", pk, error))
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(&elem);
-                        acc
-                })
-            },
-        };
-        if !formatted.is_empty() {
-            formatted.pop();
-        }
-        write!(f, "{}", formatted)
-    }
-}
-
 #[derive(Debug)]
 pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
     pub table_rows_length: i64,

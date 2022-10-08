@@ -34,31 +34,6 @@ pub enum PreparationErrorEnum {
     InitDbs(InitDbsError),
 }
 
-// impl Display for PreparationError {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => write!(f, "{:#?}", self),
-//             false => write!(f, "{:?} {}", self.where_was, self.source),
-//         }
-//     }
-// }
-
-// impl Display for PreparationErrorEnum {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         match CONFIG.is_debug_implementation_enable {
-//             true => write!(f, "{:#?}", self),
-//             false => match self {
-//                 PreparationErrorEnum::CheckAvailability(source) => {
-//                     write!(f, "{}", *source)
-//                 }
-//                 PreparationErrorEnum::InitDbs(source) => {
-//                     write!(f, "{:#?}", *source)
-//                 }
-//             },
-//         }
-//     }
-// }
-
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
