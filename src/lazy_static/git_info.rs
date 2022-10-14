@@ -4,5 +4,5 @@ use tufa_common::helpers::git::git_info::GitInformationWrapper;
 
 lazy_static! {
     pub static ref GIT_INFO: GitInformationWrapper =
-        GitInformationWrapper::init("./", PROJECT_NAME);
+        GitInformationWrapper::init("../", PROJECT_NAME);
 }
