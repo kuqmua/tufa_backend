@@ -1,5 +1,4 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::fetch::rss_handle_error_status_code::handle_error_status_code;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::helpers::fetch::async_fetch_link::async_fetch_link;
@@ -16,6 +15,7 @@ use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfo;
 use std::time::Instant;
+use tufa_common::helpers::handle_status_code::handle_status_code;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, GitInfo)]
@@ -79,7 +79,7 @@ impl ProviderKind {
                     where_was: _,
                 } = **e
                 {
-                    handle_error_status_code(source, &link);
+                    handle_status_code(source, &link);
                 }
             }
             return Err(Box::new(
