@@ -22,7 +22,7 @@ pub fn sync_http_request_json(
     match reqwest::blocking::get(link) {
         Err(e) => Err(Box::new(
             HttpRequestJsonError::init_error_with_possible_trace(
-                HttpRequestJsonErrorEnum::ReqwestBlockingGet(e),
+                HttpRequestJsonErrorEnum::ReqwestGet(e),
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),

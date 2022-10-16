@@ -1,11 +1,12 @@
-use super::http_request_text_error::HttpRequestTextError;
-use crate::helpers::http_request::get::text::http_request_text_error::HttpRequestTextErrorEnum;
+use super::http_request_version_error::HttpRequestVersionError;
+use crate::helpers::http_request::get::version::http_request_version_error::HttpRequestVersionErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use reqwest::Version;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
@@ -15,14 +16,14 @@ use tufa_common::where_was::WhereWas;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn async_http_request_text(
+pub async fn async_http_request_version(
     link: &str,
     should_trace: bool,
-) -> Result<String, Box<HttpRequestTextError>> {
+) -> Result<Version, Box<HttpRequestVersionError>> {
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(
-            HttpRequestTextError::init_error_with_possible_trace(
-                HttpRequestTextErrorEnum::ReqwestGet(e),
+            HttpRequestVersionError::init_error_with_possible_trace(
+                HttpRequestVersionErrorEnum::ReqwestGet(e),
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -38,8 +39,8 @@ pub async fn async_http_request_text(
         Ok(res) => {
             if let Err(e) = res.error_for_status_ref() {
                 return Err(Box::new(
-                    HttpRequestTextError::init_error_with_possible_trace(
-                        HttpRequestTextErrorEnum::StatusCode(e),
+                    HttpRequestVersionError::init_error_with_possible_trace(
+                        HttpRequestVersionErrorEnum::StatusCode(e),
                         WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -53,24 +54,7 @@ pub async fn async_http_request_text(
                     ),
                 ));
             }
-            match res.text().await {
-                Err(e) => Err(Box::new(
-                    HttpRequestTextError::init_error_with_possible_trace(
-                        HttpRequestTextErrorEnum::ResponseText(e),
-                        WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
-                        },
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                        should_trace,
-                    ),
-                )),
-                Ok(text) => Ok(text),
-            }
+            Ok(res.version())
         }
     }
 }

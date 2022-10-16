@@ -22,7 +22,7 @@ pub fn sync_http_request_content_length(
     match reqwest::blocking::get(link) {
         Err(e) => Err(Box::new(
             HttpRequestContentLengthError::init_error_with_possible_trace(
-                HttpRequestContentLengthErrorEnum::ReqwestBlockingGet(e),
+                HttpRequestContentLengthErrorEnum::ReqwestGet(e),
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),

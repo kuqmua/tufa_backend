@@ -22,7 +22,7 @@ pub async fn async_http_request_bytes(
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(
             HttpRequestBytesError::init_error_with_possible_trace(
-                HttpRequestBytesErrorEnum::ReqwestBlockingGet(e),
+                HttpRequestBytesErrorEnum::ReqwestGet(e),
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),

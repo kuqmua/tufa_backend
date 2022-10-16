@@ -14,14 +14,14 @@ use tufa_common::where_was::WhereWas;
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
     ImplGetWhereWasOneOrManyOneForErrorStruct,
 )]
-pub struct HttpRequestBytesError {
-    source: HttpRequestBytesErrorEnum,
+pub struct HttpRequestVersionError {
+    source: HttpRequestVersionErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
-pub enum HttpRequestBytesErrorEnum {
+pub enum HttpRequestVersionErrorEnum {
     ReqwestGet(reqwest::Error),
     StatusCode(reqwest::Error),
-    ResponseBytes(reqwest::Error),
+    ResponseVersion(reqwest::Error),
 }

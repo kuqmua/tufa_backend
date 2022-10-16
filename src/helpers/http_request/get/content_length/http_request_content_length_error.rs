@@ -21,6 +21,6 @@ pub struct HttpRequestContentLengthError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestContentLengthErrorEnum {
-    ReqwestBlockingGet(reqwest::Error),
+    ReqwestGet(reqwest::Error),
     StatusCode(reqwest::Error),
 }

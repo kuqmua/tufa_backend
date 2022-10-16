@@ -21,7 +21,7 @@ pub struct HttpRequestJsonError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestJsonErrorEnum {
-    ReqwestBlockingGet(reqwest::Error),
+    ReqwestGet(reqwest::Error),
     StatusCode(reqwest::Error),
     ResponseJson(reqwest::Error),
 }
