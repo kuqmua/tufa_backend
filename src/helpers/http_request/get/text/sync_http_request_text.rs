@@ -1,5 +1,5 @@
 use super::http_request_text_error::HttpRequestTextError;
-use crate::helpers::http_request::text::http_request_text_error::HttpRequestTextErrorEnum;
+use crate::helpers::http_request::get::text::http_request_text_error::HttpRequestTextErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;

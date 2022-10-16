@@ -1,5 +1,5 @@
 use super::http_request_bytes_error::HttpRequestBytesError;
-use crate::helpers::http_request::bytes::http_request_bytes_error::HttpRequestBytesErrorEnum;
+use crate::helpers::http_request::get::bytes::http_request_bytes_error::HttpRequestBytesErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
@@ -15,11 +15,11 @@ use tufa_common::where_was::WhereWas;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub fn sync_http_request_bytes(
+pub async fn async_http_request_bytes(
     link: &str,
     should_trace: bool,
 ) -> Result<actix_web::web::Bytes, Box<HttpRequestBytesError>> {
-    match reqwest::blocking::get(link) {
+    match reqwest::get(link).await {
         Err(e) => Err(Box::new(
             HttpRequestBytesError::init_error_with_possible_trace(
                 HttpRequestBytesErrorEnum::ReqwestBlockingGet(e),
@@ -53,7 +53,7 @@ pub fn sync_http_request_bytes(
                     ),
                 ));
             }
-            match res.bytes() {
+            match res.bytes().await {
                 Err(e) => Err(Box::new(
                     HttpRequestBytesError::init_error_with_possible_trace(
                         HttpRequestBytesErrorEnum::ResponseBytes(e),

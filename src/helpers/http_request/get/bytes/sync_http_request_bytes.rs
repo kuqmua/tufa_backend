@@ -1,5 +1,5 @@
-use super::http_request_json_error::HttpRequestJsonError;
-use crate::helpers::http_request::json::http_request_json_error::HttpRequestJsonErrorEnum;
+use super::http_request_bytes_error::HttpRequestBytesError;
+use crate::helpers::http_request::get::bytes::http_request_bytes_error::HttpRequestBytesErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
@@ -15,14 +15,14 @@ use tufa_common::where_was::WhereWas;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub fn sync_http_request_json(
+pub fn sync_http_request_bytes(
     link: &str,
     should_trace: bool,
-) -> Result<String, Box<HttpRequestJsonError>> {
+) -> Result<actix_web::web::Bytes, Box<HttpRequestBytesError>> {
     match reqwest::blocking::get(link) {
         Err(e) => Err(Box::new(
-            HttpRequestJsonError::init_error_with_possible_trace(
-                HttpRequestJsonErrorEnum::ReqwestBlockingGet(e),
+            HttpRequestBytesError::init_error_with_possible_trace(
+                HttpRequestBytesErrorEnum::ReqwestBlockingGet(e),
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -38,8 +38,8 @@ pub fn sync_http_request_json(
         Ok(res) => {
             if let Err(e) = res.error_for_status_ref() {
                 return Err(Box::new(
-                    HttpRequestJsonError::init_error_with_possible_trace(
-                        HttpRequestJsonErrorEnum::StatusCode(e),
+                    HttpRequestBytesError::init_error_with_possible_trace(
+                        HttpRequestBytesErrorEnum::StatusCode(e),
                         WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -53,10 +53,10 @@ pub fn sync_http_request_json(
                     ),
                 ));
             }
-            match res.json() {
+            match res.bytes() {
                 Err(e) => Err(Box::new(
-                    HttpRequestJsonError::init_error_with_possible_trace(
-                        HttpRequestJsonErrorEnum::ResponseJson(e),
+                    HttpRequestBytesError::init_error_with_possible_trace(
+                        HttpRequestBytesErrorEnum::ResponseBytes(e),
                         WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
@@ -69,7 +69,7 @@ pub fn sync_http_request_json(
                         should_trace,
                     ),
                 )),
-                Ok(json) => Ok(json),
+                Ok(bytes) => Ok(bytes),
             }
         }
     }

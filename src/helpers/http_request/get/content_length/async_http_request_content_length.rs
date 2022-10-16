@@ -1,5 +1,5 @@
 use super::http_request_content_length_error::HttpRequestContentLengthError;
-use crate::helpers::http_request::content_length::http_request_content_length_error::HttpRequestContentLengthErrorEnum;
+use crate::helpers::http_request::get::content_length::http_request_content_length_error::HttpRequestContentLengthErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::DateTime;
