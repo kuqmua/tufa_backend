@@ -73,15 +73,15 @@ impl ProviderKind {
         }
         if !async_fetch_links_error_vec.is_empty() {
             //todo: maybe not all links must return Ok ?
-            for (link, e) in &async_fetch_links_error_vec {
-                if let FetchLinkErrorEnum::StatusCode {
-                    source,
-                    where_was: _,
-                } = **e
-                {
-                    handle_status_code(source, &link);
-                }
-            }
+            // for (link, e) in &async_fetch_links_error_vec {
+            //     if let FetchLinkErrorEnum::StatusCode {
+            //         source,
+            //         where_was: _,
+            //     } = **e.clone()
+            //     {
+            //         // handle_status_code(source, link);//todo
+            //     }
+            // }
             return Err(Box::new(
                 FetchAndParseProviderDataErrorEnum::AsyncFetchLinks {
                     source: async_fetch_links_error_vec,

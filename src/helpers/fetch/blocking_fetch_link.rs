@@ -25,10 +25,9 @@ pub fn blocking_fetch_link(link: &str) -> Result<String, Box<FetchLinkErrorEnum>
             },
         })),
         Ok(res) => {
-            let status = res.status();
-            if status != reqwest::StatusCode::OK {
+            if let Err(e) = res.error_for_status_ref() {
                 return Err(Box::new(FetchLinkErrorEnum::StatusCode {
-                    source: status,
+                    source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),

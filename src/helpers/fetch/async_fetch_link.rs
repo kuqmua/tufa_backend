@@ -6,6 +6,24 @@ use chrono::Local;
 use chrono::Utc;
 use tufa_common::where_was::WhereWas;
 
+//
+// #[derive(
+//     Debug,
+//     InitError,
+//     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
+//     ImplGetWhereWasOneOrManyWithMethod,
+// )]
+// pub struct PreparationError {
+//     source: PreparationErrorEnum,
+//     where_was: WhereWas,
+// }
+
+// #[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
+// pub enum PreparationErrorEnum {
+//     CheckAvailability(CheckAvailabilityError),
+//     InitDbs(InitDbsError),
+// }
+//
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -25,10 +43,9 @@ pub async fn async_fetch_link(link: &str) -> Result<String, Box<FetchLinkErrorEn
             },
         })),
         Ok(res) => {
-            let status = res.status();
-            if status != reqwest::StatusCode::OK {
+            if let Err(e) = res.error_for_status_ref() {
                 return Err(Box::new(FetchLinkErrorEnum::StatusCode {
-                    source: status,
+                    source: e,
                     where_was: WhereWas {
                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),

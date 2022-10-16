@@ -7,7 +7,7 @@ pub enum FetchLinkErrorEnum {
         where_was: WhereWas,
     },
     StatusCode {
-        source: reqwest::StatusCode,
+        source: reqwest::Error,
         where_was: WhereWas,
     },
     ResponseText {
