@@ -23,5 +23,4 @@ pub struct HttpRequestVersionError {
 pub enum HttpRequestVersionErrorEnum {
     ReqwestGet(reqwest::Error),
     StatusCode(reqwest::Error),
-    ResponseVersion(reqwest::Error),
 }
