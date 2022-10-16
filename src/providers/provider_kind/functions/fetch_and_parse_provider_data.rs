@@ -2,7 +2,7 @@ use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::helpers::fetch::async_http_request_text::async_http_request_text;
-use crate::helpers::fetch::http_request_text_error::HttpRequestTextErrorEnum;
+use crate::helpers::fetch::http_request_text_error::HttpRequestTextError;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -21,7 +21,7 @@ use tufa_common::where_was::WhereWas;
 #[derive(Debug, GitInfo)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
-        source: Vec<(String, Box<HttpRequestTextErrorEnum>)>, //link, error
+        source: Vec<(String, Box<HttpRequestTextError>)>, //link, error
         where_was: WhereWas,
     },
     NoItems {
@@ -44,7 +44,7 @@ impl ProviderKind {
         let time = Instant::now();
         let capacity = links.len();
         let vec_to_return = join_all(links.iter().map(|link| async move {
-            let result = async_http_request_text(link).await;
+            let result = async_http_request_text(link, false).await;
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
