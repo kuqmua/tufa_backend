@@ -1,8 +1,8 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::helpers::fetch::async_http_request_text::async_http_request_text;
-use crate::helpers::fetch::http_request_text_error::HttpRequestTextError;
+use crate::helpers::http_request::async_http_request_text::async_http_request_text;
+use crate::helpers::http_request::http_request_text_error::HttpRequestTextError;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
