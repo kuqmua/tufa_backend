@@ -1,7 +1,7 @@
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug)]
-pub enum FetchLinkErrorEnum {
+pub enum HttpRequestTextErrorEnum {
     ReqwestBlockingGet {
         source: reqwest::Error,
         where_was: WhereWas,

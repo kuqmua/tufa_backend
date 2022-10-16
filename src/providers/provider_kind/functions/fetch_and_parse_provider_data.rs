@@ -1,8 +1,8 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::helpers::fetch::async_fetch_link::async_fetch_link;
-use crate::helpers::fetch::fetch_link_error::FetchLinkErrorEnum;
+use crate::helpers::fetch::async_http_request_text::async_http_request_text;
+use crate::helpers::fetch::http_request_text_error::HttpRequestTextErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -15,13 +15,13 @@ use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfo;
 use std::time::Instant;
-use tufa_common::helpers::handle_status_code::handle_status_code;
+// use tufa_common::helpers::handle_status_code::handle_status_code;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, GitInfo)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
-        source: Vec<(String, Box<FetchLinkErrorEnum>)>, //link, error
+        source: Vec<(String, Box<HttpRequestTextErrorEnum>)>, //link, error
         where_was: WhereWas,
     },
     NoItems {
@@ -44,7 +44,7 @@ impl ProviderKind {
         let time = Instant::now();
         let capacity = links.len();
         let vec_to_return = join_all(links.iter().map(|link| async move {
-            let result = async_fetch_link(link).await;
+            let result = async_http_request_text(link).await;
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
@@ -74,7 +74,7 @@ impl ProviderKind {
         if !async_fetch_links_error_vec.is_empty() {
             //todo: maybe not all links must return Ok ?
             // for (link, e) in &async_fetch_links_error_vec {
-            //     if let FetchLinkErrorEnum::StatusCode {
+            //     if let HttpRequestTextErrorEnum::StatusCode {
             //         source,
             //         where_was: _,
             //     } = **e.clone()
