@@ -1,4 +1,5 @@
 pub mod async_client_builder;
+pub mod client_builder_error;
 pub mod delete;
 pub mod get;
 pub mod head;
