@@ -6,8 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use reqwest::header::HeaderMap;
-use reqwest::header::HeaderValue;
+use reqwest::blocking::RequestBuilder;
 use reqwest::Version;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -19,14 +18,9 @@ use tufa_common::where_was::WhereWas;
     clippy::float_arithmetic
 )]
 pub fn sync_http_request_version(
-    link: &str,
-    headers: Option<HeaderMap<HeaderValue>>,
+    request_builder: RequestBuilder,
     should_trace: bool,
 ) -> Result<Version, Box<HttpRequestVersionError>> {
-    let request_builder = match headers {
-        Some(h) => reqwest::blocking::Client::new().get(link).headers(h),
-        None => reqwest::blocking::Client::new().get(link),
-    };
     match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestVersionError::init_error_with_possible_trace(
