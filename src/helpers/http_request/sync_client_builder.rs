@@ -14,7 +14,7 @@ use tufa_common::where_was::WhereWas;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn sync_client_builder(
+pub fn sync_client_builder(
     client_builder: reqwest::blocking::ClientBuilder,
     should_trace: bool,
 ) -> Result<reqwest::blocking::Client, Box<ClientBuilderError>> {
