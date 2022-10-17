@@ -6,8 +6,7 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
-use reqwest::header::HeaderMap;
-use reqwest::header::HeaderValue;
+use reqwest::RequestBuilder;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
@@ -18,14 +17,9 @@ use tufa_common::where_was::WhereWas;
     clippy::float_arithmetic
 )]
 pub async fn async_http_request_text(
-    link: &str,
-    headers: Option<HeaderMap<HeaderValue>>,
+    request_builder: RequestBuilder,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestTextError>> {
-    let request_builder = match headers {
-        Some(h) => reqwest::Client::new().get(link).headers(h),
-        None => reqwest::Client::new().get(link),
-    };
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestTextError::init_error_with_possible_trace(
