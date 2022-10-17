@@ -6,6 +6,8 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use reqwest::header::HeaderMap;
+use reqwest::header::HeaderValue;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
@@ -17,10 +19,15 @@ use tufa_common::where_was::WhereWas;
 )]
 pub async fn async_http_request_TextWithCharset(
     link: &str,
+    headers: Option<HeaderMap<HeaderValue>>,
     default_encoding: &str,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestTextWithCharsetError>> {
-    match reqwest::get(link).await {
+    let request_builder = match headers {
+        Some(h) => reqwest::Client::new().get(link).headers(h),
+        None => reqwest::Client::new().get(link),
+    };
+    match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestTextWithCharsetError::init_error_with_possible_trace(
                 HttpRequestTextWithCharsetErrorEnum::ReqwestGet(e),

@@ -6,6 +6,8 @@ use chrono::DateTime;
 use chrono::FixedOffset;
 use chrono::Local;
 use chrono::Utc;
+use reqwest::header::HeaderMap;
+use reqwest::header::HeaderValue;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
 
@@ -17,9 +19,14 @@ use tufa_common::where_was::WhereWas;
 )]
 pub fn sync_http_request_remote_addr(
     link: &str,
+    headers: Option<HeaderMap<HeaderValue>>,
     should_trace: bool,
 ) -> Result<Option<std::net::SocketAddr>, Box<HttpRequestRemoteAddrError>> {
-    match reqwest::blocking::get(link) {
+    let request_builder = match headers {
+        Some(h) => reqwest::blocking::Client::new().get(link).headers(h),
+        None => reqwest::blocking::Client::new().get(link),
+    };
+    match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestRemoteAddrError::init_error_with_possible_trace(
                 HttpRequestRemoteAddrErrorEnum::ReqwestGet(e),

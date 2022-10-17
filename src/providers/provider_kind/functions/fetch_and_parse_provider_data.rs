@@ -44,7 +44,7 @@ impl ProviderKind {
         let time = Instant::now();
         let capacity = links.len();
         let vec_to_return = join_all(links.iter().map(|link| async move {
-            let result = async_http_request_text(link, false).await;
+            let result = async_http_request_text(link, None, false).await;
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
