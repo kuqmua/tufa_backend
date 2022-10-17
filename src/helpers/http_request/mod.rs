@@ -3,6 +3,7 @@ pub mod client_builder_error;
 pub mod delete;
 pub mod get;
 pub mod head;
+pub mod http_request_error;
 pub mod patch;
 pub mod post;
 pub mod put;
