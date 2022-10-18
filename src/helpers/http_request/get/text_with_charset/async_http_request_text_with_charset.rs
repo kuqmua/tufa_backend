@@ -16,7 +16,7 @@ use tufa_common::where_was::WhereWas;
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn async_http_request_TextWithCharset(
+pub async fn async_http_request_text_with_charset(
     request_builder: RequestBuilder,
     default_encoding: &str,
     should_trace: bool,
