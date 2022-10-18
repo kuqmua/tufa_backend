@@ -135,9 +135,53 @@ pub async fn sync_http_request(
     }
 }
 
-pub async fn async_http_request_handle(
+pub async fn async_http_request_wrapper<
+    UserAgentValue,
+    CookieProvider: reqwest::cookie::CookieStore + 'static,
+    PoolIdleTimeoutDuration,
+>(
+    url: &str,
+    // headers: Option<HeaderMap<HeaderValue>>,
+    // user_agent: Option<UserAgentValue>,
+    // default_headers: Option<HeaderMap>,
+    // cookie_store: Option<bool>,
+    // cookie_provider: Option<CookieProvider>,
+    // gzip: Option<bool>,
+    // brotli: Option<bool>,
+    // deflate: Option<bool>,
+    // no_gzip: Option<()>,
+    // no_brotli: Option<()>,
+    // no_deflate: Option<()>,
+    // redirect: Option<Policy>,
+    // referer: Option<bool>,
+    // proxy: Option<Proxy>,
+    // no_proxy: Option<()>,
+    // timeout: Option<Duration>,
+    // connect_timeout: Option<Duration>,
+    // connection_verbose: Option<bool>,
+    // pool_idle_timeout: Option<PoolIdleTimeoutDuration>,
+    // pool_max_idle_per_host: Option<usize>,
+    // http1_title_case_headers: Option<()>,
+    // http1_allow_obsolete_multiline_headers_in_responses: Option<bool>,
+    // http1_only: Option<()>,
+    // http09_responses: Option<()>,
+    // http2_prior_knowledge: Option<()>,
+    // http2_initial_stream_window_size: Option<impl Into<Option<u32>>>,
+    // http2_initial_connection_window_size: Option<impl Into<Option<u32>>>,
+    // http2_adaptive_window: Option<bool>,
+    // http2_max_frame_size: Option<impl Into<Option<u32>>>,
+    // http2_keep_alive_interval: Option<impl Into<Option<Duration>>>,
+    // http2_keep_alive_timeout: Option<Duration>,
+    // http2_keep_alive_while_idle: Option<bool>,
+    //
+    // should_trace: bool,
     should_trace: bool,
-) -> Result<reqwest::Client, Box<HttpRequestError>> {
+) -> Result<String, Box<HttpRequestError>>
+// where
+//     UserAgentValue: TryInto<HeaderValue>,
+//     UserAgentValue::Error: Into<actix_web::http::Error>,
+//     PoolIdleTimeoutDuration: Into<Option<Duration>>,
+{
     match async_client_builder(
         //https://docs.rs/reqwest/0.11.12/reqwest/struct.ClientBuilder.html
         reqwest::Client::builder().no_gzip(),
@@ -161,7 +205,7 @@ pub async fn async_http_request_handle(
         Ok(request_builder) => {
             match async_http_request_text(
                 // https://docs.rs/reqwest/0.11.12/reqwest/struct.RequestBuilder.html
-                request_builder.get("kekw"),
+                request_builder.get(url),
                 false,
             )
             .await
@@ -181,7 +225,7 @@ pub async fn async_http_request_handle(
                     &GIT_INFO.data,
                     should_trace,
                 ))),
-                Ok(_) => todo!(),
+                Ok(string_content) => Ok(string_content),
             }
         }
     }
