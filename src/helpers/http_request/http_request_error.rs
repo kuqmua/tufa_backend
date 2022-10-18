@@ -143,56 +143,56 @@ pub async fn async_http_request_wrapper<
     TcpKeepaliveGeneric,
 >(
     url: &str,
-    // headers: Option<HeaderMap<HeaderValue>>,
-    // user_agent: Option<UserAgentValueGeneric>,
-    // default_headers: Option<HeaderMap>,
-    // cookie_store: Option<bool>,
-    // cookie_provider: Option<CookieProviderGeneric>,
-    // gzip: Option<bool>,
-    // brotli: Option<bool>,
-    // deflate: Option<bool>,
-    // no_gzip: Option<()>,
-    // no_brotli: Option<()>,
-    // no_deflate: Option<()>,
-    // redirect: Option<Policy>,
-    // referer: Option<bool>,
-    // proxy: Option<Proxy>,
-    // no_proxy: Option<()>,
-    // timeout: Option<Duration>,
-    // connect_timeout: Option<Duration>,
-    // connection_verbose: Option<bool>,
-    // pool_idle_timeout: Option<PoolIdleTimeoutDurationGeneric>,
-    // pool_max_idle_per_host: Option<usize>,
-    // http1_title_case_headers: Option<()>,
-    // http1_allow_obsolete_multiline_headers_in_responses: Option<bool>,
-    // http1_only: Option<()>,
-    // http09_responses: Option<()>,
-    // http2_prior_knowledge: Option<()>,
-    // http2_initial_stream_window_size: Option<impl Into<Option<u32>>>,
-    // http2_initial_connection_window_size: Option<impl Into<Option<u32>>>,
-    // http2_adaptive_window: Option<bool>,
-    // http2_max_frame_size: Option<impl Into<Option<u32>>>,
-    // http2_keep_alive_interval: Option<impl Into<Option<Duration>>>,
-    // http2_keep_alive_timeout: Option<Duration>,
-    // http2_keep_alive_while_idle: Option<bool>,
-    // tcp_nodelay: Option<bool>,
-    // local_address: Option<LocalAddressGeneric>,
-    // tcp_keepalive: Option<TcpKeepaliveGeneric>,
-    // add_root_certificate: Option<Certificate>,
-    // tls_built_in_root_certs: Option<bool>,
-    // identity: Option<Identity>,
-    // danger_accept_invalid_hostnames: Option<bool>,
-    // danger_accept_invalid_certs: Option<bool>,
-    // min_tls_version: Option<Version>,
-    // max_tls_version: Option<Version>,
-    // use_native_tls: Option<()>,
-    // use_rustls_tls: Option<()>,
-    // use_preconfigured_tls: Option<impl Any>,
-    // trust_dns: Option<bool>,
-    // no_trust_dns: Option<()>,
-    // https_only: Option<()>,
-    // resolve: Option<(&str, SocketAddr)>,
-    // resolve_to_addrs: Option<(&str, &[SocketAddr])>,
+    // headers_argument Option<HeaderMap<HeaderValue>>,
+    // user_agent_argument Option<UserAgentValueGeneric>,
+    // default_headers_argument Option<HeaderMap>,
+    // cookie_store_argument Option<bool>,
+    // cookie_provider_argument Option<CookieProviderGeneric>,
+    // gzip_argument Option<bool>,
+    // brotli_argument Option<bool>,
+    // deflate_argument Option<bool>,
+    // no_gzip_argument Option<()>,
+    // no_brotli_argument Option<()>,
+    // no_deflate_argument Option<()>,
+    // redirect_argument Option<Policy>,
+    // referer_argument Option<bool>,
+    // proxy_argument Option<Proxy>,
+    // no_proxy_argument Option<()>,
+    // timeout_argument Option<Duration>,
+    // connect_timeout_argument Option<Duration>,
+    // connection_verbose_argument Option<bool>,
+    // pool_idle_timeout_argument Option<PoolIdleTimeoutDurationGeneric>,
+    // pool_max_idle_per_host_argument Option<usize>,
+    // http1_title_case_headers_argument Option<()>,
+    // http1_allow_obsolete_multiline_headers_in_responses_argument Option<bool>,
+    // http1_only_argument Option<()>,
+    // http09_responses_argument Option<()>,
+    // http2_prior_knowledge_argument Option<()>,
+    // http2_initial_stream_window_size_argument Option<impl Into<Option<u32>>>,
+    // http2_initial_connection_window_size_argument Option<impl Into<Option<u32>>>,
+    // http2_adaptive_window_argument Option<bool>,
+    // http2_max_frame_size_argument Option<impl Into<Option<u32>>>,
+    // http2_keep_alive_interval_argument Option<impl Into<Option<Duration>>>,
+    // http2_keep_alive_timeout_argument Option<Duration>,
+    // http2_keep_alive_while_idle_argument Option<bool>,
+    // tcp_nodelay_argument Option<bool>,
+    // local_address_argument Option<LocalAddressGeneric>,
+    // tcp_keepalive_argument Option<TcpKeepaliveGeneric>,
+    // add_root_certificate_argument Option<Certificate>,
+    // tls_built_in_root_certs_argument Option<bool>,
+    // identity_argument Option<Identity>,
+    // danger_accept_invalid_hostnames_argument Option<bool>,
+    // danger_accept_invalid_certs_argument Option<bool>,
+    // min_tls_version_argument Option<Version>,
+    // max_tls_version_argument Option<Version>,
+    // use_native_tls_argument Option<()>,
+    // use_rustls_tls_argument Option<()>,
+    // use_preconfigured_tls_argument Option<impl Any>,
+    // trust_dns_argument Option<bool>,
+    // no_trust_dns_argument Option<()>,
+    // https_only_argument Option<()>,
+    // resolve_argument Option<(&str, SocketAddr)>,
+    // resolve_to_addrs_argument Option<(&str, &[SocketAddr])>,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestError>>
 // where
@@ -204,7 +204,56 @@ pub async fn async_http_request_wrapper<
 {
     match async_client_builder(
         //https://docs.rs/reqwest/0.11.12/reqwest/struct.ClientBuilder.html
-        reqwest::Client::builder().no_gzip(),
+        reqwest::Client::builder(),
+        // user_agent:
+        // default_headers:
+        // cookie_store:
+        // cookie_provider:
+        // gzip:
+        // brotli:
+        // deflate:
+        // no_gzip:
+        // no_brotli:
+        // no_deflate:
+        // redirect:
+        // referer:
+        // proxy:
+        // no_proxy:
+        // timeout:
+        // connect_timeout:
+        // connection_verbose:
+        // pool_idle_timeout:
+        // pool_max_idle_per_host:
+        // http1_title_case_headers:
+        // http1_allow_obsolete_multiline_headers_in_responses:
+        // http1_only:
+        // http09_responses:
+        // http2_prior_knowledge:
+        // http2_initial_stream_window_size:
+        // http2_initial_connection_window_size:
+        // http2_adaptive_window:
+        // http2_max_frame_size:
+        // http2_keep_alive_interval:
+        // http2_keep_alive_timeout:
+        // http2_keep_alive_while_idle:
+        // tcp_nodelay:
+        // local_address:
+        // tcp_keepalive:
+        // add_root_certificate:
+        // tls_built_in_root_certs:
+        // identity:
+        // danger_accept_invalid_hostnames:
+        // danger_accept_invalid_certs:
+        // min_tls_version:
+        // max_tls_version:
+        // use_native_tls:
+        // use_rustls_tls:
+        // use_preconfigured_tls:
+        // trust_dns:
+        // no_trust_dns:
+        // https_only:
+        // resolve:
+        // resolve_to_addrs:
         false,
     )
     .await
