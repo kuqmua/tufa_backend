@@ -300,7 +300,7 @@ pub async fn async_http_request_wrapper<
     form_request_builder: Option<FormGeneric>,
     json_request_builder: Option<JsonGeneric>,
     fetch_mode_no_cors_request_builder: Option<()>,
-
+    //
     method: HttpRequestMethod,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestError>>
@@ -540,7 +540,7 @@ where
             should_trace,
         ))),
         Ok(client_handle) => {
-            let mut request_builder_handle = client_handle.get(url); //do something with get
+            let mut request_builder_handle = method.get_async_builder(client_handle, url); //do something with get
             if let Some(v) = header_request_builder {
                 request_builder_handle = request_builder_handle.header(v.0, v.1);
             }
