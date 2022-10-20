@@ -142,60 +142,64 @@ pub async fn async_http_request_wrapper<
     PoolIdleTimeoutDurationGeneric,
     LocalAddressGeneric,
     TcpKeepaliveGeneric,
+    HeaderKeyGeneric,
+    HeaderValueGeneric,
+    BodyGeneric: Into<Body>,
+    QueryGeneric: Serialize + ?Sized,
+    FormGeneric: Serialize + ?Sized,
+    JsonGeneric: Serialize + ?Sized,
 >(
     url: &str,
-    headers_argument: Option<reqwest::header::HeaderMap<reqwest::header::HeaderValue>>,
-
     //
-    user_agent_argument: Option<UserAgentValueGeneric>,
-    default_headers_argument: Option<reqwest::header::HeaderMap>,
-    cookie_store_argument: Option<bool>,
-    cookie_provider_argument: Option<std::sync::Arc<CookieProviderGeneric>>,
-    gzip_argument: Option<bool>,
-    brotli_argument: Option<bool>,
-    deflate_argument: Option<bool>,
-    no_gzip_argument: Option<()>,
-    no_brotli_argument: Option<()>,
-    no_deflate_argument: Option<()>,
-    redirect_argument: Option<reqwest::redirect::Policy>,
-    referer_argument: Option<bool>,
-    proxy_argument: Option<reqwest::Proxy>,
-    no_proxy_argument: Option<()>,
-    timeout_argument: Option<std::time::Duration>,
-    connect_timeout_argument: Option<std::time::Duration>,
-    connection_verbose_argument: Option<bool>,
-    pool_idle_timeout_argument: Option<PoolIdleTimeoutDurationGeneric>,
-    pool_max_idle_per_host_argument: Option<usize>,
-    http1_title_case_headers_argument: Option<()>,
-    http1_allow_obsolete_multiline_headers_in_responses_argument: Option<bool>,
-    http1_only_argument: Option<()>,
-    http09_responses_argument: Option<()>,
-    http2_prior_knowledge_argument: Option<()>,
-    http2_initial_stream_window_size_argument: Option<impl Into<Option<u32>>>,
-    http2_initial_connection_window_size_argument: Option<impl Into<Option<u32>>>,
-    http2_adaptive_window_argument: Option<bool>,
-    http2_max_frame_size_argument: Option<impl Into<Option<u32>>>,
-    http2_keep_alive_interval_argument: Option<impl Into<Option<std::time::Duration>>>,
-    http2_keep_alive_timeout_argument: Option<std::time::Duration>,
-    http2_keep_alive_while_idle_argument: Option<bool>,
-    tcp_nodelay_argument: Option<bool>,
-    local_address_argument: Option<LocalAddressGeneric>,
-    tcp_keepalive_argument: Option<TcpKeepaliveGeneric>,
-    add_root_certificate_argument: Option<reqwest::Certificate>,
-    tls_built_in_root_certs_argument: Option<bool>,
-    identity_argument: Option<reqwest::Identity>,
-    danger_accept_invalid_hostnames_argument: Option<bool>,
-    danger_accept_invalid_certs_argument: Option<bool>,
-    min_tls_version_argument: Option<reqwest::tls::Version>,
-    max_tls_version_argument: Option<reqwest::tls::Version>,
-    use_native_tls_argument: Option<()>,
-    use_rustls_tls_argument: Option<()>,
-    use_preconfigured_tls_argument: Option<impl std::any::Any>,
-    trust_dns_argument: Option<bool>,
-    no_trust_dns_argument: Option<()>,
-    https_only_argument: Option<bool>,
-    resolve_argument: Option<(&str, std::net::SocketAddr)>,
-    resolve_to_addrs_argument: Option<(&str, &[std::net::SocketAddr])>,
+    user_agent_client_argument: Option<UserAgentValueGeneric>,
+    default_headers_client_argument: Option<reqwest::header::HeaderMap>,
+    cookie_store_client_argument: Option<bool>,
+    cookie_provider_client_argument: Option<std::sync::Arc<CookieProviderGeneric>>,
+    gzip_client_argument: Option<bool>,
+    brotli_client_argument: Option<bool>,
+    deflate_client_argument: Option<bool>,
+    no_gzip_client_argument: Option<()>,
+    no_brotli_client_argument: Option<()>,
+    no_deflate_client_argument: Option<()>,
+    redirect_client_argument: Option<reqwest::redirect::Policy>,
+    referer_client_argument: Option<bool>,
+    proxy_client_argument: Option<reqwest::Proxy>,
+    no_proxy_client_argument: Option<()>,
+    timeout_client_argument: Option<std::time::Duration>,
+    connect_timeout_client_argument: Option<std::time::Duration>,
+    connection_verbose_client_argument: Option<bool>,
+    pool_idle_timeout_client_argument: Option<PoolIdleTimeoutDurationGeneric>,
+    pool_max_idle_per_host_client_argument: Option<usize>,
+    http1_title_case_headers_client_argument: Option<()>,
+    http1_allow_obsolete_multiline_headers_in_responses_client_argument: Option<bool>,
+    http1_only_client_argument: Option<()>,
+    http09_responses_client_argument: Option<()>,
+    http2_prior_knowledge_client_argument: Option<()>,
+    http2_initial_stream_window_size_client_argument: Option<impl Into<Option<u32>>>,
+    http2_initial_connection_window_size_client_argument: Option<impl Into<Option<u32>>>,
+    http2_adaptive_window_client_argument: Option<bool>,
+    http2_max_frame_size_client_argument: Option<impl Into<Option<u32>>>,
+    http2_keep_alive_interval_client_argument: Option<impl Into<Option<std::time::Duration>>>,
+    http2_keep_alive_timeout_client_argument: Option<std::time::Duration>,
+    http2_keep_alive_while_idle_client_argument: Option<bool>,
+    tcp_nodelay_client_argument: Option<bool>,
+    local_address_client_argument: Option<LocalAddressGeneric>,
+    tcp_keepalive_client_argument: Option<TcpKeepaliveGeneric>,
+    add_root_certificate_client_argument: Option<reqwest::Certificate>,
+    tls_built_in_root_certs_client_argument: Option<bool>,
+    identity_client_argument: Option<reqwest::Identity>,
+    danger_accept_invalid_hostnames_client_argument: Option<bool>,
+    danger_accept_invalid_certs_client_argument: Option<bool>,
+    min_tls_version_client_argument: Option<reqwest::tls::Version>,
+    max_tls_version_client_argument: Option<reqwest::tls::Version>,
+    use_native_tls_client_argument: Option<()>,
+    use_rustls_tls_client_argument: Option<()>,
+    use_preconfigured_tls_client_argument: Option<impl std::any::Any>,
+    trust_dns_client_argument: Option<bool>,
+    no_trust_dns_client_argument: Option<()>,
+    https_only_client_argument: Option<bool>,
+    resolve_client_argument: Option<(&str, std::net::SocketAddr)>,
+    resolve_to_addrs_client_argument: Option<(&str, &[std::net::SocketAddr])>,
     //
     // user_agent_value: UserAgentValueGeneric,
     // default_headers_value: reqwest::header::HeaderMap,
@@ -235,6 +239,19 @@ pub async fn async_http_request_wrapper<
     // https_only_value: bool,
     // resolve_value: (&str, std::net::SocketAddr),
     // resolve_to_addrs_value: (&str, &[std::net::SocketAddr]),
+    //
+    header_request_builder: Option<(HeaderKeyGeneric, HeaderValueGeneric)>,
+    headers_request_builder: Option<reqwest::header::HeaderMap<reqwest::header::HeaderValue>>,
+    basic_auth_request_builder: Option<(BasicAuthUsernameGeneric, BasicAuthPasswordGeneric)>,
+    bearer_auth_request_builder: Option<BearerAuthGeneric>,
+    body_request_builder: Option<BodyGeneric>,
+    timeout_request_builder: Option<Duration>,
+    multipart_request_builder: Option<Form>,
+    query_request_builder: Option<QueryGeneric>,
+    version_request_builder: Option<Version>,
+    form_request_builder: Option<FormGeneric>,
+    json_request_builder: Option<JsonGeneric>,
+    fetch_mode_no_cors_request_builder: Option<()>,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestError>>
 where
@@ -243,154 +260,164 @@ where
     PoolIdleTimeoutDurationGeneric: Into<Option<std::time::Duration>>,
     LocalAddressGeneric: Into<Option<std::net::IpAddr>>,
     TcpKeepaliveGeneric: Into<Option<std::time::Duration>>,
+
+    HeaderName: TryFrom<HeaderKeyGeneric>,
+    <HeaderName as TryFrom<HeaderKeyGeneric>>::Error: Into<Error>,
+    HeaderValue: TryFrom<HeaderValueGeneric>,
+    <HeaderValue as TryFrom<HeaderValueGeneric>>::Error: Into<Error>,
+
+    BasicAuthUsernameGeneric: Display,
+    BasicAuthPasswordGeneric: Display,
+
+    BearerAuthGeneric: Display,
 {
-    let mut builder = reqwest::Client::builder();
-    if let Some(v) = user_agent_argument {
-        builder = builder.user_agent(v);
+    let mut client_builder = reqwest::Client::builder();
+    if let Some(v) = user_agent_client_argument {
+        client_builder = client_builder.user_agent(v);
     }
-    if let Some(v) = default_headers_argument {
-        builder = builder.default_headers(v);
+    if let Some(v) = default_headers_client_argument {
+        client_builder = client_builder.default_headers(v);
     }
-    if let Some(v) = cookie_store_argument {
-        builder = builder.cookie_store(v);
+    if let Some(v) = cookie_store_client_argument {
+        client_builder = client_builder.cookie_store(v);
     }
-    if let Some(v) = cookie_provider_argument {
-        builder = builder.cookie_provider(v);
+    if let Some(v) = cookie_provider_client_argument {
+        client_builder = client_builder.cookie_provider(v);
     }
-    if let Some(v) = gzip_argument {
-        builder = builder.gzip(v);
+    if let Some(v) = gzip_client_argument {
+        client_builder = client_builder.gzip(v);
     }
-    if let Some(v) = brotli_argument {
-        builder = builder.brotli(v);
+    if let Some(v) = brotli_client_argument {
+        client_builder = client_builder.brotli(v);
     }
-    if let Some(v) = deflate_argument {
-        builder = builder.deflate(v);
+    if let Some(v) = deflate_client_argument {
+        client_builder = client_builder.deflate(v);
     }
-    if no_gzip_argument.is_some() {
-        builder = builder.no_gzip();
+    if no_gzip_client_argument.is_some() {
+        client_builder = client_builder.no_gzip();
     }
-    if no_brotli_argument.is_some() {
-        builder = builder.no_brotli();
+    if no_brotli_client_argument.is_some() {
+        client_builder = client_builder.no_brotli();
     }
-    if no_deflate_argument.is_some() {
-        builder = builder.no_deflate();
+    if no_deflate_client_argument.is_some() {
+        client_builder = client_builder.no_deflate();
     }
-    if let Some(v) = redirect_argument {
-        builder = builder.redirect(v);
+    if let Some(v) = redirect_client_argument {
+        client_builder = client_builder.redirect(v);
     }
-    if let Some(v) = referer_argument {
-        builder = builder.referer(v);
+    if let Some(v) = referer_client_argument {
+        client_builder = client_builder.referer(v);
     }
-    if let Some(v) = proxy_argument {
-        builder = builder.proxy(v);
+    if let Some(v) = proxy_client_argument {
+        client_builder = client_builder.proxy(v);
     }
-    if no_proxy_argument.is_some() {
-        builder = builder.no_proxy();
+    if no_proxy_client_argument.is_some() {
+        client_builder = client_builder.no_proxy();
     }
-    if let Some(v) = timeout_argument {
-        builder = builder.timeout(v);
+    if let Some(v) = timeout_client_argument {
+        client_builder = client_builder.timeout(v);
     }
-    if let Some(v) = connect_timeout_argument {
-        builder = builder.connect_timeout(v);
+    if let Some(v) = connect_timeout_client_argument {
+        client_builder = client_builder.connect_timeout(v);
     }
-    if let Some(v) = connection_verbose_argument {
-        builder = builder.connection_verbose(v);
+    if let Some(v) = connection_verbose_client_argument {
+        client_builder = client_builder.connection_verbose(v);
     }
-    if let Some(v) = pool_idle_timeout_argument {
-        builder = builder.pool_idle_timeout(v);
+    if let Some(v) = pool_idle_timeout_client_argument {
+        client_builder = client_builder.pool_idle_timeout(v);
     }
-    if let Some(v) = pool_max_idle_per_host_argument {
-        builder = builder.pool_max_idle_per_host(v);
+    if let Some(v) = pool_max_idle_per_host_client_argument {
+        client_builder = client_builder.pool_max_idle_per_host(v);
     }
-    if http1_title_case_headers_argument.is_some() {
-        builder = builder.http1_title_case_headers();
+    if http1_title_case_headers_client_argument.is_some() {
+        client_builder = client_builder.http1_title_case_headers();
     }
-    if let Some(v) = http1_allow_obsolete_multiline_headers_in_responses_argument {
-        builder = builder.http1_allow_obsolete_multiline_headers_in_responses(v);
+    if let Some(v) = http1_allow_obsolete_multiline_headers_in_responses_client_argument {
+        client_builder = client_builder.http1_allow_obsolete_multiline_headers_in_responses(v);
     }
-    if http1_only_argument.is_some() {
-        builder = builder.http1_only();
+    if http1_only_client_argument.is_some() {
+        client_builder = client_builder.http1_only();
     }
-    if http09_responses_argument.is_some() {
-        builder = builder.http09_responses();
+    if http09_responses_client_argument.is_some() {
+        client_builder = client_builder.http09_responses();
     }
-    if http2_prior_knowledge_argument.is_some() {
-        builder = builder.http2_prior_knowledge();
+    if http2_prior_knowledge_client_argument.is_some() {
+        client_builder = client_builder.http2_prior_knowledge();
     }
-    if let Some(v) = http2_initial_stream_window_size_argument {
-        builder = builder.http2_initial_stream_window_size(v);
+    if let Some(v) = http2_initial_stream_window_size_client_argument {
+        client_builder = client_builder.http2_initial_stream_window_size(v);
     }
-    if let Some(v) = http2_initial_connection_window_size_argument {
-        builder = builder.http2_initial_connection_window_size(v);
+    if let Some(v) = http2_initial_connection_window_size_client_argument {
+        client_builder = client_builder.http2_initial_connection_window_size(v);
     }
-    if let Some(v) = http2_adaptive_window_argument {
-        builder = builder.http2_adaptive_window(v);
+    if let Some(v) = http2_adaptive_window_client_argument {
+        client_builder = client_builder.http2_adaptive_window(v);
     }
-    if let Some(v) = http2_max_frame_size_argument {
-        builder = builder.http2_max_frame_size(v);
+    if let Some(v) = http2_max_frame_size_client_argument {
+        client_builder = client_builder.http2_max_frame_size(v);
     }
-    if let Some(v) = http2_keep_alive_interval_argument {
-        builder = builder.http2_keep_alive_interval(v);
+    if let Some(v) = http2_keep_alive_interval_client_argument {
+        client_builder = client_builder.http2_keep_alive_interval(v);
     }
-    if let Some(v) = http2_keep_alive_timeout_argument {
-        builder = builder.http2_keep_alive_timeout(v);
+    if let Some(v) = http2_keep_alive_timeout_client_argument {
+        client_builder = client_builder.http2_keep_alive_timeout(v);
     }
-    if let Some(v) = http2_keep_alive_while_idle_argument {
-        builder = builder.http2_keep_alive_while_idle(v);
+    if let Some(v) = http2_keep_alive_while_idle_client_argument {
+        client_builder = client_builder.http2_keep_alive_while_idle(v);
     }
-    if let Some(v) = tcp_nodelay_argument {
-        builder = builder.tcp_nodelay(v);
+    if let Some(v) = tcp_nodelay_client_argument {
+        client_builder = client_builder.tcp_nodelay(v);
     }
-    if let Some(v) = local_address_argument {
-        builder = builder.local_address(v);
+    if let Some(v) = local_address_client_argument {
+        client_builder = client_builder.local_address(v);
     }
-    if let Some(v) = tcp_keepalive_argument {
-        builder = builder.tcp_keepalive(v);
+    if let Some(v) = tcp_keepalive_client_argument {
+        client_builder = client_builder.tcp_keepalive(v);
     }
-    if let Some(v) = add_root_certificate_argument {
-        builder = builder.add_root_certificate(v);
+    if let Some(v) = add_root_certificate_client_argument {
+        client_builder = client_builder.add_root_certificate(v);
     }
-    if let Some(v) = tls_built_in_root_certs_argument {
-        builder = builder.tls_built_in_root_certs(v);
+    if let Some(v) = tls_built_in_root_certs_client_argument {
+        client_builder = client_builder.tls_built_in_root_certs(v);
     }
-    if let Some(v) = identity_argument {
-        builder = builder.identity(v);
+    if let Some(v) = identity_client_argument {
+        client_builder = client_builder.identity(v);
     }
-    if let Some(v) = danger_accept_invalid_hostnames_argument {
-        builder = builder.danger_accept_invalid_hostnames(v);
+    if let Some(v) = danger_accept_invalid_hostnames_client_argument {
+        client_builder = client_builder.danger_accept_invalid_hostnames(v);
     }
-    if let Some(v) = danger_accept_invalid_certs_argument {
-        builder = builder.danger_accept_invalid_certs(v);
+    if let Some(v) = danger_accept_invalid_certs_client_argument {
+        client_builder = client_builder.danger_accept_invalid_certs(v);
     }
-    if let Some(v) = min_tls_version_argument {
-        builder = builder.min_tls_version(v);
+    if let Some(v) = min_tls_version_client_argument {
+        client_builder = client_builder.min_tls_version(v);
     }
-    if let Some(v) = max_tls_version_argument {
-        builder = builder.max_tls_version(v);
+    if let Some(v) = max_tls_version_client_argument {
+        client_builder = client_builder.max_tls_version(v);
     }
-    if use_native_tls_argument.is_some() {
-        builder = builder.use_native_tls();
+    if use_native_tls_client_argument.is_some() {
+        client_builder = client_builder.use_native_tls();
     }
-    if use_rustls_tls_argument.is_some() {
-        builder = builder.use_rustls_tls();
+    if use_rustls_tls_client_argument.is_some() {
+        client_builder = client_builder.use_rustls_tls();
     }
-    if let Some(v) = use_preconfigured_tls_argument {
-        builder = builder.use_preconfigured_tls(v);
+    if let Some(v) = use_preconfigured_tls_client_argument {
+        client_builder = client_builder.use_preconfigured_tls(v);
     }
-    if let Some(v) = trust_dns_argument {
-        builder = builder.trust_dns(v);
+    if let Some(v) = trust_dns_client_argument {
+        client_builder = client_builder.trust_dns(v);
     }
-    if no_trust_dns_argument.is_some() {
-        builder = builder.no_trust_dns();
+    if no_trust_dns_client_argument.is_some() {
+        client_builder = client_builder.no_trust_dns();
     }
-    if let Some(v) = https_only_argument {
-        builder = builder.https_only(v);
+    if let Some(v) = https_only_client_argument {
+        client_builder = client_builder.https_only(v);
     }
-    if let Some(v) = resolve_argument {
-        builder = builder.resolve(v.0, v.1);
+    if let Some(v) = resolve_client_argument {
+        client_builder = client_builder.resolve(v.0, v.1);
     }
-    if let Some(v) = resolve_to_addrs_argument {
-        builder = builder.resolve_to_addrs(v.0, v.1);
+    if let Some(v) = resolve_to_addrs_client_argument {
+        client_builder = client_builder.resolve_to_addrs(v.0, v.1);
     }
     match async_client_builder(
         //https://docs.rs/reqwest/0.11.12/reqwest/struct.ClientBuilder.html
@@ -446,7 +473,8 @@ where
         //     .https_only(https_only_value)
         //     .resolve(resolve_value.0, resolve_value.1)
         //     .resolve_to_addrs(resolve_to_addrs_value.0, resolve_to_addrs_value.1),
-        builder, false,
+        client_builder,
+        false,
     )
     .await
     {
@@ -463,10 +491,10 @@ where
             &GIT_INFO.data,
             should_trace,
         ))),
-        Ok(request_builder) => {
+        Ok(mut client_handle) => {
             match async_http_request_text(
                 // https://docs.rs/reqwest/0.11.12/reqwest/struct.RequestBuilder.html
-                request_builder.get(url),
+                client_handle.get(url), //do something with get
                 false,
             )
             .await
