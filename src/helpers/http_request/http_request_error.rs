@@ -135,6 +135,47 @@ pub async fn sync_http_request(
     }
 }
 
+//not all, coz reqwest impl not all
+
+pub enum HttpRequestMethod {
+    Get,
+    Post,
+    Put,
+    Patch,
+    Delete,
+    Head,
+}
+
+impl HttpRequestMethod {
+    pub fn get_async_builder(&self, client: reqwest::Client, url: &str) -> reqwest::RequestBuilder {
+        match self {
+            HttpRequestMethod::Get => client.get(url),
+            HttpRequestMethod::Post => client.post(url),
+            HttpRequestMethod::Put => client.put(url),
+            HttpRequestMethod::Patch => client.patch(url),
+            HttpRequestMethod::Delete => client.delete(url),
+            HttpRequestMethod::Head => client.head(url),
+        }
+    }
+}
+
+impl HttpRequestMethod {
+    pub fn get_sync_builder(
+        &self,
+        client: reqwest::blocking::Client,
+        url: &str,
+    ) -> reqwest::blocking::RequestBuilder {
+        match self {
+            HttpRequestMethod::Get => client.get(url),
+            HttpRequestMethod::Post => client.post(url),
+            HttpRequestMethod::Put => client.put(url),
+            HttpRequestMethod::Patch => client.patch(url),
+            HttpRequestMethod::Delete => client.delete(url),
+            HttpRequestMethod::Head => client.head(url),
+        }
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 pub async fn async_http_request_wrapper<
     UserAgentValueGeneric,
@@ -259,6 +300,8 @@ pub async fn async_http_request_wrapper<
     form_request_builder: Option<FormGeneric>,
     json_request_builder: Option<JsonGeneric>,
     fetch_mode_no_cors_request_builder: Option<()>,
+
+    method: HttpRequestMethod,
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestError>>
 where
