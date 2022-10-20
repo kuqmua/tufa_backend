@@ -142,12 +142,16 @@ pub async fn async_http_request_wrapper<
     PoolIdleTimeoutDurationGeneric,
     LocalAddressGeneric,
     TcpKeepaliveGeneric,
+    //
     HeaderKeyGeneric,
     HeaderValueGeneric,
-    BodyGeneric: Into<Body>,
-    QueryGeneric: Serialize + ?Sized,
-    FormGeneric: Serialize + ?Sized,
-    JsonGeneric: Serialize + ?Sized,
+    BasicAuthUsernameGeneric,
+    BasicAuthPasswordGeneric,
+    BearerAuthGeneric,
+    BodyGeneric: Into<reqwest::Body>,
+    QueryGeneric: serde::Serialize, // + ?Sized,
+    FormGeneric: serde::Serialize,  // + ?Sized,
+    JsonGeneric: serde::Serialize,  // + ?Sized,
 >(
     url: &str,
     //
@@ -245,10 +249,10 @@ pub async fn async_http_request_wrapper<
     basic_auth_request_builder: Option<(BasicAuthUsernameGeneric, BasicAuthPasswordGeneric)>,
     bearer_auth_request_builder: Option<BearerAuthGeneric>,
     body_request_builder: Option<BodyGeneric>,
-    timeout_request_builder: Option<Duration>,
-    multipart_request_builder: Option<Form>,
+    timeout_request_builder: Option<std::time::Duration>,
+    multipart_request_builder: Option<reqwest::multipart::Form>,
     query_request_builder: Option<QueryGeneric>,
-    version_request_builder: Option<Version>,
+    version_request_builder: Option<reqwest::Version>,
     form_request_builder: Option<FormGeneric>,
     json_request_builder: Option<JsonGeneric>,
     fetch_mode_no_cors_request_builder: Option<()>,
@@ -261,15 +265,15 @@ where
     LocalAddressGeneric: Into<Option<std::net::IpAddr>>,
     TcpKeepaliveGeneric: Into<Option<std::time::Duration>>,
 
-    HeaderName: TryFrom<HeaderKeyGeneric>,
-    <HeaderName as TryFrom<HeaderKeyGeneric>>::Error: Into<Error>,
-    HeaderValue: TryFrom<HeaderValueGeneric>,
-    <HeaderValue as TryFrom<HeaderValueGeneric>>::Error: Into<Error>,
+    reqwest::header::HeaderName: TryFrom<HeaderKeyGeneric>,
+    <reqwest::header::HeaderName as TryFrom<HeaderKeyGeneric>>::Error: Into<reqwest::Error>,
+    reqwest::header::HeaderValue: TryFrom<HeaderValueGeneric>,
+    <reqwest::header::HeaderValue as TryFrom<HeaderValueGeneric>>::Error: Into<reqwest::Error>,
 
-    BasicAuthUsernameGeneric: Display,
-    BasicAuthPasswordGeneric: Display,
+    BasicAuthUsernameGeneric: std::fmt::Display,
+    BasicAuthPasswordGeneric: std::fmt::Display,
 
-    BearerAuthGeneric: Display,
+    BearerAuthGeneric: std::fmt::Display,
 {
     let mut client_builder = reqwest::Client::builder();
     if let Some(v) = user_agent_client_argument {
