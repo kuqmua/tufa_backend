@@ -135,6 +135,7 @@ pub async fn sync_http_request(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub async fn async_http_request_wrapper<
     UserAgentValueGeneric,
     CookieProviderGeneric: reqwest::cookie::CookieStore + 'static,
@@ -195,46 +196,45 @@ pub async fn async_http_request_wrapper<
     https_only_argument: Option<bool>,
     resolve_argument: Option<(&str, std::net::SocketAddr)>,
     resolve_to_addrs_argument: Option<(&str, &[std::net::SocketAddr])>,
-
     //
-    user_agent_value: UserAgentValueGeneric,
-    default_headers_value: reqwest::header::HeaderMap,
-    cookie_store_value: bool,
-    cookie_provider_value: std::sync::Arc<CookieProviderGeneric>,
-    gzip_value: bool,
-    brotli_value: bool,
-    deflate_value: bool,
-    redirect_value: reqwest::redirect::Policy,
-    referer_value: bool,
-    proxy_value: reqwest::Proxy,
-    timeout_value: std::time::Duration,
-    connect_timeout_value: std::time::Duration,
-    connection_verbose_value: bool,
-    pool_idle_timeout_value: PoolIdleTimeoutDurationGeneric,
-    pool_max_idle_per_host_value: usize,
-    http1_allow_obsolete_multiline_headers_in_responses_value: bool,
-    http2_initial_stream_window_size_value: impl Into<Option<u32>>,
-    http2_initial_connection_window_size_value: impl Into<Option<u32>>,
-    http2_adaptive_window_value: bool,
-    http2_max_frame_size_value: impl Into<Option<u32>>,
-    http2_keep_alive_interval_value: impl Into<Option<std::time::Duration>>,
-    http2_keep_alive_timeout_value: std::time::Duration,
-    http2_keep_alive_while_idle_value: bool,
-    tcp_nodelay_value: bool,
-    local_address_value: LocalAddressGeneric,
-    tcp_keepalive_value: TcpKeepaliveGeneric,
-    add_root_certificate_value: reqwest::Certificate,
-    tls_built_in_root_certs_value: bool,
-    identity_value: reqwest::Identity,
-    danger_accept_invalid_hostnames_value: bool,
-    danger_accept_invalid_certs_value: bool,
-    min_tls_version_value: reqwest::tls::Version,
-    max_tls_version_value: reqwest::tls::Version,
-    use_preconfigured_tls_value: impl std::any::Any,
-    trust_dns_value: bool,
-    https_only_value: bool,
-    resolve_value: (&str, std::net::SocketAddr),
-    resolve_to_addrs_value: (&str, &[std::net::SocketAddr]),
+    // user_agent_value: UserAgentValueGeneric,
+    // default_headers_value: reqwest::header::HeaderMap,
+    // cookie_store_value: bool,
+    // cookie_provider_value: std::sync::Arc<CookieProviderGeneric>,
+    // gzip_value: bool,
+    // brotli_value: bool,
+    // deflate_value: bool,
+    // redirect_value: reqwest::redirect::Policy,
+    // referer_value: bool,
+    // proxy_value: reqwest::Proxy,
+    // timeout_value: std::time::Duration,
+    // connect_timeout_value: std::time::Duration,
+    // connection_verbose_value: bool,
+    // pool_idle_timeout_value: PoolIdleTimeoutDurationGeneric,
+    // pool_max_idle_per_host_value: usize,
+    // http1_allow_obsolete_multiline_headers_in_responses_value: bool,
+    // http2_initial_stream_window_size_value: impl Into<Option<u32>>,
+    // http2_initial_connection_window_size_value: impl Into<Option<u32>>,
+    // http2_adaptive_window_value: bool,
+    // http2_max_frame_size_value: impl Into<Option<u32>>,
+    // http2_keep_alive_interval_value: impl Into<Option<std::time::Duration>>,
+    // http2_keep_alive_timeout_value: std::time::Duration,
+    // http2_keep_alive_while_idle_value: bool,
+    // tcp_nodelay_value: bool,
+    // local_address_value: LocalAddressGeneric,
+    // tcp_keepalive_value: TcpKeepaliveGeneric,
+    // add_root_certificate_value: reqwest::Certificate,
+    // tls_built_in_root_certs_value: bool,
+    // identity_value: reqwest::Identity,
+    // danger_accept_invalid_hostnames_value: bool,
+    // danger_accept_invalid_certs_value: bool,
+    // min_tls_version_value: reqwest::tls::Version,
+    // max_tls_version_value: reqwest::tls::Version,
+    // use_preconfigured_tls_value: impl std::any::Any,
+    // trust_dns_value: bool,
+    // https_only_value: bool,
+    // resolve_value: (&str, std::net::SocketAddr),
+    // resolve_to_addrs_value: (&str, &[std::net::SocketAddr]),
     should_trace: bool,
 ) -> Result<String, Box<HttpRequestError>>
 where
@@ -244,61 +244,209 @@ where
     LocalAddressGeneric: Into<Option<std::net::IpAddr>>,
     TcpKeepaliveGeneric: Into<Option<std::time::Duration>>,
 {
+    let mut builder = reqwest::Client::builder();
+    if let Some(v) = user_agent_argument {
+        builder = builder.user_agent(v);
+    }
+    if let Some(v) = default_headers_argument {
+        builder = builder.default_headers(v);
+    }
+    if let Some(v) = cookie_store_argument {
+        builder = builder.cookie_store(v);
+    }
+    if let Some(v) = cookie_provider_argument {
+        builder = builder.cookie_provider(v);
+    }
+    if let Some(v) = gzip_argument {
+        builder = builder.gzip(v);
+    }
+    if let Some(v) = brotli_argument {
+        builder = builder.brotli(v);
+    }
+    if let Some(v) = deflate_argument {
+        builder = builder.deflate(v);
+    }
+    if no_gzip_argument.is_some() {
+        builder = builder.no_gzip();
+    }
+    if no_brotli_argument.is_some() {
+        builder = builder.no_brotli();
+    }
+    if no_deflate_argument.is_some() {
+        builder = builder.no_deflate();
+    }
+    if let Some(v) = redirect_argument {
+        builder = builder.redirect(v);
+    }
+    if let Some(v) = referer_argument {
+        builder = builder.referer(v);
+    }
+    if let Some(v) = proxy_argument {
+        builder = builder.proxy(v);
+    }
+    if no_proxy_argument.is_some() {
+        builder = builder.no_proxy();
+    }
+    if let Some(v) = timeout_argument {
+        builder = builder.timeout(v);
+    }
+    if let Some(v) = connect_timeout_argument {
+        builder = builder.connect_timeout(v);
+    }
+    if let Some(v) = connection_verbose_argument {
+        builder = builder.connection_verbose(v);
+    }
+    if let Some(v) = pool_idle_timeout_argument {
+        builder = builder.pool_idle_timeout(v);
+    }
+    if let Some(v) = pool_max_idle_per_host_argument {
+        builder = builder.pool_max_idle_per_host(v);
+    }
+    if http1_title_case_headers_argument.is_some() {
+        builder = builder.http1_title_case_headers();
+    }
+    if let Some(v) = http1_allow_obsolete_multiline_headers_in_responses_argument {
+        builder = builder.http1_allow_obsolete_multiline_headers_in_responses(v);
+    }
+    if http1_only_argument.is_some() {
+        builder = builder.http1_only();
+    }
+    if http09_responses_argument.is_some() {
+        builder = builder.http09_responses();
+    }
+    if http2_prior_knowledge_argument.is_some() {
+        builder = builder.http2_prior_knowledge();
+    }
+    if let Some(v) = http2_initial_stream_window_size_argument {
+        builder = builder.http2_initial_stream_window_size(v);
+    }
+    if let Some(v) = http2_initial_connection_window_size_argument {
+        builder = builder.http2_initial_connection_window_size(v);
+    }
+    if let Some(v) = http2_adaptive_window_argument {
+        builder = builder.http2_adaptive_window(v);
+    }
+    if let Some(v) = http2_max_frame_size_argument {
+        builder = builder.http2_max_frame_size(v);
+    }
+    if let Some(v) = http2_keep_alive_interval_argument {
+        builder = builder.http2_keep_alive_interval(v);
+    }
+    if let Some(v) = http2_keep_alive_timeout_argument {
+        builder = builder.http2_keep_alive_timeout(v);
+    }
+    if let Some(v) = http2_keep_alive_while_idle_argument {
+        builder = builder.http2_keep_alive_while_idle(v);
+    }
+    if let Some(v) = tcp_nodelay_argument {
+        builder = builder.tcp_nodelay(v);
+    }
+    if let Some(v) = local_address_argument {
+        builder = builder.local_address(v);
+    }
+    if let Some(v) = tcp_keepalive_argument {
+        builder = builder.tcp_keepalive(v);
+    }
+    if let Some(v) = add_root_certificate_argument {
+        builder = builder.add_root_certificate(v);
+    }
+    if let Some(v) = tls_built_in_root_certs_argument {
+        builder = builder.tls_built_in_root_certs(v);
+    }
+    if let Some(v) = identity_argument {
+        builder = builder.identity(v);
+    }
+    if let Some(v) = danger_accept_invalid_hostnames_argument {
+        builder = builder.danger_accept_invalid_hostnames(v);
+    }
+    if let Some(v) = danger_accept_invalid_certs_argument {
+        builder = builder.danger_accept_invalid_certs(v);
+    }
+    if let Some(v) = min_tls_version_argument {
+        builder = builder.min_tls_version(v);
+    }
+    if let Some(v) = max_tls_version_argument {
+        builder = builder.max_tls_version(v);
+    }
+    if use_native_tls_argument.is_some() {
+        builder = builder.use_native_tls();
+    }
+    if use_rustls_tls_argument.is_some() {
+        builder = builder.use_rustls_tls();
+    }
+    if let Some(v) = use_preconfigured_tls_argument {
+        builder = builder.use_preconfigured_tls(v);
+    }
+    if let Some(v) = trust_dns_argument {
+        builder = builder.trust_dns(v);
+    }
+    if no_trust_dns_argument.is_some() {
+        builder = builder.no_trust_dns();
+    }
+    if let Some(v) = https_only_argument {
+        builder = builder.https_only(v);
+    }
+    if let Some(v) = resolve_argument {
+        builder = builder.resolve(v.0, v.1);
+    }
+    if let Some(v) = resolve_to_addrs_argument {
+        builder = builder.resolve_to_addrs(v.0, v.1);
+    }
     match async_client_builder(
         //https://docs.rs/reqwest/0.11.12/reqwest/struct.ClientBuilder.html
-        reqwest::Client::builder()
-            .user_agent(user_agent_value)
-            .default_headers(default_headers_value)
-            .cookie_store(cookie_store_value)
-            .cookie_provider(cookie_provider_value)
-            .gzip(gzip_value)
-            .brotli(brotli_value)
-            .deflate(deflate_value)
-            .no_gzip()
-            .no_brotli()
-            .no_deflate()
-            .redirect(redirect_value)
-            .referer(referer_value)
-            .proxy(proxy_value)
-            .no_proxy()
-            .timeout(timeout_value)
-            .connect_timeout(connect_timeout_value)
-            .connection_verbose(connection_verbose_value)
-            .pool_idle_timeout(pool_idle_timeout_value)
-            .pool_max_idle_per_host(pool_max_idle_per_host_value)
-            .http1_title_case_headers()
-            .http1_allow_obsolete_multiline_headers_in_responses(
-                http1_allow_obsolete_multiline_headers_in_responses_value,
-            )
-            .http1_only()
-            .http09_responses()
-            .http2_prior_knowledge()
-            .http2_initial_stream_window_size(http2_initial_stream_window_size_value)
-            .http2_initial_connection_window_size(http2_initial_connection_window_size_value)
-            .http2_adaptive_window(http2_adaptive_window_value)
-            .http2_max_frame_size(http2_max_frame_size_value)
-            .http2_keep_alive_interval(http2_keep_alive_interval_value)
-            .http2_keep_alive_timeout(http2_keep_alive_timeout_value)
-            .http2_keep_alive_while_idle(http2_keep_alive_while_idle_value)
-            .tcp_nodelay(tcp_nodelay_value)
-            .local_address(local_address_value)
-            .tcp_keepalive(tcp_keepalive_value)
-            .add_root_certificate(add_root_certificate_value)
-            .tls_built_in_root_certs(tls_built_in_root_certs_value)
-            .identity(identity_value)
-            .danger_accept_invalid_hostnames(danger_accept_invalid_hostnames_value)
-            .danger_accept_invalid_certs(danger_accept_invalid_certs_value)
-            .min_tls_version(min_tls_version_value)
-            .max_tls_version(max_tls_version_value)
-            .use_native_tls()
-            .use_rustls_tls()
-            .use_preconfigured_tls(use_preconfigured_tls_value)
-            .trust_dns(trust_dns_value)
-            .no_trust_dns()
-            .https_only(https_only_value)
-            .resolve(resolve_value.0, resolve_value.1)
-            .resolve_to_addrs(resolve_to_addrs_value.0, resolve_to_addrs_value.1),
-        false,
+        // reqwest::Client::builder()
+        //     .user_agent(user_agent_value)
+        //     .default_headers(default_headers_value)
+        //     .cookie_store(cookie_store_value)
+        //     .cookie_provider(cookie_provider_value)
+        //     .gzip(gzip_value)
+        //     .brotli(brotli_value)
+        //     .deflate(deflate_value)
+        //     .no_gzip()
+        //     .no_brotli()
+        //     .no_deflate()
+        //     .redirect(redirect_value)
+        //     .referer(referer_value)
+        //     .proxy(proxy_value)
+        //     .no_proxy()
+        //     .timeout(timeout_value)
+        //     .connect_timeout(connect_timeout_value)
+        //     .connection_verbose(connection_verbose_value)
+        //     .pool_idle_timeout(pool_idle_timeout_value)
+        //     .pool_max_idle_per_host(pool_max_idle_per_host_value)
+        //     .http1_title_case_headers()
+        //     .http1_allow_obsolete_multiline_headers_in_responses(
+        //         http1_allow_obsolete_multiline_headers_in_responses_value,
+        //     )
+        //     .http1_only()
+        //     .http09_responses()
+        //     .http2_prior_knowledge()
+        //     .http2_initial_stream_window_size(http2_initial_stream_window_size_value)
+        //     .http2_initial_connection_window_size(http2_initial_connection_window_size_value)
+        //     .http2_adaptive_window(http2_adaptive_window_value)
+        //     .http2_max_frame_size(http2_max_frame_size_value)
+        //     .http2_keep_alive_interval(http2_keep_alive_interval_value)
+        //     .http2_keep_alive_timeout(http2_keep_alive_timeout_value)
+        //     .http2_keep_alive_while_idle(http2_keep_alive_while_idle_value)
+        //     .tcp_nodelay(tcp_nodelay_value)
+        //     .local_address(local_address_value)
+        //     .tcp_keepalive(tcp_keepalive_value)
+        //     .add_root_certificate(add_root_certificate_value)
+        //     .tls_built_in_root_certs(tls_built_in_root_certs_value)
+        //     .identity(identity_value)
+        //     .danger_accept_invalid_hostnames(danger_accept_invalid_hostnames_value)
+        //     .danger_accept_invalid_certs(danger_accept_invalid_certs_value)
+        //     .min_tls_version(min_tls_version_value)
+        //     .max_tls_version(max_tls_version_value)
+        //     .use_native_tls()
+        //     .use_rustls_tls()
+        //     .use_preconfigured_tls(use_preconfigured_tls_value)
+        //     .trust_dns(trust_dns_value)
+        //     .no_trust_dns()
+        //     .https_only(https_only_value)
+        //     .resolve(resolve_value.0, resolve_value.1)
+        //     .resolve_to_addrs(resolve_to_addrs_value.0, resolve_to_addrs_value.1),
+        builder, false,
     )
     .await
     {
