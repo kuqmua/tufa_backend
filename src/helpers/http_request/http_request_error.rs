@@ -246,7 +246,10 @@ pub async fn async_http_request_wrapper<
     //
     header_request_builder: Option<(HeaderKeyGeneric, HeaderValueGeneric)>,
     headers_request_builder: Option<reqwest::header::HeaderMap<reqwest::header::HeaderValue>>,
-    basic_auth_request_builder: Option<(BasicAuthUsernameGeneric, BasicAuthPasswordGeneric)>,
+    basic_auth_request_builder: Option<(
+        BasicAuthUsernameGeneric,
+        Option<BasicAuthPasswordGeneric>,
+    )>,
     bearer_auth_request_builder: Option<BearerAuthGeneric>,
     body_request_builder: Option<BodyGeneric>,
     timeout_request_builder: Option<std::time::Duration>,
@@ -266,13 +269,11 @@ where
     TcpKeepaliveGeneric: Into<Option<std::time::Duration>>,
 
     reqwest::header::HeaderName: TryFrom<HeaderKeyGeneric>,
-    <reqwest::header::HeaderName as TryFrom<HeaderKeyGeneric>>::Error: Into<reqwest::Error>,
+    <reqwest::header::HeaderName as TryFrom<HeaderKeyGeneric>>::Error: Into<http::Error>,
     reqwest::header::HeaderValue: TryFrom<HeaderValueGeneric>,
-    <reqwest::header::HeaderValue as TryFrom<HeaderValueGeneric>>::Error: Into<reqwest::Error>,
-
+    <reqwest::header::HeaderValue as TryFrom<HeaderValueGeneric>>::Error: Into<http::Error>,
     BasicAuthUsernameGeneric: std::fmt::Display,
     BasicAuthPasswordGeneric: std::fmt::Display,
-
     BearerAuthGeneric: std::fmt::Display,
 {
     let mut client_builder = reqwest::Client::builder();
@@ -495,10 +496,47 @@ where
             &GIT_INFO.data,
             should_trace,
         ))),
-        Ok(mut client_handle) => {
+        Ok(client_handle) => {
+            let mut request_builder_handle = client_handle.get(url); //do something with get
+            if let Some(v) = header_request_builder {
+                request_builder_handle = request_builder_handle.header(v.0, v.1);
+            }
+            if let Some(v) = headers_request_builder {
+                request_builder_handle = request_builder_handle.headers(v);
+            }
+            if let Some(v) = basic_auth_request_builder {
+                request_builder_handle = request_builder_handle.basic_auth(v.0, v.1);
+            }
+            if let Some(v) = bearer_auth_request_builder {
+                request_builder_handle = request_builder_handle.bearer_auth(v);
+            }
+            if let Some(v) = body_request_builder {
+                request_builder_handle = request_builder_handle.body(v);
+            }
+            if let Some(v) = timeout_request_builder {
+                request_builder_handle = request_builder_handle.timeout(v);
+            }
+            if let Some(v) = multipart_request_builder {
+                request_builder_handle = request_builder_handle.multipart(v);
+            }
+            if let Some(v) = query_request_builder {
+                request_builder_handle = request_builder_handle.query(&v);
+            }
+            if let Some(v) = version_request_builder {
+                request_builder_handle = request_builder_handle.version(v);
+            }
+            if let Some(v) = form_request_builder {
+                request_builder_handle = request_builder_handle.form(&v);
+            }
+            if let Some(v) = json_request_builder {
+                request_builder_handle = request_builder_handle.json(&v);
+            }
+            if fetch_mode_no_cors_request_builder.is_some() {
+                request_builder_handle = request_builder_handle.fetch_mode_no_cors();
+            }
             match async_http_request_text(
                 // https://docs.rs/reqwest/0.11.12/reqwest/struct.RequestBuilder.html
-                client_handle.get(url), //do something with get
+                request_builder_handle,
                 false,
             )
             .await
