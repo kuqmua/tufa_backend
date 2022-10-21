@@ -45,7 +45,7 @@ quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 rand = {version = "0.8", features = ["std_rng"]}
 regex = "1.5"
-reqwest = {version = "0.11.0", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls"]}
+reqwest = {version = "0.11.0", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart"]}
 secrecy = {version = "0.8", features = ["serde"]}
 serde = {version = "1.0", features = ["derive"]}
 serde-aux = "4.0.0"
