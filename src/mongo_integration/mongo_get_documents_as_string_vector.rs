@@ -47,9 +47,7 @@ pub async fn mongo_get_documents_as_string_vector(
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    location: *core::panic::Location::caller(),
                 },
             },
         )),
@@ -64,9 +62,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                 where_was: WhereWas {
                                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
+                                    location: *core::panic::Location::caller(),
                                 },
                             },
                         ));
@@ -88,9 +84,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                                     Utc,
                                                 )
                                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                                file: file!(),
-                                                line: line!(),
-                                                column: column!(),
+                                                location: *core::panic::Location::caller(),
                                             },
                                         },
                                     )),
@@ -105,9 +99,7 @@ pub async fn mongo_get_documents_as_string_vector(
                 where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                location: *core::panic::Location::caller(),
             },
                                             },
                                         ));

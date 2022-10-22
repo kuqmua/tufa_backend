@@ -40,6 +40,36 @@ pub enum MongoCheckAvailabilityErrorEnum {
     ListCollectionNames(Error),
 }
 
+// //
+// #[derive(
+//     Debug,
+//     ImplGetSourceWithMethod,
+//     ImplDisplayForErrorStruct,
+//     InitError,
+//     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
+//     ImplGetWhereWasOneOrManyOneForErrorStruct,
+// )]
+// pub struct MongoCheckAvailabilityError {
+//     source: mongodb::error::Error,
+//     where_was: WhereWas,
+// }
+// //
+// impl From<mongodb::error::Error> for MongoCheckAvailabilityError {
+//     fn from(e: mongodb::error::Error) -> Self {
+//         let location = location();
+//         Self {
+//             source: mongodb::error::Error,
+//             where_was: WhereWas {
+//                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+//                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+//                 file: location.file(),
+//                 line: location.line(),
+//                 column: location.column(),
+//             },
+//         }
+//     }
+// }
+
 #[deny(
     clippy::indexing_slicing,
     clippy::unwrap_used,
@@ -51,21 +81,21 @@ pub async fn mongo_check_availability(
     should_trace: bool,
 ) -> Result<(), Box<MongoCheckAvailabilityError>> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => Err(Box::new(
-            MongoCheckAvailabilityError::init_error_with_possible_trace(
-                MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
-                WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                &CONFIG.source_place_type,
-                &GIT_INFO.data,
-                should_trace,
-            ),
-        )),
+        Err(e) => {
+            return Err(Box::new(
+                MongoCheckAvailabilityError::init_error_with_possible_trace(
+                    MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
+                    WhereWas {
+                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
+                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                ),
+            ));
+        }
         Ok(mut client_options) => {
             client_options.connect_timeout =
                 Some(Duration::from_millis(CONFIG.mongo_connection_timeout));
@@ -76,9 +106,7 @@ pub async fn mongo_check_availability(
                         WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,
                         &GIT_INFO.data,
@@ -97,9 +125,7 @@ pub async fn mongo_check_availability(
                                 WhereWas {
                                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                    file: file!(),
-                                    line: line!(),
-                                    column: column!(),
+                                    location: *core::panic::Location::caller(),
                                 },
                                 &CONFIG.source_place_type,
                                 &GIT_INFO.data,

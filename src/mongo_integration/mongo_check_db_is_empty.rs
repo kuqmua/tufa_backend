@@ -47,9 +47,7 @@ pub async fn mongo_check_db_is_empty(
             where_was: WhereWas {
                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                file: file!(),
-                line: line!(),
-                column: column!(),
+                location: *core::panic::Location::caller(),
             },
         })),
         Ok(client_options) => match Client::with_options(client_options) {
@@ -58,9 +56,7 @@ pub async fn mongo_check_db_is_empty(
                 where_was: WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    location: *core::panic::Location::caller(),
                 },
             })),
             Ok(client) => match client.database(db_name).list_collection_names(None).await {
@@ -70,9 +66,7 @@ pub async fn mongo_check_db_is_empty(
                         where_was: WhereWas {
                             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                            file: file!(),
-                            line: line!(),
-                            column: column!(),
+                            location: *core::panic::Location::caller(),
                         },
                     },
                 )),
@@ -83,9 +77,7 @@ pub async fn mongo_check_db_is_empty(
                             where_was: WhereWas {
                                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                                file: file!(),
-                                line: line!(),
-                                column: column!(),
+                                location: *core::panic::Location::caller(),
                             },
                         }));
                     }

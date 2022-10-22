@@ -65,9 +65,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
                 WhereWas {
                     time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                         .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
+                    location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO.data,
