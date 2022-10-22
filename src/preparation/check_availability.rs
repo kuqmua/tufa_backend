@@ -85,8 +85,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             CheckAvailabilityError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Mongo(m),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -98,8 +99,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             CheckAvailabilityError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Postgres(p),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -114,8 +116,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                     postgres_source: p,
                 },
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -127,8 +130,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             CheckAvailabilityError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Net(n),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -143,8 +147,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                     mongo_source: m,
                 },
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -159,8 +164,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                     postgres_source: p,
                 },
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -176,8 +182,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
                     mongo_source: m,
                 },
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,

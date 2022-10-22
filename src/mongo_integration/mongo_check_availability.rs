@@ -60,11 +60,10 @@ pub enum MongoCheckAvailabilityErrorEnum {
 //         Self {
 //             source: mongodb::error::Error,
 //             where_was: WhereWas {
-//                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-//                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
-//                 file: location.file(),
-//                 line: location.line(),
-//                 column: location.column(),
+//                 time: std::time::SystemTime::now()
+// .duration_since(std::time::UNIX_EPOCH)
+// .expect("cannot convert time to unix_epoch"),
+//                 location: *core::panic::Location::caller(),
 //             },
 //         }
 //     }
@@ -86,8 +85,9 @@ pub async fn mongo_check_availability(
                 MongoCheckAvailabilityError::init_error_with_possible_trace(
                     MongoCheckAvailabilityErrorEnum::ClientOptionsParse(e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
@@ -104,8 +104,9 @@ pub async fn mongo_check_availability(
                     MongoCheckAvailabilityError::init_error_with_possible_trace(
                         MongoCheckAvailabilityErrorEnum::ClientWithOptions(e),
                         WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,
@@ -123,8 +124,9 @@ pub async fn mongo_check_availability(
                             MongoCheckAvailabilityError::init_error_with_possible_trace(
                                 MongoCheckAvailabilityErrorEnum::ListCollectionNames(e),
                                 WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: std::time::SystemTime::now()
+                                        .duration_since(std::time::UNIX_EPOCH)
+                                        .expect("cannot convert time to unix_epoch"),
                                     location: *core::panic::Location::caller(),
                                 },
                                 &CONFIG.source_place_type,

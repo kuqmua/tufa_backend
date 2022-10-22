@@ -40,8 +40,9 @@ pub async fn mongo_drop_collection(
         Err(e) => Err(Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse {
             source: e,
             where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
         })),
@@ -49,8 +50,9 @@ pub async fn mongo_drop_collection(
             Err(e) => Err(Box::new(MongoDropCollectionErrorEnum::ClientWithOptions {
                 source: e,
                 where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
             })),
@@ -61,8 +63,9 @@ pub async fn mongo_drop_collection(
                     return Err(Box::new(MongoDropCollectionErrorEnum::DatabaseDrop {
                         source: e,
                         where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                     }));

@@ -26,8 +26,9 @@ pub fn sync_http_request_text_with_charset(
             HttpRequestTextWithCharsetError::init_error_with_possible_trace(
                 HttpRequestTextWithCharsetErrorEnum::ReqwestGet(e),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -41,8 +42,9 @@ pub fn sync_http_request_text_with_charset(
                     HttpRequestTextWithCharsetError::init_error_with_possible_trace(
                         HttpRequestTextWithCharsetErrorEnum::StatusCode(e),
                         WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,
@@ -56,8 +58,9 @@ pub fn sync_http_request_text_with_charset(
                     HttpRequestTextWithCharsetError::init_error_with_possible_trace(
                         HttpRequestTextWithCharsetErrorEnum::ResponseTextWithCharset(e),
                         WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,

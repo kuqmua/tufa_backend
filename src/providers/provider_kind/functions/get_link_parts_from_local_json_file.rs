@@ -57,8 +57,9 @@ impl ProviderKind {
                 GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
                     GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
@@ -74,8 +75,9 @@ impl ProviderKind {
                         GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
                             WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                time: std::time::SystemTime::now()
+                                    .duration_since(std::time::UNIX_EPOCH)
+                                    .expect("cannot convert time to unix_epoch"),
                                 location: *core::panic::Location::caller(),
                             },
                             &CONFIG.source_place_type,
@@ -89,8 +91,9 @@ impl ProviderKind {
                         GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
                             GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                             WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                time: std::time::SystemTime::now()
+                                    .duration_since(std::time::UNIX_EPOCH)
+                                    .expect("cannot convert time to unix_epoch"),
                                 location: *core::panic::Location::caller(),
                             },
                             &CONFIG.source_place_type,

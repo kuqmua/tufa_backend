@@ -67,8 +67,9 @@ pub async fn init_mongo(
     //     Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
     //         InitMongoErrorEnum::ClientOptionsParse(*e),
     //         WhereWas {
-    //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-    //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+    //             time: std::time::SystemTime::now()
+    // .duration_since(std::time::UNIX_EPOCH)
+    // .expect("cannot convert time to unix_epoch"),
     //             file: file!(),
     //             line: line!(),
     //             column: column!(),
@@ -81,8 +82,9 @@ pub async fn init_mongo(
     //         Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
     //             InitMongoErrorEnum::ClientWithOptions(*e),
     //             WhereWas {
-    //                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-    //                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+    //                 time: std::time::SystemTime::now()
+    // .duration_since(std::time::UNIX_EPOCH)
+    // .expect("cannot convert time to unix_epoch"),
     //                 file: file!(),
     //                 line: line!(),
     //                 column: column!(),
@@ -105,8 +107,9 @@ pub async fn init_mongo(
     //                         *error_vec_count_documents,
     //                     ),
     //                     WhereWas {
-    //                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-    //                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+    //                         time: std::time::SystemTime::now()
+    // .duration_since(std::time::UNIX_EPOCH)
+    // .expect("cannot convert time to unix_epoch"),
     //                         file: file!(),
     //                         line: line!(),
     //                         column: column!(),
@@ -122,8 +125,9 @@ pub async fn init_mongo(
     //                 return Err(Box::new(InitMongoError::init_error_with_possible_trace(
     //                     InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
     //                     WhereWas {
-    //                         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-    //                             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+    //                         time: std::time::SystemTime::now()
+    // .duration_since(std::time::UNIX_EPOCH)
+    // .expect("cannot convert time to unix_epoch"),
     //                         file: file!(),
     //                         line: line!(),
     //                         column: column!(),
@@ -149,8 +153,9 @@ pub async fn init_mongo(
     //             //     return Err(Box::new(InitMongoError::init_error_with_possible_trace(
     //             //         InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
     //             //         WhereWas {
-    //             //             time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-    //             //                 .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+    //             //             time: std::time::SystemTime::now()
+    // .duration_since(std::time::UNIX_EPOCH)
+    // .expect("cannot convert time to unix_epoch"),
     //             //             file: file!(),
     //             //             line: line!(),
     //             //             column: column!(),

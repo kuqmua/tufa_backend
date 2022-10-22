@@ -71,8 +71,9 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
             PostgresInsertLinkPartsIntoProvidersTablesError::init_error_with_possible_trace(
                 insertion_error_hashmap,
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,

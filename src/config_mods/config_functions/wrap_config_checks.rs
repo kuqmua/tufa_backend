@@ -55,8 +55,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::ServerIp {
                     source: self.server_ip,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -68,8 +69,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::GithubName {
                     source: self.github_name,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -80,8 +82,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::GithubToken {
                     source: self.github_token,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -92,8 +95,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditUserAgent {
                     source: self.reddit_user_agent,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -104,8 +108,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditClientId {
                     source: self.reddit_client_id,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -116,8 +121,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditClientSecret {
                     source: self.reddit_client_secret,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -128,8 +134,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditUsername {
                     source: self.reddit_username,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -140,8 +147,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::RedditPassword {
                     source: self.reddit_password,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -152,8 +160,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoLogin {
                     source: self.mongo_login,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -164,8 +173,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoPassword {
                     source: self.mongo_password,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -176,8 +186,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::MongoIp {
                     source: self.mongo_ip,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -188,8 +199,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::LogFileExtension {
                     source: self.log_file_extension,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -200,8 +212,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::PathToProviderLinkPartsFolder {
                     source: self.path_to_provider_link_parts_folder,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -212,8 +225,9 @@ impl ConfigStruct {
                 source: Box::new(WrapConfigChecksErrorEnum::WarningLogsDirectoryName {
                     source: self.warning_logs_directory_name,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 }),
@@ -226,8 +240,9 @@ impl ConfigStruct {
         //         source: Box::new(WrapConfigChecksErrorEnum::LinksLimitProviderse {
         //             source: self.links_limit_providers,
         //             where_was: WhereWas {
-        //                 time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-        //                     .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+        //                 time: std::time::SystemTime::now()
+        //                    .duration_since(std::time::UNIX_EPOCH)
+        //                    .expect("cannot convert time to unix_epoch"),
         //                 file: file!(),
         //                 line: line!(),
         //                 column: column!(),

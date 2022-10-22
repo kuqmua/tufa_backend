@@ -45,8 +45,9 @@ pub async fn mongo_drop_empty_db(
         Err(e) => Err(Box::new(MongoDropEmptyDbErrorEnum::ClientOptionsParse {
             source: e,
             where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
         })),
@@ -54,8 +55,9 @@ pub async fn mongo_drop_empty_db(
             Err(e) => Err(Box::new(MongoDropEmptyDbErrorEnum::ClientWithOptions {
                 source: e,
                 where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
             })),
@@ -65,8 +67,9 @@ pub async fn mongo_drop_empty_db(
                     Err(e) => Err(Box::new(MongoDropEmptyDbErrorEnum::ListCollectionNames {
                         source: e,
                         where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                     })),
@@ -76,11 +79,9 @@ pub async fn mongo_drop_empty_db(
                                 MongoDropEmptyDbErrorEnum::CollectionNamesListIsEmpty {
                                     source: db_name.to_string(),
                                     where_was: WhereWas {
-                                        time: DateTime::<Utc>::from_utc(
-                                            Local::now().naive_utc(),
-                                            Utc,
-                                        )
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                        time: std::time::SystemTime::now()
+                                            .duration_since(std::time::UNIX_EPOCH)
+                                            .expect("cannot convert time to unix_epoch"),
                                         location: *core::panic::Location::caller(),
                                     },
                                 },
@@ -90,8 +91,9 @@ pub async fn mongo_drop_empty_db(
                             return Err(Box::new(MongoDropEmptyDbErrorEnum::DatabaseDrop {
                                 source: e,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: std::time::SystemTime::now()
+                                        .duration_since(std::time::UNIX_EPOCH)
+                                        .expect("cannot convert time to unix_epoch"),
                                     location: *core::panic::Location::caller(),
                                 },
                             }));

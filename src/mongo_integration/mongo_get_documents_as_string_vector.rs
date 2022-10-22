@@ -45,8 +45,9 @@ pub async fn mongo_get_documents_as_string_vector(
             MongoGetDocumentsAsStringVectorErrorEnum::CollectionAggregate {
                 source: e,
                 where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
             },
@@ -60,8 +61,9 @@ pub async fn mongo_get_documents_as_string_vector(
                             MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                                 source: e,
                                 where_was: WhereWas {
-                                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                    time: std::time::SystemTime::now()
+                                        .duration_since(std::time::UNIX_EPOCH)
+                                        .expect("cannot convert time to unix_epoch"),
                                     location: *core::panic::Location::caller(),
                                 },
                             },
@@ -79,11 +81,9 @@ pub async fn mongo_get_documents_as_string_vector(
                                             source: db_collection_document_field_name_handle
                                                 .to_string(),
                                             where_was: WhereWas {
-                                                time: DateTime::<Utc>::from_utc(
-                                                    Local::now().naive_utc(),
-                                                    Utc,
-                                                )
-                                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                                time: std::time::SystemTime::now()
+                                                    .duration_since(std::time::UNIX_EPOCH)
+                                                    .expect("cannot convert time to unix_epoch"),
                                                 location: *core::panic::Location::caller(),
                                             },
                                         },
@@ -97,8 +97,9 @@ pub async fn mongo_get_documents_as_string_vector(
                                             MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                                 source: other_bson_type.clone(),
                 where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
                                             },

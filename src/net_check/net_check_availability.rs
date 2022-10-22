@@ -54,8 +54,9 @@ pub async fn net_check_availability(
             NetCheckAvailabilityError::init_error_with_possible_trace(
                 NetCheckAvailabilityErrorEnum::ReqwestGet(e),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -70,8 +71,9 @@ pub async fn net_check_availability(
                     NetCheckAvailabilityError::init_error_with_possible_trace(
                         NetCheckAvailabilityErrorEnum::Client(status),
                         WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,
@@ -85,8 +87,9 @@ pub async fn net_check_availability(
                     NetCheckAvailabilityError::init_error_with_possible_trace(
                         NetCheckAvailabilityErrorEnum::Server(status),
                         WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                         &CONFIG.source_place_type,

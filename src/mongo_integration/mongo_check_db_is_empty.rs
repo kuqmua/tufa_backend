@@ -45,8 +45,9 @@ pub async fn mongo_check_db_is_empty(
         Err(e) => Err(Box::new(MongoCheckDbIsEmptyErrorEnum::ClientOptionsParse {
             source: e,
             where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
         })),
@@ -54,8 +55,9 @@ pub async fn mongo_check_db_is_empty(
             Err(e) => Err(Box::new(MongoCheckDbIsEmptyErrorEnum::ClientWithOptions {
                 source: e,
                 where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
             })),
@@ -64,8 +66,9 @@ pub async fn mongo_check_db_is_empty(
                     MongoCheckDbIsEmptyErrorEnum::ListCollectionNames {
                         source: e,
                         where_was: WhereWas {
-                            time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                             location: *core::panic::Location::caller(),
                         },
                     },
@@ -75,8 +78,9 @@ pub async fn mongo_check_db_is_empty(
                         return Err(Box::new(MongoCheckDbIsEmptyErrorEnum::NotEmpty {
                             source: documents_number.len(),
                             where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                time: std::time::SystemTime::now()
+                                    .duration_since(std::time::UNIX_EPOCH)
+                                    .expect("cannot convert time to unix_epoch"),
                                 location: *core::panic::Location::caller(),
                             },
                         }));

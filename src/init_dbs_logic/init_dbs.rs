@@ -52,8 +52,9 @@ pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsError>> {
         return Err(Box::new(InitDbsError::init_error_with_possible_trace(
             results,
             WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,

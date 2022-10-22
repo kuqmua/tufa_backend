@@ -49,8 +49,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
             MongoInsertDocsInEmptyCollectionErrorEnum::ClientOptionsParse {
                 source: e,
                 where_was: WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
             },
@@ -60,8 +61,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                 MongoInsertDocsInEmptyCollectionErrorEnum::ClientWithOptions {
                     source: e,
                     where_was: WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                 },
@@ -75,8 +77,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                         MongoInsertDocsInEmptyCollectionErrorEnum::CountDocuments {
                             source: e,
                             where_was: WhereWas {
-                                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                time: std::time::SystemTime::now()
+                                    .duration_since(std::time::UNIX_EPOCH)
+                                    .expect("cannot convert time to unix_epoch"),
                                 location: *core::panic::Location::caller(),
                             },
                         },
@@ -87,11 +90,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                 MongoInsertDocsInEmptyCollectionErrorEnum::NotEmpty {
                                     source: documents_number,
                                     where_was: WhereWas {
-                                        time: DateTime::<Utc>::from_utc(
-                                            Local::now().naive_utc(),
-                                            Utc,
-                                        )
-                                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                                        time: std::time::SystemTime::now()
+                                            .duration_since(std::time::UNIX_EPOCH)
+                                            .expect("cannot convert time to unix_epoch"),
                                         location: *core::panic::Location::caller(),
                                     },
                                 },
@@ -106,8 +107,9 @@ pub async fn mongo_insert_docs_in_empty_collection(
                                     Box::new(MongoInsertDocsInEmptyCollectionErrorEnum::CollectionInsertMany {
                                 source: e,
                                              where_was: WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
                             }),

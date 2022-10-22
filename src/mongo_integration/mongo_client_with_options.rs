@@ -53,8 +53,9 @@ pub fn mongo_client_with_options(
             MongoClientWithOptionsError::init_error_with_possible_trace(
                 e,
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,

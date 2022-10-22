@@ -116,8 +116,9 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(count_provider_links_tables_error_hashmap),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
@@ -131,8 +132,9 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(provider_links_tables_rows_length_not_equal_error_hashmap),
                 WhereWas {
-                    time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                        .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                    time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,

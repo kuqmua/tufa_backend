@@ -66,8 +66,9 @@ pub async fn init_postgres(
         Err(e) => Err(Box::new(PostgresInitError::init_error_with_possible_trace(
             PostgresInitErrorEnum::EstablishConnection(*e),
             WhereWas {
-                time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                    .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,
@@ -85,8 +86,9 @@ pub async fn init_postgres(
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
                     PostgresInitErrorEnum::CreateTableQueries(*e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
@@ -104,8 +106,9 @@ pub async fn init_postgres(
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
                     PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
@@ -123,8 +126,9 @@ pub async fn init_postgres(
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
                     PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
@@ -141,8 +145,9 @@ pub async fn init_postgres(
             //                                                                             return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
             //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
             //     WhereWas {
-            //         time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-            //             .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+            //         time: std::time::SystemTime::now()
+            // .duration_since(std::time::UNIX_EPOCH)
+            // .expect("cannot convert time to unix_epoch"),
             //         file: file!(),
             //         line: line!(),
             //         column: column!(),
@@ -162,8 +167,9 @@ pub async fn init_postgres(
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
                     PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
                     WhereWas {
-                        time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
-                            .with_timezone(&FixedOffset::east(CONFIG.timezone)),
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
