@@ -16,6 +16,6 @@ pub mod url;
 pub mod version;
 // pub mod error_for_status_ref;//dont need it i think
 
-// pub mod chunk;//async only
-// pub mod bytes_stream;//async only
-// pub mod upgrade;//async only
+pub mod chunk; //async only
+               // pub mod bytes_stream;//async only
+               // pub mod upgrade;//async only
