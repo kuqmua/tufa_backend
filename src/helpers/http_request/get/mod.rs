@@ -1,4 +1,4 @@
-// pub mod status;
+pub mod status;
 // pub mod headers;
 // pub mod headers_mut;
 // pub mod cookies;
