@@ -24,6 +24,6 @@ pub struct HttpRequestVersionError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestVersionErrorEnum {
-    ReqwestGet(reqwest::Error),
+    RequestBuilderSend(reqwest::Error),
     StatusCode(reqwest::Error),
 }

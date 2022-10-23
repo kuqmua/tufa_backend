@@ -24,6 +24,6 @@ pub struct HttpRequestRemoteAddrError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestRemoteAddrErrorEnum {
-    ReqwestGet(reqwest::Error),
+    RequestBuilderSend(reqwest::Error),
     StatusCode(reqwest::Error),
 }

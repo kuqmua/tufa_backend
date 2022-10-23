@@ -19,7 +19,7 @@ pub fn sync_http_request_headers_mut(
     match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestHeadersMutError::init_error_with_possible_trace(
-                HttpRequestHeadersMutErrorEnum::ReqwestGet(e),
+                HttpRequestHeadersMutErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

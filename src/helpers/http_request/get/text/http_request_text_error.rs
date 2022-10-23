@@ -24,7 +24,7 @@ pub struct HttpRequestTextError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestTextErrorEnum {
-    ReqwestGet(reqwest::Error),
+    RequestBuilderSend(reqwest::Error),
     StatusCode(reqwest::Error),
     ResponseText(reqwest::Error),
 }

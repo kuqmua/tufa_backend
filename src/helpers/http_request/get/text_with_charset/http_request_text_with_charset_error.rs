@@ -24,7 +24,7 @@ pub struct HttpRequestTextWithCharsetError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestTextWithCharsetErrorEnum {
-    ReqwestGet(reqwest::Error),
+    RequestBuilderSend(reqwest::Error),
     StatusCode(reqwest::Error),
     ResponseTextWithCharset(reqwest::Error),
 }

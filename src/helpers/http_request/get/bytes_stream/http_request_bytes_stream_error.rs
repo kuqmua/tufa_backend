@@ -24,7 +24,7 @@ pub struct HttpRequestBytesStreamError {
 
 #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 pub enum HttpRequestBytesStreamErrorEnum {
-    ReqwestGet(reqwest::Error),
+    RequestBuilderSend(reqwest::Error),
     StatusCode(reqwest::Error),
     ResponseBytesStream(reqwest::Error),
 }

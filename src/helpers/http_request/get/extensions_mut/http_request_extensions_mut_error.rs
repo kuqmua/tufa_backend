@@ -24,6 +24,6 @@
 
 // #[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
 // pub enum HttpRequestExtensionsMutErrorEnum {
-//     ReqwestGet(reqwest::Error),
+//     RequestBuilderSend(reqwest::Error),
 //     StatusCode(reqwest::Error),
 // }

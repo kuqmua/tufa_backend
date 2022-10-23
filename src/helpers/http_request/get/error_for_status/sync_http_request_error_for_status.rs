@@ -19,7 +19,7 @@ pub fn sync_http_request_error_for_status(
     match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestErrorForStatusError::init_error_with_possible_trace(
-                HttpRequestErrorForStatusErrorEnum::ReqwestGet(e),
+                HttpRequestErrorForStatusErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

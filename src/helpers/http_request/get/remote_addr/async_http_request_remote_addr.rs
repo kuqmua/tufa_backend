@@ -19,7 +19,7 @@ pub async fn async_http_request_remote_addr(
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestRemoteAddrError::init_error_with_possible_trace(
-                HttpRequestRemoteAddrErrorEnum::ReqwestGet(e),
+                HttpRequestRemoteAddrErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

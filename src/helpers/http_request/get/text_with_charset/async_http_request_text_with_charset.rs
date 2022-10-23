@@ -20,7 +20,7 @@ pub async fn async_http_request_text_with_charset(
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestTextWithCharsetError::init_error_with_possible_trace(
-                HttpRequestTextWithCharsetErrorEnum::ReqwestGet(e),
+                HttpRequestTextWithCharsetErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

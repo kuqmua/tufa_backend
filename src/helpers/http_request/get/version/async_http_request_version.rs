@@ -20,7 +20,7 @@ pub async fn async_http_request_version(
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestVersionError::init_error_with_possible_trace(
-                HttpRequestVersionErrorEnum::ReqwestGet(e),
+                HttpRequestVersionErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

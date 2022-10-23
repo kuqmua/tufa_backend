@@ -22,7 +22,7 @@ pub async fn async_http_request_bytes_stream(
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestBytesStreamError::init_error_with_possible_trace(
-                HttpRequestBytesStreamErrorEnum::ReqwestGet(e),
+                HttpRequestBytesStreamErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

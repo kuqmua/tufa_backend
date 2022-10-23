@@ -23,7 +23,7 @@ where
     match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestCopyToError::init_error_with_possible_trace(
-                HttpRequestCopyToErrorEnum::ReqwestGet(e),
+                HttpRequestCopyToErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

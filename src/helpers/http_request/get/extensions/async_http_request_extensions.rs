@@ -19,7 +19,7 @@
 //     match request_builder.send().await {
 //         Err(e) => Err(Box::new(
 //             HttpRequestExtensionsError::init_error_with_possible_trace(
-//                 HttpRequestExtensionsErrorEnum::ReqwestGet(e),
+//                 HttpRequestExtensionsErrorEnum::RequestBuilderSend(e),
 //                 WhereWas {
 //                     time: std::time::SystemTime::now()
 //                         .duration_since(std::time::UNIX_EPOCH)

@@ -19,7 +19,7 @@ pub async fn async_http_request_content_length(
     match request_builder.send().await {
         Err(e) => Err(Box::new(
             HttpRequestContentLengthError::init_error_with_possible_trace(
-                HttpRequestContentLengthErrorEnum::ReqwestGet(e),
+                HttpRequestContentLengthErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

@@ -19,7 +19,7 @@ pub fn sync_http_request_bytes(
     match request_builder.send() {
         Err(e) => Err(Box::new(
             HttpRequestBytesError::init_error_with_possible_trace(
-                HttpRequestBytesErrorEnum::ReqwestGet(e),
+                HttpRequestBytesErrorEnum::RequestBuilderSend(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
