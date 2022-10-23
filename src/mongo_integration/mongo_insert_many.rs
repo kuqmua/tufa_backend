@@ -8,8 +8,8 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSource;
-use impl_get_source_without_method::ImplGetSourceWithoutMethod;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_source_without_method::ImplGetSourceWithoutMethod;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
 use init_error::InitError;
 use mongodb::bson::doc;
@@ -49,11 +49,11 @@ pub async fn mongo_insert_many(
 ) -> Result<(), Box<MongoInsertManyError>> {
     let error_vec_insert_many = join_all(
         providers_json_local_data_hashmap.iter().map(
-                |(pk, data_vec)| 
+                |(pk, data_vec)|
                 async {
                     let docs: Vec<Document> = data_vec
                     .iter()
-                    .map(|data| 
+                    .map(|data|
                         doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }
                     )
                     .collect();
@@ -75,8 +75,8 @@ pub async fn mongo_insert_many(
                 error_vec_insert_many,
                 WhereWas {
                     time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
