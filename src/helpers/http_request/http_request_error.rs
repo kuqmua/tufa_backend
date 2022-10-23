@@ -145,7 +145,11 @@ pub enum HttpRequestMethod {
 }
 
 impl HttpRequestMethod {
-    pub fn get_async_builder(&self, client: reqwest::Client, url: &str) -> reqwest::RequestBuilder {
+    pub fn get_async_request_builder(
+        &self,
+        client: reqwest::Client,
+        url: &str,
+    ) -> reqwest::RequestBuilder {
         match self {
             HttpRequestMethod::Get => client.get(url),
             HttpRequestMethod::Post => client.post(url),
@@ -537,7 +541,7 @@ where
             should_trace,
         ))),
         Ok(client_handle) => {
-            let mut request_builder_handle = method.get_async_builder(client_handle, url); //do something with get
+            let mut request_builder_handle = method.get_async_request_builder(client_handle, url); //do something with get
             if let Some(v) = header_request_builder {
                 request_builder_handle = request_builder_handle.header(v.0, v.1);
             }
