@@ -1,9 +1,5 @@
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
-use chrono::DateTime;
-use chrono::FixedOffset;
-use chrono::Local;
-use chrono::Utc;
 use git_info::GitInfo;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;

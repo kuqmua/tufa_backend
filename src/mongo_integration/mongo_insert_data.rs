@@ -2,10 +2,6 @@ use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollecti
 use crate::lazy_static::config::CONFIG;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use chrono::DateTime;
-use chrono::FixedOffset;
-use chrono::Local;
-use chrono::Utc;
 use futures::future::join_all;
 use git_info::GitInfo;
 use std::collections::HashMap;

@@ -2,10 +2,6 @@ use super::http_request_text_with_charset_error::HttpRequestTextWithCharsetError
 use crate::helpers::http_request::get::text_with_charset::http_request_text_with_charset_error::HttpRequestTextWithCharsetErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
-use chrono::DateTime;
-use chrono::FixedOffset;
-use chrono::Local;
-use chrono::Utc;
 use reqwest::blocking::RequestBuilder;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
