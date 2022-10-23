@@ -26,5 +26,4 @@ pub struct HttpRequestStatusError {
 pub enum HttpRequestStatusErrorEnum {
     ReqwestGet(reqwest::Error),
     StatusCode(reqwest::Error),
-    ResponseStatus(reqwest::Error),
 }
