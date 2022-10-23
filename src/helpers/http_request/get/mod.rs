@@ -1,6 +1,6 @@
 pub mod headers;
+pub mod headers_mut;
 pub mod status;
-// pub mod headers_mut;
 // pub mod cookies;
 pub mod version;
 // pub mod url;
