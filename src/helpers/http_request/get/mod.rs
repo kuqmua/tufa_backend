@@ -13,7 +13,7 @@ pub mod text_with_charset;
 pub mod url;
 pub mod version;
 // pub mod copy_to;//sync only
-// pub mod error_for_status;
+pub mod error_for_status;
 // pub mod error_for_status_ref;
 
 // pub mod chunk;//async only
