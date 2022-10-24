@@ -1,4 +1,5 @@
 use super::http_request_bytes_error::HttpRequestBytesError;
+use crate::helpers::http_request::bytes::async_http_request_bytes::async_http_request_bytes;
 use crate::helpers::http_request::bytes::http_request_bytes_error::HttpRequestBytesErrorEnum;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
