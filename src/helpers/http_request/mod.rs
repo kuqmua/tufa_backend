@@ -1,7 +1,6 @@
-pub mod async_client_builder;
+pub mod async_http_request_client_request_builder_prep;
 pub mod client_builder_error;
 pub mod http_request_error;
-pub mod sync_client_builder;
 
 pub mod bytes;
 pub mod bytes_stream; //async only
