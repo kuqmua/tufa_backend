@@ -26,7 +26,7 @@ impl HttpRequestMethod {
 }
 
 impl HttpRequestMethod {
-    pub fn get_sync_builder(
+    pub fn get_sync_request_builder(
         &self,
         client: reqwest::blocking::Client,
         url: &str,
