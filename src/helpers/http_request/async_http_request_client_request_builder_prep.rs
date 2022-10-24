@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::http_request_error::HttpRequestMethod;
+use crate::helpers::http_request::http_request_method::HttpRequestMethod;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use chrono::{DateTime, FixedOffset, Local, Utc};
