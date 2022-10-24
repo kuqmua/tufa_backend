@@ -59,22 +59,7 @@ pub struct HttpRequestError {
 )]
 pub enum HttpRequestErrorEnum {
     ClientBuilder(ClientBuilderError),
-    RequestBuilder(HttpRequestBuilderErrorEnum),
-}
-
-#[derive(
-    Debug,
-    ImplGetSourceWithMethod,
-    ImplDisplayForSimpleErrorEnum,
-    ImplGetWhereWasOneOrManyWithMethod,
-)]
-pub enum HttpRequestBuilderErrorEnum {
-    // Delete(),
-    Get(HttpRequestGetErrorEnum),
-    // Head(),
-    // Patch(),
-    // Post(),
-    // Put(),
+    RequestBuilder(HttpRequestGetErrorEnum),
 }
 
 #[derive(
@@ -586,9 +571,7 @@ where
             .await
             {
                 Err(e) => Err(Box::new(HttpRequestError::init_error_with_possible_trace(
-                    HttpRequestErrorEnum::RequestBuilder(HttpRequestBuilderErrorEnum::Get(
-                        HttpRequestGetErrorEnum::Text(*e),
-                    )),
+                    HttpRequestErrorEnum::RequestBuilder(HttpRequestGetErrorEnum::Text(*e)),
                     WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
