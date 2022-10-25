@@ -1,10 +1,11 @@
+use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
+use crate::helpers::http_request::request_builder_methods::content_length::http_request_content_length_error::HttpRequestContentLengthError;
 use crate::lazy_static::config::CONFIG;
-use impl_display_for_error_struct::ImplDisplayForErrorStruct;
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
-use impl_get_source_without_method::ImplGetSourceWithoutMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
+use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
 use init_error::InitError;
+use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
@@ -12,18 +13,17 @@ use tufa_common::where_was::WhereWas;
 #[derive(
     Debug,
     InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
-    ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplGetSourceWithoutMethod,
-    ImplDisplayForErrorStruct,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
+    ImplGetWhereWasOneOrManyWithMethod,
+    ImplGetSourceWithMethod,
 )]
-pub struct HttpRequestContentLengthError {
-    source: HttpRequestContentLengthErrorEnum,
+pub struct HttpRequestWrapperContentLengthError {
+    source: HttpRequestWrapperContentLengthErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
-pub enum HttpRequestContentLengthErrorEnum {
-    RequestBuilderSend(reqwest::Error),
-    StatusCode(reqwest::Error),
+#[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
+pub enum HttpRequestWrapperContentLengthErrorEnum {
+    Prep(HttpRequestClientRequestBuilderPrepError),
+    ContentLength(HttpRequestContentLengthError),
 }
