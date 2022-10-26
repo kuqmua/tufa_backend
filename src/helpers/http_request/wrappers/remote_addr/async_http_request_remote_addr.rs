@@ -1,5 +1,4 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
-use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
 use crate::helpers::http_request::request_builder_methods::remote_addr::async_http_request_remote_addr::async_http_request_remote_addr;
 use crate::helpers::http_request::wrappers::remote_addr::http_request_remote_addr_error::HttpRequestWrapperRemoteAddrError;
@@ -7,7 +6,6 @@ use crate::helpers::http_request::wrappers::remote_addr::http_request_remote_add
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[allow(clippy::too_many_arguments)]

@@ -7,7 +7,6 @@ use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMeth
 use init_error::InitError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[derive(
