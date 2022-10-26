@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::content_length::async_http_request_content_length::async_http_request_content_length;
+use crate::helpers::http_request::request_builder_methods::content_length::async_content_length::async_http_request_content_length;
 use crate::helpers::http_request::wrappers::content_length::http_request_content_length_error::HttpRequestWrapperContentLengthError;
 use crate::helpers::http_request::wrappers::content_length::http_request_content_length_error::HttpRequestWrapperContentLengthErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -198,24 +198,22 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => {
-            match async_http_request_content_length(request_builder, false).await {
-                Err(e) => Err(Box::new(
-                    HttpRequestWrapperContentLengthError::init_error_with_possible_trace(
-                        HttpRequestWrapperContentLengthErrorEnum::ContentLength(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            location: *core::panic::Location::caller(),
-                        },
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                        should_trace,
-                    ),
-                )),
-                Ok(content_length) => Ok(content_length),
-            }
-        }
+        Ok(request_builder) => match async_content_length(request_builder, false).await {
+            Err(e) => Err(Box::new(
+                HttpRequestWrapperContentLengthError::init_error_with_possible_trace(
+                    HttpRequestWrapperContentLengthErrorEnum::ContentLength(*e),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                ),
+            )),
+            Ok(content_length) => Ok(content_length),
+        },
     }
 }

@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::remote_addr::http_request_remote_addr_error::HttpRequestRemoteAddrError;
+use crate::helpers::http_request::request_builder_methods::remote_addr::remote_addr_error::RemoteAddrError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperRemoteAddrError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperRemoteAddrErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    RemoteAddr(HttpRequestRemoteAddrError),
+    RemoteAddr(RemoteAddrError),
 }

@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::upgrade::async_http_request_upgrade::async_http_request_upgrade;
+use crate::helpers::http_request::request_builder_methods::upgrade::async_upgrade::async_http_request_upgrade;
 use crate::helpers::http_request::wrappers::upgrade::http_request_upgrade_error::HttpRequestWrapperUpgradeError;
 use crate::helpers::http_request::wrappers::upgrade::http_request_upgrade_error::HttpRequestWrapperUpgradeErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -198,7 +198,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match async_http_request_upgrade(request_builder, false).await {
+        Ok(request_builder) => match async_upgrade(request_builder, false).await {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperUpgradeError::init_error_with_possible_trace(
                     HttpRequestWrapperUpgradeErrorEnum::Upgrade(*e),

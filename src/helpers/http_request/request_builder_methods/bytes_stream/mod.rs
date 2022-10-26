@@ -1,2 +1,2 @@
-pub mod async_http_request_bytes_stream;
-pub mod http_request_bytes_stream_error;
+pub mod async_bytes_stream;
+pub mod bytes_stream_error;

@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::headers::http_request_headers_error::HttpRequestHeadersError;
+use crate::helpers::http_request::request_builder_methods::headers::headers_error::HeadersError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperHeadersError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperHeadersErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    Headers(HttpRequestHeadersError),
+    Headers(HeadersError),
 }

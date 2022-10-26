@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::upgrade::http_request_upgrade_error::HttpRequestUpgradeError;
+use crate::helpers::http_request::request_builder_methods::upgrade::upgrade_error::UpgradeError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperUpgradeError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperUpgradeErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    Upgrade(HttpRequestUpgradeError),
+    Upgrade(UpgradeError),
 }

@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::bytes_stream::async_http_request_bytes_stream::async_http_request_bytes_stream;
+use crate::helpers::http_request::request_builder_methods::bytes_stream::async_bytes_stream::async_http_request_bytes_stream;
 use crate::helpers::http_request::wrappers::bytes_stream::http_request_bytes_stream_error::HttpRequestWrapperBytesStreamError;
 use crate::helpers::http_request::wrappers::bytes_stream::http_request_bytes_stream_error::HttpRequestWrapperBytesStreamErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -201,24 +201,22 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => {
-            match async_http_request_bytes_stream(request_builder, false).await {
-                Err(e) => Err(Box::new(
-                    HttpRequestWrapperBytesStreamError::init_error_with_possible_trace(
-                        HttpRequestWrapperBytesStreamErrorEnum::BytesStream(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            location: *core::panic::Location::caller(),
-                        },
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                        should_trace,
-                    ),
-                )),
-                Ok(bytes_stream) => Ok(bytes_stream),
-            }
-        }
+        Ok(request_builder) => match async_bytes_stream(request_builder, false).await {
+            Err(e) => Err(Box::new(
+                HttpRequestWrapperBytesStreamError::init_error_with_possible_trace(
+                    HttpRequestWrapperBytesStreamErrorEnum::BytesStream(*e),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                ),
+            )),
+            Ok(bytes_stream) => Ok(bytes_stream),
+        },
     }
 }

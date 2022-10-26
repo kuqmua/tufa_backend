@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::text::async_http_request_text::async_http_request_text;
+use crate::helpers::http_request::request_builder_methods::text::async_text::async_http_request_text;
 use crate::helpers::http_request::wrappers::text::http_request_text_error::HttpRequestWrapperTextError;
 use crate::helpers::http_request::wrappers::text::http_request_text_error::HttpRequestWrapperTextErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -198,7 +198,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match async_http_request_text(request_builder, false).await {
+        Ok(request_builder) => match async_text(request_builder, false).await {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperTextError::init_error_with_possible_trace(
                     HttpRequestWrapperTextErrorEnum::Text(*e),

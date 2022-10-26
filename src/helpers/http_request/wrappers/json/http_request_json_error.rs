@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::json::http_request_json_error::HttpRequestJsonError;
+use crate::helpers::http_request::request_builder_methods::json::json_error::JsonError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperJsonError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperJsonErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    Json(HttpRequestJsonError),
+    Json(JsonError),
 }

@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::error_for_status::async_http_request_error_for_status::async_http_request_error_for_status;
+use crate::helpers::http_request::request_builder_methods::error_for_status::async_error_for_status::async_http_request_error_for_status;
 use crate::helpers::http_request::wrappers::error_for_status::http_request_error_for_status_error::HttpRequestWrapperErrorForStatusError;
 use crate::helpers::http_request::wrappers::error_for_status::http_request_error_for_status_error::HttpRequestWrapperErrorForStatusErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -198,24 +198,22 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => {
-            match async_http_request_error_for_status(request_builder, false).await {
-                Err(e) => Err(Box::new(
-                    HttpRequestWrapperErrorForStatusError::init_error_with_possible_trace(
-                        HttpRequestWrapperErrorForStatusErrorEnum::ErrorForStatus(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            location: *core::panic::Location::caller(),
-                        },
-                        &CONFIG.source_place_type,
-                        &GIT_INFO.data,
-                        should_trace,
-                    ),
-                )),
-                Ok(error_for_status) => Ok(error_for_status),
-            }
-        }
+        Ok(request_builder) => match async_error_for_status(request_builder, false).await {
+            Err(e) => Err(Box::new(
+                HttpRequestWrapperErrorForStatusError::init_error_with_possible_trace(
+                    HttpRequestWrapperErrorForStatusErrorEnum::ErrorForStatus(*e),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO.data,
+                    should_trace,
+                ),
+            )),
+            Ok(error_for_status) => Ok(error_for_status),
+        },
     }
 }

@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::text_with_charset::http_request_text_with_charset_error::HttpRequestTextWithCharsetError;
+use crate::helpers::http_request::request_builder_methods::text_with_charset::text_with_charset_error::TextWithCharsetError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperTextWithCharsetError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperTextWithCharsetErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    TextWithCharset(HttpRequestTextWithCharsetError),
+    TextWithCharset(TextWithCharsetError),
 }

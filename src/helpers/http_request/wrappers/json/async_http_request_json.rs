@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::json::async_http_request_json::async_http_request_json;
+use crate::helpers::http_request::request_builder_methods::json::async_json::async_http_request_json;
 use crate::helpers::http_request::wrappers::json::http_request_json_error::HttpRequestWrapperJsonError;
 use crate::helpers::http_request::wrappers::json::http_request_json_error::HttpRequestWrapperJsonErrorEnum;
 use crate::lazy_static::config::CONFIG;
@@ -198,7 +198,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match async_http_request_json(request_builder, false).await {
+        Ok(request_builder) => match async_json(request_builder, false).await {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperJsonError::init_error_with_possible_trace(
                     HttpRequestWrapperJsonErrorEnum::Json(*e),

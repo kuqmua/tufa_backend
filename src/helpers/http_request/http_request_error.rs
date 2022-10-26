@@ -33,17 +33,17 @@ pub struct HttpRequestClientRequestBuilderPrepError {
 //     ImplGetWhereWasOneOrManyWithMethod,
 // )]
 // pub enum HttpRequestGetErrorEnum {
-//     Bytes(HttpRequestBytesError),
-//     ContentLength(HttpRequestContentLengthError),
-//     Json(HttpRequestJsonError),
-//     RemoteAddr(HttpRequestRemoteAddrError),
-//     Text(HttpRequestTextError),
-//     TextWithCharset(HttpRequestTextWithCharsetError),
-//     Version(HttpRequestVersionError),
+//     Bytes(BytesError),
+//     ContentLength(ContentLengthError),
+//     Json(JsonError),
+//     RemoteAddr(RemoteAddrError),
+//     Text(TextError),
+//     TextWithCharset(TextWithCharsetError),
+//     Version(VersionError),
 // }
 
 //
-// match async_http_request_text(
+// match async_text(
 //     // https://docs.rs/reqwest/0.11.12/reqwest/struct.RequestBuilder.html
 //     request_builder_handle,
 //     false,

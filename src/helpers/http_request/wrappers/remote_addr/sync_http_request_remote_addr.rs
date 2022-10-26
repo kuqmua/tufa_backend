@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::remote_addr::sync_http_request_remote_addr::sync_http_request_remote_addr;
+use crate::helpers::http_request::request_builder_methods::remote_addr::sync_remote_addr::sync_http_request_remote_addr;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::remote_addr::http_request_remote_addr_error::HttpRequestWrapperRemoteAddrError;
 use crate::helpers::http_request::wrappers::remote_addr::http_request_remote_addr_error::HttpRequestWrapperRemoteAddrErrorEnum;
@@ -204,7 +204,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match sync_http_request_remote_addr(request_builder, false) {
+        Ok(request_builder) => match sync_remote_addr(request_builder, false) {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperRemoteAddrError::init_error_with_possible_trace(
                     HttpRequestWrapperRemoteAddrErrorEnum::RemoteAddr(*e),

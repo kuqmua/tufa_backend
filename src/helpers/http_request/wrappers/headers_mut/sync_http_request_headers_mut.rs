@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::headers_mut::sync_http_request_headers_mut::sync_http_request_headers_mut;
+use crate::helpers::http_request::request_builder_methods::headers_mut::sync_headers_mut::sync_http_request_headers_mut;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::headers_mut::http_request_headers_mut_error::HttpRequestWrapperHeadersMutError;
 use crate::helpers::http_request::wrappers::headers_mut::http_request_headers_mut_error::HttpRequestWrapperHeadersMutErrorEnum;
@@ -204,7 +204,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match sync_http_request_headers_mut(request_builder, false) {
+        Ok(request_builder) => match sync_headers_mut(request_builder, false) {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperHeadersMutError::init_error_with_possible_trace(
                     HttpRequestWrapperHeadersMutErrorEnum::HeadersMut(*e),

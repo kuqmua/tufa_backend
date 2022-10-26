@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::text::sync_http_request_text::sync_http_request_text;
+use crate::helpers::http_request::request_builder_methods::text::sync_text::sync_http_request_text;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::text::http_request_text_error::HttpRequestWrapperTextError;
 use crate::helpers::http_request::wrappers::text::http_request_text_error::HttpRequestWrapperTextErrorEnum;
@@ -204,7 +204,7 @@ where
                 should_trace,
             ),
         )),
-        Ok(request_builder) => match sync_http_request_text(request_builder, false) {
+        Ok(request_builder) => match sync_text(request_builder, false) {
             Err(e) => Err(Box::new(
                 HttpRequestWrapperTextError::init_error_with_possible_trace(
                     HttpRequestWrapperTextErrorEnum::Text(*e),

@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
-use crate::helpers::http_request::request_builder_methods::bytes_stream::http_request_bytes_stream_error::HttpRequestBytesStreamError;
+use crate::helpers::http_request::request_builder_methods::bytes_stream::bytes_stream_error::BytesStreamError;
 use crate::lazy_static::config::CONFIG;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
 use impl_get_source_with_method::ImplGetSourceWithMethod;
@@ -24,5 +24,5 @@ pub struct HttpRequestWrapperBytesStreamError {
 #[derive(Debug, ImplGetSourceWithMethod, ImplGetWhereWasOneOrManyWithMethod)]
 pub enum HttpRequestWrapperBytesStreamErrorEnum {
     Prep(HttpRequestClientRequestBuilderPrepError),
-    BytesStream(HttpRequestBytesStreamError),
+    BytesStream(BytesStreamError),
 }
