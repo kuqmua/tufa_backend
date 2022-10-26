@@ -183,7 +183,8 @@ where
         version_request_builder,
         form_request_builder,
         json_request_builder,
-        fetch_mode_no_cors_request_builder,
+        // not implemented for blocking
+        // fetch_mode_no_cors_request_builder,
         //
         method,
         should_trace,

@@ -2,17 +2,7 @@ use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBu
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
-use chrono::{DateTime, FixedOffset, Local, Utc};
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSource;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use init_error::InitError;
-use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
-use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[allow(clippy::too_many_arguments)]
@@ -103,7 +93,8 @@ pub async fn sync_http_request_client_request_builder_prep<
     version_request_builder: Option<reqwest::Version>,
     form_request_builder: Option<FormGeneric>,
     json_request_builder: Option<JsonGeneric>,
-    fetch_mode_no_cors_request_builder: Option<()>,
+    // not implemented for blocking
+    // fetch_mode_no_cors_request_builder: Option<()>,
     //
     method: HttpRequestMethod,
     should_trace: bool,
