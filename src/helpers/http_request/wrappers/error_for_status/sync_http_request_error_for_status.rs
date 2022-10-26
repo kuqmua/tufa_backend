@@ -219,7 +219,7 @@ where
                     should_trace,
                 ),
             )),
-            Ok(ErrorForStatus) => Ok(ErrorForStatus),
+            Ok(error_for_status) => Ok(error_for_status),
         },
     }
 }
