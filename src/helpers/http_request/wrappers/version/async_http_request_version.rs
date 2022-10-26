@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::version::async_version::async_http_request_version;
+use crate::helpers::http_request::request_builder_methods::version::async_version::async_version;
 use crate::helpers::http_request::wrappers::version::http_request_version_error::HttpRequestWrapperVersionError;
 use crate::helpers::http_request::wrappers::version::http_request_version_error::HttpRequestWrapperVersionErrorEnum;
 use crate::lazy_static::config::CONFIG;

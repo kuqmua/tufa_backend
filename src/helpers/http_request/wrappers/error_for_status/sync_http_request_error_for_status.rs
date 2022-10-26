@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::error_for_status::sync_error_for_status::sync_http_request_error_for_status;
+use crate::helpers::http_request::request_builder_methods::error_for_status::sync_error_for_status::sync_error_for_status;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::error_for_status::http_request_error_for_status_error::HttpRequestWrapperErrorForStatusError;
 use crate::helpers::http_request::wrappers::error_for_status::http_request_error_for_status_error::HttpRequestWrapperErrorForStatusErrorEnum;

@@ -1,6 +1,6 @@
 use crate::helpers::http_request::async_http_request_client_request_builder_prep::async_http_request_client_request_builder_prep;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::json::async_json::async_http_request_json;
+use crate::helpers::http_request::request_builder_methods::json::async_json::async_json;
 use crate::helpers::http_request::wrappers::json::http_request_json_error::HttpRequestWrapperJsonError;
 use crate::helpers::http_request::wrappers::json::http_request_json_error::HttpRequestWrapperJsonErrorEnum;
 use crate::lazy_static::config::CONFIG;

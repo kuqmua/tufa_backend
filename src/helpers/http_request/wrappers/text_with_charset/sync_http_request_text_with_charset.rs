@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::text_with_charset::sync_text_with_charset::sync_http_request_text_with_charset;
+use crate::helpers::http_request::request_builder_methods::text_with_charset::sync_text_with_charset::sync_text_with_charset;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::text_with_charset::http_request_text_with_charset_error::HttpRequestWrapperTextWithCharsetError;
 use crate::helpers::http_request::wrappers::text_with_charset::http_request_text_with_charset_error::HttpRequestWrapperTextWithCharsetErrorEnum;

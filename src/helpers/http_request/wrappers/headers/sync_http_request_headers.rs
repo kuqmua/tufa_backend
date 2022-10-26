@@ -1,5 +1,5 @@
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::helpers::http_request::request_builder_methods::headers::sync_headers::sync_http_request_headers;
+use crate::helpers::http_request::request_builder_methods::headers::sync_headers::sync_headers;
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::headers::http_request_headers_error::HttpRequestWrapperHeadersError;
 use crate::helpers::http_request::wrappers::headers::http_request_headers_error::HttpRequestWrapperHeadersErrorEnum;
