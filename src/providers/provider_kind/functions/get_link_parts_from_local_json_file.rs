@@ -57,7 +57,7 @@ impl ProviderKind {
                             .duration_since(std::time::UNIX_EPOCH)
                             .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
-                    },
+                    }, //
                     &CONFIG.source_place_type,
                     &GIT_INFO.data,
                     should_trace,

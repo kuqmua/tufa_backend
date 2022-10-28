@@ -3,7 +3,6 @@ use crate::helpers::http_request::request_builder_methods::version::sync_version
 use crate::helpers::http_request::sync_http_request_client_request_builder_prep::sync_http_request_client_request_builder_prep;
 use crate::helpers::http_request::wrappers::version::http_request_version_error::HttpRequestWrapperVersionError;
 use crate::helpers::http_request::wrappers::version::http_request_version_error::HttpRequestWrapperVersionErrorEnum;
-use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -99,6 +98,7 @@ pub async fn sync_http_request_version_wrapper<
     fetch_mode_no_cors_request_builder: Option<()>,
     //
     method: HttpRequestMethod,
+    source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
     should_trace: bool,
 ) -> Result<reqwest::Version, Box<HttpRequestWrapperVersionError>>
 where
@@ -187,6 +187,7 @@ where
         // fetch_mode_no_cors_request_builder,
         //
         method,
+        source_place_type,
         should_trace,
     )
     .await
@@ -200,7 +201,7 @@ where
                         .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
-                &CONFIG.source_place_type,
+                source_place_type,
                 &GIT_INFO.data,
                 should_trace,
             ),
@@ -215,7 +216,7 @@ where
                             .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
-                    &CONFIG.source_place_type,
+                    source_place_type,
                     &GIT_INFO.data,
                     should_trace,
                 ),

@@ -1,6 +1,5 @@
 use crate::helpers::http_request::http_request_error::HttpRequestClientRequestBuilderPrepError;
 use crate::helpers::http_request::http_request_method::HttpRequestMethod;
-use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
@@ -93,6 +92,7 @@ pub async fn async_http_request_client_request_builder_prep<
     fetch_mode_no_cors_request_builder: Option<()>,
     //
     method: HttpRequestMethod,
+    source_place_type: &tufa_common::config::source_place_type::SourcePlaceType,
     should_trace: bool,
 ) -> Result<reqwest::RequestBuilder, Box<HttpRequestClientRequestBuilderPrepError>>
 where
@@ -268,7 +268,7 @@ where
                         .expect("cannot convert time to unix_epoch"),
                     location: *core::panic::Location::caller(),
                 },
-                &CONFIG.source_place_type,
+                source_place_type,
                 &GIT_INFO.data,
                 should_trace,
             ),
