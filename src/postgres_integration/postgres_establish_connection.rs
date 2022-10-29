@@ -1,10 +1,10 @@
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSource;
-use impl_get_source_without_method::ImplGetSourceWithoutMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
+use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
 use sqlx::Postgres;
@@ -13,13 +13,15 @@ use std::time::Duration;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasOneOrMany;
+use tufa_common::where_was::WhereWasWithAddition;
 
 #[derive(
     Debug,
-    InitError,
-    ImplGetSourceWithoutMethod,
-    ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplErrorWithTracingForStructWithoutGetSource,
+    InitErrorFromTufaCommon,
+    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
 pub struct PostgresEstablishConnectionError {
     pub source: Error,

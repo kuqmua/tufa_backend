@@ -11,10 +11,10 @@ use crate::mongo_integration::mongo_insert_many::MongoInsertManyError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 use mongodb::error::Error;
@@ -28,17 +28,17 @@ use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
-    InitError,
-    ImplGetSourceWithMethod,
-    ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
+    InitErrorFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
 pub struct InitMongoError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithMethod)]
+#[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
 pub enum InitMongoErrorEnum {
     ClientOptionsParse(MongoClientOptionsParseError),
     ClientWithOptions(MongoClientWithOptionsError),

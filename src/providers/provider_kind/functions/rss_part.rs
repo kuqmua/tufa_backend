@@ -3,11 +3,11 @@ use crate::lazy_static::config::CONFIG;
 use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
-use git_info::GitInfo;
+use git_info::GitInfoFromTufaCommon;
 use reqwest::StatusCode;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, GitInfo)]
+#[derive(Debug, GitInfoFromTufaCommon)]
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,

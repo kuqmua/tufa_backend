@@ -2,10 +2,10 @@ use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_pro
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use strum_macros::EnumIter;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
@@ -19,17 +19,19 @@ pub enum InitTablesEnum {
 
 #[derive(
     Debug,
-    InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
-    ImplGetSourceWithMethod,
-    ImplGetWhereWasOneOrManyWithMethod,
+    InitErrorFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
 pub struct InitTablesError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
+#[derive(
+    Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
+)]
 pub enum InitTablesErrorEnum {
     ProvidersLinkParts(InitDbsProvidersLinkPartsError),
 }

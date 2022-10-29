@@ -9,12 +9,12 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
-use git_info::GitInfo;
+use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
 // use tufa_common::helpers::handle_status_code::handle_status_code;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, GitInfo)]
+#[derive(Debug, GitInfoFromTufaCommon)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
         source: Vec<(String, Box<TextError>)>, //link, error

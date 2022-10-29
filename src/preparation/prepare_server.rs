@@ -4,27 +4,31 @@ use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityError;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasOneOrMany;
+use tufa_common::where_was::WhereWasWithAddition;
 
 #[derive(
     Debug,
-    InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
-    ImplGetWhereWasOneOrManyWithMethod,
+    InitErrorFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
 pub struct PreparationError {
     source: PreparationErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
+#[derive(
+    Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
+)]
 pub enum PreparationErrorEnum {
     CheckAvailability(CheckAvailabilityError),
     InitDbs(InitDbsError),

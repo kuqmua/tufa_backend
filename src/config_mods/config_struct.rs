@@ -1,14 +1,15 @@
 use crate::helpers::resource::Resource;
 use gen_enum::GenEnum;
 use gen_enum_without_values::GenEnumWithoutValues;
-use init_from_env_with_panic_if_failed::InitFromEnvWithPanicIfFailedWithPanicIfFailed;
+use init_from_env_with_panic_if_failed::InitFromEnvWithPanicIfFailedWithPanicIfFailedFromTufaCommon;
 use tufa_common::config::source_place_type::SourcePlaceType;
 use tufa_common::config::tracing_type::TracingType;
+use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
     Clone,
-    InitFromEnvWithPanicIfFailedWithPanicIfFailed,
+    InitFromEnvWithPanicIfFailedWithPanicIfFailedFromTufaCommon,
     GenEnum,
     GenEnumWithoutValues,
     Default,

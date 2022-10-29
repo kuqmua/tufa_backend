@@ -3,11 +3,14 @@ use crate::lazy_static::config::CONFIG;
 use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
-use git_info::GitInfo;
+use git_info::GitInfoFromTufaCommon;
 use std::collections::HashMap;
+
+//
+// use tufa_common::traits::git_info_trait::GitInfo;
 use tufa_common::where_was::WhereWas;
 
-#[derive(Debug, GitInfo)]
+#[derive(Debug, GitInfoFromTufaCommon)]
 pub struct MongoInsertDataError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
     where_was: WhereWas,

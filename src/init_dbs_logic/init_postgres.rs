@@ -11,32 +11,34 @@ use crate::postgres_integration::postgres_establish_connection::PostgresEstablis
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use std::collections::HashMap;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
 use tufa_common::traits::get_source::GetSource;
-use init_error::InitError;
+use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
 #[derive(
     Debug,
-    InitError,
-    ImplGetSourceWithMethod,
-    ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
+    InitErrorFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct PostgresInitError {
     source: PostgresInitErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethod, ImplGetSourceWithMethod)]
+#[derive(
+    Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
+)]
 pub enum PostgresInitErrorEnum {
     EstablishConnection(PostgresEstablishConnectionError),
     CreateTableQueries(PostgresCreateProvidersDbsError),

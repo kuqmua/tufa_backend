@@ -9,23 +9,25 @@ use crate::postgres_integration::postgres_check_availability::PostgresCheckAvail
 use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_source_without_method::ImplGetSourceWithoutMethod;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasOneOrMany;
+use tufa_common::where_was::WhereWasWithAddition;
 
 #[derive(
     Debug,
-    ImplGetSourceWithMethod,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplDisplayForErrorStruct,
-    InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
-    ImplGetWhereWasOneOrManyWithMethod,
+    InitErrorFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
 pub struct CheckAvailabilityError {
     source: CheckAvailabilityErrorEnum,
@@ -34,9 +36,9 @@ pub struct CheckAvailabilityError {
 
 #[derive(
     Debug,
-    ImplGetSourceWithoutMethod,
+    ImplGetSourceWithoutMethodFromTufaCommon,
     ImplDisplayForSimpleErrorEnum,
-    ImplGetWhereWasOneOrManyWithMethod,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
 pub enum CheckAvailabilityErrorEnum {
     Net(Box<NetCheckAvailabilityError>),

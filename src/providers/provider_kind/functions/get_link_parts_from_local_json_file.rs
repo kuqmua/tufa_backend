@@ -6,31 +6,32 @@ use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJ
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_source_without_method::ImplGetSourceWithoutMethod;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStruct;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use itertools::Itertools;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasOneOrMany;
 
 #[derive(
     Debug,
-    ImplGetWhereWasOneOrManyOneForErrorStruct,
-    ImplGetSourceWithMethod,
+    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplDisplayForErrorStruct,
-    InitError,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWas,
+    InitErrorFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
 pub struct GetLinkPartsFromLocalJsonFileError {
     source: GetLinkPartsFromLocalJsonFileErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithoutMethod, ImplDisplayForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceWithoutMethodFromTufaCommon, ImplDisplayForSimpleErrorEnum)]
 pub enum GetLinkPartsFromLocalJsonFileErrorEnum {
     TokioFsFileOpen(std::io::Error),
     TokioIoAsyncReadExtReadToEnd(std::io::Error),

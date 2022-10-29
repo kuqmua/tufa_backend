@@ -4,24 +4,28 @@ use crate::providers::provider_kind::functions::get_link_parts_from_local_json_f
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas;
-use impl_get_source_with_method::ImplGetSourceWithMethod;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethod;
-use init_error::InitError;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
 use std::collections::HashMap;
 use tufa_common::traits::get_log_where_was::GetLogWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
+use tufa_common::where_was::WhereWasWithAddition;
 use valuable::Valuable;
+
+use tufa_common::config::source_place_type::SourcePlaceType;
 
 #[derive(
     Debug,
-    InitError,
-    ImplGetWhereWasOneOrManyWithMethod,
-    ImplGetSourceWithMethod,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWas,
+    InitErrorFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct GetLocalProvidersLinkPartsError {
     pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
