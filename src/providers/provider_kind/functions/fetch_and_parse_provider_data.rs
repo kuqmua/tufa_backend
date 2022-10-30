@@ -1,8 +1,6 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::helpers::http_request::request_builder_methods::text::async_text::async_text;
-use crate::helpers::http_request::request_builder_methods::text::text_error::TextError;
 use crate::lazy_static::config::CONFIG;
 use crate::lazy_static::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -11,6 +9,8 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
+use tufa_common::helpers::http_request::request_builder_methods::text::async_text::async_text;
+use tufa_common::helpers::http_request::request_builder_methods::text::text_error::TextError;
 // use tufa_common::helpers::handle_status_code::handle_status_code;
 use tufa_common::where_was::WhereWas;
 

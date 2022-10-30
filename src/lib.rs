@@ -6,7 +6,6 @@ pub mod domain;
 pub mod email_client;
 pub mod entry;
 mod fetch;
-mod helpers;
 mod idempotency;
 mod init_dbs_logic;
 pub mod issue_delivery_worker;
