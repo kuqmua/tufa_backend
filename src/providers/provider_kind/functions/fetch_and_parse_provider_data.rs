@@ -9,9 +9,13 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
+use tufa_common::helpers::http_request::http_request_method::HttpRequestMethod;
+
 use tufa_common::helpers::http_request::request_builder_methods::text::async_text::async_text;
 use tufa_common::helpers::http_request::request_builder_methods::text::text_error::TextError;
+
 // use tufa_common::helpers::handle_status_code::handle_status_code;
+use tufa_common::helpers::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
@@ -39,21 +43,109 @@ impl ProviderKind {
     ) -> Result<Vec<CommonRssPostStruct>, Box<FetchAndParseProviderDataErrorEnum>> {
         let time = Instant::now();
         let capacity = links.len();
-        let vec_to_return = join_all(links.iter().map(|link| async move {
-            let request_builder = reqwest::Client::new().get(link);
+        let vec_to_return = join_all(links.iter().map(|url| async move {
+            let request_builder = reqwest::Client::new().get(url);
             let result = async_text(request_builder, false).await;
+
+            // let h = ffrr::<
+            //     String,
+            //     reqwest::cookie::Jar,
+            //     core::time::Duration,
+            //     u32,
+            //     u32,
+            //     u32,
+            //     std::time::Duration,
+            //     std::net::IpAddr,
+            //     std::time::Duration,
+            //     String, //todo - dyn std::any::Any
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            //     String,
+            // >(
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     None,
+            //     HttpRequestMethod::Get,
+            //     &CONFIG.source_place_type,
+            //     false,
+            // )
+            // .await;
             print_colorful_message(
                 None,
                 PrintType::TimeMeasurement,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
                 format!(
-                    "fetch_link {link} in {}.{}ms",
+                    "fetch_link {url} in {}.{}ms",
                     time.elapsed().as_secs(),
                     time.elapsed().as_millis() / 10,
                 ),
             );
-            (link, result)
+            (url, result)
         }))
         .await;
         let mut half_success_vec = Vec::with_capacity(capacity);

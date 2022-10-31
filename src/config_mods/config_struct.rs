@@ -4,7 +4,6 @@ use init_from_env_with_panic_if_failed::InitFromEnvWithPanicIfFailedWithPanicIfF
 use tufa_common::config::source_place_type::SourcePlaceType;
 use tufa_common::config::tracing_type::TracingType;
 use tufa_common::helpers::resource::Resource;
-use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,
