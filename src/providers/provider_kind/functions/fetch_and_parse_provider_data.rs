@@ -9,15 +9,15 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
+use tufa_common::helpers::http_request::http_request_error::HttpRequestError;
 use tufa_common::helpers::http_request::http_request_method::HttpRequestMethod;
 use tufa_common::helpers::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
-use tufa_common::helpers::http_request::wrappers::text::http_request_text_error::HttpRequestWrapperTextError;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
-        source: Vec<(String, Box<HttpRequestWrapperTextError>)>, //link, error
+        source: Vec<(String, Box<HttpRequestError>)>, //link, error
         where_was: WhereWas,
     },
     NoItems {
