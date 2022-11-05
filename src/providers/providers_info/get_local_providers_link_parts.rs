@@ -18,7 +18,7 @@ use tufa_common::where_was::WhereWas;
 use tufa_common::where_was::WhereWasWithAddition;
 use valuable::Valuable;
 
-use tufa_common::config::source_place_type::SourcePlaceType;
+use tufa_common::config_mods::source_place_type::SourcePlaceType;
 
 #[derive(
     Debug,

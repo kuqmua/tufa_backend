@@ -10,7 +10,7 @@ use secrecy::Secret;
 use std::fmt::Debug;
 use std::fmt::Display;
 use tokio::task::JoinError;
-use tufa_common::helpers::redis::get_redis_url::get_redis_url;
+use tufa_common::server::redis::get_redis_url::get_redis_url;
 
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> Result<(), Box<ApplicationBuildErrorEnum>> {
