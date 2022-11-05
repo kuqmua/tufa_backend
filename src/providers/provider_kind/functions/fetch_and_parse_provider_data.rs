@@ -9,9 +9,9 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
-use tufa_common::helpers::http_request::http_request_error::HttpRequestError;
-use tufa_common::helpers::http_request::http_request_method::HttpRequestMethod;
-use tufa_common::helpers::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
+use tufa_common::server::http_request::http_request_error::HttpRequestError;
+use tufa_common::server::http_request::http_request_method::HttpRequestMethod;
+use tufa_common::server::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
 use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
