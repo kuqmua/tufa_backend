@@ -13,7 +13,6 @@ use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 use tufa_common::where_was::WhereWas;
 
 #[derive(
