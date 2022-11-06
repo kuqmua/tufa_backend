@@ -1,26 +1,46 @@
 #[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
+    Default,
+    Debug,
+    Clone,
+    PartialEq,
+    serde_derive::Serialize,
+    serde_derive::Deserialize, //Eq,
 )]
 pub struct RedditStructForParsing {
     pub data: RedditStructForParsingVector,
 }
 
 #[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
+    Default,
+    Debug,
+    Clone,
+    PartialEq,
+    serde_derive::Serialize,
+    serde_derive::Deserialize, //Eq,
 )]
 pub struct RedditStructForParsingVector {
     pub children: Vec<RedditStructForParsingVectorChild>,
 }
 
 #[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
+    Default,
+    Debug,
+    Clone,
+    PartialEq,
+    serde_derive::Serialize,
+    serde_derive::Deserialize, //Eq,
 )]
 pub struct RedditStructForParsingVectorChild {
     pub data: RedditStructForParsingVectorChildData,
 }
 
 #[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
+    Default,
+    Debug,
+    Clone,
+    PartialEq,
+    serde_derive::Serialize,
+    serde_derive::Deserialize, //Eq,
 )]
 pub struct RedditStructForParsingVectorChildData {
     // media_embed ???
