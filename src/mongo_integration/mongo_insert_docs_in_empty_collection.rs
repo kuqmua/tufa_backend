@@ -4,6 +4,7 @@ use mongodb::bson::Document;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use tufa_common::common::where_was::WhereWas;
+use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
 
 #[derive(Debug)]
 pub enum MongoInsertDocsInEmptyCollectionErrorEnum {

@@ -9,6 +9,7 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
+use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
 
 #[derive(Debug)]
 pub struct MongoGetProvidersLinkPartsError {
