@@ -10,10 +10,10 @@ use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrMan
 use init_error::InitErrorFromTufaCommon;
 use reqwest::Error;
 use reqwest::StatusCode;
+use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
-use tufa_common::where_was::WhereWas;
 
 #[derive(
     Debug,

@@ -1,6 +1,6 @@
 use super::provider_kind::provider_kind_enum::ProviderKind;
 use std::collections::HashMap;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub enum CheckProvidersLinkPartsEmptyError {

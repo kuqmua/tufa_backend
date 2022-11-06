@@ -12,11 +12,11 @@ use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use itertools::Itertools;
+use tufa_common::common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWasOneOrMany;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
-use tufa_common::where_was::WhereWas;
-use tufa_common::where_was::WhereWasOneOrMany;
 
 #[derive(
     Debug,

@@ -5,7 +5,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use git_info::GitInfoFromTufaCommon;
 use reqwest::StatusCode;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub enum RssPartErrorEnum {

@@ -1,7 +1,7 @@
 extern crate toml;
 use crate::config_mods::config_struct::ConfigStruct;
 use crate::lazy_static::config::CONFIG;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub struct WrapConfigChecksError {

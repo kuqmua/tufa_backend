@@ -8,7 +8,7 @@ use std::collections::HashMap;
 
 //
 // use tufa_common::traits::git_info_trait::GitInfo;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub struct MongoInsertDataError {

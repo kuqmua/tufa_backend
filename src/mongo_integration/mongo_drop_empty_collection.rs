@@ -2,7 +2,7 @@ use mongodb::bson::Document;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use mongodb::Collection;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub enum MongoDropEmptyCollectionErrorEnum {

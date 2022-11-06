@@ -7,7 +7,7 @@ use crate::lazy_static::config::CONFIG;
 use crate::providers::check_providers_link_parts_on_empty::check_providers_link_parts_on_empty;
 use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 use std::collections::HashMap;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
 //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
 //         mongo_url,

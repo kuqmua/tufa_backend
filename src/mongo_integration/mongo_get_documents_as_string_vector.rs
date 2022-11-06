@@ -2,7 +2,7 @@ use futures::stream::TryStreamExt;
 use itertools::Itertools;
 use mongodb::bson::Document;
 use mongodb::Collection;
-use tufa_common::where_was::WhereWas;
+use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug)]
 pub enum MongoGetDocumentsAsStringVectorErrorEnum {

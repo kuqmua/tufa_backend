@@ -7,10 +7,10 @@ use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use strum_macros::EnumIter;
+use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::where_was::WhereWas;
 
 #[derive(Debug, EnumIter)]
 pub enum InitTablesEnum {
