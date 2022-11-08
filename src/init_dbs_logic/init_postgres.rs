@@ -1,5 +1,5 @@
-use crate::lazy_static::config::CONFIG;
-use crate::lazy_static::git_info::GIT_INFO;
+use crate::once_cell_globals::config::CONFIG;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;

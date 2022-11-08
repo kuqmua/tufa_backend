@@ -1,5 +1,3 @@
-use crate::lazy_static::config::CONFIG;
-use crate::lazy_static::git_info::GIT_INFO;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyError;
 use crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse;
@@ -8,6 +6,8 @@ use crate::mongo_integration::mongo_client_with_options::mongo_client_with_optio
 use crate::mongo_integration::mongo_client_with_options::MongoClientWithOptionsError;
 use crate::mongo_integration::mongo_insert_many::mongo_insert_many;
 use crate::mongo_integration::mongo_insert_many::MongoInsertManyError;
+use crate::once_cell_globals::config::CONFIG;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;

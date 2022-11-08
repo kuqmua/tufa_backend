@@ -1,4 +1,4 @@
-use crate::lazy_static::config::CONFIG;
+use crate::once_cell_globals::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use mongodb::bson::doc;

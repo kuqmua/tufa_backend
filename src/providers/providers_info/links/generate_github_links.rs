@@ -1,4 +1,4 @@
-use crate::lazy_static::config::CONFIG;
+use crate::once_cell_globals::config::CONFIG;
 use crate::project_constants::GITHUB_LINK_FIRST_PART;
 use crate::project_constants::GITHUB_LINK_SECOND_PART;
 

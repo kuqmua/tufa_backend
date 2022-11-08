@@ -1,5 +1,5 @@
-use crate::lazy_static::config::CONFIG;
-use crate::lazy_static::git_info::GIT_INFO;
+use crate::once_cell_globals::config::CONFIG;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
 use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;

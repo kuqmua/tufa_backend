@@ -320,7 +320,7 @@ https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 /api/protobuf/info
 
 * cut enum extension into few different proc macroses
-* remove lazy_static! from git file open logic(lazy_static! works on runtime, but logic work on compile time)
+* remove use crate::once_cell_globals::config::CONFIG;! from git file open logic(use crate::once_cell_globals::config::CONFIG;! works on runtime, but logic work on compile time)
 * write match should trace inside init or new function of error initialization
 * env var json tracing on/off
 * different formatting for env var json tracing on/off

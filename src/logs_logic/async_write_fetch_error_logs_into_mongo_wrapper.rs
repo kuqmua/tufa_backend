@@ -1,6 +1,6 @@
 // use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 // use crate::logs_logic::drop_mongo_provider_logs_collection_if_need::drop_mongo_provider_logs_collection_if_need;
-// use crate::lazy_static::config::CONFIG;
+// use crate::once_cell_globals::config::CONFIG;
 // use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 // use crate::mongo_integration::mongo_drop_db::mongo_drop_db;
 // use crate::mongo_integration::mongo_get_db_url::mongo_get_db_url;

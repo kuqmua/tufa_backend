@@ -1,5 +1,5 @@
 // use crate::authorization::reddit::reddit_authorization;
-// use crate::lazy_static::config::CONFIG;
+// use crate::once_cell_globals::config::CONFIG;
 
 // //what should i do with authorization?
 // let is_reddit_authorized = reddit_authorization::reddit_authorization(

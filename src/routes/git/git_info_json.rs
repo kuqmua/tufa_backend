@@ -1,4 +1,4 @@
-use crate::lazy_static::git_info::GIT_INFO;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use actix_web::{web, Responder};
 use serde_derive::Deserialize;
 use serde_derive::Serialize;

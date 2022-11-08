@@ -3,7 +3,7 @@ use crate::configuration::DatabaseSettings;
 use crate::configuration::EmailClientSettings;
 use crate::configuration::Settings;
 use crate::issue_delivery_worker::run_worker_until_stopped;
-use crate::lazy_static::config::CONFIG;
+use crate::once_cell_globals::config::CONFIG;
 use crate::startup::Application;
 use crate::startup::ApplicationBuildErrorEnum;
 use secrecy::Secret;

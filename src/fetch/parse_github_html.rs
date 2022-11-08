@@ -1,5 +1,5 @@
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
-use crate::lazy_static::git_info::GIT_INFO;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use html_parser::Dom;

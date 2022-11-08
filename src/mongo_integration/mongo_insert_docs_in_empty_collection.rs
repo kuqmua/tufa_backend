@@ -1,4 +1,4 @@
-use crate::lazy_static::config::CONFIG;
+use crate::once_cell_globals::config::CONFIG;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 use mongodb::options::ClientOptions;

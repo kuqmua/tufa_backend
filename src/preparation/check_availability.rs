@@ -1,9 +1,9 @@
-use crate::lazy_static::config::CONFIG;
-use crate::lazy_static::git_info::GIT_INFO;
 use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
 use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
 use crate::net_check::net_check_availability::NetCheckAvailabilityError;
+use crate::once_cell_globals::config::CONFIG;
+use crate::once_cell_globals::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use futures::join;

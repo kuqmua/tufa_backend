@@ -4,7 +4,7 @@
 // use futures::future::join_all;
 // use serde_json::json;
 // use std::time::Instant;
-// use crate::lazy_static::config::CONFIG;
+// use crate::once_cell_globals::config::CONFIG;
 
 // #[deny(
 //     clippy::indexing_slicing,
