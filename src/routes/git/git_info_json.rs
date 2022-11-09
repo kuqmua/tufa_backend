@@ -17,13 +17,13 @@ pub struct GitJsonInformation {
 
 pub async fn git_info_json() -> impl Responder {
     web::Json(GitJsonInformation {
-        commit_id: GIT_INFO.data.commit_id.clone(),
-        repo_link: GIT_INFO.data.repo_link.clone(),
-        author: GIT_INFO.data.author.clone(),
-        author_email: GIT_INFO.data.author_email.clone(),
-        commit_unix_time: GIT_INFO.data.commit_unix_time.clone(),
-        timezone: GIT_INFO.data.timezone.clone(),
-        message: GIT_INFO.data.message.clone(),
-        commit_link: GIT_INFO.data.get_commit_link(),
+        commit_id: GIT_INFO.commit_id.clone(),
+        repo_link: GIT_INFO.repo_link.clone(),
+        author: GIT_INFO.author.clone(),
+        author_email: GIT_INFO.author_email.clone(),
+        commit_unix_time: GIT_INFO.commit_unix_time.clone(),
+        timezone: GIT_INFO.timezone.clone(),
+        message: GIT_INFO.message.clone(),
+        commit_link: GIT_INFO.get_commit_link(),
     })
 }

@@ -54,7 +54,7 @@ pub async fn mongo_client_options_parse(
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO.data,
+                &GIT_INFO,
                 should_trace,
             ),
         )),

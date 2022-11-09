@@ -69,7 +69,7 @@ pub async fn init_mongo(
     //             column: column!(),
     //         },
     //         &CONFIG.source_place_type,
-    //         &GIT_INFO.data,
+    //         &GIT_INFO,
     //         should_trace,
     //     ))),
     //     Ok(client_options) => match mongo_client_with_options(client_options, false) {
@@ -84,7 +84,7 @@ pub async fn init_mongo(
     //                 column: column!(),
     //             },
     //             &CONFIG.source_place_type,
-    //             &GIT_INFO.data,
+    //             &GIT_INFO,
     //             should_trace,
     //         ))),
     //         Ok(client) => {
@@ -109,7 +109,7 @@ pub async fn init_mongo(
     //                         column: column!(),
     //                     },
     //                     &CONFIG.source_place_type,
-    //                     &GIT_INFO.data,
+    //                     &GIT_INFO,
     //                     should_trace,
     //                 )));
     //             }
@@ -127,7 +127,7 @@ pub async fn init_mongo(
     //                         column: column!(),
     //                     },
     //                     &CONFIG.source_place_type,
-    //                     &GIT_INFO.data,
+    //                     &GIT_INFO,
     //                     should_trace,
     //                 )));
     //             }
@@ -155,7 +155,7 @@ pub async fn init_mongo(
     //             //             column: column!(),
     //             //         },
     //             //         &CONFIG.source_place_type,
-    //             //         &GIT_INFO.data,
+    //             //         &GIT_INFO,
     //             //         should_trace,
     //             //     )));
     //             // }

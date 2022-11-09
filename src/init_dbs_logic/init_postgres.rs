@@ -70,7 +70,7 @@ pub async fn init_postgres(
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,
-            &GIT_INFO.data,
+            &GIT_INFO,
             should_trace,
         ))),
         Ok(pool) => {
@@ -90,7 +90,7 @@ pub async fn init_postgres(
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
-                    &GIT_INFO.data,
+                    &GIT_INFO,
                     should_trace,
                 )));
             }
@@ -110,7 +110,7 @@ pub async fn init_postgres(
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
-                    &GIT_INFO.data,
+                    &GIT_INFO,
                     should_trace,
                 )));
             }
@@ -130,7 +130,7 @@ pub async fn init_postgres(
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
-                    &GIT_INFO.data,
+                    &GIT_INFO,
                     should_trace,
                 )));
             }
@@ -151,7 +151,7 @@ pub async fn init_postgres(
             //         column: column!(),
             //     },
             //     &CONFIG.source_place_type,
-            //     &GIT_INFO.data,
+            //     &GIT_INFO,
             //     should_trace,
             // )));
             // }
@@ -171,7 +171,7 @@ pub async fn init_postgres(
                         location: *core::panic::Location::caller(),
                     },
                     &CONFIG.source_place_type,
-                    &GIT_INFO.data,
+                    &GIT_INFO,
                     should_trace,
                 )));
             }

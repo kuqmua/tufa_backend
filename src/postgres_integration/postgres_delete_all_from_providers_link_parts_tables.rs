@@ -64,7 +64,7 @@ pub async fn postgres_delete_all_from_providers_link_parts_tables(
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO.data,
+                &GIT_INFO,
                 should_trace,
             ),
         ));

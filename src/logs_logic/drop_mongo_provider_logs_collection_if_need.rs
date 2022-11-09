@@ -34,7 +34,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             Some(pk),
             PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             format!("drop fail with error {e:#?}"),
         );
         return Err(e);

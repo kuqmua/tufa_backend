@@ -74,7 +74,7 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO.data,
+                &GIT_INFO,
                 should_trace,
             ),
         ));

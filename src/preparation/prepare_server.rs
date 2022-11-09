@@ -51,7 +51,7 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,
-            &GIT_INFO.data,
+            &GIT_INFO,
             should_trace,
         )));
     }
@@ -71,7 +71,7 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,
-            &GIT_INFO.data,
+            &GIT_INFO,
             should_trace,
         )));
     }

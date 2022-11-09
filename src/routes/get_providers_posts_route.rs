@@ -23,7 +23,7 @@ pub async fn get_providers_posts_route() -> Result<HttpResponse, actix_web::Erro
         None,
         PrintType::TimeMeasurement,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.data.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         message,
     );
     Ok(HttpResponse::Ok().finish())

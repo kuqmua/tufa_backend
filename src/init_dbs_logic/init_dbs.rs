@@ -58,7 +58,7 @@ pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsError>> {
                 location: *core::panic::Location::caller(),
             },
             &CONFIG.source_place_type,
-            &GIT_INFO.data,
+            &GIT_INFO,
             should_trace,
         )));
     }

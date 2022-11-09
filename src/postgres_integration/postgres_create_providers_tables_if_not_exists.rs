@@ -65,7 +65,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
                     location: *core::panic::Location::caller(),
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO.data,
+                &GIT_INFO,
                 should_trace,
             ),
         ));
