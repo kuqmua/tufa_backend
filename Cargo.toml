@@ -86,6 +86,7 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 # init_from_env = {git = "https://github.com/kuqmua/init_from_env"}
 # provider_kind_from_config = {path = "https://github.com/kuqmua/provider_kind_from_config"}
 #dev
+compile_time_git_info = {path = "../proc_macros/compile_time_git_info"}
 enum_extension = {path = "../proc_macros/enum_extension"}
 error_display = {path = "../proc_macros/error_display"}
 gen_enum = {path = "../proc_macros/gen_enum"}
