@@ -12,7 +12,6 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::time::Duration;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::common::where_was::WhereWasOneOrMany;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
@@ -36,35 +35,6 @@ pub enum MongoCheckAvailabilityErrorEnum {
     ClientWithOptions(Error),
     ListCollectionNames(Error),
 }
-
-// //
-// #[derive(
-//     Debug,
-//     ImplGetSourceWithMethodFromTufaCommon,
-//     ImplDisplayForErrorStruct,
-//     InitErrorFromTufaCommon,
-//     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
-//     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
-// )]
-// pub struct MongoCheckAvailabilityError {
-//     source: mongodb::error::Error,
-//     where_was: WhereWas,
-// }
-// //
-// impl From<mongodb::error::Error> for MongoCheckAvailabilityError {
-//     fn from(e: mongodb::error::Error) -> Self {
-//         let location = location();
-//         Self {
-//             source: mongodb::error::Error,
-//             where_was: WhereWas {
-//                 time: std::time::SystemTime::now()
-// .duration_since(std::time::UNIX_EPOCH)
-// .expect("cannot convert time to unix_epoch"),
-//                 location: *core::panic::Location::caller(),
-//             },
-//         }
-//     }
-// }
 
 #[deny(
     clippy::indexing_slicing,

@@ -11,7 +11,6 @@ use sqlx::Pool;
 use sqlx::Postgres;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::common::where_was::WhereWasOneOrMany;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
 
