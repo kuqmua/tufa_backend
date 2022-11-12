@@ -1,4 +1,4 @@
-use crate::project_constants::HABR_LINK_FIRST_PART;
+use crate::global_variables::hardcode::HABR_LINK_FIRST_PART;
 
 #[deny(
     clippy::indexing_slicing,

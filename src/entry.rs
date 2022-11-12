@@ -1,9 +1,9 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::hardcode::PROJECT_NAME;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::preparation::prepare_server::prepare_server;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
-use crate::project_constants::PROJECT_NAME;
 use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;

@@ -16,7 +16,6 @@ mod net_check;
 mod postgres_integration;
 mod preparation;
 mod prints;
-mod project_constants;
 mod providers;
 mod routes;
 mod server_wrapper;

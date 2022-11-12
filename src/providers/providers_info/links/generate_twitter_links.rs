@@ -1,6 +1,6 @@
-use crate::project_constants::TWITTER_LINK_FIRST_PART;
-use crate::project_constants::TWITTER_LINK_SECOND_PART;
-use crate::project_constants::TWITTER_LINK_THIRD_PART;
+use crate::global_variables::hardcode::TWITTER_LINK_FIRST_PART;
+use crate::global_variables::hardcode::TWITTER_LINK_SECOND_PART;
+use crate::global_variables::hardcode::TWITTER_LINK_THIRD_PART;
 use crate::providers::providers_info::get_twitter_provider_name::get_twitter_provider_name;
 
 #[deny(
