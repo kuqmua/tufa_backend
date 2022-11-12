@@ -8,19 +8,12 @@ use actix_web::web;
 use actix_web::HttpResponse;
 use actix_web_flash_messages::FlashMessage;
 use secrecy::ExposeSecret;
-use secrecy::Secret;
 use sqlx::PgPool;
+use tufa_common::common::change_password_form_data::ChangePasswordFormData;
 use tufa_common::common::postgres_credentials::PostgresCredentials;
 
-#[derive(serde::Deserialize)]
-pub struct FormData {
-    current_password: Secret<String>,
-    new_password: Secret<String>,
-    new_password_check: Secret<String>,
-}
-
 pub async fn change_password(
-    form: web::Form<FormData>,
+    form: web::Form<ChangePasswordFormData>,
     pool: web::Data<PgPool>,
     user_id: web::ReqData<UserId>,
 ) -> Result<HttpResponse, actix_web::Error> {
