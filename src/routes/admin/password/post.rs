@@ -1,6 +1,5 @@
 use crate::authentication::password::validate_credentials;
 use crate::authentication::password::AuthError;
-use crate::authentication::password::Credentials;
 use crate::authentication::UserId;
 use crate::routes::admin::dashboard::get_username;
 use crate::utils::status_codes::e500;
@@ -11,6 +10,7 @@ use actix_web_flash_messages::FlashMessage;
 use secrecy::ExposeSecret;
 use secrecy::Secret;
 use sqlx::PgPool;
+use tufa_common::common::postgres_credentials::PostgresCredentials;
 
 #[derive(serde::Deserialize)]
 pub struct FormData {
@@ -33,7 +33,7 @@ pub async fn change_password(
         return Ok(see_other("/admin/password"));
     }
     let username = get_username(*user_id, &pool).await.map_err(e500)?;
-    let credentials = Credentials {
+    let credentials = PostgresCredentials {
         username,
         password: form.0.current_password,
     };

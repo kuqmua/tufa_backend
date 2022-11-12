@@ -1,6 +1,5 @@
 use crate::authentication::validate_credentials;
 use crate::authentication::AuthError;
-use crate::authentication::Credentials;
 use crate::routes::error_chain_fmt;
 use crate::session_state::TypedSession;
 use actix_web::error::InternalError;
@@ -10,6 +9,7 @@ use actix_web::HttpResponse;
 use actix_web_flash_messages::FlashMessage;
 use secrecy::Secret;
 use sqlx::PgPool;
+use tufa_common::common::postgres_credentials::PostgresCredentials;
 
 #[derive(serde::Deserialize)]
 pub struct FormData {
@@ -26,7 +26,7 @@ pub async fn login(
     pool: web::Data<PgPool>,
     session: TypedSession,
 ) -> Result<HttpResponse, InternalError<LoginError>> {
-    let credentials = Credentials {
+    let credentials = PostgresCredentials {
         username: form.0.username,
         password: form.0.password,
     };

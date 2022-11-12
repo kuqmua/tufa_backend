@@ -11,6 +11,7 @@ use argon2::Version;
 use secrecy::ExposeSecret;
 use secrecy::Secret;
 use sqlx::PgPool;
+use tufa_common::common::postgres_credentials::PostgresCredentials;
 
 #[derive(thiserror::Error, Debug)]
 pub enum AuthError {
@@ -18,11 +19,6 @@ pub enum AuthError {
     InvalidCredentials(#[source] anyhow::Error),
     #[error(transparent)]
     UnexpectedError(#[from] anyhow::Error),
-}
-
-pub struct Credentials {
-    pub username: String,
-    pub password: Secret<String>,
 }
 
 #[tracing::instrument(name = "Get stored credentials", skip(username, pool))]
@@ -47,7 +43,7 @@ async fn get_stored_credentials(
 
 #[tracing::instrument(name = "Validate credentials", skip(credentials, pool))]
 pub async fn validate_credentials(
-    credentials: Credentials,
+    credentials: PostgresCredentials,
     pool: &PgPool,
 ) -> Result<uuid::Uuid, AuthError> {
     let mut user_id = None;
