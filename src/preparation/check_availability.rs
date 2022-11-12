@@ -1,7 +1,5 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
-use crate::mongo_integration::mongo_check_availability::mongo_check_availability;
-use crate::mongo_integration::mongo_check_availability::MongoCheckAvailabilityError;
 use crate::net_check::net_check_availability::net_check_availability;
 use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
@@ -17,6 +15,8 @@ use init_error::InitErrorFromTufaCommon;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
 use tufa_common::config_mods::traits::get_postgres_url::GetPostgresUrl;
+use tufa_common::server::mongo::mongo_check_availability::mongo_check_availability;
+use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
