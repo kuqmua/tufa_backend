@@ -1,6 +1,6 @@
+use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
 use crate::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsError;
-use crate::once_cell_globals::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;

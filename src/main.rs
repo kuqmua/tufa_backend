@@ -4,7 +4,7 @@ fn main() {
     //     .expect("cannot convert time to unix_epoch");
     // let datetime = chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + duration)
     //     .with_timezone(&chrono::FixedOffset::east(
-    //         tufa_server::use crate::once_cell_globals::config::CONFIG;::config::CONFIG.timezone,
+    //         tufa_server::use crate::global_variables::runtime::config::CONFIG;::config::CONFIG.timezone,
     //     ));
     // let timestamp_str = datetime.format("%Y-%m-%d %H:%M:%S.%f").to_string();
     // println! {"333***{}",timestamp_str};

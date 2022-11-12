@@ -1,4 +1,4 @@
-use crate::once_cell_globals::git_info::GIT_INFO;
+use crate::global_variables::compile_time::git_info::GIT_INFO;
 use actix_web::{web, Responder};
 use tufa_common::common::git::git_info::GitInformation;
 

@@ -1,5 +1,5 @@
-use crate::once_cell_globals::config::CONFIG;
-use crate::once_cell_globals::git_info::GIT_INFO;
+use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;

@@ -1,4 +1,4 @@
-use crate::once_cell_globals::config::CONFIG;
+use crate::global_variables::runtime::config::CONFIG;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 use mongodb::options::ClientOptions;

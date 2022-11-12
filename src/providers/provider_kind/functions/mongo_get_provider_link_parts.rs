@@ -1,6 +1,6 @@
+use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorEnum;
-use crate::once_cell_globals::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use mongodb::bson::Document;

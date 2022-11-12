@@ -1,9 +1,9 @@
+use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_mongo::init_mongo;
 use crate::init_dbs_logic::init_mongo::InitMongoError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitError;
-use crate::once_cell_globals::config::CONFIG;
-use crate::once_cell_globals::git_info::GIT_INFO;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;

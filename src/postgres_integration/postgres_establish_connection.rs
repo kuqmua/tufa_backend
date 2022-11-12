@@ -1,5 +1,5 @@
-use crate::once_cell_globals::config::CONFIG;
-use crate::once_cell_globals::git_info::GIT_INFO;
+use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
 use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;

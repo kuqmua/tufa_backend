@@ -1,5 +1,5 @@
 use super::print_wrapper::print_wrapper;
-use crate::once_cell_globals::config::CONFIG;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;

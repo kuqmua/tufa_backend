@@ -1,4 +1,4 @@
-use crate::once_cell_globals::config::CONFIG;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::CleanLogsDirError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;

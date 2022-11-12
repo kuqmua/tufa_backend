@@ -1,5 +1,5 @@
-use crate::once_cell_globals::config::CONFIG;
-use crate::once_cell_globals::git_info::GIT_INFO;
+use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
