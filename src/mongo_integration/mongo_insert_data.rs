@@ -1,10 +1,10 @@
-use super::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorEnum;
 use crate::global_variables::runtime::config::CONFIG;
-use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::collections::HashMap;
+use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
+use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionError;
 
 //
 // use tufa_common::traits::git_info_trait::GitInfo;
@@ -12,7 +12,7 @@ use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub struct MongoInsertDataError {
-    pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>,
+    pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>,
     where_was: WhereWas,
 }
 
@@ -44,6 +44,7 @@ pub async fn mongo_insert_data(
                         .mongo_providers_logs_db_collection_document_field_name_handle
                         .clone(),
                     vec_of_link_parts,
+                    false,
                 )
                 .await,
             )
@@ -57,7 +58,7 @@ pub async fn mongo_insert_data(
         }
         None
     })
-    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionErrorEnum>>();
+    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
     if !error_hashmap.is_empty() {
         return Err(Box::new(MongoInsertDataError {
             source: error_hashmap,
