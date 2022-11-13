@@ -44,6 +44,7 @@ pub async fn mongo_insert_data(
                         .mongo_providers_logs_db_collection_document_field_name_handle
                         .clone(),
                     vec_of_link_parts,
+                    &CONFIG.source_place_type,
                     false,
                 )
                 .await,
