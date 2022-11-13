@@ -31,11 +31,18 @@ pub async fn mongo_insert_data(
             (
                 pk,
                 mongo_insert_docs_in_empty_collection(
+                    {
+                        use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
+                        CONFIG.get_mongo_url()
+                    },
                     db_name_handle,
                     format!(
                         "{pk}{}",
                         CONFIG.mongo_providers_logs_db_collection_handle_second_part
                     ),
+                    CONFIG
+                        .mongo_providers_logs_db_collection_document_field_name_handle
+                        .clone(),
                     vec_of_link_parts,
                 )
                 .await,

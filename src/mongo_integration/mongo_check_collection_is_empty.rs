@@ -3,24 +3,62 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use tufa_common::common::where_was::WhereWas;
 
-#[derive(Debug)]
+// #[derive(Debug)]
+// pub enum MongoCheckCollectionIsEmptyErrorEnum {
+//     ClientOptionsParse {
+//         source: mongodb::error::Error,
+//         where_was: WhereWas,
+//     },
+//     ClientWithOptions {
+//         source: mongodb::error::Error,
+//         where_was: WhereWas,
+//     },
+//     CountDocuments {
+//         source: mongodb::error::Error,
+//         where_was: WhereWas,
+//     },
+//     NotEmpty {
+//         source: u64,
+//         where_was: WhereWas,
+//     },
+// }
+
+// use tufa_common::common::where_was::WhereWas;
+use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::config::CONFIG;
+use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
+use tufa_common::traits::where_was_trait::WhereWasTrait;
+use impl_display_for_error_struct::ImplDisplayForErrorStruct;
+use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use init_error::InitErrorFromTufaCommon;
+// use mongodb::options::ClientOptions;
+// use mongodb::Client;
+use std::time::Duration;
+
+#[derive(
+    Debug,
+    ImplGetSourceWithMethodFromTufaCommon,
+    ImplDisplayForErrorStruct,
+    InitErrorFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
+    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+)]
+pub struct MongoCheckCollectionIsEmptyError {
+    source: MongoCheckCollectionIsEmptyErrorEnum,
+    where_was: WhereWas,
+}
+
+#[derive(Debug, ImplGetSourceWithoutMethodFromTufaCommon, ImplDisplayForSimpleErrorEnum)]
 pub enum MongoCheckCollectionIsEmptyErrorEnum {
-    ClientOptionsParse {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    ClientWithOptions {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    CountDocuments {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    NotEmpty {
-        source: u64,
-        where_was: WhereWas,
-    },
+    ClientOptionsParse(mongodb::error::Error),
+    ClientWithOptions(mongodb::error::Error),
+    CountDocuments(mongodb::error::Error),
+    NotEmpty(u64),
 }
 
 #[deny(
@@ -33,31 +71,45 @@ pub async fn mongo_check_collection_is_empty(
     mongo_url: &str,
     db_name: &str,
     db_collection_name: &str,
-) -> Result<(), Box<MongoCheckCollectionIsEmptyErrorEnum>> {
+    should_trace: bool,
+) -> Result<(), Box<MongoCheckCollectionIsEmptyError>> {
     match ClientOptions::parse(mongo_url).await {
-        Err(e) => Err(Box::new(
-            MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse {
-                source: e,
-                where_was: WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
-                },
-            },
-        )),
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(Box::new(
-                MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions {
-                    source: e,
-                    where_was: WhereWas {
+        Err(e) => 
+                    Err(Box::new(
+                MongoCheckCollectionIsEmptyError::init_error_with_possible_trace(
+                    MongoCheckCollectionIsEmptyErrorEnum::ClientOptionsParse(e),
+                    WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
                             .expect("cannot convert time to unix_epoch"),
                         location: *core::panic::Location::caller(),
                     },
-                },
-            )),
+                    &CONFIG.source_place_type,
+                    &GIT_INFO,
+                    should_trace,
+                ),
+            ))
+        
+        ,
+        Ok(client_options) => match Client::with_options(client_options) {
+            Err(e) => 
+            
+            Err(Box::new(
+                MongoCheckCollectionIsEmptyError::init_error_with_possible_trace(
+                    MongoCheckCollectionIsEmptyErrorEnum::ClientWithOptions(e),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO,
+                    should_trace,
+                ),
+            ))
+            
+            ,
             Ok(client) => {
                 match client
                     .database(db_name)
@@ -65,28 +117,54 @@ pub async fn mongo_check_collection_is_empty(
                     .count_documents(None, None)
                     .await
                 {
-                    Err(e) => Err(Box::new(
-                        MongoCheckCollectionIsEmptyErrorEnum::CountDocuments {
-                            source: e,
-                            where_was: WhereWas {
-                                time: std::time::SystemTime::now()
-                                    .duration_since(std::time::UNIX_EPOCH)
-                                    .expect("cannot convert time to unix_epoch"),
-                                location: *core::panic::Location::caller(),
-                            },
-                        },
-                    )),
+                    Err(e) => 
+                                Err(Box::new(
+                MongoCheckCollectionIsEmptyError::init_error_with_possible_trace(
+                    MongoCheckCollectionIsEmptyErrorEnum::CountDocuments(e),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO,
+                    should_trace,
+                ),
+            ))
+
+                    
+                    ,
                     Ok(documents_number) => {
                         if documents_number > 0 {
-                            return Err(Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty {
-                                source: documents_number,
-                                where_was: WhereWas {
-                                    time: std::time::SystemTime::now()
-                                        .duration_since(std::time::UNIX_EPOCH)
-                                        .expect("cannot convert time to unix_epoch"),
-                                    location: *core::panic::Location::caller(),
-                                },
-                            }));
+                            return 
+                            
+                                                            Err(Box::new(
+                MongoCheckCollectionIsEmptyError::init_error_with_possible_trace(
+                    MongoCheckCollectionIsEmptyErrorEnum::NotEmpty(documents_number),
+                    WhereWas {
+                        time: std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .expect("cannot convert time to unix_epoch"),
+                        location: *core::panic::Location::caller(),
+                    },
+                    &CONFIG.source_place_type,
+                    &GIT_INFO,
+                    should_trace,
+                ),
+            ))
+                            
+                            // Err(Box::new(MongoCheckCollectionIsEmptyErrorEnum::NotEmpty {
+                            //     source: documents_number,
+                            //     where_was: WhereWas {
+                            //         time: std::time::SystemTime::now()
+                            //             .duration_since(std::time::UNIX_EPOCH)
+                            //             .expect("cannot convert time to unix_epoch"),
+                            //         location: *core::panic::Location::caller(),
+                            //     },
+                            // }))
+                            
+                            ;
                         }
                         Ok(())
                     }
