@@ -76,7 +76,12 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
     match join!(
         net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),
-        mongo_check_availability(mongo_url, false),
+        mongo_check_availability(
+            mongo_url,
+            &CONFIG.source_place_type,
+            std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
+            false,
+        ),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
         (Ok(_), Ok(_), Err(m)) => Err(Box::new(
