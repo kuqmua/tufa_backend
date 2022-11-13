@@ -77,10 +77,9 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
         net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),
         mongo_check_availability(
-            MONGO_CLIENT_OPTIONS.deref().to_owned(),
+            MONGO_CLIENT_OPTIONS.deref().to_owned(), //std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
             &CONFIG.mongo_providers_logs_db_name,
             &CONFIG.source_place_type,
-            std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
             false,
         ),
     ) {

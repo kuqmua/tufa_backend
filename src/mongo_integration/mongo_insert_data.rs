@@ -1,14 +1,13 @@
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::collections::HashMap;
+use std::ops::Deref;
+use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionError;
-
-//
-// use tufa_common::traits::git_info_trait::GitInfo;
-use tufa_common::common::where_was::WhereWas;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub struct MongoInsertDataError {
@@ -31,10 +30,7 @@ pub async fn mongo_insert_data(
             (
                 pk,
                 mongo_insert_docs_in_empty_collection(
-                    {
-                        use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
-                        CONFIG.get_mongo_url()
-                    },
+                    MONGO_CLIENT_OPTIONS.deref().to_owned(),
                     db_name_handle,
                     format!(
                         "{pk}{}",
