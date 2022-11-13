@@ -1,5 +1,6 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS;
 use crate::net_check::net_check_availability::net_check_availability;
 use crate::net_check::net_check_availability::NetCheckAvailabilityError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
@@ -12,8 +13,8 @@ use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
+use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
 use tufa_common::config_mods::traits::get_postgres_url::GetPostgresUrl;
 use tufa_common::server::mongo::mongo_check_availability::mongo_check_availability;
 use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityError;
@@ -72,12 +73,11 @@ pub enum CheckAvailabilityErrorEnum {
 pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvailabilityError>> {
     let net_url = &CONFIG.starting_check_link.clone();
     let postgres_url = &CONFIG.get_postgres_url();
-    let mongo_url = &CONFIG.get_mongo_url();
     match join!(
         net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),
         mongo_check_availability(
-            mongo_url,
+            MONGO_CLIENT_OPTIONS.deref().to_owned(),
             &CONFIG.mongo_providers_logs_db_name,
             &CONFIG.source_place_type,
             std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
