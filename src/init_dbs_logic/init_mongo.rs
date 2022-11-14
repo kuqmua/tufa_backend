@@ -40,10 +40,10 @@ pub struct InitMongoError {
 
 #[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
 pub enum InitMongoErrorEnum {
-    ClientOptionsParse(MongoClientOptionsParseError),
-    ClientWithOptions(MongoClientWithOptionsError),
-    CollectionCountDocumentsOrIsNotEmpty(MongoCheckCollectionsIsNotEmptyError),
-    InsertManyError(MongoInsertManyError),
+    ClientOptionsParseWrapper(MongoClientOptionsParseError),
+    ClientWithOptionsWrapper(MongoClientWithOptionsError),
+    CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyError),
+    InsertManyErrorWrapper(MongoInsertManyError),
 }
 
 #[deny(

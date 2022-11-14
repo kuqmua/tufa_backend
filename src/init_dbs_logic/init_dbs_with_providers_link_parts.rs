@@ -31,13 +31,14 @@ pub struct InitDbsProvidersLinkPartsError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
-    GetLocalProvidersLinkParts(GetLocalProvidersLinkPartsError),
-    PostgresInit(PostgresInitError),
-    MongoInit(InitMongoError),
-    MongoAndPostgresInit {
-        mongo: InitMongoError,
-        postgres: PostgresInitError,
-    },
+    GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsError),
+    PostgresInitWrapper(PostgresInitError),
+    MongoInitWrapper(InitMongoError),
+    //todo - do something with that - add support for fields
+    // MongoAndPostgresInitOrigin {
+    //     mongo: InitMongoError,
+    //     postgres: PostgresInitError,
+    // },
 }
 
 #[deny(
@@ -52,7 +53,7 @@ pub async fn init_dbs_with_providers_link_parts(
     match get_local_providers_link_parts(false).await {
         Err(e) => Err(Box::new(
             InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkParts(*e),
+                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkPartsWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -91,7 +92,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     if let Err(e) = pg_result {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
+                                InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -109,7 +110,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     if let Err(e) = mongo_result {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -128,7 +129,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     (Ok(_), Err(e)) => {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::PostgresInit(*e),
+                                InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -144,7 +145,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     (Err(e), Ok(_)) => {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInit(*e),
+                                InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -158,23 +159,24 @@ pub async fn init_dbs_with_providers_link_parts(
                         ));
                     }
                     (Err(mongo_error), Err(postgres_error)) => {
-                        return Err(Box::new(
-                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInit {
-                                    mongo: *mongo_error,
-                                    postgres: *postgres_error,
-                                },
-                                WhereWas {
-                                    time: std::time::SystemTime::now()
-                                        .duration_since(std::time::UNIX_EPOCH)
-                                        .expect("cannot convert time to unix_epoch"),
-                                    location: *core::panic::Location::caller(),
-                                },
-                                &CONFIG.source_place_type,
-                                &GIT_INFO,
-                                should_trace,
-                            ),
-                        ));
+                        todo!();
+                        // return Err(Box::new(
+                        //     InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                        //         InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInitOrigin {
+                        //             mongo: *mongo_error,
+                        //             postgres: *postgres_error,
+                        //         },
+                        //         WhereWas {
+                        //             time: std::time::SystemTime::now()
+                        //                 .duration_since(std::time::UNIX_EPOCH)
+                        //                 .expect("cannot convert time to unix_epoch"),
+                        //             location: *core::panic::Location::caller(),
+                        //         },
+                        //         &CONFIG.source_place_type,
+                        //         &GIT_INFO,
+                        //         should_trace,
+                        //     ),
+                        // ));
                     }
                 },
             }

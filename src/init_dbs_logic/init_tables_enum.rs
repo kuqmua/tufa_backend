@@ -33,7 +33,7 @@ pub struct InitTablesError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum InitTablesErrorEnum {
-    ProvidersLinkParts(InitDbsProvidersLinkPartsError),
+    ProvidersLinkPartsWrapper(InitDbsProvidersLinkPartsError),
 }
 
 impl InitTablesEnum {
@@ -48,7 +48,7 @@ impl InitTablesEnum {
             InitTablesEnum::ProvidersLinkParts => {
                 if let Err(e) = init_dbs_with_providers_link_parts(false).await {
                     return Err(Box::new(InitTablesError::init_error_with_possible_trace(
-                        InitTablesErrorEnum::ProvidersLinkParts(*e),
+                        InitTablesErrorEnum::ProvidersLinkPartsWrapper(*e),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)

@@ -28,8 +28,8 @@ pub struct PreparationError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum PreparationErrorEnum {
-    CheckAvailability(CheckAvailabilityError),
-    InitDbs(InitDbsError),
+    CheckAvailabilityWrapper(CheckAvailabilityError),
+    InitDbsWrapper(InitDbsError),
 }
 
 #[deny(
@@ -41,7 +41,7 @@ pub enum PreparationErrorEnum {
 pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationError>> {
     if let Err(e) = check_availability(false).await {
         return Err(Box::new(PreparationError::init_error_with_possible_trace(
-            PreparationErrorEnum::CheckAvailability(*e),
+            PreparationErrorEnum::CheckAvailabilityWrapper(*e),
             WhereWas {
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
@@ -61,7 +61,7 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationErr
     }
     if let Err(e) = init_dbs(false).await {
         return Err(Box::new(PreparationError::init_error_with_possible_trace(
-            PreparationErrorEnum::InitDbs(*e),
+            PreparationErrorEnum::InitDbsWrapper(*e),
             WhereWas {
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)

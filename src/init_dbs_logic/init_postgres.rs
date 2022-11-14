@@ -40,14 +40,14 @@ pub struct PostgresInitError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum PostgresInitErrorEnum {
-    EstablishConnection(PostgresEstablishConnectionError),
-    CreateTableQueries(PostgresCreateProvidersDbsError),
-    CheckProviderLinksTablesAreEmpty(PostgresCheckProvidersLinkPartsTablesEmptyError),
-    DeleteAllFromProvidersTables(PostgresDeleteAllFromProvidersTablesError),
-    CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(
+    EstablishConnectionWrapper(PostgresEstablishConnectionError),
+    CreateTableQueriesWrapper(PostgresCreateProvidersDbsError),
+    CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyError),
+    DeleteAllFromProvidersTablesWrapper(PostgresDeleteAllFromProvidersTablesError),
+    CheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapper(
         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
     ),
-    InsertLinkPartsIntoProvidersTables(PostgresInsertLinkPartsIntoProvidersTablesError),
+    InsertLinkPartsIntoProvidersTablesWrapper(PostgresInsertLinkPartsIntoProvidersTablesError),
 }
 
 #[deny(
@@ -62,7 +62,7 @@ pub async fn init_postgres(
 ) -> Result<(), Box<PostgresInitError>> {
     match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
         Err(e) => Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-            PostgresInitErrorEnum::EstablishConnection(*e),
+            PostgresInitErrorEnum::EstablishConnectionWrapper(*e),
             WhereWas {
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
@@ -82,7 +82,7 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::CreateTableQueries(*e),
+                    PostgresInitErrorEnum::CreateTableQueriesWrapper(*e),
                     WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
@@ -102,7 +102,7 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmpty(*e),
+                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
                     WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
@@ -122,7 +122,7 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::DeleteAllFromProvidersTables(*e),
+                    PostgresInitErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
                     WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
@@ -163,7 +163,7 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTables(*e),
+                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
                     WhereWas {
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
