@@ -1,7 +1,7 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
-use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyError;
+use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyWrapperError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables;
@@ -18,7 +18,7 @@ use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrMan
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::common::where_was::WhereWas;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
-use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError;
+use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError;
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
@@ -31,7 +31,7 @@ use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditional
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
-pub struct PostgresInitError {
+pub struct PostgresInitWrapperError {
     source: PostgresInitErrorEnum,
     where_was: WhereWas,
 }
@@ -42,10 +42,10 @@ pub struct PostgresInitError {
 pub enum PostgresInitErrorEnum {
     EstablishConnectionWrapper(PostgresEstablishConnectionError),
     CreateTableQueriesWrapper(PostgresCreateProvidersDbsError),
-    CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyError),
+    CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyWrapperError),
     DeleteAllFromProvidersTablesWrapper(PostgresDeleteAllFromProvidersTablesError),
     CheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapper(
-        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError,
+        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError,
     ),
     InsertLinkPartsIntoProvidersTablesWrapper(PostgresInsertLinkPartsIntoProvidersTablesError),
 }
@@ -59,20 +59,22 @@ pub enum PostgresInitErrorEnum {
 pub async fn init_postgres(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
-) -> Result<(), Box<PostgresInitError>> {
+) -> Result<(), Box<PostgresInitWrapperError>> {
     match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
-        Err(e) => Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-            PostgresInitErrorEnum::EstablishConnectionWrapper(*e),
-            WhereWas {
-                time: std::time::SystemTime::now()
-                    .duration_since(std::time::UNIX_EPOCH)
-                    .expect("cannot convert time to unix_epoch"),
-                location: *core::panic::Location::caller(),
-            },
-            &CONFIG.source_place_type,
-            &GIT_INFO,
-            should_trace,
-        ))),
+        Err(e) => Err(Box::new(
+            PostgresInitWrapperError::init_error_with_possible_trace(
+                PostgresInitErrorEnum::EstablishConnectionWrapper(*e),
+                WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    location: *core::panic::Location::caller(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO,
+                should_trace,
+            ),
+        )),
         Ok(pool) => {
             if let Err(e) = postgres_create_providers_tables_if_not_exists(
                 &providers_json_local_data_hashmap,
@@ -81,18 +83,20 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::CreateTableQueriesWrapper(*e),
-                    WhereWas {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
-                    },
-                    &CONFIG.source_place_type,
-                    &GIT_INFO,
-                    should_trace,
-                )));
+                return Err(Box::new(
+                    PostgresInitWrapperError::init_error_with_possible_trace(
+                        PostgresInitErrorEnum::CreateTableQueriesWrapper(*e),
+                        WhereWas {
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
+                            location: *core::panic::Location::caller(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO,
+                        should_trace,
+                    ),
+                ));
             }
             if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
                 &providers_json_local_data_hashmap,
@@ -101,18 +105,20 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
-                    WhereWas {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
-                    },
-                    &CONFIG.source_place_type,
-                    &GIT_INFO,
-                    should_trace,
-                )));
+                return Err(Box::new(
+                    PostgresInitWrapperError::init_error_with_possible_trace(
+                        PostgresInitErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
+                        WhereWas {
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
+                            location: *core::panic::Location::caller(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO,
+                        should_trace,
+                    ),
+                ));
             }
             if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(
                 &providers_json_local_data_hashmap,
@@ -121,18 +127,20 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
-                    WhereWas {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
-                    },
-                    &CONFIG.source_place_type,
-                    &GIT_INFO,
-                    should_trace,
-                )));
+                return Err(Box::new(
+                    PostgresInitWrapperError::init_error_with_possible_trace(
+                        PostgresInitErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
+                        WhereWas {
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
+                            location: *core::panic::Location::caller(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO,
+                        should_trace,
+                    ),
+                ));
             }
             // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
             //     &providers_json_local_data_hashmap,
@@ -140,7 +148,7 @@ pub async fn init_postgres(
             //     false,
             // )
             // .await {
-            //                                                                             return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
+            //                                                                             return Err(Box::new(PostgresInitWrapperError::init_error_with_possible_trace(
             //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
             //     WhereWas {
             //         time: std::time::SystemTime::now()
@@ -162,18 +170,20 @@ pub async fn init_postgres(
             )
             .await
             {
-                return Err(Box::new(PostgresInitError::init_error_with_possible_trace(
-                    PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
-                    WhereWas {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
-                    },
-                    &CONFIG.source_place_type,
-                    &GIT_INFO,
-                    should_trace,
-                )));
+                return Err(Box::new(
+                    PostgresInitWrapperError::init_error_with_possible_trace(
+                        PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
+                        WhereWas {
+                            time: std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .expect("cannot convert time to unix_epoch"),
+                            location: *core::panic::Location::caller(),
+                        },
+                        &CONFIG.source_place_type,
+                        &GIT_INFO,
+                        should_trace,
+                    ),
+                ));
             }
             Ok(())
         }

@@ -13,7 +13,6 @@ use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrMan
 use init_error::InitErrorFromTufaCommon;
 use itertools::Itertools;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::common::where_was::WhereWasOneOrMany;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
@@ -26,7 +25,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
-pub struct GetLinkPartsFromLocalJsonFileError {
+pub struct GetLinkPartsFromLocalJsonFileWrapperError {
     source: GetLinkPartsFromLocalJsonFileErrorEnum,
     where_was: WhereWas,
 }
@@ -48,10 +47,10 @@ impl ProviderKind {
     pub async fn get_link_parts_from_local_json_file(
         self,
         should_trace: bool,
-    ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileError>> {
+    ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileWrapperError>> {
         match tokio::fs::File::open(&self.get_init_local_data_file_path()).await {
             Err(e) => Err(Box::new(
-                GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
+                GetLinkPartsFromLocalJsonFileWrapperError::init_error_with_possible_trace(
                     GetLinkPartsFromLocalJsonFileErrorEnum::TokioFsFileOpen(e),
                     WhereWas {
                         time: std::time::SystemTime::now()
@@ -69,7 +68,7 @@ impl ProviderKind {
                 if let Err(e) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
                 {
                     return Err(Box::new(
-                        GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
+                        GetLinkPartsFromLocalJsonFileWrapperError::init_error_with_possible_trace(
                             GetLinkPartsFromLocalJsonFileErrorEnum::TokioIoAsyncReadExtReadToEnd(e),
                             WhereWas {
                                 time: std::time::SystemTime::now()
@@ -85,7 +84,7 @@ impl ProviderKind {
                 }
                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
                     Err(e) => Err(Box::new(
-                        GetLinkPartsFromLocalJsonFileError::init_error_with_possible_trace(
+                        GetLinkPartsFromLocalJsonFileWrapperError::init_error_with_possible_trace(
                             GetLinkPartsFromLocalJsonFileErrorEnum::SerdeJsonFromSlice(e),
                             WhereWas {
                                 time: std::time::SystemTime::now()

@@ -1,7 +1,7 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty;
-use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyError;
+use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyWrapperError;
 use crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse;
 use crate::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseError;
 use crate::mongo_integration::mongo_client_with_options::mongo_client_with_options;
@@ -33,7 +33,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
-pub struct InitMongoError {
+pub struct InitMongoWrapperError {
     source: InitMongoErrorEnum,
     where_was: WhereWas,
 }
@@ -42,7 +42,7 @@ pub struct InitMongoError {
 pub enum InitMongoErrorEnum {
     ClientOptionsParseWrapper(MongoClientOptionsParseError),
     ClientWithOptionsWrapper(MongoClientWithOptionsError),
-    CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyError),
+    CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyWrapperError),
     InsertManyErrorWrapper(MongoInsertManyError),
 }
 
@@ -55,10 +55,10 @@ pub enum InitMongoErrorEnum {
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
-) -> Result<(), Box<InitMongoError>> {
+) -> Result<(), Box<InitMongoWrapperError>> {
     todo!()
     // match mongo_client_options_parse(false).await {
-    //     Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
+    //     Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
     //         InitMongoErrorEnum::ClientOptionsParse(*e),
     //         WhereWas {
     //             time: std::time::SystemTime::now()
@@ -73,7 +73,7 @@ pub async fn init_mongo(
     //         should_trace,
     //     ))),
     //     Ok(client_options) => match mongo_client_with_options(client_options, false) {
-    //         Err(e) => Err(Box::new(InitMongoError::init_error_with_possible_trace(
+    //         Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
     //             InitMongoErrorEnum::ClientWithOptions(*e),
     //             WhereWas {
     //                 time: std::time::SystemTime::now()
@@ -96,7 +96,7 @@ pub async fn init_mongo(
     //             )
     //             .await
     //             {
-    //                 return Err(Box::new(InitMongoError::init_error_with_possible_trace(
+    //                 return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
     //                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
     //                         *error_vec_count_documents,
     //                     ),
@@ -116,7 +116,7 @@ pub async fn init_mongo(
     //             if let Err(error_vec_insert_many) =
     //                 mongo_insert_many(providers_json_local_data_hashmap, db, false).await
     //             {
-    //                 return Err(Box::new(InitMongoError::init_error_with_possible_trace(
+    //                 return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
     //                     InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
     //                     WhereWas {
     //                         time: std::time::SystemTime::now()
@@ -144,7 +144,7 @@ pub async fn init_mongo(
     //             //     })
     //             //     .collect::<HashMap<ProviderKind, Error>>();
     //             // if !error_vec_insert_many.is_empty() {
-    //             //     return Err(Box::new(InitMongoError::init_error_with_possible_trace(
+    //             //     return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
     //             //         InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
     //             //         WhereWas {
     //             //             time: std::time::SystemTime::now()

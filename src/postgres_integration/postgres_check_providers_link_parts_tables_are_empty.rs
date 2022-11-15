@@ -23,7 +23,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplGetSourceWithMethodFromTufaCommon,
 )]
-pub struct PostgresCheckProvidersLinkPartsTablesEmptyError {
+pub struct PostgresCheckProvidersLinkPartsTablesEmptyWrapperError {
     source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
     where_was: WhereWas,
 }
@@ -44,7 +44,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
     should_trace: bool,
-) -> Result<(), Box<PostgresCheckProvidersLinkPartsTablesEmptyError>> {
+) -> Result<(), Box<PostgresCheckProvidersLinkPartsTablesEmptyWrapperError>> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap.keys().map(|pk| async {
             let query_string = format!(
@@ -73,7 +73,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(Box::new(
-            PostgresCheckProvidersLinkPartsTablesEmptyError::init_error_with_possible_trace(
+            PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(
                     count_provider_links_tables_error_hashmap,
                 ),
@@ -91,7 +91,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     }
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
         return Err(Box::new(
-            PostgresCheckProvidersLinkPartsTablesEmptyError::init_error_with_possible_trace(
+            PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(
                     provider_links_tables_not_empty_error_hashmap,
                 ),

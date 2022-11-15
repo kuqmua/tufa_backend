@@ -1,11 +1,11 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_mongo::init_mongo;
-use crate::init_dbs_logic::init_mongo::InitMongoError;
+use crate::init_dbs_logic::init_mongo::InitMongoWrapperError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
-use crate::init_dbs_logic::init_postgres::PostgresInitError;
+use crate::init_dbs_logic::init_postgres::PostgresInitWrapperError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
-use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
+use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
@@ -22,7 +22,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
     ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
-pub struct InitDbsProvidersLinkPartsError {
+pub struct InitDbsProvidersLinkPartsWrapperError {
     source: InitDbsProvidersLinkPartsErrorEnum,
     where_was: WhereWas,
 }
@@ -31,9 +31,9 @@ pub struct InitDbsProvidersLinkPartsError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
-    GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsError),
-    PostgresInitWrapper(PostgresInitError),
-    MongoInitWrapper(InitMongoError),
+    GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsWrapperError),
+    PostgresInitWrapper(PostgresInitWrapperError),
+    MongoInitWrapper(InitMongoWrapperError),
     //todo - do something with that - add support for fields
     // MongoAndPostgresInitOrigin {
     //     mongo: InitMongoError,
@@ -49,10 +49,10 @@ pub enum InitDbsProvidersLinkPartsErrorEnum {
 )]
 pub async fn init_dbs_with_providers_link_parts(
     should_trace: bool,
-) -> Result<(), Box<InitDbsProvidersLinkPartsError>> {
+) -> Result<(), Box<InitDbsProvidersLinkPartsWrapperError>> {
     match get_local_providers_link_parts(false).await {
         Err(e) => Err(Box::new(
-            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+            InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                 InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkPartsWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -91,7 +91,7 @@ pub async fn init_dbs_with_providers_link_parts(
                 (None, Some(pg_result)) => {
                     if let Err(e) = pg_result {
                         return Err(Box::new(
-                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                            InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
@@ -109,7 +109,7 @@ pub async fn init_dbs_with_providers_link_parts(
                 (Some(mongo_result), None) => {
                     if let Err(e) = mongo_result {
                         return Err(Box::new(
-                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                            InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
@@ -128,7 +128,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     (Ok(_), Ok(_)) => (),
                     (Ok(_), Err(e)) => {
                         return Err(Box::new(
-                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                            InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
@@ -144,7 +144,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     }
                     (Err(e), Ok(_)) => {
                         return Err(Box::new(
-                            InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                            InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()

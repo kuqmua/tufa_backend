@@ -24,7 +24,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
-pub struct MongoCheckCollectionsIsNotEmptyError {
+pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
     source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
     where_was: WhereWas,
 }
@@ -45,7 +45,7 @@ pub async fn mongo_check_collections_is_not_empty(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     db: &Database,
     should_trace: bool,
-) -> Result<(), Box<MongoCheckCollectionsIsNotEmptyError>> {
+) -> Result<(), Box<MongoCheckCollectionsIsNotEmptyWrapperError>> {
     let error_vec_count_documents =
         join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
             (
@@ -72,7 +72,7 @@ pub async fn mongo_check_collections_is_not_empty(
         .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
     if !error_vec_count_documents.is_empty() {
         return Err(Box::new(
-            MongoCheckCollectionsIsNotEmptyError::init_error_with_possible_trace(
+            MongoCheckCollectionsIsNotEmptyWrapperError::init_error_with_possible_trace(
                 error_vec_count_documents,
                 WhereWas {
                     time: std::time::SystemTime::now()

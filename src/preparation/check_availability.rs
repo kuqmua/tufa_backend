@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS;
 use crate::net_check::net_check_availability::net_check_availability;
-use crate::net_check::net_check_availability::NetCheckAvailabilityError;
+use crate::net_check::net_check_availability::NetCheckAvailabilityWrapperError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityError;
 use futures::join;
@@ -17,7 +17,7 @@ use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::config_mods::traits::get_postgres_url::GetPostgresUrl;
 use tufa_common::server::mongo::mongo_check_availability::mongo_check_availability;
-use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityError;
+use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityWrapperError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
@@ -30,7 +30,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
     ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
-pub struct CheckAvailabilityError {
+pub struct CheckAvailabilityWrapperError {
     source: CheckAvailabilityErrorEnum,
     where_was: WhereWas,
 }
@@ -42,24 +42,24 @@ pub struct CheckAvailabilityError {
     ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
 pub enum CheckAvailabilityErrorEnum {
-    Net(Box<NetCheckAvailabilityError>),
+    Net(Box<NetCheckAvailabilityWrapperError>),
     Postgres(Box<PostgresCheckAvailabilityError>),
-    Mongo(Box<MongoCheckAvailabilityError>),
+    Mongo(Box<MongoCheckAvailabilityWrapperError>),
     NetAndMongo {
-        net_source: Box<NetCheckAvailabilityError>,
-        mongo_source: Box<MongoCheckAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityWrapperError>,
+        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
     },
     NetAndPostgres {
-        net_source: Box<NetCheckAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityWrapperError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
     MongoAndPostgres {
-        mongo_source: Box<MongoCheckAvailabilityError>,
+        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
     NetAndMongoAndPostgres {
-        net_source: Box<NetCheckAvailabilityError>,
-        mongo_source: Box<MongoCheckAvailabilityError>,
+        net_source: Box<NetCheckAvailabilityWrapperError>,
+        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
         postgres_source: Box<PostgresCheckAvailabilityError>,
     },
 }
@@ -70,7 +70,9 @@ pub enum CheckAvailabilityErrorEnum {
     clippy::integer_arithmetic,
     clippy::float_arithmetic
 )]
-pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvailabilityError>> {
+pub async fn check_availability(
+    should_trace: bool,
+) -> Result<(), Box<CheckAvailabilityWrapperError>> {
     let net_url = &CONFIG.starting_check_link.clone();
     let postgres_url = &CONFIG.get_postgres_url();
     match join!(
@@ -85,7 +87,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
         (Ok(_), Ok(_), Err(m)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Mongo(m),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -99,7 +101,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Ok(_), Err(p), Ok(_)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Postgres(p),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -113,7 +115,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Ok(_), Err(p), Err(m)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::MongoAndPostgres {
                     mongo_source: m,
                     postgres_source: p,
@@ -130,7 +132,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Err(n), Ok(_), Ok(_)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::Net(n),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -144,7 +146,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Err(n), Ok(_), Err(m)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::NetAndMongo {
                     net_source: n,
                     mongo_source: m,
@@ -161,7 +163,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Err(n), Err(p), Ok(_)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::NetAndPostgres {
                     net_source: n,
                     postgres_source: p,
@@ -178,7 +180,7 @@ pub async fn check_availability(should_trace: bool) -> Result<(), Box<CheckAvail
             ),
         )),
         (Err(n), Err(p), Err(m)) => Err(Box::new(
-            CheckAvailabilityError::init_error_with_possible_trace(
+            CheckAvailabilityWrapperError::init_error_with_possible_trace(
                 CheckAvailabilityErrorEnum::NetAndMongoAndPostgres {
                     net_source: n,
                     postgres_source: p,

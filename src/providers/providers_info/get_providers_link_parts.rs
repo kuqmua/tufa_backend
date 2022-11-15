@@ -2,7 +2,7 @@ use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_provider
 use crate::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
-use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsError;
+use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::resource::Resource;
@@ -12,7 +12,7 @@ use tufa_common::server::resource::Resource;
 #[derive(Debug)]
 pub enum GetProvidersLinkPartsErrorEnum {
     Local {
-        source: GetLocalProvidersLinkPartsError,
+        source: GetLocalProvidersLinkPartsWrapperError,
         where_was: WhereWas,
     },
     Mongodb {

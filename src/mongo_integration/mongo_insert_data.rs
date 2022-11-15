@@ -7,11 +7,11 @@ use std::collections::HashMap;
 use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
-use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionError;
+use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionWrapperError;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
-pub struct MongoInsertDataError {
-    pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>,
+pub struct MongoInsertDataWrapperError {
+    pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionWrapperError>,
     where_was: WhereWas,
 }
 
@@ -24,7 +24,7 @@ pub struct MongoInsertDataError {
 pub async fn mongo_insert_data(
     db_name_handle: &str,
     vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,
-) -> Result<(), Box<MongoInsertDataError>> {
+) -> Result<(), Box<MongoInsertDataWrapperError>> {
     let error_hashmap = join_all(vec_of_link_parts_hashmap.into_iter().map(
         |(pk, vec_of_link_parts)| async move {
             (
@@ -55,9 +55,9 @@ pub async fn mongo_insert_data(
         }
         None
     })
-    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionError>>();
+    .collect::<HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionWrapperError>>();
     if !error_hashmap.is_empty() {
-        return Err(Box::new(MongoInsertDataError {
+        return Err(Box::new(MongoInsertDataWrapperError {
             source: error_hashmap,
             where_was: WhereWas {
                 time: std::time::SystemTime::now()

@@ -1,7 +1,7 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
-use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsError;
+use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsWrapperError;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
@@ -24,7 +24,7 @@ pub enum InitTablesEnum {
     ImplGetSourceWithMethodFromTufaCommon,
     ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
 )]
-pub struct InitTablesError {
+pub struct InitTablesWrapperError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
 }
@@ -33,7 +33,7 @@ pub struct InitTablesError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum InitTablesErrorEnum {
-    ProvidersLinkPartsWrapper(InitDbsProvidersLinkPartsError),
+    ProvidersLinkPartsWrapper(InitDbsProvidersLinkPartsWrapperError),
 }
 
 impl InitTablesEnum {
@@ -43,22 +43,24 @@ impl InitTablesEnum {
         clippy::integer_arithmetic,
         clippy::float_arithmetic
     )]
-    pub async fn init(&self, should_trace: bool) -> Result<(), Box<InitTablesError>> {
+    pub async fn init(&self, should_trace: bool) -> Result<(), Box<InitTablesWrapperError>> {
         match self {
             InitTablesEnum::ProvidersLinkParts => {
                 if let Err(e) = init_dbs_with_providers_link_parts(false).await {
-                    return Err(Box::new(InitTablesError::init_error_with_possible_trace(
-                        InitTablesErrorEnum::ProvidersLinkPartsWrapper(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            location: *core::panic::Location::caller(),
-                        },
-                        &CONFIG.source_place_type,
-                        &GIT_INFO,
-                        should_trace,
-                    )));
+                    return Err(Box::new(
+                        InitTablesWrapperError::init_error_with_possible_trace(
+                            InitTablesErrorEnum::ProvidersLinkPartsWrapper(*e),
+                            WhereWas {
+                                time: std::time::SystemTime::now()
+                                    .duration_since(std::time::UNIX_EPOCH)
+                                    .expect("cannot convert time to unix_epoch"),
+                                location: *core::panic::Location::caller(),
+                            },
+                            &CONFIG.source_place_type,
+                            &GIT_INFO,
+                            should_trace,
+                        ),
+                    ));
                 }
             }
         }

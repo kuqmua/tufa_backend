@@ -23,7 +23,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
-pub struct NetCheckAvailabilityError {
+pub struct NetCheckAvailabilityWrapperError {
     source: NetCheckAvailabilityErrorEnum,
     where_was: WhereWas,
 }
@@ -49,10 +49,10 @@ pub enum NetCheckAvailabilityErrorEnum {
 pub async fn net_check_availability(
     link: &str,
     should_trace: bool,
-) -> Result<(), Box<NetCheckAvailabilityError>> {
+) -> Result<(), Box<NetCheckAvailabilityWrapperError>> {
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(
-            NetCheckAvailabilityError::init_error_with_possible_trace(
+            NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
                 NetCheckAvailabilityErrorEnum::ReqwestGet(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -69,7 +69,7 @@ pub async fn net_check_availability(
             let status = res.status();
             if status.is_client_error() {
                 return Err(Box::new(
-                    NetCheckAvailabilityError::init_error_with_possible_trace(
+                    NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
                         NetCheckAvailabilityErrorEnum::Client(status),
                         WhereWas {
                             time: std::time::SystemTime::now()
@@ -85,7 +85,7 @@ pub async fn net_check_availability(
             }
             if status.is_server_error() {
                 return Err(Box::new(
-                    NetCheckAvailabilityError::init_error_with_possible_trace(
+                    NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
                         NetCheckAvailabilityErrorEnum::Server(status),
                         WhereWas {
                             time: std::time::SystemTime::now()

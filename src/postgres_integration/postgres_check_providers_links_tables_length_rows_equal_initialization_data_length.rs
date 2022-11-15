@@ -23,7 +23,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplGetSourceWithMethodFromTufaCommon,
 )]
-pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError {
+pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError {
     source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum,
     where_was: WhereWas,
 }
@@ -62,8 +62,10 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
     should_trace: bool,
-) -> Result<(), Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError>>
-{
+) -> Result<
+    (),
+    Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError>,
+> {
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap
             .iter()
@@ -109,7 +111,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
     }
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::init_error_with_possible_trace(
+            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::SelectCount(count_provider_links_tables_error_hashmap),
                 WhereWas {
                     time: std::time::SystemTime::now()
@@ -125,7 +127,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
     }
     if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
         return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthError::init_error_with_possible_trace(
+            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthErrorEnum::ProviderLinksTablesRowsLengthNotEqual(provider_links_tables_rows_length_not_equal_error_hashmap),
                 WhereWas {
                     time: std::time::SystemTime::now()

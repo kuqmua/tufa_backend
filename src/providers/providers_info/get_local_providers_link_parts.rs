@@ -1,6 +1,6 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
-use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileError;
+use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileWrapperError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
@@ -22,8 +22,8 @@ use valuable::Valuable;
     ImplGetSourceWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
-pub struct GetLocalProvidersLinkPartsError {
-    pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError>,
+pub struct GetLocalProvidersLinkPartsWrapperError {
+    pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError>,
     pub where_was: WhereWas,
 }
 
@@ -40,7 +40,7 @@ pub struct TracingVec {
 )]
 pub async fn get_local_providers_link_parts(
     should_trace: bool,
-) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsError>> {
+) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsWrapperError>> {
     let result_vec = join_all(
         ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
             .into_iter()
@@ -52,7 +52,7 @@ pub async fn get_local_providers_link_parts(
             }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileError> =
+    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError> =
         HashMap::new();
     let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
@@ -68,7 +68,7 @@ pub async fn get_local_providers_link_parts(
     }
     if !errors_hashmap.is_empty() {
         return Err(Box::new(
-            GetLocalProvidersLinkPartsError::init_error_with_possible_trace(
+            GetLocalProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                 errors_hashmap,
                 WhereWas {
                     time: std::time::SystemTime::now()
