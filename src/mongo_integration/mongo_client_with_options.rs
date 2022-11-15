@@ -1,7 +1,7 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use mongodb::error::Error;
@@ -14,11 +14,11 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
-pub struct MongoClientWithOptionsError {
+pub struct MongoClientWithOptionsOriginError {
     source: Error,
     where_was: WhereWas,
 }
@@ -32,10 +32,10 @@ pub struct MongoClientWithOptionsError {
 pub fn mongo_client_with_options(
     client_options: ClientOptions,
     should_trace: bool,
-) -> Result<Client, Box<MongoClientWithOptionsError>> {
+) -> Result<Client, Box<MongoClientWithOptionsOriginError>> {
     match Client::with_options(client_options) {
         Err(e) => Err(Box::new(
-            MongoClientWithOptionsError::init_error_with_possible_trace(
+            MongoClientWithOptionsOriginError::init_error_with_possible_trace(
                 e,
                 WhereWas {
                     time: std::time::SystemTime::now()

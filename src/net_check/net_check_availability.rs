@@ -5,7 +5,6 @@ use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use reqwest::Error;
@@ -32,12 +31,12 @@ pub struct NetCheckAvailabilityWrapperError {
     Debug,
     GitInfoFromTufaCommon,
     ImplDisplayForSimpleErrorEnum,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum NetCheckAvailabilityErrorEnum {
-    ReqwestGet(Error),
-    Client(StatusCode),
-    Server(StatusCode),
+    ReqwestGetOrigin(Error),
+    ClientOrigin(StatusCode),
+    ServerOrigin(StatusCode),
 }
 
 #[deny(
@@ -53,7 +52,7 @@ pub async fn net_check_availability(
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(
             NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                NetCheckAvailabilityErrorEnum::ReqwestGet(e),
+                NetCheckAvailabilityErrorEnum::ReqwestGetOrigin(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -70,7 +69,7 @@ pub async fn net_check_availability(
             if status.is_client_error() {
                 return Err(Box::new(
                     NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                        NetCheckAvailabilityErrorEnum::Client(status),
+                        NetCheckAvailabilityErrorEnum::ClientOrigin(status),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)
@@ -86,7 +85,7 @@ pub async fn net_check_availability(
             if status.is_server_error() {
                 return Err(Box::new(
                     NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                        NetCheckAvailabilityErrorEnum::Server(status),
+                        NetCheckAvailabilityErrorEnum::ServerOrigin(status),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)

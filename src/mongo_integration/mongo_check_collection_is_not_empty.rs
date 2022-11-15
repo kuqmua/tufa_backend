@@ -5,7 +5,6 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use mongodb::bson::Document;
@@ -29,10 +28,10 @@ pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithoutMethodFromTufaCommon)]
+#[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
 pub enum CollectionCountDocumentsOrIsNotEmpty {
-    CountDocuments(Error),
-    IsNotEmpty(u64),
+    CountDocumentsOrigin(Error),
+    IsNotEmptyOrigin(u64),
 }
 
 #[deny(
@@ -58,12 +57,15 @@ pub async fn mongo_check_collections_is_not_empty(
         .await
         .into_iter()
         .filter_map(|(pk, result)| match result {
-            Err(e) => Some((pk, CollectionCountDocumentsOrIsNotEmpty::CountDocuments(e))),
+            Err(e) => Some((
+                pk,
+                CollectionCountDocumentsOrIsNotEmpty::CountDocumentsOrigin(e),
+            )),
             Ok(documents_number) => {
                 if documents_number > 0 {
                     return Some((
                         pk,
-                        CollectionCountDocumentsOrIsNotEmpty::IsNotEmpty(documents_number),
+                        CollectionCountDocumentsOrIsNotEmpty::IsNotEmptyOrigin(documents_number),
                     ));
                 }
                 None

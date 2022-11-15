@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::postgres::PgPoolOptions;
@@ -15,12 +15,12 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     ImplDisplayForErrorStruct,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
-pub struct PostgresCheckAvailabilityError {
+pub struct PostgresCheckAvailabilityOriginError {
     source: Error,
     where_was: WhereWas,
 }
@@ -34,7 +34,7 @@ pub struct PostgresCheckAvailabilityError {
 pub async fn postgres_check_availability(
     postgres_url: &str,
     should_trace: bool,
-) -> Result<(), Box<PostgresCheckAvailabilityError>> {
+) -> Result<(), Box<PostgresCheckAvailabilityOriginError>> {
     if let Err(e) = PgPoolOptions::new()
         .max_connections(1)
         .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout))
@@ -42,7 +42,7 @@ pub async fn postgres_check_availability(
         .await
     {
         return Err(Box::new(
-            PostgresCheckAvailabilityError::init_error_with_possible_trace(
+            PostgresCheckAvailabilityOriginError::init_error_with_possible_trace(
                 e,
                 WhereWas {
                     time: std::time::SystemTime::now()

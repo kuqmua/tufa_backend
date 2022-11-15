@@ -4,7 +4,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::Pool;
@@ -18,10 +18,10 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
-pub struct PostgresCreateProvidersDbsError {
+pub struct PostgresCreateProvidersDbsOriginError {
     pub source: HashMap<ProviderKind, sqlx::Error>,
     pub where_was: WhereWas,
 }
@@ -36,7 +36,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
     should_trace: bool,
-) -> Result<(), Box<PostgresCreateProvidersDbsError>> {
+) -> Result<(), Box<PostgresCreateProvidersDbsOriginError>> {
     let table_creation_error_hashmap = join_all(
         providers_json_local_data_hashmap.keys().map(|pk| async {
             let query_string = format!(
@@ -56,7 +56,7 @@ pub async fn postgres_create_providers_tables_if_not_exists(
     if !table_creation_error_hashmap.is_empty() {
         //todo iter over hashmap to support init_error_with_possible_trace
         return Err(Box::new(
-            PostgresCreateProvidersDbsError::init_error_with_possible_trace(
+            PostgresCreateProvidersDbsOriginError::init_error_with_possible_trace(
                 table_creation_error_hashmap,
                 WhereWas {
                     time: std::time::SystemTime::now()

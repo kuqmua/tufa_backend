@@ -3,13 +3,13 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
 use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyWrapperError;
 use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
-use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsError;
+use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsOriginError;
 use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables;
-use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesError;
+use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesOriginError;
 use crate::postgres_integration::postgres_establish_connection::postgres_establish_connection;
-use crate::postgres_integration::postgres_establish_connection::PostgresEstablishConnectionError;
+use crate::postgres_integration::postgres_establish_connection::PostgresEstablishConnectionOriginError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
-use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesError;
+use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use std::collections::HashMap;
@@ -40,14 +40,16 @@ pub struct PostgresInitWrapperError {
     Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceWithMethodFromTufaCommon,
 )]
 pub enum PostgresInitErrorEnum {
-    EstablishConnectionWrapper(PostgresEstablishConnectionError),
-    CreateTableQueriesWrapper(PostgresCreateProvidersDbsError),
+    EstablishConnectionWrapper(PostgresEstablishConnectionOriginError),
+    CreateTableQueriesWrapper(PostgresCreateProvidersDbsOriginError),
     CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyWrapperError),
-    DeleteAllFromProvidersTablesWrapper(PostgresDeleteAllFromProvidersTablesError),
+    DeleteAllFromProvidersTablesWrapper(PostgresDeleteAllFromProvidersTablesOriginError),
     CheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapper(
         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError,
     ),
-    InsertLinkPartsIntoProvidersTablesWrapper(PostgresInsertLinkPartsIntoProvidersTablesError),
+    InsertLinkPartsIntoProvidersTablesWrapper(
+        PostgresInsertLinkPartsIntoProvidersTablesOriginError,
+    ),
 }
 
 #[deny(

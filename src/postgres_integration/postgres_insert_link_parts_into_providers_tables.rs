@@ -4,7 +4,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::Pool;
@@ -18,10 +18,10 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
-pub struct PostgresInsertLinkPartsIntoProvidersTablesError {
+pub struct PostgresInsertLinkPartsIntoProvidersTablesOriginError {
     source: HashMap<ProviderKind, sqlx::Error>,
     where_was: WhereWas,
 }
@@ -36,7 +36,7 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     pool: &Pool<Postgres>,
     should_trace: bool,
-) -> Result<(), Box<PostgresInsertLinkPartsIntoProvidersTablesError>> {
+) -> Result<(), Box<PostgresInsertLinkPartsIntoProvidersTablesOriginError>> {
     let insertion_error_hashmap = join_all(providers_json_local_data_hashmap.iter().map(
         |(pk, string_vec)| async {
             let mut values_string = String::from("");
@@ -64,7 +64,7 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
     .collect::<HashMap<ProviderKind, sqlx::Error>>();
     if !insertion_error_hashmap.is_empty() {
         return Err(Box::new(
-            PostgresInsertLinkPartsIntoProvidersTablesError::init_error_with_possible_trace(
+            PostgresInsertLinkPartsIntoProvidersTablesOriginError::init_error_with_possible_trace(
                 insertion_error_hashmap,
                 WhereWas {
                     time: std::time::SystemTime::now()

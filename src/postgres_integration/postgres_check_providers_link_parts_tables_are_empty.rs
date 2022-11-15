@@ -5,7 +5,6 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
 use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::Pool;
@@ -28,10 +27,10 @@ pub struct PostgresCheckProvidersLinkPartsTablesEmptyWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithoutMethodFromTufaCommon)]
+#[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
-    SelectCount(HashMap<ProviderKind, sqlx::Error>),
-    NotEmpty(HashMap<ProviderKind, i64>),
+    SelectCountOrigin(HashMap<ProviderKind, sqlx::Error>),
+    NotEmptyOrigin(HashMap<ProviderKind, i64>),
 }
 
 #[deny(
@@ -74,7 +73,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(Box::new(
             PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCount(
+                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCountOrigin(
                     count_provider_links_tables_error_hashmap,
                 ),
                 WhereWas {
@@ -92,7 +91,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
         return Err(Box::new(
             PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmpty(
+                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmptyOrigin(
                     provider_links_tables_not_empty_error_hashmap,
                 ),
                 WhereWas {

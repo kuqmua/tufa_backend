@@ -3,11 +3,11 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyWrapperError;
 use crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse;
-use crate::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseError;
+use crate::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginError;
 use crate::mongo_integration::mongo_client_with_options::mongo_client_with_options;
-use crate::mongo_integration::mongo_client_with_options::MongoClientWithOptionsError;
+use crate::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError;
 use crate::mongo_integration::mongo_insert_many::mongo_insert_many;
-use crate::mongo_integration::mongo_insert_many::MongoInsertManyError;
+use crate::mongo_integration::mongo_insert_many::MongoInsertManyOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
@@ -40,10 +40,10 @@ pub struct InitMongoWrapperError {
 
 #[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
 pub enum InitMongoErrorEnum {
-    ClientOptionsParseWrapper(MongoClientOptionsParseError),
-    ClientWithOptionsWrapper(MongoClientWithOptionsError),
+    ClientOptionsParseWrapper(MongoClientOptionsParseOriginError),
+    ClientWithOptionsWrapper(MongoClientWithOptionsOriginError),
     CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyWrapperError),
-    InsertManyErrorWrapper(MongoInsertManyError),
+    InsertManyErrorWrapper(MongoInsertManyOriginError),
 }
 
 #[deny(

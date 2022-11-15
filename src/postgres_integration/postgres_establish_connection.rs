@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
-use impl_get_source_without_method::ImplGetSourceWithoutMethodFromTufaCommon;
+use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::postgres::PgPoolOptions;
@@ -18,11 +18,11 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplGetSourceWithoutMethodFromTufaCommon,
+    ImplGetSourceWithMethodFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
-pub struct PostgresEstablishConnectionError {
+pub struct PostgresEstablishConnectionOriginError {
     pub source: Error,
     pub where_was: WhereWas,
 }
@@ -36,7 +36,7 @@ pub struct PostgresEstablishConnectionError {
 pub async fn postgres_establish_connection(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
-) -> Result<sqlx::Pool<Postgres>, Box<PostgresEstablishConnectionError>> {
+) -> Result<sqlx::Pool<Postgres>, Box<PostgresEstablishConnectionOriginError>> {
     match PgPoolOptions::new()
         .max_connections(providers_json_local_data_hashmap.len() as u32)
         .connect_timeout(Duration::from_millis(CONFIG.postgres_connection_timeout)) //todo add timeout constant or env var
@@ -44,7 +44,7 @@ pub async fn postgres_establish_connection(
         .await
     {
         Err(e) => Err(Box::new(
-            PostgresEstablishConnectionError::init_error_with_possible_trace(
+            PostgresEstablishConnectionOriginError::init_error_with_possible_trace(
                 e,
                 WhereWas {
                     time: std::time::SystemTime::now()
