@@ -10,14 +10,14 @@ use futures::future::join_all;
 use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::server::http_request::http_request_error::HttpRequestError;
+use tufa_common::server::http_request::http_request_error::HttpRequestOriginError;
 use tufa_common::server::http_request::http_request_method::HttpRequestMethod;
 use tufa_common::server::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
 
 #[derive(Debug, GitInfoFromTufaCommon)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
-        source: Vec<(String, Box<HttpRequestError>)>, //link, error
+        source: Vec<(String, Box<HttpRequestOriginError>)>, //link, error
         where_was: WhereWas,
     },
     NoItems {
